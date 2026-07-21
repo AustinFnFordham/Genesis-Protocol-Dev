@@ -1,0 +1,413 @@
+{
+  "inventory": {
+    "total_files": 40,
+    "valid_json_schemas": 15,
+    "invalid_json_schemas": 25,
+    "by_category": {
+      "canonical_entity": 35,
+      "runtime_projection_or_meta": 5
+    }
+  },
+  "schemas": [
+    {
+      "file": "Action.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 11: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Standard Action",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Adversary.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 4: ADVERSARY-SPECIFIC SYSTEMS (Role File Only)' is not of typ",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Adversary",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Background.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 11: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Character Background",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CampaignState.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "CampaignState",
+      "category": "runtime_projection_or_meta"
+    },
+    {
+      "file": "Character.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 8: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Character",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CharacterClassFeature.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "CharacterClassFeature",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CharacterClassFeature.v2.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "CharacterClassFeatureV2",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CharacterCreator.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Character Creation Process",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Class.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "\"MIGRATION NOTE: The 'connections' block is DEPRECATED per Genesis Pro",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Character Class",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Combat.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 13: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFaile",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Combat Action",
+      "category": "runtime_projection_or_meta"
+    },
+    {
+      "file": "CombatRules.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Combat Rules",
+      "category": "runtime_projection_or_meta"
+    },
+    {
+      "file": "Companion.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Companion NPC",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CraftingRecipe.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 16: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Crafting Recipe",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Creature.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Creature",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "CulturalFeatures.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Cultural Features Schema",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Effect.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Effect Schema",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "EnvironmentalAdaptations.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Environmental Adaptations Schema",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Faction.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 11: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFaile",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Faction",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Feature.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Game Feature / Talent",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "FeatureValidation.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Feature Validation Schema",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Gameplay_Example.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Gameplay Example / Scene",
+      "category": "runtime_projection_or_meta"
+    },
+    {
+      "file": "Item.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 12: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFaile",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Game Item",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Lore.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 11: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFaile",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Lore Entry",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "MasterTags.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Master Tags Registry",
+      "category": "runtime_projection_or_meta"
+    },
+    {
+      "file": "Master_Action.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 15: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Master Action",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Modification.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 10: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Item Modification",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Nemesis.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Nemesis",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Object.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 9: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFailed",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Object",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Power.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 9: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFailed",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Power",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Property.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Property",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Species.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'MIGRATION NOTE: class_synergies and faction_synergies are DEPRECATED ",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Species",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "SpeciesProgression.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Species Progression Schema",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Squad.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Squad",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Starship.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 13: TAGS & CATEGORIZATION' is not of type 'object', 'boolean'",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Starship & Vehicle",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "StarshipAction.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Starship Action",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "StarshipCareer.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "StarshipCareer",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "StarshipWeapon.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 7: IMAGE GENERATION & UI' is not of type 'object', 'boolean'\n",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "StarshipWeapon",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Status.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 9: UI INTEGRATION' is not of type 'object', 'boolean'\n\nFailed",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Status Effect",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "Subclass.schema.json",
+      "valid_json": true,
+      "metaschema_valid": false,
+      "meta_err": "'SECTION 5: LLM-GM INTEGRATION' is not of type 'object', 'boolean'\n\nFa",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Character Subclass",
+      "category": "canonical_entity"
+    },
+    {
+      "file": "SynergyRules.schema.json",
+      "valid_json": true,
+      "metaschema_valid": true,
+      "meta_err": "",
+      "declares_schema": "schema#",
+      "has_id": false,
+      "title": "Synergy Rules Engine",
+      "category": "canonical_entity"
+    }
+  ]
+}

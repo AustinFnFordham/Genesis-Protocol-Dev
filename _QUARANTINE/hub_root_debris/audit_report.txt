@@ -1,0 +1,17 @@
+HOLISTIC AUDIT REPORT
+=====================
+Total Files: 35
+Passed: 30
+Failed: 5
+
+FAILURES:
+- bothan.yml:
+  * Exception: unhashable type: 'dict'
+- chiss.yml:
+  * Exception: unhashable type: 'dict'
+- clawdite.yml:
+  * Exception: unhashable type: 'dict'
+- echani.yml:
+  * Exception: unhashable type: 'dict'
+- nautolan.yml:
+  * Exception: unhashable type: 'dict'

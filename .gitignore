@@ -1,0 +1,21 @@
+# dependencies / environments
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# build products & caches
+app/genesis-os/dist/
+app/genesis-os/playwright-report/
+app/genesis-os/e2e/out/artifacts/
+app/genesis-os/pw_install.log
+app/genesis-os/vite.log
+*.log
+
+# large model/data caches (never canonical)
+SW5e_Data_Hub/New_Genesis/.venv/
+SW5e_Data_Hub/logs/
+
+# OS noise
+Thumbs.db
+Desktop.ini

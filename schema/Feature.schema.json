@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game Feature / Talent",
+  "description": "The definitive schema for a single, modular class feature or talent.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "xp_cost": { "type": "integer" },
+
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Tags that define this feature's characteristics, capabilities, and triggers. All tags must be defined in master_tags.yml.",
+      "items": { "type": "string" }
+    },
+
+    "narrative": { "type": "string", "description": "The 'Soul'. Rich, multi-sentence paragraph for the LLM-GM." },
+    "flavor_text": { "type": "string" },
+
+    "activation": {
+      "type": "object",
+      "description": "How the feature is activated.",
+      "properties": {
+        "cost": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "enum": ["action", "bonus_action", "reaction", "free_action", "movement", "downtime"] },
+              "count": { "type": "integer" }
+            },
+            "required": ["type", "count"]
+          }
+        },
+        "trigger": { "type": "string", "description": "The specific event that triggers this feature, if not manual." }
+      }
+    },
+
+    "targeting": {
+      "type": "object",
+      "description": "The targeting parameters for this feature.",
+      "properties": {
+        "type": { "enum": ["self", "creature", "object", "point", "area", "cone", "line"] },
+        "range": {
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer" },
+            "unit": { "type": "string", "default": "feet" }
+          }
+        },
+        "area": {
+          "type": "object",
+          "properties": {
+            "shape": { "enum": ["sphere", "cube", "cone", "line"] },
+            "size": { "type": "integer" },
+            "unit": { "type": "string", "default": "feet" }
+          }
+        }
+      }
+    },
+
+    "mechanics": {
+      "type": "array",
+      "description": "The 'Engine'. The list of unambiguous outcomes and effects.",
+      "items": {
+        "$ref": "#/definitions/mechanicEffect"
+      }
+    },
+    
+    "corruption_transform": {
+        "$ref": "#/definitions/corruptionTransform"
+    },
+    "llm_guidance": {
+        "$ref": "#/definitions/llmGuidance"
+    },
+    "image_generation": {
+        "$ref": "#/definitions/imageGeneration"
+    },
+    "ui": {
+        "$ref": "#/definitions/ui"
+    }
+  },
+  "required": ["id", "name", "xp_cost", "tags", "narrative", "mechanics"],
+  "definitions": {
+    "mechanicEffect": {
+      "type": "object",
+      "properties": {
+        "effect": { "type": "string" },
+        "description": { "type": "string", "description": "Human-readable description for LLM and UI tooltips" },
+        "parameters": { "type": "object" },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "op": { "enum": ["==", "!=", ">", "<", ">=", "<=", "in", "contains"] },
+              "value": {}
+            },
+            "required": ["key", "op", "value"]
+          }
+        }
+      },
+      "required": ["effect", "description"]
+    },
+    "corruptionTransform": {
+      "type": "object",
+      "properties": {
+        "can_corrupt": { "type": "string" },
+        "can_purify": { "type": "string" },
+        "corruption_conditions": { "type": "array" },
+        "purification_conditions": { "type": "array" }
+      }
+    },
+    "llmGuidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": { "type": "string" },
+        "tactical_notes": { "type": "string" },
+        "narrative_hooks": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "imageGeneration": {
+      "type": "object",
+      "properties": {
+        "base_prompt": { "type": "string" },
+        "base_negative_keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": { "type": "string" },
+              "modifier_text": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": { "type": "string" },
+        "icon": { "type": "string" },
+        "color": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,968 @@
+{
+ "mounted": "meridian_reach",
+ "campaign_id": "meridian_reach",
+ "mount_epoch": 3,
+ "state_revision": 2,
+ "runtime_mode": "live",
+ "selected_character_id": "aero",
+ "campaign": {
+  "title": "Meridian Reach — The Sensor Array",
+  "era": "High Republic",
+  "phase": "scene",
+  "opening_status": "opening"
+ },
+ "operative": {
+  "character_runtime": {
+   "identity": {
+    "name": "Aeleron \"Aero\" Do'ordo",
+    "species": {
+     "species_id": "species_echani",
+     "name": "Echani"
+    },
+    "class": {
+     "class_id": "class_sentinel",
+     "name": "Sentinel"
+    },
+    "subclass": {
+     "subclass_id": null,
+     "name": null
+    },
+    "background": {
+     "background_id": "background_jedi",
+     "name": "Jedi"
+    },
+    "level": 1,
+    "role": null
+   },
+   "abilities": {
+    "scores": {
+     "strength": 8,
+     "dexterity": 16,
+     "constitution": 12,
+     "intelligence": 12,
+     "wisdom": 14,
+     "charisma": 14
+    },
+    "modifiers": {
+     "strength": -1,
+     "dexterity": 3,
+     "constitution": 1,
+     "intelligence": 1,
+     "wisdom": 2,
+     "charisma": 2
+    },
+    "proficiency_bonus": 2
+   },
+   "defenses": {
+    "maximum_hp": 11,
+    "current_hp": 11,
+    "hp_formula": "Echani base HP 10 + Constitution modifier 1",
+    "maximum_strain": 12,
+    "current_strain": 12,
+    "strain_formula": "Echani base Strain 11 + Constitution modifier 1",
+    "armor_class": 13,
+    "armor_class_formula": "10 + Dexterity modifier 3",
+    "saving_throws": {
+     "strength": -1,
+     "dexterity": 5,
+     "constitution": 1,
+     "intelligence": 1,
+     "wisdom": 2,
+     "charisma": 4
+    },
+    "saving_throw_proficiencies": [
+     "dexterity",
+     "charisma"
+    ],
+    "conditions": []
+   },
+   "resources": {
+    "maximum_force_points": 3,
+    "current_force_points": 3,
+    "force_point_formula": "Level 1 + Charisma modifier 2",
+    "force_point_recovery": {
+     "long_rest": "restore all",
+     "meditation_kit": "once per long rest during a short rest, restore up to 2 spent Force Points"
+    },
+    "sentinel_balance": {
+     "maximum_uses": 2,
+     "current_uses": 2,
+     "recovery": "long_rest"
+    },
+    "combat_communication": {
+     "maximum_sparring_uses": 1,
+     "current_sparring_uses": 1,
+     "recovery": "short_rest"
+    }
+   },
+   "movement": {
+    "speed": "30 feet",
+    "initiative": 3
+   },
+   "senses": {
+    "passive_perception": 14,
+    "passive_insight": 14,
+    "passive_investigation": 11,
+    "other_senses": []
+   },
+   "proficiencies": {
+    "skills": {
+     "insight": {
+      "modifier": 4,
+      "source": "Jedi background"
+     },
+     "persuasion": {
+      "modifier": 4,
+      "source": "Jedi background"
+     },
+     "technology": {
+      "modifier": 3,
+      "source": "Sentinel"
+     },
+     "intimidation": {
+      "modifier": 4,
+      "source": "Sentinel"
+     },
+     "perception": {
+      "modifier": 4,
+      "source": "Sentinel"
+     }
+    },
+    "tools": [
+     "Security Kit"
+    ],
+    "armor": [
+     "Light armor"
+    ],
+    "weapons": [
+     "Simple weapons",
+     "Lightsabers",
+     "Blaster pistols",
+     "Unarmed strikes"
+    ],
+    "languages": [
+     "Galactic Basic",
+     "Echani",
+     "Sith"
+    ]
+   },
+   "forcecasting": {
+    "ability": "charisma",
+    "attack_modifier": 4,
+    "save_dc": 12,
+    "powers_known": 2,
+    "highest_power_level": 0,
+    "concentration": {
+     "save": "Constitution",
+     "modifier": 1,
+     "dc": "10 or half the triggering damage, whichever is higher",
+     "failure": "concentration ends",
+     "automatic_end": [
+      "Aero becomes incapacitated",
+      "Aero begins another concentration effect"
+     ]
+    }
+   },
+   "features": [
+    {
+     "name": "Martial Arts Training",
+     "urid": "feature_martial_arts_training"
+    },
+    {
+     "name": "Combat Discipline",
+     "urid": "feature_combat_discipline"
+    },
+    {
+     "name": "Combat Communication",
+     "urid": "feature_combat_communication"
+    },
+    {
+     "name": "Force Connection",
+     "urid": "feature_force_connection"
+    },
+    {
+     "name": "Sentinel Balance",
+     "urid": "feature_sentinel_balance"
+    },
+    {
+     "name": "Lightsaber Deflect - Tier 1",
+     "urid": "feature_lightsaber_deflect_tier_1"
+    },
+    {
+     "name": "Echani Grappling Training",
+     "urid": "feature_echani_grappling_training"
+    }
+   ],
+   "powers": [
+    {
+     "name": "Battle Insight",
+     "urid": "power_battle_insight"
+    },
+    {
+     "name": "Burst",
+     "urid": "power_burst"
+    }
+   ],
+   "equipment": {
+    "weapons": [],
+    "armor": [],
+    "gear": [],
+    "vehicles": [],
+    "trinkets": [],
+    "starships": [],
+    "item_stacks": [
+     {
+      "item_id": "item_standard_blaster_pistol",
+      "name": "Standard Blaster Pistol",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_security_kit",
+      "name": "Security Kit",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_meditation_kit",
+      "name": "Meditation Kit",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_backpack",
+      "name": "Backpack",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_bedroll",
+      "name": "Bedroll",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_compact_mess_kit",
+      "name": "Compact mess kit",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_ration_pack",
+      "name": "Ration pack",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_canteen",
+      "name": "Canteen",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_compact_jedi_glowrod",
+      "name": "Compact Jedi glowrod",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_syntherope",
+      "name": "Syntherope",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_basic_fire_starting_tool",
+      "name": "Basic fire-starting tool",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_personal_comlink",
+      "name": "Personal comlink",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_blaster_ammunition",
+      "name": "Blaster ammunition",
+      "quantity": 1,
+      "equipped": false
+     }
+    ],
+    "item_instances": [
+     {
+      "instance_id": "iteminst_aero_lightsaber_001",
+      "base_item_id": "item_lightsaber",
+      "name": "Taron-forged Modular Indigo Lightsaber",
+      "equipped": true
+     },
+     {
+      "instance_id": "iteminst_aero_jedi_robes_001",
+      "base_item_id": "item_jedi_robes",
+      "name": "Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle",
+      "equipped": true
+     }
+    ],
+    "credits": 50,
+    "inventory": []
+   },
+   "background": {
+    "feature": "Former Master and Jedi Network",
+    "former_master": {
+     "name": "Vael Taron",
+     "species": "Cathar",
+     "former_title": "Shadow Master Taron",
+     "final_known_office": "Weapons Master of the Coruscant Jedi Temple",
+     "status": "missing",
+     "objective_fate": "unresolved",
+     "last_known_region": "Meridian Reach"
+    },
+    "safe_houses": {
+     "known_access": true,
+     "specific_locations": []
+    },
+    "stillwater_incident": {
+     "location": "Meridian Archive Annex Aurek-7, locally called Stillwater Annex",
+     "mission_role": "Aero's final mission as a Padawan and first field command",
+     "official_objective": "Investigate a reactivated remote archive annex containing Long Silence journals tentatively associated with the earlier celestial phenomenon.",
+     "memory_boundary": "Aero remembers arriving and beginning the investigation. His memories become trauma-fragmented after accessing a sealed archive section. His final reliable memory is Taron ordering him back to the ship; his next continuous memory is approaching Coruscant alone.",
+     "memory_cause": "psychological trauma; no confirmed mystical suppression",
+     "council_ruling": [
+      "mission unresolved",
+      "Taron missing",
+      "Aero cleared of misconduct",
+      "records temporarily sealed",
+      "knighthood legitimate"
+     ],
+     "field_restriction": "four moons of meditation and recovery, completed",
+     "current_belief": "Aero believes some Council members consider him incompetent, naive, or unprepared because of his age and condition after Stillwater."
+    }
+   },
+   "soul": {
+    "voice": "Clear controlled tenor; precise rather than monotone; warmer, quicker, and openly amused with trusted people.",
+    "observation_mannerism": "Becomes still and follows a person's eyes, face, shoulders, hands, hips, and knees as if watching a dance. Subtle head movement signifies engagement, particularly to another Echani.",
+    "regional_values": [
+     "Listen before commanding",
+     "Help before being asked",
+     "Keep a steady hand"
+    ]
+   },
+   "crafting_seeds": {
+    "active_mechanical_benefit": "none",
+    "future_split_saber": {
+     "status": "design target only",
+     "joined": "approximately 4-4.5-foot indigo Convergence blade; provisional 1d12+DEX and two-handed",
+     "separated": "paired approximately 3-foot blue and violet blades; provisional 1d8+DEX each",
+     "requirements": "future materials, completed independent systems, crafting, legal training, and audit"
+    },
+    "future_kyber_sidearm": {
+     "status": "concept only",
+     "concept": "attuned kyber-resonance precision pistol emphasizing Force-guided accuracy"
+    },
+    "future_saber_marksman_platform": {
+     "status": "late-game concept only",
+     "concept": "long-range blaster platform using Aero's docked saber as focusing core",
+     "limitation": "saber unavailable while docked; mechanics undefined until earned"
+    }
+   },
+   "validation": {
+    "confirmed": [
+     "Sentinel proficiencies and Level 1 feature names",
+     "Echani speed, base HP, base Strain, languages, and trait text",
+     "Jedi background skills, language choice, and network feature",
+     "Two legal Level 0 powers selected from the complete Level 1 list",
+     "Grapple and Shove are universal combat actions"
+    ],
+    "provisional": [
+     "PB, HP, Strain, AC, and Force Point formulas where files omit progression",
+     "repaired weapon profiles and starting package",
+     "Force Connection, Sentinel Balance, Deflect, kit, grapple, and robe implementations",
+     "Battle Insight duration override and Burst save/prone implementation",
+     "dual-crystal resonance, mantle repair, and future crafting seeds"
+    ],
+    "unresolved": [
+     "authoritative Sentinel equipment and Force Point progressions",
+     "canonical generic Jedi-robe AC and complete concentration rules",
+     "named safe houses and contacts",
+     "Taron's objective fate, location, and Stillwater truth",
+     "future crafting mechanics and unlock levels"
+    ],
+    "illegal_or_conflicting_choices": [
+     "Force Technique and Saber Ward were replaced because the Level 1 list did not permit them.",
+     "Sentinel equipment is a declared repair because its source block is absent.",
+     "Jedi robe records conflict; adopted unarmored AC is used."
+    ]
+   },
+   "progression": {
+    "current_level": 1,
+    "class_id": "class_sentinel",
+    "subclass_id": null,
+    "unlocked_feature_urids": [
+     "feature_martial_arts_training",
+     "feature_combat_discipline",
+     "feature_combat_communication",
+     "feature_force_connection",
+     "feature_sentinel_balance",
+     "feature_lightsaber_deflect_tier_1",
+     "feature_jedi_network",
+     "feature_echani_grappling_training"
+    ],
+    "selected_choice_urids": [
+     "power_battle_insight",
+     "power_burst"
+    ],
+    "pending_choice_groups": [],
+    "locked_future_feature_urids": [],
+    "campaign_specific_rule_urids": [
+     "rule_meridian_jedi_network_access"
+    ],
+    "earned_relationship_maneuver_urids": []
+   },
+   "asset_relationships": {
+    "current_vessel_id": "republic_shuttle_escort",
+    "owned_vessel_ids": [],
+    "assigned_vessel_ids": [
+     "vessel_republic_shuttle_consular_class_tend"
+    ]
+   },
+   "relationship_ids": [
+    "rel_former_master_vael_taron"
+   ]
+  },
+  "available_actions": [],
+  "conditions": [],
+  "progression_summary": {
+   "current_level": 1,
+   "class_id": "class_sentinel",
+   "subclass_id": null,
+   "unlocked_feature_urids": [
+    "feature_martial_arts_training",
+    "feature_combat_discipline",
+    "feature_combat_communication",
+    "feature_force_connection",
+    "feature_sentinel_balance",
+    "feature_lightsaber_deflect_tier_1",
+    "feature_jedi_network",
+    "feature_echani_grappling_training"
+   ],
+   "selected_choice_urids": [
+    "power_battle_insight",
+    "power_burst"
+   ],
+   "pending_choice_groups": [],
+   "locked_future_feature_urids": [],
+   "campaign_specific_rule_urids": [
+    "rule_meridian_jedi_network_access"
+   ],
+   "earned_relationship_maneuver_urids": []
+  },
+  "asset_relationships": {
+   "owned_vessel_ids": [],
+   "assigned_vessel_ids": [
+    "republic_shuttle_escort"
+   ],
+   "accessible_vessel_ids": [
+    "republic_shuttle_escort"
+   ],
+   "current_vessel_id": "republic_shuttle_escort"
+  },
+  "reference_integrity": {
+   "required_reference_slots": 13,
+   "populated_reference_slots": 13,
+   "resolved_reference_slots": 13,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 0,
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
+  }
+ },
+ "party": {
+  "participant_ids": [
+   "aero"
+  ],
+  "active_participant_id": "aero",
+  "characters_by_id": {
+   "aero": {
+    "player_visible_runtime_summary": {
+     "display_name": "Aeleron \"Aero\" Do'ordo",
+     "species": {
+      "species_id": "species_echani",
+      "name": "Echani"
+     },
+     "class": {
+      "class_id": "class_sentinel",
+      "name": "Sentinel"
+     },
+     "level": 1,
+     "current_hp": 11,
+     "maximum_hp": 11,
+     "armor_class": 13
+    }
+   }
+  }
+ },
+ "active_engagement": {
+  "opening_crawl": {
+   "source": "authored",
+   "campaign_id": "meridian_reach",
+   "cinematic_exposition": "The Meridian Reach had learned long ago not to wait for rescue.\n\nIts settlements were scattered across wide distances, joined by old trade lanes, volunteer relays, and the stubborn belief that a neighbor in need should never have to ask twice. The Republic had brought law and learning to the frontier, but it was the people of the Reach who kept its farms alive, its ships moving, and its isolated worlds speaking to one another through the dark.\n\nThe Jedi who came here had understood that.\n\nThey did not arrive as generals or judges. They walked the fields, repaired moisture pumps, listened to old grievances, and slept beneath the same leaking roofs as the people they served. In time, the frontier gave them a name of its own.\n\nThe Walking Cloaks.\n\nAeleron Do'ordo had grown beneath the shadow of that tradition.\n\nNow, for the first time, no master stood beside him.\n\nVael Taron had disappeared somewhere within the Reach, leaving behind no body, no final message, and no answer beyond the faint impression Aero had felt after four days of meditation: distant, obscured, but not gone.\n\nThe Council had given Aero a title.\n\nKnight.\n\nThe word still felt heavier than the lightsaber at his side.\n\nHis first command was supposed to be simple.\n\nA Republic shuttle carried him toward the outer reaches of the sector with three young operatives he had never met before and six engineers whose equipment crates filled most of the aft compartment. Their destination was an abandoned beacon relay — one of the old frontier links that had gone silent after years of neglect.\n\nRestore the station. Confirm the signal. Bring everyone home.\n\nRoutine work.\n\nThe kind of work the Walking Cloaks had once done without ceremony.\n\nBeyond the viewport, the stars stretched across the black, and somewhere ahead of them the Meridian Reach waited — quiet, familiar, and still holding the last trace of Aero's missing master.\n\n---\n\nThe shuttle's cabin hums with recycled air and the low harmonics of the hyperdrive. Dax Ferren fills the cockpit doorway with one boot on the frame, halfway through a story nobody asked for. Besk Ollor's six engineers have colonized the aft compartment, their crates strapped in tight rows. And across the cabin sit the three operatives the Republic assigned to Aero's first command — Senn Varga checking his gear for the fourth time, Ilo Reeth watching the young Knight without quite watching him, Maza Ketrel counting ration packs against a manifest.\n\nNone of them have served together before. All of them know who his master was.\n",
+   "scene_transition": null,
+   "immediate_visible_context": "Republic shuttle en route to the frontier sensor array",
+   "active_cast": [
+    "Dax Ferren",
+    "Senn Varga",
+    "Ilo Reeth",
+    "Maza Ketrel",
+    "Besk Ollor"
+   ],
+   "action_window": "What does Aeleron \"Aero\" Do'ordo do?",
+   "mission_summary": "escort six Republic engineers to reactivate an abandoned frontier sensor array"
+  },
+  "active_scene": {
+   "scene_id": "scene_shuttle_briefing",
+   "location": "Republic shuttle en route to the frontier sensor array"
+  },
+  "transcript": {
+   "entries": [],
+   "cursor": 0,
+   "has_earlier": false,
+   "latest_sequence": 0
+  },
+  "suggestions": [],
+  "objectives": [
+   "escort six Republic engineers to reactivate an abandoned frontier sensor array"
+  ]
+ },
+ "command_record": {
+  "journal": {
+   "entries": [],
+   "is_structured": true
+  },
+  "map": {
+   "visible_nodes": []
+  },
+  "player_visible_nemesis": [],
+  "ship": {
+   "vessel_id": "republic_shuttle_escort",
+   "name": "Republic Shuttle (Consular-class tender)",
+   "silhouette": 4,
+   "speed": 2,
+   "armor": 2,
+   "hull": {
+    "current": 14,
+    "threshold": 14
+   },
+   "strain": {
+    "current": 10,
+    "threshold": 10
+   },
+   "shields": {
+    "fore": 1,
+    "aft": 0,
+    "port": 0,
+    "starboard": 0
+   },
+   "systems": {
+    "engines": "operational",
+    "navigation": "operational",
+    "communications": "operational",
+    "shields": "operational"
+   },
+   "stations": [
+    {
+     "station_id": "pilot",
+     "name": "Pilot",
+     "occupied_by": "pilot_dax",
+     "required_proficiencies": [
+      "piloting"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Fly/Drive",
+      "Evasive Maneuvers"
+     ],
+     "disabled_actions": []
+    },
+    {
+     "station_id": "communications",
+     "name": "Communications",
+     "occupied_by": null,
+     "required_proficiencies": [
+      "computers"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Hail Vessel",
+      "Scan Frequencies",
+      "Slice Comms"
+     ],
+     "disabled_actions": []
+    },
+    {
+     "station_id": "engineering",
+     "name": "Engineering",
+     "occupied_by": null,
+     "required_proficiencies": [
+      "mechanics"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Damage Control",
+      "Boost Shields"
+     ],
+     "disabled_actions": []
+    }
+   ],
+   "weapons": []
+  },
+  "ship_vessel_id": "republic_shuttle_escort"
+ },
+ "definitions": {
+  "feature_force_connection": {
+   "urid": "feature_force_connection",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
+   "content_hash": "386bc29ba9c478b3",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "force connection",
+    "force connections"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Force Connection"
+  },
+  "power_burst": {
+   "urid": "power_burst",
+   "entity_type": "Power",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml",
+   "content_hash": "c6e5c9f82b94b3f6",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "burst",
+    "bursts"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Burst"
+  },
+  "feature_lightsaber_deflect_tier_1": {
+   "urid": "feature_lightsaber_deflect_tier_1",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "40fba6cb0ccd5571",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "lightsaber deflect tier 1",
+    "lightsaber deflect tier 1s"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Lightsaber Deflect - Tier 1"
+  },
+  "class_sentinel": {
+   "urid": "class_sentinel",
+   "entity_type": "Class",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\classes\\sentinel.yml",
+   "content_hash": "b7630816342a3779",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "sentinel",
+    "sentinels"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\classes\\sentinel.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Sentinel"
+  },
+  "feature_combat_discipline": {
+   "urid": "feature_combat_discipline",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "3598832bf7cebc97",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "combat discipline",
+    "combat disciplines"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Combat Discipline"
+  },
+  "power_battle_insight": {
+   "urid": "power_battle_insight",
+   "entity_type": "Power",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml",
+   "content_hash": "1b06a0fad19abc70",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "battle insight",
+    "battle insights"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Battle Insight"
+  },
+  "feature_jedi_network": {
+   "urid": "feature_jedi_network",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "e3fe4c51e4ed0859",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "jedi network",
+    "jedi networks"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Jedi Network"
+  },
+  "species_echani": {
+   "urid": "species_echani",
+   "entity_type": "Species",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "a05116a5759c28d6",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "echani",
+    "echanis"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Echani"
+  },
+  "feature_combat_communication": {
+   "urid": "feature_combat_communication",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "2b610747d133bfec",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "combat communication",
+    "combat communications"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Combat Communication"
+  },
+  "feature_martial_arts_training": {
+   "urid": "feature_martial_arts_training",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "b11a35b0ffef27bf",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "martial arts training",
+    "martial arts trainings"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Martial Arts Training"
+  },
+  "feature_echani_grappling_training": {
+   "urid": "feature_echani_grappling_training",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "e8f7a3bb429267ef",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "echani grappling training",
+    "echani grappling trainings"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Echani Grappling Training"
+  },
+  "feature_sentinel_balance": {
+   "urid": "feature_sentinel_balance",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "71897843e894b997",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "sentinel balance",
+    "sentinel balances"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Sentinel Balance"
+  }
+ },
+ "visibility": {
+  "hidden_fields_removed": true,
+  "player_visible_entity_ids": [
+   "aero"
+  ]
+ },
+ "provenance": {
+  "campaign_source": "gm/campaigns/meridian_reach/runtime_state.json",
+  "character_runtime_source": "runtime.player_characters.aero",
+  "campaign_instance_id": "meridian_reach__1784613879",
+  "registry_build_id": null,
+  "projection_builder_version": "1.2.0-c5",
+  "fixture_filter": {
+   "candidates_examined": 12,
+   "known_fixture_urids": 20,
+   "rejected_fixture_urids": 0,
+   "fixture_membership_attempts": 0,
+   "fixture_membership_rejections": 0,
+   "live_projection_fixture_hits": 0
+  },
+  "reference_integrity": {
+   "required_reference_slots": 13,
+   "populated_reference_slots": 13,
+   "resolved_reference_slots": 13,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 0,
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
+  },
+  "unresolved_progression_refs": 0,
+  "hidden_fields_removed": true
+ },
+ "validation": {
+  "schema_valid": true,
+  "semantic_valid": true,
+  "errors": [],
+  "warnings": [],
+  "malformed_equipment_entries": 0,
+  "duplicate_character_sources": 0
+ },
+ "projection_emitted": true
+}

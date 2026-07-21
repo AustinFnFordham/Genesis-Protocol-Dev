@@ -1,0 +1,246 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Synergy Rules Engine",
+  "description": "The Central Rules Engine that defines ALL synergistic relationships in the game. All connection/synergy blocks in individual data files are DEPRECATED in favor of this unified system. Rules are arbitrated by Specificity, Exclusion, and Priority.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "rule_id": {
+        "type": "string",
+        "description": "Unique identifier for this synergy rule (e.g., 'heroic_reputation_bonus', 'wookiee_guardian_rage')."
+      },
+      "name": {
+        "type": "string",
+        "description": "Human-readable name for this synergy rule."
+      },
+      "description": {
+        "type": "string",
+        "description": "Rich narrative description of what this synergy represents and why it exists."
+      },
+      "priority": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100,
+        "default": 50,
+        "description": "Priority for rule resolution when multiple rules could apply. Higher values take precedence. Default is 50."
+      },
+      "trigger": {
+        "type": "object",
+        "description": "Conditions that must be met for this synergy to activate.",
+        "properties": {
+          "actor_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that the actor (character/creature performing the action) must have. ALL tags must be present (AND logic)."
+          },
+          "actor_tags_any": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags where at least ONE must be present on the actor (OR logic)."
+          },
+          "actor_tags_exclude": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that the actor must NOT have."
+          },
+          "target_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that the target must have. ALL tags must be present (AND logic)."
+          },
+          "target_tags_any": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags where at least ONE must be present on the target (OR logic)."
+          },
+          "target_tags_exclude": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that the target must NOT have."
+          },
+          "action_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that the action/power/item being used must have."
+          },
+          "action_tags_any": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags where at least ONE must be present on the action (OR logic)."
+          },
+          "context_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Environmental or situational tags that must be present (e.g., 'in_space', 'underwater', 'during_combat')."
+          },
+          "custom_conditions": {
+            "type": "array",
+            "description": "Advanced conditional logic for complex synergies.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "condition_type": {
+                  "enum": ["stat_check", "item_equipped", "power_known", "alignment_threshold", "narrative_flag"],
+                  "description": "Type of condition to evaluate."
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "Parameters specific to the condition type."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Human-readable description of this condition."
+                }
+              },
+              "required": ["condition_type", "parameters"]
+            }
+          },
+          "narrative_context": {
+            "type": "string",
+            "description": "Narrative description of when this synergy should trigger, for LLM-GM guidance."
+          }
+        }
+      },
+      "mechanical_effect": {
+        "type": "array",
+        "description": "The mechanical effects applied when this synergy triggers.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "grant_advantage",
+                "grant_disadvantage",
+                "enhance_damage",
+                "reduce_damage",
+                "enhance_attack",
+                "enhance_dc",
+                "reduce_cost",
+                "resource_efficiency",
+                "additional_action",
+                "bonus_action",
+                "reaction_trigger",
+                "apply_status",
+                "remove_status",
+                "modify_stat",
+                "grant_temporary_hp",
+                "heal",
+                "deal_damage",
+                "add_dice",
+                "reroll_dice",
+                "auto_success",
+                "auto_failure",
+                "extend_duration",
+                "increase_range",
+                "increase_area",
+                "narrative_effect"
+              ],
+              "description": "The type of mechanical effect this synergy provides."
+            },
+            "parameters": {
+              "type": "object",
+              "description": "Parameters specific to the effect type. Structure varies by type.",
+              "properties": {
+                "target_stat": { "type": "string", "description": "For stat modifications, the stat being modified." },
+                "value": { "description": "The value of the effect (varies by type: integer, string, object, etc.)." },
+                "bonus": { "type": "integer", "description": "Flat numeric bonus." },
+                "multiplier": { "type": "number", "description": "Multiplicative modifier." },
+                "chance_percent": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Percentage chance of effect occurring." },
+                "effect": { "type": "string", "description": "Specific effect to apply (e.g., 'no_cost', 'lasting_repair')." },
+                "dice_count": { "type": "integer", "description": "Number of dice to add/modify." },
+                "dice_type": { "type": "string", "description": "Type of dice (e.g., 'd6', 'd8', 'd10')." },
+                "damage_type": { "type": "string", "description": "Type of damage for damage effects." },
+                "status_id": { "type": "string", "description": "ID of status effect to apply/remove." },
+                "duration_modifier": { "type": "integer", "description": "Rounds/minutes to extend duration by." }
+              }
+            },
+            "target_scopes": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Who/what this effect applies to (e.g., 'self', 'allies', 'enemies', 'devices', 'all')."
+            },
+            "condition": {
+              "type": "string",
+              "description": "Additional condition that must be met for this specific effect."
+            },
+            "duration": {
+              "type": "object",
+              "description": "How long this effect lasts.",
+              "properties": {
+                "amount": { "type": "integer" },
+                "unit": { "enum": ["rounds", "minutes", "hours", "days", "permanent", "until_end_of_encounter"] }
+              }
+            },
+            "notes": {
+              "type": "string",
+              "description": "Human-readable notes about this effect for LLM-GM and players."
+            }
+          },
+          "required": ["type", "parameters"]
+        }
+      },
+      "exclusions": {
+        "type": "array",
+        "description": "Other rule_ids that this rule conflicts with. If both would trigger, the one with higher priority wins.",
+        "items": { "type": "string" }
+      },
+      "stacks_with": {
+        "type": "array",
+        "description": "Rule_ids that this rule can stack with (both can apply simultaneously).",
+        "items": { "type": "string" }
+      },
+      "narrative_enhancement": {
+        "type": "string",
+        "description": "Rich narrative description for the LLM-GM of how this synergy manifests in the story."
+      },
+      "llm_guidance": {
+        "type": "object",
+        "description": "Guidance for the LLM-GM on how to narrate and apply this synergy.",
+        "properties": {
+          "roleplay_guidance": {
+            "type": "string",
+            "description": "How this synergy should be portrayed in roleplay."
+          },
+          "tactical_notes": {
+            "type": "string",
+            "description": "Tactical advice for using this synergy effectively."
+          },
+          "narrative_hooks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Story hooks that can arise from this synergy."
+          }
+        }
+      },
+      "source_data": {
+        "type": "object",
+        "description": "Metadata about where this synergy rule came from (for migration tracking).",
+        "properties": {
+          "migrated_from": {
+            "type": "array",
+            "description": "Original files and locations this rule was migrated from.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "file": { "type": "string", "description": "Original file path." },
+                "block_type": { "type": "string", "description": "Original block type (e.g., 'class_synergies', 'species_synergies', 'faction_synergies')." },
+                "original_id": { "type": "string", "description": "Original ID reference." }
+              }
+            }
+          },
+          "created_date": { "type": "string", "format": "date", "description": "When this rule was created." },
+          "last_modified": { "type": "string", "format": "date", "description": "When this rule was last updated." }
+        }
+      },
+      "active": {
+        "type": "boolean",
+        "default": true,
+        "description": "If false, this rule is disabled and will not trigger."
+      }
+    },
+    "required": ["rule_id", "description", "trigger", "mechanical_effect"]
+  },
+  "$comment": "EXAMPLE RULE:\n[\n  {\n    \"rule_id\": \"rebel_resourcefulness\",\n    \"name\": \"Rebel Resourcefulness\",\n    \"description\": \"Rebel ingenuity allows them to stretch limited medical supplies.\",\n    \"priority\": 50,\n    \"trigger\": {\n      \"actor_tags\": [\"rebel_alliance\"],\n      \"action_tags\": [\"healing\", \"medical_kit\"],\n      \"narrative_context\": \"When a Rebel character uses medical supplies to heal\"\n    },\n    \"mechanical_effect\": [\n      {\n        \"type\": \"resource_efficiency\",\n        \"parameters\": {\n          \"chance_percent\": 50,\n          \"effect\": \"no_cost\"\n        },\n        \"target_scopes\": [\"self\"],\n        \"notes\": \"50% chance the medical supplies are not consumed\"\n      }\n    ],\n    \"narrative_enhancement\": \"The Rebel's years of operating with limited resources have taught them to make every bacta patch count. They expertly apply field dressings that would take others twice as many supplies.\",\n    \"active\": true\n  }\n]"
+}
+

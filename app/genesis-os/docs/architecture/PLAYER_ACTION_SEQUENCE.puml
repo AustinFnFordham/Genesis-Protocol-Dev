@@ -1,0 +1,28 @@
+@startuml
+' Genesis Protocol — Player action + narrative stream
+actor Player
+participant Composer
+participant ClientStore
+participant API
+participant RuntimeSteward
+participant RulesLawyer
+participant AtomicEngine
+participant EventLedger
+participant NarrativeService
+participant ProjectionBuilder
+participant ActiveEngagement
+Player -> Composer : Submit declaration
+Composer -> API : POST intent {campaign_id, epoch, revision, text}
+API -> RuntimeSteward : interpret intent
+RuntimeSteward -> RulesLawyer : validate mechanics
+RulesLawyer --> RuntimeSteward : legal / illegal / ruling required
+RuntimeSteward -> AtomicEngine : approved mutation
+AtomicEngine -> EventLedger : append canonical event
+EventLedger -> NarrativeService : provide resolved facts
+NarrativeService --> API : streamed cinematic output
+API --> ActiveEngagement : stream chunks tagged campaign_id + epoch + revision
+ActiveEngagement -> ClientStore : accept matching chunks only
+EventLedger -> ProjectionBuilder : rebuild affected projection
+ProjectionBuilder --> ClientStore : RFC6902 patch / updated projection
+ClientStore -> ActiveEngagement : render committed state
+@enduml

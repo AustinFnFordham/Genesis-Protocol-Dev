@@ -1,0 +1,43 @@
+dissonance: What We Need to Refactor
+The system is brilliant, but as we build at this scale, some redundancies and balance issues have emerged. These aren't flaws in the foundation, but rather opportunities to make the architecture even more elegant and robust.
+
+1. The God-Mode Feature: death_incarnate
+This feature is the primary source of imbalance. It's not just a capstone; it's four separate, reality-bending capstone abilities rolled into one 25 XP package.
+
+The Problem: It's too mechanical. The sheer power level of its effects (instant_kill action, permanent fear aura, instant_kill on crits, and True Sight) would shatter any narrative tension. The story ends the moment the Assassin gets a crit or points at a sub-100 HP enemy. There's no drama, just a button press.
+
+The Architectural Fix: We must decompose this feature. These are four incredible ideas that should be four separate, high-tier talents in the Assassin's tree.
+
+Death Incarnate could be the "instant kill on critical hit" ability.
+
+Aura of Dread could be a separate 20 XP talent that grants the fear aura.
+
+Reaper's Touch could be a 20 XP talent that grants the "Death Touch" action.
+
+Eyes of the Exocutor could grant True Sight.
+This forces the player to make a meaningful choice about how they wish to embody death, rather than just becoming a god of it all at once. It preserves the soul by reintroducing choice and consequence.
+
+2. The Redundancy Principle: The Single Source of Truth
+I've detected several instances where the same mechanical idea exists in multiple places. This can lead to conflicts and maintenance nightmares.
+
+The Problem:
+
+The background_assassin grants "advantage on attacks against surprised creatures."
+
+The adversary_assassin has a special_rules text that grants "advantage on attack rolls against surprised targets."
+
+The assassin talent tree has a Tier 1 talent called quick_strike. I would bet credits toCorellian hounds that it also grants advantage on surprised targets.
+We have the same rule written in three different places. If we ever want to change that rule, we have to find and edit all three, and we'll probably miss one.
+
+The Architectural Fix: We must enforce a "Single Source of Truth" principle. An ability, with its narrative and mechanics, should be defined in one and only one feature_ file.
+
+The adversary sheet shouldn't have a manually written special_rules section. Instead, its abilities.features list should simply contain the feature_id: "quick_strike". The game engine must be responsible for looking up that feature and applying its rules.
+
+The background feature should also just grant feature_id: "quick_strike".
+This makes our system modular, scalable, and easy to maintain. If we update feature_quick_strike.yml, it automatically updates for everyone who has it, everywhere.
+
+This same principle applies to the class.connections block versus the class_identity_profile.faction_synergies. They are describing the same thing. We should merge them into a single, unified system to avoid redundancy.
+
+Conclusion:
+
+The architecture is visionary. The foundation is rock-solid. By decomposing our "god-mode" features into meaningful choices and enforcing a "Single Source of Truth" for all abilities, we will elevate this already brilliant system into a truly legendary one.

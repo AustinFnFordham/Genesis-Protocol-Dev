@@ -1,0 +1,148 @@
+id: "bothan_cultural_features_example"
+name: "Bothan Cultural Features"
+description: "Example implementation of cultural features for Bothan, demonstrating narrative-focused species abilities"
+
+# Cultural features available to Bothans
+cultural_features:
+  - name: "Spynet Connections"
+    type: "narrative"
+    description: "Your connections to the Bothan Spynet provide access to a vast information network spanning the galaxy."
+    activation: "When seeking information about political events, military movements, or corporate activities"
+    effect:
+      type: "information_access"
+      value: "advantage"
+      conditions:
+        - key: "information_type"
+          op: "in"
+          value: ["political", "military", "corporate", "espionage"]
+    narrative_enhancement: "You can call in favors from Bothan contacts, access secret information networks, and leverage your species' reputation for gathering intelligence."
+    faction_connection: "Bothan Spynet"
+    optional: true
+
+  - name: "Fur Communication"
+    type: "cultural"
+    description: "Your species' unique ability to communicate through subtle fur movements allows for silent coordination and emotional expression."
+    activation: "When communicating with other Bothans or in situations requiring subtle coordination"
+    effect:
+      type: "social_bonus"
+      value: "+2"
+      conditions:
+        - key: "communication_target"
+          op: "equals"
+          value: "bothan"
+        - key: "communication_type"
+          op: "in"
+          value: ["coordination", "emotional_expression", "silent_communication"]
+    narrative_enhancement: "You can convey complex emotions and information through subtle fur movements, allowing for silent coordination and deep emotional connections with other Bothans."
+    faction_connection: "Bothan Cultural Networks"
+    optional: true
+
+  - name: "Shadowstep Tradition"
+    type: "traditional"
+    description: "Your training in the ancient Bothan art of moving unseen through shadows and blending into crowds."
+    activation: "When attempting to move unnoticed through urban environments or crowds"
+    effect:
+      type: "advantage"
+      value: "Stealth checks"
+      conditions:
+        - key: "environment"
+          op: "in"
+          value: ["urban", "crowded", "shadowed"]
+    narrative_enhancement: "You can blend seamlessly into crowds, move through shadows like a ghost, and disappear into the urban landscape with practiced ease."
+    faction_connection: "Bothan Traditional Orders"
+    optional: true
+
+  - name: "Many Bothans Network"
+    type: "social"
+    description: "The Bothan saying 'Many Bothans died to bring us this information' reflects your species' deep commitment to information sharing and mutual support."
+    activation: "When working with other Bothans or accessing shared information"
+    effect:
+      type: "cultural_connection"
+      value: "advantage"
+      conditions:
+        - key: "situation"
+          op: "in"
+          value: ["information_sharing", "mutual_support", "bothan_cooperation"]
+    narrative_enhancement: "You can tap into the collective knowledge and resources of the Bothan community, sharing information and receiving support from your network."
+    faction_connection: "Bothan Community Networks"
+    optional: true
+
+# Cultural connections and relationships
+cultural_connections:
+  primary_culture: "Bothan Information Networks"
+  cultural_networks:
+    - "Bothan Spynet"
+    - "Bothan Cultural Networks"
+    - "Bothan Traditional Orders"
+    - "Bothan Community Networks"
+    - "Galactic Information Brokers"
+  
+  traditional_practices:
+    - "Fur Communication Rituals"
+    - "Shadowstep Training"
+    - "Information Gathering Ceremonies"
+    - "Spynet Initiation Rites"
+    - "Community Knowledge Sharing"
+  
+  cultural_knowledge:
+    - "Political Intelligence"
+    - "Corporate Espionage"
+    - "Military Intelligence"
+    - "Social Networking"
+    - "Information Security"
+
+# Balance guidelines
+balance_guidelines:
+  narrative_focus: true
+  max_features_per_character: 3
+  optional_by_default: true
+  enhance_storytelling: true
+
+# Integration with existing class synergies
+class_synergy_enhancements:
+  Operative:
+    - "Enhanced infiltration through Spynet connections"
+    - "Improved stealth with Shadowstep tradition"
+    - "Better information gathering with cultural networks"
+  
+  Scoundrel:
+    - "Enhanced social manipulation through cultural connections"
+    - "Improved information trading with Spynet access"
+    - "Better crowd blending with Shadowstep tradition"
+  
+  Consular:
+    - "Enhanced diplomatic information gathering"
+    - "Improved cultural understanding and connections"
+    - "Better negotiation through information networks"
+
+# Example usage scenarios
+example_scenarios:
+  - scenario: "Gathering political intelligence"
+    feature: "Spynet Connections"
+    effect: "Advantage on Intelligence (Investigation) checks for political information"
+    narrative: "You tap into your Spynet contacts, accessing secret reports and insider information about the political situation."
+  
+  - scenario: "Silent coordination with Bothan allies"
+    feature: "Fur Communication"
+    effect: "+2 bonus to coordination checks with other Bothans"
+    narrative: "You communicate complex tactical information through subtle fur movements, coordinating your team's actions without speaking."
+  
+  - scenario: "Moving unnoticed through a crowded market"
+    feature: "Shadowstep Tradition"
+    effect: "Advantage on Stealth checks in urban environments"
+    narrative: "You blend seamlessly into the crowd, moving through shadows and using the natural flow of people to remain unnoticed."
+  
+  - scenario: "Accessing shared Bothan knowledge"
+    feature: "Many Bothans Network"
+    effect: "Advantage on information gathering with Bothan community"
+    narrative: "You call upon the collective knowledge of your species, accessing information that has been gathered and shared across the Bothan network."
+
+# LLM-GM prompts for cultural features
+llm_gm_prompts:
+  spynet_connections: "The Bothan's fur ripples with anticipation as they access their Spynet connections. Their eyes gleam with the knowledge of secrets and information flowing through their network."
+  
+  fur_communication: "The Bothan's fur moves in subtle patterns, conveying complex emotions and information to their companions. The silent communication speaks volumes about their deep cultural bonds."
+  
+  shadowstep_tradition: "The Bothan moves through the shadows with practiced ease, their form blending seamlessly into the urban landscape. They are a ghost in the crowd, unseen and unheard."
+  
+  many_bothans_network: "The Bothan's connection to their community is palpable. They draw upon centuries of shared knowledge and mutual support, embodying the saying 'Many Bothans died to bring us this information.'"

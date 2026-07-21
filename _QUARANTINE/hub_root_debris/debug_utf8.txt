@@ -1,0 +1,10 @@
+[GENESIS] Initializing Engine 8.0 (llama3.1:8b)...
+[DEBUG] Existing Keys: ['id', 'class_id', 'name', 'alignment_theme', 'tags', 'talent_tree_theme', 'narrative', 'flavor_text', 'class_identity_profile', 'talent_tree', 'llm_guidance', 'visual_engine', 'subclass_identity_profile', 'progression_tree']
+[GENESIS] Upgrading Apex Predator in subclass_platinum mode...
+[DEBUG] Data keys before save: ['id', 'class_id', 'name', 'alignment_theme', 'tags', 'talent_tree_theme', 'narrative', 'flavor_text', 'class_identity_profile', 'talent_tree', 'llm_guidance', 'visual_engine', 'subclass_identity_profile', 'progression_tree']
+[DEBUG] progression_tree is PRESENT in data
+[DEBUG] Saving to e:\StarWars\SW5e_Data_Hub\SW5e_Data_Hub\data\subclasses\beast_master\apex_predator.yml...
+[DEBUG-SAVE] Saving to e:\StarWars\SW5e_Data_Hub\SW5e_Data_Hub\data\subclasses\beast_master\apex_predator.yml
+[DEBUG-SAVE] Pre-save size: 6698
+[DEBUG-SAVE] Post-save size: 6698
+[GENESIS] File upgraded: apex_predator.yml

@@ -1,0 +1,261 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Status Effect",
+  "description": "Defines a single, modular status effect or condition with comprehensive narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'status_poisoned' or 'status_aiming'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the status effect."
+    },
+    "status_type": {
+      "enum": ["boon", "bane", "neutral"],
+      "description": "Whether the status is beneficial, detrimental, or neutral for UI and logic purposes."
+    },
+    "category": {
+      "enum": ["combat", "environmental", "force", "tech", "social", "mental", "physical", "temporary"],
+      "description": "The category of status effect for organization and filtering."
+    },
+    "severity": {
+      "enum": ["minor", "moderate", "major", "extreme"],
+      "description": "The severity level of the status effect."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of what the status effect represents and how it feels to experience it. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this status effect, often from Star Wars lore."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical description of what the status effect does."
+    },
+    "duration": {
+      "type": "string",
+      "description": "How long the status effect lasts, e.g., '1 minute', 'Concentration', 'Until removed'."
+    },
+    "stacking": {
+      "type": "object",
+      "description": "Rules for how this status effect stacks with itself or similar effects.",
+      "properties": {
+        "self_stackable": {
+          "type": "boolean",
+          "description": "Whether multiple instances of this status can stack on the same target."
+        },
+        "max_stacks": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of stacks allowed (if self_stackable is true)."
+        },
+        "stacking_behavior": {
+          "enum": ["additive", "multiplicative", "replaces", "highest_only"],
+          "description": "How multiple stacks interact with each other."
+        }
+      }
+    },
+
+    "$comment": "SECTION 4: MECHANICAL EFFECTS",
+    "effects": {
+      "type": "array",
+      "description": "The mechanical rules this status applies to a target, using our master effects schema.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "effect": {
+            "type": "string",
+            "description": "The type of effect this status provides."
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Parameters for the effect, varies by effect type."
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions that must be met for this effect to apply.",
+            "items": { "type": "string" }
+          },
+          "scaling_per_stack": {
+            "type": "array",
+            "description": "Optional dynamic scaling based on the number of stacks of this status effect.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "property_to_scale": {
+                  "type": "string",
+                  "description": "The property within parameters that scales with stacks (e.g., 'damage_dice', 'duration', 'range')."
+                },
+                "modification": {
+                  "enum": ["add_flat_bonus", "multiply_value", "add_dice", "extend_duration", "increase_range"],
+                  "description": "How the property scales with each additional stack."
+                },
+                "value": {
+                  "description": "The scaling value (e.g., +1 damage, +1d4 dice, +1 round duration)."
+                },
+                "max_scaling": {
+                  "type": "integer",
+                  "description": "Optional maximum scaling limit to prevent infinite growth."
+                }
+              },
+              "required": ["property_to_scale", "modification", "value"]
+            }
+          }
+        },
+        "required": ["effect"]
+      }
+    },
+
+    "$comment": "SECTION 5: REMOVAL CONDITIONS",
+    "removal_conditions": {
+      "type": "array",
+      "description": "Conditions that can remove this status effect.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["time", "skill_check", "spell", "rest", "death", "custom"],
+            "description": "Type of removal condition."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the removal condition."
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Additional parameters for the removal condition."
+          }
+        },
+        "required": ["type", "description"]
+      }
+    },
+
+    "$comment": "SECTION 6: SYNERGIES & INTEGRATION",
+    "class_synergies": {
+      "type": "array",
+      "description": "Classes that have special interactions with this status effect.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["class_id", "narrative"]
+      }
+    },
+    "species_synergies": {
+      "type": "array",
+      "description": "Species that have special interactions with this status effect.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "species_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["species_id", "narrative"]
+      }
+    },
+    "faction_synergies": {
+      "type": "array",
+      "description": "Factions that have special interactions with this status effect.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["faction_id", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 7: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "iconic_usage": {
+          "type": "string",
+          "description": "Example of how this status effect is typically used in Star Wars lore."
+        },
+        "tactical_notes": {
+          "type": "string",
+          "description": "Tactical advice for when and how this status effect is most effective."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this status effect.",
+          "items": { "type": "string" }
+        },
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying characters affected by this status."
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this status effect, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this status effect adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Combat_Scene', 'Location')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this status effect is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 9: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the status effect's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the status effect's icon for UI display."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color for UI elements (hex code or color name)."
+        }
+      },
+      "required": ["image", "icon", "color"]
+    }
+  },
+  "required": ["id", "name", "status_type", "category", "severity", "narrative", "description", "duration", "effects", "image_generation", "ui"]
+}

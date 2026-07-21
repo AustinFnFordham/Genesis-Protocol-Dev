@@ -1,0 +1,23 @@
+urid: item_compact_mess_kit
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: 7c8f4c8a979a5979
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- compact mess kit
+- compact mess kits
+- mess kit
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Compact mess kit
+effect: mundane eating and cooking equipment

@@ -1,0 +1,185 @@
+id: "mon_calamari_environmental_example"
+name: "Mon Calamari Environmental Adaptations"
+description: "Example implementation of environmental adaptations for Mon Calamari, demonstrating species-specific environmental abilities"
+
+# Environmental adaptations for Mon Calamari
+environmental_adaptations:
+  - environment: "aquatic"
+    advantage: "Natural swimming ability and underwater breathing"
+    situational_bonus:
+      type: "saving_throw_bonus"
+      value: "+2"
+      conditions:
+        - key: "environment"
+          op: "equals"
+          value: "aquatic"
+        - key: "save_type"
+          op: "in"
+          value: ["constitution", "strength", "dexterity"]
+    immersion_effect: "You move through water with natural grace, your amphibious nature allowing you to navigate underwater environments as easily as walking on land."
+    narrative_hooks:
+      - "Underwater exploration and navigation"
+      - "Aquatic combat and tactics"
+      - "Underwater construction and engineering"
+      - "Marine life communication"
+    optional: true
+
+  - environment: "space"
+    advantage: "Intuitive understanding of starship systems and space environments"
+    situational_bonus:
+      type: "skill_bonus"
+      value: "+2"
+      conditions:
+        - key: "environment"
+          op: "equals"
+          value: "space"
+        - key: "skill_type"
+          op: "in"
+          value: ["technology", "piloting", "engineering"]
+    immersion_effect: "Your species' natural affinity for starship design and space travel makes you feel at home in the void, understanding ship systems and space environments instinctively."
+    narrative_hooks:
+      - "Starship design and modification"
+      - "Space navigation and piloting"
+      - "Zero-gravity engineering"
+      - "Space station operations"
+    optional: true
+
+  - environment: "urban_waterways"
+    advantage: "Expertise in urban aquatic environments and water-based infrastructure"
+    situational_bonus:
+      type: "advantage"
+      value: "Technology checks"
+      conditions:
+        - key: "environment"
+          op: "equals"
+          value: "urban_waterways"
+        - key: "technology_type"
+          op: "in"
+          value: ["water_systems", "aquatic_infrastructure", "flood_control"]
+    immersion_effect: "Your understanding of water systems and aquatic infrastructure allows you to navigate and work with urban waterways as if they were extensions of your natural environment."
+    narrative_hooks:
+      - "Urban water system engineering"
+      - "Aquatic infrastructure maintenance"
+      - "Flood control and water management"
+      - "Underwater urban exploration"
+    optional: true
+
+  - environment: "high_humidity"
+    advantage: "Enhanced comfort and performance in high humidity environments"
+    situational_bonus:
+      type: "constitution_bonus"
+      value: "+1"
+      conditions:
+        - key: "environment"
+          op: "equals"
+          value: "high_humidity"
+        - key: "activity"
+          op: "in"
+          value: ["endurance", "recovery", "comfort"]
+    immersion_effect: "High humidity environments feel natural and comfortable to you, your amphibious physiology thriving in moist conditions that might discomfort other species."
+    narrative_hooks:
+      - "Tropical and jungle environments"
+      - "Steam and moisture-rich areas"
+      - "Humid industrial environments"
+      - "Water vapor processing facilities"
+    optional: true
+
+# Environmental mastery and expertise
+environmental_mastery:
+  primary_environments:
+    - "aquatic"
+    - "space"
+    - "urban_waterways"
+    - "high_humidity"
+  
+  environmental_knowledge:
+    - "Aquatic Engineering"
+    - "Starship Design"
+    - "Water Systems Management"
+    - "Space Navigation"
+    - "Marine Biology"
+    - "Underwater Construction"
+  
+  survival_techniques:
+    - "Underwater Breathing and Movement"
+    - "Space Environment Adaptation"
+    - "Aquatic Infrastructure Navigation"
+    - "Water-Based Resource Management"
+    - "Marine Life Communication"
+    - "Zero-Gravity Engineering"
+
+# Balance guidelines
+balance_guidelines:
+  situational_advantages: true
+  max_adaptations_per_character: 4
+  balanced_mechanics: true
+  enhance_immersion: true
+
+# Integration with existing class synergies
+class_synergy_enhancements:
+  Engineer:
+    - "Enhanced aquatic engineering capabilities"
+    - "Improved starship design and modification"
+    - "Better water system management"
+  
+  Consular:
+    - "Enhanced diplomatic abilities in aquatic environments"
+    - "Improved communication with marine life"
+    - "Better understanding of water-based cultures"
+  
+  Scholar:
+    - "Enhanced research in aquatic and space environments"
+    - "Improved knowledge of marine biology and space sciences"
+    - "Better documentation of underwater and space phenomena"
+  
+  Scout:
+    - "Enhanced exploration of aquatic and space environments"
+    - "Improved navigation in water and zero-gravity"
+    - "Better survival in extreme environments"
+
+# Example usage scenarios
+example_scenarios:
+  - scenario: "Navigating underwater ruins"
+    environment: "aquatic"
+    advantage: "Natural swimming and breathing underwater"
+    effect: "+2 to Constitution saves against underwater hazards"
+    narrative: "You move through the underwater ruins with natural grace, your amphibious nature allowing you to explore areas that would be impossible for other species."
+  
+  - scenario: "Repairing starship systems"
+    environment: "space"
+    advantage: "Intuitive understanding of starship systems"
+    effect: "+2 to Technology checks for starship repairs"
+    narrative: "Your natural affinity for starship design makes the complex systems feel intuitive, allowing you to identify and repair issues that might baffle other engineers."
+  
+  - scenario: "Managing urban water systems"
+    environment: "urban_waterways"
+    advantage: "Expertise in water-based infrastructure"
+    effect: "Advantage on Technology checks for water systems"
+    narrative: "Your understanding of aquatic infrastructure allows you to navigate and maintain the complex water systems that keep the city functioning."
+  
+  - scenario: "Surviving in tropical environments"
+    environment: "high_humidity"
+    advantage: "Enhanced comfort in humid conditions"
+    effect: "+1 to Constitution for endurance activities"
+    narrative: "The humid tropical environment feels natural and comfortable to you, your amphibious physiology thriving in conditions that might exhaust other species."
+
+# LLM-GM prompts for environmental adaptations
+llm_gm_prompts:
+  aquatic: "The Mon Calamari moves through the water with natural grace, their amphibious nature evident in every fluid motion. They seem completely at home in the aquatic environment."
+  
+  space: "The Mon Calamari's eyes gleam with understanding as they examine the starship systems. Their natural affinity for space travel and engineering is palpable in their confident movements."
+  
+  urban_waterways: "The Mon Calamari navigates the complex water systems with practiced ease, their understanding of aquatic infrastructure allowing them to move through the urban waterways like a fish in water."
+  
+  high_humidity: "The Mon Calamari seems to thrive in the humid environment, their amphibious physiology making them perfectly comfortable in conditions that might discomfort other species."
+
+# Environmental storytelling opportunities
+storytelling_opportunities:
+  - "Underwater exploration missions"
+  - "Starship design and modification projects"
+  - "Aquatic infrastructure maintenance"
+  - "Marine life communication and diplomacy"
+  - "Space station operations and maintenance"
+  - "Tropical environment survival scenarios"
+  - "Water-based resource management"
+  - "Zero-gravity engineering challenges"

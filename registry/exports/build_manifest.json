@@ -1,0 +1,11 @@
+{
+ "registry_build_id": "de78ad1a30d9c0f2",
+ "files": 4403,
+ "entity_candidates": 11824,
+ "canonical": 57,
+ "exact_duplicate_groups": 320,
+ "entity_duplicate_urids": 2456,
+ "parse_failures": 51,
+ "deterministic": true,
+ "auto_promotion": "none \u2014 canonical layer mirrors approved golden_slice lane only"
+}

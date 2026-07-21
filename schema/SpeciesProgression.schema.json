@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Species Progression Schema",
+  "description": "Schema for species traits that scale with character level",
+  "type": "object",
+  "properties": {
+    "progression_tiers": {
+      "type": "object",
+      "description": "Level-based progression tiers for species traits",
+      "properties": {
+        "level_5": {
+          "type": "object",
+          "description": "Minor trait enhancement at level 5",
+          "properties": {
+            "enhancement_type": {
+              "type": "string",
+              "enum": ["damage_bonus", "skill_enhancement", "saving_throw_bonus", "utility_improvement"],
+              "description": "Type of enhancement provided"
+            },
+            "description": {
+              "type": "string",
+              "description": "Narrative description of the enhancement"
+            },
+            "mechanical_effect": {
+              "type": "object",
+              "description": "Mechanical effect of the enhancement",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["bonus_damage", "advantage", "proficiency", "resistance", "utility_action"],
+                  "description": "Type of mechanical effect"
+                },
+                "value": {
+                  "type": ["string", "number"],
+                  "description": "Value of the effect (e.g., '+2', '1d4', 'advantage')"
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions when this effect applies",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": { "type": "string" },
+                      "op": { "type": "string" },
+                      "value": { "type": ["string", "number", "array"] }
+                    }
+                  }
+                }
+              },
+              "required": ["type", "value"]
+            },
+            "optional": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether this enhancement is optional"
+            }
+          },
+          "required": ["enhancement_type", "description", "mechanical_effect"]
+        },
+        "level_10": {
+          "type": "object",
+          "description": "Moderate trait enhancement at level 10",
+          "properties": {
+            "enhancement_type": {
+              "type": "string",
+              "enum": ["damage_bonus", "skill_enhancement", "saving_throw_bonus", "utility_improvement", "new_ability"],
+              "description": "Type of enhancement provided"
+            },
+            "description": {
+              "type": "string",
+              "description": "Narrative description of the enhancement"
+            },
+            "mechanical_effect": {
+              "type": "object",
+              "description": "Mechanical effect of the enhancement",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["bonus_damage", "advantage", "proficiency", "resistance", "utility_action", "new_action"],
+                  "description": "Type of mechanical effect"
+                },
+                "value": {
+                  "type": ["string", "number"],
+                  "description": "Value of the effect"
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions when this effect applies"
+                }
+              },
+              "required": ["type", "value"]
+            },
+            "optional": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether this enhancement is optional"
+            }
+          },
+          "required": ["enhancement_type", "description", "mechanical_effect"]
+        },
+        "level_15": {
+          "type": "object",
+          "description": "Major trait enhancement at level 15",
+          "properties": {
+            "enhancement_type": {
+              "type": "string",
+              "enum": ["damage_bonus", "skill_enhancement", "saving_throw_bonus", "utility_improvement", "new_ability", "legendary_feature"],
+              "description": "Type of enhancement provided"
+            },
+            "description": {
+              "type": "string",
+              "description": "Narrative description of the enhancement"
+            },
+            "mechanical_effect": {
+              "type": "object",
+              "description": "Mechanical effect of the enhancement",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["bonus_damage", "advantage", "proficiency", "resistance", "utility_action", "new_action", "legendary_action"],
+                  "description": "Type of mechanical effect"
+                },
+                "value": {
+                  "type": ["string", "number"],
+                  "description": "Value of the effect"
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions when this effect applies"
+                }
+              },
+              "required": ["type", "value"]
+            },
+            "optional": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether this enhancement is optional"
+            }
+          },
+          "required": ["enhancement_type", "description", "mechanical_effect"]
+        },
+        "level_20": {
+          "type": "object",
+          "description": "Epic trait enhancement at level 20",
+          "properties": {
+            "enhancement_type": {
+              "type": "string",
+              "enum": ["damage_bonus", "skill_enhancement", "saving_throw_bonus", "utility_improvement", "new_ability", "legendary_feature", "epic_feature"],
+              "description": "Type of enhancement provided"
+            },
+            "description": {
+              "type": "string",
+              "description": "Narrative description of the enhancement"
+            },
+            "mechanical_effect": {
+              "type": "object",
+              "description": "Mechanical effect of the enhancement",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["bonus_damage", "advantage", "proficiency", "resistance", "utility_action", "new_action", "legendary_action", "epic_action"],
+                  "description": "Type of mechanical effect"
+                },
+                "value": {
+                  "type": ["string", "number"],
+                  "description": "Value of the effect"
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions when this effect applies"
+                }
+              },
+              "required": ["type", "value"]
+            },
+            "optional": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether this enhancement is optional"
+            }
+          },
+          "required": ["enhancement_type", "description", "mechanical_effect"]
+        }
+      },
+      "required": ["level_5", "level_10", "level_15", "level_20"]
+    },
+    "balance_guidelines": {
+      "type": "object",
+      "description": "Balance guidelines for progression system",
+      "properties": {
+        "max_bonus_per_tier": {
+          "type": "number",
+          "default": 3,
+          "description": "Maximum bonus value per progression tier"
+        },
+        "requires_class_synergy": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether progression requires class synergy"
+        },
+        "optional_by_default": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether enhancements are optional by default"
+        }
+      }
+    }
+  },
+  "required": ["progression_tiers", "balance_guidelines"]
+}

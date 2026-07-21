@@ -1,0 +1,30 @@
+aran_class_review:
+  date: 2026-07-21
+  candidate_class: class_operative
+  source_class_exists: true   # PHB p.107-109; false "Operator" inference remains deleted
+  mechanical_matches:
+    - 'DEX 18 primary ability — matches Operative quick build ("make Dexterity your highest")'
+    - 'HP 45 at L5 within legal Operative range (avg 38, max 50 with CON +2)'
+    - 'Smuggler background + pilot/deception concept = the PHB''s own canonical Operative example (Han Solo, operative + scoundrel)'
+    - 'Feature NAME "Operator Archetype" is the same Operative/Operator conflation — the generation brief intended this class'
+  mechanical_conflicts:
+    - 'AC 16 exceeds light-armor + DEX unarmored expectations without an identified armor item resolution'
+    - 'Saving throws not recorded in DEX/INT shape'
+  feature_matches: []   # none of Expertise / Sneak Attack / Cunning Action / Bad Feeling / Uncanny Dodge present
+  feature_conflicts:
+    - 'L5 Operative kit absent: Expertise, Sneak Attack 3d6, Cunning Action, Operative Exploits ×2, Bad Feeling, Operative Practice, Uncanny Dodge'
+    - 'Existing features (Operator Archetype, Smuggler''s Cunning, Daring Pilot) are campaign-local AI-authored, not sourced class features'
+  likely_intended_class: class_operative
+  confidence: high_conceptual_low_mechanical
+  migration_recommended: conditional
+  migration_condition: >-
+    Assign class_id: class_operative AND reconcile features — either (a) grant the
+    sourced L5 Operative kit and reclassify the three campaign-local features as
+    background/campaign flavor, or (b) keep features as-is with class assigned
+    nominally. Option (a) is mechanically honest; it changes Aran's playable kit.
+  owner_confirmation_required: true
+  action_taken: >-
+    class_operative authored into registry/golden_slice/global_definitions/ with full
+    PHB provenance and validated progression. Aran's class_id remains NULL (honest
+    unresolved) pending your ruling — per directive, no assignment solely because
+    he is a smuggler/pilot, and feature conflict is material.

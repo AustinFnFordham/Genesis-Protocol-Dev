@@ -1,0 +1,709 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Companion NPC",
+  "description": "Enhanced schema for companion NPCs with comprehensive narrative integration, LLM-GM guidance, and advanced AI behavior systems.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'companion_r2d2' or 'companion_chewbacca'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the companion."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this companion is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How rare this companion is in the galaxy."
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the companion, their personality, and role in the story. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this companion, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this companion is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the companion."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this companion in the galaxy."
+    },
+    "companion_type": {
+      "enum": ["friendly_contact", "shop_keeper", "quest_giver", "droid_companion", "animal_companion", "mentor", "ally"],
+      "description": "The category of companion this NPC belongs to."
+    },
+    "role": {
+      "type": "string",
+      "description": "The specific role or specialization of this companion."
+    },
+    "narrative_tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags for filtering and content generation, following the narrative tag taxonomy."
+    },
+    "ai_behavior": {
+      "type": "object",
+      "description": "Detailed AI behavior directives for LLM GMs",
+      "properties": {
+        "personality": {
+          "type": "object",
+          "properties": {
+            "traits": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Key personality traits that define the companion's character."
+            },
+            "speech_patterns": {
+              "type": "string",
+              "description": "How the companion typically speaks and communicates."
+            },
+            "emotional_range": {
+              "type": "string",
+              "description": "The companion's typical emotional responses and range."
+            }
+          }
+        },
+        "motivations": {
+          "type": "object",
+          "properties": {
+            "primary_goals": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "The companion's main objectives and desires."
+            },
+            "fears": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "What the companion fears or wants to avoid."
+            },
+            "values": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Core values that guide the companion's decisions."
+            }
+          }
+        },
+        "combat_behavior": {
+          "type": "object",
+          "properties": {
+            "tactical_preferences": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "How the companion prefers to fight or support in combat."
+            },
+            "target_priorities": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "What types of enemies or objectives the companion prioritizes."
+            },
+            "retreat_conditions": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "When the companion will consider retreating or changing tactics."
+            }
+          }
+        },
+        "social_behavior": {
+          "type": "object",
+          "properties": {
+            "interaction_style": {
+              "type": "string",
+              "description": "How the companion typically interacts with others."
+            },
+            "relationship_building": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "How the companion forms and maintains relationships."
+            },
+            "conflict_resolution": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "How the companion handles disagreements or conflicts."
+            }
+          }
+        },
+        "special_abilities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Unique abilities or behaviors the companion can perform."
+        },
+        "contextual_responses": {
+          "type": "object",
+          "description": "How the companion responds to different situations",
+          "properties": {
+            "danger": {
+              "type": "string",
+              "description": "Response when the party is in danger."
+            },
+            "success": {
+              "type": "string",
+              "description": "Response when the party achieves success."
+            },
+            "failure": {
+              "type": "string",
+              "description": "Response when the party fails or faces setbacks."
+            },
+            "moral_choices": {
+              "type": "string",
+              "description": "Response to moral dilemmas or ethical decisions."
+            }
+          }
+        }
+      }
+    },
+    "relationship_tracking": {
+      "type": "object",
+      "description": "System for tracking the companion's relationship with the player and party",
+      "properties": {
+        "trust": {
+          "type": "object",
+          "properties": {
+            "current_level": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Current trust level (0-100)."
+            },
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "threshold": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "effects": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": { "type": "string" },
+                  "change": { "type": "integer" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "loyalty": {
+          "type": "object",
+          "properties": {
+            "current_level": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Current loyalty level (0-100)."
+            },
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "threshold": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "effects": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "influence": {
+          "type": "object",
+          "properties": {
+            "current_level": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Current influence level (0-100)."
+            },
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "threshold": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "effects": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "shared_experiences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event": { "type": "string" },
+              "impact": { "type": "string" },
+              "relationship_change": { "type": "integer" },
+              "date": { "type": "string" }
+            }
+          },
+          "description": "Record of significant events that have affected the relationship."
+        }
+      }
+    },
+    "progression_system": {
+      "type": "object",
+      "description": "System for companion growth and development over time",
+      "properties": {
+        "experience": {
+          "type": "object",
+          "properties": {
+            "current_xp": {
+              "type": "integer",
+              "description": "Current experience points earned."
+            },
+            "level": {
+              "type": "integer",
+              "description": "Current companion level."
+            },
+            "xp_to_next_level": {
+              "type": "integer",
+              "description": "Experience needed to reach the next level."
+            },
+            "xp_sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": { "type": "string" },
+                  "xp_gained": { "type": "integer" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "skill_progression": {
+          "type": "object",
+          "properties": {
+            "learned_skills": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "skill_name": { "type": "string" },
+                  "level_learned": { "type": "integer" },
+                  "mastery_level": { "type": "integer" },
+                  "description": { "type": "string" }
+                }
+              }
+            },
+            "skill_specializations": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Areas where the companion has developed expertise."
+            }
+          }
+        },
+        "ability_improvements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ability": { "type": "string" },
+              "improvement": { "type": "string" },
+              "level_gained": { "type": "integer" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "feature_unlocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "feature_name": { "type": "string" },
+              "level_unlocked": { "type": "integer" },
+              "description": { "type": "string" },
+              "requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "relationship_milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "milestone": { "type": "string" },
+              "requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "rewards": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "unlocked": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "services": {
+      "type": "object",
+      "description": "Services this companion can provide based on their role",
+      "properties": {
+        "primary_services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "service_name": { "type": "string" },
+              "description": { "type": "string" },
+              "requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "cost": { "type": "string" },
+              "relationship_bonus": { "type": "boolean" }
+            }
+          }
+        },
+        "special_services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "service_name": { "type": "string" },
+              "description": { "type": "string" },
+              "unlock_requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "relationship_requirement": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "quest_integration": {
+      "type": "object",
+      "description": "How this companion integrates with quests and missions",
+      "properties": {
+        "quest_hooks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Potential quest hooks related to this companion."
+        },
+        "mission_roles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Roles the companion can play in missions."
+        },
+        "reward_modifications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quest_type": { "type": "string" },
+              "modification": { "type": "string" },
+              "requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Member Of', 'Native To', 'Associated With', 'Enemy Of'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "character_sheet_id": {
+      "type": "string",
+      "description": "Reference to the companion's character sheet file (e.g., 'character_astromech_r4d9')"
+    },
+    "personal_name": {
+      "type": "string",
+      "description": "The companion's personal name (e.g., 'R4-D9' for an astromech droid)"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["Companion", "Ally", "Mentor", "Contact"],
+      "description": "The companion's tier or importance level"
+    },
+
+    "special_rules": {
+      "type": "array",
+      "description": "Special rules and mechanics specific to this companion",
+      "items": { "type": "string" }
+    },
+
+    "romantic_relationships": {
+      "type": "object",
+      "description": "System for tracking romantic relationships with player characters",
+      "properties": {
+        "romance_potential": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high"],
+          "description": "How likely this companion is to develop romantic feelings"
+        },
+        "compatibility_factors": {
+          "type": "array",
+          "description": "Factors that affect romantic compatibility",
+          "items": { "type": "string" }
+        },
+        "deal_breakers": {
+          "type": "array",
+          "description": "Actions or traits that would end romantic interest",
+          "items": { "type": "string" }
+        },
+        "romance_progression": {
+          "type": "array",
+          "description": "Stages of romantic relationship development",
+          "items": {
+            "type": "object",
+            "properties": {
+              "stage": { "type": "string" },
+              "trust_requirement": { "type": "integer" },
+              "description": { "type": "string" },
+              "unlock_conditions": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "romance_events": {
+          "type": "array",
+          "description": "Special events that can deepen romantic bonds",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event_name": { "type": "string" },
+              "description": { "type": "string" },
+              "relationship_change": { "type": "integer" },
+              "requirements": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "romance_modifiers": {
+          "type": "array",
+          "description": "Actions that affect romantic relationship",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": { "type": "string" },
+              "change": { "type": "integer" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "faction_affiliations": {
+      "type": "array",
+      "description": "Faction memberships and relationships",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction": { "type": "string" },
+          "renown": { "type": "integer" },
+          "status": { "type": "string" },
+          "relationship": { "type": "string" }
+        }
+      }
+    },
+
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this companion type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_companions": {
+      "type": "array",
+      "description": "Notable companions of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld or origin of this companion."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this companion."
+    },
+
+    "customization": {
+      "type": "object",
+      "description": "Customization options for droids and other customizable companions",
+      "properties": {
+        "personality_modules": {
+          "type": "array",
+          "description": "Available personality modules for droid companions",
+          "items": { "type": "string" }
+        },
+        "technical_modules": {
+          "type": "array",
+          "description": "Available technical modules for droid companions",
+          "items": { "type": "string" }
+        },
+        "combat_modules": {
+          "type": "array",
+          "description": "Available combat modules for droid companions",
+          "items": { "type": "string" }
+        },
+        "utility_modules": {
+          "type": "array",
+          "description": "Available utility modules for droid companions",
+          "items": { "type": "string" }
+        },
+        "physical_customizations": {
+          "type": "array",
+          "description": "Available physical customizations",
+          "items": { "type": "string" }
+        },
+        "equipment_integration": {
+          "type": "array",
+          "description": "Available equipment integration options",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying this companion."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this companion.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this companion interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for this companion.",
+          "items": { "type": "string" }
+        },
+        "ai_behavior_guidance": {
+          "type": "string",
+          "description": "Specific guidance for AI behavior and decision-making."
+        }
+      }
+    },
+
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this companion."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Group_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the companion image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the companion icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this companion for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "personal_name", "tier", "era", "rarity", "narrative", "description", "companion_type", "role", "character_sheet_id", "ai_behavior", "connections"]
+}

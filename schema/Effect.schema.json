@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Effect Schema",
+  "description": "Schema for reusable mechanical/narrative effect definitions referenced by features via effect_ref.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "pattern": "^effect_[a-z0-9_]+$" },
+    "name": { "type": "string" },
+    "category": { "type": "string" },
+
+    "narrative": { "type": "string" },
+    "flavor_text": { "type": "string" },
+
+    "mechanics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "effect": { "type": "string" },
+          "description": { "type": "string" },
+          "parameters": { "type": "object" },
+          "conditions": { "type": "array", "items": { "type": "object" } },
+          "rules": { "type": "array", "items": { "type": "string" } },
+          "end_conditions": { "type": "array", "items": { "type": "object" } }
+        },
+        "required": ["effect", "description"]
+      }
+    },
+
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": { "type": "string" },
+        "tactical_notes": { "type": "string" },
+        "narrative_hooks": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["roleplay_guidance", "tactical_notes"]
+    },
+
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": { "type": "string" },
+        "base_negative_keywords": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["base_prompt"]
+    },
+
+    "ui": {
+      "type": "object",
+      "properties": {
+        "icon": { "type": "string" },
+        "color": { "type": "string", "pattern": "^#?[A-Fa-f0-9]{6}$" }
+      }
+    }
+  },
+  "required": ["id", "name", "category", "narrative", "flavor_text", "mechanics", "llm_guidance", "image_generation", "ui"]
+}
+
+

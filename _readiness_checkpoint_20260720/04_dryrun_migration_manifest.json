@@ -1,0 +1,3654 @@
+{
+  "summary": {
+    "entities": 180,
+    "misrouted": 127,
+    "by_family": {
+      "approach": 10,
+      "asset": 10,
+      "unknown": 1,
+      "creature": 1,
+      "faction": 11,
+      "feat": 108,
+      "location": 20,
+      "npc": 9,
+      "planet": 5,
+      "species": 4,
+      "subclass": 1
+    }
+  },
+  "manifest": [
+    {
+      "source_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_assassination.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_assassination.yml",
+      "current_urid": "approach_black_sun_assassination",
+      "resulting_urid": "approach_black_sun_assassination",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "e7984c4f0cd3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_corporate_sabotage.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_corporate_sabotage.yml",
+      "current_urid": "approach_black_sun_corporate_sabotage",
+      "resulting_urid": "approach_black_sun_corporate_sabotage",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "0c5a29639bcc",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_interstellar_extortion.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_interstellar_extortion.yml",
+      "current_urid": "approach_black_sun_interstellar_extortion",
+      "resulting_urid": "approach_black_sun_interstellar_extortion",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "d86da163f68b",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_pheromone_manipulation.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_pheromone_manipulation.yml",
+      "current_urid": "approach_black_sun_pheromone_manipulation",
+      "resulting_urid": "approach_black_sun_pheromone_manipulation",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "040316bdfdda",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_political_leverage.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/factions/fac_black_sun/approach_black_sun_political_leverage.yml",
+      "current_urid": "approach_black_sun_political_leverage",
+      "resulting_urid": "approach_black_sun_political_leverage",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "3e40744fdbb5",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_blackmail_archives.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_blackmail_archives.yml",
+      "current_urid": "asset_black_sun_blackmail_archives",
+      "resulting_urid": "asset_black_sun_blackmail_archives",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "2ae544165b9a",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_cryoban_security.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_cryoban_security.yml",
+      "current_urid": "asset_black_sun_cryoban_security",
+      "resulting_urid": "asset_black_sun_cryoban_security",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "f6bf80fcbbc7",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_forged_chain_codes.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_forged_chain_codes.yml",
+      "current_urid": "asset_black_sun_forged_chain_codes",
+      "resulting_urid": "asset_black_sun_forged_chain_codes",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "d283aaf21a0d",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_guri_replicant_codes.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_guri_replicant_codes.yml",
+      "current_urid": "asset_black_sun_guri_replicant_codes",
+      "resulting_urid": "asset_black_sun_guri_replicant_codes",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "ca1efb4a3907",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_vigo_spy_network.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/factions/fac_black_sun/asset_black_sun_vigo_spy_network.yml",
+      "current_urid": "asset_black_sun_vigo_spy_network",
+      "resulting_urid": "asset_black_sun_vigo_spy_network",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "d66cc5e436db",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/classes/guardian.yml",
+      "detected_entity_type": "unknown",
+      "detection_evidence": "no_signal",
+      "proposed_target_path": "data/wip/classes/guardian.yml",
+      "current_urid": "guardian",
+      "resulting_urid": "guardian",
+      "canonical_schema": "?",
+      "inbound_references": 1,
+      "outbound_references": 0,
+      "content_hash_before": "bb16bb30f7a3",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/creatures/creature_shadowstalker_nexu.yml",
+      "detected_entity_type": "creature",
+      "detection_evidence": "id_prefix:creature_",
+      "proposed_target_path": "data/wip/creatures/creature_shadowstalker_nexu.yml",
+      "current_urid": "creature_shadowstalker_nexu",
+      "resulting_urid": "creature_shadowstalker_nexu",
+      "canonical_schema": "Creature",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "8860fcc63bc0",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_black_sun.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_black_sun.yml",
+      "current_urid": "fac_black_sun",
+      "resulting_urid": "fac_black_sun",
+      "canonical_schema": "faction_core",
+      "inbound_references": 50,
+      "outbound_references": 16,
+      "content_hash_before": "919663dd0365",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_children_of_the_watch.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_children_of_the_watch.yml",
+      "current_urid": "fac_children_of_the_watch",
+      "resulting_urid": "fac_children_of_the_watch",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 17,
+      "content_hash_before": "62a80eb77e27",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_crimson_dawn.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_crimson_dawn.yml",
+      "current_urid": "fac_crimson_dawn",
+      "resulting_urid": "fac_crimson_dawn",
+      "canonical_schema": "faction_core",
+      "inbound_references": 34,
+      "outbound_references": 2,
+      "content_hash_before": "d5c48cb95d59",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_galactic_empire.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_galactic_empire.yml",
+      "current_urid": "fac_galactic_empire",
+      "resulting_urid": "fac_galactic_empire",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 15,
+      "content_hash_before": "e646320a4619",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_hutt_cartel.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_hutt_cartel.yml",
+      "current_urid": "fac_hutt_cartel",
+      "resulting_urid": "fac_hutt_cartel",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 15,
+      "content_hash_before": "ecf3020a2416",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_imperial_remnant.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_imperial_remnant.yml",
+      "current_urid": "fac_imperial_remnant",
+      "resulting_urid": "fac_imperial_remnant",
+      "canonical_schema": "faction_core",
+      "inbound_references": 1,
+      "outbound_references": 15,
+      "content_hash_before": "2c1d2ef70099",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_jedi.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_jedi.yml",
+      "current_urid": "fac_jedi",
+      "resulting_urid": "fac_jedi",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "96725954a450",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_new_mandalorians.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_new_mandalorians.yml",
+      "current_urid": "fac_new_mandalorians",
+      "resulting_urid": "fac_new_mandalorians",
+      "canonical_schema": "faction_core",
+      "inbound_references": 1,
+      "outbound_references": 15,
+      "content_hash_before": "d5d3b1563bd2",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_pyke_syndicate.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_pyke_syndicate.yml",
+      "current_urid": "fac_pyke_syndicate",
+      "resulting_urid": "fac_pyke_syndicate",
+      "canonical_schema": "faction_core",
+      "inbound_references": 31,
+      "outbound_references": 16,
+      "content_hash_before": "f04d3f510114",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_rebel_alliance.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_rebel_alliance.yml",
+      "current_urid": "fac_rebel_alliance",
+      "resulting_urid": "fac_rebel_alliance",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 15,
+      "content_hash_before": "a4893155bc7f",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_test_minimal.yml",
+      "detected_entity_type": "faction",
+      "detection_evidence": "id_prefix:fac_",
+      "proposed_target_path": "data/wip/factions/core/fac_test_minimal.yml",
+      "current_urid": "fac_test_minimal",
+      "resulting_urid": "fac_test_minimal",
+      "canonical_schema": "faction_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "6ae68e1eda32",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/factions/core/fac_pyke_syndicate/feats/feat_crimson_dawn_0_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_3.yml",
+      "current_urid": "feat_crimson_dawn_0_3",
+      "resulting_urid": "feat_crimson_dawn_0_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "37b9d3334159",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_black_sun_stub_5f381d.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_black_sun_stub_5f381d.yml",
+      "current_urid": "feat_black_sun_stub_5f381d",
+      "resulting_urid": "feat_black_sun_stub_5f381d",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "f5324cb7d79a",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_black_sun_stub_9d7d87.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_black_sun_stub_9d7d87.yml",
+      "current_urid": "feat_black_sun_stub_9d7d87",
+      "resulting_urid": "feat_black_sun_stub_9d7d87",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "97576772bb34",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_jedi_stub_04ec34.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_jedi_stub_04ec34.yml",
+      "current_urid": "feat_jedi_stub_04ec34",
+      "resulting_urid": "feat_jedi_stub_04ec34",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "b913f64b26ae",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_jedi_stub_936dc4.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_jedi_stub_936dc4.yml",
+      "current_urid": "feat_jedi_stub_936dc4",
+      "resulting_urid": "feat_jedi_stub_936dc4",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "206c6d6cfb88",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_jedi_stub_be1664.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_jedi_stub_be1664.yml",
+      "current_urid": "feat_jedi_stub_be1664",
+      "resulting_urid": "feat_jedi_stub_be1664",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "8a7b9237dde9",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_jedi_stub_da6591.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_jedi_stub_da6591.yml",
+      "current_urid": "feat_jedi_stub_da6591",
+      "resulting_urid": "feat_jedi_stub_da6591",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "dd4b26e6aeeb",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/feats/feat_jedi_stub_f3af64.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_jedi_stub_f3af64.yml",
+      "current_urid": "feat_jedi_stub_f3af64",
+      "resulting_urid": "feat_jedi_stub_f3af64",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "32ce6e25646e",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/core/locations/loc_pla_hq.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_pla_hq.yml",
+      "current_urid": "loc_pla_hq.yml",
+      "resulting_urid": "loc_pla_hq.yml",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "1e5c5c0d740c",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/approaches/approach_black_sun_assassination.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/<owner>/approach_black_sun_assassination.yml",
+      "current_urid": "approach_black_sun_assassination",
+      "resulting_urid": "approach_black_sun_assassination",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "802ec2e1eee4",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/approaches/approach_black_sun_corporate_sabotage.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/<owner>/approach_black_sun_corporate_sabotage.yml",
+      "current_urid": "approach_black_sun_corporate_sabotage",
+      "resulting_urid": "approach_black_sun_corporate_sabotage",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "b49c86d7a2c3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/approaches/approach_black_sun_interstellar_extortion.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/<owner>/approach_black_sun_interstellar_extortion.yml",
+      "current_urid": "approach_black_sun_interstellar_extortion",
+      "resulting_urid": "approach_black_sun_interstellar_extortion",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "e7485f062b3c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/approaches/approach_black_sun_pheromone_manipulation.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/<owner>/approach_black_sun_pheromone_manipulation.yml",
+      "current_urid": "approach_black_sun_pheromone_manipulation",
+      "resulting_urid": "approach_black_sun_pheromone_manipulation",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "a147c923b3fe",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/approaches/approach_black_sun_political_leverage.yml",
+      "detected_entity_type": "approach",
+      "detection_evidence": "id_prefix:approach_",
+      "proposed_target_path": "data/wip/approaches/<owner>/approach_black_sun_political_leverage.yml",
+      "current_urid": "approach_black_sun_political_leverage",
+      "resulting_urid": "approach_black_sun_political_leverage",
+      "canonical_schema": "approach_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "e25b599a8316",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/assets/asset_black_sun_blackmail_archives.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/<owner>/asset_black_sun_blackmail_archives.yml",
+      "current_urid": "asset_black_sun_blackmail_archives",
+      "resulting_urid": "asset_black_sun_blackmail_archives",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "7a55f91a1846",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/assets/asset_black_sun_cryoban_security.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/<owner>/asset_black_sun_cryoban_security.yml",
+      "current_urid": "asset_black_sun_cryoban_security",
+      "resulting_urid": "asset_black_sun_cryoban_security",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "52ee02790857",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/assets/asset_black_sun_forged_chain_codes.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/<owner>/asset_black_sun_forged_chain_codes.yml",
+      "current_urid": "asset_black_sun_forged_chain_codes",
+      "resulting_urid": "asset_black_sun_forged_chain_codes",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "1d7e6eaa045c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/assets/asset_black_sun_guri_replicant_codes.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/<owner>/asset_black_sun_guri_replicant_codes.yml",
+      "current_urid": "asset_black_sun_guri_replicant_codes",
+      "resulting_urid": "asset_black_sun_guri_replicant_codes",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "d8021ee18012",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/assets/asset_black_sun_vigo_spy_network.yml",
+      "detected_entity_type": "asset",
+      "detection_evidence": "id_prefix:asset_",
+      "proposed_target_path": "data/wip/assets/<owner>/asset_black_sun_vigo_spy_network.yml",
+      "current_urid": "asset_black_sun_vigo_spy_network",
+      "resulting_urid": "asset_black_sun_vigo_spy_network",
+      "canonical_schema": "asset_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "42fc262a6f99",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_0_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_1.yml",
+      "current_urid": "feat_crimson_dawn_0_1",
+      "resulting_urid": "feat_crimson_dawn_0_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "0c2171e8e2a3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_0_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_2.yml",
+      "current_urid": "feat_crimson_dawn_0_2",
+      "resulting_urid": "feat_crimson_dawn_0_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "409a3e8ca8f9",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_0_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_3.yml",
+      "current_urid": "feat_crimson_dawn_0_3",
+      "resulting_urid": "feat_crimson_dawn_0_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "a247d1e7d9e1",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_1_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_1.yml",
+      "current_urid": "feat_crimson_dawn_1_1",
+      "resulting_urid": "feat_crimson_dawn_1_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "07809881faea",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_1_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_2.yml",
+      "current_urid": "feat_crimson_dawn_1_2",
+      "resulting_urid": "feat_crimson_dawn_1_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "a295fc73b634",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_1_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_3.yml",
+      "current_urid": "feat_crimson_dawn_1_3",
+      "resulting_urid": "feat_crimson_dawn_1_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "6580a75307e9",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_2_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_1.yml",
+      "current_urid": "feat_crimson_dawn_2_1",
+      "resulting_urid": "feat_crimson_dawn_2_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "40634f0b0877",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_2_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_3.yml",
+      "current_urid": "feat_crimson_dawn_2_3",
+      "resulting_urid": "feat_crimson_dawn_2_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "8facfaf7e77c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_3_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_1.yml",
+      "current_urid": "feat_crimson_dawn_3_1",
+      "resulting_urid": "feat_crimson_dawn_3_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "e8a361b37999",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_3_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_2.yml",
+      "current_urid": "feat_crimson_dawn_3_2",
+      "resulting_urid": "feat_crimson_dawn_3_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "409b2a9c6cbf",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_3_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_3.yml",
+      "current_urid": "feat_crimson_dawn_3_3",
+      "resulting_urid": "feat_crimson_dawn_3_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "0d26109c29f0",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_4_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_1.yml",
+      "current_urid": "feat_crimson_dawn_4_1",
+      "resulting_urid": "feat_crimson_dawn_4_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "e5c110c4839e",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_4_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_2.yml",
+      "current_urid": "feat_crimson_dawn_4_2",
+      "resulting_urid": "feat_crimson_dawn_4_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "75dc34cc1656",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_crimson_dawn_4_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_3.yml",
+      "current_urid": "feat_crimson_dawn_4_3",
+      "resulting_urid": "feat_crimson_dawn_4_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "4744ed1ca0d0",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank1_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "25e844a65ad7",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank1_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "e3b241ed2e0d",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank1_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "8f3b2c874d47",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank2_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "d78ba2e7aa9f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank2_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "d720befcc21a",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank2_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "97b69ad4be30",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank3_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "3f4e7276f828",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank3_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "2a4d9a014dad",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank3_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "8b4669e77646",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank4_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "87405162a859",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank4_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "6a51713566b5",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank4_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "ef7947fd4de7",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank5_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "b6e2e92ed29c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank5_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "a36c24d92b13",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_pyke_syndicate_rank5_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "81a6fd183761",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/feats/feat_stub_2812ae.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_stub_2812ae.yml",
+      "current_urid": "feat_stub_2812ae",
+      "resulting_urid": "feat_stub_2812ae",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "1d825d155e0c",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/locations/loc_falleen_enclave.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_falleen_enclave.yml",
+      "current_urid": "loc_falleen_enclave",
+      "resulting_urid": "loc_falleen_enclave",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "003748a8c5a8",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/locations/loc_imperial_city_underlevels.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_imperial_city_underlevels.yml",
+      "current_urid": "loc_imperial_city_underlevels",
+      "resulting_urid": "loc_imperial_city_underlevels",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "e228eb7caa4f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/locations/loc_mustafar_fortress.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress.yml",
+      "current_urid": "loc_mustafar_fortress",
+      "resulting_urid": "loc_mustafar_fortress",
+      "canonical_schema": "location_core",
+      "inbound_references": 4,
+      "outbound_references": 0,
+      "content_hash_before": "e95f2a250e6f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/locations/loc_spice_terminals.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_spice_terminals.yml",
+      "current_urid": "loc_spice_terminals",
+      "resulting_urid": "loc_spice_terminals",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "8dec8608d3b4",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/locations/loc_xizors_palace.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_xizors_palace.yml",
+      "current_urid": "loc_xizors_palace",
+      "resulting_urid": "loc_xizors_palace",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "faca739904ea",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/npcs/npc_crimson_dawn_dryden_vos.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_dryden_vos.yml",
+      "current_urid": "npc_crimson_dawn_dryden_vos",
+      "resulting_urid": "npc_crimson_dawn_dryden_vos",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "054079436874",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/npcs/npc_crimson_dawn_maul.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_maul.yml",
+      "current_urid": "npc_crimson_dawn_maul",
+      "resulting_urid": "npc_crimson_dawn_maul",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "f968f2f9356f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_black_sun/npcs/npc_crimson_dawn_qira.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_qira.yml",
+      "current_urid": "npc_crimson_dawn_qira",
+      "resulting_urid": "npc_crimson_dawn_qira",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "0a31a5b648bb",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_0_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_1.yml",
+      "current_urid": "feat_crimson_dawn_0_1",
+      "resulting_urid": "feat_crimson_dawn_0_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "5232155954c6",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_0_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_2.yml",
+      "current_urid": "feat_crimson_dawn_0_2",
+      "resulting_urid": "feat_crimson_dawn_0_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "2bc02e83f860",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_0_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_3.yml",
+      "current_urid": "feat_crimson_dawn_0_3",
+      "resulting_urid": "feat_crimson_dawn_0_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "a01368d5ade6",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_1_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_1.yml",
+      "current_urid": "feat_crimson_dawn_1_1",
+      "resulting_urid": "feat_crimson_dawn_1_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "aa594402ae42",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_1_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_2.yml",
+      "current_urid": "feat_crimson_dawn_1_2",
+      "resulting_urid": "feat_crimson_dawn_1_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "50c63c6f0330",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_1_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_3.yml",
+      "current_urid": "feat_crimson_dawn_1_3",
+      "resulting_urid": "feat_crimson_dawn_1_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "b4a8d962e5c5",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_2_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_1.yml",
+      "current_urid": "feat_crimson_dawn_2_1",
+      "resulting_urid": "feat_crimson_dawn_2_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "e1a5c171f020",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_2_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_2.yml",
+      "current_urid": "feat_crimson_dawn_2_2",
+      "resulting_urid": "feat_crimson_dawn_2_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "c568b364c2b0",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_2_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_3.yml",
+      "current_urid": "feat_crimson_dawn_2_3",
+      "resulting_urid": "feat_crimson_dawn_2_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "db33b44f95f9",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_3_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_1.yml",
+      "current_urid": "feat_crimson_dawn_3_1",
+      "resulting_urid": "feat_crimson_dawn_3_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "d76a45fa1acf",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_3_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_2.yml",
+      "current_urid": "feat_crimson_dawn_3_2",
+      "resulting_urid": "feat_crimson_dawn_3_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "b225ed15bc9a",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_3_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_3.yml",
+      "current_urid": "feat_crimson_dawn_3_3",
+      "resulting_urid": "feat_crimson_dawn_3_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "46726c8e6e29",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_4_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_1.yml",
+      "current_urid": "feat_crimson_dawn_4_1",
+      "resulting_urid": "feat_crimson_dawn_4_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "5a8fdfba37a9",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_4_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_2.yml",
+      "current_urid": "feat_crimson_dawn_4_2",
+      "resulting_urid": "feat_crimson_dawn_4_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "c902923adccd",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_crimson_dawn_4_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_3.yml",
+      "current_urid": "feat_crimson_dawn_4_3",
+      "resulting_urid": "feat_crimson_dawn_4_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "c5aa9bbfdc9f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank1_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "5e175bdcbaf8",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank1_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "7312c6fb6fc3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank1_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "f86c34aa68f7",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank2_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "3451944e2f73",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank2_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "83811068a78c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank2_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "f8c4a41847b3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank3_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "068ba9256a42",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank3_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "8607d2d3e1f7",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank3_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "41acbda0b70c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank4_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "8f0061c9409f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank4_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "00c33a670146",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank4_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "635da1f22b52",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank5_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "099e526067d0",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank5_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "f1f16228f1e3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/feats/feat_pyke_syndicate_rank5_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "43407d6e5754",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/locations/loc_crimson_dawn_first_light.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_crimson_dawn_first_light.yml",
+      "current_urid": "loc_crimson_dawn_first_light",
+      "resulting_urid": "loc_crimson_dawn_first_light",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "1e1f512d2faf",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/npcs/npc_crimson_dawn_dryden_vos.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_dryden_vos.yml",
+      "current_urid": "npc_crimson_dawn_dryden_vos",
+      "resulting_urid": "npc_crimson_dawn_dryden_vos",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "a81b52d52c47",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/npcs/npc_crimson_dawn_maul.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_maul.yml",
+      "current_urid": "npc_crimson_dawn_maul",
+      "resulting_urid": "npc_crimson_dawn_maul",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "e9de99ee3acd",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_crimson_dawn/npcs/npc_crimson_dawn_qira.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_qira.yml",
+      "current_urid": "npc_crimson_dawn_qira",
+      "resulting_urid": "npc_crimson_dawn_qira",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "a3e7b94543b1",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_0_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_2.yml",
+      "current_urid": "feat_crimson_dawn_0_2",
+      "resulting_urid": "feat_crimson_dawn_0_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "e3a3cf19a587",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_0_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_0_3.yml",
+      "current_urid": "feat_crimson_dawn_0_3",
+      "resulting_urid": "feat_crimson_dawn_0_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "37b9d3334159",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_1_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_1.yml",
+      "current_urid": "feat_crimson_dawn_1_1",
+      "resulting_urid": "feat_crimson_dawn_1_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "06d7ee4b1805",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_1_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_1_2.yml",
+      "current_urid": "feat_crimson_dawn_1_2",
+      "resulting_urid": "feat_crimson_dawn_1_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "8ff77cd081c5",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_2_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_2.yml",
+      "current_urid": "feat_crimson_dawn_2_2",
+      "resulting_urid": "feat_crimson_dawn_2_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "6842196f71e6",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_2_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_2_3.yml",
+      "current_urid": "feat_crimson_dawn_2_3",
+      "resulting_urid": "feat_crimson_dawn_2_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "5edf0a87ac9f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_3_1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_1.yml",
+      "current_urid": "feat_crimson_dawn_3_1",
+      "resulting_urid": "feat_crimson_dawn_3_1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "4ac00ee4cbb2",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_3_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_2.yml",
+      "current_urid": "feat_crimson_dawn_3_2",
+      "resulting_urid": "feat_crimson_dawn_3_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "b6a381090b17",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_3_3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_3_3.yml",
+      "current_urid": "feat_crimson_dawn_3_3",
+      "resulting_urid": "feat_crimson_dawn_3_3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "5d97cfeba32a",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_crimson_dawn_4_2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_crimson_dawn_4_2.yml",
+      "current_urid": "feat_crimson_dawn_4_2",
+      "resulting_urid": "feat_crimson_dawn_4_2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "63dc7f6d82aa",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank1_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "8a7b8a9e6ced",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank1_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "e90c2fe82057",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank1_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank1_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank1_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank1_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "b06f28a65d22",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank2_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "55a92f6aba45",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank2_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "c6713bc4b95c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank2_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank2_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank2_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank2_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "14d64544b8b3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank3_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "74869f3d030c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank3_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "6d48577df5d3",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank3_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank3_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank3_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank3_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "9a44a6e02b76",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank4_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "2bab6d55740f",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank4_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "5d8c3bec37e6",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank4_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank4_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank4_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank4_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "3a67eddc4a7c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank5_choice1.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice1.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice1",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice1",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "75970af709df",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank5_choice2.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice2.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice2",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice2",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "dce89714168c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/feats/feat_pyke_syndicate_rank5_choice3.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/<owner>/feat_pyke_syndicate_rank5_choice3.yml",
+      "current_urid": "feat_pyke_syndicate_rank5_choice3",
+      "resulting_urid": "feat_pyke_syndicate_rank5_choice3",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "ddbf7adf7c72",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/npcs/npc_crimson_dawn_dryden_vos.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_dryden_vos.yml",
+      "current_urid": "npc_crimson_dawn_dryden_vos",
+      "resulting_urid": "npc_crimson_dawn_dryden_vos",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "1d0043904731",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/npcs/npc_crimson_dawn_maul.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_maul.yml",
+      "current_urid": "npc_crimson_dawn_maul",
+      "resulting_urid": "npc_crimson_dawn_maul",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "3fffdcbb4df6",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/factions/fac_pyke_syndicate/npcs/npc_crimson_dawn_qira.yml",
+      "detected_entity_type": "npc",
+      "detection_evidence": "id_prefix:npc_",
+      "proposed_target_path": "data/wip/npcs/<owner>/npc_crimson_dawn_qira.yml",
+      "current_urid": "npc_crimson_dawn_qira",
+      "resulting_urid": "npc_crimson_dawn_qira",
+      "canonical_schema": "npc_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "1a947d272a79",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_payout.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_payout.yml",
+      "current_urid": "feat_black_sun_associate_payout",
+      "resulting_urid": "feat_black_sun_associate_payout",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "69a41090676f",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_quiet_ear.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_quiet_ear.yml",
+      "current_urid": "feat_black_sun_associate_quiet_ear",
+      "resulting_urid": "feat_black_sun_associate_quiet_ear",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "1241487ee509",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_smugglers_path.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_associate_smugglers_path.yml",
+      "current_urid": "feat_black_sun_associate_smugglers_path",
+      "resulting_urid": "feat_black_sun_associate_smugglers_path",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "a3b53a969e71",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_ambush.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_ambush.yml",
+      "current_urid": "feat_black_sun_enforcer_ambush",
+      "resulting_urid": "feat_black_sun_enforcer_ambush",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "f54c13df09ee",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_asset_recovery.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_asset_recovery.yml",
+      "current_urid": "feat_black_sun_enforcer_asset_recovery",
+      "resulting_urid": "feat_black_sun_enforcer_asset_recovery",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "9261cce1428c",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_muscle.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_enforcer_muscle.yml",
+      "current_urid": "feat_black_sun_enforcer_muscle",
+      "resulting_urid": "feat_black_sun_enforcer_muscle",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "cdb495b776f4",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_negotiator.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_negotiator.yml",
+      "current_urid": "feat_black_sun_hand_negotiator",
+      "resulting_urid": "feat_black_sun_hand_negotiator",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "a20cde461943",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_poison.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_poison.yml",
+      "current_urid": "feat_black_sun_hand_poison",
+      "resulting_urid": "feat_black_sun_hand_poison",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "4bffc3e30549",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_reflexes.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_hand_reflexes.yml",
+      "current_urid": "feat_black_sun_hand_reflexes",
+      "resulting_urid": "feat_black_sun_hand_reflexes",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "d709fd93d129",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_command.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_command.yml",
+      "current_urid": "feat_black_sun_underlord_command",
+      "resulting_urid": "feat_black_sun_underlord_command",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "6fa2d3f15fdd",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_presence.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_presence.yml",
+      "current_urid": "feat_black_sun_underlord_presence",
+      "resulting_urid": "feat_black_sun_underlord_presence",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "d5d935f3ae81",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_secrets.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_underlord_secrets.yml",
+      "current_urid": "feat_black_sun_underlord_secrets",
+      "resulting_urid": "feat_black_sun_underlord_secrets",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "9aa12ee1c782",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_aristocrat.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_aristocrat.yml",
+      "current_urid": "feat_black_sun_vigo_aristocrat",
+      "resulting_urid": "feat_black_sun_vigo_aristocrat",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "562a7a005fcd",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_dirty_fighting.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_dirty_fighting.yml",
+      "current_urid": "feat_black_sun_vigo_dirty_fighting",
+      "resulting_urid": "feat_black_sun_vigo_dirty_fighting",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "a8fb27e65a6e",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_network.yml",
+      "detected_entity_type": "feat",
+      "detection_evidence": "id_prefix:feat_",
+      "proposed_target_path": "data/wip/feats/factions/fac_black_sun/feat_black_sun_vigo_network.yml",
+      "current_urid": "feat_black_sun_vigo_network",
+      "resulting_urid": "feat_black_sun_vigo_network",
+      "canonical_schema": "feat_core",
+      "inbound_references": 1,
+      "outbound_references": 1,
+      "content_hash_before": "911b899311db",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/locations/loc_coruscant.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/loc_coruscant.yml",
+      "current_urid": "loc_coruscant",
+      "resulting_urid": "loc_coruscant",
+      "canonical_schema": "location_core",
+      "inbound_references": 4,
+      "outbound_references": 1,
+      "content_hash_before": "312d91aca479",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/locations/loc_falleen_enclave.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/loc_falleen_enclave.yml",
+      "current_urid": "loc_falleen_enclave",
+      "resulting_urid": "loc_falleen_enclave",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "74fd91dfbe20",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/locations/loc_imperial_city_underlevels.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/loc_imperial_city_underlevels.yml",
+      "current_urid": "loc_imperial_city_underlevels",
+      "resulting_urid": "loc_imperial_city_underlevels",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "01a777989f85",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/locations/loc_spice_terminals.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/loc_spice_terminals.yml",
+      "current_urid": "loc_spice_terminals",
+      "resulting_urid": "loc_spice_terminals",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "3955e0849a97",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/locations/loc_xizors_palace.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/loc_xizors_palace.yml",
+      "current_urid": "loc_xizors_palace",
+      "resulting_urid": "loc_xizors_palace",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 2,
+      "content_hash_before": "3555775fae2c",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_coruscant/planet_coruscant.yml",
+      "detected_entity_type": "planet",
+      "detection_evidence": "id_prefix:planet_",
+      "proposed_target_path": "data/wip/planets/planet_coruscant/planet_coruscant.yml",
+      "current_urid": "planet_coruscant",
+      "resulting_urid": "planet_coruscant",
+      "canonical_schema": "planet_core",
+      "inbound_references": 5,
+      "outbound_references": 0,
+      "content_hash_before": "85d0c43ad8f2",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/planets/planet_coruscant/era/planet_era_coruscant_rebellion.yml",
+      "detected_entity_type": "planet",
+      "detection_evidence": "id_prefix:planet_",
+      "proposed_target_path": "data/wip/planets/planet_coruscant/era/planet_era_coruscant_rebellion.yml",
+      "current_urid": "planet_era_coruscant_rebellion",
+      "resulting_urid": "planet_era_coruscant_rebellion",
+      "canonical_schema": "planet_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "00a5d9e593a3",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/planets/planet_coruscant/locations/loc_imperial_city_underlevels.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_imperial_city_underlevels.yml",
+      "current_urid": "loc_imperial_city_underlevels",
+      "resulting_urid": "loc_imperial_city_underlevels",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "6e6694109350",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_coruscant/locations/loc_imperial_palace.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_imperial_palace.yml",
+      "current_urid": "loc_imperial_palace",
+      "resulting_urid": "loc_imperial_palace",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "b0bf6b2cac64",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_coruscant/locations/loc_senate_building.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_senate_building.yml",
+      "current_urid": "loc_senate_building",
+      "resulting_urid": "loc_senate_building",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "13195ba39e88",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/planet_mustafar.yml",
+      "detected_entity_type": "planet",
+      "detection_evidence": "id_prefix:planet_",
+      "proposed_target_path": "data/wip/planets/planet_mustafar/planet_mustafar.yml",
+      "current_urid": "planet_mustafar",
+      "resulting_urid": "planet_mustafar",
+      "canonical_schema": "planet_core",
+      "inbound_references": 5,
+      "outbound_references": 0,
+      "content_hash_before": "dc09ee076cc3",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/era/planet_era_mustafar_rebellion.yml",
+      "detected_entity_type": "planet",
+      "detection_evidence": "id_prefix:planet_",
+      "proposed_target_path": "data/wip/planets/planet_mustafar/era/planet_era_mustafar_rebellion.yml",
+      "current_urid": "planet_era_mustafar_rebellion",
+      "resulting_urid": "planet_era_mustafar_rebellion",
+      "canonical_schema": "planet_core",
+      "inbound_references": 0,
+      "outbound_references": 1,
+      "content_hash_before": "7b03f2831d51",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/locations/loc_mustafar_fortress.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress.yml",
+      "current_urid": "loc_mustafar_fortress",
+      "resulting_urid": "loc_mustafar_fortress",
+      "canonical_schema": "location_core",
+      "inbound_references": 4,
+      "outbound_references": 1,
+      "content_hash_before": "8859b18d58f9",
+      "duplicate_urid": true,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "DUP_URID",
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/locations/loc_mustafar_fortress_concealed_hangar.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress_concealed_hangar.yml",
+      "current_urid": "loc_mustafar_fortress_concealed_hangar",
+      "resulting_urid": "loc_mustafar_fortress_concealed_hangar",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 2,
+      "content_hash_before": "2716f28a74e2",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/locations/loc_mustafar_fortress_evac_pods.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress_evac_pods.yml",
+      "current_urid": "loc_mustafar_fortress_evac_pods",
+      "resulting_urid": "loc_mustafar_fortress_evac_pods",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 2,
+      "content_hash_before": "055ffe29f326",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/locations/loc_mustafar_fortress_interrogation_block.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress_interrogation_block.yml",
+      "current_urid": "loc_mustafar_fortress_interrogation_block",
+      "resulting_urid": "loc_mustafar_fortress_interrogation_block",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 2,
+      "content_hash_before": "af2c61b85b14",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_mustafar/locations/loc_mustafar_fortress_vault_systems.yml",
+      "detected_entity_type": "location",
+      "detection_evidence": "id_prefix:loc_",
+      "proposed_target_path": "data/wip/locations/<owner>/loc_mustafar_fortress_vault_systems.yml",
+      "current_urid": "loc_mustafar_fortress_vault_systems",
+      "resulting_urid": "loc_mustafar_fortress_vault_systems",
+      "canonical_schema": "location_core",
+      "inbound_references": 0,
+      "outbound_references": 2,
+      "content_hash_before": "b9f2f7dc89ec",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "route_to_correct_dir",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": [
+        "OWNER_UNKNOWN"
+      ]
+    },
+    {
+      "source_path": "data/wip/planets/planet_unknown/planet_unknown.yml",
+      "detected_entity_type": "planet",
+      "detection_evidence": "id_prefix:planet_",
+      "proposed_target_path": "data/wip/planets/planet_unknown/planet_unknown.yml",
+      "current_urid": "planet_unknown",
+      "resulting_urid": "planet_unknown",
+      "canonical_schema": "planet_core",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "1f9b27280b26",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/species/human.yml",
+      "detected_entity_type": "species",
+      "detection_evidence": "shape:asi",
+      "proposed_target_path": "data/wip/species/human.yml",
+      "current_urid": "human",
+      "resulting_urid": "human",
+      "canonical_schema": "species_core|Species(CONFLICT)",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "26e09932f5d5",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/species/species_human.yml",
+      "detected_entity_type": "species",
+      "detection_evidence": "id_prefix:species_",
+      "proposed_target_path": "data/wip/species/species_human.yml",
+      "current_urid": "species_human",
+      "resulting_urid": "species_human",
+      "canonical_schema": "species_core|Species(CONFLICT)",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "4affbf6d27ce",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/species/species_unknown.yml",
+      "detected_entity_type": "species",
+      "detection_evidence": "id_prefix:species_",
+      "proposed_target_path": "data/wip/species/species_unknown.yml",
+      "current_urid": "species_unknown",
+      "resulting_urid": "species_unknown",
+      "canonical_schema": "species_core|Species(CONFLICT)",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "81e062ab581a",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/species/species_wookiee.yml",
+      "detected_entity_type": "species",
+      "detection_evidence": "id_prefix:species_",
+      "proposed_target_path": "data/wip/species/species_wookiee.yml",
+      "current_urid": "species_wookiee",
+      "resulting_urid": "species_wookiee",
+      "canonical_schema": "species_core|Species(CONFLICT)",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "f238013d8ac8",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    },
+    {
+      "source_path": "data/wip/subclasses/subclass_guardian_protector.yml",
+      "detected_entity_type": "subclass",
+      "detection_evidence": "id_prefix:subclass_",
+      "proposed_target_path": "data/wip/subclasses/subclass_guardian_protector.yml",
+      "current_urid": "subclass_guardian_protector",
+      "resulting_urid": "subclass_guardian_protector",
+      "canonical_schema": "subclass_core?",
+      "inbound_references": 0,
+      "outbound_references": 0,
+      "content_hash_before": "877286cc12f9",
+      "duplicate_urid": false,
+      "planned_transformations": [
+        "in_place",
+        "structural_repair(draft)"
+      ],
+      "unresolved_decisions": []
+    }
+  ]
+}

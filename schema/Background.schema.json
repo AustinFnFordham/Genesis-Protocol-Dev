@@ -1,0 +1,307 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character Background",
+  "description": "A comprehensive schema for character backgrounds with narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'background_jedi' or 'background_soldier'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the background."
+    },
+    "background_type": {
+      "enum": ["Military", "Criminal", "Religious", "Academic", "Professional", "Survivor", "Noble", "Outcast", "Other"],
+      "description": "The primary category of the background."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this background is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+
+    "$comment": "SECTION 2: TAGS & NARRATIVE BLOCK",
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Static tags that define this background's themes and social connections. All tags must be defined in master_tags.yml. Examples: ['soldier', 'military_training', 'disciplined', 'tactical'].",
+      "items": { "type": "string" }
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the background, its significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this background."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this background is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "The main descriptive text for the background, providing comprehensive details."
+    },
+    "life_experience": {
+      "type": "string",
+      "description": "Detailed description of the typical life experiences and challenges faced by someone with this background."
+    },
+    "common_origins": {
+      "type": "array",
+      "description": "Common places or circumstances where people with this background originate.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Common Among', 'Natural Path To', 'Associated With', 'Trained By', 'Served In'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this background from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_individuals": {
+      "type": "array",
+      "description": "Notable individuals who have this background.",
+      "items": { "type": "string" }
+    },
+    "famous_events": {
+      "type": "array",
+      "description": "Notable events or moments involving people with this background.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this background.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this background.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this background.",
+          "items": { "type": "string" }
+        },
+        "typical_missions": {
+          "type": "array",
+          "description": "Types of missions or tasks typically associated with this background.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this background affects the cultures and societies of the galaxy."
+        },
+        "social_standing": {
+          "type": "string",
+          "description": "The typical social standing and reputation of people with this background."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: MECHANICAL BENEFITS",
+    "proficiencies": {
+      "type": "object",
+      "description": "Skills, tools, and languages granted by this background.",
+      "properties": {
+        "skills": {
+          "type": "array",
+          "description": "Skill proficiencies granted by this background.",
+          "items": { "type": "string" }
+        },
+        "tools": {
+          "type": "object",
+          "description": "Tool proficiencies, including fixed and choice-based options.",
+          "properties": {
+            "fixed": {
+              "type": "array",
+              "description": "Fixed tool proficiencies.",
+              "items": { "type": "string" }
+            },
+            "choose": {
+              "type": "object",
+              "description": "Choice-based tool proficiencies.",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "description": "Number of tools to choose."
+                },
+                "from": {
+                  "type": "array",
+                  "description": "List of available tool choices.",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "languages": {
+          "type": "object",
+          "description": "Language proficiencies, including fixed and choice-based options.",
+          "properties": {
+            "fixed": {
+              "type": "array",
+              "description": "Fixed language proficiencies.",
+              "items": { "type": "string" }
+            },
+            "choose": {
+              "type": "object",
+              "description": "Choice-based language proficiencies.",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "description": "Number of languages to choose."
+                },
+                "from": {
+                  "type": "array",
+                  "description": "List of available language choices.",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "feature": {
+      "$ref": "CharacterClassFeature.schema.json",
+      "description": "The unique feature granted by this background, reusing our feature schema."
+    },
+
+    "$comment": "SECTION 8: PERSONALITY & CHARACTERIZATION",
+    "personality_options": {
+      "type": "object",
+      "description": "Lists of choices for the player to define their character's personality.",
+      "properties": {
+        "traits": {
+          "type": "array",
+          "description": "Personality traits commonly associated with this background.",
+          "items": { "type": "string" }
+        },
+        "ideals": {
+          "type": "array",
+          "description": "Core beliefs and values commonly held by people with this background.",
+          "items": { "type": "string" }
+        },
+        "bonds": {
+          "type": "array",
+          "description": "Important relationships and connections commonly formed by people with this background.",
+          "items": { "type": "string" }
+        },
+        "flaws": {
+          "type": "array",
+          "description": "Common weaknesses and character flaws associated with this background.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 9: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this background, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this background adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Item')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this background is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 10: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the background's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the background's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    },
+
+    "$comment": "SECTION 11: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Tags for filtering and categorization.",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this background.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this background."
+    }
+  },
+  "required": ["id", "name", "background_type", "tags", "narrative", "description", "proficiencies", "feature", "personality_options", "image_generation", "ui"]
+}

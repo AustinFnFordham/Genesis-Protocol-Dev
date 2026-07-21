@@ -1,0 +1,15 @@
+{
+  "title": "The Ender Protocol: Cyber-Duel",
+  "start_button_label": "Run Scenario 1: Brute-Force",
+  "log_title": "System Event Log",
+  "actions": {
+    "block_ip": "Execute Firewall Rule (Block IP)",
+    "lockdown": "Isolate Endpoint (Lock Account)",
+    "monitor": "Initiate Packet Capture (Monitor & Trace)"
+  },
+  "status_messages": {
+    "sim_started": "Initializing adversarial simulation...",
+    "red_team_turn": "Red Team agent is executing its turn...",
+    "player_turn": "Operator, the Blue Team Co-Pilot has generated response options."
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Adversary",
+  "description": "Defines any non-player character (NPC) with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'adversary_stormtrooper' or 'adversary_imperial_officer'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the adversary."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this adversary is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How common or unique this adversary is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: TAGS & NARRATIVE BLOCK",
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Static tags that define this adversary's nature, affiliations, and combat style. All tags must be defined in master_tags.yml. Examples: ['sith', 'force_user', 'ruthless', 'empire_loyalist'].",
+      "items": { "type": "string" }
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the adversary, their role, and significance. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this adversary, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this adversary is viewed by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the adversary."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this adversary in the galaxy."
+    },
+    "tier": {
+      "enum": ["Minion", "Rival", "Companion", "Elite", "Boss"],
+      "description": "The tier of the NPC, which determines their role and how they function."
+    },
+    "character_sheet_id": {
+      "type": "string",
+      "description": "Reference to the adversary's character sheet file (e.g., 'character_stormtrooper_sergeant')"
+    },
+    "personal_name": {
+      "type": "string",
+      "description": "The adversary's personal name (e.g., 'TK-421' for a stormtrooper)"
+    },
+    "special_rules": {
+      "type": "array",
+      "description": "Special rules for this NPC, e.g., 'As a companion, this character acts on the player's turn'.",
+      "items": { "type": "string" }
+    },
+    "ai_behavior": {
+      "type": "object",
+      "description": "Adversary-specific AI behavior and combat tactics",
+      "properties": {
+        "combat_tactics": {
+          "type": "array",
+          "description": "Specific combat tactics and strategies this adversary uses",
+          "items": { "type": "string" }
+        },
+        "target_priorities": {
+          "type": "array",
+          "description": "What this adversary prioritizes as targets",
+          "items": { "type": "string" }
+        },
+        "retreat_conditions": {
+          "type": "array",
+          "description": "Conditions under which this adversary will retreat",
+          "items": { "type": "string" }
+        },
+        "escalation_triggers": {
+          "type": "array",
+          "description": "What causes this adversary to escalate their tactics",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "combat_role": {
+      "type": "string",
+      "enum": ["Frontline", "Support", "Ranged", "Stealth", "Caster", "Leader"],
+      "description": "The primary combat role of this adversary."
+    },
+    "threat_level": {
+      "type": "string",
+      "enum": ["Low", "Medium", "High", "Extreme"],
+      "description": "The threat level this adversary poses to players."
+    },
+    "loot_table": {
+      "type": "object",
+      "description": "Items and rewards this adversary can drop",
+      "properties": {
+        "guaranteed_loot": {
+          "type": "array",
+          "description": "Items always dropped by this adversary",
+          "items": { "type": "string" }
+        },
+        "random_loot": {
+          "type": "array",
+          "description": "Items that may be dropped by this adversary",
+          "items": { "type": "string" }
+        },
+        "rare_loot": {
+          "type": "array",
+          "description": "Rare items that may be dropped by this adversary",
+          "items": { "type": "string" }
+        },
+        "credits": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "encounter_guidance": {
+      "type": "object",
+      "description": "Guidance for using this adversary in encounters",
+      "properties": {
+        "solo_encounter": {
+          "type": "string",
+          "description": "How to use this adversary as a solo encounter"
+        },
+        "group_encounter": {
+          "type": "string",
+          "description": "How to use this adversary in group encounters"
+        },
+        "environmental_factors": {
+          "type": "array",
+          "description": "Environmental factors that affect this adversary",
+          "items": { "type": "string" }
+        },
+        "allies_and_minions": {
+          "type": "array",
+          "description": "Common allies and minions for this adversary",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 4: ADVERSARY-SPECIFIC SYSTEMS (Role File Only)",
+    "narrative_tags": {
+      "type": "array",
+      "description": "Tags for categorizing and filtering adversaries",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["id", "name", "personal_name", "era", "rarity", "tags", "narrative", "description", "tier", "character_sheet_id", "combat_role", "threat_level"]
+}

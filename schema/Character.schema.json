@@ -1,0 +1,377 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character",
+  "description": "Defines a character with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID for the character, e.g., 'character_luke_skywalker'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the character."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this character is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How unique or special this character is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the character, their role, and significance. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this character, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this character is viewed by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the character."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this character in the galaxy."
+    },
+    "species_id": {
+      "type": "string",
+      "description": "ID of the species this character belongs to."
+    },
+    "background_id": {
+      "type": "string",
+      "description": "ID of the background this character has."
+    },
+    "game_mode": {
+      "type": "object",
+      "description": "The game mode settings for this character.",
+      "properties": {
+        "mode_id": {
+          "type": "string",
+          "enum": ["mode_specialist", "mode_balanced", "mode_heroic"],
+          "description": "The ID of the game mode being used."
+        },
+        "xp_multiplier": {
+          "type": "number",
+          "description": "Multiplier for XP gain for this character."
+        },
+        "out_of_class_xp_penalty": {
+          "type": "number",
+          "description": "Penalty multiplier for out-of-class features."
+        }
+      },
+      "required": ["mode_id", "xp_multiplier", "out_of_class_xp_penalty"]
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "description": "The character's current level."
+    },
+    "xp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The character's current XP total."
+    },
+    "hit_points": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The character's current hit points."
+    },
+    "max_hit_points": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The character's maximum hit points."
+    },
+    "armor_class": {
+      "type": "integer",
+      "minimum": 10,
+      "description": "The character's armor class."
+    },
+    "speed": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The character's movement speed in feet."
+    },
+    "ability_scores": {
+      "type": "object",
+      "description": "The character's ability scores.",
+      "properties": {
+        "strength": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "dexterity": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "constitution": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "intelligence": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "wisdom": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "charisma": { "type": "integer", "minimum": 1, "maximum": 30 }
+      },
+      "required": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+    },
+    "saving_throws": {
+      "type": "object",
+      "description": "The character's saving throw modifiers.",
+      "properties": {
+        "strength": { "type": "integer" },
+        "dexterity": { "type": "integer" },
+        "constitution": { "type": "integer" },
+        "intelligence": { "type": "integer" },
+        "wisdom": { "type": "integer" },
+        "charisma": { "type": "integer" }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "description": "The character's skill modifiers.",
+      "properties": {
+        "acrobatics": { "type": "integer" },
+        "animal_handling": { "type": "integer" },
+        "arcana": { "type": "integer" },
+        "athletics": { "type": "integer" },
+        "deception": { "type": "integer" },
+        "history": { "type": "integer" },
+        "insight": { "type": "integer" },
+        "intimidation": { "type": "integer" },
+        "investigation": { "type": "integer" },
+        "medicine": { "type": "integer" },
+        "nature": { "type": "integer" },
+        "perception": { "type": "integer" },
+        "performance": { "type": "integer" },
+        "persuasion": { "type": "integer" },
+        "religion": { "type": "integer" },
+        "sleight_of_hand": { "type": "integer" },
+        "stealth": { "type": "integer" },
+        "survival": { "type": "integer" }
+      }
+    },
+    "proficiencies": {
+      "type": "array",
+      "description": "List of proficiencies the character has.",
+      "items": { "type": "string" }
+    },
+    "languages": {
+      "type": "array",
+      "description": "List of languages the character knows.",
+      "items": { "type": "string" }
+    },
+    "equipment": {
+      "type": "array",
+      "description": "List of equipment the character has.",
+      "items": { "type": "string" }
+    },
+    "features": {
+      "type": "array",
+      "description": "List of features the character has.",
+      "items": { "type": "string" }
+    },
+    "spells": {
+      "type": "array",
+      "description": "List of spells the character knows.",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "string",
+      "description": "General notes about the character."
+    },
+    "moral_compass": {
+      "type": "integer",
+      "minimum": -100,
+      "maximum": 100,
+      "default": 0,
+      "description": "Character's moral compass ranging from -100 (completely Dark) to +100 (completely Light). Default starting value is 0 (neutral)."
+    },
+
+    "$comment": "SECTION 4: TAGS & PHYSICAL PROFILE (Genesis Protocol Article II & VI)",
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM: Tags are the fundamental vocabulary of the game. Every character has a tags block that is a living document containing both static tags (from Species, Class, Background, etc.) and dynamic tags (earned through gameplay, reputation, achievements). All tags must be defined in master_tags.yml.",
+      "items": { "type": "string" }
+    },
+    "physical_profile": {
+      "type": "object",
+      "description": "ARTISANAL PERFECTION (Article VI-C): Physical characteristics for dynamic image generation. The engine combines this with species_id, class_id, inventory, and action context to create rich, contextualized image prompts at run-time.",
+      "properties": {
+        "height": {
+          "type": "string",
+          "description": "Character's height (e.g., \"7'5\\\"\", \"1.8 meters\")."
+        },
+        "build": {
+          "type": "string",
+          "description": "Body type (e.g., \"muscular\", \"lean\", \"stocky\", \"slender\")."
+        },
+        "hair_color": {
+          "type": "string",
+          "description": "Hair color (or equivalent for non-human species)."
+        },
+        "hair_style": {
+          "type": "string",
+          "description": "Hair style description."
+        },
+        "eye_color": {
+          "type": "string",
+          "description": "Eye color."
+        },
+        "skin_tone": {
+          "type": "string",
+          "description": "Skin tone or coloration."
+        },
+        "distinguishing_features": {
+          "type": "array",
+          "description": "Scars, tattoos, cybernetics, or other unique features. These can be added dynamically during gameplay.",
+          "items": { "type": "string" }
+        },
+        "typical_attire": {
+          "type": "array",
+          "description": "Typical clothing and accessories when not in specific gear.",
+          "items": { "type": "string" }
+        },
+        "voice_description": {
+          "type": "string",
+          "description": "Description of the character's voice for LLM-GM narration."
+        }
+      }
+    },
+
+    "$comment": "SECTION 5: DEPRECATED - UNIFIED CONNECTIONS SYSTEM",
+    "$comment": "MIGRATION NOTE: The 'connections' block is DEPRECATED per Genesis Protocol Article III. All connection-based synergies should be migrated to synergy_rules.yml using the tags system. This block is kept for backward compatibility during the migration period.",
+    "connections": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Member Of', 'Enemy Of', 'Allied With', 'From'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 6: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this character type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_characters": {
+      "type": "array",
+      "description": "Notable characters of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld or origin of this character."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this character."
+    },
+
+    "$comment": "SECTION 7: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying this character."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this character.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this character interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for this character.",
+          "items": { "type": "string" }
+        },
+        "character_development": {
+          "type": "string",
+          "description": "Guidance for character development and progression."
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: IMAGE GENERATION & UI",
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this character."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Character_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the character image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the character icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this character for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "species_id", "background_id", "game_mode", "tags"]
+}

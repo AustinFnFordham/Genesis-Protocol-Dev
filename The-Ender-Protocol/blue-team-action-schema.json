@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Jedi Defense Tools",
+    "version": "1.0.0",
+    "description": "A collection of defensive tools for the Jedi Co-Pilot agent."
+  },
+  "paths": {
+    "/block_ip": {
+      "post": {
+        "summary": "Blocks a malicious IP address.",
+        "description": "This tool takes a scenario_id and an ip_address and adds the IP to the blocked_ips list in the firewall_rules.json file for that scenario.",
+        "operationId": "blockIpAddress",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scenario_id": {
+                    "type": "string",
+                    "description": "The ID of the current scenario, e.g., 'scenario_01_bruteforce'."
+                  },
+                  "ip_address": {
+                    "type": "string",
+                    "description": "The IP address to be blocked."
+                  }
+                },
+                "required": ["scenario_id", "ip_address"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The result of the block attempt.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the operation, e.g., 'success'."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message confirming the action."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

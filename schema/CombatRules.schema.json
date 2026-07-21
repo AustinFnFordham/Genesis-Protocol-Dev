@@ -1,0 +1,73 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Combat Rules",
+    "description": "Defines the core rules for personal and starship combat in the hybrid system.",
+    "type": "object",
+    "properties": {
+      "personal_combat": {
+        "type": "object",
+        "properties": {
+          "round_structure": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["Start of Round", "All characters take turns in initiative order", "End of Round"]
+          },
+          "action_economy": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["1 Action", "1 Bonus Action", "1 Reaction", "Movement", "1 Object Interaction"]
+          },
+          "defense_model": {
+            "type": "object",
+            "properties": {
+              "primary": { "const": "Armor Class (AC)" },
+              "secondary": { "const": "Damage Reduction (DR)" }
+            }
+          },
+          "narrative_currency_generation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "trigger": { "type": "string" },
+                "generates": { "type": "string" }
+              }
+            }
+          },
+          "critical_hit_rules": {
+            "type": "object",
+            "properties": {
+              "trigger": { "const": "Natural 20 on attack roll" },
+              "effect": { "const": "Player choice: Double damage dice OR inflict Critical Injury by spending Advantage." }
+            }
+          }
+        }
+      },
+      "starship_combat": {
+        "type": "object",
+        "properties": {
+          "scale_and_range": {
+            "type": "string",
+            "const": "Abstract (Silhouette and Range Bands)"
+          },
+          "action_economy": {
+            "type": "string",
+            "const": "Role-based (Crew Stations and unique Starship Actions)"
+          },
+          "health_model": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["Shield Points", "Hull Trauma (HP)", "System Strain"]
+          },
+          "critical_hit_rules": {
+            "type": "object",
+            "properties": {
+              "trigger": { "const": "Varies by weapon (often requires spending Advantage/Triumph)" },
+              "effect": { "const": "Roll on the Starship Critical Hit table." }
+            }
+          }
+        }
+      }
+    },
+    "required": ["personal_combat", "starship_combat"]
+  }

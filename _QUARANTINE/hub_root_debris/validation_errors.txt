@@ -1,0 +1,2 @@
+[CORE] first_order.yml: "npc_todo_bad_format_{'npc_offi" does not match '^npc_[a-z0-9_]+$' at deque(['synergy', 'key_npc_ids', 0])
+[FATAL CORE] first_order.yml: "npc_todo_bad_format_{'npc_offi" does not match '^npc_[a-z0-9_]+$' at deque(['synergy', 'key_npc_ids', 0])

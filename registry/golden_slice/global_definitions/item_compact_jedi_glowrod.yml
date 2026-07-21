@@ -1,0 +1,24 @@
+urid: item_compact_jedi_glowrod
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: e71aa8e89ff7c862
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- compact jedi glowrod
+- compact jedi glowrods
+- jedi glowrod
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Compact Jedi glowrod
+effect: adjustable cool-white illumination with magnetic belt clip; no automatic combat
+  benefit

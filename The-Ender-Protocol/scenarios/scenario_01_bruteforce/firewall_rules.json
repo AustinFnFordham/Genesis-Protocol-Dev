@@ -1,0 +1,14 @@
+{
+  "scenario_id": "scenario_01_bruteforce",
+  "description": "Firewall rules for brute force scenario",
+  "blocked_ips": [],
+  "allowed_ips": [
+    "192.168.1.100",
+    "10.0.0.50"
+  ],
+  "rules": {
+    "max_failed_attempts": 3,
+    "lockout_duration_minutes": 30,
+    "rate_limit_per_minute": 10
+  }
+}

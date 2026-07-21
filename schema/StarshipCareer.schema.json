@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StarshipCareer",
+  "description": "Defines a starship career that represents a character's role and expertise in starship operations, separate from their ground-based character class.",
+  "type": "object",
+  "properties": {
+    "career_id": {
+      "type": "string",
+      "description": "Unique identifier for the starship career."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the starship career."
+    },
+    "logline": {
+      "type": "string",
+      "description": "Brief, evocative description of the career's core concept."
+    },
+    "gameplay_loop": {
+      "type": "string",
+      "description": "Detailed explanation of how this career plays during starship combat and operations."
+    },
+    "core_mechanics": {
+      "type": "array",
+      "description": "List of primary mechanical abilities that define this career's playstyle.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the mechanical ability."
+          },
+          "action_type": {
+            "type": "string",
+            "enum": ["action", "bonus_action", "reaction", "free_action"],
+            "description": "Type of action required to use this ability."
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of what this ability does."
+          },
+          "mechanical_effects": {
+            "type": "array",
+            "description": "List of specific mechanical effects this ability provides.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "effect_type": {
+                  "type": "string",
+                  "enum": [
+                    "movement_modifier",
+                    "attack_modifier",
+                    "defense_modifier",
+                    "system_control",
+                    "debuff_enemy",
+                    "buff_ally",
+                    "resource_management",
+                    "sensor_manipulation",
+                    "power_reroute",
+                    "emergency_repair"
+                  ]
+                },
+                "target": {
+                  "type": "string",
+                  "enum": ["self", "ally", "enemy", "ship_system", "battlefield"],
+                  "description": "What this effect targets."
+                },
+                "duration": {
+                  "type": "string",
+                  "description": "How long this effect lasts (e.g., '1_round', 'until_end_of_turn', 'permanent')."
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions that must be met for this effect to apply.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": { "type": "string" },
+                      "op": { "type": "string" },
+                      "value": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["name", "action_type", "description"]
+      }
+    },
+    "progression_path": {
+      "type": "array",
+      "description": "Progression tiers that unlock new abilities and capabilities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": ["Novice", "Adept", "Expert", "Master", "Legendary"],
+            "description": "Progression tier name."
+          },
+          "xp_requirement": {
+            "type": "integer",
+            "description": "XP cost to reach this tier."
+          },
+          "perks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of abilities and capabilities unlocked at this tier."
+          },
+          "unlocked_mechanics": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of mechanical ability IDs unlocked at this tier."
+          }
+        },
+        "required": ["tier", "perks"]
+      }
+    },
+    "synergy_nodes": {
+      "type": "array",
+      "description": "Special interactions with other starship careers.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "with_career": {
+            "type": "string",
+            "description": "Career ID this synergy works with."
+          },
+          "synergy": {
+            "type": "string",
+            "description": "Description of the synergistic effect."
+          },
+          "mechanical_effect": {
+            "type": "object",
+            "description": "Specific mechanical benefit of this synergy.",
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "description": "When this synergy activates."
+              },
+              "effect": {
+                "type": "string",
+                "description": "What mechanical benefit is provided."
+              },
+              "cost": {
+                "type": "string",
+                "description": "Any cost or requirement for this synergy."
+              }
+            }
+          }
+        },
+        "required": ["with_career", "synergy"]
+      }
+    },
+    "ui_theme": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "type": "string",
+          "description": "Icon identifier for UI display."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color for UI theming (hex code)."
+        },
+        "secondary_color": {
+          "type": "string",
+          "description": "Secondary color for UI theming (hex code)."
+        }
+      },
+      "required": ["icon", "color"]
+    },
+    "ship_compatibility": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of ship classes this career is most effective with.",
+      "enum": [
+        "starfighter",
+        "interceptor", 
+        "bomber",
+        "transport",
+        "frigate",
+        "cruiser",
+        "capital_ship",
+        "freighter",
+        "corvette",
+        "all"
+      ]
+    },
+    "prerequisites": {
+      "type": "object",
+      "properties": {
+        "minimum_level": {
+          "type": "integer",
+          "description": "Minimum character level required to take this career."
+        },
+        "required_skills": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Skills that must be proficient to take this career."
+        },
+        "required_tool_proficiencies": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tool proficiencies required for this career."
+        }
+      }
+    }
+  },
+  "required": ["career_id", "name", "logline", "gameplay_loop", "core_mechanics", "progression_path", "synergy_nodes", "ui_theme"]
+}

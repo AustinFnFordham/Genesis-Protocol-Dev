@@ -1,0 +1,223 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Squad",
+  "description": "Defines a squad with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'squad_stormtrooper_platoon' or 'squad_rebel_cell'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the squad."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this squad is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How common or unique this squad is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the squad, its role, and significance. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this squad, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this squad is viewed by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the squad."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this squad in the galaxy."
+    },
+    "squad_leader_id": { 
+      "type": "string", 
+      "description": "The ID of the Character leading the squad." 
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "adversary_id": { 
+            "type": "string", 
+            "description": "The type of minion in the squad." 
+          },
+          "count": { 
+            "type": "integer",
+            "description": "Number of this type of minion in the squad."
+          }
+        }
+      }
+    },
+    "squad_hp": { 
+      "type": "integer", 
+      "description": "The combined health pool of all minions in the squad." 
+    },
+    "active_formation": {
+      "type": "string",
+      "description": "The ID of the formation the squad is currently in."
+    },
+    "squad_actions": {
+      "type": "array",
+      "description": "A list of special actions the leader can command the squad to take.",
+      "items": { "$ref": "Action.schema.json" }
+    },
+    "squad_type": {
+      "type": "string",
+      "enum": ["Military", "Mercenary", "Rebel", "Criminal", "Security", "Exploration", "Diplomatic"],
+      "description": "The type of squad this is."
+    },
+    "training_level": {
+      "type": "string",
+      "enum": ["Green", "Regular", "Veteran", "Elite", "Legendary"],
+      "description": "The training and experience level of the squad."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Member_Of', 'Enemy_Of', 'Allied_With', 'From'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this squad type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_squads": {
+      "type": "array",
+      "description": "Notable squads of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld or origin of this squad."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this squad."
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying encounters with this squad."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this squad.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this squad interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for this squad.",
+          "items": { "type": "string" }
+        },
+        "squad_development": {
+          "type": "string",
+          "description": "Guidance for squad development and progression."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: IMAGE GENERATION & UI",
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this squad."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Formation_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the squad image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the squad icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this squad for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "squad_leader_id", "members", "connections"]
+}

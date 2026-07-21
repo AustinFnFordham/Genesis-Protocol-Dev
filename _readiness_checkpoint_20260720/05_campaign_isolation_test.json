@@ -1,0 +1,72 @@
+{
+  "pass": true,
+  "hidden_excluded": true,
+  "sequence": [
+    "meridian_reach",
+    "shadows_of_empire",
+    "meridian_reach",
+    "shadows_of_empire",
+    "meridian_reach"
+  ],
+  "results": [
+    {
+      "step": 1,
+      "mount": "meridian_reach",
+      "cid_ok": true,
+      "foreign_leaks": [],
+      "npcs": [
+        "Dax Ferren",
+        "Senn Varga",
+        "Ilo Reeth",
+        "Maza Ketrel",
+        "Besk Ollor"
+      ]
+    },
+    {
+      "step": 2,
+      "mount": "shadows_of_empire",
+      "cid_ok": true,
+      "foreign_leaks": [],
+      "npcs": [
+        "Captain Dara Reyes",
+        "Yuel"
+      ]
+    },
+    {
+      "step": 3,
+      "mount": "meridian_reach",
+      "cid_ok": true,
+      "foreign_leaks": [],
+      "npcs": [
+        "Dax Ferren",
+        "Senn Varga",
+        "Ilo Reeth",
+        "Maza Ketrel",
+        "Besk Ollor"
+      ]
+    },
+    {
+      "step": 4,
+      "mount": "shadows_of_empire",
+      "cid_ok": true,
+      "foreign_leaks": [],
+      "npcs": [
+        "Captain Dara Reyes",
+        "Yuel"
+      ]
+    },
+    {
+      "step": 5,
+      "mount": "meridian_reach",
+      "cid_ok": true,
+      "foreign_leaks": [],
+      "npcs": [
+        "Dax Ferren",
+        "Senn Varga",
+        "Ilo Reeth",
+        "Maza Ketrel",
+        "Besk Ollor"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+urid: rule_meridian_jedi_network_access
+entity_type: CampaignRule
+authority_lane: campaign_local
+source_path: null
+content_hash: 392e69d1d53fcd94
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- meridian jedi network acces
+- meridian jedi network access
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance: {}
+campaign_scope: meridian_reach
+validation_status: ruling_authored
+resolution_status: campaign_local_adaptation
+name: Meridian Jedi-Network Access

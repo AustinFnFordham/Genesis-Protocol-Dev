@@ -1,0 +1,2097 @@
+{
+ "generated": true,
+ "pipeline": "Genesis Protocol / Forge V3",
+ "manifest": [
+  {
+   "urid": "fac_black_sun",
+   "entity_type": "faction",
+   "tier": "gold",
+   "source": "data\\gold\\factions\\core\\fac_black_sun.yml"
+  },
+  {
+   "urid": "species_wookiee",
+   "entity_type": "specie",
+   "tier": "wip",
+   "source": "data\\wip\\species\\species_wookiee.yml"
+  },
+  {
+   "urid": "guardian",
+   "entity_type": "classe",
+   "tier": "wip",
+   "source": "data\\wip\\classes\\guardian.yml"
+  },
+  {
+   "urid": "subclass_guardian_protector",
+   "entity_type": "subclasse",
+   "tier": "wip",
+   "source": "data\\wip\\subclasses\\subclass_guardian_protector.yml"
+  },
+  {
+   "urid": "loc_xizors_palace",
+   "entity_type": "location",
+   "tier": "wip",
+   "source": "data\\wip\\locations\\loc_xizors_palace.yml"
+  },
+  {
+   "urid": "creature_shadowstalker_nexu",
+   "entity_type": "creature",
+   "tier": "wip",
+   "source": "data\\wip\\creatures\\creature_shadowstalker_nexu.yml"
+  }
+ ],
+ "registry": {
+  "fac_black_sun": {
+   "metadata": {
+    "id": "fac_black_sun",
+    "name": "Black Sun",
+    "slug": "black_sun",
+    "version": "4.2.0",
+    "status": "gold",
+    "source_dataset": "sw5e_core",
+    "content_origin": "canon"
+   },
+   "taxonomy": {
+    "era": [
+     "tag_era_rebellion"
+    ],
+    "alignment": [
+     "tag_align_dark"
+    ],
+    "tags": [
+     "tag_criminal_syndicate",
+     "tag_faction_underworld",
+     "tag_trait_organized",
+     "tag_trait_wealthy",
+     "tag_trait_espionage",
+     "tag_species_falleen"
+    ]
+   },
+   "structure": {
+    "power": {
+     "wealth": 8,
+     "military": 4,
+     "influence": 5,
+     "tech_level": 5
+    },
+    "ranks": [
+     {
+      "rank_level": 1,
+      "title": "Associate",
+      "renown_cost": 0,
+      "feature_choices": [
+       {
+        "feat_id": "feat_black_sun_associate_quiet_ear"
+       },
+       {
+        "feat_id": "feat_black_sun_associate_smugglers_path"
+       },
+       {
+        "feat_id": "feat_black_sun_associate_payout"
+       }
+      ]
+     },
+     {
+      "rank_level": 2,
+      "title": "Enforcer",
+      "renown_cost": 15,
+      "feature_choices": [
+       {
+        "feat_id": "feat_black_sun_enforcer_muscle"
+       },
+       {
+        "feat_id": "feat_black_sun_enforcer_asset_recovery"
+       },
+       {
+        "feat_id": "feat_black_sun_enforcer_ambush"
+       }
+      ]
+     },
+     {
+      "rank_level": 3,
+      "title": "Vigo's Hand",
+      "renown_cost": 35,
+      "feature_choices": [
+       {
+        "feat_id": "feat_black_sun_hand_poison"
+       },
+       {
+        "feat_id": "feat_black_sun_hand_negotiator"
+       },
+       {
+        "feat_id": "feat_black_sun_hand_reflexes"
+       }
+      ]
+     },
+     {
+      "rank_level": 4,
+      "title": "Vigo",
+      "renown_cost": 75,
+      "feature_choices": [
+       {
+        "feat_id": "feat_black_sun_vigo_aristocrat"
+       },
+       {
+        "feat_id": "feat_black_sun_vigo_dirty_fighting"
+       },
+       {
+        "feat_id": "feat_black_sun_vigo_network"
+       }
+      ]
+     },
+     {
+      "rank_level": 5,
+      "title": "Underlord",
+      "renown_cost": 150,
+      "feature_choices": [
+       {
+        "feat_id": "feat_black_sun_underlord_command"
+       },
+       {
+        "feat_id": "feat_black_sun_underlord_presence"
+       },
+       {
+        "feat_id": "feat_black_sun_underlord_secrets"
+       }
+      ]
+     }
+    ]
+   },
+   "essence": {
+    "overview": "Black Sun isn't a gang — it's a shadow court. Vigo salons on Coruscant trade in favors like currency, and every favor has a witness. The Falleen nobility keeps the syndicate polished on the surface and feral underneath: spice, slaves, piracy, assassination — all managed with ledgers clean enough to pass through a senator's hands.\n",
+    "ideology": "Profit is proof. Discretion is survival. Violence is a tool, not a personality — and the Sun punishes waste. The only unforgivable sin is drawing heat that can't be redirected.\n",
+    "style_guide": {
+     "tone": "Opulent Menace",
+     "key_phrases": [
+      "The Sun sees receipts.",
+      "Keep it clean.",
+      "Pay the debt, or become it."
+     ],
+     "image_prompt_base": "Star Wars underworld noir, Coruscant night rain, Falleen aristocrats in sharp suits, neon-green accent lighting, guarded counting-room, hidden blasters, tense smiles.\n",
+     "image_prompt_modifiers": [
+      "holo-ledger glow",
+      "silk-and-armor fashion",
+      "security droids at velvet ropes"
+     ]
+    },
+    "gm_guidance": {
+     "first_missions": [
+      "Recover a stolen Vigo ring before it opens a safehouse door.",
+      "Burn a debt-ledger copy held by an ISB-adjacent accountant.",
+      "Escort a Falleen 'diplomat' who is actually delivering blackmail.",
+      "Plant counterfeit customs seals to redirect heat onto a rival syndicate.",
+      "Find who skimmed a percentage off a spice shipment—quietly.",
+      "Retrieve a crate that 'doesn't exist' from a Coruscant impound bay.",
+      "Silence a witness who thinks they're protected by the Republic.",
+      "Broker peace between two crews before the Vigo loses face."
+     ],
+     "hooks": [
+      "A Vigo's favor is called in—on you—by someone you've never met.",
+      "An assassin's contract exists with your name on it… signed by a dead man.",
+      "A senator's aide offers immunity for one name: yours.",
+      "A safehouse door opens for the wrong ring.",
+      "A rival syndicate starts using Black Sun pheromone markers as a false flag.",
+      "A ship arrives with crew missing and cargo untouched—like it was judged."
+     ],
+     "rumors": [
+      "Xizor's old ledgers still circulate, and they name everyone.",
+      "Someone in the Vigos is feeding ISB 'clean' intelligence.",
+      "A new spice cut causes hallucinations of green fire in the mirrors.",
+      "A counting room on Coruscant has been recording conversations for years.",
+      "The Sun has a 'black list'—one name added means you vanish.",
+      "A Vigo is buying Jedi artifacts, not for power— for leverage."
+     ],
+     "conflicts": [
+      "Vigo politics: humiliation is deadlier than gunfire.",
+      "Heat management: you're rewarded for crimes no one can prove.",
+      "False flags and infiltration by rival syndicates.",
+      "Falleen nobility vs street crews—control vs chaos."
+     ],
+     "tells_by_rank": {
+      "rank_1": "Carries messages, not money—if they have credits, they're bait.",
+      "rank_2": "Has a safehouse phrase and a handler who never says their real name.",
+      "rank_3": "Speaks in numbers and schedules; violence happens off-screen, on-time.",
+      "rank_4": "Walks with escorts who don't look like escorts.",
+      "rank_5": "Never negotiates twice—if they return, it's to end something."
+     }
+    },
+    "culture": {
+     "customs": [
+      "Oaths sworn on Mustafar Fortress.",
+      "Debts are recorded twice: once in a ledger, once in a living witness.",
+      "Vigo gatherings are ritualized—gift, compliment, threat, then business."
+     ],
+     "taboos": [
+      "Talking numbers outside a counting room.",
+      "Skimming from the top without the Vigo's cut.",
+      "Bleeding where cameras can see it."
+     ],
+     "status_markers": [
+      "Signet rings containing micro-transmitters.",
+      "Tailored coats with hidden seams for credsticks.",
+      "A perfume note—Falleen pheromone trace."
+     ]
+    },
+    "tone_levers": {
+     "always_on": [
+      "sci_fi"
+     ],
+     "temperatures": {
+      "action": 0.6,
+      "drama": 0.6,
+      "horror": 0.2,
+      "thriller": 0.4,
+      "adventure": 0.6,
+      "comedy": 0.1,
+      "western": 0.2
+     },
+     "subgenres": [
+      "underworld_noir",
+      "political_intrigue"
+     ],
+     "notes": "Use dread sparingly—cursed artifacts, haunted vaults, aftermath—never constant. The tone is opulent menace, not horror. Let the horror come from betrayal and consequence.\n"
+    }
+   },
+   "connections": {
+    "headquarters_id": "loc_coruscant",
+    "key_npc_ids": [
+     "npc_prince_xizor",
+     "npc_guri"
+    ],
+    "allies": [
+     "fac_galactic_empire"
+    ],
+    "enemies": [
+     "fac_rebel_alliance"
+    ],
+    "neutral": [
+     "fac_hutt_cartel"
+    ]
+   },
+   "synergy_engine": {
+    "rules": [
+     {
+      "rule_id": "rule_black_sun_class_operative_synergy",
+      "narrative": "Operatives find natural homes as Black Sun assassins and spies.",
+      "llm_guidance": "Apply when a Black Sun member with the Operative class makes a Stealth check during faction-sponsored activities. Represents their specialized training.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_class_operative"
+      ],
+      "trigger_event": "on_check",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_class_operative",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "skill_bonus",
+       "target": "skill_stealth",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     },
+     {
+      "rule_id": "rule_black_sun_class_scoundrel_synergy",
+      "narrative": "Smugglers and gamblers thrive in the Sun's casinos and trade routes.",
+      "llm_guidance": "Apply when a Black Sun member with the Scoundrel class makes a Deception check in criminal or underworld contexts. Their experience aligns with syndicate needs.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_class_scoundrel"
+      ],
+      "trigger_event": "on_check",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_class_scoundrel",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "skill_bonus",
+       "target": "skill_deception",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     },
+     {
+      "rule_id": "rule_black_sun_species_falleen_synergy",
+      "narrative": "Falleen are fast-tracked for leadership due to pheromone control and cultural ties.",
+      "llm_guidance": "Apply when a Falleen Black Sun member makes a Charisma save, representing their natural pheromone resistance and manipulation abilities valued by the syndicate.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_species_falleen"
+      ],
+      "trigger_event": "on_save",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_species_falleen",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "check_advantage",
+       "target": "save_charisma",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     },
+     {
+      "rule_id": "rule_black_sun_species_human_synergy",
+      "narrative": "Humans blend easily into the Imperial circles Black Sun infests.",
+      "llm_guidance": "Apply when a Human Black Sun member makes an Insight check while operating within Imperial or mainstream contexts. Their unremarkable appearance aids infiltration.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_human"
+      ],
+      "trigger_event": "on_check",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_human",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "skill_bonus",
+       "target": "skill_insight",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     },
+     {
+      "rule_id": "rule_black_sun_background_criminal_synergy",
+      "narrative": "A history of crime is the only resume Black Sun accepts.",
+      "llm_guidance": "Apply when a Black Sun member with a Criminal background makes a Streetwise check. Their prior experience in underworld dealings gives them an edge.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_background_criminal"
+      ],
+      "trigger_event": "on_check",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_background_criminal",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "skill_bonus",
+       "target": "skill_streetwise",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     },
+     {
+      "rule_id": "rule_black_sun_background_noble_synergy",
+      "narrative": "Disgraced nobles find new power structures in the Vigo courts.",
+      "llm_guidance": "Apply when a Black Sun member with a Noble background makes a Persuasion check in high-society or political contexts. Their social training serves syndicate diplomacy.",
+      "trigger_tags": [
+       "tag_faction_black_sun",
+       "tag_background_noble"
+      ],
+      "trigger_event": "on_check",
+      "condition": {
+       "logic": "AND",
+       "conditions": [
+        {
+         "type": "tag",
+         "target": "tag_faction_black_sun",
+         "operator": "has",
+         "value": true
+        },
+        {
+         "type": "tag",
+         "target": "tag_background_noble",
+         "operator": "has",
+         "value": true
+        }
+       ]
+      },
+      "effect": {
+       "category": "skill_bonus",
+       "target": "skill_persuasion",
+       "target_scope": "self",
+       "bonus_type": "circumstance",
+       "value": 1
+      }
+     }
+    ]
+   },
+   "ui": {
+    "color_hex": "#0D5C3A",
+    "icon_path": "icons/black_sun.svg",
+    "image_path": "images/black_sun_hero.webp"
+   }
+  },
+  "species_wookiee": {
+   "description": "Towering and fiercely loyal, Wookiees are famed for their strength, climbing prowess, and unyielding bonds of honor.",
+   "metadata": {
+    "id": "species_wookiee",
+    "name": "Wookiee",
+    "slug": "wookiee",
+    "version": "1.0.0",
+    "status": "wip",
+    "source_dataset": "legacy_species_v1",
+    "content_origin": "canon"
+   },
+   "_legacy": {
+    "id": "wookiee",
+    "name": "Wookiee",
+    "tags": [
+     "ambitious",
+     "arboreal",
+     "honorable",
+     "kashyyyk_native",
+     "legendary",
+     "loyal",
+     "melee_specialist",
+     "precise",
+     "predator",
+     "resilient",
+     "strength",
+     "strength_based",
+     "uncommon",
+     "warrior",
+     "wilderness",
+     "wookiee"
+    ],
+    "starting_xp": 105,
+    "ability_score_increases": [
+     {
+      "ability": "Strength",
+      "value": 2
+     },
+     {
+      "ability": "Constitution",
+      "value": 1
+     }
+    ],
+    "speed": 30,
+    "size": "Medium",
+    "languages": [
+     "Shyriiwook",
+     "Basic"
+    ],
+    "base_hp": 14,
+    "base_strain": 8,
+    "innate_traits": [
+     {
+      "id": "wookiee_feral_strength",
+      "name": "Feral Strength",
+      "narrative": "A Wookiee's rage is a powerful weapon. When pushed, you can enter a state of primal fury, striking with overwhelming force.",
+      "mechanics": [
+       {
+        "effect": "grant_ability",
+        "name": "Feral Strike",
+        "action_type": "free_action",
+        "description": "Once per short rest, when you hit with a melee or unarmed attack, you can activate this ability to deal an additional 2d4 damage.",
+        "rules": [
+         "cooldown:short_rest",
+         "trigger:on_melee_hit"
+        ]
+       }
+      ],
+      "corruption_transform": {
+       "can_corrupt": true,
+       "corrupts_to_feature_id": "dark_side_brutish_strength",
+       "ui_transition": {
+        "animation": "ui-corruption-brutish-strength",
+        "sfx": "sound-effect-dark-side-brutish-strength"
+       }
+      }
+     },
+     {
+      "id": "wookiee_climbing_claws",
+      "name": "Climbing Claws",
+      "narrative": "Your hands and feet house retractable claws, a biological inheritance from a life spent in the canopy of Kashyyyk's wroshyr trees.",
+      "mechanics": [
+       {
+        "effect": "grant_movement",
+        "parameters": {
+         "type": "climbing",
+         "value": "equal_to_walking_speed"
+        }
+       },
+       {
+        "effect": "modify_unarmed_strike",
+        "parameters": {
+         "damage_dice": "1d4",
+         "damage_type": "slashing"
+        }
+       }
+      ],
+      "corruption_transform": {
+       "can_corrupt": true,
+       "corrupts_to_feature_id": "dark_side_crawling_horror",
+       "ui_transition": {
+        "animation": "ui-corruption-crawling-horror",
+        "sfx": "sound-effect-dark-side-crawling-horror"
+       }
+      }
+     },
+     {
+      "id": "wookiee_indomitable_roar",
+      "name": "Indomitable Roar",
+      "narrative": "Your powerful roar is not just a challenge; it's a manifestation of an unbreakable will that steels you against fear.",
+      "mechanics": [
+       {
+        "effect": "grant_advantage",
+        "description": "You have advantage on all saving throws against being frightened.",
+        "conditions": [
+         {
+          "key": "saving_throw_type",
+          "op": "equals",
+          "value": "frightened"
+         }
+        ]
+       }
+      ],
+      "corruption_transform": {
+       "can_corrupt": true,
+       "corrupts_to_feature_id": "dark_side_berserker_mode",
+       "ui_transition": {
+        "animation": "ui-corruption-berserker-mode",
+        "sfx": "sound-effect-dark-side-berserker-mode"
+       }
+      }
+     }
+    ],
+    "appearance_profile": {
+     "height_range": "2.1m - 2.4m",
+     "distinctions": [
+      "Thick fur covering entire body",
+      "Retractable climbing claws",
+      "Powerful, muscular build",
+      "Deep, resonant voice"
+     ],
+     "fur_color_variants": [
+      "Rich Brown",
+      "Golden Brown",
+      "Dark Brown",
+      "Reddish Brown",
+      "Black",
+      "Grey",
+      "White (rare)"
+     ],
+     "fur_patterns": [
+      "Solid color",
+      "Subtle striping",
+      "Mottled patterns",
+      "Gradient variations"
+     ],
+     "eye_color_variants": [
+      "Dark Brown",
+      "Golden Amber",
+      "Deep Blue",
+      "Green",
+      "Hazel"
+     ],
+     "common_adornments": [
+      "Leather bandoliers and pouches",
+      "Woven fiber belts and straps",
+      "Bone or wood jewelry",
+      "Combat armor with fur trim",
+      "Traditional Kashyyyk ceremonial garments"
+     ],
+     "llm_description_prompt": "Describe a Wookiee character. Emphasize their towering presence, the texture and color of their fur, and their powerful, dignified bearing. Their eyes should convey both intelligence and primal strength. Consider their traditional Kashyyyk heritage and the stories their scars and adornments might tell."
+    },
+    "class_synergies": [
+     {
+      "class": "Guardian",
+      "narrative": "A Wookiee's legendary loyalty and protective instincts make them a natural Guardian, willing to endure any hardship to defend their friends and honor their life-debts.",
+      "mechanical_benefits": [
+       "Feral Strength trait synergizes with Guardian's defensive abilities",
+       "High Constitution supports Guardian's tank role",
+       "Indomitable Roar enhances Guardian's ability to protect allies"
+      ]
+     },
+     {
+      "class": "Soldier (Brawler)",
+      "narrative": "Combining their immense strength with formal combat training, a Wookiee Soldier is one of the most terrifying melee combatants in the galaxy.",
+      "mechanical_benefits": [
+       "Climbing Claws provide natural weapons for unarmed combat",
+       "Feral Strength amplifies Soldier's damage output",
+       "Natural durability supports frontline combat role"
+      ]
+     },
+     {
+      "class": "Scout",
+      "narrative": "Wookiees' arboreal heritage and natural climbing abilities make them exceptional Scouts, able to navigate any terrain and track prey with primal instincts.",
+      "mechanical_benefits": [
+       "Climbing Claws enable vertical exploration and ambush tactics",
+       "Keen senses from arboreal hunting background",
+       "Natural stealth in forest and urban environments"
+      ]
+     },
+     {
+      "class": "Berserker",
+      "narrative": "When a Wookiee's rage is unleashed, few can stand against their primal fury and overwhelming strength.",
+      "mechanical_benefits": [
+       "Feral Strength trait perfectly complements Berserker's rage mechanics",
+       "Indomitable Roar enhances Berserker's intimidation abilities",
+       "Natural durability supports reckless combat style"
+      ]
+     }
+    ],
+    "faction_synergies": [
+     {
+      "faction": "Rebel Alliance",
+      "narrative": "Wookiees' strong sense of justice and resistance to oppression made them natural allies of the Rebellion, with many serving as elite warriors and loyal companions."
+     },
+     {
+      "faction": "Kashyyyk Resistance",
+      "narrative": "Wookiees fiercely defend their homeworld and traditions, forming tight-knit communities that resist external threats and exploitation."
+     },
+     {
+      "faction": "Mandalorian Clans",
+      "narrative": "Some Wookiees find kinship with Mandalorian culture, respecting their warrior traditions and code of honor while bringing their own unique strength to the clan."
+     }
+    ],
+    "species_progression": {
+     "base_trait": "Feral Strength",
+     "base_description": "Your species is naturally strong and resilient. You have advantage on Strength checks and gain resistance to bludgeoning damage.",
+     "progression_tiers": {
+      "level_5": {
+       "enhancement_type": "damage_bonus",
+       "description": "Your legendary strength has grown more formidable. Your natural weapons and unarmed strikes deal additional damage.",
+       "mechanical_effect": {
+        "type": "bonus_damage",
+        "value": "+2",
+        "conditions": [
+         {
+          "key": "weapon_type",
+          "op": "in",
+          "value": [
+           "unarmed",
+           "natural_weapon",
+           "melee_weapon"
+          ]
+         }
+        ]
+       },
+       "optional": true
+      },
+      "level_10": {
+       "enhancement_type": "skill_enhancement",
+       "description": "Your strength has become legendary. You can use your Strength modifier for Intimidation checks, and your presence alone can cow lesser beings.",
+       "mechanical_effect": {
+        "type": "advantage",
+        "value": "Charisma (Intimidation) checks",
+        "conditions": [
+         {
+          "key": "intimidation_method",
+          "op": "equals",
+          "value": "physical_presence"
+         }
+        ]
+       },
+       "optional": true
+      },
+      "level_15": {
+       "enhancement_type": "new_ability",
+       "description": "Your strength has reached epic proportions. Once per long rest, you can perform a feat of legendary strength.",
+       "mechanical_effect": {
+        "type": "new_action",
+        "value": "Legendary Strength",
+        "description": "As an action, you can attempt a feat of legendary strength (break through walls, lift massive objects, etc.)"
+       },
+       "optional": true
+      },
+      "level_20": {
+       "enhancement_type": "epic_feature",
+       "description": "Your strength has become truly legendary. You are a living embodiment of Wookiee might and resilience.",
+       "mechanical_effect": {
+        "type": "epic_action",
+        "value": "Epic Wookiee Might",
+        "description": "Once per long rest, you can add 1d12 to any Strength check or saving throw, and gain advantage on all Strength-based actions for 1 minute"
+       },
+       "optional": true
+      }
+     },
+     "balance_guidelines": {
+      "max_bonus_per_tier": 3,
+      "requires_class_synergy": false,
+      "optional_by_default": true
+     },
+     "narrative_progression": {
+      "level_5": "Your Wookiee's strength has grown more formidable. Their muscles ripple with barely contained power, and their presence commands respect even from seasoned warriors.",
+      "level_10": "Your Wookiee's strength has become legendary. Their very presence can cow lesser beings, and their roar can shake the foundations of buildings. They are a living embodiment of Wookiee might.",
+      "level_15": "Your Wookiee's strength has reached epic proportions. They can perform feats that seem impossible to other species - breaking through reinforced walls, lifting starship components, and inspiring awe in all who witness their power.",
+      "level_20": "Your Wookiee's strength has become truly legendary. They are a living legend, a force of nature whose very presence can change the course of battles. Their strength is not just physical - it's the strength of their spirit, their loyalty, and their unbreakable will."
+     }
+    },
+    "cultural_features": [
+     {
+      "name": "Life-Debt Tradition",
+      "type": "traditional",
+      "description": "Your species' sacred tradition of life-debts, where saving another's life creates an unbreakable bond of loyalty and service.",
+      "activation": "When someone saves your life or you save another's life",
+      "effect": {
+       "type": "cultural_connection",
+       "value": "advantage",
+       "conditions": [
+        {
+         "key": "situation",
+         "op": "in",
+         "value": [
+          "life_debt_fulfillment",
+          "loyalty_actions",
+          "protective_actions"
+         ]
+        }
+       ]
+      },
+      "narrative_enhancement": "You can call upon the sacred bonds of life-debt, creating unbreakable connections with allies and inspiring others with your unwavering loyalty.",
+      "faction_connection": "Kashyyyk Traditions",
+      "optional": true
+     },
+     {
+      "name": "Honor-Bound Warrior",
+      "type": "cultural",
+      "description": "Your deep connection to Wookiee warrior traditions and the code of honor that guides your actions.",
+      "activation": "When facing challenges to your honor or defending your principles",
+      "effect": {
+       "type": "advantage",
+       "value": "Charisma (Persuasion) checks",
+       "conditions": [
+        {
+         "key": "situation",
+         "op": "in",
+         "value": [
+          "honor_challenges",
+          "principled_actions",
+          "warrior_traditions"
+         ]
+        }
+       ]
+      },
+      "narrative_enhancement": "Your adherence to Wookiee warrior traditions grants you respect and authority among those who value honor and courage.",
+      "faction_connection": "Mandalorian Clans",
+      "optional": true
+     },
+     {
+      "name": "Kashyyyk Heritage",
+      "type": "narrative",
+      "description": "Your deep connection to Kashyyyk's natural world and the wisdom of your arboreal ancestors.",
+      "activation": "When interacting with nature, climbing, or navigating forest environments",
+      "effect": {
+       "type": "advantage",
+       "value": "Wisdom (Survival) checks",
+       "conditions": [
+        {
+         "key": "environment",
+         "op": "in",
+         "value": [
+          "forest",
+          "arboreal",
+          "natural"
+         ]
+        }
+       ]
+      },
+      "narrative_enhancement": "You can draw upon the ancient wisdom of Kashyyyk, understanding the natural world in ways that seem almost mystical to other species.",
+      "faction_connection": "Kashyyyk Resistance",
+      "optional": true
+     }
+    ],
+    "cultural_connections": {
+     "primary_culture": "Kashyyyk Warrior Traditions",
+     "cultural_networks": [
+      "Kashyyyk Resistance",
+      "Wookiee Honor Societies",
+      "Arboreal Wisdom Keepers",
+      "Life-Debt Brotherhoods",
+      "Warrior Clans"
+     ],
+     "traditional_practices": [
+      "Life-Debt Ceremonies",
+      "Honor Duels and Challenges",
+      "Arboreal Hunting Rituals",
+      "Warrior Initiation Rites",
+      "Ancestral Wisdom Sharing"
+     ],
+     "cultural_knowledge": [
+      "Arboreal Navigation",
+      "Honor Codes and Traditions",
+      "Natural Medicine",
+      "Warrior Tactics",
+      "Kashyyyk History"
+     ]
+    },
+    "environmental_adaptations": [
+     {
+      "environment": "arboreal",
+      "advantage": "Natural climbing ability and tree-dwelling expertise",
+      "situational_bonus": {
+       "type": "advantage",
+       "value": "Athletics (Climbing) checks",
+       "conditions": [
+        {
+         "key": "environment",
+         "op": "equals",
+         "value": "arboreal"
+        },
+        {
+         "key": "activity",
+         "op": "in",
+         "value": [
+          "climbing",
+          "swinging",
+          "tree_navigation"
+         ]
+        }
+       ]
+      },
+      "immersion_effect": "You move through the trees with natural grace, your arboreal heritage making you perfectly at home in forest canopies and urban vertical spaces.",
+      "narrative_hooks": [
+       "Vertical exploration and ambush tactics",
+       "Tree-to-tree navigation and travel",
+       "Arboreal hunting and tracking",
+       "Urban rooftop navigation"
+      ],
+      "optional": true
+     },
+     {
+      "environment": "forest",
+      "advantage": "Enhanced senses and natural camouflage in forest environments",
+      "situational_bonus": {
+       "type": "advantage",
+       "value": "Stealth checks",
+       "conditions": [
+        {
+         "key": "environment",
+         "op": "equals",
+         "value": "forest"
+        },
+        {
+         "key": "activity",
+         "op": "in",
+         "value": [
+          "hiding",
+          "tracking",
+          "ambush"
+         ]
+        }
+       ]
+      },
+      "immersion_effect": "Your natural fur and arboreal instincts allow you to blend seamlessly into forest environments, moving silently and tracking prey with primal precision.",
+      "narrative_hooks": [
+       "Forest survival and hunting",
+       "Natural camouflage and stealth",
+       "Wildlife tracking and communication",
+       "Forest-based ambush tactics"
+      ],
+      "optional": true
+     },
+     {
+      "environment": "urban_vertical",
+      "advantage": "Expertise in navigating urban vertical spaces and climbing structures",
+      "situational_bonus": {
+       "type": "skill_bonus",
+       "value": "+2",
+       "conditions": [
+        {
+         "key": "environment",
+         "op": "equals",
+         "value": "urban_vertical"
+        },
+        {
+         "key": "skill_type",
+         "op": "in",
+         "value": [
+          "athletics",
+          "acrobatics",
+          "stealth"
+         ]
+        }
+       ]
+      },
+      "immersion_effect": "Your climbing abilities translate perfectly to urban environments, allowing you to navigate buildings, rooftops, and vertical spaces as easily as trees.",
+      "narrative_hooks": [
+       "Urban rooftop navigation",
+       "Building climbing and infiltration",
+       "Vertical escape routes",
+       "Urban ambush tactics"
+      ],
+      "optional": true
+     },
+     {
+      "environment": "high_gravity",
+      "advantage": "Enhanced strength and resilience in high-gravity environments",
+      "situational_bonus": {
+       "type": "saving_throw_bonus",
+       "value": "+2",
+       "conditions": [
+        {
+         "key": "environment",
+         "op": "equals",
+         "value": "high_gravity"
+        },
+        {
+         "key": "save_type",
+         "op": "in",
+         "value": [
+          "constitution",
+          "strength"
+         ]
+        }
+       ]
+      },
+      "immersion_effect": "Your natural strength and resilience make you perfectly adapted to high-gravity environments, where your power becomes even more formidable.",
+      "narrative_hooks": [
+       "High-gravity world exploration",
+       "Enhanced strength demonstrations",
+       "Gravity-based combat advantages",
+       "Heavy lifting and construction"
+      ],
+      "optional": true
+     }
+    ],
+    "environmental_mastery": {
+     "primary_environments": [
+      "arboreal",
+      "forest",
+      "urban_vertical",
+      "high_gravity"
+     ],
+     "environmental_knowledge": [
+      "Arboreal Navigation",
+      "Forest Ecology",
+      "Urban Vertical Movement",
+      "High-Gravity Adaptation",
+      "Natural Camouflage",
+      "Tree-Dwelling Techniques"
+     ],
+     "survival_techniques": [
+      "Vertical Climbing and Swinging",
+      "Forest Stealth and Tracking",
+      "Urban Rooftop Navigation",
+      "High-Gravity Movement",
+      "Natural Camouflage",
+      "Arboreal Hunting"
+     ]
+    },
+    "advanced_system_balance": {
+     "progression_balance": {
+      "max_bonus_per_tier": 3,
+      "optional_by_default": true,
+      "narrative_focus": true
+     },
+     "cultural_balance": {
+      "max_features_per_character": 3,
+      "narrative_focus": true,
+      "optional_by_default": true
+     },
+     "environmental_balance": {
+      "max_adaptations_per_character": 4,
+      "situational_advantages": true,
+      "optional_by_default": true
+     }
+    },
+    "rarity": "common",
+    "visual_engine": {
+     "archetype": "mammalian_humanoid",
+     "overrides": {
+      "base_visual_tokens": [
+       {
+        "fur_texture": "coarse_hair"
+       },
+       {
+        "skin_color": "brown"
+       },
+       {
+        "eye_color": "green_or_yellow"
+       },
+       {
+        "facial_expression": "fierce"
+       }
+      ],
+      "morphology": {
+       "head_type": "pointed_ears_head",
+       "body_type": "furry_body",
+       "average_height": "1.8_meters"
+      },
+      "dynamic_visuals": {
+       "age_progression": {
+        "child": {
+         "height_progression": "0.5-1.2 meters",
+         "weight_progression": "10-30 kg",
+         "facial_expression": "playful"
+        },
+        "adult": {
+         "height_progression": "1.5-2.2 meters",
+         "weight_progression": "40-70 kg",
+         "facial_expression": "fierce"
+        },
+        "elder": {
+         "height_progression": "1.8-2.5 meters",
+         "weight_progression": "80-100 kg",
+         "facial_expression": "wise"
+        }
+       },
+       "morality_corruption": {
+        "dark_side": {
+         "fur_texture": "matted_and_dirty",
+         "skin_color": "pale_or_sickly",
+         "eye_color": "red_or_purple"
+        },
+        "light_side": {
+         "fur_texture": "shiny_andHealthy",
+         "skin_color": "tanned_orBronzed",
+         "eye_color": "bright_blue_or_green"
+        }
+       }
+      },
+      "unique_identifiers": [
+       "Shaggy Fur Pattern",
+       "Scars Above the Left Eye",
+       "Notch in the Right Ear"
+      ],
+      "prompt_schema": {
+       "base_prompt": "A towering, furry Wookiee with {contextual_modifiers} and a fierce expression.",
+       "contextual_modifiers": [
+        "age",
+        "alignment",
+        "background"
+       ]
+      }
+     }
+    },
+    "nemesis_engine": {
+     "archetype": "blood_feud",
+     "overrides": {
+      "progression_path": {
+       "emergence": "The nemesis begins as a rumor, whispered among the Wookiee clans. A figure of great strength and ferocity,\nsaid to be on a mission of vengeance against the Wookiees.\n",
+       "escalation": "As the Wookiee encounters more clues about their nemesis' identity and motivations, they begin to feel\nincreasingly threatened and defensive.\n",
+       "confrontation": "The Wookiee finally confronts their nemesis in a climactic battle. If victorious, they may emerge with a\nnewfound sense of respect and admiration for their foe.\n"
+      },
+      "resolution_paths": {
+       "victory": "The Wookiee defeats their nemesis, claiming a great triumph for themselves and their clan.",
+       "redemption": "The Wookiee finds an opportunity to redeem their nemesis, saving them from a fate worse than death.",
+       "escape": "The Wookiee narrowly escapes their nemesis' deadly grasp, but not without scars both physical and emotional."
+      },
+      "conflict_triggers": [
+       "The Wookiee encounters evidence of their nemesis' past wrongdoings",
+       "A rival clan member betrays the Wookiee to their nemesis",
+       "The Wookiee is ambushed by their nemesis in a treacherous wilderness setting"
+      ],
+      "personal_vendetta": {
+       "formation_triggers": [
+        "The Wookiee discovers their nemesis' identity",
+        "A close friend or family member falls victim to their nemesis"
+       ],
+       "vendetta_type": "A burning desire for revenge and retribution"
+      },
+      "aggressive_type": "warrior",
+      "passive_type": "protector",
+      "primary_trait": "ferocity",
+      "secondary_trait": " loyalty"
+     }
+    },
+    "romance_engine": {
+     "archetype": "warrior_bond",
+     "overrides": {
+      "romance_potential": true,
+      "romance_compatibility": [
+       "ambitious",
+       "arboreal",
+       "honorable"
+      ],
+      "romance_progression": {
+       "stage1": "The Wookiee notices a romantic interest in another character, but is unsure if the feeling is mutual.\n",
+       "stage2": "The Wookiee begins to subtly flirt and show interest in the other character, hoping to initiate a romance.\n",
+       "stage3": "The Wookiee and their love interest share a tender moment, solidifying their connection and sparking deeper emotions.\n",
+       "stage4": "As the relationship deepens, the Wookiee must confront challenges and obstacles that test their commitment and trust in one another.\n",
+       "stage5": "The Wookiee and their partner stand strong together, facing the future with love, loyalty, and mutual support.\n"
+      },
+      "romance_events": [
+       "The Wookiee's romantic interest is kidnapped by a rival clan",
+       "A close friend of the Wookiee tries to play matchmaker for them",
+       "The Wookiee's partner has a traumatic event in their past that affects their trust and intimacy with the Wookiee"
+      ],
+      "romance_modifiers": [
+       {
+        "loyal": "increases relationship tension when faced with external threats"
+       },
+       {
+        "precise": "allows for more creative and nuanced romantic interactions"
+       }
+      ],
+      "bonding_mechanic": "deepening bond through shared experiences and mutual support",
+      "courtship_routine": "gift-giving and honor-based rituals to demonstrate commitment",
+      "relationship_goals": [
+       "establish a lifelong bond",
+       "build a family together"
+      ]
+     }
+    },
+    "flavor_text": "Wookiees are known for their deep connection to the natural world, and their reverence for the ancient forest moon of Kashyyyk. Their culture is built upon a profound respect for life, honor, and family - principles that guide them in all aspects of their lives. As a Wookiee, you embody these values, and your actions are shaped by the unwavering commitment to protect and preserve the balance of nature.",
+    "llm_guidance": {
+     "roleplay_guidance": "As a Wookiee, you have an innate sense of loyalty and duty. You prioritize family and tribe above all else, and will go to great lengths to defend and support those you care about. However, this strong sense of allegiance can sometimes lead to blind spots and conflicts with others who do not share your values or priorities. Be mindful of this tendency, and strive to find a balance between loyalty and self-awareness.",
+     "narrative_hooks": [
+      "Explore the complexities of Wookiee honor culture",
+      "Delve into the ancient history of Kashyyyk and its impact on modern Wookiee society"
+     ],
+     "social_dynamics": "Wookiees are known for their close-knit family bonds, but this also means they can be fiercely protective and sometimes isolationist. Be prepared to navigate these dynamics when interacting with other species or individuals who may not understand or respect Wookiee customs.",
+     "common_motivations": [
+      "Protect the balance of nature",
+      "Uphold honor and tradition",
+      "Reunite lost loved ones"
+     ]
+    },
+    "companion_engine": {
+     "archetype": "loyal_protector",
+     "overrides": {
+      "ai_behavior": {
+       "personality": "\"Independent, loyal, and fiercely protective. A Wookiee is driven by a strong sense of duty to its loved ones.\n It values honesty and directness in communication.\"\n",
+       "motivations": [
+        "Protect allies from harm",
+        "Defend the innocent",
+        "Uphold honor and reputation",
+        "Explore the wilderness and discover new things"
+       ],
+       "combat_behavior": "\"A Wookiee is a skilled melee fighter, relying on its strength and agility to take down opponents.\n It will often use its surroundings to gain an advantage in combat.\"\n",
+       "social_behavior": "\"A Wookiee values building strong relationships through shared experiences and mutual respect.\n It will often go out of its way to help others and support those in need.\"\n"
+      },
+      "relationship_tracking": {
+       "trust_levels": "\"Initial trust levels are high due to the Wookiee's natural loyalty and sense of duty.\n However, this can be broken if the player consistently betrays or disrespects their pack.\"\n",
+       "loyalty_triggers": "\"The Wookiee will become more loyal and dedicated to the player if they demonstrate a strong sense of honor\n and protect them from harm. Conversely, failure to uphold these values may erode trust and loyalty.\"\n"
+      },
+      "services": [
+       "Combat support (melee fighting)",
+       "Exploration and navigation (due to their climbing prowess)",
+       "Mediation and negotiation (using their natural diplomacy skills)"
+      ]
+     }
+    }
+   }
+  },
+  "guardian": {
+   "id": "guardian",
+   "name": "Guardian",
+   "era": "Galactic_Republic",
+   "rarity": "rare",
+   "tags": [
+    "force_user",
+    "jedi",
+    "guardian",
+    "tank",
+    "defensive",
+    "protector",
+    "light_side",
+    "melee_specialist",
+    "strength_based",
+    "force_defense"
+   ],
+   "narrative": "Force-wielders who excel at protection and defense. They are the shield of the Jedi Order, using the Force to protect others and maintain peace through strength and unwavering resolve.",
+   "flavor_text": "A Jedi uses the Force for knowledge and defense, never for attack. - Yoda",
+   "cultural_significance": "Guardians are revered as protectors of peace and justice, embodying the Jedi ideal of using strength to defend the weak.",
+   "description": "Force-wielders who excel at protection and defense. They are the shield of the Jedi Order, using the Force to protect others and maintain peace through strength and unwavering resolve.",
+   "origin_story": "The Guardian tradition dates back to the earliest days of the Jedi Order, when the first Jedi realized that the Force could be used not just for knowledge, but for protection.",
+   "class_identity_profile": {
+    "core_fantasy": "A stalwart defender of peace and justice, wielding the Force as both shield and sword to protect the innocent and stand against darkness.",
+    "key_attributes": [
+     "Strength",
+     "Wisdom"
+    ],
+    "iconic_gear": [
+     "Lightsaber",
+     "Jedi Robes",
+     "Meditation kit",
+     "Force-imbued protective gear"
+    ],
+    "role_in_galaxy": "Guardians are the protectors of the Republic and the Jedi Order, standing as the first line of defense against threats both physical and spiritual. They embody the principle that true strength comes from protecting others.",
+    "famous_exemplars": [
+     "Obi-Wan Kenobi",
+     "Mace Windu",
+     "Qui-Gon Jinn",
+     "Plo Koon",
+     "Kit Fisto"
+    ],
+    "species_synergies": [
+     {
+      "species": "human",
+      "narrative": "Human adaptability and determination make them natural Guardians, able to excel in any protective role."
+     },
+     {
+      "species": "kel_dor",
+      "narrative": "Kel Dor wisdom and Force sensitivity make them exceptional Guardians with deep insight into protection."
+     }
+    ],
+    "faction_synergies": [
+     {
+      "faction": "jedi_order",
+      "narrative": "Guardians are the backbone of the Jedi Order, serving as its primary protectors and defenders."
+     },
+     {
+      "faction": "galactic_republic",
+      "narrative": "Guardians often serve as peacekeepers and protectors for the Republic, defending its citizens and values."
+     }
+    ]
+   },
+   "hit_die": "1d10",
+   "proficiencies": {
+    "armor": [
+     "light",
+     "medium"
+    ],
+    "weapons": [
+     "lightsabers",
+     "blaster_pistols",
+     "vibroweapons"
+    ],
+    "tools": [
+     "meditation_kit",
+     "force_imbued_items",
+     "protective_gear"
+    ],
+    "saving_throws": [
+     "strength",
+     "wisdom"
+    ],
+    "skills": {
+     "choose": 2,
+     "from": [
+      "athletics",
+      "insight",
+      "intimidation",
+      "perception",
+      "persuasion",
+      "survival"
+     ]
+    }
+   },
+   "primary_ability": "Strength or Wisdom",
+   "primary_resource": "Force Points",
+   "starting_equipment": [
+    "A lightsaber",
+    "A blaster pistol and 50 rounds",
+    "Meditation kit",
+    "Protective gear",
+    "Explorer's pack",
+    "50 credits"
+   ],
+   "connections": [
+    {
+     "target_id": "jedi_order",
+     "target_type": "Faction",
+     "relationship_id": "rel_iconic_to",
+     "narrative": "Guardians are the backbone of the Jedi Order, serving as its primary protectors and defenders.",
+     "mechanical_benefit": "Access to Jedi training and resources",
+     "relationship": "associated"
+    },
+    {
+     "target_id": "galactic_republic",
+     "target_type": "Faction",
+     "relationship_id": "rel_common_among",
+     "narrative": "Guardians often serve as peacekeepers and protectors for the Republic, defending its citizens and values.",
+     "mechanical_benefit": "Access to Republic resources and intelligence",
+     "relationship": "associated"
+    }
+   ],
+   "llm_guidance": {
+    "roleplay_guidance": "As a Guardian, you embody the unwavering resolve to protect others. Your actions should reflect this commitment to defense and service.",
+    "narrative_hooks": [
+     "Use your abilities to deflect incoming attacks and protect allies.",
+     "Employ the Force to sense and counter threats before they strike.",
+     "Demonstrate compassion and empathy in your interactions with others, even in the face of adversity."
+    ],
+    "social_dynamics": "Guardians are often seen as pillars of strength within their communities. They should strive to maintain a strong sense of duty and responsibility towards those they protect.",
+    "common_motivations": [
+     "Protecting others from harm",
+     "Upholding justice and order",
+     "Preserving peace and stability"
+    ]
+   },
+   "image_generation": {
+    "base_prompt": "A cinematic digital painting of a Jedi Guardian in traditional robes, standing in a protective stance with their lightsaber ignited. The Guardian's expression shows calm determination and unwavering resolve, their eyes reflecting deep wisdom and Force connection. The scene is bathed in the soft blue glow of their lightsaber, with ethereal Force energy subtly surrounding them. The background suggests a Jedi Temple or training area, with other Jedi visible in the distance.",
+    "base_negative_keywords": [
+     "dark side",
+     "aggressive",
+     "angry",
+     "chaotic",
+     "destructive",
+     "cartoonish",
+     "blurry"
+    ],
+    "contextual_modifiers": [
+     {
+      "target_type": "Character_Portrait",
+      "modifier_text": "Close-up portrait focusing on the Guardian's wise, determined features and calm confidence. The Force energy should be subtly visible around their eyes and hands."
+     },
+     {
+      "target_type": "Combat_Scene",
+      "modifier_text": "In a protective stance, lightsaber ignited and ready to defend. The Guardian should be positioned to shield others, with Force energy creating a protective barrier."
+     },
+     {
+      "target_type": "Class_Scene",
+      "modifier_text": "In a Jedi Temple or training area, surrounded by other Jedi and students. The scene should convey wisdom, protection, and the passing of knowledge."
+     }
+    ]
+   },
+   "ui": {
+    "image": "images/classes/guardian.jpg",
+    "icon": "icons/classes/guardian.svg",
+    "color": "#0066CC"
+   },
+   "visual_engine": {
+    "base_visual_tokens": [
+     "lightsaber_hilt",
+     "Jedi_robes",
+     "Force_shield_icon",
+     "blaster_scar"
+    ],
+    "dynamic_visuals": {
+     "combat_stance": "Guardian stance: feet shoulder-width apart, hands up in a defensive position, radiating an aura of calm resolve",
+     "energy_signature": "A swirling vortex of blue and white energies emanates from the Guardian's connection to the Force, pulsing with a gentle but firm light"
+    },
+    "prompt_schema": {
+     "base_prompt": "Create an image of a Guardian standing tall, their lightsaber at the ready as they prepare to defend against an incoming attack",
+     "contextual_modifiers": [
+      "Show the Guardian's expression as calm and determined",
+      "Emphasize the Guardian's connection to the Force through glowing blue or white energies surrounding them",
+      "Include a subtle hint of weariness from years of protecting others, perhaps a few wisps of gray in their hair or a faint scar above their eyebrow"
+     ]
+    }
+   },
+   "nemesis_engine": {
+    "archetype": "class_rival",
+    "progression_path": {
+     "emergence": "Nemesis appears as a former ally or acquaintance, initially seeking protection or guidance.",
+     "escalation": "As the Guardian's influence and reputation grow, so does the Nemesis's resentment and aggression towards them.",
+     "confrontation": "The final showdown between the Guardian and their Nemesis takes place in a symbolic location, representing the balance of power between light and dark."
+    },
+    "resolution_paths": {
+     "victory": "The Guardian defeats the Nemesis using their mastery of the Force and strategic thinking.",
+     "redemption": "The Nemesis is redeemed through their confrontation with the Guardian, who helps them find peace and forgiveness.",
+     "escape": "The Guardian and their allies successfully thwart the Nemesis's plans, but at a great personal cost."
+    },
+    "conflict_triggers": [
+     "The Guardian's increasing popularity and influence",
+     "The Nemesis's own sense of inadequacy or jealousy",
+     "A hidden agenda or ulterior motive"
+    ]
+   },
+   "romance_engine": {
+    "archetype": "lifestyle_impact",
+    "romance_potential": "Medium",
+    "romance_progression": {
+     "stage1": "Initial attraction, but the Guardian's dedication to their duties makes it difficult to balance work and love.",
+     "stage2": "The relationship deepens as the partner becomes more involved in the Guardian's life and missions.",
+     "stage3": "Challenges arise from the Guardian's role as a protector and leader, leading to conflicts with romantic partners.",
+     "stage4": "Jealousy, possessiveness, or insecurity may surface in the Guardian's partner due to their relationship with others.",
+     "stage5": "The relationship becomes more stable and secure as both partners learn to adapt to each other's roles and responsibilities."
+    },
+    "lifestyle_challenges": [
+     "Balancing work and personal life",
+     "Dealing with jealousy or possessiveness from romantic partners",
+     "Navigating the complexities of being in a high-profile relationship while serving as a Guardian"
+    ]
+   },
+   "companion_engine": {
+    "archetype": "npc_role",
+    "ai_behavior": {
+     "personality": {
+      "traits": [
+       "Calm",
+       "Resolute"
+      ],
+      "tone": "Confident"
+     },
+     "motivations": {
+      "primary_motivation": "Protection",
+      "secondary_motivations": [
+       "Service",
+       "Duty"
+      ]
+     },
+     "combat_behavior": "Engage in defensive tactics to shield allies and absorb damage.",
+     "social_behavior": "Interact with companions in a calm, professional manner, offering guidance and support when needed."
+    },
+    "relationship_tracking": {
+     "trust_levels": [
+      "Companions gain 100% trust after completing three missions together successfully.",
+      "Trust is lost if a companion fails to complete a mission or betrays the Guardian's trust."
+     ],
+     "loyalty_triggers": "Reward companions with gifts, recognition, and praise for outstanding service."
+    },
+    "services": [
+     "Shield allies from harm using defensive techniques and abilities",
+     "Provide tactical guidance during missions",
+     "Serve as a mediator in disputes between allies"
+    ]
+   },
+   "level_progression": [
+    {
+     "level": 1,
+     "features": [
+      {
+       "description": "Wielding the Force to bolster their allies' resilience and mitigate incoming damage.",
+       "feature_id": "force_protection",
+       "feature_type": "class_feature"
+      },
+      {
+       "description": "A heightened awareness of their surroundings, granting a bonus to Wisdom (Perception) checks.",
+       "feature_id": "force_sensitivity",
+       "feature_type": "class_feature"
+      },
+      {
+       "description": "Proficiency in one type of skill or tool, chosen at character creation.",
+       "feature_id": "proficiency_bonus",
+       "feature_type": "class_feature"
+      }
+     ]
+    },
+    {
+     "level": 2,
+     "features": [
+      {
+       "description": "A stance that grants advantage on Constitution saving throws made to resist being knocked prone.",
+       "feature_id": "defensive_stance",
+       "feature_type": "class_feature"
+      }
+     ]
+    },
+    {
+     "level": 3,
+     "features": [
+      {
+       "description": "Select one subclass from the list below, and it will provide additional abilities and customization.",
+       "feature_id": "subclass_choice",
+       "feature_type": "class_feature"
+      }
+     ]
+    }
+   ],
+   "_legacy": {
+    "progression_tree_migration_20260711": [
+     {
+      "node_id": "force_protection_1",
+      "feature_id": "force_protection",
+      "level_requirement": 1,
+      "type": "core",
+      "description": "Wielding the Force to bolster their allies' resilience and mitigate incoming damage.",
+      "effects": [
+       {
+        "type": "grant_proficiency",
+        "value": "Protection Mechanic Description",
+        "notes": "Grant the ability to use protection mechanics."
+       }
+      ]
+     },
+     {
+      "node_id": "force_sensitivity_1",
+      "feature_id": "force_sensitivity",
+      "level_requirement": 1,
+      "type": "core",
+      "description": "A heightened awareness of their surroundings, granting a bonus to Wisdom (Perception) checks.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": 2,
+        "notes": "Grant a +2 bonus to Wisdom (Perception) checks."
+       }
+      ]
+     },
+     {
+      "node_id": "proficiency_bonus_1",
+      "feature_id": "proficiency_bonus",
+      "level_requirement": 1,
+      "type": "core",
+      "description": "Proficiency in one type of skill or tool, chosen at character creation.",
+      "effects": [
+       {
+        "type": "grant_proficiency",
+        "value": "Proficiency Choice Description",
+        "notes": "Grant the ability to use proficiency mechanics for a chosen skill or tool."
+       }
+      ]
+     },
+     {
+      "node_id": "defensive_stance_2",
+      "feature_id": "defensive_stance",
+      "level_requirement": 2,
+      "type": "core",
+      "description": "A stance that grants advantage on Constitution saving throws made to resist being knocked prone.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": 1,
+        "notes": "Grant a +1 bonus to Constitution saving throws."
+       }
+      ]
+     },
+     {
+      "node_id": "subclass_choice_3",
+      "feature_id": "subclass_choice",
+      "level_requirement": 3,
+      "type": "choice",
+      "description": "Select one subclass from the list below, and it will provide additional abilities and customization.",
+      "effects": [
+       {
+        "type": "trigger_effect",
+        "value": "Subclass Selection Description",
+        "notes": "Allow the player to select a subclass."
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "subclass_guardian_protector": {
+   "id": "subclass_guardian_protector",
+   "class_id": "guardian",
+   "name": "Protector",
+   "tags": [
+    "guardian",
+    "protector",
+    "defensive",
+    "bodyguard",
+    "tank",
+    "light_side",
+    "jedi",
+    "force_defense",
+    "support",
+    "protective",
+    "melee_specialist"
+   ],
+   "alignment_theme": "light",
+   "talent_tree_theme": {
+    "background_diorama": "A serene Jedi Temple meditation chamber with soft, protective light filtering through tall windows. Ancient protective runes glow gently on the walls, and a sense of calm determination fills the air.",
+    "node_style": "Soft, glowing orbs of blue-white light that pulse with protective energy, each containing a symbol of defense and guardianship.",
+    "connection_style": "Flowing streams of Force energy that connect the nodes, creating a web of protective light that seems to pulse with the Guardian's heartbeat.",
+    "color_palette": {
+     "primary": "#0066CC",
+     "secondary": "#FFFFFF"
+    },
+    "ambient_audio": "gentle_hum_of_protective_force_energy"
+   },
+   "narrative": "You are the ultimate guardian, a living shield whose very presence creates a sanctuary of safety. Your mastery of protective techniques goes beyond mere defense—you become an extension of the Force itself, creating an impenetrable barrier between your charges and any threat that would harm them.",
+   "flavor_text": "'I will not let harm come to those under my protection. The Force flows through me to shield them.' - A Guardian Protector",
+   "subclass_identity_profile": {
+    "core_fantasy": "Unwavering guardians of the innocent, Protectors wield their lightsabers with precision and power.",
+    "role_in_group": "Support",
+    "visual_signals": [
+     "Jedi emblem on shoulder armor",
+     "Hilt lightsaber"
+    ]
+   },
+   "talent_tree": [
+    {
+     "id": "gp_t1_personal_protection",
+     "feature_id": "feature_guardian_personal_protection",
+     "xp_cost": 5,
+     "tier": 1,
+     "column": 1,
+     "connections": [
+      "gp_t2_attack_interception",
+      "gp_t2_guardian_sense"
+     ]
+    },
+    {
+     "id": "gp_t1_protective_aura",
+     "feature_id": "feature_guardian_protective_aura",
+     "xp_cost": 5,
+     "tier": 1,
+     "column": 2,
+     "connections": [
+      "gp_t2_attack_interception",
+      "gp_t2_guardian_sense"
+     ]
+    },
+    {
+     "id": "gp_t1_defensive_mastery",
+     "feature_id": "feature_guardian_defensive_mastery",
+     "xp_cost": 5,
+     "tier": 1,
+     "column": 3,
+     "connections": [
+      "gp_t2_attack_interception",
+      "gp_t2_guardian_sense"
+     ]
+    },
+    {
+     "id": "gp_t2_attack_interception",
+     "feature_id": "feature_guardian_attack_interception",
+     "xp_cost": 10,
+     "tier": 2,
+     "column": 1,
+     "prerequisites": [
+      "gp_t1_personal_protection",
+      "gp_t1_protective_aura"
+     ],
+     "connections": [
+      "gp_t3_bodyguard_mastery",
+      "gp_t3_protective_barrier"
+     ]
+    },
+    {
+     "id": "gp_t2_guardian_sense",
+     "feature_id": "feature_guardian_guardian_sense",
+     "xp_cost": 10,
+     "tier": 2,
+     "column": 2,
+     "prerequisites": [
+      "gp_t1_protective_aura",
+      "gp_t1_defensive_mastery"
+     ],
+     "connections": [
+      "gp_t3_bodyguard_mastery",
+      "gp_t3_protective_barrier"
+     ]
+    },
+    {
+     "id": "gp_t2_force_shield",
+     "feature_id": "feature_guardian_force_shield",
+     "xp_cost": 10,
+     "tier": 2,
+     "column": 3,
+     "prerequisites": [
+      "gp_t1_defensive_mastery",
+      "gp_t1_personal_protection"
+     ],
+     "connections": [
+      "gp_t3_bodyguard_mastery",
+      "gp_t3_protective_barrier"
+     ]
+    },
+    {
+     "id": "gp_t3_bodyguard_mastery",
+     "feature_id": "feature_guardian_bodyguard_mastery",
+     "xp_cost": 15,
+     "tier": 3,
+     "column": 1,
+     "prerequisites": [
+      "gp_t2_attack_interception",
+      "gp_t2_guardian_sense"
+     ],
+     "connections": [
+      "gp_t4_protector_mastery"
+     ]
+    },
+    {
+     "id": "gp_t3_protective_barrier",
+     "feature_id": "feature_guardian_protective_barrier",
+     "xp_cost": 15,
+     "tier": 3,
+     "column": 2,
+     "prerequisites": [
+      "gp_t2_guardian_sense",
+      "gp_t2_force_shield"
+     ],
+     "connections": [
+      "gp_t4_protector_mastery"
+     ]
+    },
+    {
+     "id": "gp_t3_guardian_meditation",
+     "feature_id": "feature_guardian_guardian_meditation",
+     "xp_cost": 15,
+     "tier": 3,
+     "column": 3,
+     "prerequisites": [
+      "gp_t2_force_shield",
+      "gp_t2_attack_interception"
+     ],
+     "connections": [
+      "gp_t4_protector_mastery"
+     ]
+    },
+    {
+     "id": "gp_t4_protector_mastery",
+     "feature_id": "feature_guardian_protector_mastery",
+     "xp_cost": 20,
+     "tier": 4,
+     "column": 1,
+     "prerequisites": [
+      "gp_t3_bodyguard_mastery",
+      "gp_t3_protective_barrier",
+      "gp_t3_guardian_meditation"
+     ],
+     "connections": [
+      "gp_t5_legendary_protector"
+     ]
+    },
+    {
+     "id": "gp_t4_ultimate_guardian",
+     "feature_id": "feature_guardian_ultimate_guardian",
+     "xp_cost": 20,
+     "tier": 4,
+     "column": 2,
+     "prerequisites": [
+      "gp_t3_bodyguard_mastery",
+      "gp_t3_protective_barrier",
+      "gp_t3_guardian_meditation"
+     ],
+     "connections": [
+      "gp_t5_legendary_protector"
+     ]
+    },
+    {
+     "id": "gp_t5_legendary_protector",
+     "feature_id": "feature_guardian_legendary_protector",
+     "xp_cost": 25,
+     "tier": 5,
+     "column": 1,
+     "prerequisites": [
+      "gp_t4_protector_mastery",
+      "gp_t4_ultimate_guardian"
+     ]
+    }
+   ],
+   "llm_guidance": {
+    "roleplay_guidance": "Protectors are defined by their unwavering commitment to others' safety. They should always be thinking about how to position themselves to protect their charges, and their actions should reflect this protective mindset. They are calm under pressure, always ready to sacrifice themselves for others, and have an almost supernatural ability to sense danger before it strikes.",
+    "narrative_hooks": [
+     "The Protector must choose between protecting their assigned charge and saving innocent civilians caught in the crossfire.",
+     "A powerful enemy specifically targets the Protector's charge, testing their defensive abilities to the limit.",
+     "The Protector discovers a plot that threatens not just their charge, but the entire organization they serve.",
+     "The Protector's charge is kidnapped, and they must use all their skills to track and rescue them."
+    ],
+    "tactical_notes": "Protectors excel at positioning and defensive tactics. They should always be thinking about how to create protective barriers, intercept attacks, and ensure their charges' safety. Their abilities work best when they can focus on protecting specific individuals rather than trying to protect everyone at once."
+   },
+   "progression_tree": [
+    {
+     "node_id": "protector_1_feature",
+     "feature_id": "defensive_stance",
+     "level_requirement": 3,
+     "type": "core",
+     "description": "As a Protector, you can enter a defensive stance at the start of your turn, granting you advantage on all Intimidation checks and allowing you to move up to 10 feet without provoking opportunity attacks.",
+     "effects": [
+      {
+       "type": "mechanic_type",
+       "value": "Intimidation Check Advantage"
+      },
+      {
+       "type": "mechanic_type",
+       "value": "Movement Feature"
+      }
+     ]
+    },
+    {
+     "node_id": "protector_2_feature",
+     "feature_id": "force_deflection",
+     "level_requirement": 7,
+     "type": "core",
+     "description": "You can use your reaction to deflect one attack roll against you this turn. The attacker must make a Wisdom saving throw with a DC of 15 + your proficiency bonus. On a successful save, the attack is deflected and has no effect.",
+     "effects": [
+      {
+       "type": "mechanic_type",
+       "value": "Reaction Ability"
+      }
+     ]
+    },
+    {
+     "node_id": "protector_3_feature",
+     "feature_id": "ally_shield",
+     "level_requirement": 11,
+     "type": "core",
+     "description": "When a friendly creature within 10 feet of you takes damage, you can use your reaction to grant them a bonus to their Armor Class until the start of your next turn. The bonus is equal to your Charisma modifier (minimum +1).",
+     "effects": [
+      {
+       "type": "mechanic_type",
+       "value": "Reaction Ability"
+      }
+     ]
+    },
+    {
+     "node_id": "protector_4_feature",
+     "feature_id": "unyielding_stance",
+     "level_requirement": 15,
+     "type": "core",
+     "description": "As a Protector, you can enter an unyielding stance at the start of your turn. Until the start of your next turn, you have advantage on all Strength checks and can move up to 10 feet without provoking opportunity attacks.",
+     "effects": [
+      {
+       "type": "mechanic_type",
+       "value": "Strength Check Advantage"
+      }
+     ]
+    },
+    {
+     "node_id": "protector_5_feature",
+     "feature_id": "shield_generator",
+     "level_requirement": 18,
+     "type": "core",
+     "description": "You can use your action to generate a shield around yourself, granting you a bonus to your Armor Class equal to your Charisma modifier (minimum +1). The shield lasts for 1 minute and can be dispelled by any effect that deals radiant damage.",
+     "effects": [
+      {
+       "type": "mechanic_type",
+       "value": "Shield Generation"
+      }
+     ]
+    }
+   ],
+   "visual_engine": {
+    "base_visual_tokens": [
+     "Lightsaber_Hilt",
+     "Exosuit_Armor"
+    ],
+    "dynamic_visuals": {
+     "combat_stance": "Assuming a defensive stance with feet shoulder-width apart and lightsaber held at a 45-degree angle, ready to strike at a moment's notice.",
+     "energy_signature": "A vibrant blue aura surrounds the Protector's body, pulsing with energy as they channel their connection to the Force."
+    },
+    "prompt_schema": {
+     "base_prompt": "Generate an image of a Protector standing in a dimly lit corridor, lightsaber ignited and ready for battle, surrounded by shadows that hint at the darkness they protect against.",
+     "contextual_modifiers": [
+      "Show the Protector's determined expression as they prepare to face their enemies",
+      "Depict the environment with broken machinery and debris scattered about, reflecting the aftermath of a fierce struggle"
+     ]
+    }
+   },
+   "class_identity_profile": {
+    "core_fantasy": "Stalwart defender of allies.",
+    "key_attributes": [
+     "Strength",
+     "Constitution"
+    ],
+    "iconic_gear": [],
+    "role_in_galaxy": "'I will not let harm come to those under my protection. The Force flows through me to shield them.' - A Guardian Protector"
+   }
+  },
+  "loc_xizors_palace": {
+   "metadata": {
+    "id": "loc_xizors_palace",
+    "name": "Xizor's Palace",
+    "version": "4.2.0",
+    "status": "wip",
+    "source_dataset": "sw5e_core",
+    "content_origin": "canon",
+    "slug": "xizors_palace",
+    "owner_id": "fac_black_sun"
+   },
+   "type": "unknown",
+   "description": "A towering monument to Black Sun's power on Coruscant, Xizor's Palace rivals the Imperial Palace in opulence. Hidden beneath its gleaming exterior are command centers, secure vaults, and the headquarters of Prince Xizor himself.",
+   "_legacy": {
+    "taxonomy": {
+     "tags": [
+      "tag_location",
+      "tag_faction_black_sun",
+      "tag_location_building"
+     ],
+     "era": [
+      "tag_era_rebellion"
+     ]
+    },
+    "essence": {
+     "overview": "A towering monument to Black Sun's power on Coruscant, Xizor's Palace rivals the Imperial Palace in opulence. Hidden beneath its gleaming exterior are command centers, secure vaults, and the headquarters of Prince Xizor himself.",
+     "notable_features": [
+      "Secure Vigo meeting chambers",
+      "Encrypted communications hub",
+      "Guri's private quarters",
+      "Hidden escape tunnels"
+     ]
+    },
+    "connections": {
+     "parent_location_id": "loc_coruscant",
+     "affiliated_faction_ids": [
+      "fac_black_sun"
+     ]
+    },
+    "ui": {
+     "icon_path": "icons/locations/palace.svg",
+     "color_hex": "#4A0E4E"
+    }
+   }
+  },
+  "creature_shadowstalker_nexu": {
+   "id": "creature_shadowstalker_nexu",
+   "name": "Shadowstalker Nexu",
+   "era": "Galactic_Empire",
+   "rarity": "very_rare",
+   "narrative": "A lean, void-black subspecies of nexu adapted for urban predation. Bred by clandestine Imperial kennels for silence, obedience, and terror operations, Shadowstalkers slip through vents and scaffolds like liquid night. Their whisker-spines sense air pressure and sound, letting them hunt in total darkness. A single hissing exhale often precedes the strike.",
+   "flavor_text": "\"You never see the first one. You hear the second—and realize the first is behind you.\" — Anonymous dockside rumor, Level 1313",
+   "cultural_significance": "On lower levels, the Shadowstalker is a cautionary tale—proof that empires engineer monsters on purpose. On imperial black-sites, they are an asset classed as both deterrent and disposal.",
+   "description": "Quadrupedal ambush predator with retractable talons, split jaws, and low infrared signature. Uses verticality and blind angles to isolate prey.",
+   "origin_story": "Gene-edited from captured nexu stock and trained with shock-collar conditioning. A handful escaped into megastructure undercities.",
+   "category": "Beast",
+   "size": "Large",
+   "habitat": [
+    "Undercity",
+    "Industrial",
+    "Sewers"
+   ],
+   "narrative_tags": [
+    "Ambush",
+    "Stealth",
+    "Urban_Predator"
+   ],
+   "stats": {
+    "strength": 18,
+    "dexterity": 20,
+    "constitution": 16,
+    "intelligence": 12,
+    "wisdom": 16,
+    "charisma": 12
+   },
+   "attacks": [
+    {
+     "name": "Silent Pounce",
+     "description": "Leap from shadow to strike with crushing momentum.",
+     "damage": "2d8 + Dexterity Modifier",
+     "range": "melee",
+     "conditions": [
+      {
+       "key": "attacker_has_surprise",
+       "op": "==",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "name": "Rend",
+     "description": "Split-jaw bite followed by raking claws.",
+     "damage": "2d6 + Strength Modifier",
+     "special": "On hit, the target takes an additional 1d4 damage at the start of its next turn.",
+     "range": "melee"
+    }
+   ],
+   "ai_behavior": "Avoids open light, splits the party, retreats after a hard hit, then re-engages from a new angle. Targets the isolated and the loud first.",
+   "source": "Imperial Security Bureau Black-Kennel Brief 17-C",
+   "connections": [
+    {
+     "target_id": "galactic_empire",
+     "target_type": "Faction",
+     "relationship_id": "rel_engineered_by",
+     "narrative": "Used for intimidation and deniable disappearances in occupied sectors.",
+     "relationship": "associated"
+    },
+    {
+     "target_id": "coruscant_1313",
+     "target_type": "Lore",
+     "relationship_id": "rel_habitat",
+     "narrative": "Sightings cluster near maintenance shafts and coolant ducts.",
+     "relationship": "associated"
+    }
+   ],
+   "llm_guidance": {
+    "roleplay_guidance": "Play the environment against the players: flickering lights, steam vents, narrow gantries. Describe breathy hisses from multiple directions to seed paranoia. Let silence build before you break it.",
+    "narrative_hooks": [
+     "A black-market handler offers a bounty for a live capture—no questions.",
+     "A labor union blames management for weaponizing predators to break strikes.",
+     "A fallen ISB tech wants to trade den site coordinates for extraction."
+    ],
+    "social_dynamics": "Locals share whispered routes and talismanic wards; enforcers deny the problem to avoid panic.",
+    "common_motivations": [
+     "Territory defense",
+     "Hunger triggered by vibration patterns"
+    ],
+    "creature_development": "Escalate from single ambushes to coordinated pack tactics as the pack learns the party's rhythms."
+   },
+   "image_generation": {
+    "base_prompt": "A cinematic digital painting of a void-black nexu variant poised on an overhead pipe in a neon-lit undercity. The creature's split jaws part slightly, showing needle teeth; whisker-spines splay to taste the air. Its eyes reflect thin bars of cold light. Steam drifts, rain beads on matte fur, and sodium backlights carve a razor silhouette. High-detail concept art, gritty realism, tense mood, dramatic rim lighting.",
+    "base_negative_keywords": [
+     "cartoonish",
+     "blurry",
+     "bright cheerful",
+     "low detail"
+    ],
+    "contextual_modifiers": [
+     {
+      "target_type": "Creature_Portrait",
+      "modifier_text": "Focus on the head and forequarters with splayed whisker-spines; shallow depth of field; wet textures; breath visible in cold air."
+     },
+     {
+      "target_type": "Encounter_Scene",
+      "modifier_text": "Include a narrow gantry, a dangling hazard chain, and a flickering yellow maintenance light casting staccato shadows."
+     }
+    ]
+   },
+   "ui": {
+    "image": "/images/creatures/shadowstalker_nexu.jpg",
+    "icon": "/icons/creatures/shadowstalker_nexu.svg",
+    "color": "#1B1F24"
+   },
+   "tags": [
+    "Ambush",
+    "Stealth",
+    "Urban_Predator"
+   ]
+  }
+ },
+ "campaign_state": {
+  "campaign_id": "campaign_vertical_slice_qa",
+  "name": "Vertical Slice QA — Shadows over Coruscant",
+  "current_location_id": "loc_xizors_palace",
+  "party": [
+   {
+    "name": "Rrawrkhal",
+    "species_id": "species_wookiee",
+    "class_id": "guardian",
+    "subclass_id": "subclass_guardian_protector",
+    "level": 5,
+    "hp": {
+     "current": 42,
+     "max": 47
+    },
+    "ffg_pools": {
+     "duty": 20,
+     "obligation": 35,
+     "morality": 55
+    }
+   }
+  ],
+  "active_threats": [
+   "creature_shadowstalker_nexu"
+  ],
+  "faction_watch": [
+   "fac_black_sun"
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+﻿import importlib, json
+import gm_controllers as gmc
+importlib.reload(gmc)
+gmc.mount_campaign("meridian_reach")
+st=gmc.player_visible_state()
+name=(st.get("player_characters") or {}).get("aero",{}).get("identity",{}).get("name")
+eq=(st.get("player_characters") or {}).get("aero",{}).get("equipment",{})
+print("NAME:", repr(name))
+print("has_backslash_x:", "\\x" in json.dumps(st))
+print("campaign_id:", st.get("campaign_id"), "mount_epoch:", st.get("mount_epoch"))
+print("EQUIP slot types:", {k: type(v).__name__ for k,v in eq.items()})
+print("all slots are lists:", all(isinstance(eq.get(s),list) for s in ("weapons","armor","gear","vehicles","trinkets","starships")))
+print("weapons:", [w.get("name") for w in eq.get("weapons",[])][:4])
+print("armor:", [a.get("name") for a in eq.get("armor",[])][:4])
+print("vehicles:", [v.get("name") for v in eq.get("vehicles",[])][:4])

@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Starship Action",
+    "description": "Defines a single, specific action that can be taken by a crew member on a starship.",
+    "type": "object",
+    "properties": {
+      "id": { "type": "string", "description": "Unique, machine-readable ID, e.g., 'action_ship_angle_deflectors'." },
+      "name": { "type": "string" },
+      "description": { "type": "string", "description": "Tooltip text explaining the action's rules and outcomes." },
+      "station": {
+        "enum": ["Pilot", "Co-Pilot", "Gunner", "Systems Operator", "Commander"],
+        "description": "The primary crew station that can perform this action."
+      },
+      "cost": {
+        "type": "array",
+        "items": { "enum": ["action", "bonus_action", "reaction"] }
+      },
+      "skill_check": {
+        "type": "object",
+        "properties": {
+          "skill": { "type": "string", "description": "The skill used for the check, e.g., 'Piloting' or 'Technology'." },
+          "difficulty": { "type": "string", "description": "The base difficulty of the check, e.g., 'Easy', 'Hard'." }
+        }
+      },
+      "effects": {
+        "$ref": "CharacterClassFeature.schema.json#/properties/effects",
+        "description": "The mechanical results of succeeding on the action's check."
+      },
+      "narrative_outcomes": {
+        "type": "array",
+        "description": "List of IDs for valid Advantage/Threat spends when using this action.",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["id", "name", "description", "station", "cost"]
+  }

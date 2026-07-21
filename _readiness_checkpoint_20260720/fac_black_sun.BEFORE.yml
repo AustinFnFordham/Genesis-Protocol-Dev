@@ -1,0 +1,324 @@
+metadata:
+  id: fac_black_sun
+  name: Black Sun
+  slug: black_sun
+  version: 4.2.0
+  status: gold
+  source_dataset: sw5e_core
+  content_origin: canon
+taxonomy:
+  era:
+  - tag_era_rebellion
+  alignment:
+  - tag_align_dark
+  tags:
+  - tag_criminal_syndicate
+  - tag_faction_underworld
+  - tag_trait_organized
+  - tag_trait_wealthy
+  - tag_trait_espionage
+  - tag_species_falleen
+structure:
+  power:
+    wealth: 8
+    military: 4
+    influence: 5
+    tech_level: 5
+  ranks:
+  - rank_level: 1
+    title: Associate
+    renown_cost: 0
+    feature_choices:
+    - feat_id: feat_black_sun_associate_quiet_ear
+    - feat_id: feat_black_sun_associate_smugglers_path
+    - feat_id: feat_black_sun_associate_payout
+  - rank_level: 2
+    title: Enforcer
+    renown_cost: 15
+    feature_choices:
+    - feat_id: feat_black_sun_enforcer_muscle
+    - feat_id: feat_black_sun_enforcer_asset_recovery
+    - feat_id: feat_black_sun_enforcer_ambush
+  - rank_level: 3
+    title: Vigo's Hand
+    renown_cost: 35
+    feature_choices:
+    - feat_id: feat_black_sun_hand_poison
+    - feat_id: feat_black_sun_hand_negotiator
+    - feat_id: feat_black_sun_hand_reflexes
+  - rank_level: 4
+    title: Vigo
+    renown_cost: 75
+    feature_choices:
+    - feat_id: feat_black_sun_vigo_aristocrat
+    - feat_id: feat_black_sun_vigo_dirty_fighting
+    - feat_id: feat_black_sun_vigo_network
+  - rank_level: 5
+    title: Underlord
+    renown_cost: 150
+    feature_choices:
+    - feat_id: feat_black_sun_underlord_command
+    - feat_id: feat_black_sun_underlord_presence
+    - feat_id: feat_black_sun_underlord_secrets
+essence:
+  overview: "Black Sun isn't a gang \u2014 it's a shadow court. Vigo salons on Coruscant\
+    \ trade in favors like currency, and every favor has a witness. The Falleen nobility\
+    \ keeps the syndicate polished on the surface and feral underneath: spice, slaves,\
+    \ piracy, assassination \u2014 all managed with ledgers clean enough to pass through\
+    \ a senator's hands.\n"
+  ideology: "Profit is proof. Discretion is survival. Violence is a tool, not a personality\
+    \ \u2014 and the Sun punishes waste. The only unforgivable sin is drawing heat\
+    \ that can't be redirected.\n"
+  style_guide:
+    tone: Opulent Menace
+    key_phrases:
+    - The Sun sees receipts.
+    - Keep it clean.
+    - Pay the debt, or become it.
+    image_prompt_base: 'Star Wars underworld noir, Coruscant night rain, Falleen aristocrats
+      in sharp suits, neon-green accent lighting, guarded counting-room, hidden blasters,
+      tense smiles.
+
+      '
+    image_prompt_modifiers:
+    - holo-ledger glow
+    - silk-and-armor fashion
+    - security droids at velvet ropes
+  gm_guidance:
+    first_missions:
+    - Recover a stolen Vigo ring before it opens a safehouse door.
+    - Burn a debt-ledger copy held by an ISB-adjacent accountant.
+    - Escort a Falleen 'diplomat' who is actually delivering blackmail.
+    - Plant counterfeit customs seals to redirect heat onto a rival syndicate.
+    - "Find who skimmed a percentage off a spice shipment\u2014quietly."
+    - Retrieve a crate that 'doesn't exist' from a Coruscant impound bay.
+    - Silence a witness who thinks they're protected by the Republic.
+    - Broker peace between two crews before the Vigo loses face.
+    hooks:
+    - "A Vigo's favor is called in\u2014on you\u2014by someone you've never met."
+    - "An assassin's contract exists with your name on it\u2026 signed by a dead man."
+    - 'A senator''s aide offers immunity for one name: yours.'
+    - A safehouse door opens for the wrong ring.
+    - A rival syndicate starts using Black Sun pheromone markers as a false flag.
+    - "A ship arrives with crew missing and cargo untouched\u2014like it was judged."
+    rumors:
+    - Xizor's old ledgers still circulate, and they name everyone.
+    - Someone in the Vigos is feeding ISB 'clean' intelligence.
+    - A new spice cut causes hallucinations of green fire in the mirrors.
+    - A counting room on Coruscant has been recording conversations for years.
+    - "The Sun has a 'black list'\u2014one name added means you vanish."
+    - "A Vigo is buying Jedi artifacts, not for power\u2014 for leverage."
+    conflicts:
+    - 'Vigo politics: humiliation is deadlier than gunfire.'
+    - 'Heat management: you''re rewarded for crimes no one can prove.'
+    - False flags and infiltration by rival syndicates.
+    - "Falleen nobility vs street crews\u2014control vs chaos."
+    tells_by_rank:
+      rank_1: "Carries messages, not money\u2014if they have credits, they're bait."
+      rank_2: Has a safehouse phrase and a handler who never says their real name.
+      rank_3: Speaks in numbers and schedules; violence happens off-screen, on-time.
+      rank_4: Walks with escorts who don't look like escorts.
+      rank_5: "Never negotiates twice\u2014if they return, it's to end something."
+  culture:
+    customs:
+    - Oaths sworn on Mustafar Fortress.
+    - 'Debts are recorded twice: once in a ledger, once in a living witness.'
+    - "Vigo gatherings are ritualized\u2014gift, compliment, threat, then business."
+    taboos:
+    - Talking numbers outside a counting room.
+    - Skimming from the top without the Vigo's cut.
+    - Bleeding where cameras can see it.
+    status_markers:
+    - Signet rings containing micro-transmitters.
+    - Tailored coats with hidden seams for credsticks.
+    - "A perfume note\u2014Falleen pheromone trace."
+  tone_levers:
+    always_on:
+    - sci_fi
+    temperatures:
+      action: 0.6
+      drama: 0.6
+      horror: 0.2
+      thriller: 0.4
+      adventure: 0.6
+      comedy: 0.1
+      western: 0.2
+    subgenres:
+    - underworld_noir
+    - political_intrigue
+    notes: "Use dread sparingly\u2014cursed artifacts, haunted vaults, aftermath\u2014\
+      never constant. The tone is opulent menace, not horror. Let the horror come\
+      \ from betrayal and consequence.\n"
+connections:
+  headquarters_id: loc_coruscant
+  key_npc_ids:
+  - npc_prince_xizor
+  - npc_guri
+  allies:
+  - fac_galactic_empire
+  enemies:
+  - fac_rebel_alliance
+  neutral:
+  - fac_hutt_cartel
+synergy_engine:
+  rules:
+  - rule_id: rule_black_sun_class_operative_synergy
+    narrative: Operatives find natural homes as Black Sun assassins and spies.
+    llm_guidance: Apply when a Black Sun member with the Operative class makes a Stealth
+      check during faction-sponsored activities. Represents their specialized training.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_class_operative
+    trigger_event: on_check
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_class_operative
+        operator: has
+        value: true
+    effect:
+      category: skill_bonus
+      target: skill_stealth
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+  - rule_id: rule_black_sun_class_scoundrel_synergy
+    narrative: Smugglers and gamblers thrive in the Sun's casinos and trade routes.
+    llm_guidance: Apply when a Black Sun member with the Scoundrel class makes a Deception
+      check in criminal or underworld contexts. Their experience aligns with syndicate
+      needs.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_class_scoundrel
+    trigger_event: on_check
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_class_scoundrel
+        operator: has
+        value: true
+    effect:
+      category: skill_bonus
+      target: skill_deception
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+  - rule_id: rule_black_sun_species_falleen_synergy
+    narrative: Falleen are fast-tracked for leadership due to pheromone control and
+      cultural ties.
+    llm_guidance: Apply when a Falleen Black Sun member makes a Charisma save, representing
+      their natural pheromone resistance and manipulation abilities valued by the
+      syndicate.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_species_falleen
+    trigger_event: on_save
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_species_falleen
+        operator: has
+        value: true
+    effect:
+      category: check_advantage
+      target: save_charisma
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+  - rule_id: rule_black_sun_species_human_synergy
+    narrative: Humans blend easily into the Imperial circles Black Sun infests.
+    llm_guidance: Apply when a Human Black Sun member makes an Insight check while
+      operating within Imperial or mainstream contexts. Their unremarkable appearance
+      aids infiltration.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_human
+    trigger_event: on_check
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_human
+        operator: has
+        value: true
+    effect:
+      category: skill_bonus
+      target: skill_insight
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+  - rule_id: rule_black_sun_background_criminal_synergy
+    narrative: A history of crime is the only resume Black Sun accepts.
+    llm_guidance: Apply when a Black Sun member with a Criminal background makes a
+      Streetwise check. Their prior experience in underworld dealings gives them an
+      edge.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_background_criminal
+    trigger_event: on_check
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_background_criminal
+        operator: has
+        value: true
+    effect:
+      category: skill_bonus
+      target: skill_streetwise
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+  - rule_id: rule_black_sun_background_noble_synergy
+    narrative: Disgraced nobles find new power structures in the Vigo courts.
+    llm_guidance: Apply when a Black Sun member with a Noble background makes a Persuasion
+      check in high-society or political contexts. Their social training serves syndicate
+      diplomacy.
+    trigger_tags:
+    - tag_faction_black_sun
+    - tag_background_noble
+    trigger_event: on_check
+    condition:
+      logic: AND
+      conditions:
+      - type: tag
+        target: tag_faction_black_sun
+        operator: has
+        value: true
+      - type: tag
+        target: tag_background_noble
+        operator: has
+        value: true
+    effect:
+      category: skill_bonus
+      target: skill_persuasion
+      target_scope: self
+      bonus_type: circumstance
+      value: 1
+ui:
+  color_hex: '#0D5C3A'
+  icon_path: icons/black_sun.svg
+  image_path: images/black_sun_hero.webp

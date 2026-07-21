@@ -1,0 +1,654 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Combat Action",
+  "description": "Defines a combat action, attack, or maneuver that can be performed during combat using the unified SW5e x FFG system.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'combat_attack' or 'combat_force_push'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the combat action."
+    },
+    "action_category": {
+      "enum": ["attack", "maneuver", "defensive", "utility", "environmental", "force", "tech"],
+      "description": "The category of combat action for organization and filtering."
+    },
+    "difficulty": {
+      "enum": ["basic", "intermediate", "advanced", "expert"],
+      "description": "The difficulty level of performing this combat action."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of what the combat action represents and how it feels to perform. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this combat action, often from Star Wars lore."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical description of what the combat action does and its rules."
+    },
+    "type": {
+      "enum": ["attack", "maneuver", "reaction", "bonus_action", "free_action"],
+      "description": "The type of combat action this represents."
+    },
+    "cost": {
+      "type": "array",
+      "description": "The types of action resources this can be spent on.",
+      "items": {
+        "enum": ["action", "bonus_action", "reaction", "free_action", "movement"]
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "description": "Requirements that must be met to use this combat action.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["weapon_equipped", "class_feature", "power_known", "status_active", "position", "resource_available", "movement_available", "cover_available", "environmental_condition"]
+          },
+          "value": {
+            "type": "string",
+            "description": "The specific requirement value."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the requirement."
+          }
+        }
+      }
+    },
+    "initiative_modifiers": {
+      "type": "object",
+      "description": "How this action affects initiative or is affected by initiative.",
+      "properties": {
+        "initiative_bonus": {
+          "type": "integer",
+          "description": "Bonus to initiative rolls when using this action."
+        },
+        "initiative_penalty": {
+          "type": "integer",
+          "description": "Penalty to initiative rolls when using this action."
+        },
+        "initiative_advantage": {
+          "type": "boolean",
+          "description": "Whether this action grants advantage on initiative."
+        },
+        "initiative_disadvantage": {
+          "type": "boolean",
+          "description": "Whether this action imposes disadvantage on initiative."
+        }
+      }
+    },
+    "movement_requirements": {
+      "type": "object",
+      "description": "Movement requirements and effects for this action.",
+      "properties": {
+        "required_movement": {
+          "type": "integer",
+          "description": "Minimum movement required to use this action."
+        },
+        "movement_cost": {
+          "type": "integer",
+          "description": "Movement cost to use this action."
+        },
+        "difficult_terrain_penalty": {
+          "type": "boolean",
+          "description": "Whether this action is affected by difficult terrain."
+        },
+        "positioning_requirements": {
+          "type": "array",
+          "description": "Positioning requirements for this action.",
+          "items": {
+            "enum": ["adjacent", "within_reach", "flanking", "higher_ground", "cover", "line_of_sight"]
+          }
+        }
+      }
+    },
+    "cover_interactions": {
+      "type": "object",
+      "description": "How this action interacts with cover.",
+      "properties": {
+        "ignores_cover": {
+          "type": "array",
+          "description": "Types of cover this action ignores.",
+          "items": {
+            "enum": ["half_cover", "three_quarters_cover", "total_cover"]
+          }
+        },
+        "cover_bonus": {
+          "type": "integer",
+          "description": "Bonus when using this action from cover."
+        },
+        "creates_cover": {
+          "type": "boolean",
+          "description": "Whether this action creates cover for allies."
+        },
+        "destroys_cover": {
+          "type": "boolean",
+          "description": "Whether this action can destroy cover."
+        }
+      }
+    },
+    "environmental_factors": {
+      "type": "object",
+      "description": "How environmental conditions affect this action.",
+      "properties": {
+        "terrain_effects": {
+          "type": "array",
+          "description": "How different terrain types affect this action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "terrain_type": {
+                "enum": ["rough_ground", "dense_vegetation", "slippery_surface", "deep_water", "elevated", "confined"]
+              },
+              "effect": {
+                "type": "string",
+                "description": "How this terrain affects the action."
+              }
+            }
+          }
+        },
+        "weather_effects": {
+          "type": "array",
+          "description": "How weather conditions affect this action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "weather_type": {
+                "enum": ["rain", "fog", "wind", "extreme_heat", "extreme_cold", "storm"]
+              },
+              "effect": {
+                "type": "string",
+                "description": "How this weather affects the action."
+              }
+            }
+          }
+        },
+        "hazard_interactions": {
+          "type": "array",
+          "description": "How hazards interact with this action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hazard_type": {
+                "enum": ["fire", "electricity", "poison", "radiation", "vacuum", "pressure"]
+              },
+              "effect": {
+                "type": "string",
+                "description": "How this hazard affects the action."
+              }
+            }
+          }
+        }
+      }
+    },
+    "combat_conditions": {
+      "type": "object",
+      "description": "How combat conditions affect this action.",
+      "properties": {
+        "prone_effects": {
+          "type": "object",
+          "properties": {
+            "advantage": {
+              "type": "boolean",
+              "description": "Whether this action has advantage against prone targets."
+            },
+            "disadvantage": {
+              "type": "boolean",
+              "description": "Whether this action has disadvantage when prone."
+            }
+          }
+        },
+        "invisible_effects": {
+          "type": "object",
+          "properties": {
+            "advantage": {
+              "type": "boolean",
+              "description": "Whether this action has advantage against invisible targets."
+            },
+            "disadvantage": {
+              "type": "boolean",
+              "description": "Whether this action has disadvantage when invisible."
+            }
+          }
+        },
+        "grappled_effects": {
+          "type": "object",
+          "properties": {
+            "can_use": {
+              "type": "boolean",
+              "description": "Whether this action can be used while grappled."
+            },
+            "restrictions": {
+              "type": "array",
+              "description": "Restrictions when using this action while grappled."
+            }
+          }
+        },
+        "restrained_effects": {
+          "type": "object",
+          "properties": {
+            "can_use": {
+              "type": "boolean",
+              "description": "Whether this action can be used while restrained."
+            },
+            "restrictions": {
+              "type": "array",
+              "description": "Restrictions when using this action while restrained."
+            }
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "description": "Defines the targeting parameters for this combat action.",
+      "properties": {
+        "type": {
+          "enum": ["self", "creature", "object", "point", "area", "cone", "line"]
+        },
+        "range": {
+          "type": "integer",
+          "description": "Range in feet."
+        },
+        "area": {
+          "type": "object",
+          "description": "For area effects, defines the shape and size.",
+          "properties": {
+            "shape": {
+              "enum": ["sphere", "cube", "cone", "line", "cylinder"]
+            },
+            "size": {
+              "type": "integer",
+              "description": "Size in feet."
+            }
+          }
+        }
+      }
+    },
+    "attack": {
+      "type": "object",
+      "description": "Attack parameters if this is an attack action.",
+      "properties": {
+        "attack_type": {
+          "enum": ["melee_weapon", "ranged_weapon", "unarmed", "force_power", "tech_power"]
+        },
+        "attack_modifier": {
+          "type": "string",
+          "description": "The ability modifier used for the attack roll."
+        },
+        "damage": {
+          "type": "object",
+          "properties": {
+            "dice": {
+              "type": "string",
+              "description": "Damage dice, e.g., '1d6' or '2d8'."
+            },
+            "type": {
+              "enum": ["slashing", "piercing", "bludgeoning", "energy", "ion", "force", "tech"]
+            },
+            "bonus": {
+              "type": "string",
+              "description": "Additional damage bonus, e.g., 'Strength modifier'."
+            }
+          }
+        },
+        "critical_range": {
+          "type": "array",
+          "description": "Numbers that trigger critical hits.",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "damage_reduction": {
+          "type": "object",
+          "description": "How this attack interacts with damage reduction.",
+          "properties": {
+            "bypasses_resistance": {
+              "type": "array",
+              "description": "Damage types this attack bypasses resistance for.",
+              "items": {
+                "enum": ["slashing", "piercing", "bludgeoning", "energy", "ion", "force", "tech"]
+              }
+            },
+            "bypasses_immunity": {
+              "type": "array",
+              "description": "Damage types this attack bypasses immunity for.",
+              "items": {
+                "enum": ["slashing", "piercing", "bludgeoning", "energy", "ion", "force", "tech"]
+              }
+            },
+            "damage_reduction": {
+              "type": "integer",
+              "description": "Amount of damage reduction this attack ignores."
+            }
+          }
+        }
+      }
+    },
+    "effects": {
+      "type": "array",
+      "description": "The mechanical results of taking this combat action, using our master effects schema.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "make_attack",
+              "apply_status",
+              "modify_stat",
+              "grant_advantage",
+              "impose_disadvantage",
+              "heal_hp",
+              "restore_strain",
+              "reduce_damage",
+              "reflect_attack",
+              "teleport",
+              "stabilize_creature",
+              "enhance_object",
+              "counter_attack",
+              "emergency_override",
+              "create_cover",
+              "destroy_cover",
+              "modify_terrain",
+              "apply_environmental_effect"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "description": "The specific effect value or identifier."
+          },
+          "target_scopes": {
+            "type": "array",
+            "description": "Who or what this effect applies to.",
+            "items": {
+              "enum": ["self", "ally", "enemy", "all_allies", "all_enemies", "all_creatures", "object", "area", "terrain", "environment"]
+            }
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions that must be met for this effect to apply.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "The condition key to check."
+                },
+                "op": {
+                  "enum": ["equals", "greater_than", "less_than", "not_equals", "contains", "starts_with"]
+                },
+                "value": {
+                  "description": "The value to compare against."
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes about this effect."
+          }
+        }
+      }
+    },
+    "narrative_currency": {
+      "type": "object",
+      "description": "How this action generates and spends narrative currency (Advantage/Threat).",
+      "properties": {
+        "advantage_generation": {
+          "type": "array",
+          "description": "Conditions that generate Advantage when using this action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "description": "What triggers Advantage generation."
+              },
+              "amount": {
+                "type": "integer",
+                "description": "Amount of Advantage generated."
+              }
+            }
+          }
+        },
+        "threat_generation": {
+          "type": "array",
+          "description": "Conditions that generate Threat when using this action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "description": "What triggers Threat generation."
+              },
+              "amount": {
+                "type": "integer",
+                "description": "Amount of Threat generated."
+              }
+            }
+          }
+        },
+        "advantage_spends": {
+          "type": "array",
+          "description": "Valid Advantage spends for this action.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "threat_spends": {
+          "type": "array",
+          "description": "Valid Threat spends for this action.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "narrative_outcomes": {
+      "type": "array",
+      "description": "List of IDs for valid Advantage/Threat spends when using this combat action.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "synergies": {
+      "type": "array",
+      "description": "Special combinations that enhance this combat action.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": ["class_feature", "power", "property", "status", "species_trait", "environmental", "positional"]
+          },
+          "requirement": {
+            "type": "string",
+            "description": "The specific requirement for this synergy."
+          },
+          "bonus": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["attack_bonus", "damage_bonus", "range_bonus", "effect_enhancement", "initiative_bonus", "movement_bonus", "cover_bonus"]
+              },
+              "value": {
+                "type": "string",
+                "description": "The bonus value, e.g., '+2' or 'advantage'."
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of how this synergy works."
+          }
+        }
+      }
+    },
+    "balance_considerations": {
+      "type": "object",
+      "description": "Balance considerations for this combat action.",
+      "properties": {
+        "power_level": {
+          "enum": ["low", "medium", "high", "very_high"],
+          "description": "Relative power level of this action."
+        },
+        "action_economy_impact": {
+          "type": "string",
+          "description": "How this action affects action economy."
+        },
+        "resource_cost": {
+          "type": "string",
+          "description": "Resource cost considerations."
+        },
+        "counterplay_options": {
+          "type": "array",
+          "description": "Available counterplay options against this action."
+        },
+        "testing_notes": {
+          "type": "string",
+          "description": "Notes for testing this action's balance."
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Keywords for categorization and filtering.",
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "$comment": "SECTION 10: SYNERGIES & INTEGRATION",
+    "class_synergies": {
+      "type": "array",
+      "description": "Classes that have special interactions with this combat action.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["class_id", "narrative"]
+      }
+    },
+    "species_synergies": {
+      "type": "array",
+      "description": "Species that have special interactions with this combat action.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "species_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["species_id", "narrative"]
+      }
+    },
+    "faction_synergies": {
+      "type": "array",
+      "description": "Factions that have special interactions with this combat action.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["faction_id", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 11: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "iconic_usage": {
+          "type": "string",
+          "description": "Example of how this combat action is typically used in Star Wars lore."
+        },
+        "tactical_notes": {
+          "type": "string",
+          "description": "Tactical advice for when and how this combat action is most effective."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this combat action.",
+          "items": { "type": "string" }
+        },
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying characters performing this combat action."
+        }
+      }
+    },
+
+    "$comment": "SECTION 12: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this combat action, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this combat action adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Combat_Scene', 'Location')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this combat action is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 13: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the combat action's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the combat action's icon for UI display."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color for UI elements (hex code or color name)."
+        }
+      },
+      "required": ["image", "icon", "color"]
+    }
+  },
+  "required": ["id", "name", "action_category", "difficulty", "narrative", "description", "type", "cost", "image_generation", "ui"]
+}

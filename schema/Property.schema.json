@@ -1,0 +1,250 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Property",
+  "description": "Defines a property with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'property_lightweight' or 'property_durable'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the property."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this property is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How common or unique this property is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the property, its significance, and role. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this property, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this property is viewed by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the property."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this property in the galaxy."
+    },
+    "application_tags": {
+      "type": "array",
+      "description": "A list of tags an item must have for this property to be applied.",
+      "items": { "type": "string" }
+    },
+    "effects": {
+      "type": "array",
+      "description": "A list of mechanical effects this property provides.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "grant_proficiency",
+              "grant_advantage",
+              "modify_stat",
+              "modify_weapon",
+              "modify_skill_check",
+              "modify_roll",
+              "grant_feat",
+              "narrative_effect",
+              "apply_status",
+              "trigger_effect",
+              "grant_choice",
+              "grant_power",
+              "modify_power_cost",
+              "grant_talent",
+              "modify_talent_tree"
+            ],
+            "description": "The type of effect this property provides."
+          },
+          "value": {
+            "description": "The value associated with this effect (varies by type)."
+          },
+          "target_property": {
+            "type": "string",
+            "description": "The property being modified (for modify_stat effects)."
+          },
+          "target_scopes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "The scope of targets this effect applies to."
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions that must be met for this effect to apply.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": { "type": "string" },
+                "op": { "type": "string" },
+                "value": {}
+              },
+              "required": ["key", "op", "value"]
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Actions that can be taken with this effect."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes about this effect."
+          }
+        },
+        "required": ["type"]
+      }
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Applied_To', 'Developed_By', 'Restricted_To', 'Iconic_To'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this property type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_properties": {
+      "type": "array",
+      "description": "Notable properties of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld or origin of this property."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this property."
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying with this property."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this property.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this property affects social dynamics in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for using this property.",
+          "items": { "type": "string" }
+        },
+        "property_development": {
+          "type": "string",
+          "description": "Guidance for property development and progression."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: IMAGE GENERATION & UI",
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this property."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Property_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the property image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the property icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this property for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "application_tags", "effects", "connections"]
+}

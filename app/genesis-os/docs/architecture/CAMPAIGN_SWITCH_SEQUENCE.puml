@@ -1,0 +1,29 @@
+@startuml
+' Genesis Protocol — Atomic campaign switch
+actor User
+participant CampaignSelector
+participant MountCoordinator
+participant ClientStore
+participant API
+participant CampaignService
+participant VisibilityService
+participant ProjectionBuilder
+participant UIContainers
+User -> CampaignSelector : Select Meridian Reach
+CampaignSelector -> MountCoordinator : mount(campaign_id)
+MountCoordinator -> ClientStore : increment mount_epoch
+MountCoordinator -> ClientStore : status = MOUNTING
+MountCoordinator -> API : GET projection {campaign_id, mount_epoch}
+API -> CampaignService : load campaign
+CampaignService -> VisibilityService : filter for player visibility
+VisibilityService -> ProjectionBuilder : build coherent projection
+ProjectionBuilder --> API : projection envelope
+API --> MountCoordinator : projection {campaign_id, epoch, revision}
+MountCoordinator -> MountCoordinator : validate campaign_id + epoch
+alt response matches current mount
+  MountCoordinator -> ClientStore : atomic commit projection
+  ClientStore -> UIContainers : render one revision
+else response is stale
+  MountCoordinator -> MountCoordinator : discard response
+end
+@enduml

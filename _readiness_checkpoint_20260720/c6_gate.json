@@ -1,0 +1,132 @@
+{
+ "gate": {
+  "canonical_runtime_is_reference_driven": false,
+  "resolved_view_separate_from_runtime": true,
+  "required_reference_slots": {
+   "meridian": 29,
+   "shadows": 9
+  },
+  "resolved_reference_slots": {
+   "meridian": 0,
+   "shadows": 0
+  },
+  "missing_required_references": 36,
+  "unresolved_required_references": 3,
+  "inline_legacy_definitions_in_canonical_runtime": 13,
+  "display_strings_in_id_collections": 0,
+  "registry_resolution_coverage_percent": {
+   "meridian": 0.0,
+   "shadows": 0.0
+  },
+  "one_to_one_tests": true,
+  "one_to_many_tests": true,
+  "many_to_many_tests": true,
+  "typed_relationship_edge_tests": true,
+  "synergy_query_tests": true,
+  "state_revision_monotonic": true,
+  "journal_semantic_quality": true,
+  "fixture_inventory_reconciled": true,
+  "live_fixture_hits": 0,
+  "OVERALL_C6_GATE": false
+ },
+ "fixture_inventory": {
+  "total_boot_registry_records": 67,
+  "sandbox_gold_files": 40,
+  "heuristic_detected_fixture_urids": 20,
+  "discrepancy": "heuristic narrative-marker undercounts; the 41-file sandbox store includes guardian/power fixtures without a 'sandbox' narrative marker",
+  "resolution": "mark fixtures by SOURCE STORE (sandbox_gold) via manifest tier, not narrative heuristic \u2014 done in reconciliation; ProjectionBuilder exclusion should consume this set"
+ },
+ "cardinality": {
+  "one_to_one_supported": true,
+  "one_to_many_supported": true,
+  "many_to_many_supported": true,
+  "typed_relationship_edges_supported": true,
+  "observed": {
+   "one_to_one": true,
+   "one_to_many": true,
+   "many_to_many": true,
+   "edge_count": 303,
+   "entity_types": {
+    "Feat": 12,
+    "Entity": 35,
+    "Character": 15,
+    "Species": 3,
+    "Item": 2
+   }
+  }
+ },
+ "revision": {
+  "r1": 1,
+  "r2": 1,
+  "monotonic": true
+ },
+ "meridian": {
+  "campaign_instance_id": "meridian_reach__1784613879",
+  "reference_integrity": {
+   "required_reference_slots": 29,
+   "populated_reference_slots": 0,
+   "resolved_reference_slots": 0,
+   "missing_required_references": 29,
+   "unresolved_references": 0,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 10,
+   "registry_resolution_coverage_percent": 0.0,
+   "missing_domains": [
+    "background",
+    "class",
+    "feature",
+    "item",
+    "power",
+    "species"
+   ]
+  },
+  "display_strings_in_id_collections": 0,
+  "asset_relationships": {
+   "owned_vessel_ids": [],
+   "assigned_vessel_ids": [
+    "republic_shuttle_escort"
+   ],
+   "accessible_vessel_ids": [
+    "republic_shuttle_escort"
+   ],
+   "current_vessel_id": "republic_shuttle_escort"
+  },
+  "journal_quality": {
+   "summary_not_truncated": true,
+   "ordinary_utterances_filtered": true
+  }
+ },
+ "shadows": {
+  "campaign_instance_id": "shadows_of_empire__1784613879",
+  "reference_integrity": {
+   "required_reference_slots": 9,
+   "populated_reference_slots": 2,
+   "resolved_reference_slots": 0,
+   "missing_required_references": 7,
+   "unresolved_references": 3,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 3,
+   "registry_resolution_coverage_percent": 0.0,
+   "missing_domains": [
+    "class",
+    "feature",
+    "item"
+   ]
+  },
+  "display_strings_in_id_collections": 0,
+  "asset_relationships": {
+   "owned_vessel_ids": [],
+   "assigned_vessel_ids": [
+    "yt2400_reconciliator"
+   ],
+   "accessible_vessel_ids": [
+    "yt2400_reconciliator"
+   ],
+   "current_vessel_id": "yt2400_reconciliator"
+  },
+  "journal_quality": {
+   "summary_not_truncated": true,
+   "ordinary_utterances_filtered": true
+  }
+ }
+}

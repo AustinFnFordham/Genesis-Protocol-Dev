@@ -1,0 +1,21 @@
+urid: iteminst_aero_lightsaber_001
+entity_type: ItemInstance
+authority_lane: character_instance
+source_path: null
+content_hash: a90a2eabd7e8e136
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- taron forged modular indigo lightsaber
+- taron forged modular indigo lightsabers
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs:
+- item_lightsaber
+provenance: {}
+campaign_scope: meridian_reach
+validation_status: instance_authored
+resolution_status: character_instance
+name: Taron-forged Modular Indigo Lightsaber

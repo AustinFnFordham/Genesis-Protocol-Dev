@@ -1,0 +1,239 @@
+/* === ADDITIONAL VISUAL EFFECTS === */
+
+/* Matrix-style text effect */
+@keyframes matrixRain {
+    0% { transform: translateY(-100vh); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.matrix-bg::before {
+    content: '01001010 01100101 01100100 01101001';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(0, 255, 0, 0.1);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 20px;
+    animation: matrixRain 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Lightsaber glow effect */
+.lightsaber-glow {
+    position: relative;
+    overflow: visible;
+}
+
+.lightsaber-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(to bottom, #00ffff, #ffffff, #00ffff);
+    border-radius: 2px;
+    box-shadow: 
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #00ffff;
+    animation: lightsaberHum 2s ease-in-out infinite;
+    transform: translateY(-50%);
+}
+
+.lightsaber-glow.red::before {
+    background: linear-gradient(to bottom, #ff0000, #ffffff, #ff0000);
+    box-shadow: 
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 30px #ff0000;
+}
+
+@keyframes lightsaberHum {
+    0%, 100% { opacity: 0.8; transform: translateY(-50%) scaleY(1); }
+    50% { opacity: 1; transform: translateY(-50%) scaleY(1.1); }
+}
+
+/* Hologram flicker effect */
+.hologram-flicker {
+    animation: hologramFlicker 0.15s linear infinite;
+}
+
+@keyframes hologramFlicker {
+    0% { opacity: 1; }
+    98% { opacity: 1; }
+    99% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+/* Energy shield effect */
+.energy-shield {
+    position: relative;
+    overflow: hidden;
+}
+
+.energy-shield::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%),
+        conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+    animation: shieldRotate 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes shieldRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Particle effect */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00ffff;
+    border-radius: 50%;
+    animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle:nth-child(odd) {
+    background: #ff0080;
+    animation-duration: 8s;
+}
+
+@keyframes particleFloat {
+    0% { 
+        transform: translateY(100vh) translateX(0px) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) translateX(10px) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) translateX(-10px) scale(1);
+    }
+    100% { 
+        transform: translateY(0vh) translateX(0px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Scan line effect */
+.scanlines {
+    position: relative;
+    overflow: hidden;
+}
+
+.scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.03) 2px,
+        rgba(0, 255, 255, 0.03) 4px
+    );
+    pointer-events: none;
+    animation: scanlineMove 2s linear infinite;
+}
+
+@keyframes scanlineMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+}
+
+/* Glitch effect for dramatic moments */
+.glitch {
+    animation: glitch 0.3s ease-in-out infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* Force lightning effect */
+.force-lightning {
+    position: relative;
+}
+
+.force-lightning::after {
+    content: '⚡';
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+    animation: lightning 0.1s ease-in-out infinite;
+    transform: translateY(-50%);
+}
+
+@keyframes lightning {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Hyperspace effect */
+.hyperspace {
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%),
+        linear-gradient(0deg, transparent 0%, rgba(0, 255, 255, 0.1) 50%, transparent 100%);
+    background-size: 200% 200%;
+    animation: hyperspace 1s ease-in-out infinite;
+}
+
+@keyframes hyperspace {
+    0% { background-position: -200% -200%; }
+    100% { background-position: 200% 200%; }
+}
+
+/* Death Star trench run effect */
+.trench-run {
+    background: 
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.8) 25%, 
+            rgba(0, 255, 255, 0.1) 25%, 
+            rgba(0, 255, 255, 0.1) 50%, 
+            rgba(0, 0, 0, 0.8) 50%, 
+            rgba(0, 0, 0, 0.8) 75%, 
+            rgba(0, 255, 255, 0.1) 75%
+        );
+    background-size: 40px 40px;
+    animation: trenchMove 2s linear infinite;
+}
+
+@keyframes trenchMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}

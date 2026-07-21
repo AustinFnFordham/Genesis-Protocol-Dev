@@ -1,0 +1,267 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Standard Action",
+  "description": "A comprehensive schema for character actions with narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'action_attack' or 'action_dodge'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the action."
+    },
+    "action_type": {
+      "enum": ["Combat", "Social", "Exploration", "Utility", "Movement", "Special"],
+      "description": "The primary category of the action."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this action is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the action, its significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this action."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this action is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Tooltip text explaining the action's rules and outcomes."
+    },
+    "action_process": {
+      "type": "string",
+      "description": "Detailed step-by-step description of how the action is performed."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this action technique or method."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Developed By', 'Common Among', 'Restricted To', 'Iconic To', 'Enhanced By'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this action from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_users": {
+      "type": "array",
+      "description": "Notable individuals who have mastered this action.",
+      "items": { "type": "string" }
+    },
+    "famous_instances": {
+      "type": "array",
+      "description": "Notable events or moments involving this action.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this action.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this action.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this action.",
+          "items": { "type": "string" }
+        },
+        "typical_usage": {
+          "type": "array",
+          "description": "Examples of how this action is typically used in Star Wars stories.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this action affects the cultures and societies of the galaxy."
+        },
+        "tactical_significance": {
+          "type": "string",
+          "description": "The tactical implications and significance of this action."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: ACTION MECHANICS",
+    "cost": {
+      "type": "array",
+      "description": "The types of action resources this can be spent on.",
+      "items": { "enum": ["action", "bonus_action", "reaction", "object_interaction", "movement", "downtime"] }
+    },
+    "target": {
+      "type": "object",
+      "description": "Defines the targeting parameters for this action.",
+      "properties": {
+        "type": {
+          "enum": ["self", "creature", "object", "point", "area", "none"],
+          "description": "The type of target this action can affect."
+        },
+        "range": {
+          "type": "integer",
+          "description": "Range in feet."
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Additional conditions that must be met for targeting.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "skill_check": {
+      "type": "object",
+      "description": "Optional skill check requirements for this action.",
+      "properties": {
+        "skill": {
+          "type": "string",
+          "description": "The skill required to perform this action (e.g., 'Technology (INT)', 'Persuasion (CHA)')."
+        },
+        "dc_type": {
+          "enum": ["fixed", "opposed_check", "variable"],
+          "description": "Type of difficulty class for the skill check."
+        },
+        "value": {
+          "type": "integer",
+          "description": "Fixed DC value for the skill check."
+        },
+        "opposed_by": {
+          "type": "string",
+          "description": "Skill that opposes this check (for opposed_check type)."
+        },
+        "variable_source": {
+          "type": "string",
+          "description": "Source of variable DC (e.g., 'target_level', 'environment_difficulty')."
+        }
+      },
+      "required": ["skill", "dc_type"]
+    },
+    "effects": {
+      "$ref": "CharacterClassFeature.schema.json#/properties/effects",
+      "description": "The mechanical results of taking the action, using our master effects schema."
+    },
+
+    "$comment": "SECTION 8: NARRATIVE OUTCOMES",
+    "narrative_outcomes": {
+      "type": "array",
+      "description": "List of IDs for valid Advantage/Threat spends when using this action.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 9: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this action, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this action adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Combat_Scene', 'Location')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this action is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 10: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the action's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the action's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    },
+
+    "$comment": "SECTION 11: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Keywords for categorization and search.",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this action.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this action."
+    }
+  },
+  "required": ["id", "name", "action_type", "narrative", "description", "cost", "image_generation", "ui"]
+}

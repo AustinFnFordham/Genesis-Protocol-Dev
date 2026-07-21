@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Environmental Adaptations Schema",
+  "description": "Schema for species-specific environmental abilities",
+  "type": "object",
+  "properties": {
+    "environmental_adaptations": {
+      "type": "array",
+      "description": "Environmental adaptations for this species",
+      "items": {
+        "type": "object",
+        "properties": {
+          "environment": {
+            "type": "string",
+            "enum": ["aquatic", "desert", "arctic", "jungle", "urban", "space", "volcanic", "toxic", "vacuum", "high_gravity", "low_gravity"],
+            "description": "Type of environment this adaptation applies to"
+          },
+          "advantage": {
+            "type": "string",
+            "description": "Primary advantage in this environment"
+          },
+          "situational_bonus": {
+            "type": "object",
+            "description": "Situational bonus provided in this environment",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["saving_throw_bonus", "skill_bonus", "movement_bonus", "resistance", "advantage", "immunity"],
+                "description": "Type of bonus provided"
+              },
+              "value": {
+                "type": ["string", "number"],
+                "description": "Value of the bonus"
+              },
+              "conditions": {
+                "type": "array",
+                "description": "Specific conditions when this bonus applies",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": { "type": "string" },
+                    "op": { "type": "string" },
+                    "value": { "type": ["string", "number", "array"] }
+                  }
+                }
+              }
+            },
+            "required": ["type", "value"]
+          },
+          "immersion_effect": {
+            "type": "string",
+            "description": "How this adaptation enhances immersion and storytelling"
+          },
+          "narrative_hooks": {
+            "type": "array",
+            "description": "Narrative hooks and storytelling opportunities",
+            "items": {
+              "type": "string"
+            }
+          },
+          "optional": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this adaptation is optional"
+          }
+        },
+        "required": ["environment", "advantage", "situational_bonus", "immersion_effect"]
+      }
+    },
+    "environmental_mastery": {
+      "type": "object",
+      "description": "Environmental mastery and expertise",
+      "properties": {
+        "primary_environments": {
+          "type": "array",
+          "description": "Primary environments this species is adapted to",
+          "items": {
+            "type": "string"
+          }
+        },
+        "environmental_knowledge": {
+          "type": "array",
+          "description": "Areas of environmental knowledge and expertise",
+          "items": {
+            "type": "string"
+          }
+        },
+        "survival_techniques": {
+          "type": "array",
+          "description": "Unique survival techniques and methods",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "balance_guidelines": {
+      "type": "object",
+      "description": "Balance guidelines for environmental adaptations",
+      "properties": {
+        "situational_advantages": {
+          "type": "boolean",
+          "default": true,
+          "description": "Adaptations should provide situational advantages, not universal bonuses"
+        },
+        "max_adaptations_per_character": {
+          "type": "number",
+          "default": 4,
+          "description": "Maximum environmental adaptations per character"
+        },
+        "balanced_mechanics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Adaptations must be balanced against other species abilities"
+        },
+        "enhance_immersion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Adaptations should enhance immersion, not optimization"
+        }
+      }
+    }
+  },
+  "required": ["environmental_adaptations", "environmental_mastery", "balance_guidelines"]
+}

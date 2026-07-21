@@ -1,0 +1,13 @@
+{
+ "projection_emitted": true,
+ "schema_valid": true,
+ "semantic_valid": true,
+ "malformed_equipment_entries": 0,
+ "identity_taxonomy_errors": 0,
+ "duplicate_character_sources": 0,
+ "unresolved_required_progression_refs": 0,
+ "live_fixture_hits": 0,
+ "hidden_state_leaks": 0,
+ "journal_is_structured": true,
+ "starship_taxonomy_valid": true
+}

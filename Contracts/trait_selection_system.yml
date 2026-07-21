@@ -1,0 +1,81 @@
+trait_selection_system:
+  name: "Trait Marketplace Selection"
+  description: "When your chosen species has fewer than 3 innate traits, you may select additional traits from this marketplace to reach the 3-trait minimum."
+  
+  selection_rules:
+    - "Species with 3+ innate traits: No marketplace selection needed"
+    - "Species with <3 innate traits: Choose marketplace traits to reach 3 total"
+    - "Maximum 2 marketplace traits per character"
+    - "No duplicate proficiencies (convert to advantage if overlap)"
+    
+  available_traits:
+    - id: "trait_tradecraft"
+      name: "Tradecraft"
+      description: "Blend, misdirect, and move through urban currents without leaving a wake."
+      synergy: ["bothan", "human", "twi'lek"]
+      effects:
+        - grant_proficiency: "Stealth"
+        - grant_proficiency: "Deception"
+        - grant_advantage: "social_contact_checks_once_per_short_rest"
+      
+    - id: "trait_shipwrights_eye"
+      name: "Shipwright's Eye"
+      description: "Years near the yards trained your eye for stress lines, balance, and good work."
+      synergy: ["mon_calamari", "duros", "human"]
+      effects:
+        - grant_proficiency: "Technology"
+        - grant_advantage: "vehicle_technology_checks"
+      
+    - id: "trait_oral_tradition"
+      name: "Oral Tradition"
+      description: "You carry myths and lessons, skilled at keeping listeners and knowledge alike."
+      synergy: ["ithorian", "human", "togruta"]
+      effects:
+        - grant_proficiency: "Performance"
+        - grant_advantage: "storytelling_performance_checks"
+      
+    - id: "trait_peace_talks"
+      name: "Peace Talks"
+      description: "You slow tempers and find common ground when blades are half-drawn."
+      synergy: ["ithorian", "mon_calamari", "human"]
+      effects:
+        - grant_advantage: "deescalate_persuasion_checks"
+      
+    - id: "trait_urban_blend"
+      name: "Urban Blend"
+      description: "Crowds conceal those who match their rhythm and noise."
+      synergy: ["bothan", "twi'lek", "human"]
+      effects:
+        - grant_advantage: "stealth_in_urban_crowds"
+      
+    - id: "trait_field_savvy"
+      name: "Field Savvy"
+      description: "Hard lessons in the field sharpened your instincts when the plan goes sideways."
+      synergy: ["rodian", "duros", "human"]
+      effects:
+        - grant_advantage: "objective_related_checks_once_per_short_rest"
+        
+    - id: "trait_spynet_operative"
+      name: "Spynet Operative"
+      description: "Trained within the webs of favors and whispers, you gather intelligence, cultivate sources, and vanish into crowds."
+      synergy: ["bothan", "human", "chiss", "twi'lek"]
+      effects:
+        - grant_proficiency: "Stealth"
+        - grant_proficiency: "Deception"
+        - grant_advantage: "social_contact_checks_once_per_short_rest"
+        - grant_advantage: "stealth_in_urban_crowds"
+        
+    - id: "trait_astrogation_expert"
+      name: "Astrogation Expert"
+      description: "You chart lanes and read stellar weather, turning silence into safe passage."
+      synergy: ["duros", "human", "mon_calamari", "chiss"]
+      effects:
+        - grant_proficiency: "Astrogation"
+        - grant_advantage: "astrogation_checks"
+  
+  selection_flow:
+    1: "Choose your species and note its innate traits"
+    2: "If innate traits < 3, browse marketplace options"
+    3: "Select marketplace traits to reach 3 total (max 2 marketplace)"
+    4: "Resolve any proficiency overlaps (convert to advantage)"
+    5: "Optionally choose one starship background"

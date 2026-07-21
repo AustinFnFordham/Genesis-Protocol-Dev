@@ -1,0 +1,374 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Starship & Vehicle",
+  "description": "A comprehensive schema for starships and vehicles with narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'starship_millennium_falcon' or 'vehicle_x_wing'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the starship or vehicle."
+    },
+    "starship_type": {
+      "enum": ["Fighter", "Bomber", "Transport", "Freighter", "Corvette", "Frigate", "Destroyer", "Cruiser", "Battleship", "Carrier", "Shuttle", "Speeder", "Walker", "Other"],
+      "description": "The primary category of the starship or vehicle."
+    },
+    "class": {
+      "type": "string",
+      "description": "The specific class or model designation."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this starship is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "The company or organization that built this starship."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the starship, its history, significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this starship."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this starship is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "The main descriptive text for the starship, providing comprehensive details."
+    },
+    "physical_description": {
+      "type": "string",
+      "description": "Detailed physical description of the starship's appearance, design, and construction."
+    },
+    "manufacturing_location": {
+      "type": "string",
+      "description": "Where this starship was typically manufactured or assembled."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Manufactured By', 'Iconic To', 'Common Among', 'Deployed By', 'Designed For'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this starship from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_pilots": {
+      "type": "array",
+      "description": "Notable individuals who have piloted or commanded this type of starship.",
+      "items": { "type": "string" }
+    },
+    "famous_battles": {
+      "type": "array",
+      "description": "Notable battles or events involving this type of starship.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this starship.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this starship.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this starship.",
+          "items": { "type": "string" }
+        },
+        "typical_missions": {
+          "type": "array",
+          "description": "Types of missions or tasks typically performed with this starship.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this starship affects the cultures and societies of the galaxy."
+        },
+        "technological_significance": {
+          "type": "string",
+          "description": "The technological implications and significance of this starship."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: MECHANICAL STATS",
+    "silhouette": {
+      "type": "integer",
+      "description": "The size category of the starship (1-10 scale)."
+    },
+    "speed": {
+      "type": "integer",
+      "description": "The starship's speed rating."
+    },
+    "handling": {
+      "type": "integer",
+      "description": "The starship's handling/maneuverability rating."
+    },
+    "defenses": {
+      "type": "object",
+      "description": "Defensive capabilities of the starship.",
+      "properties": {
+        "ac": {
+          "type": "integer",
+          "description": "Armor Class rating."
+        },
+        "dr": {
+          "type": "integer",
+          "description": "Damage Reduction value."
+        },
+        "shield_points_max": {
+          "type": "integer",
+          "description": "Maximum shield points."
+        },
+        "shield_points_current": {
+          "type": "integer",
+          "description": "Current shield points."
+        }
+      }
+    },
+    "health": {
+      "type": "object",
+      "description": "Health and damage tracking for the starship.",
+      "properties": {
+        "hull_trauma_max": {
+          "type": "integer",
+          "description": "Maximum hull trauma points."
+        },
+        "hull_trauma_current": {
+          "type": "integer",
+          "description": "Current hull trauma points."
+        },
+        "system_strain_max": {
+          "type": "integer",
+          "description": "Maximum system strain points."
+        },
+        "system_strain_current": {
+          "type": "integer",
+          "description": "Current system strain points."
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: SYSTEMS & CAPABILITIES",
+    "systems": {
+      "type": "object",
+      "description": "Technical systems and capabilities of the starship.",
+      "properties": {
+        "hyperdrive_class": {
+          "type": "number",
+          "description": "Hyperdrive rating (lower is faster)."
+        },
+        "navicomputer": {
+          "type": "boolean",
+          "description": "Whether the starship has a navicomputer."
+        },
+        "sensors": {
+          "type": "string",
+          "description": "Description of sensor capabilities."
+        },
+        "life_support": {
+          "type": "string",
+          "description": "Life support system details."
+        },
+        "communications": {
+          "type": "string",
+          "description": "Communication system capabilities."
+        }
+      }
+    },
+    "weapons": {
+      "type": "array",
+      "description": "Weapon systems installed on the starship.",
+      "items": { "$ref": "Item.schema.json" }
+    },
+
+    "$comment": "SECTION 9: MODULAR SYSTEMS",
+    "modifications": {
+      "type": "object",
+      "description": "Modification system for customizable starships.",
+      "properties": {
+        "slots": {
+          "type": "object",
+          "description": "Available modification slots, categorized by system.",
+          "properties": {
+            "engines": { "type": "integer" },
+            "weapons": { "type": "integer" },
+            "shields": { "type": "integer" },
+            "armor": { "type": "integer" },
+            "comms": { "type": "integer" },
+            "sensors": { "type": "integer" },
+            "miscellaneous": { "type": "integer" }
+          }
+        },
+        "installed": {
+          "type": "array",
+          "description": "List of installed modification IDs.",
+          "items": { "type": "string" }
+        },
+        "compatible_mods": {
+          "type": "array",
+          "description": "List of modification IDs that can be installed on this starship.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 10: CREW & CAPACITY",
+    "crew_complement": {
+      "type": "string",
+      "description": "Description of the crew requirements."
+    },
+    "passenger_capacity": {
+      "type": "integer",
+      "description": "Number of passengers the starship can carry."
+    },
+    "cargo_capacity": {
+      "type": "string",
+      "description": "Description of cargo capacity and storage."
+    },
+    "consumables": {
+      "type": "string",
+      "description": "How long the starship can operate without resupply."
+    },
+    "crew_stations": {
+      "type": "array",
+      "description": "Available crew positions and their capabilities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "station": {
+            "enum": ["Pilot", "Co-Pilot", "Gunner", "Systems_Operator", "Commander", "Mechanic", "Technician", "Navigator", "Engineer"],
+            "description": "The crew station type."
+          },
+          "available_actions": {
+            "type": "array",
+            "description": "Actions available to this crew station.",
+            "items": { "type": "string" }
+          },
+          "skill_requirements": {
+            "type": "array",
+            "description": "Skills required to operate this station effectively.",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 11: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this starship, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this starship adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Combat_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this starship is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 12: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the starship's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the starship's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    },
+
+    "$comment": "SECTION 13: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Tags for filtering and categorization.",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this starship.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this starship."
+    }
+  },
+  "required": ["id", "name", "starship_type", "class", "narrative", "description", "silhouette", "speed", "handling", "defenses", "health", "image_generation", "ui"]
+}

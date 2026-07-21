@@ -1,0 +1,555 @@
+{
+ "mounted": "shadows_of_empire",
+ "campaign_id": "shadows_of_empire",
+ "mount_epoch": 4,
+ "state_revision": 2,
+ "runtime_mode": "live",
+ "selected_character_id": "char_smuggler_pilot_aran_voss",
+ "campaign": {
+  "title": "Shadows of Empire: Remnants",
+  "era": "New_Republic",
+  "phase": "scene",
+  "opening_status": "completed"
+ },
+ "operative": {
+  "character_runtime": {
+   "identity": {
+    "name": "Aran Voss",
+    "species": {
+     "species_id": "species_human",
+     "name": "species_human"
+    },
+    "class": {
+     "class_id": "class_operator",
+     "name": "Operator"
+    },
+    "subclass": {
+     "subclass_id": null,
+     "name": null
+    },
+    "background": {
+     "background_id": "background_bg_smuggler",
+     "name": "bg_smuggler"
+    },
+    "level": 5,
+    "role": null
+   },
+   "abilities": {
+    "scores": {
+     "strength": 12,
+     "dexterity": 18,
+     "constitution": 14,
+     "intelligence": 10,
+     "wisdom": 12,
+     "charisma": 16
+    },
+    "modifiers": {
+     "strength": 1,
+     "dexterity": 4,
+     "constitution": 2,
+     "intelligence": 0,
+     "wisdom": 1,
+     "charisma": 3
+    },
+    "proficiency_bonus": 3
+   },
+   "defenses": {
+    "current_hp": 45,
+    "maximum_hp": 45,
+    "armor_class": 16,
+    "conditions": []
+   },
+   "movement": {
+    "speed": 30
+   },
+   "resources": {},
+   "features": [
+    {
+     "name": "Operator Archetype",
+     "urid": "feature_operator_archetype"
+    },
+    {
+     "name": "Smuggler's Cunning",
+     "urid": "feature_smuggler_s_cunning"
+    },
+    {
+     "name": "Daring Pilot",
+     "urid": "feature_daring_pilot"
+    }
+   ],
+   "powers": [],
+   "equipment": {
+    "weapons": [],
+    "armor": [],
+    "gear": [],
+    "vehicles": [],
+    "trinkets": [],
+    "starships": [],
+    "item_stacks": [
+     {
+      "item_id": "item_blaster_pistol",
+      "name": "Blaster Pistol",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_flight_jacket",
+      "name": "Flight Jacket",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "item_id": "item_lucky_sabacc_chip",
+      "name": "Lucky Sabacc Chip",
+      "quantity": 1,
+      "equipped": false
+     }
+    ],
+    "item_instances": [],
+    "inventory": []
+   },
+   "progression": {
+    "current_level": 5,
+    "class_id": "class_operator",
+    "subclass_id": null,
+    "unlocked_feature_urids": [
+     "feature_operator_archetype",
+     "feature_smuggler_s_cunning",
+     "feature_daring_pilot"
+    ],
+    "selected_choice_urids": [],
+    "pending_choice_groups": [],
+    "locked_future_feature_urids": [],
+    "campaign_specific_rule_urids": [],
+    "earned_relationship_maneuver_urids": []
+   },
+   "asset_relationships": {
+    "current_vessel_id": "yt2400_reconciliator",
+    "owned_vessel_ids": [],
+    "assigned_vessel_ids": [
+     "vessel_the_reconciliator_yt_2400"
+    ]
+   },
+   "relationship_ids": [
+    "rel_party_char_former_isb_analyst_tala_r",
+    "rel_party_char_iridonian_guardian_kass_z"
+   ]
+  },
+  "available_actions": [],
+  "conditions": [],
+  "progression_summary": {
+   "current_level": 5,
+   "class_id": "class_operator",
+   "subclass_id": null,
+   "unlocked_feature_urids": [
+    "feature_operator_archetype",
+    "feature_smuggler_s_cunning",
+    "feature_daring_pilot"
+   ],
+   "selected_choice_urids": [],
+   "pending_choice_groups": [],
+   "locked_future_feature_urids": [],
+   "campaign_specific_rule_urids": [],
+   "earned_relationship_maneuver_urids": []
+  },
+  "asset_relationships": {
+   "owned_vessel_ids": [],
+   "assigned_vessel_ids": [
+    "yt2400_reconciliator"
+   ],
+   "accessible_vessel_ids": [
+    "yt2400_reconciliator"
+   ],
+   "current_vessel_id": "yt2400_reconciliator"
+  },
+  "reference_integrity": {
+   "required_reference_slots": 6,
+   "populated_reference_slots": 6,
+   "resolved_reference_slots": 6,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 0,
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
+  }
+ },
+ "party": {
+  "participant_ids": [
+   "char_smuggler_pilot_aran_voss",
+   "char_former_isb_analyst_tala_ren",
+   "char_iridonian_guardian_kass_zoran"
+  ],
+  "active_participant_id": "char_smuggler_pilot_aran_voss",
+  "characters_by_id": {
+   "char_smuggler_pilot_aran_voss": {
+    "player_visible_runtime_summary": {
+     "display_name": "Aran Voss",
+     "species": {
+      "species_id": "species_human",
+      "name": "species_human"
+     },
+     "class": {
+      "class_id": "class_operator",
+      "name": "Operator"
+     },
+     "level": 5,
+     "current_hp": 45,
+     "maximum_hp": 45,
+     "armor_class": 16
+    }
+   },
+   "char_former_isb_analyst_tala_ren": {
+    "player_visible_runtime_summary": {
+     "display_name": "Tala Ren",
+     "species": {
+      "species_id": "human",
+      "name": null
+     },
+     "class": {
+      "class_id": null,
+      "name": null
+     },
+     "level": 5,
+     "current_hp": 16,
+     "maximum_hp": 16,
+     "armor_class": 14
+    }
+   },
+   "char_iridonian_guardian_kass_zoran": {
+    "player_visible_runtime_summary": {
+     "display_name": "Kass Zoran",
+     "species": {
+      "species_id": "species_zabrak",
+      "name": null
+     },
+     "class": {
+      "class_id": null,
+      "name": null
+     },
+     "level": 7,
+     "current_hp": 68,
+     "maximum_hp": 68,
+     "armor_class": 20
+    }
+   }
+  }
+ },
+ "active_engagement": {
+  "opening_crawl": {
+   "cinematic_exposition": "TOKEN_CRAWL_SHADOWS_B2",
+   "active_cast": [
+    "Captain Dara Reyes"
+   ],
+   "mission_summary": "deliver intel",
+   "source": "persisted"
+  },
+  "active_scene": {
+   "scene_id": "scene_vardos_aftermath",
+   "location": "docking bay 9, Vardos orbital transfer station"
+  },
+  "transcript": {
+   "entries": [
+    {
+     "entry_id": "TOKEN_SHADOWS_9Y",
+     "type": "narrator",
+     "text": "TOKEN_SHADOWS_9Y"
+    }
+   ],
+   "cursor": 1,
+   "has_earlier": false,
+   "latest_sequence": 1
+  },
+  "suggestions": [],
+  "objectives": [
+   "deliver the exfiltrated listening-post intel",
+   "shake the local enforcers"
+  ]
+ },
+ "command_record": {
+  "journal": {
+   "entries": [],
+   "is_structured": true
+  },
+  "map": {
+   "visible_nodes": []
+  },
+  "player_visible_nemesis": [],
+  "ship": {
+   "vessel_id": "yt2400_reconciliator",
+   "name": "The Reconciliator (YT-2400)",
+   "silhouette": 4,
+   "speed": 3,
+   "armor": 3,
+   "hull": {
+    "current": 22,
+    "threshold": 22
+   },
+   "strain": {
+    "current": 15,
+    "threshold": 15
+   },
+   "shields": {
+    "fore": 1,
+    "aft": 1,
+    "port": 0,
+    "starboard": 0
+   },
+   "systems": {
+    "engines": "operational",
+    "navigation": "operational",
+    "communications": "operational",
+    "weapons": "operational",
+    "shields": "operational"
+   },
+   "stations": [
+    {
+     "station_id": "pilot",
+     "name": "Pilot",
+     "occupied_by": "char_smuggler_pilot_aran_voss",
+     "required_proficiencies": [
+      "piloting"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Fly/Drive",
+      "Evasive Maneuvers",
+      "Gain the Advantage",
+      "Punch It"
+     ],
+     "disabled_actions": []
+    },
+    {
+     "station_id": "navigation",
+     "name": "Navigation",
+     "occupied_by": "char_former_isb_analyst_tala_ren",
+     "required_proficiencies": [
+      "astrogation"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Plot Course",
+      "Scan the Enemy",
+      "Calculate Hyperroute"
+     ],
+     "disabled_actions": []
+    },
+    {
+     "station_id": "turret_dorsal",
+     "name": "Dorsal Turret",
+     "occupied_by": null,
+     "required_proficiencies": [
+      "gunnery"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Fire Turret",
+      "Suppressing Fire",
+      "Aim"
+     ],
+     "disabled_actions": []
+    },
+    {
+     "station_id": "engineering",
+     "name": "Engineering",
+     "occupied_by": "char_iridonian_guardian_kass_zoran",
+     "required_proficiencies": [
+      "mechanics"
+     ],
+     "status": "operational",
+     "available_actions": [
+      "Damage Control",
+      "Boost Shields",
+      "Reroute Power"
+     ],
+     "disabled_actions": []
+    }
+   ],
+   "weapons": [
+    {
+     "weapon_id": "dorsal_laser_cannon",
+     "arc": "dorsal 360",
+     "range": "close",
+     "damage": 6,
+     "qualities": [
+      "Accurate 1"
+     ],
+     "current_status": "operational"
+    }
+   ]
+  },
+  "ship_vessel_id": "yt2400_reconciliator"
+ },
+ "definitions": {
+  "feature_operator_archetype": {
+   "urid": "feature_operator_archetype",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "99df4e9458fd8627",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "operator archetype",
+    "operator archetypes"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Operator Archetype"
+  },
+  "species_human": {
+   "urid": "species_human",
+   "entity_type": "Species",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "0841b53804663887",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "species human",
+    "species humans"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "species_human"
+  },
+  "class_operator": {
+   "urid": "class_operator",
+   "entity_type": "Class",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\subclasses\\bounty_hunter_subclasses\\bounty_hunter.operator.yml",
+   "content_hash": "2671db255592020d",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "operator",
+    "operators"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\subclasses\\bounty_hunter_subclasses\\bounty_hunter.operator.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Operator"
+  },
+  "feature_smuggler_s_cunning": {
+   "urid": "feature_smuggler_s_cunning",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "318a8cb96db03e81",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "smuggler s cunning",
+    "smuggler s cunnings"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Smuggler's Cunning"
+  },
+  "feature_daring_pilot": {
+   "urid": "feature_daring_pilot",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "b82961b397f0024b",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "daring pilot",
+    "daring pilots"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Daring Pilot"
+  }
+ },
+ "visibility": {
+  "hidden_fields_removed": true,
+  "player_visible_entity_ids": [
+   "char_smuggler_pilot_aran_voss",
+   "char_former_isb_analyst_tala_ren",
+   "char_iridonian_guardian_kass_zoran"
+  ]
+ },
+ "provenance": {
+  "campaign_source": "gm/campaigns/shadows_of_empire/runtime_state.json",
+  "character_runtime_source": "runtime.player_characters.char_smuggler_pilot_aran_voss",
+  "campaign_instance_id": "shadows_of_empire__1784613879",
+  "registry_build_id": null,
+  "projection_builder_version": "1.2.0-c5",
+  "fixture_filter": {
+   "candidates_examined": 7,
+   "known_fixture_urids": 20,
+   "rejected_fixture_urids": 0,
+   "fixture_membership_attempts": 0,
+   "fixture_membership_rejections": 0,
+   "live_projection_fixture_hits": 0
+  },
+  "reference_integrity": {
+   "required_reference_slots": 6,
+   "populated_reference_slots": 6,
+   "resolved_reference_slots": 6,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "low_confidence_mappings": 0,
+   "inline_legacy_definitions": 0,
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
+  },
+  "unresolved_progression_refs": 0,
+  "hidden_fields_removed": true
+ },
+ "validation": {
+  "schema_valid": true,
+  "semantic_valid": true,
+  "errors": [],
+  "warnings": [],
+  "malformed_equipment_entries": 0,
+  "duplicate_character_sources": 0
+ },
+ "projection_emitted": true
+}

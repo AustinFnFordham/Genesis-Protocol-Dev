@@ -1,0 +1,62 @@
+Here is the updated YAML block:
+
+```yml
+flavor_text: "For centuries, Trandoshans have been driven by the insatiable hunger of the Scorekeeper, whose benevolent gaze rewards the most efficient and honorable kills. The Dosha's sacred hunters roam the galaxy in search of prey, bound by a code of brutal efficiency that separates them from their reptilian cousins."
+
+llm_guidance:
+  roleplay_guidance: "Play the Trandoshan as a calculating hunter who weighs every decision against the potential reward and risk. Their ruthless reputation precedes them, but they are not immune to the allure of honor and prestige in the hunt."
+  narrative_hooks:
+    - "As you stalk your prey, remember that every kill is an opportunity to earn Jagannath points and appease the Scorekeeper."
+    - "Regenerative physiology makes you nearly unkillable in combat, but don't take unnecessary risks – a wounded hunter is a liability to their own clan."
+  social_dynamics: "Trandoshans are feared and respected by their peers for their unwavering dedication to the hunt. They have little patience for weakness or failure, and will not hesitate to abandon a comrade who slows them down."
+  common_motivations:
+    - Survival
+    - Prestige
+    - Honor
+
+nemesis_engine:
+  overrides:
+    progression_path:
+      - 
+        name: Emergence
+        description: "A Trandoshan catches wind of a lucrative bounty and begins to track it, pouring over data and scouring the galaxy for signs."
+        threat_level: Low
+      - 
+        name: Escalation
+        description: "The Trandoshan closes in on its quarry, using cunning and stealth to evade detection while closing in for the kill."
+        threat_level: Medium
+      - 
+        name: Confrontation
+        description: "A long-standing vendetta or a particularly challenging prey brings the Trandoshan face-to-face with their greatest foe yet."
+        threat_level: High
+    resolution_paths:
+      - 
+        name: Victory
+        description: "The Trandoshan emerges victorious, claiming their bounty and earning a place among the Dosha's most honored hunters."
+      - 
+        name: Betrayal
+        description: "A trusted ally or rival hunter turns against the Trandoshan, forcing them to fight for survival and defend their honor."
+      - 
+        name: Redemption
+        description: "The Trandoshan fails to capture their prey but finds a way to restore their reputation by showing mercy to a Wookiee captive or revealing a hidden injustice."
+    conflict_triggers:
+      - A Trandoshan encounters a Wookiee, stirring memories of the Dosha's dark past.
+      - The Scorekeeper's favor is withdrawn due to a lack of efficient kills or questionable hunting practices.
+      - A rival bounty hunter challenges the Trandoshan for supremacy.
+
+romance_engine:
+  overrides:
+    romance_progression:
+      - 
+        name: Courtship
+        description: "A Trandoshan begins to pursue a romantic interest, wooing them with gifts and favors while testing their hunting prowess."
+      - 
+        name: Bonding
+        description: "The Trandoshan's partner joins in the hunt, learning the ways of the Dosha and strengthening their bond through shared experiences."
+    romance_events:
+      - The Trandoshan teaches their partner how to track and kill effectively.
+      - The couple participates in a high-stakes hunt together, relying on each other for survival.
+    romance_modifiers:
+      - Sharing a bounty with the partner increases attraction by +2, but also raises the risk of failure or injury.
+      - Failing to capture prey while with the partner decreases attraction by -1, reflecting the Trandoshan's disappointment and frustration.
+```

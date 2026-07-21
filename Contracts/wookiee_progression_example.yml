@@ -1,0 +1,104 @@
+id: "wookiee_progression_example"
+name: "Wookiee Species Progression"
+description: "Example implementation of species progression for Wookiee, demonstrating how traits scale with character level"
+
+# Base trait that will be enhanced
+base_trait: "Feral Strength"
+base_description: "Your species is naturally strong and resilient. You have advantage on Strength checks and gain resistance to bludgeoning damage."
+
+# Progression tiers
+progression_tiers:
+  level_5:
+    enhancement_type: "damage_bonus"
+    description: "Your legendary strength has grown more formidable. Your natural weapons and unarmed strikes deal additional damage."
+    mechanical_effect:
+      type: "bonus_damage"
+      value: "+2"
+      conditions:
+        - key: "weapon_type"
+          op: "in"
+          value: ["unarmed", "natural_weapon", "melee_weapon"]
+    optional: true
+
+  level_10:
+    enhancement_type: "skill_enhancement"
+    description: "Your strength has become legendary. You can use your Strength modifier for Intimidation checks, and your presence alone can cow lesser beings."
+    mechanical_effect:
+      type: "advantage"
+      value: "Charisma (Intimidation) checks"
+      conditions:
+        - key: "intimidation_method"
+          op: "equals"
+          value: "physical_presence"
+    optional: true
+
+  level_15:
+    enhancement_type: "new_ability"
+    description: "Your strength has reached epic proportions. Once per long rest, you can perform a feat of legendary strength."
+    mechanical_effect:
+      type: "new_action"
+      value: "Legendary Strength"
+      description: "As an action, you can attempt a feat of legendary strength (break through walls, lift massive objects, etc.)"
+    optional: true
+
+  level_20:
+    enhancement_type: "epic_feature"
+    description: "Your strength has become truly legendary. You are a living embodiment of Wookiee might and resilience."
+    mechanical_effect:
+      type: "epic_action"
+      value: "Epic Wookiee Might"
+      description: "Once per long rest, you can add 1d12 to any Strength check or saving throw, and gain advantage on all Strength-based actions for 1 minute"
+    optional: true
+
+# Balance guidelines
+balance_guidelines:
+  max_bonus_per_tier: 3
+  requires_class_synergy: false
+  optional_by_default: true
+
+# Narrative progression prompts for LLM-GMs
+narrative_progression:
+  level_5: "Your Wookiee's strength has grown more formidable. Their muscles ripple with barely contained power, and their presence commands respect even from seasoned warriors."
+  
+  level_10: "Your Wookiee's strength has become legendary. Their very presence can cow lesser beings, and their roar can shake the foundations of buildings. They are a living embodiment of Wookiee might."
+  
+  level_15: "Your Wookiee's strength has reached epic proportions. They can perform feats that seem impossible to other species - breaking through reinforced walls, lifting starship components, and inspiring awe in all who witness their power."
+  
+  level_20: "Your Wookiee's strength has become truly legendary. They are a living legend, a force of nature whose very presence can change the course of battles. Their strength is not just physical - it's the strength of their spirit, their loyalty, and their unbreakable will."
+
+# Integration with existing class synergies
+class_synergy_enhancements:
+  Guardian:
+    - "Enhanced protective abilities through legendary strength"
+    - "Improved intimidation and presence in protective situations"
+    - "Epic feats of strength for protecting allies"
+  
+  Soldier:
+    - "Enhanced combat effectiveness with legendary strength"
+    - "Improved intimidation in combat situations"
+    - "Epic combat feats and maneuvers"
+  
+  Berserker:
+    - "Enhanced berserker rage through legendary strength"
+    - "Improved intimidation during berserker states"
+    - "Epic berserker feats and abilities"
+
+# Example usage scenarios
+example_scenarios:
+  - scenario: "Breaking through a reinforced door"
+    level_5: "Add +2 to the Strength check"
+    level_10: "Add +2 and use Strength for Intimidation to scare guards"
+    level_15: "Use Legendary Strength action for automatic success"
+    level_20: "Use Epic Wookiee Might for advantage and +1d12 bonus"
+  
+  - scenario: "Intimidating a group of enemies"
+    level_5: "Normal intimidation with advantage"
+    level_10: "Use Strength for Intimidation with advantage"
+    level_15: "Legendary presence automatically intimidates lesser foes"
+    level_20: "Epic presence can cause enemies to flee in terror"
+  
+  - scenario: "Lifting a massive object"
+    level_5: "Add +2 to the Strength check"
+    level_10: "Enhanced lifting capacity"
+    level_15: "Use Legendary Strength for impossible feats"
+    level_20: "Epic strength can lift starship components"

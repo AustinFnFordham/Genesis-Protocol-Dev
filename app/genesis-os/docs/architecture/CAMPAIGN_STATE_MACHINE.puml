@@ -1,0 +1,23 @@
+@startuml
+' Genesis Protocol — Campaign lifecycle state machine
+[*] --> Uninitialized
+Uninitialized --> Mounting : selectCampaign(campaign_id)
+Mounting --> Hydrating : projectionRequested
+Mounting --> Error : requestFailed
+Hydrating --> Ready : [campaign_id matches]\n[epoch matches]\n[projection valid]
+Hydrating --> StaleResponseDiscarded : [epoch mismatch]
+Hydrating --> Error : [projection invalid]
+StaleResponseDiscarded --> Mounting : awaitCurrentRequest
+Ready --> Switching : selectDifferentCampaign()
+Switching --> Mounting : incrementMountEpoch()
+Ready --> RestartConfirmation : restartFromOpening()
+RestartConfirmation --> Ready : cancel
+RestartConfirmation --> Restarting : confirm
+Restarting --> Mounting : backupComplete\nresetComplete
+Ready --> Refreshing : backgroundRefresh()
+Refreshing --> Ready : newRevisionCommitted
+Refreshing --> Ready : refreshFailed\nretainOldProjection
+Error --> Mounting : retry()
+Error --> [*] : closeApplication()
+Ready --> [*] : closeApplication()
+@enduml

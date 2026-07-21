@@ -1,0 +1,27 @@
+{
+ "registry_build_id": "reg_113_1784625901",
+ "registry_size": 113,
+ "meridian_reach": {
+  "coverage_percent": 100.0,
+  "missing_required_references": 0,
+  "unresolved_references": 0,
+  "opening_status": "completed",
+  "transcript_total": 41,
+  "species_name": "Echani",
+  "class_name": "Sentinel",
+  "planned_subclass_present": true,
+  "state_revision": 12
+ },
+ "shadows_of_empire": {
+  "coverage_percent": 100.0,
+  "missing_required_references": 0,
+  "unresolved_references": 1,
+  "opening_status": "completed",
+  "transcript_total": 1,
+  "species_name": "Human",
+  "class_name": "Operator",
+  "planned_subclass_present": true,
+  "state_revision": 6
+ },
+ "LIVE_C6_PASS": true
+}

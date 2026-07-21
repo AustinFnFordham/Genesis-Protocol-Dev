@@ -1,0 +1,4 @@
+mapping values are not allowed here
+  in "<unicode string>", line 2, column 12:
+    flavor_text: "For centuries, Trandoshans ha ... 
+               ^

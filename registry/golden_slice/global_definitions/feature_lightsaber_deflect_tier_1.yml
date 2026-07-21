@@ -1,0 +1,25 @@
+urid: feature_lightsaber_deflect_tier_1
+entity_type: Feature
+authority_lane: global_validated
+source_path: null
+content_hash: 40fba6cb0ccd5571
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- lightsaber deflect tier 1
+- lightsaber deflect tier 1s
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+  enriched_from: runtime_inline
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Lightsaber Deflect - Tier 1
+effect: Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection
+  attack against one visible creature within 30 feet; on a hit it deals the original
+  attack's rolled damage without adding Dexterity.

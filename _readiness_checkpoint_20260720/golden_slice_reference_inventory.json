@@ -1,0 +1,23 @@
+{
+ "total_reference_slots": 35,
+ "meridian_slots": 29,
+ "shadows_slots": 6,
+ "false_slots_removed": "armor singleton keys + property fields no longer counted",
+ "domains": {
+  "species": 1,
+  "class": 1,
+  "background": 1,
+  "feature": 11,
+  "power": 2,
+  "item_instance": 2,
+  "item_definition": 16,
+  "action": 1
+ },
+ "resolution_status": {
+  "exact_validated": 12,
+  "genuine_missing": 19,
+  "relationship_edge": 1,
+  "character_instance": 2,
+  "reviewed_alias": 1
+ }
+}

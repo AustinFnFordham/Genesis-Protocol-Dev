@@ -1,0 +1,21 @@
+urid: class_sentinel
+entity_type: Class
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\classes\sentinel.yml
+content_hash: b7630816342a3779
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- sentinel
+- sentinels
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\classes\sentinel.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Sentinel

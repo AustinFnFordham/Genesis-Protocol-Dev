@@ -1,0 +1,22 @@
+urid: rel_former_master_vael_taron
+entity_type: RelationshipEdge
+authority_lane: relationship_edge
+source_path: null
+content_hash: 2b9e016854e9fe4f
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- former master vael taron
+- former master vael tarons
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs:
+- aero
+- npc_vael_taron
+provenance: {}
+campaign_scope: meridian_reach
+validation_status: edge_authored
+resolution_status: relationship_edge
+name: Former Master Vael Taron

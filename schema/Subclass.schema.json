@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character Subclass",
+  "description": "Defines a character subclass (or specialization) with its unique identity, UI theme, and branching talent tree.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'subclass_beast_warden'."
+    },
+    "class_id": {
+      "type": "string",
+      "description": "The ID of the base class this subclass belongs to, e.g., 'mystic'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the subclass."
+    },
+    "alignment_theme": {
+      "type": "string",
+      "enum": ["light", "dark", "neutral", "neutral_good", "lawful_evil", "chaotic_good", "lawful_neutral", "chaotic_neutral", "chaotic_evil"],
+      "description": "The general moral or ethical alignment associated with this subclass's fantasy."
+    },
+
+    "$comment": "SECTION 2: UI THEME FOR THE PROGRESSION CONSTELLATION",
+    "talent_tree_theme": {
+      "type": "object",
+      "description": "A data-driven style guide for this subclass's unique UI in the progression screen.",
+      "properties": {
+        "background_diorama": { "type": "string", "description": "A narrative description of the 'Living Diorama' background scene." },
+        "node_style": { "type": "string", "description": "Describes the shape and feel of the talent nodes (e.g., 'Hexagonal and technical', 'Soft, glowing orbs')." },
+        "connection_style": { "type": "string", "description": "Describes the look of the lines connecting the nodes (e.g., 'Sharp laser lines', 'Flowing streams of Force energy')." },
+        "color_palette": {
+          "type": "object",
+          "properties": {
+            "primary": { "type": "string", "description": "Primary hex color for UI elements." },
+            "secondary": { "type": "string", "description": "Secondary hex color for highlights." }
+          },
+          "required": ["primary", "secondary"]
+        },
+        "ambient_audio": { "type": "string", "description": "Description of the background audio loop for this screen (e.g., 'The hum of a starship engine')." }
+      },
+      "required": ["background_diorama", "node_style", "connection_style", "color_palette", "ambient_audio"]
+    },
+
+    "$comment": "SECTION 3: NARRATIVE & IDENTITY",
+    "narrative": {
+      "type": "string",
+      "description": "A rich, multi-sentence paragraph describing the subclass fantasy, its methods, and its role in the galaxy."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "An iconic, thematic quote that captures the essence of the subclass."
+    },
+
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Tags that define this subclass' specialization and characteristics. All tags must be defined in master_tags.yml.",
+      "items": { "type": "string" }
+    },
+
+    "class_identity_profile": {
+      "type": "object",
+      "description": "The core thematic elements that define this subclass.",
+      "properties": {
+        "core_fantasy": { "type": "string", "description": "A single, punchy sentence defining the playstyle." },
+        "key_attributes": { "type": "array", "items": { "type": "string" }, "description": "The primary ability scores for this subclass." },
+        "iconic_gear": { "type": "array", "items": { "type": "string" }, "description": "Equipment strongly associated with this subclass." },
+        "role_in_galaxy": { "type": "string", "description": "The subclass's typical role or function in galactic society." },
+        "famous_exemplars": { "type": "array", "items": { "type": "string" }, "description": "Famous characters from lore who embody this subclass." },
+        "$comment": "DEPRECATED - SYNERGIES",
+        "$comment": "MIGRATION NOTE: species_synergies and faction_synergies in class_identity_profile are DEPRECATED per Genesis Protocol Article III. Migrate to synergy_rules.yml using tags.",
+        "species_synergies": {
+          "type": "array",
+          "deprecated": true,
+          "description": "DEPRECATED: Use tags and synergy_rules.yml instead.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "species": { "type": "string" },
+              "narrative": { "type": "string" }
+            }
+          }
+        },
+        "faction_synergies": {
+          "type": "array",
+          "deprecated": true,
+          "description": "DEPRECATED: Use tags and synergy_rules.yml instead.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "faction": { "type": "string" },
+              "narrative": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["core_fantasy", "key_attributes", "iconic_gear", "role_in_galaxy"]
+    },
+
+    "$comment": "SECTION 4: TALENT TREE (The FFG-style Branching Progression)",
+    "talent_tree": {
+      "type": "array",
+      "description": "The complete, branching talent tree for this specialization. Progression is handled by spending XP to purchase nodes.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "A unique ID for this specific node in the tree, e.g., 'bw_t1_empathy'." },
+          "feature_id": { "type": "string", "description": "The ID of the feature this node grants, linking to a file in the /features/ directory." },
+          "xp_cost": { "type": "integer" },
+          "tier": { "type": "integer", "description": "The vertical tier of the talent (typically 1-5)." },
+          "column": { "type": "integer", "description": "The horizontal column of the talent, for UI positioning." },
+          "prerequisites": { "type": "array", "items": { "type": "string" }, "description": "A list of talent node IDs that must be purchased before this one." },
+          "connections": { "type": "array", "items": { "type": "string" }, "description": "A list of talent node IDs that this node unlocks." }
+        },
+        "required": ["id", "feature_id", "xp_cost", "tier", "column"]
+      }
+    },
+
+    "$comment": "SECTION 5: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": { "type": "string", "description": "Detailed advice for the LLM-GM on how to portray a character of this subclass." },
+        "narrative_hooks": { "type": "array", "items": { "type": "string" }, "description": "Story ideas that are a perfect fit for this subclass." },
+        "tactical_notes": { "type": "string", "description": "Advice for the LLM-GM on how to effectively use this subclass's abilities in combat." }
+      },
+      "required": ["roleplay_guidance", "narrative_hooks", "tactical_notes"]
+    }
+  },
+  "required": ["id", "class_id", "name", "alignment_theme", "talent_tree_theme", "narrative", "tags", "class_identity_profile", "talent_tree", "llm_guidance"]
+}

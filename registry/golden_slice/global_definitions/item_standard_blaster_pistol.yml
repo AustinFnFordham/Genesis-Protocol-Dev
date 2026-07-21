@@ -1,0 +1,22 @@
+urid: item_standard_blaster_pistol
+entity_type: Item
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\items\weapons_expanded.yml
+content_hash: eee347ef53dcdfb6
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- blaster pistol
+- standard blaster pistol
+- standard blaster pistols
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\items\weapons_expanded.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Standard Blaster Pistol

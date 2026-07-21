@@ -1,0 +1,149 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: The Ender Protocol - AI Training Platform
+Globals:
+  Function:
+    Runtime: python3.10
+    Timeout: 90
+    Environment:
+      Variables:
+        S3_BUCKET_NAME: the-ender-protocol-data-austin-fordham
+Resources:
+  RedTeamToolsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RedTeamToolsFunction
+      Handler: app.lambda_handler
+      Policies:
+      - S3ReadPolicy:
+          BucketName: the-ender-protocol-data-austin-fordham
+    Metadata:
+      SamResourceId: RedTeamToolsFunction
+  RedTeamToolsFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: RedTeamToolsFunction
+      Action: lambda:InvokeFunction
+      Principal: bedrock.amazonaws.com
+      SourceAccount:
+        Ref: AWS::AccountId
+  BlueTeamToolsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: BlueTeamToolsFunction
+      Handler: app.lambda_handler
+      Policies:
+      - S3ReadPolicy:
+          BucketName: the-ender-protocol-data-austin-fordham
+      - Statement:
+        - Effect: Allow
+          Action:
+          - s3:PutObject
+          Resource: arn:aws:s3:::the-ender-protocol-data-austin-fordham/*
+    Metadata:
+      SamResourceId: BlueTeamToolsFunction
+  BlueTeamToolsFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: BlueTeamToolsFunction
+      Action: lambda:InvokeFunction
+      Principal: bedrock.amazonaws.com
+      SourceAccount:
+        Ref: AWS::AccountId
+  SupervisorAgentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SupervisorAgentFunction
+      Handler: app.lambda_handler
+      Timeout: 90
+      Environment:
+        Variables:
+          RED_TEAM_AGENT_ID: QFY4WQH3Q8
+          BLUE_TEAM_AGENT_ID: KAH6H3NHW1
+      Policies:
+      - S3ReadPolicy:
+          BucketName: the-ender-protocol-data-austin-fordham
+      - Statement:
+        - Effect: Allow
+          Action:
+          - s3:PutObject
+          Resource: arn:aws:s3:::the-ender-protocol-data-austin-fordham/*
+      - Statement:
+        - Effect: Allow
+          Action:
+          - bedrock:InvokeModel
+          - bedrock:InvokeAgent
+          Resource: '*'
+    Metadata:
+      SamResourceId: SupervisorAgentFunction
+  SupervisorAgentFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: SupervisorAgentFunction
+      Action: lambda:InvokeFunction
+      Principal: bedrock.amazonaws.com
+      SourceAccount:
+        Ref: AWS::AccountId
+  SupervisorMockFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SupervisorMockFunction
+      Handler: app_mock.lambda_handler
+      Timeout: 90
+      Environment:
+        Variables:
+          RED_TEAM_LAMBDA_NAME:
+            Ref: RedTeamToolsFunction
+          BLUE_TEAM_LAMBDA_NAME:
+            Ref: BlueTeamToolsFunction
+          BLUE_TEAM_AGENT_ID: KAH6H3NHW1
+      Policies:
+      - S3ReadPolicy:
+          BucketName: the-ender-protocol-data-austin-fordham
+      - Statement:
+        - Effect: Allow
+          Action:
+          - s3:PutObject
+          Resource: arn:aws:s3:::the-ender-protocol-data-austin-fordham/*
+      - Statement:
+        - Effect: Allow
+          Action:
+          - lambda:InvokeFunction
+          Resource:
+          - Fn::GetAtt:
+            - RedTeamToolsFunction
+            - Arn
+          - Fn::GetAtt:
+            - BlueTeamToolsFunction
+            - Arn
+      - Statement:
+        - Effect: Allow
+          Action:
+          - bedrock:InvokeAgent
+          Resource: '*'
+    Metadata:
+      SamResourceId: SupervisorMockFunction
+Outputs:
+  RedTeamToolsFunctionArn:
+    Value:
+      Fn::GetAtt:
+      - RedTeamToolsFunction
+      - Arn
+  BlueTeamToolsFunctionArn:
+    Value:
+      Fn::GetAtt:
+      - BlueTeamToolsFunction
+      - Arn
+  SupervisorAgentFunctionArn:
+    Value:
+      Fn::GetAtt:
+      - SupervisorAgentFunction
+      - Arn
+  SupervisorMockFunctionArn:
+    Value:
+      Fn::GetAtt:
+      - SupervisorMockFunction
+      - Arn

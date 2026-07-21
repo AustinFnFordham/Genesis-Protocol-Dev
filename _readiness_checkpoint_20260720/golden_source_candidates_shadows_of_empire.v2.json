@@ -1,0 +1,115 @@
+{
+ "character_id": "char_smuggler_pilot_aran_voss",
+ "slots": [
+  {
+   "domain": "species",
+   "source_name": "species_human",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "species_species_human",
+   "source_path": null
+  },
+  {
+   "domain": "background",
+   "source_name": "bg_smuggler",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "background_bg_smuggler",
+   "source_path": null
+  },
+  {
+   "domain": "feature",
+   "source_name": "Operator Archetype",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_operator_archetype",
+   "source_path": null
+  },
+  {
+   "domain": "feature",
+   "source_name": "Smuggler's Cunning",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_smuggler_s_cunning",
+   "source_path": null
+  },
+  {
+   "domain": "feature",
+   "source_name": "Daring Pilot",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_daring_pilot",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Blaster Pistol",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "item_blaster_pistol",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\crafting\\weapon_recipes.yml"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Flight Jacket",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_flight_jacket",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Lucky Sabacc Chip",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_lucky_sabacc_chip",
+   "source_path": null
+  },
+  {
+   "domain": "vessel_definition",
+   "source_name": "The Reconciliator (YT-2400)",
+   "cited": null,
+   "vessel_id": "yt2400_reconciliator",
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "vessel_the_reconciliator_yt_2400",
+   "source_path": null
+  },
+  {
+   "domain": "asset_relationship",
+   "source_name": "owned:yt2400_reconciliator",
+   "cited": null,
+   "vessel_id": "yt2400_reconciliator",
+   "status": "relationship_edge",
+   "authority_lane": "relationship_edge",
+   "proposed_urid": "asset:yt2400_reconciliator",
+   "source_path": null
+  },
+  {
+   "domain": "character_relationship",
+   "source_name": "party_member:char_former_isb_analyst_tala_ren",
+   "cited": null,
+   "status": "relationship_edge",
+   "authority_lane": "relationship_edge",
+   "proposed_urid": "rel:party_member_char_former_isb_analyst_tala_ren",
+   "source_path": null
+  },
+  {
+   "domain": "character_relationship",
+   "source_name": "party_member:char_iridonian_guardian_kass_zoran",
+   "cited": null,
+   "status": "relationship_edge",
+   "authority_lane": "relationship_edge",
+   "proposed_urid": "rel:party_member_char_iridonian_guardian_kass_zoran",
+   "source_path": null
+  }
+ ]
+}

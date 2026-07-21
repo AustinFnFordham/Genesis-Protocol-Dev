@@ -1,0 +1,70 @@
+/* GENESIS PROTOCOL — GLOBAL DESIGN TOKENS (system + semantic + state).
+ * Single source of truth for color, typography, spacing. Components must
+ * reference these tokens — no scattered hardcoded font sizes/colors in JSX.
+ * Typography targets (readable at 1080p/1440p, Windows 125%, zoom 125%):
+ *   narrative 15-16px · body 13-14px · controls 12-13px · metadata 11-12px. */
+
+:root {
+  /* ---- system: color ---- */
+  --sys-color-bg: #06131c;
+  --sys-color-surface: #0a1e2b;
+  --sys-color-surface-2: #0c2432;
+  --sys-color-text: #d9f6ff;
+  --sys-color-muted: #7fa6b6;      /* raised from prior dim for readability */
+  --sys-color-accent: #1fe0ff;
+  --sys-color-gold: #ffcf5a;
+  --sys-color-warning: #ffc400;
+  --sys-color-error: #ff435a;
+  --sys-color-line: #17394a;
+
+  /* ---- system: typography ----
+   * Full 11-step type ramp. Every JSX font size resolves to one of these tokens
+   * (no raw pixel literals in components). Snap map (raw px -> token):
+   *   7, 7.5, 8      -> micro       (8px)
+   *   8.5            -> label       (8.5px)
+   *   9, 9.5         -> caption     (9.5px)
+   *   10, 10.5       -> note        (10.5px)
+   *   11, 11.5       -> meta        (11.5px)
+   *   12, 12.5       -> control     (12.5px)
+   *   13, 14         -> body        (13.5px)
+   *   16             -> narrative   (15.5px)
+   *   17             -> title       (17px)
+   *   20, 21, 22     -> heading     (21px)
+   *   30             -> display     (30px)  */
+  --sys-font-family-ui: "IBM Plex Mono", ui-monospace, monospace;
+  --sys-font-size-micro: 8px;
+  --sys-font-size-label: 8.5px;
+  --sys-font-size-caption: 9.5px;
+  --sys-font-size-note: 10.5px;
+  --sys-font-size-meta: 11.5px;
+  --sys-font-size-control: 12.5px;
+  --sys-font-size-body: 13.5px;
+  --sys-font-size-narrative: 15.5px;
+  --sys-font-size-title: 17px;
+  --sys-font-size-heading: 21px;
+  --sys-font-size-display: 30px;
+  --sys-line-height-narrative: 1.55;
+  --sys-line-height-body: 1.45;
+
+  /* ---- system: spacing ---- */
+  --sys-space-1: 0.25rem;
+  --sys-space-2: 0.5rem;
+  --sys-space-3: 0.75rem;
+  --sys-space-4: 1rem;
+  --sys-radius: 6px;
+
+  /* ---- semantic ---- */
+  --sem-text-primary: var(--sys-color-text);
+  --sem-text-secondary: var(--sys-color-muted);
+  --sem-border-active: var(--sys-color-accent);
+  --sem-border-warning: var(--sys-color-warning);
+  --sem-border-error: var(--sys-color-error);
+  --sem-panel-bg: var(--sys-color-surface);
+}
+
+/* ---- state tokens (drive panel chrome by data-state) ---- */
+[data-state="loading"] { --comp-panel-border: var(--sys-color-muted); --comp-content-opacity: 0.55; }
+[data-state="stale"]   { --comp-panel-border: var(--sys-color-warning); }
+[data-state="error"]   { --comp-panel-border: var(--sys-color-error); }
+[data-state="empty"]   { --comp-panel-border: var(--sys-color-line); --sem-text-primary: var(--sys-color-muted); }
+[data-state="blocked"] { --comp-panel-border: var(--sys-color-line); }

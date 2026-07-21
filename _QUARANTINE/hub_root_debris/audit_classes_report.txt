@@ -1,0 +1,28 @@
+CLASS AUDIT REPORT
+==================
+Total Files: 22
+Passed: 22
+Failed: 0
+
+[PASS] bounty_hunter.yml
+[PASS] colonist.yml
+[PASS] commander.yml
+[PASS] consular.yml
+[PASS] diplomat.yml
+[PASS] engineer.yml
+[PASS] explorer.yml
+[PASS] guardian.yml
+[PASS] hired_gun.yml
+[PASS] inquisitor.yml
+[PASS] juggernaut.yml
+[PASS] mystic.yml
+[PASS] scoundrel.yml
+[PASS] scout.yml
+[PASS] seeker.yml
+[PASS] sentinel.yml
+[PASS] sith.yml
+[PASS] smuggler.yml
+[PASS] soldier.yml
+[PASS] spy.yml
+[PASS] tracker.yml
+[PASS] trooper.yml

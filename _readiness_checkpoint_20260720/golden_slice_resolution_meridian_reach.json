@@ -1,0 +1,357 @@
+{
+ "character_id": "aero",
+ "required_slots": 37,
+ "exact_source_matches": 12,
+ "genuine_missing": 25,
+ "rows": [
+  {
+   "domain": "species",
+   "source_name": "Echani",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\SPECIES_REGISTRY.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "class",
+   "source_name": "Sentinel",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\classes\\sentinel.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\classes\\sentinel.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "background",
+   "source_name": "Jedi",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\backgrounds\\background_jedi.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\backgrounds\\background_jedi.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Martial Arts Training",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Discipline",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Communication",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Force Connection",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\features\\consular\\force_connection.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Sentinel Balance",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Lightsaber Deflect - Tier 1",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Former Master and Jedi Network",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Echani Grappling Training",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "power",
+   "source_name": "Battle Insight",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\catalogs\\force_powers.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\catalogs\\force_powers_comprehensive.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "power",
+   "source_name": "Burst",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\catalogs\\force_powers.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\catalogs\\force_powers_comprehensive.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "item",
+   "source_name": "Taron-forged Modular Indigo Lightsaber",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Standard Blaster Pistol",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\weapons_expanded.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\items\\weapons_expanded.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "item",
+   "source_name": "Unarmed Strike",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "name",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "equipped",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "armor_category",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "armor_formula",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "dexterity_rules",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "penalties",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "resulting_ac",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "exact_effects",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "source",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Security Kit",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Meditation Kit",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Backpack",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\armor_modular.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\items\\armor_modular.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "item",
+   "source_name": "Bedroll",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Compact mess kit",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Ration pack",
+   "candidates": [
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\gear_expanded.yml",
+     "kind": "entity"
+    },
+    {
+     "lane": "global_validated",
+     "path": "SW5e_Data_Hub\\source_data\\items\\gear_expanded.yml",
+     "kind": "entity"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "item",
+   "source_name": "Canteen",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Compact Jedi glowrod",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Syntherope",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Basic fire-starting tool",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Personal comlink",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Blaster ammunition",
+   "candidates": [],
+   "status": "genuine_missing"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "scenario_id": "scenario_01_bruteforce",
+  "description": "Simulated user accounts for brute force attack training",
+  "accounts": [
+    {
+      "username": "admin",
+      "password_hash": "482c811da5d5b4bc6d497ffa98491e38",
+      "access_level": "administrator"
+    },
+    {
+      "username": "jsmith",
+      "password_hash": "d93a1b8e0c3e5e5e5e5e5e5e5e5e5e5e",
+      "access_level": "user"
+    },
+    {
+      "username": "dbadmin",
+      "password_hash": "0d107d09f5bbe40cade3de5c71e9e9b7",
+      "access_level": "database"
+    }
+  ]
+}

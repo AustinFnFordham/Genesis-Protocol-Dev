@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Gameplay Example / Scene",
+    "description": "Defines a single, pre-scripted scene or encounter for the LLM GM to run.",
+    "type": "object",
+    "properties": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "description": { "type": "string", "description": "An overview of the scene's goal and dramatic tension." },
+      "scene_setup": {
+        "type": "object",
+        "properties": {
+          "location_id": { "type": "string", "description": "Links to a Lore schema for the setting." },
+          "initial_disposition": { "type": "string", "description": "The starting state of the scene, e.g., 'PCs are hidden, guards are patrolling'." },
+          "actors": {
+            "type": "array",
+            "description": "List of all characters involved in the scene.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "character_id": { "type": "string" },
+                "role": { "enum": ["Player", "Nemesis", "Rival", "Minion", "Neutral"] }
+              }
+            }
+          }
+        }
+      },
+      "sequence": {
+        "type": "array",
+        "description": "The ordered sequence of events and choices that make up the scene.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "event_id": { "type": "string" },
+            "type": { "enum": ["narration", "player_choice", "combat_encounter", "skill_challenge"] },
+            "content": { "type": "string", "description": "The text for the LLM to narrate or the challenge to present." },
+            "choices": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" },
+                  "leads_to_event_id": { "type": "string" },
+                  "consequences": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "success_event_id": { "type": "string" },
+            "failure_event_id": { "type": "string" }
+          }
+        }
+      }
+    },
+    "required": ["id", "name", "scene_setup", "sequence"]
+  }

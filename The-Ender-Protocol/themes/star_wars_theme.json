@@ -1,0 +1,15 @@
+{
+  "title": "The Ender Protocol: Jedi Archives",
+  "start_button_label": "Begin Simulation: Defend the Archives",
+  "log_title": "Mission Holocron",
+  "actions": {
+    "block_ip": "Force Barrier (Block Intruder's Signal)",
+    "lockdown": "Stasis Field (Lock Terminal)",
+    "monitor": "Battle Meditation (Monitor & Trace Intruder)"
+  },
+  "status_messages": {
+    "sim_started": "A disturbance in the Force has been detected...",
+    "red_team_turn": "The Sith Infiltrator is making their move...",
+    "player_turn": "Commander, the Co-Pilot awaits your command."
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://genesis.local/schemas/MOUNTED_PROJECTION.schema.json",
+  "title": "Mounted Campaign Projection",
+  "description": "The single server-built envelope every client panel consumes. One campaign, one epoch, one revision. No panel loads its own campaign/character/fixture.",
+  "type": "object",
+  "required": ["campaign_id", "mount_epoch", "state_revision", "selected_character_id", "operative", "party", "active_engagement", "command_record", "visibility"],
+  "additionalProperties": true,
+  "properties": {
+    "campaign_id": { "type": "string" },
+    "mount_epoch": { "type": "integer", "minimum": 0, "description": "Incremented per mount transaction; client discards responses whose epoch != current." },
+    "state_revision": { "type": "integer", "minimum": 0, "description": "Monotonic server revision; panels render one revision atomically." },
+    "projection_hash": { "type": ["string", "null"] },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "selected_character_id": { "type": ["string", "null"] },
+    "campaign": {
+      "type": "object",
+      "properties": { "title": {"type": "string"}, "era": {"type": "string"}, "phase": {"type": "string"}, "opening_status": {"type": "string", "enum": ["opening", "completed"]} }
+    },
+    "operative": {
+      "type": "object",
+      "required": ["character_runtime"],
+      "properties": {
+        "character_runtime": { "$ref": "https://genesis.local/schemas/CHARACTER_RUNTIME.schema.json" },
+        "available_actions": { "type": "array", "items": {"type": "object"} },
+        "conditions": { "type": "array" },
+        "progression_summary": { "type": "object" }
+      }
+    },
+    "party": {
+      "type": "object",
+      "required": ["participant_ids"],
+      "properties": {
+        "participant_ids": { "type": "array", "items": {"type": "string"} },
+        "active_participant_id": { "type": ["string", "null"] }
+      }
+    },
+    "active_engagement": {
+      "type": "object",
+      "properties": {
+        "opening_crawl": { "type": ["object", "null"] },
+        "active_scene": { "type": ["object", "null"] },
+        "transcript": { "type": "object", "properties": { "entries": {"type": "array"} } },
+        "suggestions": { "type": "array", "maxItems": 4 },
+        "objectives": { "type": "array" }
+      }
+    },
+    "command_record": {
+      "type": "object",
+      "properties": {
+        "journal": { "type": "object", "properties": { "entries": {"type": "array"} } },
+        "map": { "type": "object", "properties": { "visible_nodes": {"type": "array"} } },
+        "player_visible_nemesis": { "type": "array", "description": "Player-visibility filtered; hidden adversaries excluded." },
+        "ship": { "type": ["object", "null"], "description": "null => 'No ship registered to this campaign' empty state." }
+      }
+    },
+    "visibility": {
+      "type": "object",
+      "required": ["hidden_fields_removed"],
+      "properties": {
+        "player_visible_entity_ids": { "type": "array", "items": {"type": "string"} },
+        "hidden_fields_removed": { "type": "boolean", "const": true }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": { "source_revision": {"type": "integer"}, "table_rulings": {"type": "array"} }
+    }
+  }
+}

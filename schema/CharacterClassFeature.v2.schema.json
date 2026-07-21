@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CharacterClassFeatureV2",
+  "description": "Refined structured feature format with activation, targeting, and mechanics.",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "source": { "type": "string" },
+    "level": { "type": "integer", "minimum": 1 },
+    "description": { "type": "string" },
+
+    "activation": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "type": "object",
+          "properties": {
+            "type": { "enum": ["action", "bonus_action", "reaction", "none"] },
+            "count": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["type"]
+        },
+        "trigger": { "type": "string" }
+      },
+      "required": ["cost"]
+    },
+
+    "targeting": {
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["self", "ally", "enemy", "creature", "point"] },
+        "range": {
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer", "minimum": 0 },
+            "unit": { "enum": ["feet", "squares", "meters"] }
+          },
+          "required": ["value", "unit"]
+        },
+        "conditions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "mechanics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "effect": { "type": "string" },
+          "description": { "type": "string" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "target": { "type": "string" },
+          "condition": { "type": "string" },
+
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true
+          },
+
+          "on_arrival": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/mechanic" }
+          },
+
+          "on_hit": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/mechanic" }
+          }
+        },
+        "required": ["effect"],
+        "$defs": {
+          "mechanic": {
+            "type": "object",
+            "properties": {
+              "effect": { "type": "string" },
+              "description": { "type": "string" },
+              "target": { "type": "string" },
+              "condition": { "type": "string" },
+              "parameters": { "type": "object", "additionalProperties": true }
+            },
+            "required": ["effect"]
+          }
+        }
+      }
+    },
+
+    "amount": {
+      "type": ["integer", "string", "object"],
+      "description": "Optional top-level amount field for simple damage/heal features"
+    }
+  },
+  "required": ["name", "description"]
+}

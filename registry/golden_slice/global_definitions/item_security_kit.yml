@@ -1,0 +1,23 @@
+urid: item_security_kit
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: 0490ff754c14a544
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- security kit
+- security kits
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Security Kit
+effect: Enables physical-security Technology checks at +3; no blanket advantage and
+  no double proficiency.

@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Object",
+  "description": "Defines interactive objects in the game world that can be targeted by actions, with specialized interfaces for different interaction types.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'object_imperial_blast_door_controls' or 'object_jedi_holocron'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the object."
+    },
+    "object_type": {
+      "enum": ["Door", "Terminal", "Container", "Weapon", "Vehicle", "Artifact", "Device", "Structure", "Environmental", "Other"],
+      "description": "The primary type of object this represents."
+    },
+    "subtype": {
+      "type": "string",
+      "description": "More specific categorization, e.g., 'Blast Door', 'Computer Terminal', 'Cargo Container'."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this object is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "enum": ["Common", "Uncommon", "Rare", "Very_Rare", "Legendary", "Artifact"],
+      "description": "How rare or difficult to obtain this object is."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the object's appearance, history, and significance. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "A memorable quote or description that captures the essence of this object."
+    },
+    "description": {
+      "type": "string",
+      "description": "Mechanical description of what this object does and how it functions."
+    },
+
+    "$comment": "SECTION 3: PHYSICAL PROPERTIES",
+    "size": {
+      "type": "string",
+      "enum": ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"],
+      "description": "The size category of the object."
+    },
+    "weight": {
+      "type": "string",
+      "description": "The weight of the object, e.g., '50 lbs' or '2 tons'."
+    },
+    "material": {
+      "type": "string",
+      "description": "Primary material composition, e.g., 'Durasteel', 'Transparisteel', 'Ancient Stone'."
+    },
+    "durability": {
+      "type": "object",
+      "description": "The object's resistance to damage and wear.",
+      "properties": {
+        "hit_points": {
+          "type": "integer",
+          "description": "Total hit points the object can sustain."
+        },
+        "damage_threshold": {
+          "type": "integer",
+          "description": "Minimum damage required to harm the object."
+        },
+        "damage_resistances": {
+          "type": "array",
+          "description": "Damage types this object resists.",
+          "items": { "type": "string" }
+        },
+        "damage_immunities": {
+          "type": "array",
+          "description": "Damage types this object is immune to.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 4: INTERACTION INTERFACES",
+    "hackable_interface": {
+      "type": "object",
+      "description": "Properties for objects that can be hacked or sliced.",
+      "properties": {
+        "system_security_level": {
+          "type": "integer",
+          "description": "The DC for hacking attempts against this system."
+        },
+        "data_on_success": {
+          "type": "string",
+          "description": "Information revealed when successfully hacked."
+        },
+        "control_on_critical_success": {
+          "type": "array",
+          "description": "Actions that become available on a critical success.",
+          "items": { "type": "string" }
+        },
+        "countermeasures_on_failure": {
+          "type": "array",
+          "description": "Negative consequences of failed hacking attempts.",
+          "items": { "type": "string" }
+        },
+        "required_tools": {
+          "type": "array",
+          "description": "Tools or equipment needed to attempt hacking.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "lockable_interface": {
+      "type": "object",
+      "description": "Properties for objects that can be locked or unlocked.",
+      "properties": {
+        "lock_difficulty": {
+          "type": "integer",
+          "description": "The DC for lockpicking attempts."
+        },
+        "lock_type": {
+          "type": "string",
+          "enum": ["Mechanical", "Electronic", "Biometric", "Force_Sensitive", "Hybrid"],
+          "description": "The type of locking mechanism."
+        },
+        "unlock_requirements": {
+          "type": "array",
+          "description": "What is needed to unlock this object.",
+          "items": { "type": "string" }
+        },
+        "alarm_on_failure": {
+          "type": "boolean",
+          "description": "Whether failed attempts trigger an alarm."
+        }
+      }
+    },
+    "movable_interface": {
+      "type": "object",
+      "description": "Properties for objects that can be moved or manipulated.",
+      "properties": {
+        "strength_requirement": {
+          "type": "integer",
+          "description": "Minimum Strength score needed to move this object."
+        },
+        "movement_difficulty": {
+          "type": "integer",
+          "description": "The DC for moving this object."
+        },
+        "movement_speed": {
+          "type": "string",
+          "description": "How fast this object can be moved, e.g., '5 feet per round'."
+        },
+        "requires_tools": {
+          "type": "array",
+          "description": "Tools needed to move this object.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "examinable_interface": {
+      "type": "object",
+      "description": "Properties for objects that can be examined or investigated.",
+      "properties": {
+        "investigation_dc": {
+          "type": "integer",
+          "description": "The DC for investigation checks to learn about this object."
+        },
+        "information_tiers": {
+          "type": "array",
+          "description": "Different levels of information available based on investigation results.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dc_required": { "type": "integer" },
+              "information": { "type": "string" }
+            },
+            "required": ["dc_required", "information"]
+          }
+        },
+        "special_knowledge": {
+          "type": "array",
+          "description": "Information only available to characters with specific knowledge or skills.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "requirement": { "type": "string" },
+              "information": { "type": "string" }
+            },
+            "required": ["requirement", "information"]
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 5: FUNCTIONAL PROPERTIES",
+    "functionality": {
+      "type": "object",
+      "description": "What this object does and how it operates.",
+      "properties": {
+        "primary_function": {
+          "type": "string",
+          "description": "The main purpose or function of this object."
+        },
+        "activation_method": {
+          "type": "string",
+          "description": "How this object is activated or used."
+        },
+        "power_requirements": {
+          "type": "string",
+          "description": "What powers or energizes this object."
+        },
+        "operational_limits": {
+          "type": "array",
+          "description": "Limitations on how this object can be used.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 6: CONNECTIONS & SYNERGIES",
+    "connections": {
+      "type": "array",
+      "description": "Relationships to other game elements.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": { "type": "string" },
+          "target_type": {
+            "enum": ["Species", "Class", "Faction", "Background", "Item", "Power", "Status", "Action", "Lore", "Location", "Era", "Other"]
+          },
+          "relationship": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 7: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Guidance for LLM-GM on how to use this object in gameplay.",
+      "properties": {
+        "iconic_usage": {
+          "type": "string",
+          "description": "How this object is typically used in Star Wars stories."
+        },
+        "tactical_notes": {
+          "type": "string",
+          "description": "Tactical considerations for using this object in encounters."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and plot elements this object can provide.",
+          "items": { "type": "string" }
+        },
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "How to describe and roleplay interactions with this object."
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: IMAGE GENERATION (for AI Art Engine)",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "The foundational prompt for generating images of this object."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different image generation contexts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "enum": ["Object_Portrait", "Object_in_Scene", "Object_Detail", "Object_Interface", "Object_Environment"]
+              },
+              "modifier_text": { "type": "string" }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 9: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the object's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the object's icon for UI elements."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this object (hex code)."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "object_type", "era", "narrative", "image_generation", "ui"]
+}

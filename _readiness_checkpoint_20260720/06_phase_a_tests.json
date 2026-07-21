@@ -1,0 +1,76 @@
+{
+  "item_classify": {
+    "YT-2400 light freighter": "Starship",
+    "Flight jacket": "Gear",
+    "Lucky sabacc chip": "Trade_Good",
+    "DL-44 heavy blaster pistol": "Weapon",
+    "Beskar chestplate": "Armor"
+  },
+  "item_classify_ok": true,
+  "item_slot_violations": [
+    "non_weapon_in_weapon_slot: YT-2400 freighter is Starship",
+    "non_weapon_in_weapon_slot: Flight jacket is Gear",
+    "non_weapon_in_weapon_slot: Lucky sabacc chip is Trade_Good",
+    "starship_in_carried_slot: YT-2400 freighter in weapons"
+  ],
+  "item_enforcement_ok": true,
+  "routed": {
+    "weapons": [
+      "DL-44 blaster"
+    ],
+    "armor": [],
+    "gear": [
+      "Flight jacket",
+      "Lucky sabacc chip"
+    ],
+    "vehicles": [
+      "YT-2400 freighter"
+    ]
+  },
+  "opening_source": "authored",
+  "opening_stable": true,
+  "roundtrip": {
+    "meridian_sees_own": true,
+    "meridian_sees_shadows": false,
+    "shadows_sees_meridian": false,
+    "shadows_sees_own": true,
+    "return_meridian_own": true,
+    "return_meridian_shadows": false
+  },
+  "roundtrip_ok": true,
+  "restart": {
+    "backup_made": true,
+    "opening_preserved": true,
+    "cleared": [
+      "chronicle.jsonl",
+      "runtime_state.json",
+      "transcript_archive.jsonl",
+      "turn_log.jsonl"
+    ],
+    "retained": [
+      "opening.generated.json",
+      "opening.md"
+    ],
+    "token_gone_after_restart": true,
+    "backup_has_token": true
+  },
+  "restart_ok": true,
+  "hidden": {
+    "not_in_visible_state": true,
+    "not_in_transcript": true
+  },
+  "hidden_ok": true,
+  "action_model": {
+    "combat_has_round": true,
+    "combat_has_turn": true,
+    "combat_has_initiative": true,
+    "has_participants_registry": false,
+    "has_active_participant": true,
+    "has_action_owner": false,
+    "has_actions_remaining": false,
+    "has_out_of_combat_turn_model": false
+  },
+  "PHASE_A_TESTS_PASS": true,
+  "opening_cache_source": "persisted",
+  "opening_authored_stable": true
+}

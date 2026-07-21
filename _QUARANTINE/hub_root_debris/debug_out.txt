@@ -1,0 +1,148 @@
+SCHEMA EXPECTS: ['customs', 'taboos', 'status_markers']
+CANDIDATE HAS: ['customs', 'taboos', 'status_markers']
+
+Validating...
+FAIL: Additional properties are not allowed ('rule' was unexpected)
+
+Failed validating 'additionalProperties' in schema['properties']['connections']['properties']['membership_integration']['properties']['species_synergies']['items']:
+    {'type': 'object',
+     'additionalProperties': False,
+     'required': ['species_id', 'narrative', 'rule_object'],
+     'properties': {'species_id': {'type': 'string'},
+                    'narrative': {'type': 'string'},
+                    'rule_object': {'$ref': '#/$defs/rule_object'}}}
+
+On instance['connections']['membership_integration']['species_synergies'][1]:
+    {'species_id': 'spc_human',
+     'narrative': 'Humans blend easily into the Imperial circles Black Sun '
+                  'infests.',
+     'rule': {'type': 'skill_bonus', 'target': 'skill_insight', 'value': 1},
+     'rule_object': {'type': 'skill_bonus',
+                     'target': 'skill_insight',
+                     'value': 1}}
+
+--- ERROR ---
+Path: ['structure', 'ranks', 0, 'feature_choices', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 0, 'feature_choices', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 0, 'feature_choices', 2]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 1, 'feature_choices', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 1, 'feature_choices', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 1, 'feature_choices', 2]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 2, 'feature_choices', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 2, 'feature_choices', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 2, 'feature_choices', 2]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 3, 'feature_choices', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 3, 'feature_choices', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 3, 'feature_choices', 2]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 4, 'feature_choices', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 4, 'feature_choices', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['structure', 'ranks', 4, 'feature_choices', 2]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'structure', 'properties', 'ranks', 'items', 'properties', 'feature_choices', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'class_synergies', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'class_synergies', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'class_synergies', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'class_synergies', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'species_synergies', 0]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'species_synergies', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'species_synergies', 1]
+Message: Additional properties are not allowed ('rule' was unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'species_synergies', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'background_synergies', 0]
+Message: Additional properties are not allowed ('id', 'rule' were unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'background_synergies', 'items', 'additionalProperties']
+
+--- ERROR ---
+Path: ['connections', 'membership_integration', 'background_synergies', 1]
+Message: Additional properties are not allowed ('id', 'rule' were unexpected)
+Validator: additionalProperties
+Schema Path: ['properties', 'connections', 'properties', 'membership_integration', 'properties', 'background_synergies', 'items', 'additionalProperties']

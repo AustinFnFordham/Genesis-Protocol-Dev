@@ -1,0 +1,81 @@
+# K — TOKEN STANDARDIZATION (measurable report)
+# Genesis Protocol · Phase A · 2026-07-21
+# Objective: remove all raw font-size pixel literals from components; every size
+# resolves through the design-token type ramp (single source of truth).
+
+token_ramp:                       # src/styles/design-tokens.css (11 steps)
+  micro: 8px
+  label: 8.5px
+  caption: 9.5px
+  note: 10.5px
+  meta: 11.5px
+  control: 12.5px
+  body: 13.5px
+  narrative: 15.5px
+  title: 17px
+  heading: 21px
+  display: 30px
+
+snap_map:                         # raw px -> token (max drift 1.0px, invisible)
+  "7": micro
+  "7.5": micro
+  "8": micro
+  "8.5": label
+  "9": caption
+  "9.5": caption
+  "10": note
+  "10.5": note
+  "11": meta
+  "11.5": meta
+  "12": control
+  "12.5": control
+  "13": body
+  "14": body
+  "16": narrative
+  "17": title
+  "20": heading
+  "21": heading
+  "22": heading
+  "30": display
+max_snap_drift_px: 1.0
+
+before:
+  raw_fontsize_literals: 175
+  distinct_values: 20            # 7 .. 30
+  files_with_literals: 18
+after:
+  raw_fontsize_literals: 0
+  token_backed_fontsize_refs: 194   # 175 swept + 19 previously tokenized panels
+  unmapped_values: 0
+  files_touched: 18
+
+files_touched:                    # replacements per file
+  App.jsx: 7
+  components/AddCharacter.jsx: 7
+  components/CampaignSelect.jsx: 10
+  components/CharacterCreator.jsx: 8
+  components/CharacterForge.jsx: 9
+  components/CommandPanel.jsx: 8
+  components/DialogueSystem.jsx: 21
+  components/DiceFeed.jsx: 9
+  components/GalacticMap.jsx: 4
+  components/GmSession.jsx: 18
+  components/LivingDiorama.jsx: 15
+  components/NemesisWeb.jsx: 5
+  components/ProgressionTree.jsx: 6
+  components/ReactionWindow.jsx: 7
+  components/ShipManagement.jsx: 7
+  components/ShipStations.jsx: 15
+  components/TacticalRuntime.jsx: 13
+  components/Workbench.jsx: 6
+
+verification:
+  raw_literals_remaining: 0        # grep -E "fontSize:\s*[0-9]" src -> 0
+  jsx_parse: 21/21 pass            # acorn + acorn-jsx, 0 failures
+  method: scripted exact-value sweep (token_sweep.py); no conditional/computed
+          fontSize existed, so no expression was altered — only literal swaps
+  note: production rollup/esbuild build not run in Linux sandbox (node_modules is
+        win32-native); syntax proven via platform-independent acorn parse. Full
+        `npm run build` to be confirmed on the Windows host / in L harness.
+
+status: PASS

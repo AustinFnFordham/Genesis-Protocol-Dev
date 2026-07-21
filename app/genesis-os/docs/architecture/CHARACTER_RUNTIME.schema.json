@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://genesis.local/schemas/CHARACTER_RUNTIME.schema.json",
+  "title": "Character Runtime",
+  "description": "The ONE canonical character source. Every character-facing panel (Operative, attributes, equipment, DNA Record, powers, relationships, portrait, participant registration, Add Character result) projects from this instance. No panel builds a shallow parallel character object.",
+  "type": "object",
+  "required": ["character_id", "campaign_id", "identity", "mechanics", "equipment"],
+  "additionalProperties": true,
+  "properties": {
+    "character_id": { "type": "string" },
+    "campaign_id": { "type": "string" },
+    "runtime_revision": { "type": "integer", "minimum": 0 },
+    "identity": {
+      "type": "object",
+      "required": ["display_name"],
+      "properties": {
+        "full_name": { "type": "string", "description": "Unicode string. e.g. Aeleron \"Aero\" Do'ordo — NEVER \\x27-escaped." },
+        "display_name": { "type": "string" },
+        "preferred_name": { "type": "string" },
+        "species": { "type": "string" },
+        "class": { "type": "string" },
+        "subclass": { "type": ["string", "null"] },
+        "level": { "type": "integer", "minimum": 1 },
+        "role": { "type": "string" }
+      }
+    },
+    "mechanics": {
+      "type": "object",
+      "properties": {
+        "attributes": { "type": "object" },
+        "derived_statistics": { "type": "object" },
+        "defenses": { "type": "object", "properties": { "armor_class": {"type": "integer"}, "current_hp": {"type": "integer"}, "maximum_hp": {"type": "integer"}, "conditions": {"type": "array"} } },
+        "resources": { "type": "object" },
+        "movement": { "type": "object" },
+        "senses": { "type": "object" },
+        "proficiencies": { "type": "array" },
+        "features": { "type": "array" },
+        "powers": { "type": "array" },
+        "actions": { "type": "array" },
+        "reactions": { "type": "array" },
+        "conditions": { "type": "array" }
+      }
+    },
+    "equipment": {
+      "type": "object",
+      "description": "CANONICAL CONTRACT: every slot is an ARRAY (server-normalized). Items routed by item_type; a non-Weapon never appears in weapons.",
+      "required": ["weapons", "armor", "gear", "vehicles"],
+      "properties": {
+        "weapons": { "type": "array" },
+        "armor": { "type": "array" },
+        "gear": { "type": "array" },
+        "vehicles": { "type": "array" },
+        "trinkets": { "type": "array" },
+        "starships": { "type": "array" },
+        "currency": { "type": ["integer", "object"] }
+      }
+    },
+    "progression": {
+      "type": "object",
+      "properties": {
+        "current_level": { "type": "integer" },
+        "unlocked_feature_urids": { "type": "array", "items": {"type": "string"} },
+        "selected_choice_urids": { "type": "array", "items": {"type": "string"} },
+        "pending_choices": { "type": "array" },
+        "campaign_specific_rulings": { "type": "array" },
+        "earned_relationship_maneuvers": { "type": "array" }
+      }
+    },
+    "soul": { "type": "object" },
+    "relationships": { "type": "array" },
+    "visual_identity": { "type": "object" },
+    "provenance": { "type": "object" },
+    "validation": { "type": "object" }
+  }
+}

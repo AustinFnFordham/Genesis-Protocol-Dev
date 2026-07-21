@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700;900&display=swap');
+
+/* Enhanced Star Wars Theme with Starfield Background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', monospace !important;
+}
+
+body, .stApp {
+    background: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 2px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 1px at 160px 30px, #ddd, transparent),
+        linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #16213e 100%) !important;
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    color: #00ffff !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Main container */
+.main .block-container {
+    max-width: 100% !important;
+    padding: 1rem !important;
+}
+
+/* Enhanced sidebar */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, rgba(0, 10, 20, 0.95), rgba(0, 20, 40, 0.95)) !important;
+    border-right: 3px solid #00ffff !important;
+    box-shadow: 5px 0 15px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* Main title with enhanced glow */
+h1 {
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 900 !important;
+    font-size: 3.5rem !important;
+    text-align: center !important;
+    background: linear-gradient(45deg, #00ffff, #ff0080, #00ffff) !important;
+    background-size: 200% 200% !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: titleGlow 3s ease-in-out infinite !important;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8) !important;
+    margin: 2rem 0 !important;
+    letter-spacing: 0.3em !important;
+}
+
+@keyframes titleGlow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 40px #00ffff);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px #ff0080) drop-shadow(0 0 60px #ff0080);
+    }
+}
+
+/* Status message styling */
+.status-message {
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.8), rgba(0, 40, 80, 0.8)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 10px !important;
+    padding: 1rem !important;
+    margin: 1rem 0 !important;
+    text-align: center !important;
+    font-size: 1.1rem !important;
+    color: #00ffff !important;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
+}
+
+/* Mission Holocron - Enhanced with diegetic lighting */
+.mission-holocron {
+    background: linear-gradient(135deg, rgba(0, 10, 30, 0.9), rgba(0, 30, 60, 0.9)) !important;
+    border: 3px solid #00ffff !important;
+    border-radius: 15px !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    height: 300px !important;
+    overflow-y: auto !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    position: relative !important;
+}
+
+.holocron-red {
+    border-color: #ff4444 !important;
+    box-shadow: 
+        0 0 25px rgba(255, 68, 68, 0.8),
+        inset 0 0 25px rgba(255, 68, 68, 0.1) !important;
+    background: linear-gradient(135deg, rgba(30, 0, 0, 0.9), rgba(60, 0, 0, 0.9)) !important;
+    animation: redPulse 2s ease-in-out infinite !important;
+}
+
+.holocron-blue {
+    border-color: #00ffff !important;
+    box-shadow: 
+        0 0 25px rgba(0, 255, 255, 0.8),
+        inset 0 0 25px rgba(0, 255, 255, 0.1) !important;
+    background: linear-gradient(135deg, rgba(0, 10, 30, 0.9), rgba(0, 30, 60, 0.9)) !important;
+    animation: bluePulse 2s ease-in-out infinite !important;
+}
+
+@keyframes redPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 68, 68, 0.6), inset 0 0 20px rgba(255, 68, 68, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(255, 68, 68, 1), inset 0 0 40px rgba(255, 68, 68, 0.2);
+    }
+}
+
+@keyframes bluePulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(0, 255, 255, 1), inset 0 0 40px rgba(0, 255, 255, 0.2);
+    }
+}
+
+/* Raw data section */
+.raw-data {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: 2px solid #666 !important;
+    border-radius: 10px !important;
+    padding: 1rem !important;
+    margin: 1rem 0 !important;
+    height: 150px !important;
+    overflow-y: auto !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.9rem !important;
+    color: #888 !important;
+}
+
+/* Enhanced button styles */
+.stButton > button {
+    width: 100% !important;
+    height: 60px !important;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.2)) !important;
+    border: 3px solid #00ffff !important;
+    border-radius: 12px !important;
+    color: #00ffff !important;
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    transition: all 0.3s ease !important;
+    margin: 0.3rem 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
+    box-shadow: 
+        0 0 15px rgba(0, 255, 255, 0.3),
+        inset 0 0 15px rgba(0, 255, 255, 0.1) !important;
+}
+
+.stButton > button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.5)) !important;
+    box-shadow: 
+        0 0 25px rgba(0, 255, 255, 0.8),
+        inset 0 0 25px rgba(0, 255, 255, 0.2) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    border-color: #ffffff !important;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 1) !important;
+}
+
+.stButton > button:hover::before {
+    left: 100%;
+}
+
+/* Mission briefing cards */
+.mission-card {
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(0, 40, 80, 0.9)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 15px !important;
+    padding: 2rem !important;
+    margin: 1rem 0 !important;
+    height: 250px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.mission-card:hover {
+    transform: translateY(-5px) scale(1.02) !important;
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5) !important;
+    border-color: #ffffff !important;
+}
+
+.mission-card.red {
+    border-color: #ff4444 !important;
+    background: linear-gradient(135deg, rgba(40, 0, 0, 0.9), rgba(80, 0, 0, 0.9)) !important;
+}
+
+.mission-card.red:hover {
+    box-shadow: 0 10px 30px rgba(255, 68, 68, 0.5) !important;
+}
+
+.mission-card.purple {
+    border-color: #8800ff !important;
+    background: linear-gradient(135deg, rgba(20, 0, 40, 0.9), rgba(40, 0, 80, 0.9)) !important;
+}
+
+.mission-card.purple:hover {
+    box-shadow: 0 10px 30px rgba(136, 0, 255, 0.5) !important;
+}
+
+/* Star Wars ASCII art */
+.ascii-art {
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.8rem !important;
+    color: #00ffff !important;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.8) !important;
+}
+
+/* Enhanced scrollbar styling */
+.mission-holocron::-webkit-scrollbar, .raw-data::-webkit-scrollbar {
+    width: 8px;
+}
+
+.mission-holocron::-webkit-scrollbar-track, .raw-data::-webkit-scrollbar-track {
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.mission-holocron::-webkit-scrollbar-thumb, .raw-data::-webkit-scrollbar-thumb {
+    background: #00ffff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* Victory/Defeat screens */
+.victory {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2)) !important;
+    border: 3px solid #00ff00 !important;
+    animation: victoryGlow 1s ease-in-out infinite !important;
+}
+
+.defeat {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 128, 0.2)) !important;
+    border: 3px solid #ff0000 !important;
+    animation: defeatGlow 1s ease-in-out infinite !important;
+}
+
+@keyframes victoryGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(0, 255, 0, 1); }
+}
+
+@keyframes defeatGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(255, 0, 0, 1); }
+}
+
+/* Legacy turn indicators for compatibility */
+.red-turn {
+    background: linear-gradient(135deg, rgba(80, 0, 0, 0.5) 0%, rgba(40, 0, 0, 0.3) 100%) !important;
+    box-shadow: 0 0 60px rgba(255, 0, 0, 1), 0 0 100px rgba(255, 0, 0, 0.8), inset 0 0 60px rgba(255, 0, 0, 0.4) !important;
+    border: 6px solid #ff0000 !important;
+    padding: 30px !important;
+    border-radius: 15px !important;
+    animation: redPulse 1.2s infinite !important;
+    position: relative !important;
+}
+
+.blue-turn {
+    background: linear-gradient(135deg, rgba(0, 80, 80, 0.5) 0%, rgba(0, 40, 40, 0.3) 100%) !important;
+    box-shadow: 0 0 60px rgba(0, 255, 255, 1), 0 0 100px rgba(0, 255, 255, 0.8), inset 0 0 60px rgba(0, 255, 255, 0.4) !important;
+    border: 6px solid #00ffff !important;
+    padding: 30px !important;
+    border-radius: 15px !important;
+    animation: bluePulse 1.2s infinite !important;
+    position: relative !important;
+}
+
+/* Hide Streamlit elements */
+#MainMenu, footer, header {
+    visibility: hidden !important;
+    height: 0 !important;
+}

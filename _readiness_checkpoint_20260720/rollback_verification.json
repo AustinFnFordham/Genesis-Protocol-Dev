@@ -1,0 +1,18 @@
+{
+ "meridian_reach": {
+  "backup": "registry\\golden_slice\\migration\\meridian_reach_20260721_025511.bak.json",
+  "pre_migration_hash": "c29584ff987e472e",
+  "migrated_hash": "5725eb933cba9bf5",
+  "restored_hash": "c29584ff987e472e",
+  "rollback_ok": true,
+  "migration_changed_runtime": true
+ },
+ "shadows_of_empire": {
+  "backup": "registry\\golden_slice\\migration\\shadows_of_empire_20260721_025511.bak.json",
+  "pre_migration_hash": "f62175189a97bbd6",
+  "migrated_hash": "996a746c7305e05e",
+  "restored_hash": "f62175189a97bbd6",
+  "rollback_ok": true,
+  "migration_changed_runtime": true
+ }
+}

@@ -1,0 +1,22 @@
+urid: item_blaster_ammunition
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: a9da66b3d15f901e
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- blaster ammunition
+- blaster ammunitions
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Blaster ammunition
+effect: 50 total shots; pistol capacity 12

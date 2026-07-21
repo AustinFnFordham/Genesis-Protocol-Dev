@@ -1,0 +1,63 @@
+# GENESIS PROTOCOL — COMPONENT → DATA MAPPING
+# Every character/campaign panel binds to ONE mounted_campaign_projection path.
+# empty_state is MANDATORY — no panel may fall back to a fixture.
+
+mapping:
+  operative_name:
+    path: operative.character_runtime.identity.display_name
+    empty_state: "Character unavailable"
+  species_class_line:
+    path: operative.character_runtime.identity   # species / class / subclass / level / role
+    empty_state: "Character details unavailable"
+  armor_class:
+    path: operative.character_runtime.mechanics.defenses.armor_class
+    empty_state: "—"
+  weapons:
+    path: operative.character_runtime.equipment.weapons
+    empty_state: "No weapons equipped"
+  gear:
+    path: operative.character_runtime.equipment.gear
+    empty_state: "No gear carried"
+  vehicles:
+    path: operative.character_runtime.equipment.vehicles
+    empty_state: "No vessels registered"
+  powers:
+    path: operative.character_runtime.mechanics.powers
+    empty_state: "No powers available"
+  dna_record:
+    path: operative.character_runtime.progression   # + validated class/subclass defs + prereq-filtered registry choices
+    empty_state: "Progression unavailable"
+    note: "Registry supplies DEFINITIONS/choices; runtime supplies selected/unlocked/pending/locked + rulings. Never show Guardian for Aero, never show Sandbox Entity."
+  transcript:
+    path: active_engagement.transcript.entries
+    empty_state: "Campaign has not begun"
+  suggestions:
+    path: active_engagement.suggestions
+    empty_state: "Enter any plausible action"
+  journal:
+    path: command_record.journal.entries
+    empty_state: "No campaign events recorded"
+  map:
+    path: command_record.map.visible_nodes
+    empty_state: "No mapped campaign locations have been established."
+  nemesis:
+    path: command_record.player_visible_nemesis
+    empty_state: "No player-visible Nemesis information is available."
+    note: "Player-visibility filtered server-side; a hidden adversary must NOT appear."
+  ship:
+    path: command_record.ship
+    empty_state: "No ship is registered to this campaign."
+
+# Panels requiring re-pointing (currently read boot registry fixtures):
+repointing_required:
+  - { component: ProgressionTree, from: registry/manifest, to: operative.character_runtime.progression }
+  - { component: GalacticMap,     from: hardcoded+registry, to: command_record.map.visible_nodes }
+  - { component: ShipManagement,  from: registry,           to: command_record.ship }
+  - { component: NemesisWeb,      from: registry,           to: command_record.player_visible_nemesis }
+  - { component: DialogueSystem,  from: scripted Malice log, to: active_engagement (drop scripted fallback in live) }
+
+# Required test metadata on every visible region:
+test_metadata:
+  all_panels: [data-campaign-id, data-mount-epoch, data-state-revision]
+  character_panels_also: [data-character-id]
+  assertion: "every visible panel shares identical campaign_id + mount_epoch + state_revision; character panels share character_id"

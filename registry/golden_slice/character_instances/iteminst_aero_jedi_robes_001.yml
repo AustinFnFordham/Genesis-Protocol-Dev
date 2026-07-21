@@ -1,0 +1,21 @@
+urid: iteminst_aero_jedi_robes_001
+entity_type: ItemInstance
+authority_lane: character_instance
+source_path: null
+content_hash: b60f805c1ce03f95
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- dark grey jedi robes with master taron s mornos synthweave mantle
+- dark grey jedi robes with master taron s mornos synthweave mantles
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs:
+- item_jedi_robes
+provenance: {}
+campaign_scope: meridian_reach
+validation_status: instance_authored
+resolution_status: character_instance
+name: Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle

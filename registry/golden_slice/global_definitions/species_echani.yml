@@ -1,0 +1,21 @@
+urid: species_echani
+entity_type: Species
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\species\echani.yml
+content_hash: a05116a5759c28d6
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- echani
+- echanis
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\species\echani.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Echani

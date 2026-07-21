@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Nemesis",
+  "description": "Defines a major, recurring antagonist with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'nemesis_darth_vader' or 'nemesis_grand_moff_tarkin'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the nemesis."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this nemesis is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How unique or powerful this nemesis is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the nemesis, their role, and significance in the story. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this nemesis, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this nemesis is viewed and feared by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the nemesis."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this nemesis in the galaxy."
+    },
+    "archetype": {
+      "enum": ["Brute", "Brains", "Leader", "Manipulator", "Fanatic", "Survivor"],
+      "description": "The FFG-inspired archetype defining their primary method of opposition."
+    },
+    "motivations": {
+      "type": "string",
+      "description": "What do they want? Why are they opposed to the player characters?"
+    },
+    "character_sheet": {
+      "$ref": "Character.schema.json",
+      "description": "The Nemesis uses the same master character schema as the players."
+    },
+    "is_force_sensitive": { 
+      "type": "boolean",
+      "description": "Whether this nemesis is Force-sensitive."
+    },
+    "minions": {
+      "type": "array",
+      "description": "A list of Adversary IDs that this Nemesis typically commands.",
+      "items": { "type": "string" }
+    },
+    "progression_plan": {
+      "type": "object",
+      "description": "Defines how the Nemesis will grow in power and influence.",
+      "properties": {
+        "xp_thresholds": {
+          "type": "array",
+          "description": "Milestones that trigger an upgrade for the Nemesis.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "trigger": { 
+                "type": "string", 
+                "description": "e.g., 'After the PCs complete the Shadow Syndicate quest'." 
+              },
+              "upgrades": {
+                "type": "array",
+                "description": "List of new features, items, or minions the Nemesis gains.",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "plot_hooks": {
+      "type": "array",
+      "description": "A list of potential actions or schemes the Nemesis can initiate.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Member Of', 'Enemy Of', 'Commands', 'Allied With'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this nemesis type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_nemeses": {
+      "type": "array",
+      "description": "Notable nemeses of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld or origin of this nemesis."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this nemesis."
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying this nemesis."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this nemesis.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this nemesis interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for this nemesis.",
+          "items": { "type": "string" }
+        },
+        "nemesis_development": {
+          "type": "string",
+          "description": "Guidance for nemesis development and progression."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: IMAGE GENERATION & UI",
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this nemesis."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Command_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the nemesis image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the nemesis icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this nemesis for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "archetype", "motivations", "character_sheet", "connections"]
+}

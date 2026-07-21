@@ -1,0 +1,1 @@
+{"response": {"actionGroup": "blue-team-tools", "apiPath": "/block-ip", "httpMethod": "POST", "httpStatusCode": 200, "responseBody": {"application/json": {"body": "{\"status\": \"success\", \"message\": \"IP 192.168.1.100 blocked\"}"}}}}

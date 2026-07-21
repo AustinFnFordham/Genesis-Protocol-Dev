@@ -1,0 +1,707 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Species",
+  "description": "Defines a single playable species with comprehensive narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'human' or 'wookiee'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the species."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this species is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How common this species is in the galaxy."
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the species, their culture, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this species, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this species is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the species."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this species in the galaxy."
+    },
+    "narrative_tags": {
+      "type": "array",
+      "description": "Keywords for the LLM to use for storytelling (e.g., 'physical: reptilian', 'social: feared', 'allegiance: criminal').",
+      "items": { "type": "string" }
+    },
+    "starting_xp": {
+      "type": "integer",
+      "description": "Experience points granted at character creation to be spent on skills and talents."
+    },
+    "ability_score_increases": {
+      "type": "array",
+      "description": "Defines how this species modifies base ability scores.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ability": { "enum": ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Choice"] },
+          "value": { "type": "integer" }
+        }
+      }
+    },
+    "speed": { "type": "integer", "description": "Base walking speed in feet." },
+    "size": { "enum": ["Tiny", "Small", "Medium", "Large"] },
+    "languages": {
+      "type": "array",
+      "description": "List of languages the species can speak, read, and write.",
+      "items": { "type": "string" }
+    },
+    "base_hp": {
+      "type": "integer",
+      "description": "A flat HP bonus added at character creation, similar to FFG's Wound Threshold."
+    },
+    "base_strain": {
+      "type": "integer",
+      "description": "The starting value for the character's Strain pool."
+    },
+    "innate_traits": {
+      "type": "array",
+      "description": "A list of innate traits granted by this species, following the specified schema.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this trait."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the trait."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Rich narrative description of what this trait represents and how it feels to use it."
+          },
+                  "mechanics": {
+                    "type": "array",
+                    "description": "Detailed mechanical effects this trait provides.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "effect": {
+                          "type": "string",
+                          "description": "The type of effect this trait provides."
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "description": "Parameters for the effect (e.g., skill, language, damage_dice)."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the effect."
+                        },
+                        "action_type": {
+                          "type": "string",
+                          "enum": ["passive", "action", "bonus_action", "reaction", "free_action"],
+                          "description": "Type of action required for this effect."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the effect."
+                        },
+                        "rules": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Rules associated with this effect."
+                        },
+                        "conditions": {
+                          "type": "array",
+                          "description": "Conditions that must be met for this effect to apply.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": { "type": "string" },
+                              "op": { "type": "string" },
+                              "value": {}
+                            },
+                            "required": ["key", "op", "value"]
+                          }
+                        }
+                      },
+                      "required": ["effect"]
+                    }
+                  },
+          "effects": {
+            "type": "array",
+            "description": "A list of mechanical effects this trait provides.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "grant_proficiency",
+                    "grant_advantage",
+                    "modify_stat",
+                    "modify_weapon",
+                    "modify_skill_check",
+                    "modify_roll",
+                    "grant_feat",
+                    "narrative_effect",
+                    "apply_status",
+                    "trigger_effect",
+                    "modify_speed",
+                    "set_armor_class",
+                    "grant_reaction",
+                    "modify_unarmed_strike",
+                    "grant_action",
+                    "allow_dual_concentration",
+                    "grant_resistance",
+                    "modify_hp_per_level",
+                    "grant_bonus_action"
+                  ],
+                  "description": "The type of effect this trait provides."
+                },
+                "value": {
+                  "description": "The value associated with this effect (varies by type)."
+                },
+                "target_property": {
+                  "type": "string",
+                  "description": "The property being modified (for modify_stat effects)."
+                },
+                "target_scopes": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "The scope of targets this effect applies to."
+                },
+                "conditions": {
+                  "type": "array",
+                  "description": "Conditions that must be met for this effect to apply.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": { "type": "string" },
+                      "op": { "type": "string" },
+                      "value": {}
+                    },
+                    "required": ["key", "op", "value"]
+                  }
+                },
+                "actions": {
+                  "type": "array",
+                  "items": { 
+                    "oneOf": [
+                      { "type": "string" },
+                      { "type": "object" }
+                    ]
+                  },
+                  "description": "Actions that can be taken with this effect. Can be strings or complex action objects."
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Additional notes about this effect."
+                }
+              },
+              "required": ["type"]
+            }
+          }
+        },
+        "required": ["id", "name", "narrative", "mechanics"]
+      }
+    },
+
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Static tags that define this species' fundamental characteristics. All tags must be defined in master_tags.yml. Examples: ['wookiee', 'strong', 'loyal', 'kashyyyk_native'].",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "DEPRECATED - UNIFIED CONNECTIONS SYSTEM",
+    "$comment": "MIGRATION NOTE: The 'connections' block is DEPRECATED per Genesis Protocol Article III. Migrate to synergy_rules.yml using tags.",
+    "connections": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Universal connections to any game object - factions, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Native To', 'Common Among', 'Restricted To', 'Iconic To'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this species from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_members": {
+      "type": "array",
+      "description": "Notable individuals of this species from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary homeworld of this species."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this species."
+    },
+
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying characters of this species."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this species.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this species interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for characters of this species.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this species."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Group_Shot', 'Cultural_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the species image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the species icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this species for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    },
+
+    "appearance_profile": {
+      "type": "object",
+      "description": "Detailed appearance information for visual generation and character creation.",
+      "properties": {
+        "height_range": {
+          "type": "string",
+          "description": "Typical height range for this species."
+        },
+        "distinctions": {
+          "type": "array",
+          "description": "Key physical distinctions that make this species recognizable.",
+          "items": { "type": "string" }
+        },
+        "skin_color_variants": {
+          "type": "array",
+          "description": "Common skin color variations for this species.",
+          "items": { "type": "string" }
+        },
+        "hair_color_variants": {
+          "type": "array",
+          "description": "Common hair color variations for this species.",
+          "items": { "type": "string" }
+        },
+        "eye_color_variants": {
+          "type": "array",
+          "description": "Common eye color variations for this species.",
+          "items": { "type": "string" }
+        },
+        "common_adornments": {
+          "type": "array",
+          "description": "Typical clothing, accessories, and cultural items for this species.",
+          "items": { "type": "string" }
+        },
+        "llm_description_prompt": {
+          "type": "string",
+          "description": "Direct prompt for LLM-GM visual description generation."
+        }
+      }
+    },
+    "$comment": "DEPRECATED - SYNERGIES",
+    "$comment": "MIGRATION NOTE: class_synergies and faction_synergies are DEPRECATED per Genesis Protocol Article III. Migrate to synergy_rules.yml using tags.",
+    "class_synergies": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Detailed class synergies with narrative descriptions and mechanical benefits.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "type": "string",
+            "description": "The class name and specialization."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Why this species works well with this class."
+          },
+          "mechanical_benefits": {
+            "type": "array",
+            "description": "Specific mechanical benefits of this combination.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["class", "narrative"]
+      }
+    },
+    "faction_synergies": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Detailed faction synergies with narrative descriptions.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction": {
+            "type": "string",
+            "description": "The faction name."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Why this species associates with this faction."
+          }
+        },
+        "required": ["faction", "narrative"]
+      }
+    },
+    "species_progression": {
+      "type": "object",
+      "description": "Progressive enhancements that unlock at higher levels.",
+      "properties": {
+        "base_trait": {
+          "type": "string",
+          "description": "The base trait this progression builds upon."
+        },
+        "base_description": {
+          "type": "string",
+          "description": "Description of the base trait."
+        },
+        "progression_tiers": {
+          "type": "object",
+          "description": "Enhancements available at different levels.",
+          "patternProperties": {
+            "^level_[0-9]+$": {
+              "type": "object",
+              "properties": {
+                "enhancement_type": {
+                  "type": "string",
+                  "description": "Type of enhancement (skill_enhancement, utility_improvement, damage_bonus, saving_throw_bonus, new_ability, legendary_feature)."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "What this enhancement represents."
+                },
+                "mechanical_effect": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string" },
+                    "value": { "type": "string" },
+                    "description": { "type": "string" },
+                    "conditions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": { "type": "string" },
+                          "op": { "type": "string" },
+                          "value": {}
+                        }
+                      }
+                    }
+                  }
+                },
+                "optional": {
+                  "type": "boolean",
+                  "description": "Whether this enhancement is optional."
+                }
+              },
+              "required": ["enhancement_type", "description"]
+            }
+          }
+        }
+      }
+    },
+    "cultural_features": {
+      "oneOf": [
+        {
+          "type": "array",
+          "description": "Cultural elements that provide narrative depth and roleplay opportunities.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the cultural feature."
+              },
+              "type": {
+                "type": "string",
+                "enum": ["ceremonial", "traditional", "cultural", "narrative", "social"],
+                "description": "Type of cultural feature."
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the cultural feature."
+              },
+              "activation": {
+                "type": "string",
+                "description": "When this cultural feature activates."
+              },
+              "effect": {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string" },
+                  "value": { "type": "string" },
+                  "conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": { "type": "string" },
+                        "op": { "type": "string" },
+                        "value": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "narrative_enhancement": {
+                "type": "string",
+                "description": "How this feature enhances roleplay and storytelling."
+              },
+              "faction_connection": {
+                "type": "string",
+                "description": "Faction this cultural feature is associated with."
+              },
+              "optional": {
+                "type": "boolean",
+                "description": "Whether this cultural feature is optional."
+              }
+            },
+            "required": ["name", "type", "description"]
+          }
+        },
+        {
+          "type": "object",
+          "description": "Cultural features as nested object structure.",
+          "properties": {
+            "cultural_features": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "type": { "type": "string", "enum": ["ceremonial", "traditional", "cultural", "narrative", "social"] },
+                  "description": { "type": "string" },
+                  "narrative_impact": { "type": "string" }
+                },
+                "required": ["name", "type", "description"]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "environmental_adaptations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "description": "Environmental adaptations that provide situational advantages.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "environment": {
+                "type": "string",
+                "description": "The environment this adaptation applies to."
+              },
+              "advantage": {
+                "type": "string",
+                "description": "Description of the advantage this adaptation provides."
+              },
+              "situational_bonus": {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string" },
+                  "value": { "type": "string" },
+                  "conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": { "type": "string" },
+                        "op": { "type": "string" },
+                        "value": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "immersion_effect": {
+                "type": "string",
+                "description": "How this adaptation affects roleplay and immersion."
+              },
+              "narrative_hooks": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Narrative hooks for this adaptation."
+              },
+              "optional": {
+                "type": "boolean",
+                "description": "Whether this adaptation is optional."
+              }
+            },
+            "required": ["environment", "advantage"]
+          }
+        },
+        {
+          "type": "object",
+          "description": "Environmental adaptations as nested object structure.",
+          "properties": {
+            "environmental_adaptations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "environment": { "type": "string" },
+                  "adaptation_name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "mechanical_benefit": { "type": "string" }
+                },
+                "required": ["environment", "adaptation_name", "description", "mechanical_benefit"]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "advanced_system_balance": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Balance guidelines for advanced systems (object structure).",
+          "properties": {
+            "progression_balance": {
+              "type": "object",
+              "description": "Guidelines for balancing progression enhancements.",
+              "properties": {
+                "max_bonus_per_tier": { "type": "integer" },
+                "optional_by_default": { "type": "boolean" },
+                "narrative_focus": { "type": "boolean" }
+              }
+            },
+            "cultural_balance": {
+              "type": "object",
+              "description": "Guidelines for integrating cultural features.",
+              "properties": {
+                "max_features_per_character": { "type": "integer" },
+                "narrative_focus": { "type": "boolean" },
+                "optional_by_default": { "type": "boolean" }
+              }
+            },
+            "environmental_balance": {
+              "type": "object",
+              "description": "Guidelines for environmental adaptations.",
+              "properties": {
+                "max_adaptations_per_character": { "type": "integer" },
+                "situational_advantages": { "type": "boolean" },
+                "optional_by_default": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Balance guidelines for advanced systems (array structure).",
+          "properties": {
+            "progression_balance": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "cultural_integration": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "environmental_specialization": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      ]
+    }
+  },
+          "required": ["id", "name", "description", "tags", "starting_xp", "ability_score_increases", "speed", "size", "languages", "base_hp", "base_strain"]
+}

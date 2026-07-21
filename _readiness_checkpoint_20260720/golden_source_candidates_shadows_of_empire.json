@@ -1,0 +1,65 @@
+{
+ "character_id": "char_smuggler_pilot_aran_voss",
+ "slots": [
+  {
+   "domain": "feature",
+   "source_name": "Operator Archetype",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_operator_archetype",
+   "source_path": null,
+   "method": "none"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Smuggler's Cunning",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_smuggler_s_cunning",
+   "source_path": null,
+   "method": "none"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Daring Pilot",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_daring_pilot",
+   "source_path": null,
+   "method": "none"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Blaster Pistol",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_blaster_pistol",
+   "source_path": null,
+   "method": "none"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Flight Jacket",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_flight_jacket",
+   "source_path": null,
+   "method": "none"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Lucky Sabacc Chip",
+   "cited_source": null,
+   "resolution_status": "genuine_missing",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_lucky_sabacc_chip",
+   "source_path": null,
+   "method": "none"
+  }
+ ]
+}

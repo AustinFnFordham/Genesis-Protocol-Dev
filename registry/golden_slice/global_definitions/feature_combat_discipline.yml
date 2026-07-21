@@ -1,0 +1,23 @@
+urid: feature_combat_discipline
+entity_type: Feature
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\species\echani.yml
+content_hash: 3598832bf7cebc97
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- combat discipline
+- combat disciplines
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\species\echani.yml
+  enriched_from: runtime_inline
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Combat Discipline
+effect: Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents.

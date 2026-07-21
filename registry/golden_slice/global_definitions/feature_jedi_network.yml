@@ -1,0 +1,21 @@
+urid: feature_jedi_network
+entity_type: Feature
+authority_lane: global_validated
+source_path: null
+content_hash: e3fe4c51e4ed0859
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- jedi network
+- jedi networks
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Jedi Network

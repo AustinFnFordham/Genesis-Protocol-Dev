@@ -1,0 +1,28 @@
+@startuml
+' Genesis Protocol — Narrative scrolling + opening-crawl lifecycle
+state "Transcript scroll" as TS {
+  [*] --> AtBottom
+  AtBottom --> FollowingNewMessages : messageReceived
+  FollowingNewMessages --> AtBottom : scrollComplete
+  AtBottom --> ReadingHistory : userScrollsUp
+  ReadingHistory --> ReadingHistoryWithUnread : messageReceived
+  ReadingHistoryWithUnread --> AtBottom : clickNewMessages
+  ReadingHistory --> AtBottom : userScrollsToBottom
+  AtBottom --> SuggestionSelected : clickSuggestion
+  SuggestionSelected --> AtBottom : populateComposer
+}
+state "Opening crawl" as OC {
+  [*] --> NotLoaded
+  NotLoaded --> OpeningActive : campaignMounted\n[opening not acknowledged]
+  OpeningActive --> SceneActive : openingAcknowledged
+  SceneActive --> OpeningCollapsed : normalPlay
+  OpeningCollapsed --> OpeningExpanded : viewOpeningCrawl
+  OpeningExpanded --> OpeningCollapsed : closeOpeningCrawl
+  SceneActive --> RestartConfirmation : restartRequested
+  RestartConfirmation --> SceneActive : cancel
+  RestartConfirmation --> OpeningActive : confirm\nbackup + reset
+  OpeningCollapsed --> OpeningCollapsed : inventorySelected
+  OpeningCollapsed --> OpeningCollapsed : tabChanged
+  OpeningCollapsed --> OpeningCollapsed : modalOpened
+}
+@enduml

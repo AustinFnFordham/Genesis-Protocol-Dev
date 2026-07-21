@@ -1,0 +1,22 @@
+urid: item_ration_pack
+entity_type: Item
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\items\gear_expanded.yml
+content_hash: 88a9fe4badae45c3
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- ration pack
+- ration packs
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\items\gear_expanded.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Ration pack
+effect: one ordinary field ration each

@@ -1,0 +1,57 @@
+# GENESIS — LEGACY PATH RETIREMENT MATRIX (Contract Rev 1.1 §7)
+# Every legacy path gets an explicit disposition so it cannot quietly reappear.
+
+legacy_paths:
+  - path: store.campaign / _bootCampaign
+    status: isolate_to_dev_mode
+    replacement: mounted.projection (single atomic projection)
+    removal_commit: pending (D–L)
+    verification: no panel reads store.campaign in live mode
+
+  - path: store.loadCampaignFromEntity
+    status: migrate
+    replacement: mountProjection(cid) coordinator -> /gm/projection
+    removal_commit: pending
+    verification: CampaignSelect no longer calls it (now calls mountProjection) — DONE for select path
+
+  - path: store.startCampaign (new campaign via CharacterCreator)
+    status: retain (isolate)
+    replacement: keep for creator flow; must emit a projection-shaped mount, not the legacy save
+    removal_commit: pending (Phase C alignment)
+    verification: startCampaign result flows through ProjectionBuilder
+
+  - path: boot registry LIVE rendering (registry.get/manifest.find in panels)
+    status: remove (from live rendering)
+    replacement: mounted.projection + projection.definitions (registry ENRICHES by URID only)
+    removal_commit: pending (D–G)
+    verification: ProgressionTree/GalacticMap/ShipManagement/NemesisWeb read projection, not registry
+
+  - path: DialogueSystem scripted Malice fallback (local `log`, Coruscant 1313)
+    status: isolate_to_dev_mode
+    replacement: live mode renders only projection.active_engagement; scripted demo behind runtime_mode!=live
+    removal_commit: pending (H)
+    verification: live mounted campaign never shows Malice/Coruscant-1313 fixture
+
+  - path: hardcoded Map nodes (Coruscant/Mustafar/Falleen in GalacticMap)
+    status: remove
+    replacement: command_record.map.visible_nodes (empty state if none)
+    removal_commit: pending (E)
+    verification: Map shows only mounted-campaign nodes or honest empty
+
+  - path: fixture Ship source (ShipManagement registry Starship fixtures)
+    status: remove
+    replacement: command_record.ship (runtime-registered vessel) or empty state
+    removal_commit: pending (F)
+    verification: Ship tab shows only the campaign ship; no Millennium Falcon
+
+  - path: fixture Nemesis source (NemesisWeb registry)
+    status: remove
+    replacement: command_record.player_visible_nemesis (server visibility-filtered) or empty
+    removal_commit: pending (G)
+    verification: hidden adversaries never exposed; empty state when none visible
+
+  - path: sandbox_gold entities in live registry payload
+    status: isolate_to_dev_mode
+    replacement: runtime_mode gating; live excludes fixtures from membership (provenance.excluded_fixture_count)
+    removal_commit: partial (ProjectionBuilder excludes in live) — DONE for projection; boot /registry still serves them for definitions
+    verification: projection sandbox_in_blob == false (verified both campaigns)

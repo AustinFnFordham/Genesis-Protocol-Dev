@@ -1,0 +1,13 @@
+{
+ "required_slot_completeness_valid": true,
+ "id_shaped_values_normalized": true,
+ "double_prefixed_urids": 0,
+ "candidate_status_separate_from_authority": true,
+ "relationship_edges_have_endpoints": true,
+ "vessel_models_separate_from_instances": true,
+ "item_definitions_separate_from_instances": true,
+ "material_campaign_rulings_extracted": true,
+ "visible_party_reference_policy_resolved": true,
+ "truncated_or_display_derived_urids": 0,
+ "false_source_entity_type_matches": 0
+}

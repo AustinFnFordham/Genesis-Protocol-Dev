@@ -1,0 +1,28 @@
+urid: feature_force_connection
+entity_type: Feature
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\features\consular\force_connection.yml
+content_hash: 386bc29ba9c478b3
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- force connection
+- force connections
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\features\consular\force_connection.yml
+  enriched_from: runtime_inline
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Force Connection
+effect:
+  passive: May sense significant Force disturbances without automatically learning
+    identity, location, or explanation.
+  focused: As an action, focus on one visible creature within 30 feet and gain advantage
+    on one Insight check before the end of Aero's next turn to read emotional state
+    or apparent concealment.

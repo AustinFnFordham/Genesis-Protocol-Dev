@@ -1,0 +1,234 @@
+/* GENESIS//OS — diegetic holo theme (mockup-informed: neon cyan holotable,
+   clipped panels, scanlines, glow chrome). Presentation is the product. */
+
+:root {
+  --cyan: #33e1ff;
+  --cyan-dim: #1899b8;
+  --cyan-glow: rgba(51, 225, 255, 0.55);
+  --amber: #ffb300;
+  --red: #ff4d5a;
+  --green: #59ffa3;
+  --gold: #ffd54f;
+  --ink: #04070d;
+  --panel: rgba(10, 20, 32, 0.82);
+  --panel-2: rgba(14, 28, 44, 0.9);
+  --line: rgba(51, 225, 255, 0.28);
+  --line-hot: rgba(51, 225, 255, 0.85);
+  --txt: #cfe8f5;
+  --dim: #5f7f96;
+  --mono: 'Consolas', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--mono);
+  color: var(--txt);
+  background:
+    radial-gradient(1200px 700px at 75% -10%, rgba(38, 90, 140, 0.35), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(120, 30, 90, 0.22), transparent 55%),
+    var(--ink);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* moving star/grid field behind everything */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(51, 225, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 225, 255, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 78%);
+}
+
+/* global scanlines */
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 40;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 3px);
+  opacity: 0.5;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* ---------- panel chrome ---------- */
+.holo-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  box-shadow:
+    inset 0 0 22px rgba(51, 225, 255, 0.05),
+    0 0 14px rgba(51, 225, 255, 0.07);
+  position: relative;
+}
+.holo-panel::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(51, 225, 255, 0.06), transparent 18%);
+}
+
+.holo-title {
+  font-size: 10px; letter-spacing: 3px; color: var(--cyan);
+  text-shadow: 0 0 8px var(--cyan-glow);
+  padding: 10px 14px 6px; text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 8px;
+}
+.holo-title::before { content: '◢'; font-size: 8px; color: var(--cyan-dim); }
+
+/* ---------- interactive cards ---------- */
+.holo-card {
+  position: relative;
+  padding: 9px 12px; margin: 5px 6px;
+  background: linear-gradient(90deg, rgba(51, 225, 255, 0.05), transparent 70%);
+  border: 1px solid transparent;
+  border-left: 2px solid rgba(51, 225, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.16s ease;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+.holo-card:hover {
+  background: linear-gradient(90deg, rgba(51, 225, 255, 0.13), rgba(51, 225, 255, 0.03));
+  border-left-color: var(--cyan);
+  transform: translateX(2px);
+}
+.holo-card.sel {
+  border: 1px solid var(--line-hot);
+  border-left: 2px solid var(--cyan);
+  background: linear-gradient(90deg, rgba(51, 225, 255, 0.16), rgba(51, 225, 255, 0.02));
+  box-shadow: 0 0 12px rgba(51, 225, 255, 0.18), inset 0 0 18px rgba(51, 225, 255, 0.06);
+}
+.holo-card .n { color: var(--txt); font-size: 13px; }
+.holo-card .t { color: var(--dim); font-size: 9.5px; letter-spacing: 1px; margin-top: 2px; }
+
+/* ---------- badges ---------- */
+.badge {
+  display: inline-block; font-size: 8.5px; letter-spacing: 1.5px;
+  padding: 1.5px 7px; margin-left: 7px; vertical-align: middle;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+.badge.gold { background: linear-gradient(90deg, #4a3a00, #6b5500); color: var(--gold); text-shadow: 0 0 6px rgba(255, 213, 79, 0.6); }
+.badge.wip { background: #3a2600; color: var(--amber); }
+
+/* ---------- buttons ---------- */
+.holo-btn {
+  display: inline-block; cursor: pointer; user-select: none;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--cyan); background: rgba(51, 225, 255, 0.07);
+  border: 1px solid var(--line-hot);
+  padding: 8px 22px; margin: 4px 8px 4px 0;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  text-shadow: 0 0 8px var(--cyan-glow);
+  transition: all 0.15s ease;
+}
+.holo-btn:hover { background: rgba(51, 225, 255, 0.2); box-shadow: 0 0 16px rgba(51, 225, 255, 0.35); }
+.holo-btn.primary { background: rgba(51, 225, 255, 0.18); box-shadow: 0 0 14px rgba(51, 225, 255, 0.25); }
+.holo-btn.ghost { color: var(--dim); border-color: rgba(95, 127, 150, 0.4); text-shadow: none; }
+.holo-btn.danger { color: var(--red); border-color: rgba(255, 77, 90, 0.6); text-shadow: 0 0 8px rgba(255, 77, 90, 0.5); }
+.holo-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+/* ---------- stat hexes ---------- */
+.stat-hex {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  text-align: center; padding: 16px 4px 14px;
+  transition: all 0.15s;
+}
+.stat-hex:hover { border-color: var(--line-hot); box-shadow: 0 0 12px rgba(51, 225, 255, 0.2); }
+.stat-hex .k { font-size: 9px; letter-spacing: 2px; color: var(--dim); }
+.stat-hex .v { font-size: 21px; color: var(--txt); text-shadow: 0 0 10px rgba(51, 225, 255, 0.35); }
+.stat-hex .m { font-size: 11px; color: var(--cyan); }
+
+/* ---------- gauges ---------- */
+.gauge { height: 5px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--line); overflow: hidden; width: 110px; }
+.gauge i { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan-dim), var(--cyan)); box-shadow: 0 0 8px var(--cyan-glow); transition: width 0.5s ease; }
+.gauge.amber i { background: linear-gradient(90deg, #7a5200, var(--amber)); }
+.gauge.red i { background: linear-gradient(90deg, #6b0d16, var(--red)); }
+
+/* ---------- tags ---------- */
+.tag-chip {
+  display: inline-block; font-size: 9.5px; letter-spacing: 0.5px;
+  color: var(--cyan); border: 1px solid var(--line);
+  background: rgba(51, 225, 255, 0.05);
+  padding: 2px 10px; margin: 0 5px 5px 0;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+.tag-chip.broken { color: var(--red); border-color: rgba(255, 77, 90, 0.6); }
+
+/* ---------- warning stripe (unverified data) ---------- */
+.wip-stripe {
+  font-size: 9.5px; letter-spacing: 3px; color: var(--amber); text-align: center;
+  padding: 4px; text-transform: uppercase;
+  background: repeating-linear-gradient(45deg, rgba(80, 55, 0, 0.55) 0 12px, rgba(20, 14, 0, 0.55) 12px 24px);
+  border-bottom: 1px solid rgba(255, 179, 0, 0.4);
+  animation: stripePulse 2.2s ease-in-out infinite;
+}
+@keyframes stripePulse { 50% { opacity: 0.65; } }
+
+/* ---------- GM seal ---------- */
+.gm-seal {
+  border-left: 3px solid var(--amber); padding: 6px 10px; margin: 10px 0;
+  color: var(--amber); font-size: 10px; letter-spacing: 2px;
+  background: linear-gradient(90deg, rgba(255, 179, 0, 0.07), transparent);
+}
+.gm-seal pre { color: var(--txt); font-size: 11px; letter-spacing: 0; white-space: pre-wrap; margin: 6px 0 0; }
+
+/* ---------- section headers ---------- */
+.sec-h {
+  font-size: 9.5px; letter-spacing: 2.5px; color: var(--dim); text-transform: uppercase;
+  margin: 16px 0 7px; display: flex; align-items: center; gap: 8px;
+}
+.sec-h::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+
+/* ---------- inputs ---------- */
+.holo-input {
+  background: rgba(4, 10, 16, 0.8); border: 1px solid var(--line);
+  color: var(--txt); font-family: var(--mono); font-size: 13px;
+  padding: 9px 12px; width: 360px; outline: none;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.holo-input:focus { border-color: var(--line-hot); box-shadow: 0 0 12px rgba(51, 225, 255, 0.2); }
+.holo-input.wide { width: 560px; }
+
+/* ---------- wizard steps ---------- */
+.step-rail { display: flex; gap: 3px; margin-bottom: 16px; }
+.step-pip {
+  font-size: 9px; letter-spacing: 2px; padding: 5px 13px;
+  color: var(--dim); border: 1px solid rgba(95, 127, 150, 0.3);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.step-pip.on { color: var(--cyan); border-color: var(--line-hot); background: rgba(51, 225, 255, 0.1); text-shadow: 0 0 8px var(--cyan-glow); }
+.step-pip.done { color: var(--green); border-color: rgba(89, 255, 163, 0.4); }
+
+/* ---------- portrait frame ---------- */
+.portrait-frame {
+  position: relative; width: 100%; aspect-ratio: 3/4; max-width: 210px;
+  border: 1px solid var(--line-hot);
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(51, 225, 255, 0.16), transparent 65%),
+    var(--panel-2);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 30px rgba(51, 225, 255, 0.08), 0 0 18px rgba(51, 225, 255, 0.12);
+}
+.portrait-frame .ph { color: var(--cyan-dim); font-size: 44px; text-shadow: 0 0 18px var(--cyan-glow); }
+.portrait-frame .label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  font-size: 8.5px; letter-spacing: 2px; color: var(--dim); text-align: center;
+  padding: 4px; background: rgba(4, 10, 16, 0.75);
+}
+
+/* ---------- boot flicker ---------- */
+@keyframes bootIn { 0% { opacity: 0; filter: brightness(3) blur(2px); } 12% { opacity: 1; } 18% { opacity: 0.4; } 24% { opacity: 1; filter: none; } 100% { opacity: 1; } }
+.boot-in { animation: bootIn 0.9s ease-out; }
+
+/* scrollbars */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(4, 10, 16, 0.6); }
+::-webkit-scrollbar-thumb { background: rgba(51, 225, 255, 0.25); border: 1px solid rgba(51, 225, 255, 0.15); }
+::-webkit-scrollbar-thumb:hover { background: rgba(51, 225, 255, 0.45); }

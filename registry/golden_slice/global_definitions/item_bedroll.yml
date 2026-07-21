@@ -1,0 +1,22 @@
+urid: item_bedroll
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: 7fa6f7a85f89e6aa
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- bedroll
+- bedrolls
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Bedroll
+effect: mundane sleeping equipment

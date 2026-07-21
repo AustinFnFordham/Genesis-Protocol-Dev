@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Master Tags Registry",
+  "description": "The Single Source of Truth for all tags in the SW5e Data Hub. No tag may exist unless it is defined here. This file is the absolute lexicon for our game's vocabulary, organized by category.",
+  "type": "object",
+  "patternProperties": {
+    "^[A-Z][a-zA-Z0-9_ ]*$": {
+      "type": "array",
+      "description": "A category of tags (e.g., 'Damage Type', 'Reputation', 'Force Alignment', 'Species Trait', 'Item Quality').",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag_id": {
+            "type": "string",
+            "description": "Unique, machine-readable tag identifier (e.g., 'ion', 'hero_of_the_outer_rim', 'dark_side', 'wookiee')."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of what this tag represents and its significance in the game world."
+          },
+          "mechanical_properties": {
+            "type": "object",
+            "description": "Optional mechanical properties that define how this tag interacts with game systems.",
+            "properties": {
+              "vulnerability_modifier": {
+                "type": "array",
+                "description": "Defines vulnerabilities or resistances based on other tags.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "target_tags": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Tags that this modifier applies to."
+                    },
+                    "multiplier": {
+                      "type": "number",
+                      "description": "Damage multiplier (e.g., 2.0 for double damage, 0.5 for half damage)."
+                    },
+                    "additive_bonus": {
+                      "type": "integer",
+                      "description": "Flat bonus/penalty to apply."
+                    }
+                  }
+                }
+              },
+              "social_modifier": {
+                "type": "object",
+                "description": "Modifiers to social interactions based on this tag.",
+                "properties": {
+                  "affects_tags": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Tags of creatures/NPCs this social modifier applies to."
+                  },
+                  "bonus_type": {
+                    "enum": ["advantage", "disadvantage", "flat_bonus", "flat_penalty"],
+                    "description": "Type of social interaction modifier."
+                  },
+                  "value": {
+                    "type": "integer",
+                    "description": "Numeric value for flat bonuses/penalties."
+                  }
+                }
+              },
+              "trigger_events": {
+                "type": "array",
+                "description": "Special events or conditions that this tag can trigger.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "event_type": {
+                      "type": "string",
+                      "description": "Type of event (e.g., 'nemesis_encounter', 'faction_response', 'environmental_effect')."
+                    },
+                    "probability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Probability of this event triggering (0.0 to 1.0)."
+                    },
+                    "conditions": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Narrative conditions that must be met for this event to trigger."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Alternative names or spellings for this tag (for data migration and backward compatibility)."
+          },
+          "related_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tags that are conceptually related or frequently used together."
+          },
+          "deprecated": {
+            "type": "boolean",
+            "description": "If true, this tag is deprecated and should not be used in new content."
+          },
+          "deprecated_in_favor_of": {
+            "type": "string",
+            "description": "If deprecated, the tag_id that should be used instead."
+          }
+        },
+        "required": ["tag_id", "description"]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$comment": "EXAMPLE STRUCTURE:\n{\n  \"Damage Type\": [\n    {\n      \"tag_id\": \"ion\",\n      \"description\": \"Damage that is exceptionally effective against droids, shields, and electronics.\",\n      \"mechanical_properties\": {\n        \"vulnerability_modifier\": [\n          {\n            \"target_tags\": [\"droid\", \"shield\", \"electronic\"],\n            \"multiplier\": 2.0\n          }\n        ]\n      }\n    }\n  ],\n  \"Reputation\": [\n    {\n      \"tag_id\": \"hero_of_the_outer_rim\",\n      \"description\": \"This character is renowned for liberating worlds. They are celebrated by Rebel sympathizers but hunted by the Empire.\",\n      \"mechanical_properties\": {\n        \"social_modifier\": {\n          \"affects_tags\": [\"rebel_alliance\"],\n          \"bonus_type\": \"advantage\",\n          \"value\": null\n        },\n        \"trigger_events\": [\n          {\n            \"event_type\": \"nemesis_encounter\",\n            \"probability\": 0.15,\n            \"conditions\": [\"in_imperial_territory\"]\n          }\n        ]\n      }\n    }\n  ]\n}"
+}
+

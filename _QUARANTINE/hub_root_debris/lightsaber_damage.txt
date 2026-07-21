@@ -1,0 +1,373 @@
+value: lightsaber_damage
+
+duration: Instantaneous
+
+mechanics:
+  - type: apply_damage
+    value: 1d4_ion
+
+type: Force_Points
+
+type: enhance_movement
+    value: +2_distance
+    condition: non_combat_use
+
+intimidation_attempts
+
+grant_advantage
+
+omnidirectional_leap
+
+avoiding_opportunity_attacks
+
+silent_movement
+
+timing: as_part_of_this_action
+
+type: additional_action
+
+value: jump_distance_doubled
+
+mechanical_benefit:
+  - type: grant_advantage
+    condition: intimidation_attempts
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: melee_combat
+
+mechanical_benefit:
+  - type: area_effect
+    value: intimidate
+    range: 30_feet
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +1_damage
+    condition: emotional_state
+
+mechanical_benefit:
+  - type: reaction_trigger
+    trigger: taking_damage
+    action_type: bonus_action
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    target_scopes:
+    - target
+    notes: Gain +2 to Force Lightning damage
+  - type: apply_status
+    value: fear
+    target_scopes:
+    - enemies
+
+mechanical_benefit:
+  - type: enhance_attack
+    value: +2_attack_rolls
+    condition: intimidation_attempts
+
+mechanical_benefit:
+  - type: enhance_dc
+    value: +2_saving_throw_dc
+    condition: diplomatic_use
+
+mechanical_benefit:
+  - type: apply_status
+    value: memory_wipe
+    duration: 1_hour (what is one hour equivalent to? can we count this in rounds for the engine's sake?)
+
+ mechanical_benefit:
+  - type: grant_advantage
+    condition: against_humans
+
+
+mechanical_benefit:
+  - type: reduce_requirement
+    value: intelligence_4_instead_of_6
+
+mechanical_benefit:
+  - type: enhance_dc
+    value: +2_saving_throw_dc
+    condition: peaceful_purposes
+
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: psychological_harm
+
+
+mechanics:
+  - type: area_damage
+    value: 6d6_force
+    target_scopes:
+    - area
+    conditions:
+    - key: within_20_foot_radius
+      op: equals
+      value: true
+    notes: Dexterity save or take 6d6 force damage
+  - type: apply_status
+    value: knocked_prone
+    target_scopes:
+    - target
+    conditions:
+    - key: target_failed_save
+      op: equals
+      value: true
+
+mechanical_benefit:
+  - type: area_damage
+    value: additional_damage
+    range: 10_feet_from_target
+
+mechanical_benefit:
+  - type: apply_status
+    value: fear
+    target_scopes:
+    - enemies_in_area
+
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +1_damage
+    condition: strong_negative_emotions
+
+
+mechanical_benefit:
+  - type: reaction_trigger
+    trigger: taking_damage_from_multiple_enemies
+    action_type: reaction
+
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+
+type: environmental_effect
+    value: destruction
+
+mechanical_benefit:
+  - type: enhance_attack
+    value: +2_attack_rolls
+    condition: intimidating_large_groups
+
+mechanics:
+  - type: apply_damage
+    value: 2d4_lightning
+
+mechanical_benefit:
+  - type: apply_status
+    value: disabled
+    duration: 1_round
+
+
+mechanical_benefit:
+  - type: apply_status
+    value: disabled
+    target_scopes:
+    - security_systems
+    - cameras
+
+
+mechanical_benefit:
+  - type: grant_advantage
+    condition: against_electronic_devices_and_droids
+    target_scopes:
+    - self
+
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: double_damage
+    condition: against_electronic_devices_and_droids
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: against_imperial_technology_and_droids
+
+mechanical_benefit:
+  - type: enhance_attack
+    value: +2_attack_rolls
+    condition: against_rebel_technology_and_droids
+
+
+mechanical_benefit:
+  - type: protect_ally
+    range: adjacent
+
+mechanical_benefit:
+  - type: redirect_attack
+    target_scopes:
+    - original_attacker
+
+
+ mechanical_benefit:
+  - type: grant_advantage
+    condition: deflecting_attacks_from_multiple_sources
+    target_scopes:
+    - self
+
+ mechanical_benefit:
+  - type: enhance_deflection
+    value: omnidirectional
+    target_scopes:
+    - self
+
+
+ mechanical_benefit:
+  - type: enhance_deflection
+    value: +2_redirect_bonus
+    condition: redirecting_attacks_at_enemies
+    target_scopes:
+    - enemies
+
+mechanical_benefit:
+  - type: reaction_trigger
+    trigger: ally_attacked_within_range
+    action_type: reaction
+
+mechanical_benefit:
+  - type: modify_effect
+    value: 5_feet_push_distance
+    condition: non_lethal_applications
+
+
+mechanical_benefit:
+  - type: grant_advantage
+    condition: against_targets_of_their_size_or_smaller
+    target_scopes:
+    - self
+
+mechanical_benefit:
+  - type: enhance_dc
+    value: +2_saving_throw_dc
+    condition: defensive_use
+    target_scopes:
+    - target
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: aggressive_use
+    target_scopes:
+    - target
+
+
+mechanical_benefit:
+  - type: additional_action
+    action_type: bonus_action
+    condition: after_attack_action
+    target_scopes:
+    - target
+
+mechanical_benefit:
+  - type: additional_effect
+    value: disarm_attempt
+    condition: on_successful_hit
+    target_scopes:
+    - target
+
+
+mechanical_benefit:
+  - type: grant_advantage
+    condition: against_targets_within_20_feet
+    target_scopes:
+    - self
+
+mechanical_benefit:
+  - type: enhance_range
+    value: +10_feet
+    target_scopes:
+    - self
+
+mechanical_benefit:
+  - type: enhance_attack
+    value: +2_attack_rolls
+    condition: defensive_use
+    target_scopes:
+    - target
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: aggressive_use
+    target_scopes:
+    - target
+
+
+
+notes: Gain +2 to Saber Throw damage when using it aggressively
+
+mechanical_benefit:
+  - type: apply_status
+    value: disabled
+    duration: 1_round
+    target_scopes:
+    - electronic_devices
+    notes: Can use Ion Blast to disable electronic devices for 1 round instead of just dealing damage
+
+mechanical_benefit:
+  - type: apply_status
+    value: disabled
+    target_scopes:
+    - security_systems
+    - cameras
+    notes: Can use Ion Blast to disable security systems and cameras within range
+
+
+mechanical_benefit:
+  - type: grant_advantage
+    condition: against_electronic_devices_and_droids
+    target_scopes:
+    - self
+    notes: Gain advantage on Ion Blast attack rolls against electronic devices and droids
+
+
+
+ mechanical_benefit:
+  - type: enhance_damage
+    value: double_damage
+    condition: against_electronic_devices_and_droids
+    target_scopes:
+    - target
+    notes: Can use Ion Blast to deal double damage to other electronic devices and droids
+
+mechanical_benefit:
+  - type: enhance_damage
+    value: +2_damage
+    condition: against_imperial_technology_and_droids
+    target_scopes:
+    - target
+    notes: Gain +2 to Ion Blast damage against Imperial technology and droids
+
+mechanical_benefit:
+  - type: enhance_attack
+    value: +2_attack_rolls
+    condition: against_rebel_technology_and_droids
+    target_scopes:
+    - target
+    notes: Gain +2 to Ion Blast attack rolls against Rebel technology and droids
+mechanics:
+  - type: apply_damage
+    value: 1d4_fire
+    target_scopes:
+    - target
+    notes: Deal 1d4 fire damage to target
+mechanical_benefit:
+  - type: enhance_attack
+    target_scopes:
+    - self
+    notes: Engineers gain +1 to Tech power attack rolls.
+    value: +2_attack_rolls
+mechanical_benefit:
+  - type: enhance_dc
+    target_scopes:
+    - target
+    notes: Rebels gain +2 to Tech power saving throw DCs.
+    value: +2_saving_throw_dc
+
+

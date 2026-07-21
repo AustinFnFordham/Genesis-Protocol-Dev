@@ -1,0 +1,61 @@
+urid: class_operative
+entity_type: Class
+name: Operative
+status: validated
+authority_lane: golden_slice
+schema_version: '1.0'
+provenance:
+  primary_source: SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt
+  source_locations:
+    - 'PHB p.107-109 (chapter 3, CLASSES / OPERATIVE, char offsets ~357404-364400)'
+    - 'PHB p.14 Building Han Solo: "Han Solo is best depicted as an operative... 1 Hit Die - a d8, hit points equal to 8 + Constitution modifier" (~43454)'
+  corroborating_records:
+    - SW5e_Data_Hub/forge_v3/backend/feats/operative_feats.yml (requires Operative class)
+    - SW5e_Data_Hub/forge_v3/backend/feats/operative_infiltrator_feats.yml (requires Operative + Infiltrator)
+    - SW5e_Data_Hub/forge_v3/backend/subclasses/operative_subclasses/ (operative.infiltrator, operative.stealth_specialist)
+  correction_note: >-
+    Surgical C.6 correction 2026-07-21. Previous investigation conflated "Operator"
+    (a false inference from a Bounty Hunter subclass file, since removed) with
+    "Operative", the genuine PHB base class. This record is extracted from the
+    authoritative source text, not inferred.
+mechanics:
+  hit_die: d8
+  hit_points_level_1: '8 + Constitution modifier'
+  hit_points_higher: '1d8 (or 5) + Constitution modifier per operative level after 1st'
+  proficiencies:
+    armor: [Light armor]
+    weapons:
+      - Simple blasters
+      - Simple vibroweapons
+      - 'Martial blasters lacking auto, special, strength, and two-handed properties'
+      - 'Martial vibroweapons with the finesse property'
+    tools: ["One specialist's kit of your choice"]
+    saving_throws: [Dexterity, Intelligence]
+    skills: 'Choose any four'
+  starting_wealth_variant: '7d4 x 100 cr'
+  primary_ability: Dexterity
+  progression:
+    level_1: {proficiency_bonus: 2, features: [Expertise, Sneak Attack], sneak_attack: 1d6, exploits: 0}
+    level_2: {proficiency_bonus: 2, features: [Cunning Action, Operative Exploits], sneak_attack: 1d6, exploits: 2}
+    level_3: {proficiency_bonus: 2, features: [Bad Feeling, Operative Practice], sneak_attack: 2d6, exploits: 2}
+    level_4: {proficiency_bonus: 2, features: [Ability Score Improvement], sneak_attack: 2d6, exploits: 2}
+    level_5: {proficiency_bonus: 3, features: [Uncanny Dodge], sneak_attack: 3d6, exploits: 2}
+    level_6: {proficiency_bonus: 3, features: [Expertise], sneak_attack: 3d6, exploits: 2}
+    level_7: {proficiency_bonus: 3, features: [Evasion], sneak_attack: 4d6, exploits: 3}
+    level_9: {proficiency_bonus: 4, features: [Practice feature], sneak_attack: 5d6, exploits: 3}
+    level_11: {proficiency_bonus: 4, features: [Reliable Talent], sneak_attack: 6d6, exploits: 3}
+    level_14: {proficiency_bonus: 5, features: [Blindsense], sneak_attack: 7d6, exploits: 4}
+    level_15: {proficiency_bonus: 5, features: [Slippery Mind], sneak_attack: 8d6, exploits: 4}
+    level_18: {proficiency_bonus: 6, features: [Elusive], sneak_attack: 9d6, exploits: 5}
+    level_20: {proficiency_bonus: 6, features: [Stroke of Luck], sneak_attack: 10d6, exploits: 5}
+  subclass_progression: 'Operative Practice chosen at level 3; Practice features at 9, 13, 17'
+  subclasses_known: [operative.infiltrator, operative.stealth_specialist, 'Acquisitions Practice (PHB p.112)', 'Beguiler Practice (PHB p.113)']
+  feat_references: [operative_feats.yml, operative_infiltrator_feats.yml]
+validation:
+  class_progression: confirmed (PHB table p.108)
+  hit_die: confirmed (d8, corroborated twice)
+  proficiencies: confirmed
+  saving_throws: confirmed (DEX/INT)
+  level_1_features: confirmed (Expertise, Sneak Attack 1d6)
+  subclass_progression: confirmed
+  references: confirmed (feats + subclass dirs exist in two source generations)

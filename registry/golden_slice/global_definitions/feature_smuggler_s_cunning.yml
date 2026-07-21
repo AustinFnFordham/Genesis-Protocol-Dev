@@ -1,0 +1,23 @@
+urid: feature_smuggler_s_cunning
+entity_type: Feature
+authority_lane: campaign_local
+source_path: null
+content_hash: 318a8cb96db03e81
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- smuggler s cunning
+- smuggler s cunnings
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+  source: SW5e_Data_Hub\forge_v3\data\campaign_local\Character__char_smuggler_pilot_aran_voss.yml
+  note: player-defined archetype feature; not a global definition
+campaign_scope: shadows_of_empire
+validation_status: provisional
+resolution_status: campaign_local_adaptation
+name: Smuggler's Cunning

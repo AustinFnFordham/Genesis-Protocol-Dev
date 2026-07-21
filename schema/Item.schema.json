@@ -1,0 +1,299 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game Item",
+  "description": "A comprehensive schema for any item with narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'item_lightsaber' or 'item_heavy_blaster_pistol'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the item."
+    },
+    "item_type": {
+      "enum": ["Weapon", "Armor", "Gear", "Consumable", "Artifact", "Droid_Part", "Starship_Component", "Trade_Good", "Other"],
+      "description": "The primary category of the item."
+    },
+    "subtype": {
+      "type": "string",
+      "description": "More specific categorization, e.g., 'Lightsaber', 'Heavy Armor', 'Medical Kit'."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this item is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "enum": ["Common", "Uncommon", "Rare", "Very_Rare", "Legendary", "Artifact"],
+      "description": "The rarity level of the item."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the item, its history, significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this item."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this item is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "The main descriptive text for the item, providing comprehensive details."
+    },
+    "physical_description": {
+      "type": "string",
+      "description": "Detailed physical description of the item's appearance, materials, and construction."
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "The company, organization, or individual who created this item."
+    },
+    "manufacturing_location": {
+      "type": "string",
+      "description": "Where this item was typically manufactured or crafted."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Manufactured By', 'Iconic To', 'Restricted To', 'Common Among', 'Created For'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this item from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_users": {
+      "type": "array",
+      "description": "Notable individuals who have used or owned this type of item.",
+      "items": { "type": "string" }
+    },
+    "famous_instances": {
+      "type": "array",
+      "description": "Notable events or moments involving this type of item.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this item.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this item.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this item.",
+          "items": { "type": "string" }
+        },
+        "iconic_usage": {
+          "type": "array",
+          "description": "Examples of how this item is typically used in Star Wars stories.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this item affects the cultures and societies of the galaxy."
+        },
+        "technological_significance": {
+          "type": "string",
+          "description": "The technological implications and significance of this item."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: MECHANICAL STATS",
+    "cost": {
+      "type": "integer",
+      "description": "Base cost in credits."
+    },
+    "weight": {
+      "type": "number",
+      "description": "Weight in kilograms."
+    },
+    "stats": {
+      "type": "object",
+      "description": "Mechanical statistics based on item type.",
+      "properties": {
+        "weapon_stats": {
+          "type": "object",
+          "properties": {
+            "damage_dice": { "type": "string" },
+            "damage_type": { "type": "string" },
+            "range": { "type": "string" },
+            "critical_rating": { "type": "integer", "description": "FFG-style rating. Cost in Advantage to trigger a Critical Injury." },
+            "ammo_capacity": { "type": "integer" },
+            "reload_time": { "type": "string" }
+          }
+        },
+        "armor_stats": {
+          "type": "object",
+          "properties": {
+            "ac_bonus": { "type": "integer", "description": "d20-style bonus to Armor Class." },
+            "dr_value": { "type": "integer", "description": "FFG-style Soak, our Damage Reduction." },
+            "strength_requirement": { "type": "integer" },
+            "stealth_disadvantage": { "type": "boolean" },
+            "max_dex_bonus": { "type": "integer" }
+          }
+        },
+        "gear_stats": {
+          "type": "object",
+          "properties": {
+            "capacity": { "type": "string" },
+            "duration": { "type": "string" },
+            "charges": { "type": "integer" },
+            "power_consumption": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: MODULAR SYSTEMS",
+    "properties": {
+      "type": "array",
+      "description": "List of IDs for innate properties from our Property library (e.g., 'finesse', 'vicious').",
+      "items": { "type": "string" }
+    },
+    "modifications": {
+      "type": "object",
+      "description": "Modification system for customizable items.",
+      "properties": {
+        "slots": {
+          "type": "integer",
+          "description": "Number of available modification slots (FFG's Hard Points)."
+        },
+        "installed": {
+          "type": "array",
+          "description": "List of installed modification IDs.",
+          "items": { "type": "string" }
+        },
+        "compatible_mods": {
+          "type": "array",
+          "description": "List of modification IDs that can be installed on this item.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 9: SPECIAL ABILITIES",
+    "effects": {
+      "$ref": "CharacterClassFeature.schema.json#/properties/effects",
+      "description": "Reusable effects block for items that grant special actions or passive bonuses."
+    },
+    "narrative_outcomes": {
+      "type": "array",
+      "description": "List of IDs for valid Advantage/Threat spends when using this item.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 10: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Tags for filtering and applying properties, e.g., ['weapon', 'ranged', 'blaster'].",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this item.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this item."
+    },
+
+    "$comment": "SECTION 11: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this item, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this item adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Combat_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this item is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 12: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the item's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the item's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "item_type", "narrative", "description", "rarity", "image_generation", "ui"]
+}

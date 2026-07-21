@@ -1,0 +1,351 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lore Entry",
+  "description": "Defines a single entry in the game's lore database with comprehensive narrative integration, LLM-GM guidance, and system synergies.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'lore_coruscant' or 'lore_battle_of_yavin'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the lore entry."
+    },
+    "lore_type": {
+      "enum": ["Planet", "Faction", "Historical_Event", "Technology", "Creature", "Location", "Character", "Artifact", "Culture", "Conflict", "Discovery", "Legend", "Other"],
+      "description": "The type of lore entry this represents."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this lore is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "importance_level": {
+      "enum": ["Galactic", "Regional", "Local", "Personal"],
+      "description": "The scope and importance of this lore entry."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the lore entry, its history, significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this lore entry."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this lore entry is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "array",
+      "description": "Layered description of the lore entry, with some information requiring discovery.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text content of this description layer."
+          },
+          "discovery_requirements": {
+            "type": "array",
+            "description": "Requirements that must be met to discover this layer of information.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": ["skill_check", "quest_completed", "item_found", "relationship_level", "location_visited", "time_elapsed"],
+                  "description": "Type of requirement for discovering this information."
+                },
+                "skill": {
+                  "type": "string",
+                  "description": "Skill required for skill_check type (e.g., 'Lore (INT)', 'Investigation (INT)')."
+                },
+                "dc": {
+                  "type": "integer",
+                  "description": "Difficulty class for skill_check type."
+                },
+                "quest_id": {
+                  "type": "string",
+                  "description": "Quest ID that must be completed for quest_completed type."
+                },
+                "item_id": {
+                  "type": "string",
+                  "description": "Item ID that must be found for item_found type."
+                },
+                "relationship_target": {
+                  "type": "string",
+                  "description": "Target for relationship_level type."
+                },
+                "relationship_level": {
+                  "type": "integer",
+                  "description": "Required relationship level for relationship_level type."
+                },
+                "location_id": {
+                  "type": "string",
+                  "description": "Location ID that must be visited for location_visited type."
+                },
+                "time_required": {
+                  "type": "string",
+                  "description": "Time that must elapse for time_elapsed type (e.g., '1 week', '1 month')."
+                }
+              },
+              "required": ["type"]
+            }
+          }
+        },
+        "required": ["text"]
+      }
+    },
+    "physical_description": {
+      "type": "string",
+      "description": "For locations, planets, creatures, or artifacts: detailed physical description of appearance and characteristics."
+    },
+    "historical_context": {
+      "type": "array",
+      "description": "Layered historical context, with some information requiring discovery.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text content of this historical context layer."
+          },
+          "discovery_requirements": {
+            "type": "array",
+            "description": "Requirements that must be met to discover this layer of information.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": ["skill_check", "quest_completed", "item_found", "relationship_level", "location_visited", "time_elapsed"],
+                  "description": "Type of requirement for discovering this information."
+                },
+                "skill": {
+                  "type": "string",
+                  "description": "Skill required for skill_check type (e.g., 'Lore (INT)', 'Investigation (INT)')."
+                },
+                "dc": {
+                  "type": "integer",
+                  "description": "Difficulty class for skill_check type."
+                },
+                "quest_id": {
+                  "type": "string",
+                  "description": "Quest ID that must be completed for quest_completed type."
+                },
+                "item_id": {
+                  "type": "string",
+                  "description": "Item ID that must be found for item_found type."
+                },
+                "relationship_target": {
+                  "type": "string",
+                  "description": "Target for relationship_level type."
+                },
+                "relationship_level": {
+                  "type": "integer",
+                  "description": "Required relationship level for relationship_level type."
+                },
+                "location_id": {
+                  "type": "string",
+                  "description": "Location ID that must be visited for location_visited type."
+                },
+                "time_required": {
+                  "type": "string",
+                  "description": "Time that must elapse for time_elapsed type (e.g., '1 week', '1 month')."
+                }
+              },
+              "required": ["type"]
+            }
+          }
+        },
+        "required": ["text"]
+      }
+    },
+    "current_status": {
+      "type": "string",
+      "description": "The current state or condition of this lore entry in the present timeline."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - lore entries, factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (lore, faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Lore", "Faction", "Species", "Class", "Location", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Located On', 'Native Homeworld', 'Natural Synergy', 'Historical Ally', 'Created By', 'Discovered By'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 6: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this lore entry from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_events": {
+      "type": "array",
+      "description": "Notable events or moments related to this lore entry.",
+      "items": { "type": "string" }
+    },
+    "notable_figures": {
+      "type": "array",
+      "description": "Important individuals associated with this lore entry.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 7: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this lore entry.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this lore entry.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this lore entry.",
+          "items": { "type": "string" }
+        },
+        "knowledge_checks": {
+          "type": "array",
+          "description": "Types of knowledge checks that might reveal information about this lore entry.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this lore entry affects the cultures and societies of the galaxy."
+        },
+        "political_significance": {
+          "type": "string",
+          "description": "The political implications and significance of this lore entry."
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: MECHANICAL INTEGRATION",
+    "mechanical_effects": {
+      "type": "object",
+      "description": "Mechanical effects and benefits related to this lore entry.",
+      "properties": {
+        "knowledge_benefits": {
+          "type": "array",
+          "description": "Benefits gained from knowing about this lore entry.",
+          "items": { "type": "string" }
+        },
+        "skill_modifiers": {
+          "type": "array",
+          "description": "Skill checks that might be modified by knowledge of this lore entry.",
+          "items": { "type": "string" }
+        },
+        "equipment_access": {
+          "type": "array",
+          "description": "Equipment or items that might be accessible through knowledge of this lore entry.",
+          "items": { "type": "string" }
+        },
+        "special_abilities": {
+          "type": "array",
+          "description": "Special abilities that might be unlocked through this lore entry.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 9: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Keywords for the LLM to easily categorize and find information.",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this lore entry.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this lore entry."
+    },
+
+    "$comment": "SECTION 10: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this lore entry, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this lore entry adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Combat_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this lore entry is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 11: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the lore entry's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the lore entry's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "lore_type", "era", "narrative", "description", "importance_level", "image_generation", "ui"]
+}

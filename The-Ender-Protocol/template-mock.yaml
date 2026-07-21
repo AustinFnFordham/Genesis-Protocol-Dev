@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: The Ender Protocol - Mock Mode (No Bedrock)
+
+Globals:
+  Function:
+    Runtime: python3.10
+    Timeout: 30
+    Environment:
+      Variables:
+        S3_BUCKET_NAME: the-ender-protocol-data-austin-fordham
+
+Resources:
+  SupervisorAgentMockFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ender-protocol-supervisor-mock
+      CodeUri: src/lambdas/supervisor_agent/
+      Handler: app_mock.lambda_handler
+      Policies:
+        - S3ReadPolicy:
+            BucketName: the-ender-protocol-data-austin-fordham
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:PutObject
+              Resource: arn:aws:s3:::the-ender-protocol-data-austin-fordham/*
+        - Statement:
+            - Effect: Allow
+              Action:
+                - lambda:InvokeFunction
+              Resource:
+                - arn:aws:lambda:us-east-1:986341372503:function:ender-protocol-red-team-tools
+                - arn:aws:lambda:us-east-1:986341372503:function:ender-protocol-blue-team-tools
+
+Outputs:
+  SupervisorAgentMockFunctionArn:
+    Value: !GetAtt SupervisorAgentMockFunction.Arn

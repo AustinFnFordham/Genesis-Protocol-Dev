@@ -1,0 +1,21 @@
+urid: item_lucky_sabacc_chip
+entity_type: Item
+authority_lane: global_validated
+source_path: null
+content_hash: 497fbaa4dbc67aa5
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- lucky sabacc chip
+- lucky sabacc chips
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Lucky Sabacc Chip

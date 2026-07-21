@@ -1,0 +1,19 @@
+# DURABLE CHECKPOINT — no git repo present; this manifest is the named marker.
+checkpoint:
+  name: CHECKPOINT_C6_2026-07-21
+  branch: none (E:\StarWars is not a git repository)
+  commit: n/a
+  tag: CHECKPOINT_C6_2026-07-21
+  handoff_document: docs/handoffs/SESSION_HANDOFF_C6_TO_UI.md
+  created_at: "2026-07-21"
+  runtime_backups:
+    - registry/golden_slice/migration/meridian_reach_20260721_025511.bak.json    # sha256[:16]=c29584ff987e472e
+    - registry/golden_slice/migration/shadows_of_empire_20260721_025511.bak.json  # sha256[:16]=f62175189a97bbd6
+  live_runtimes_state: rolled_back_to_pre_migration (hash-verified equal to backups)
+  golden_slice_lane: registry/golden_slice/  (KEPT — 45 records, reuse next session)
+  migration_script: api_bridge/_golden_migrate.py  (RERUN with fidelity fix)
+  rollback_script: api_bridge/_rollback_checkpoint.py
+  gate_evidence_dir: _readiness_checkpoint_20260720/
+  rollback_verified: true
+  backups_not_overwritten: true
+  gate_status: GATE_FAIL

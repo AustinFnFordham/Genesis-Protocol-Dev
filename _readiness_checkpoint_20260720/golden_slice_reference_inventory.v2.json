@@ -1,0 +1,29 @@
+{
+ "total_reference_slots": 46,
+ "meridian_slots": 34,
+ "shadows_slots": 12,
+ "false_slots_remaining": 0,
+ "domains": {
+  "species": 2,
+  "class": 1,
+  "background": 2,
+  "planned_subclass": 1,
+  "feature": 10,
+  "background_feature": 1,
+  "character_relationship": 3,
+  "campaign_rule": 1,
+  "power": 2,
+  "item_instance": 2,
+  "item_definition": 16,
+  "action": 1,
+  "vessel_definition": 2,
+  "asset_relationship": 2
+ },
+ "status_ladder": {
+  "candidate_found": 14,
+  "unresolved_after_source_pass": 24,
+  "relationship_edge": 5,
+  "campaign_local_adaptation": 1,
+  "character_instance": 2
+ }
+}

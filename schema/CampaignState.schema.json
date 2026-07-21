@@ -1,0 +1,254 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CampaignState",
+  "description": "Defines the current state of a campaign with comprehensive narrative integration, LLM-GM guidance, and enhanced progression systems.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "campaign_id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID for the campaign, e.g., 'campaign_empire_strikes_back'."
+    },
+    "campaign_name": {
+      "type": "string",
+      "description": "The display name of the campaign."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this campaign is set in, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How unique or special this campaign is in the galaxy."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the campaign, its themes, and significance. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this campaign, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this campaign affects different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the campaign."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this campaign in the galaxy."
+    },
+    "game_mode": {
+      "type": "object",
+      "description": "The game mode settings for this campaign.",
+      "properties": {
+        "mode_id": {
+          "type": "string",
+          "enum": ["mode_specialist", "mode_balanced", "mode_heroic"],
+          "description": "The ID of the game mode being used."
+        },
+        "xp_multiplier": {
+          "type": "number",
+          "description": "Multiplier for XP gain in this campaign."
+        },
+        "out_of_class_xp_penalty": {
+          "type": "number",
+          "description": "Penalty multiplier for out-of-class features."
+        }
+      },
+      "required": ["mode_id", "xp_multiplier", "out_of_class_xp_penalty"]
+    },
+    "current_session": {
+      "type": "object",
+      "description": "Information about the current session.",
+      "properties": {
+        "session_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The current session number."
+        },
+        "session_date": {
+          "type": "string",
+          "format": "date",
+          "description": "The date of the current session."
+        },
+        "session_summary": {
+          "type": "string",
+          "description": "Summary of what happened in the current session."
+        }
+      }
+    },
+    "party": {
+      "type": "object",
+      "description": "Information about the party.",
+      "properties": {
+        "party_name": {
+          "type": "string",
+          "description": "The name of the party."
+        },
+        "party_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "description": "The average level of the party."
+        },
+        "party_xp": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The total XP the party has earned."
+        },
+        "character_ids": {
+          "type": "array",
+          "description": "List of character IDs in the party.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "campaign_notes": {
+      "type": "string",
+      "description": "General notes about the campaign."
+    },
+    "next_session_prep": {
+      "type": "string",
+      "description": "Notes for preparing the next session."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Set In', 'Involves', 'Features', 'Centers On'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this campaign type from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_campaigns": {
+      "type": "array",
+      "description": "Notable campaigns of this type from Star Wars lore.",
+      "items": { "type": "string" }
+    },
+    "homeworld": {
+      "type": "string",
+      "description": "The primary setting or homeworld of this campaign."
+    },
+    "cultural_notes": {
+      "type": "string",
+      "description": "Important cultural information about this campaign."
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying in this campaign."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this campaign.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this campaign affects social dynamics in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for characters in this campaign.",
+          "items": { "type": "string" }
+        },
+        "campaign_development": {
+          "type": "string",
+          "description": "Guidance for campaign development and progression."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: IMAGE GENERATION & UI",
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this campaign."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Campaign_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the campaign image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the campaign icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this campaign for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["campaign_id", "campaign_name", "era", "rarity", "narrative", "description", "game_mode", "connections"]
+}

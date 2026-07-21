@@ -1,0 +1,9 @@
+{
+  "servers": [
+    {
+      "id": "holocron_vault_server",
+      "hostname": "holocron-vault.jedi-archives.local",
+      "patch_level": "outdated"
+    }
+  ]
+}

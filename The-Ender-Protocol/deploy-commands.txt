@@ -1,0 +1,16 @@
+# Step 1: Upload scenario data to S3
+aws s3 cp scenarios/scenario_01_bruteforce/user_accounts.json s3://the-ender-protocol-data-austin-fordham/scenarios/scenario_01_bruteforce/user_accounts.json
+
+aws s3 cp scenarios/scenario_01_bruteforce/password_dictionary.json s3://the-ender-protocol-data-austin-fordham/scenarios/scenario_01_bruteforce/password_dictionary.json
+
+# Step 2: Build Lambda functions
+sam build
+
+# Step 3: Deploy to AWS (guided mode)
+sam deploy --guided
+
+# Step 4: Test the Red Team function
+aws lambda invoke --function-name ender-protocol-red-team-tools --payload "{\"username\":\"admin\",\"password\":\"password123\"}" response.json
+
+# Step 5: View response
+type response.json

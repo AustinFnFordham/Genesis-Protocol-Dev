@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Feature Validation Schema",
+  "description": "Validates that feature mechanics follow the Mechanical Effects Engine rules.",
+  "type": "object",
+  "properties": {
+    "mechanics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "effect": {
+            "type": "string",
+            "enum": [
+              "modify_stat",
+              "grant_action", 
+              "grant_advantage",
+              "aura",
+              "field",
+              "utility",
+              "control_connection",
+              "damage_sharing",
+              "summon_spirit"
+            ]
+          },
+          "effect_ref": { "type": "string", "pattern": "^effect_[a-z0-9_]+$" },
+          "action_type": {
+            "type": "string",
+            "enum": ["action", "bonus_action", "reaction", "free_action"]
+          },
+          "cost": {
+            "type": "string",
+            "pattern": "^\\d+\\s+(action|bonus action|reaction|free action)$"
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "target_stat": {
+                "type": "string",
+                "enum": [
+                  "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma",
+                  "ac", "hp", "speed",
+                  "stealth_bonus", "survival_bonus", "perception_bonus", 
+                  "ranged_attack_bonus", "melee_attack_bonus",
+                  "control_range", "tactical_awareness"
+                ]
+              },
+              "value": {
+                "oneOf": [
+                  {"type": "number"},
+                  {"type": "string", "pattern": "^[+-]?\\d+$"}
+                ]
+              },
+              "radius": {"type": "number"},
+              "duration": {
+                "type": "string",
+                "enum": [
+                  "permanent",
+                  "concentration, up to 1 minute",
+                  "concentration, up to 10 minutes", 
+                  "concentration, up to 1 hour",
+                  "until end of turn",
+                  "until start of next turn",
+                  "1 minute",
+                  "1 hour"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": ["attack_roll", "skill_check", "saving_throw", "command_check"]
+              },
+              "skill": {
+                "type": "string",
+                "enum": ["Stealth", "Survival", "Perception", "Nature", "Investigation"]
+              },
+              "condition": {"type": "string"}
+            }
+          },
+          "target_scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "self",
+                "bonded_companion", 
+                "allies_within_radius",
+                "enemies_within_radius"
+              ]
+            }
+          }
+        },
+        "anyOf": [
+          { "required": ["effect", "description"] },
+          { "required": ["effect_ref"] }
+        ],
+        "if": {
+          "properties": {"effect": {"const": "grant_action"}}
+        },
+        "then": {
+          "required": ["action_type", "cost"]
+        },
+        "if": {
+          "properties": {"effect": {"const": "modify_stat"}}
+        },
+        "then": {
+          "required": ["parameters"]
+        }
+      }
+    }
+  }
+}

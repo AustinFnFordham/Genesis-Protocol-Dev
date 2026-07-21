@@ -1,0 +1,25 @@
+urid: feature_echani_grappling_training
+entity_type: Feature
+authority_lane: global_validated
+source_path: null
+content_hash: e8f7a3bb429267ef
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- echani grappling training
+- echani grappling trainings
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+  enriched_from: runtime_inline
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Echani Grappling Training
+effect: With a free hand, make a Dexterity-based martial check at +5 against the target's
+  Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled
+  and its speed becomes 0.

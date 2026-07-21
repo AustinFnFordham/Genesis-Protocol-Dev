@@ -1,0 +1,1 @@
+{"response": {"actionGroup": "red-team-tools", "apiPath": "/brute-force", "httpMethod": "POST", "httpStatusCode": 200, "responseBody": {"application/json": {"body": "{\"success\": true, \"message\": \"Access granted to admin\", \"access_level\": \"administrator\"}"}}}}

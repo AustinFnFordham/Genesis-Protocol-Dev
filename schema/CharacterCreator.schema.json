@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Character Creation Process",
+    "description": "Defines the step-by-step process for creating a new character, referencing the core data schemas.",
+    "type": "object",
+    "properties": {
+        "process_name": { "const": "Standard Character Creation" },
+        "steps": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "step_number": { "type": "integer" },
+                    "title": { "type": "string" },
+                    "description": { "type": "string" },
+                    "data_source": {
+                        "type": "string",
+                        "description": "The folder of YAML files to load for this step's choices, e.g., 'species' or 'classes'."
+                    },
+                    "player_choice": {
+                        "type": "string",
+                        "description": "The property on the Character schema that this step's choice will populate, e.g., 'species_id'."
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+urid: rel_party_char_iridonian_guardian_kass_z
+entity_type: RelationshipEdge
+authority_lane: relationship_edge
+source_path: null
+content_hash: 93364281c0a3aaa2
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- party char iridonian guardian kass zoran
+- party char iridonian guardian kass zorans
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs:
+- char_smuggler_pilot_aran_voss
+- char_iridonian_guardian_kass_zoran
+provenance: {}
+campaign_scope: shadows_of_empire
+validation_status: edge_authored
+resolution_status: relationship_edge
+name: party char_iridonian_guardian_kass_zoran

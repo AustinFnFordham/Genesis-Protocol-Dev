@@ -1,0 +1,22 @@
+urid: vessel_the_reconciliator_yt_2400
+entity_type: Vessel
+authority_lane: global_validated
+source_path: null
+content_hash: cf46dabdcc03d53d
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- reconciliator yt 2400
+- the reconciliator yt 2400
+- the reconciliator yt 2400s
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: The Reconciliator (YT-2400)

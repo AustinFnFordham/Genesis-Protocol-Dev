@@ -1,0 +1,100 @@
+{
+  "backup_dir": "_migration_backup\\20260720_180407\\factions",
+  "files": [
+    {
+      "file": "data/wip/factions\\core\\fac_black_sun.yml",
+      "was_status": "gold",
+      "hash_before": "919663dd0365",
+      "hash_after": "919663dd0365",
+      "transforms": []
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_children_of_the_watch.yml",
+      "was_status": "gold",
+      "hash_before": "62a80eb77e27",
+      "hash_after": "160f13dd6c1f",
+      "transforms": []
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_crimson_dawn.yml",
+      "was_status": "wip",
+      "hash_before": "d5c48cb95d59",
+      "hash_after": "d5c48cb95d59",
+      "transforms": []
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_galactic_empire.yml",
+      "was_status": "wip",
+      "hash_before": "e646320a4619",
+      "hash_after": "2bd5b607f251",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_hutt_cartel.yml",
+      "was_status": "wip",
+      "hash_before": "ecf3020a2416",
+      "hash_after": "5e0e34c574df",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_imperial_remnant.yml",
+      "was_status": "wip",
+      "hash_before": "2c1d2ef70099",
+      "hash_after": "b0ab6af97b32",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_jedi.yml",
+      "was_status": null,
+      "hash_before": "96725954a450",
+      "hash_after": "96725954a450",
+      "transforms": []
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_new_mandalorians.yml",
+      "was_status": "wip",
+      "hash_before": "d5d3b1563bd2",
+      "hash_after": "298b29d0cc56",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_pyke_syndicate.yml",
+      "was_status": "wip",
+      "hash_before": "f04d3f510114",
+      "hash_after": "5771e1e8ec55",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_rebel_alliance.yml",
+      "was_status": "wip",
+      "hash_before": "a4893155bc7f",
+      "hash_after": "2a80e6e94392",
+      "transforms": [
+        "had_tag_align_neutral(->grey applied)",
+        "had_tag_stub(stripped)"
+      ]
+    },
+    {
+      "file": "data/wip/factions\\core\\fac_test_minimal.yml",
+      "was_status": "wip",
+      "hash_before": "6ae68e1eda32",
+      "hash_after": "8c3ee780d4c9",
+      "transforms": []
+    }
+  ]
+}

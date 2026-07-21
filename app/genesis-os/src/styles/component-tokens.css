@@ -1,0 +1,33 @@
+/* GENESIS PROTOCOL — COMPONENT TOKENS. Per-component variables that resolve to
+ * system/semantic tokens. Refactor target: components read these, not literals. */
+
+.operative-panel {
+  --comp-panel-bg: var(--sys-color-surface);
+  --comp-panel-border: var(--sem-border-active);
+  --comp-body-size: var(--sys-font-size-body);
+  --comp-meta-size: var(--sys-font-size-meta);
+}
+.active-engagement {
+  --comp-narrative-size: var(--sys-font-size-narrative);
+  --comp-narrative-line: var(--sys-line-height-narrative);
+  --comp-composer-size: var(--sys-font-size-control);
+}
+.command-record {
+  --comp-body-size: var(--sys-font-size-body);
+  --comp-meta-size: var(--sys-font-size-meta);
+}
+.journal-entry {
+  --comp-entry-title-size: var(--sys-font-size-body);
+  --comp-entry-meta-size: var(--sys-font-size-meta);
+}
+.suggestion-grid {
+  /* responsive 2x2 (or 4-col on wide) — replaces the vertical stack */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sys-space-2);
+}
+@media (min-width: 1500px) { .suggestion-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Fixed-header / scrollable-body panel skeleton (Operative + Command&Record) */
+.panel-fixed { flex: 0 0 auto; }
+.panel-scroll-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }

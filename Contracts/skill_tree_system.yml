@@ -1,0 +1,466 @@
+# Skill Tree System for SW5e x FFG Unified System
+# Constellation-style progression trees with carousel navigation
+# Matches the visual concept: glowing nodes, interconnected paths, detailed panels
+
+skill_tree_system:
+  metadata:
+    version: "1.0"
+    last_updated: "2025-01-27"
+    system: "SW5e/FFG Hybrid Constellation Trees"
+    description: "Visual skill tree system with constellation-style progression and carousel navigation"
+
+  # ========================================
+  # VISUAL DESIGN SYSTEM
+  # ========================================
+  
+  visual_design:
+    constellation_theme:
+      description: "Main progression tree with glowing nodes and interconnected paths"
+      background: "starry_galaxy"
+      ambient_effects:
+        - "nebula_particles"
+        - "star_twinkling"
+        - "constellation_lines"
+      
+      node_styles:
+        active_node:
+          glow_color: "#FF6B35"  # Bright orange glow
+          border_color: "#FF4500"
+          fill_color: "#8B4513"
+          size: "large"
+          shape: "hexagon"
+          animation: "pulse_glow"
+        
+        available_node:
+          glow_color: "#4A90E2"  # Blue glow
+          border_color: "#2E5C8A"
+          fill_color: "#1A3A5F"
+          size: "medium"
+          shape: "circle"
+          animation: "gentle_pulse"
+        
+        locked_node:
+          glow_color: "#666666"  # Dim gray
+          border_color: "#444444"
+          fill_color: "#222222"
+          size: "small"
+          shape: "circle"
+          animation: "none"
+        
+        choice_node:
+          glow_color: "#7ED321"  # Green glow
+          border_color: "#5A9E1A"
+          fill_color: "#2D4A1A"
+          size: "large"
+          shape: "diamond"
+          animation: "choice_pulse"
+    
+    carousel_navigation:
+      description: "Bottom navigation bar for switching between class trees"
+      position: "bottom"
+      style: "sleek_holographic"
+      background: "transparent_dark"
+      border: "subtle_glow"
+      
+      carousel_items:
+        - icon: "bounty_hunter_helmet"
+          label: "Bounty Hunter"
+          class: "bounty_hunter"
+          status: "active"
+          glow: "orange"
+        
+        - icon: "crossed_blasters"
+          label: "Smuggler"
+          class: "scoundrel"
+          status: "available"
+          glow: "blue"
+        
+        - icon: "lightsaber_blue"
+          label: "Jedi Guardian"
+          class: "guardian"
+          status: "available"
+          glow: "blue"
+        
+        - icon: "lightsaber_green"
+          label: "Jedi Consular"
+          class: "consular"
+          status: "available"
+          glow: "blue"
+    
+    detail_panel:
+      description: "Right-side panel showing detailed node information"
+      position: "right"
+      width: "300px"
+      background: "holographic_blue"
+      border: "glowing_edge"
+      
+      sections:
+        - name: "Ability Details"
+          fields:
+            - "ability_name"
+            - "target_lock"
+            - "damage_bonus"
+            - "armor_bonus"
+            - "special_effects"
+        
+        - name: "Requirements"
+          fields:
+            - "level_requirement"
+            - "prerequisites"
+            - "ability_scores"
+            - "class_requirements"
+        
+        - name: "Narrative"
+          fields:
+            - "description"
+            - "lore_connections"
+            - "training_notes"
+            - "mastery_path"
+
+  # ========================================
+  # CLASS SKILL TREES
+  # ========================================
+  
+  class_trees:
+    bounty_hunter:
+      name: "Bounty Hunter"
+      description: "Masters of tracking, combat, and the art of the hunt"
+      theme: "hunter_theme"
+      background_music: "bounty_hunter_ambient"
+      
+      progression_tree:
+        # Level 1 - Core Identity
+        - node_id: "hunter_quarry_1"
+          name: "Hunter's Quarry"
+          type: "core"
+          level_requirement: 1
+          position: { x: 0, y: 0 }
+          glow_intensity: 1.0
+          description: "You gain the ability to mark a target as your quarry"
+          mechanics:
+            target_lock: 14
+            damage_bonus: 19
+            armor_bonus: "+10%"
+            special_effects:
+              - "Mark target as quarry"
+              - "Track quarry across any distance"
+              - "Bonus damage against quarry"
+          prerequisites: []
+          connections: ["tracking_expertise_1", "combat_training_1"]
+        
+        # Level 1 - First Choice
+        - node_id: "tracking_expertise_1"
+          name: "Tracking Expertise"
+          type: "choice"
+          level_requirement: 1
+          position: { x: -2, y: 1 }
+          glow_intensity: 0.8
+          description: "Choose your primary tracking method"
+          choice_group: "tracking_expertise_level_1"
+          choices:
+            - name: "Tech Tracking"
+              description: "Use technology to track targets"
+              effects:
+                - "Bonus to technology-based tracking"
+                - "Access to advanced scanning equipment"
+            - name: "Instinct Tracking"
+              description: "Rely on natural instincts and senses"
+              effects:
+                - "Bonus to perception-based tracking"
+                - "Enhanced survival skills"
+          prerequisites: ["hunter_quarry_1"]
+          connections: ["hunter_quarry_1", "ranged_expertise_2", "melee_expertise_2"]
+        
+        - node_id: "combat_training_1"
+          name: "Combat Training"
+          type: "core"
+          level_requirement: 1
+          position: { x: 2, y: 1 }
+          glow_intensity: 0.8
+          description: "Basic combat training and weapon proficiency"
+          mechanics:
+            target_lock: 12
+            damage_bonus: 15
+            armor_bonus: "+5%"
+          prerequisites: ["hunter_quarry_1"]
+          connections: ["hunter_quarry_1", "ranged_expertise_2", "melee_expertise_2"]
+        
+        # Level 2 - Combat Focus
+        - node_id: "ranged_expertise_2"
+          name: "Ranged Expertise"
+          type: "choice"
+          level_requirement: 2
+          position: { x: -3, y: 2 }
+          glow_intensity: 0.7
+          description: "Specialize in ranged combat and sniping"
+          choice_group: "combat_focus_level_2"
+          choices:
+            - name: "Sniper Training"
+              description: "Long-range precision shooting"
+              effects:
+                - "Extended range for ranged weapons"
+                - "Critical hit bonuses"
+            - name: "Rapid Fire"
+              description: "High-volume ranged combat"
+              effects:
+                - "Multiple attack options"
+                - "Suppression fire abilities"
+          prerequisites: ["tracking_expertise_1", "combat_training_1"]
+          connections: ["tracking_expertise_1", "bounty_hunter_specialization_3"]
+        
+        - node_id: "melee_expertise_2"
+          name: "Melee Expertise"
+          type: "choice"
+          level_requirement: 2
+          position: { x: 3, y: 2 }
+          glow_intensity: 0.7
+          description: "Specialize in close-quarters combat"
+          choice_group: "combat_focus_level_2"
+          choices:
+            - name: "Close Combat"
+              description: "Hand-to-hand and melee weapon mastery"
+              effects:
+                - "Bonus to melee attacks"
+                - "Grappling and disarming abilities"
+            - name: "Defensive Combat"
+              description: "Defensive melee techniques"
+              effects:
+                - "Enhanced armor class"
+                - "Counter-attack abilities"
+          prerequisites: ["tracking_expertise_1", "combat_training_1"]
+          connections: ["combat_training_1", "bounty_hunter_specialization_3"]
+        
+        # Level 3 - Subclass Entry
+        - node_id: "bounty_hunter_specialization_3"
+          name: "Bounty Hunter Specialization"
+          type: "subclass_entry"
+          level_requirement: 3
+          position: { x: 0, y: 3 }
+          glow_intensity: 1.0
+          description: "Choose your specialization as a Bounty Hunter"
+          choice_group: "bounty_hunter_specialization"
+          choices:
+            - name: "Assassin"
+              description: "Silent elimination specialist"
+              effects:
+                - "Stealth bonuses"
+                - "Critical hit enhancements"
+                - "Poison and toxin resistance"
+            - name: "Gadgeteer"
+              description: "Technology and equipment specialist"
+              effects:
+                - "Advanced gadget access"
+                - "Tech-based tracking"
+                - "Equipment modification bonuses"
+            - name: "Mandalorian"
+              description: "Honorable warrior tradition"
+              effects:
+                - "Mandalorian armor proficiency"
+                - "Honor-based abilities"
+                - "Cultural connections"
+          prerequisites: ["ranged_expertise_2", "melee_expertise_2"]
+          connections: ["ranged_expertise_2", "melee_expertise_2", "enhanced_tracking_4"]
+
+    jedi_guardian:
+      name: "Jedi Guardian"
+      description: "Protectors of peace and justice, masters of lightsaber combat"
+      theme: "jedi_theme"
+      background_music: "jedi_guardian_ambient"
+      
+      progression_tree:
+        # Level 1 - Core Identity
+        - node_id: "force_connection_1"
+          name: "Force Connection"
+          type: "core"
+          level_requirement: 1
+          position: { x: 0, y: 0 }
+          glow_intensity: 1.0
+          description: "Your connection to the Force grows stronger"
+          mechanics:
+            force_points: 3
+            lightsaber_bonus: "+2"
+            force_sensitivity: "enhanced"
+          prerequisites: []
+          connections: ["lightsaber_training_1", "force_sense_1"]
+        
+        - node_id: "lightsaber_training_1"
+          name: "Lightsaber Training"
+          type: "core"
+          level_requirement: 1
+          position: { x: -2, y: 1 }
+          glow_intensity: 0.9
+          description: "Basic lightsaber combat training"
+          mechanics:
+            lightsaber_proficiency: "trained"
+            attack_bonus: "+3"
+            damage_bonus: 15
+          prerequisites: ["force_connection_1"]
+          connections: ["force_connection_1", "guardian_style_2"]
+        
+        - node_id: "force_sense_1"
+          name: "Force Sense"
+          type: "choice"
+          level_requirement: 1
+          position: { x: 2, y: 1 }
+          glow_intensity: 0.8
+          description: "Choose how you sense and interact with the Force"
+          choice_group: "force_sense_level_1"
+          choices:
+            - name: "Combat Sense"
+              description: "Enhanced awareness in combat"
+              effects:
+                - "Bonus to initiative"
+                - "Danger sense abilities"
+            - name: "Empathic Sense"
+              description: "Understanding of others' emotions"
+              effects:
+                - "Bonus to insight checks"
+                - "Emotional reading abilities"
+          prerequisites: ["force_connection_1"]
+          connections: ["force_connection_1", "guardian_style_2"]
+
+  # ========================================
+  # INTERACTIVE FEATURES
+  # ========================================
+  
+  interactive_features:
+    node_selection:
+      description: "Clicking on nodes shows detailed information"
+      behavior:
+        - "Node glows brighter when selected"
+        - "Detail panel updates with node information"
+        - "Connections to other nodes highlight"
+        - "Prerequisites and requirements display"
+    
+    choice_making:
+      description: "Making choices in choice nodes"
+      behavior:
+        - "Choice options display in detail panel"
+        - "Each choice shows its effects and consequences"
+        - "Confirmation required before choice is locked"
+        - "Choice affects future node availability"
+    
+    progression_visualization:
+      description: "Visual representation of character progression"
+      features:
+        - "Completed nodes remain brightly lit"
+        - "Available nodes pulse gently"
+        - "Locked nodes are dimmed"
+        - "Path to current level is highlighted"
+    
+    carousel_navigation:
+      description: "Switching between different class trees"
+      behavior:
+        - "Smooth transition animations"
+        - "Current class tree is highlighted"
+        - "Available classes are accessible"
+        - "Locked classes are dimmed"
+
+  # ========================================
+  # ANIMATION SYSTEM
+  # ========================================
+  
+  animation_system:
+    node_animations:
+      pulse_glow:
+        duration: "2s"
+        easing: "ease-in-out"
+        properties:
+          - "glow_intensity: 0.8 -> 1.2 -> 0.8"
+          - "scale: 1.0 -> 1.1 -> 1.0"
+      
+      choice_pulse:
+        duration: "1.5s"
+        easing: "ease-in-out"
+        properties:
+          - "glow_intensity: 0.9 -> 1.3 -> 0.9"
+          - "rotation: 0deg -> 5deg -> 0deg"
+      
+      gentle_pulse:
+        duration: "3s"
+        easing: "ease-in-out"
+        properties:
+          - "glow_intensity: 0.6 -> 0.9 -> 0.6"
+    
+    transition_animations:
+      carousel_switch:
+        duration: "0.5s"
+        easing: "ease-in-out"
+        properties:
+          - "fade_out: 1.0 -> 0.0"
+          - "fade_in: 0.0 -> 1.0"
+          - "slide: left -> right"
+      
+      node_selection:
+        duration: "0.3s"
+        easing: "ease-out"
+        properties:
+          - "glow_intensity: current -> 1.5"
+          - "scale: 1.0 -> 1.05"
+
+  # ========================================
+  # INTEGRATION WITH EXISTING SYSTEMS
+  # ========================================
+  
+  system_integration:
+    progression_tree_integration:
+      description: "Connects to existing class progression trees"
+      data_source: "classes/*.yml -> progression_tree"
+      mapping:
+        node_id: "maps to progression_tree.node_id"
+        feature_id: "maps to progression_tree.feature_id"
+        level_requirement: "maps to progression_tree.level_requirement"
+        type: "maps to progression_tree.type"
+        prerequisites: "maps to progression_tree.prerequisites"
+    
+    synergy_integration:
+      description: "Integrates with synergy system for enhanced effects"
+      features:
+        - "Species-class synergies affect node bonuses"
+        - "Item synergies enhance node effects"
+        - "Power synergies unlock special abilities"
+    
+    mode_integration:
+      description: "Mode system affects skill tree behavior"
+      effects:
+        - "Combat modes enhance combat-related nodes"
+        - "Social modes enhance social-related nodes"
+        - "Exploration modes enhance exploration-related nodes"
+    
+    llm_integration:
+      description: "LLM-friendly data structure for AI assistance"
+      features:
+        - "Structured node data for AI analysis"
+        - "Choice recommendations based on character build"
+        - "Progression optimization suggestions"
+        - "Narrative integration for storytelling"
+
+  # ========================================
+  # IMPLEMENTATION NOTES
+  # ========================================
+  
+  implementation_notes:
+    visual_requirements:
+      - "High-quality star field background"
+      - "Particle system for nebula effects"
+      - "Glow and lighting effects"
+      - "Smooth animations and transitions"
+    
+    performance_considerations:
+      - "Optimize particle effects for performance"
+      - "Use efficient rendering for large trees"
+      - "Implement level-of-detail for distant nodes"
+      - "Cache animations and effects"
+    
+    accessibility_features:
+      - "High contrast mode for visibility"
+      - "Keyboard navigation support"
+      - "Screen reader compatibility"
+      - "Colorblind-friendly color schemes"
+    
+    future_enhancements:
+      - "3D skill tree visualization"
+      - "Multiplayer skill tree sharing"
+      - "Custom skill tree creation"
+      - "Advanced animation effects"
+      - "VR/AR support for immersive experience"

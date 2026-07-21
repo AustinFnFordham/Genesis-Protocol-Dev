@@ -1,0 +1,23 @@
+urid: feature_operator_archetype
+entity_type: Feature
+authority_lane: campaign_local
+source_path: null
+content_hash: 99df4e9458fd8627
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- operator archetype
+- operator archetypes
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+  source: SW5e_Data_Hub\forge_v3\data\campaign_local\Character__char_smuggler_pilot_aran_voss.yml
+  note: player-defined archetype feature; not a global definition
+campaign_scope: shadows_of_empire
+validation_status: provisional
+resolution_status: campaign_local_adaptation
+name: Operator Archetype

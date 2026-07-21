@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&display=swap');
+
+/* === GLOBAL RESET & BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Orbitron', 'Rajdhani', monospace !important;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #16213e 100%) !important;
+    color: #00ffff !important;
+    overflow-x: hidden;
+}
+
+/* === ANIMATED BACKGROUND === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 100, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 100, 255, 0.05) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* === MAIN CONTAINER === */
+.main .block-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* === HEADER SECTION === */
+.stTitle {
+    text-align: center !important;
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 900 !important;
+    font-size: 4rem !important;
+    background: linear-gradient(45deg, #00ffff, #ff0080, #00ffff) !important;
+    background-size: 200% 200% !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: titleGlow 3s ease-in-out infinite, gradientShift 4s ease-in-out infinite !important;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8) !important;
+    margin: 2rem 0 !important;
+    letter-spacing: 0.2em !important;
+}
+
+@keyframes titleGlow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 40px #00ffff);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px #ff0080) drop-shadow(0 0 60px #ff0080);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === SUBTITLE === */
+.subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ff4444;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-shadow: 0 0 10px #ff4444;
+    animation: redPulse 2s ease-in-out infinite;
+}
+
+@keyframes redPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* === GRID LAYOUT === */
+.game-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 2rem;
+    height: 100vh;
+    padding: 2rem;
+}
+
+.left-panel, .right-panel {
+    background: rgba(0, 20, 40, 0.8);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.center-panel {
+    background: rgba(0, 10, 30, 0.9);
+    border: 3px solid #00ffff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.5),
+        inset 0 0 30px rgba(0, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.center-panel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ffff, #ff0080, #00ffff, #ff0080);
+    background-size: 400% 400%;
+    border-radius: 20px;
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* === BUTTONS === */
+.stButton > button {
+    width: 100% !important;
+    height: 60px !important;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.2)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 10px !important;
+    color: #00ffff !important;
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.stButton > button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.4)) !important;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.6),
+        inset 0 0 20px rgba(0, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+    border-color: #ffffff !important;
+}
+
+.stButton > button:hover::before {
+    left: 100%;
+}
+
+/* === SCENARIO BUTTONS === */
+.scenario-button {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(128, 0, 255, 0.2)) !important;
+    border: 2px solid #ff0080 !important;
+    height: 80px !important;
+    font-size: 1.3rem !important;
+}
+
+.scenario-button:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.4), rgba(128, 0, 255, 0.4)) !important;
+    box-shadow: 
+        0 0 25px rgba(255, 0, 128, 0.8),
+        inset 0 0 25px rgba(255, 0, 128, 0.2) !important;
+    border-color: #ffffff !important;
+}
+
+/* === MISSION LOG === */
+.mission-log {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    height: 400px;
+    overflow-y: auto;
+    font-family: 'Rajdhani', monospace;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.mission-log::-webkit-scrollbar {
+    width: 8px;
+}
+
+.mission-log::-webkit-scrollbar-track {
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.mission-log::-webkit-scrollbar-thumb {
+    background: #00ffff;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* === TURN INDICATORS === */
+.red-turn {
+    border-color: #ff4444 !important;
+    box-shadow: 
+        0 0 30px rgba(255, 68, 68, 0.8),
+        inset 0 0 30px rgba(255, 68, 68, 0.2) !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+    animation: redTurnPulse 2s ease-in-out infinite;
+}
+
+.blue-turn {
+    border-color: #00ffff !important;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.8),
+        inset 0 0 30px rgba(0, 255, 255, 0.2) !important;
+    background: rgba(0, 255, 255, 0.1) !important;
+    animation: blueTurnPulse 2s ease-in-out infinite;
+}
+
+@keyframes redTurnPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 68, 68, 0.6), inset 0 0 20px rgba(255, 68, 68, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(255, 68, 68, 1), inset 0 0 40px rgba(255, 68, 68, 0.3);
+    }
+}
+
+@keyframes blueTurnPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(0, 255, 255, 1), inset 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+}
+
+/* === GAME OVER EFFECTS === */
+.victory {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2)) !important;
+    border: 3px solid #00ff00 !important;
+    animation: victoryGlow 1s ease-in-out infinite;
+}
+
+.defeat {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 128, 0.2)) !important;
+    border: 3px solid #ff0000 !important;
+    animation: defeatGlow 1s ease-in-out infinite;
+}
+
+@keyframes victoryGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(0, 255, 0, 1); }
+}
+
+@keyframes defeatGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(255, 0, 0, 1); }
+}
+
+/* === SIDEBAR === */
+.css-1d391kg {
+    background: rgba(0, 10, 20, 0.9) !important;
+    border-right: 2px solid #00ffff !important;
+}
+
+/* === HIDE STREAMLIT ELEMENTS === */
+.css-1rs6os, .css-17ziqus, #MainMenu, footer, header {
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+    .game-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        height: auto;
+    }
+    
+    .stTitle {
+        font-size: 3rem !important;
+    }
+}
+
+/* === HOLOGRAPHIC EFFECTS === */
+.hologram {
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    animation: hologramScan 3s linear infinite;
+}
+
+@keyframes hologramScan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

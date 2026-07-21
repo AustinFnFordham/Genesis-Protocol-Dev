@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&display=swap');
+
+/* === GLOBAL RESET & BASE === */
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Orbitron', 'Rajdhani', monospace !important;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #16213e 100%) !important;
+    color: #00ffff !important;
+    overflow-x: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* === STREAMLIT CONTAINER FIXES === */
+.main .block-container {
+    max-width: 100% !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+}
+
+.stApp {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* === ANIMATED BACKGROUND === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 100, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 100, 255, 0.05) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* === HEADER SECTION === */
+.main-header {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 20, 40, 0.9));
+    border: 3px solid #00ffff;
+    border-radius: 20px;
+    padding: 2rem !important;
+    margin: 1rem 0 2rem 0 !important;
+    text-align: center;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.5),
+        inset 0 0 30px rgba(0, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ffff, #ff0080, #00ffff, #ff0080);
+    background-size: 400% 400%;
+    border-radius: 20px;
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.epic-title {
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 900 !important;
+    font-size: 3.5rem !important;
+    background: linear-gradient(45deg, #00ffff, #ff0080, #00ffff) !important;
+    background-size: 200% 200% !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: titleGlow 3s ease-in-out infinite, gradientShift 4s ease-in-out infinite !important;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8) !important;
+    margin: 1rem 0 !important;
+    letter-spacing: 0.2em !important;
+}
+
+@keyframes titleGlow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 20px #00ffff) drop-shadow(0 0 40px #00ffff);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px #ff0080) drop-shadow(0 0 60px #ff0080);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.epic-subtitle {
+    color: #ff4444 !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px #ff4444 !important;
+    animation: redPulse 2s ease-in-out infinite !important;
+    margin: 1rem 0 !important;
+}
+
+@keyframes redPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* === MISSION CARDS CONTAINER === */
+.mission-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    gap: 2rem !important;
+    margin: 2rem 0 !important;
+    padding: 0 1rem !important;
+}
+
+.mission-card {
+    flex: 1 !important;
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(0, 40, 80, 0.9)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 15px !important;
+    padding: 2rem !important;
+    min-height: 300px !important;
+    max-height: 350px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+
+.mission-card:hover {
+    transform: translateY(-10px) scale(1.02) !important;
+    box-shadow: 
+        0 20px 40px rgba(0, 255, 255, 0.3),
+        0 0 50px rgba(0, 255, 255, 0.5) !important;
+    border-color: #ffffff !important;
+}
+
+.mission-card.red {
+    border-color: #ff4444 !important;
+    background: linear-gradient(135deg, rgba(40, 0, 0, 0.9), rgba(80, 0, 0, 0.9)) !important;
+}
+
+.mission-card.red:hover {
+    box-shadow: 
+        0 20px 40px rgba(255, 68, 68, 0.3),
+        0 0 50px rgba(255, 68, 68, 0.5) !important;
+}
+
+.mission-card.purple {
+    border-color: #8800ff !important;
+    background: linear-gradient(135deg, rgba(20, 0, 40, 0.9), rgba(40, 0, 80, 0.9)) !important;
+}
+
+.mission-card.purple:hover {
+    box-shadow: 
+        0 20px 40px rgba(136, 0, 255, 0.3),
+        0 0 50px rgba(136, 0, 255, 0.5) !important;
+}
+
+/* === BUTTONS === */
+.stButton > button {
+    width: 100% !important;
+    height: 60px !important;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.2)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 10px !important;
+    color: #00ffff !important;
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin: 0.5rem 0 !important;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.4)) !important;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.6),
+        inset 0 0 20px rgba(0, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+    border-color: #ffffff !important;
+}
+
+/* === SCENARIO BUTTONS === */
+.scenario-button {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(128, 0, 255, 0.2)) !important;
+    border: 2px solid #ff0080 !important;
+    height: 80px !important;
+    font-size: 1.3rem !important;
+}
+
+.scenario-button:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.4), rgba(128, 0, 255, 0.4)) !important;
+    box-shadow: 
+        0 0 25px rgba(255, 0, 128, 0.8),
+        inset 0 0 25px rgba(255, 0, 128, 0.2) !important;
+    border-color: #ffffff !important;
+}
+
+/* === GAME INTERFACE === */
+.game-panel {
+    background: linear-gradient(135deg, rgba(0, 10, 30, 0.95), rgba(0, 30, 60, 0.95)) !important;
+    border: 3px solid #00ffff !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    margin: 1rem 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 400px !important;
+}
+
+.status-panel {
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(0, 40, 80, 0.9)) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 15px !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+}
+
+.log-panel {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: 2px solid #00ffff !important;
+    border-radius: 15px !important;
+    padding: 1.5rem !important;
+    height: 400px !important;
+    overflow-y: auto !important;
+    font-family: 'Rajdhani', monospace !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+    margin: 1rem 0 !important;
+}
+
+/* === TURN INDICATORS === */
+.red-turn {
+    border-color: #ff4444 !important;
+    box-shadow: 
+        0 0 30px rgba(255, 68, 68, 0.8),
+        inset 0 0 30px rgba(255, 68, 68, 0.2) !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+    animation: redTurnPulse 2s ease-in-out infinite !important;
+}
+
+.blue-turn {
+    border-color: #00ffff !important;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.8),
+        inset 0 0 30px rgba(0, 255, 255, 0.2) !important;
+    background: rgba(0, 255, 255, 0.1) !important;
+    animation: blueTurnPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes redTurnPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 68, 68, 0.6), inset 0 0 20px rgba(255, 68, 68, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(255, 68, 68, 1), inset 0 0 40px rgba(255, 68, 68, 0.3);
+    }
+}
+
+@keyframes blueTurnPulse {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(0, 255, 255, 1), inset 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+}
+
+/* === VICTORY/DEFEAT SCREENS === */
+.victory-screen {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2)) !important;
+    border: 3px solid #00ff00 !important;
+    animation: victoryGlow 1s ease-in-out infinite !important;
+    text-align: center !important;
+    padding: 3rem !important;
+    border-radius: 20px !important;
+    margin: 2rem 0 !important;
+}
+
+.defeat-screen {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 128, 0.2)) !important;
+    border: 3px solid #ff0000 !important;
+    animation: defeatGlow 1s ease-in-out infinite !important;
+    text-align: center !important;
+    padding: 3rem !important;
+    border-radius: 20px !important;
+    margin: 2rem 0 !important;
+}
+
+@keyframes victoryGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(0, 255, 0, 1); }
+}
+
+@keyframes defeatGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+    50% { box-shadow: 0 0 40px rgba(255, 0, 0, 1); }
+}
+
+/* === SCROLLBAR STYLING === */
+.log-panel::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.log-panel::-webkit-scrollbar-track {
+    background: rgba(0, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+}
+
+.log-panel::-webkit-scrollbar-thumb {
+    background: #00ffff !important;
+    border-radius: 4px !important;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5) !important;
+}
+
+/* === HIDE STREAMLIT ELEMENTS === */
+.css-1rs6os, .css-17ziqus, #MainMenu, footer, header {
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1200px) {
+    .mission-container {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .epic-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .mission-card {
+        min-height: 250px !important;
+        max-height: 300px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .epic-title {
+        font-size: 2rem !important;
+    }
+    
+    .main-header {
+        padding: 1rem !important;
+    }
+    
+    .mission-card {
+        padding: 1.5rem !important;
+        min-height: 200px !important;
+    }
+}

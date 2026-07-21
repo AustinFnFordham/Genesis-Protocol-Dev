@@ -1,0 +1,10 @@
+{
+  "layoutEngine": "dagre",
+  "debounce": 500,
+  "theme": 0,
+  "apiToken": "",
+  "d2Path": "\"C:\\Program Files\\D2\\d2.exe\"",
+  "pad": 100,
+  "sketch": false,
+  "containerHeight": 800
+}

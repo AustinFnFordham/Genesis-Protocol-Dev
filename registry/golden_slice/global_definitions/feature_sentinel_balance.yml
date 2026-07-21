@@ -1,0 +1,23 @@
+urid: feature_sentinel_balance
+entity_type: Feature
+authority_lane: global_validated
+source_path: null
+content_hash: 71897843e894b997
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- sentinel balance
+- sentinel balances
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+  enriched_from: runtime_inline
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Sentinel Balance
+effect: Add 1d4 to the failed saving throw, potentially turning it into a success.

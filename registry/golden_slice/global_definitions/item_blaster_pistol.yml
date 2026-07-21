@@ -1,0 +1,21 @@
+urid: item_blaster_pistol
+entity_type: Item
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\crafting\weapon_recipes.yml
+content_hash: c160cd384b4bbd23
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- blaster pistol
+- blaster pistols
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\crafting\weapon_recipes.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Blaster Pistol

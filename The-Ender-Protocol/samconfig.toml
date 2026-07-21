@@ -1,0 +1,10 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "ender-protocol"
+s3_bucket = "the-ender-protocol-data-austin-fordham"
+s3_prefix = "ender-protocol"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+image_repositories = []

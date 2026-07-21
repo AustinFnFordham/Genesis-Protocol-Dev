@@ -1,0 +1,568 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Crafting Recipe",
+  "description": "A comprehensive schema for crafting recipes with narrative integration, LLM-GM guidance, and enhanced mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID for the recipe, e.g., 'recipe_basic_blaster' or 'recipe_force_artifact'."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the crafted item."
+    },
+    "recipe_type": {
+      "enum": ["Weapon", "Armor", "Gear", "Consumable", "Artifact", "Droid_Part", "Starship_Component", "Modification", "Special"],
+      "description": "The primary category of item being crafted."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this recipe is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["Common", "Uncommon", "Rare", "Very_Rare", "Legendary"],
+      "description": "Rarity of the recipe itself, affecting how it's learned or discovered."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the crafting process, its significance, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote, description, or memorable phrase that captures the essence of this crafting process."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this crafting process is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "$comment": "SECTION 3: DETAILED INFORMATION",
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the crafting process and the resulting item."
+    },
+    "crafting_process": {
+      "type": "string",
+      "description": "Detailed step-by-step description of how the crafting process works."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this crafting technique or recipe."
+    },
+
+    "$comment": "SECTION 4: UNIFIED CONNECTIONS SYSTEM",
+    "connections": {
+      "type": "array",
+      "description": "Universal connections to any game object - factions, species, classes, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, class, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Class", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Developed By', 'Taught By', 'Common Among', 'Restricted To', 'Iconic To'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: ICONIC ELEMENTS",
+    "iconic_examples": {
+      "type": "array",
+      "description": "Famous or notable examples of this crafting process from Star Wars canon.",
+      "items": { "type": "string" }
+    },
+    "famous_crafters": {
+      "type": "array",
+      "description": "Notable individuals who have mastered this crafting technique.",
+      "items": { "type": "string" }
+    },
+    "famous_instances": {
+      "type": "array",
+      "description": "Notable events or moments involving this crafting process.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this crafting process.",
+          "items": { "type": "string" }
+        },
+        "adventure_seeds": {
+          "type": "array",
+          "description": "Potential adventure ideas that could involve this crafting process.",
+          "items": { "type": "string" }
+        },
+        "character_connections": {
+          "type": "array",
+          "description": "Ways characters might be connected to or affected by this crafting process.",
+          "items": { "type": "string" }
+        },
+        "typical_missions": {
+          "type": "array",
+          "description": "Types of missions or tasks typically associated with this crafting process.",
+          "items": { "type": "string" }
+        },
+        "cultural_impact": {
+          "type": "string",
+          "description": "How this crafting process affects the cultures and societies of the galaxy."
+        },
+        "technological_significance": {
+          "type": "string",
+          "description": "The technological implications and significance of this crafting process."
+        }
+      }
+    },
+
+    "$comment": "SECTION 7: CRAFTING MECHANICS",
+    "difficulty": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "description": "The DC for the crafting check required to successfully create this item."
+    },
+    "crafting_time": {
+      "type": "object",
+      "description": "Time requirements for the crafting process.",
+      "properties": {
+        "base_time": {
+          "type": "integer",
+          "description": "Base time in hours required for crafting."
+        },
+        "time_unit": {
+          "type": "string",
+          "enum": ["hours", "days", "weeks", "months"],
+          "description": "Unit of time measurement."
+        },
+        "modifiers": {
+          "type": "array",
+          "description": "Conditions that affect crafting time.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "type": "string",
+                "description": "Condition that affects crafting time (e.g., 'workshop_available', 'master_crafter')"
+              },
+              "multiplier": {
+                "type": "number",
+                "description": "Time multiplier (0.5 for half time, 2.0 for double time)"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: MATERIALS & TOOLS",
+    "materials": {
+      "type": "array",
+      "description": "Required materials for the crafting process. Can specify exact items or use tag requirements for flexible material gathering.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the material requirement."
+          },
+          "item_id": {
+            "type": "string",
+            "description": "ID of the specific item required (use this OR tag_requirement, not both)."
+          },
+          "tag_requirement": {
+            "type": "object",
+            "description": "Alternative to item_id - allows any item with the specified tag to fulfill this requirement.",
+            "properties": {
+              "tag": {
+                "type": "string",
+                "description": "The tag that qualifying items must have (e.g., 'metal_plate', 'power_cell', 'electronic_component')."
+              },
+              "quantity": {
+                "type": "integer",
+                "description": "How many items with this tag are needed."
+              },
+              "quality_penalty": {
+                "type": "integer",
+                "description": "Penalty to crafting check when using lower-quality tagged items (e.g., -2 for scrap materials)."
+              },
+              "quality_bonus": {
+                "type": "integer",
+                "description": "Bonus to crafting check when using higher-quality tagged items (e.g., +2 for premium materials)."
+              }
+            },
+            "required": ["tag", "quantity"]
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of the material required (required if using item_id, optional if using tag_requirement)."
+          },
+          "rarity": {
+            "type": "string",
+            "enum": ["Common", "Uncommon", "Rare", "Very_Rare", "Legendary"],
+            "description": "Rarity of the material, affects availability and cost."
+          },
+          "substitutes": {
+            "type": "array",
+            "description": "Alternative materials that can be used instead.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["description"]
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "Required tools and equipment for the crafting process.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool_id": {
+            "type": "string",
+            "description": "ID of the required tool or equipment."
+          },
+          "proficiency_required": {
+            "type": "boolean",
+            "description": "Whether proficiency with the tool is required."
+          },
+          "quality_bonus": {
+            "type": "integer",
+            "description": "Bonus to crafting check if using a high-quality version of this tool."
+          }
+        },
+        "required": ["tool_id"]
+      }
+    },
+
+    "$comment": "SECTION 9: SKILLS & PREREQUISITES",
+    "skills": {
+      "type": "array",
+      "description": "Skills required for the crafting process.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skill_name": {
+            "type": "string",
+            "description": "Name of the skill used for crafting (e.g., 'Intelligence (Technology)', 'Dexterity (Sleight of Hand)')."
+          },
+          "proficiency_bonus": {
+            "type": "integer",
+            "description": "Additional bonus if proficient in this skill."
+          },
+          "primary": {
+            "type": "boolean",
+            "description": "Whether this is the primary skill for the crafting check."
+          }
+        },
+        "required": ["skill_name"]
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "description": "Requirements that must be met before attempting this crafting process.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["level", "class", "subclass", "feat", "power", "species", "background", "tool_proficiency", "skill_proficiency"],
+            "description": "Type of prerequisite."
+          },
+          "value": {
+            "type": "string",
+            "description": "Specific value for the prerequisite (e.g., '5' for level, 'fighter' for class)."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the prerequisite."
+          }
+        },
+        "required": ["type", "value"]
+      }
+    },
+
+    "$comment": "SECTION 10: RESULTS & QUALITY",
+    "result": {
+      "type": "object",
+      "description": "The item that results from successful crafting.",
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "description": "ID of the resulting crafted item."
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "Quantity of items produced (usually 1)."
+        },
+        "quality_modifiers": {
+          "type": "array",
+          "description": "Quality levels based on crafting check success margin.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check_margin": {
+                "type": "integer",
+                "description": "Margin of success required for this quality level."
+              },
+              "effects": {
+                "type": "array",
+                "description": "Effects granted at this quality level.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["enhance_property", "add_property", "modify_stat", "grant_advantage", "reduce_cost", "extend_duration"],
+                      "description": "Type of quality enhancement."
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Specific enhancement value or property."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the quality enhancement."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["item_id", "quantity"]
+    },
+
+    "$comment": "SECTION 11: FAILURE & SPECIAL EFFECTS",
+    "failure_effects": {
+      "type": "array",
+      "description": "Effects that occur when crafting fails.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "failure_margin": {
+            "type": "integer",
+            "description": "Margin of failure that triggers this effect."
+          },
+          "effects": {
+            "type": "array",
+            "description": "Effects that occur on failure.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["material_loss", "tool_damage", "injury", "time_waste", "partial_result", "catastrophic_failure"],
+                  "description": "Type of failure effect."
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Specific effect value or description."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the failure effect."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "special_effects": {
+      "type": "array",
+      "description": "Special effects that can occur during crafting.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["force_enhancement", "tech_integration", "customization", "unique_property", "narrative_outcome"],
+            "description": "Type of special effect."
+          },
+          "value": {
+            "type": "string",
+            "description": "Specific effect value or description."
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions that must be met for this effect.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Condition key to check."
+                },
+                "op": {
+                  "type": "string",
+                  "enum": ["equals", "greater_than", "less_than", "contains", "not_equals"],
+                  "description": "Comparison operator."
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Value to compare against."
+                }
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the special effect."
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 12: ECONOMICS & REWARDS",
+    "cost": {
+      "type": "object",
+      "description": "Cost information for the crafting process.",
+      "properties": {
+        "base_cost": {
+          "type": "integer",
+          "description": "Base cost in credits for materials and tools."
+        },
+        "cost_modifiers": {
+          "type": "array",
+          "description": "Conditions that affect the cost.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "type": "string",
+                "description": "Condition that affects cost."
+              },
+              "multiplier": {
+                "type": "number",
+                "description": "Cost multiplier."
+              }
+            }
+          }
+        }
+      }
+    },
+    "experience_reward": {
+      "type": "integer",
+      "description": "Experience points gained for successfully crafting this item."
+    },
+    "reputation_effects": {
+      "type": "array",
+      "description": "Effects on reputation with various factions.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction": {
+            "type": "string",
+            "description": "Faction or group affected by this crafting."
+          },
+          "change": {
+            "type": "integer",
+            "description": "Reputation change (positive or negative)."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the reputation effect."
+          }
+        }
+      }
+    },
+
+    "$comment": "SECTION 13: NARRATIVE OUTCOMES",
+    "narrative_outcomes": {
+      "type": "array",
+      "description": "List of narrative outcomes or role-playing opportunities related to this crafting process.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 14: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this crafting process, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this crafting process adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Workshop_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this crafting process is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 15: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the crafting process's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the crafting process's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    },
+
+    "$comment": "SECTION 16: TAGS & CATEGORIZATION",
+    "tags": {
+      "type": "array",
+      "description": "Keywords for categorization and search.",
+      "items": { "type": "string" }
+    },
+    "themes": {
+      "type": "array",
+      "description": "Thematic elements associated with this crafting process.",
+      "items": { "type": "string" }
+    },
+    "mood": {
+      "type": "string",
+      "description": "The emotional tone or atmosphere associated with this crafting process."
+    }
+  },
+  "required": ["id", "name", "recipe_type", "narrative", "description", "difficulty", "crafting_time", "materials", "result", "image_generation", "ui"]
+}

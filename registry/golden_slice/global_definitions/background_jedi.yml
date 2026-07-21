@@ -1,0 +1,21 @@
+urid: background_jedi
+entity_type: Background
+authority_lane: global_validated
+source_path: SW5e_Data_Hub\forge_v3\backend\backgrounds\background_jedi.yml
+content_hash: aa1ff8d9ce3e3057
+schema_valid: true
+semantic_valid: true
+mechanical_match: true
+aliases:
+- jedi
+- jedis
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  resolved_from: SW5e_Data_Hub\forge_v3\backend\backgrounds\background_jedi.yml
+campaign_scope: null
+validation_status: candidate_promoted
+resolution_status: exact_validated
+name: Jedi

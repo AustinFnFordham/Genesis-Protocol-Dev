@@ -1,0 +1,10 @@
+resume_checkpoint:
+  date: 2026-07-21
+  branch: none
+  commit: none
+  note: E:\StarWars is NOT version-controlled (recorded, unchanged)
+  uncommitted_changes: n/a
+  running_processes: [vite:1420, api_bridge:8788]
+  ollama: down (not required for projection/containment gate)
+  playwright: config+spec present, package NOT installed
+  projections_verified: {meridian: 'Aero/Echani/Sentinel/Republic Shuttle', shadows: 'Aran/Human/unresolved/Reconciliator'}

@@ -1,0 +1,304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Faction",
+  "description": "Defines a faction with comprehensive narrative integration, LLM-GM guidance, and system synergies.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'faction_jedi_order' or 'faction_galactic_empire'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the faction."
+    },
+    "faction_type": {
+      "enum": ["Religious_Order", "Government", "Military", "Criminal_Syndicate", "Corporation", "Rebellion", "Mercenary_Group", "Academy", "Guild", "Family", "Other"],
+      "description": "The type of organization this faction represents."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this faction is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+
+    "$comment": "SECTION 2: TAGS & NARRATIVE BLOCK",
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Static tags that define this faction's characteristics, allegiances, and reputation. All tags must be defined in master_tags.yml. Examples: ['rebel_alliance', 'democratic', 'military', 'anti_empire'].",
+      "items": { "type": "string" }
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the faction's history, purpose, and role in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "core_ideology": {
+      "type": "string",
+      "description": "The central beliefs, values, or principles that drive this faction."
+    },
+    "famous_exemplars": {
+      "type": "array",
+      "description": "Notable individuals from Star Wars lore who represent this faction.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 3: TERRITORY & INFLUENCE",
+    "territory": {
+      "type": "string",
+      "description": "Description of the faction's primary territory, sphere of influence, or operational area."
+    },
+    "influence": {
+      "type": "string",
+      "description": "The level and nature of the faction's influence in the galaxy (e.g., 'High - official peacekeepers of the Republic')."
+    },
+    "headquarters": {
+      "type": "string",
+      "description": "The primary location or world where the faction is based."
+    },
+
+    "$comment": "SECTION 4: RELATIONSHIPS & DIPLOMACY",
+    "relationships": {
+      "type": "array",
+      "description": "The faction's relationships with other factions and organizations.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction_id": {
+            "type": "string",
+            "description": "ID of the related faction."
+          },
+          "relationship_type": {
+            "enum": ["allied", "neutral", "hostile", "subordinate", "superior", "rival", "secret"],
+            "description": "The nature of the relationship."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of the relationship and its history."
+          },
+          "mechanical_effects": {
+            "type": "array",
+            "description": "Any mechanical benefits or penalties from this relationship.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["faction_id", "relationship_type", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 5: RANKS & PROGRESSION",
+    "ranks": {
+      "type": "array",
+      "description": "The ordered progression of ranks within the faction.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rank_number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The numerical rank (1 being the lowest)."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of this rank."
+          },
+          "renown_cost": {
+            "type": "integer",
+            "description": "Renown needed to achieve this rank."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of what this rank means and its responsibilities."
+          },
+          "benefits": {
+            "type": "array",
+            "description": "A list of feature IDs granted at this rank.",
+            "items": { "type": "string" }
+          },
+          "requirements": {
+            "type": "array",
+            "description": "Requirements to achieve this rank.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["rank_number", "title", "renown_cost", "narrative", "benefits"]
+      }
+    },
+
+    "$comment": "SECTION 6: SYNERGIES & INTEGRATION",
+    "species_synergies": {
+      "type": "array",
+      "description": "Species that have special interactions with this faction.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "species_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["species_id", "narrative"]
+      }
+    },
+    "class_synergies": {
+      "type": "array",
+      "description": "Classes that have special interactions with this faction.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["class_id", "narrative"]
+      }
+    },
+    "background_synergies": {
+      "type": "array",
+      "description": "Backgrounds that have special interactions with this faction.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "background_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["background_id", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 7: ICONIC ELEMENTS",
+    "iconic_gear": {
+      "type": "array",
+      "description": "Equipment and items strongly associated with this faction.",
+      "items": { "type": "string" }
+    },
+    "iconic_abilities": {
+      "type": "array",
+      "description": "Skills, powers, or abilities strongly associated with this faction.",
+      "items": { "type": "string" }
+    },
+    "iconic_locations": {
+      "type": "array",
+      "description": "Places and locations strongly associated with this faction.",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 8: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this faction.",
+          "items": { "type": "string" }
+        },
+        "typical_missions": {
+          "type": "array",
+          "description": "Types of missions or tasks this faction typically assigns.",
+          "items": { "type": "string" }
+        },
+        "conflict_types": {
+          "type": "array",
+          "description": "Types of conflicts this faction typically engages in.",
+          "items": { "type": "string" }
+        },
+        "recruitment_methods": {
+          "type": "array",
+          "description": "How this faction typically recruits new members.",
+          "items": { "type": "string" }
+        },
+        "internal_politics": {
+          "type": "string",
+          "description": "Description of the faction's internal structure and politics."
+        },
+        "external_relations": {
+          "type": "string",
+          "description": "Description of how the faction interacts with the broader galaxy."
+        }
+      }
+    },
+
+    "$comment": "SECTION 9: MEMBERSHIP PERKS",
+    "membership_perks": {
+      "type": "object",
+      "description": "General perks and benefits granted to all members of this faction, separate from rank-specific benefits.",
+      "properties": {
+        "skill_proficiencies": {
+          "type": "array",
+          "description": "Skills that faction members gain proficiency in.",
+          "items": { "type": "string" }
+        },
+        "tool_proficiencies": {
+          "type": "array",
+          "description": "Tools that faction members gain proficiency in.",
+          "items": { "type": "string" }
+        },
+        "language_proficiencies": {
+          "type": "array",
+          "description": "Languages that faction members learn.",
+          "items": { "type": "string" }
+        },
+        "equipment_access": {
+          "type": "array",
+          "description": "Special equipment or items that faction members have access to.",
+          "items": { "type": "string" }
+        },
+        "special_abilities": {
+          "type": "array",
+          "description": "Unique abilities granted to faction members.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 10: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this faction, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this faction adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Location', 'Combat_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this faction is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 11: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the faction's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the faction's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "faction_type", "era", "tags", "narrative", "core_ideology", "territory", "influence", "ranks", "image_generation", "ui"]
+}

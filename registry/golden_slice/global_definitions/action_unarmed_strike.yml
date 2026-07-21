@@ -1,0 +1,21 @@
+urid: action_unarmed_strike
+entity_type: Action
+authority_lane: global_validated
+source_path: null
+content_hash: 74e25c46a3f4919f
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- unarmed strike
+- unarmed strikes
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Unarmed Strike

@@ -1,0 +1,314 @@
+{
+ "character_id": "aero",
+ "slots": [
+  {
+   "domain": "species",
+   "source_name": "Echani",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "species_echani",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+  },
+  {
+   "domain": "class",
+   "source_name": "Sentinel",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "class_sentinel",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\classes\\sentinel.yml"
+  },
+  {
+   "domain": "background",
+   "source_name": "Jedi",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "background_jedi",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\backgrounds\\background_jedi.yml"
+  },
+  {
+   "domain": "planned_subclass",
+   "source_name": "Sentry",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "subclass_sentry",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\subclasses\\sentinel_subclasses\\sentinel_sentry.yml",
+   "planned": true
+  },
+  {
+   "domain": "feature",
+   "source_name": "Martial Arts Training",
+   "cited": "06-lore-species.zip/official_species_playable/echani.yml",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "feature_martial_arts_training",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Discipline",
+   "cited": "06-lore-species.zip/official_species_playable/echani.yml",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "feature_combat_discipline",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Communication",
+   "cited": "06-lore-species.zip/official_species_playable/echani.yml",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "feature_combat_communication",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Force Connection",
+   "cited": "04-game_data.zip/classes/sentinel.yml; adopted implementation",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "feature_force_connection",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Sentinel Balance",
+   "cited": "04-game_data.zip/classes/sentinel.yml; adopted implementation",
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_sentinel_balance",
+   "source_path": null
+  },
+  {
+   "domain": "feature",
+   "source_name": "Lightsaber Deflect - Tier 1",
+   "cited": "adopted Level 1 technique",
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_lightsaber_deflect_tier_1",
+   "source_path": null
+  },
+  {
+   "domain": "background_feature",
+   "source_name": "Jedi Network",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_jedi_network",
+   "source_path": null
+  },
+  {
+   "domain": "character_relationship",
+   "source_name": "Former Master (Vael Taron)",
+   "cited": null,
+   "status": "relationship_edge",
+   "authority_lane": "relationship_edge",
+   "proposed_urid": "rel:former_master_vael_taron",
+   "source_path": null
+  },
+  {
+   "domain": "campaign_rule",
+   "source_name": "Meridian Jedi-Network Access",
+   "cited": null,
+   "status": "campaign_local_adaptation",
+   "authority_lane": "campaign_local",
+   "proposed_urid": "rule:meridian_jedi_network_access",
+   "source_path": null
+  },
+  {
+   "domain": "feature",
+   "source_name": "Echani Grappling Training",
+   "cited": "04-game_data.zip/actions/combat_actions.yml; adopted Dexterity implementation",
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "feature_echani_grappling_training",
+   "source_path": null
+  },
+  {
+   "domain": "power",
+   "source_name": "Battle Insight",
+   "cited": "04-game_data.zip/powers/power_battle_insight.yml",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "power_battle_insight",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml"
+  },
+  {
+   "domain": "power",
+   "source_name": "Burst",
+   "cited": "04-game_data.zip/powers/power_burst.yml",
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "power_burst",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml"
+  },
+  {
+   "domain": "item_instance",
+   "source_name": "Taron-forged Modular Indigo Lightsaber",
+   "cited": null,
+   "status": "character_instance",
+   "authority_lane": "character_instance",
+   "proposed_urid": "iteminst:aero:taron_forged_modular_ind_001",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Standard Blaster Pistol",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "item_standard_blaster_pistol",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\weapons_expanded.yml"
+  },
+  {
+   "domain": "action",
+   "source_name": "Unarmed Strike",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "global_validated",
+   "proposed_urid": "action_unarmed_strike",
+   "source_path": null
+  },
+  {
+   "domain": "item_instance",
+   "source_name": "Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle",
+   "cited": null,
+   "status": "character_instance",
+   "authority_lane": "character_instance",
+   "proposed_urid": "iteminst:aero:dark_grey_jedi_robes_wit_001",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Security Kit",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_security_kit",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Meditation Kit",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_meditation_kit",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Backpack",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "item_backpack",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\armor_modular.yml"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Bedroll",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_bedroll",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Compact mess kit",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_compact_mess_kit",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Ration pack",
+   "cited": null,
+   "status": "candidate_found",
+   "authority_lane": "global_validated",
+   "proposed_urid": "item_ration_pack",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\items\\gear_expanded.yml"
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Canteen",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_canteen",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Compact Jedi glowrod",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_compact_jedi_glowrod",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Syntherope",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_syntherope",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Basic fire-starting tool",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_basic_fire_starting_tool",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Personal comlink",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_personal_comlink",
+   "source_path": null
+  },
+  {
+   "domain": "item_definition",
+   "source_name": "Blaster ammunition",
+   "cited": null,
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "item_blaster_ammunition",
+   "source_path": null
+  },
+  {
+   "domain": "vessel_definition",
+   "source_name": "Republic Shuttle (Consular-class tender)",
+   "cited": null,
+   "vessel_id": "republic_shuttle_escort",
+   "status": "unresolved_after_source_pass",
+   "authority_lane": "unresolved",
+   "proposed_urid": "vessel_republic_shuttle_consular_class_tender",
+   "source_path": null
+  },
+  {
+   "domain": "asset_relationship",
+   "source_name": "assigned:republic_shuttle_escort",
+   "cited": null,
+   "vessel_id": "republic_shuttle_escort",
+   "status": "relationship_edge",
+   "authority_lane": "relationship_edge",
+   "proposed_urid": "asset:republic_shuttle_escort",
+   "source_path": null
+  }
+ ]
+}

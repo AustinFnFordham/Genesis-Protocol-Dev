@@ -1,0 +1,290 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character Class",
+  "description": "Defines a character class with comprehensive narrative integration, LLM-GM guidance, and enhanced progression mechanics.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'bounty_hunter' or 'jedi_guardian'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the class."
+    },
+    "era": {
+      "type": "string",
+      "description": "The primary era this class is most associated with, e.g., 'Galactic_Republic', 'Galactic_Empire', 'New_Republic'."
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary"],
+      "description": "How common this class is in the galaxy."
+    },
+
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of the class, their role, and significance in the galaxy. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this class, often from Star Wars lore."
+    },
+    "cultural_significance": {
+      "type": "string",
+      "description": "Description of how this class is viewed and valued by different cultures and groups in the galaxy."
+    },
+
+    "description": {
+      "type": "string",
+      "description": "Detailed mechanical and lore description of the class."
+    },
+    "origin_story": {
+      "type": "string",
+      "description": "The history and origin of this class in the galaxy."
+    },
+    "hit_die": {
+      "type": "string",
+      "description": "The type of hit die this class uses (e.g., 'd8', 'd10', 'd12')."
+    },
+      "proficiencies": {
+        "type": "object",
+        "properties": {
+          "armor": { "type": "array", "items": { "type": "string" } },
+          "weapons": { "type": "array", "items": { "type": "string" } },
+          "tools": { "type": "array", "items": { "type": "string" } },
+          "saving_throws": { "type": "array", "items": { "type": "string" } },
+          "skills": {
+            "type": "object",
+            "properties": {
+              "choose": { "type": "integer" },
+              "from": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+    "primary_ability": {
+      "type": "string",
+      "description": "The primary ability score for this class."
+    },
+
+    "class_identity_profile": {
+      "type": "object",
+      "description": "Narrative flavor elements that define the class's identity and role in the galaxy.",
+      "properties": {
+        "core_fantasy": {
+          "type": "string",
+          "description": "The core fantasy this class fulfills for players."
+        },
+        "key_attributes": {
+          "type": "array",
+          "description": "The key attributes and characteristics of this class.",
+          "items": { "type": "string" }
+        },
+        "iconic_gear": {
+          "type": "array",
+          "description": "Iconic equipment and weapons associated with this class.",
+          "items": { "type": "string" }
+        },
+        "role_in_galaxy": {
+          "type": "string",
+          "description": "The role this class plays in the broader galaxy."
+        },
+        "famous_exemplars": {
+          "type": "array",
+          "description": "Famous examples of this class from Star Wars lore.",
+          "items": { "type": "string" }
+        },
+        "species_synergies": {
+          "type": "array",
+          "description": "Detailed species synergies with narrative descriptions.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "species": {
+                "type": "string",
+                "description": "The species ID"
+              },
+              "narrative": {
+                "type": "string",
+                "description": "Why this species has synergy with this class"
+              }
+            },
+            "required": ["species", "narrative"]
+          }
+        },
+        "faction_synergies": {
+          "type": "array",
+          "description": "Detailed faction synergies with narrative descriptions.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "faction": {
+                "type": "string",
+                "description": "The faction ID"
+              },
+              "narrative": {
+                "type": "string",
+                "description": "Why this faction has synergy with this class"
+              }
+            },
+            "required": ["faction", "narrative"]
+          }
+        }
+      },
+      "required": ["core_fantasy", "key_attributes", "iconic_gear", "role_in_galaxy", "famous_exemplars"]
+    },
+
+    "level_progression": {
+      "type": "array",
+      "description": "Progression features granted at each level from 1-20.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "The level at which this feature is granted."
+          },
+          "features": {
+            "type": "array",
+            "description": "Features granted at this level.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "feature_id": {
+                  "type": "string",
+                  "description": "ID of the feature being granted."
+                },
+                "feature_type": {
+                  "enum": ["class_feature", "ability_score_increase", "feat", "power", "proficiency"],
+                  "description": "The type of feature being granted."
+                },
+                "choices": {
+                  "type": "array",
+                  "description": "Available choices for this feature (if applicable).",
+                  "items": { "type": "string" }
+                }
+              },
+              "required": ["feature_id", "feature_type"]
+            }
+          }
+        },
+        "required": ["level", "features"]
+      }
+    },
+
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM (Genesis Protocol Article II): Static tags that define this class' fundamental characteristics and role. All tags must be defined in master_tags.yml. Examples: ['force_user', 'tank', 'melee_specialist'].",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "DEPRECATED - UNIFIED CONNECTIONS SYSTEM",
+    "$comment": "MIGRATION NOTE: The 'connections' block is DEPRECATED per Genesis Protocol Article III. Migrate to synergy_rules.yml using tags.",
+    "connections": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Universal connections to any game object - factions, species, locations, etc.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "description": "ID of the target object (faction, species, location, etc.)."
+          },
+          "target_type": {
+            "enum": ["Faction", "Species", "Location", "Lore", "Item", "Power", "Background", "Starship", "Other"],
+            "description": "The type of object being connected to."
+          },
+          "relationship": {
+            "type": "string",
+            "description": "The nature of the relationship, e.g., 'Common Among', 'Restricted To', 'Iconic To'."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how these objects are connected."
+          },
+          "mechanical_benefit": {
+            "type": "string",
+            "description": "Optional mechanical benefit from this connection."
+          }
+        },
+        "required": ["target_id", "target_type", "relationship", "narrative"]
+      }
+    },
+
+    "llm_guidance": {
+      "type": "object",
+      "properties": {
+        "roleplay_guidance": {
+          "type": "string",
+          "description": "Guidance for roleplaying characters of this class."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements specific to this class.",
+          "items": { "type": "string" }
+        },
+        "social_dynamics": {
+          "type": "string",
+          "description": "How this class interacts with others in the galaxy."
+        },
+        "common_motivations": {
+          "type": "array",
+          "description": "Common motivations and goals for characters of this class.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "image_generation": {
+      "type": "object",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Base prompt for generating images of this class."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers for different contexts and situations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image being generated (e.g., 'Portrait', 'Action_Shot', 'Class_Scene')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Additional text to add to the prompt for this context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the class image file."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the class icon file."
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color associated with this class for UI theming."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "tags", "hit_die", "proficiencies", "primary_ability", "class_identity_profile", "level_progression"]
+}

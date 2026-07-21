@@ -1,0 +1,27 @@
+{
+ "fidelity": {
+  "meridian_reach": {
+   "backup": "registry\\golden_slice\\migration\\meridian_reach_fidelity_20260721_053821.bak.json",
+   "quantities_preserved": true,
+   "equipped_state_preserved": true,
+   "current_resources_preserved": true,
+   "transcript_preserved": true,
+   "features_preserved": true,
+   "powers_preserved": true,
+   "identity_name_preserved": true,
+   "all_pass": true
+  },
+  "shadows_of_empire": {
+   "backup": "registry\\golden_slice\\migration\\shadows_of_empire_fidelity_20260721_053821.bak.json",
+   "quantities_preserved": true,
+   "equipped_state_preserved": true,
+   "current_resources_preserved": true,
+   "transcript_preserved": true,
+   "features_preserved": true,
+   "powers_preserved": true,
+   "identity_name_preserved": true,
+   "all_pass": true
+  }
+ },
+ "lane_records_enriched": 0
+}

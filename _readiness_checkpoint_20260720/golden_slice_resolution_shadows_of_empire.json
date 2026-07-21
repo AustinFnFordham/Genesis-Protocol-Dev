@@ -1,0 +1,62 @@
+{
+ "character_id": "char_smuggler_pilot_aran_voss",
+ "required_slots": 6,
+ "exact_source_matches": 3,
+ "genuine_missing": 3,
+ "rows": [
+  {
+   "domain": "feature",
+   "source_name": "Operator Archetype",
+   "candidates": [
+    {
+     "lane": "campaign_local",
+     "path": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
+     "kind": "features"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Smuggler's Cunning",
+   "candidates": [
+    {
+     "lane": "campaign_local",
+     "path": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
+     "kind": "features"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Daring Pilot",
+   "candidates": [
+    {
+     "lane": "campaign_local",
+     "path": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
+     "kind": "features"
+    }
+   ],
+   "status": "exact_source"
+  },
+  {
+   "domain": "item",
+   "source_name": "Blaster Pistol",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Flight Jacket",
+   "candidates": [],
+   "status": "genuine_missing"
+  },
+  {
+   "domain": "item",
+   "source_name": "Lucky Sabacc Chip",
+   "candidates": [],
+   "status": "genuine_missing"
+  }
+ ]
+}

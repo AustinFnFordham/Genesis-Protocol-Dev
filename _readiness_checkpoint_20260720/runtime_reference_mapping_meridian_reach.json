@@ -1,0 +1,305 @@
+{
+ "character_id": "aero",
+ "campaign_id": "meridian_reach",
+ "mappings": [
+  {
+   "domain": "species",
+   "source_name": "Echani",
+   "proposed_urid": "species_echani",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "class",
+   "source_name": "Sentinel",
+   "proposed_urid": "class_sentinel",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "background",
+   "source_name": "Jedi",
+   "proposed_urid": "background_jedi",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Martial Arts Training",
+   "proposed_urid": "feature_martial_arts_training",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Discipline",
+   "proposed_urid": "feature_combat_discipline",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Combat Communication",
+   "proposed_urid": "feature_combat_communication",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Force Connection",
+   "proposed_urid": "feature_force_connection",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Sentinel Balance",
+   "proposed_urid": "feature_sentinel_balance",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Lightsaber Deflect - Tier 1",
+   "proposed_urid": "feature_lightsaber_deflect_tier_1",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Former Master and Jedi Network",
+   "proposed_urid": "feature_former_master_and_jedi_network",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "feature",
+   "source_name": "Echani Grappling Training",
+   "proposed_urid": "feature_echani_grappling_training",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "power",
+   "source_name": "Battle Insight",
+   "proposed_urid": "power_battle_insight",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "power",
+   "source_name": "Burst",
+   "proposed_urid": "power_burst",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Taron-forged Modular Indigo Lightsaber",
+   "proposed_urid": "item_taron_forged_modular_indigo_lightsaber",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Standard Blaster Pistol",
+   "proposed_urid": "item_standard_blaster_pistol",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Unarmed Strike",
+   "proposed_urid": "item_unarmed_strike",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "name",
+   "proposed_urid": "item_name",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "equipped",
+   "proposed_urid": "item_equipped",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "armor_category",
+   "proposed_urid": "item_armor_category",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "armor_formula",
+   "proposed_urid": "item_armor_formula",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "dexterity_rules",
+   "proposed_urid": "item_dexterity_rules",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "penalties",
+   "proposed_urid": "item_penalties",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "resulting_ac",
+   "proposed_urid": "item_resulting_ac",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "exact_effects",
+   "proposed_urid": "item_exact_effects",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "source",
+   "proposed_urid": "item_source",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Security Kit",
+   "proposed_urid": "item_security_kit",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Meditation Kit",
+   "proposed_urid": "item_meditation_kit",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Backpack",
+   "proposed_urid": "item_backpack",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Bedroll",
+   "proposed_urid": "item_bedroll",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Compact mess kit",
+   "proposed_urid": "item_compact_mess_kit",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Ration pack",
+   "proposed_urid": "item_ration_pack",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Canteen",
+   "proposed_urid": "item_canteen",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Compact Jedi glowrod",
+   "proposed_urid": "item_compact_jedi_glowrod",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Syntherope",
+   "proposed_urid": "item_syntherope",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Basic fire-starting tool",
+   "proposed_urid": "item_basic_fire_starting_tool",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Personal comlink",
+   "proposed_urid": "item_personal_comlink",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  },
+  {
+   "domain": "item",
+   "source_name": "Blaster ammunition",
+   "proposed_urid": "item_blaster_ammunition",
+   "evidence": "no registry match",
+   "confidence": 0.0,
+   "status": "unresolved"
+  }
+ ],
+ "exact": 0,
+ "unresolved": 37,
+ "note": "Only exact/reviewed mappings may be written to canonical runtime. Unresolved => author the registry definition or reviewer assigns URID."
+}

@@ -1,0 +1,123 @@
+# GENESIS PROTOCOL — STATE SOURCE INVENTORY
+# Grounded in the real code as of 2026-07-20 (post Phase-A GATE_FAIL).
+# Method: static scan of src/components/*.jsx + src/state/*.js for data-source
+# patterns (registry.get/manifest.find vs gmRuntime/gm-projection vs hardcoded).
+
+state_architecture:
+  client_state_library: zustand            # src/state/store.js (create())
+  redux_present: false
+  redux_slices: []
+  other_global_stores:
+    - name: useGenesis (zustand)
+      role: authoritative client store (mounted runtime projection + UI state MIXED)
+    - name: window.__genesis / window.__ledger
+      role: dev/QA hooks
+  component_local_state:
+    - DialogueSystem: scripted `log`/`mood`/`input` (Malice demo — FIXTURE, non-live)
+    - CommandPanel: `tab`
+    - CampaignSelect: `campaigns`,`busy`,`err`
+  server_authoritative_state:
+    - api_bridge/gm_controllers.py  # per-campaign runtime/transcript/chronicle/opening (CANONICAL)
+    - api_bridge/server.py          # boot registry (gold + sandbox_gold fixtures) + gm/* endpoints
+  persisted_client_state:
+    - none durable (save_state.json is server-side; LEGACY client `campaign` object mirrors it)
+  legacy_state_paths:
+    - store.campaign / loadCampaignFromEntity / startCampaign / boot()  # OLD save_state model, parallel to gm mount
+    - loadRegistry() boot payload  # 41 sandbox fixtures — the source of every fixture leak below
+
+# ---------------------------------------------------------------------------
+# TWO COMPETING SOURCES (the root defect):
+#   A) MOUNTED PROJECTION  = gmRuntime  (GET /gm/state, per-campaign, coherent)
+#   B) BOOT REGISTRY       = registry/manifest (41 sandbox fixtures, campaign-blind)
+# Panels reading (B) show Aran/Guardian/Sandbox/Falcon/Coruscant regardless of
+# the mounted campaign. The fix is: every panel consumes ONE mounted projection.
+# ---------------------------------------------------------------------------
+
+component_state_source:
+  - component: CharacterAnchor (Operative identity/stats)
+    displayed_data: name, species/class, defenses, portrait
+    store_or_local_state: useGenesis
+    server_endpoint: GET /gm/state (gmRuntime.player_characters[active_player])
+    campaign_keyed: true
+    character_keyed: partial (uses metadata.active_player, no explicit selected_character_id)
+    stale_response_protection: none (pre-repair)
+    fallback_fixture: none
+    coherent: true
+
+  - component: ActionPanel (Available Actions + equipment)
+    displayed_data: actions, weapons/armor/gear/vehicles, powers, reactions
+    store_or_local_state: useGenesis
+    server_endpoint: GET /gm/state (gmRuntime sheet, equipment normalized at boundary)
+    campaign_keyed: true
+    character_keyed: partial (active_player)
+    stale_response_protection: via mountEpoch (added Phase A)
+    fallback_fixture: none
+    coherent: true
+
+  - component: ProgressionTree (DNA Record)          # DEFECT
+    displayed_data: class/subclass progression nodes
+    store_or_local_state: useGenesis.registry + manifest
+    server_endpoint: NONE — reads boot registry fixtures (registry.get x8)
+    campaign_keyed: false
+    character_keyed: false — ignores selected character; shows Guardian/Sandbox for Aero
+    stale_response_protection: none
+    fallback_fixture: Aran Voss / Guardian Feature / Sandbox Entity
+    coherent: FALSE
+
+  - component: GalacticMap (Map tab)                  # DEFECT
+    displayed_data: location nodes
+    store_or_local_state: useGenesis.registry + hardcoded
+    server_endpoint: NONE — hardcoded Coruscant/Mustafar/Falleen + registry
+    campaign_keyed: false
+    character_keyed: n/a
+    stale_response_protection: none
+    fallback_fixture: Coruscant / Mustafar / Falleen
+    coherent: FALSE
+
+  - component: ShipManagement (Command&Record Ship tab)  # DEFECT
+    displayed_data: ship + crew
+    store_or_local_state: useGenesis.registry + manifest (x8)
+    server_endpoint: NONE — registry Starship fixtures
+    campaign_keyed: false
+    character_keyed: n/a
+    stale_response_protection: none
+    fallback_fixture: Millennium Falcon / Aran Voss / Tala Ren / Kass Zoran / Sandbox Entity / Sith Assassin
+    coherent: FALSE
+
+  - component: NemesisWeb (Nemesis tab)              # DEFECT
+    displayed_data: nemesis nodes
+    store_or_local_state: useGenesis.registry/manifest
+    server_endpoint: NONE — registry fixtures (no player-visibility filter)
+    campaign_keyed: false
+    character_keyed: n/a
+    stale_response_protection: none
+    fallback_fixture: Aran Voss / Assassin (also risks hidden-state exposure)
+    coherent: FALSE
+
+  - component: ShipStations (center Ship view when mounted)
+    displayed_data: ship stations from mounted runtime
+    server_endpoint: gmRuntime.ship
+    campaign_keyed: true
+    fallback_fixture: none
+    coherent: true
+
+  - component: DialogueSystem (Active Engagement)
+    displayed_data: transcript (live) OR scripted Malice demo (non-live)
+    store_or_local_state: useGenesis.gmFeed (live) + local `log` (fixture)
+    server_endpoint: GET /gm/state + POST /gm/turn
+    campaign_keyed: true (live path); FALSE (scripted Malice fallback)
+    character_keyed: partial; Malice fallback via manifest.find is a FIXTURE
+    stale_response_protection: mountEpoch (added Phase A)
+    fallback_fixture: Darth Malice / Coruscant Level 1313 (scripted mode)
+    coherent: partial
+
+  - component: CommandPanel Journal
+    displayed_data: structured chronicle
+    server_endpoint: GET /gm/chronicle (per-campaign, epoch-guarded — Phase A)
+    campaign_keyed: true
+    fallback_fixture: none (legacy diagnostics moved to diagnostics channel — Phase A)
+    coherent: true
+
+# SUMMARY: 4 panels (DNA Record, Map, Ship-tab, Nemesis) + DialogueSystem scripted
+# fallback must be re-pointed at the mounted projection (or an honest empty state).
+# No new runtime/character object is needed — one projection, contained views.

@@ -1,0 +1,21 @@
+urid: vessel_republic_shuttle_consular_class_tend
+entity_type: Vessel
+authority_lane: global_validated
+source_path: null
+content_hash: 6781cacf4964870a
+schema_valid: true
+semantic_valid: true
+mechanical_match: null
+aliases:
+- republic shuttle consular class tender
+- republic shuttle consular class tenders
+tags: []
+prerequisites: []
+inbound_refs: []
+outbound_refs: []
+provenance:
+  method: authored
+campaign_scope: null
+validation_status: authored_residual
+resolution_status: genuine_missing_authored
+name: Republic Shuttle (Consular-class tender)

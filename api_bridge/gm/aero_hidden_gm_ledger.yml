@@ -1,0 +1,109 @@
+document:
+  id: hidden_gm_ledger_aeleron_doordo
+  type: genesis_hidden_gm_ledger
+  version: 1
+  visibility: gm_only
+  status: prepared
+  warning: Do not expose entries to Aero without an earned causal discovery path.
+
+hidden_gm_ledger:
+  character_id: character_runtime_aeleron_doordo_level_1
+
+  established_hidden_history:
+    - id: secret_cardo_vel
+      classification: objective_fact
+      visibility: senior Council members, former Jedi Shadows, sealed Temple record
+      aero_knowledge: none
+      facts:
+        name: Cardo Vel
+        species: Zabrak
+        relationship: Master Taron's former Padawan before Aero
+        history:
+          - Cardo fell to the dark side.
+          - Cardo became the only combatant considered Taron's true equal.
+          - Taron personally hunted him down.
+          - Their final confrontation ended with Taron killing Cardo honorably, remembering who Cardo had been rather than treating him with contempt for what he became.
+          - Taron subsequently refused every proposed apprentice until choosing Aero.
+      boundaries:
+        - Exact cause and progression of Cardo's fall are not established.
+        - Exact location, date, witnesses, and duel details are not established.
+        - Do not convert ceremonial or honorable language into an unsupported execution account.
+
+    - id: secret_council_division
+      classification: mixed_objective_opinion
+      visibility: Jedi leadership and individuals who personally hold these views
+      aero_knowledge: Aero senses doubt but does not know its Cardo-related context.
+      established_opinions:
+        - Some Council members trust Taron's final judgment that Aero was ready.
+        - Some question whether Taron's brilliance as a practitioner translated into healthy mentorship.
+        - Some privately perceive two apprentices ending in catastrophe and fear a pattern.
+        - Some suspect Aero was knighted from grief, obligation, or respect for Taron rather than independent confidence.
+      official_truth:
+        - Aero was cleared of misconduct.
+        - Aero's knighthood is legitimate.
+        - The Stillwater records are temporarily sealed.
+      boundaries:
+        - The Council is divided, not unanimous.
+        - Institutional doubt creates no automatic mechanical penalty.
+        - No NPC may know these opinions unless their role and access establish it.
+
+  character_beliefs_not_objective_truth:
+    - Aero believes greater strength might have prevented Taron's disappearance.
+    - Aero feels responsible for proving Taron was a great mentor.
+    - Aero believes Council concern means they consider him incompetent or naive.
+    - Aero interprets his four-day meditation as evidence that Taron may still be found.
+
+  unresolved_truths:
+    - id: thread_taron_fate
+      status: unresolved
+      known_to_aero: He experienced Taron's presence as faint but possessing its familiar strength and an impression of greater power.
+      objective_unknowns:
+        - Whether Taron is alive
+        - Taron's current location
+        - Taron's physical, psychological, or spiritual condition
+        - Whether the sensed presence originated from Taron
+
+    - id: thread_stillwater_horror
+      status: unresolved
+      established:
+        - Taron and Aero investigated Stillwater Annex.
+        - Their investigation concerned Long Silence journals tentatively associated with the celestial phenomenon.
+        - Aero's trauma-fragmented memory begins after a sealed archive section was accessed.
+        - His final reliable memory is Taron ordering him to return to the ship and report.
+      objective_unknowns:
+        - What the sealed records contained
+        - Where the investigation led
+        - What caused the traumatic incident
+        - Why Taron left his mantle in his Coruscant quarters
+        - How Aero reached the ship or returned to Coruscant
+      constraint: Aero's memory fragmentation is currently psychological trauma, not confirmed mystical suppression.
+
+    - id: thread_sensor_array_connection
+      status: unresolved
+      official_truth: The sensor-array escort is a routine assignment with no recognized connection to Stillwater or Taron.
+      constraint: Any true connection must be established through causal play; do not assume one exists.
+
+    - id: thread_celestial_phenomenon
+      status: inherited_chronicle_mystery
+      origin: The Chronicle of the Meridian Reach, Year 4
+      established: The phenomenon remains unexplained and cross-colony philosophical rumors persist.
+      constraint: It predates Aero and must not exist solely to explain his personal arc.
+
+  future_reveal_guardrails:
+    - Cardo's history requires access to a qualified witness, former Shadow, senior Council source, or sealed record.
+    - A reveal may affect Aero emotionally but cannot dictate the player character's reaction.
+    - Taron's fate must remain unresolved until play establishes it.
+    - Narrative dice alone cannot manufacture a connection among Taron, Stillwater, the sensor array, and the celestial phenomenon.
+    - The hidden ledger grants no NPC omniscience.
+
+  opening_scope:
+    era: High Republic
+    sector: Meridian Reach
+    aero_age: 20
+    party_meeting_status: first_time
+    aero_role: newly knighted Jedi on first command
+    mission: escort six Republic engineers to reactivate an abandoned frontier sensor array
+    transport: Republic shuttle
+    harvest_festival: Nona Ladiern's Harvest Festival is two weeks away
+    narration_started: false
+

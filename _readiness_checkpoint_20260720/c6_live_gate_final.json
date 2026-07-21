@@ -1,0 +1,42 @@
+{
+ "registry_build_id": "reg_112_1784627585",
+ "projection_builder_version": "1.2.0-c5",
+ "campaigns": {
+  "meridian_reach": {
+   "coverage_percent": 100.0,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "semantic_errors": 0,
+   "semantic_error_list": [],
+   "low_confidence_mappings": 0,
+   "migration_fidelity_all_pass": true,
+   "projection_emitted": true,
+   "planned_subclass_present": true,
+   "campaign_instance_id": "meridian_reach__1784613879",
+   "state_revision": 14,
+   "species_name": "Echani",
+   "class_name": "Sentinel"
+  },
+  "shadows_of_empire": {
+   "coverage_percent": 88.9,
+   "missing_required_references": 1,
+   "unresolved_references": 1,
+   "semantic_errors": 1,
+   "semantic_error_list": [
+    "class_id_unresolved"
+   ],
+   "low_confidence_mappings": 0,
+   "migration_fidelity_all_pass": true,
+   "projection_emitted": true,
+   "planned_subclass_present": false,
+   "campaign_instance_id": "shadows_of_empire__1784613879",
+   "state_revision": 8,
+   "species_name": "Human",
+   "class_name": null
+  }
+ },
+ "meridian_pass": true,
+ "shadows_pass": false,
+ "validator_consistent_with_payloads": true,
+ "overall_c6_gate": false
+}

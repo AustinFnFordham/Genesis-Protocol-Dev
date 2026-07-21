@@ -1,0 +1,23 @@
+{
+ "extractor_valid": true,
+ "total_required_reference_slots": 45,
+ "false_slots_remaining": 0,
+ "registry_resolution_coverage_percent": {
+  "meridian_reach": 100.0,
+  "shadows_of_empire": 100.0
+ },
+ "missing_required_references": 0,
+ "unresolved_required_references": 0,
+ "display_strings_in_id_fields": 0,
+ "rollback_available": true,
+ "revision_monotonic": true,
+ "lane_records": 45,
+ "resolution_ladder": {
+  "exact_validated": 15,
+  "genuine_missing_authored": 24,
+  "relationship_edge": 3,
+  "campaign_local_adaptation": 1,
+  "character_instance": 2
+ },
+ "overall_c6_gate": true
+}

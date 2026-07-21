@@ -1,0 +1,502 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Power",
+  "description": "Defines a single Force or Tech power with narrative integration, base effects, and upgradeable mechanics.",
+  "type": "object",
+  "properties": {
+    "$comment": "SECTION 1: METADATA & IDENTIFICATION",
+    "id": {
+      "type": "string",
+      "description": "Unique, machine-readable ID, e.g., 'power_force_push' or 'power_tech_hack'."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the power."
+    },
+    "power_type": {
+      "enum": ["Force", "Tech"],
+      "description": "Whether this is a Force power or Tech power."
+    },
+    "alignment": {
+      "enum": ["Light", "Dark", "Universal"],
+      "description": "For Force powers: the alignment this power represents. Tech powers are always Universal."
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9,
+      "description": "The base level required to learn this power. 0 for at-will, 1-9 for leveled powers."
+    },
+
+    "$comment": "SECTION 2: NARRATIVE BLOCK (for the LLM-GM)",
+    "narrative": {
+      "type": "string",
+      "description": "Rich narrative description of what the power does and how it feels to use it. Used by LLM-GM for storytelling."
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Iconic quote or description that captures the essence of this power, often from Star Wars lore."
+    },
+
+    "$comment": "SECTION 3: CORE MECHANICS (The SW5e/5e Foundation)",
+    "casting_time": {
+      "type": "string",
+      "description": "The action cost to cast this power, e.g., '1 Action', '1 Bonus Action', '1 Reaction'."
+    },
+    "range": {
+      "type": "string",
+      "description": "The range of the power, e.g., 'Self', 'Touch', '30 feet', '60 feet'."
+    },
+    "duration": {
+      "type": "string",
+      "description": "How long the power lasts, e.g., 'Instantaneous', 'Concentration, up to 1 minute'."
+    },
+    "power_cost": {
+      "type": "array",
+      "description": "The resources spent to activate this power.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "Flat resource cost (e.g., 2 Force Points).",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Force_Points", "Tech_Points", "Strain", "Hit_Points"],
+                "description": "The type of resource being spent."
+              },
+              "amount": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "The flat amount of the resource being spent."
+              }
+            },
+            "required": ["type", "amount"]
+          },
+          {
+            "type": "object",
+            "description": "Percent-based cost (e.g., 5% of Max Hit Points).",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Force_Points", "Tech_Points", "Strain", "Hit_Points"],
+                "description": "The type of resource being spent."
+              },
+              "cost_mode": {
+                "type": "string",
+                "enum": ["percent_of_max", "percent_of_current"],
+                "description": "Whether the percentage is of the resource's maximum or current value."
+              },
+              "percentage": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 100,
+                "description": "Percentage of the referenced pool to spend (e.g., 5 = five percent)."
+              },
+              "apply_to": {
+                "type": "string",
+                "enum": ["current", "max"],
+                "description": "For Hit_Points (or similar), whether to deduct from current HP or reduce max HP."
+              },
+              "recovery": {
+                "type": "string",
+                "enum": ["none", "short_rest", "long_rest", "milestone"],
+                "description": "If max is reduced, how the max recovers."
+              },
+              "rounding": {
+                "type": "string",
+                "enum": ["down", "up", "nearest"],
+                "description": "How to round fractional results. Default is down."
+              }
+            },
+            "required": ["type", "cost_mode", "percentage"]
+          }
+        ]
+      }
+    },
+    "manifestation": {
+      "type": "array",
+      "description": "Descriptive strings explaining how the power manifests when cast.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uses_per_rest": {
+      "type": "string",
+      "enum": ["at_will", "short", "long"],
+      "description": "For high-level, game-changing powers that have limited uses per rest period."
+    },
+    "material_components": {
+      "type": "array",
+      "description": "Optional material components for rare rituals that specifically require and/or consume physical items.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "description": "ID of the specific item required as a material component."
+          },
+          "consumed": {
+            "type": "boolean",
+            "description": "Whether casting the power uses up the item (true) or just requires it to be present (false)."
+          },
+          "narrative": {
+            "type": "string",
+            "description": "Description of how this material is used in the power's casting."
+          },
+          "substitutes": {
+            "type": "array",
+            "description": "Alternative items that can be used instead of the specified item_id.",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["item_id", "consumed", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 3B: ACCESS & CORRUPTION",
+    "access_rules": {
+      "type": "object",
+      "description": "Rules governing who can use this power based on alignment and exceptions at extremes.",
+      "properties": {
+        "alignment_required": {
+          "type": "string",
+          "enum": ["Light", "Dark", "Universal"],
+          "description": "Primary alignment required to use this power without penalty."
+        },
+        "opposite_alignment_access": {
+          "type": "object",
+          "description": "Rules for using a power of the opposite alignment.",
+          "properties": {
+            "allowed": { "type": "boolean" },
+            "allowed_at_extremes": { "type": "boolean" },
+            "threshold": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Alignment score threshold (e.g., 90+) where penalties are waived."
+            },
+            "penalties": {
+              "type": "object",
+              "properties": {
+                "cost_multiplier": { "type": "number", "minimum": 1 },
+                "dc_penalty": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "corruption_transform": {
+      "type": "object",
+      "description": "Defines how this power can be corrupted or purified into a counterpart power.",
+      "properties": {
+        "can_corrupt": { "type": "boolean" },
+        "corrupts_to_power_id": { "type": "string" },
+        "can_purify": { "type": "boolean" },
+        "purifies_to_power_id": { "type": "string" },
+        "retains_mastery": { "type": "boolean", "description": "If true, tiered upgrades map across when corrupted/purified." },
+        "mapping_notes": { "type": "string", "description": "Human-readable notes on how effects map between variants." }
+      }
+    },
+
+    "$comment": "SECTION 4: BASE EFFECT (What the power does when first learned)",
+    "base_effect": {
+      "type": "object",
+      "description": "The core mechanical effect of the power when first learned.",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what the base power does."
+        },
+        "mechanics": {
+          "type": "array",
+          "description": "Detailed mechanical effects using our master effects schema.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "effect": {
+                "type": "string",
+                "description": "The type of effect this mechanic provides."
+              },
+              "parameters": {
+                "type": "object",
+                "description": "Parameters for the effect, varies by effect type."
+              },
+              "conditions": {
+                "type": "array",
+                "description": "Conditions that must be met for this effect to apply.",
+                "items": { "type": "string" }
+              }
+            },
+            "required": ["effect"]
+          }
+        }
+      },
+      "required": ["description", "mechanics"]
+    },
+
+    "$comment": "SECTION 5: POWER UPGRADES (The FFG Tree)",
+    "upgrades": {
+      "type": "array",
+      "description": "Upgrades that can be purchased with XP to enhance the power.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique ID for this upgrade, e.g., 'push_upgrade_magnitude'."
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the upgrade."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what this upgrade does."
+          },
+          "xp_cost": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The XP cost to purchase this upgrade."
+          },
+          "prerequisites": {
+            "type": "array",
+            "description": "List of upgrade IDs that must be purchased first.",
+            "items": { "type": "string" }
+          },
+          "mechanics": {
+            "type": "array",
+            "description": "Detailed mechanical effects of this upgrade.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "effect": {
+                  "type": "string",
+                  "description": "The type of effect this upgrade provides."
+                },
+                "modification": {
+                  "type": "string",
+                  "description": "How this upgrade modifies the base power."
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "Additional parameters for the upgrade effect."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the modification effect for LLM-GM narration."
+                }
+              },
+              "required": ["effect"]
+            }
+          }
+        },
+        "required": ["id", "name", "description", "xp_cost", "prerequisites", "mechanics"]
+      }
+    },
+
+    "$comment": "SECTION 6: TAGS (Genesis Protocol Article II)",
+    "tags": {
+      "type": "array",
+      "description": "UNIVERSAL TAGGING SYSTEM: Tags define the fundamental vocabulary and characteristics of this power. All tags must be defined in master_tags.yml. Examples: ['force', 'dark_side', 'damage', 'control'], ['tech', 'hacking', 'electronics'].",
+      "items": { "type": "string" }
+    },
+
+    "$comment": "SECTION 6B: DEPRECATED - SYNERGIES & INTEGRATION",
+    "$comment": "MIGRATION NOTE: class_synergies, species_synergies, and faction_synergies are DEPRECATED per Genesis Protocol Article III. All synergistic relationships should be migrated to synergy_rules.yml using the tags system. These blocks are kept for backward compatibility during the migration period.",
+    "class_synergies": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Classes that have special interactions with this power.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "class_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["class_id", "narrative"]
+      }
+    },
+    "species_synergies": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Species that have special interactions with this power.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "species_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["species_id", "narrative"]
+      }
+    },
+    "faction_synergies": {
+      "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED: Use tags and synergy_rules.yml instead. Factions that have special interactions with this power.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "faction_id": { "type": "string" },
+          "narrative": { "type": "string" },
+          "mechanical_benefit": { "type": "string" }
+        },
+        "required": ["faction_id", "narrative"]
+      }
+    },
+
+    "$comment": "SECTION 6B: MORALITY ENGINE - RESONANCE EFFECTS",
+    "resonance_effects": {
+      "type": "array",
+      "description": "Optional resonance effects triggered by specific narrative conditions, including alignment shifts and bystander effects for the Morality Engine.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "narrative_trigger": {
+            "type": "string",
+            "description": "The narrative condition that triggers this resonance effect."
+          },
+          "mechanical_benefit": {
+            "type": "array",
+            "description": "Mechanical effects applied when this resonance is triggered.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "value": { "type": ["string", "integer"] },
+                "target_scopes": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "condition": { "type": "string" },
+                "duration": { "type": ["string", "integer"] },
+                "notes": { "type": "string" }
+              }
+            }
+          },
+          "alignment_shift": {
+            "type": "object",
+            "description": "Optional alignment shift applied to the user's moral_compass.",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": ["light", "dark"],
+                "description": "The direction of the alignment shift."
+              },
+              "magnitude": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50,
+                "description": "The magnitude of the alignment shift (1-50)."
+              }
+            }
+          },
+          "bystander_effect": {
+            "type": "object",
+            "description": "Optional effect on witnesses, presented as a roleplaying choice.",
+            "properties": {
+              "narrative_trigger": {
+                "type": "string",
+                "description": "The narrative condition presented to companions as a roleplaying choice."
+              },
+              "consequence": {
+                "type": "array",
+                "description": "The consequences applied if the bystander conditions are met.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string" },
+                    "direction": {
+                      "type": "string",
+                      "enum": ["light", "dark"]
+                    },
+                    "magnitude": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 10,
+                      "description": "Magnitude of the bystander alignment shift (1-10)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["narrative_trigger"]
+      }
+    },
+
+    "$comment": "SECTION 7: LLM-GM INTEGRATION",
+    "llm_guidance": {
+      "type": "object",
+      "description": "Additional guidance for LLM-GM integration.",
+      "properties": {
+        "iconic_usage": {
+          "type": "string",
+          "description": "Example of how this power is typically used in Star Wars lore."
+        },
+        "tactical_notes": {
+          "type": "string",
+          "description": "Tactical advice for when and how to use this power."
+        },
+        "narrative_hooks": {
+          "type": "array",
+          "description": "Story hooks and narrative elements related to this power.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "$comment": "SECTION 8: IMAGE GENERATION",
+    "image_generation": {
+      "type": "object",
+      "description": "Data source for modular AI art generation engine.",
+      "properties": {
+        "base_prompt": {
+          "type": "string",
+          "description": "Detailed foundational prompt for generating a 'stock image' of this power, with bracketed placeholders for customizable parts."
+        },
+        "contextual_modifiers": {
+          "type": "array",
+          "description": "Modifiers defining how this power adds flavor and context to other image prompts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target_type": {
+                "type": "string",
+                "description": "The type of image this modifier applies to (e.g., 'Character_Portrait', 'Combat_Scene', 'Location')."
+              },
+              "modifier_text": {
+                "type": "string",
+                "description": "Text to append to the base prompt when this power is part of the context."
+              }
+            },
+            "required": ["target_type", "modifier_text"]
+          }
+        }
+      },
+      "required": ["base_prompt", "contextual_modifiers"]
+    },
+
+    "$comment": "SECTION 9: UI INTEGRATION",
+    "ui": {
+      "type": "object",
+      "description": "User interface assets and display information.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "Path to the power's representative image."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to the power's icon for UI display."
+        }
+      },
+      "required": ["image", "icon"]
+    }
+  },
+  "required": ["id", "name", "power_type", "level", "tags", "narrative", "casting_time", "range", "duration", "power_cost", "manifestation", "base_effect", "image_generation", "ui"]
+}
