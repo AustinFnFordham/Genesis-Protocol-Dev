@@ -33,9 +33,20 @@ export const useGenesis = create((set, get) => ({
   /** Refresh the mounted runtime slice. ALL player-facing views resolve the
    * active character through gmRuntime → metadata.active_player. The client
    * store caches display state; it never decides who is active. */
+  _refreshSeq: 0,          // monotonic request token — stale responses are DISCARDED, never applied
   refreshGmRuntime: async () => {
+    const mySeq = get()._refreshSeq + 1;
+    set({ _refreshSeq: mySeq });
     try {
       const rt = await (await fetch('http://localhost:8788/api/v1/gm/state')).json();
+      // RACE GUARD (executed-test defect fix): if any newer refresh or mount
+      // began while this request was in flight, this response is stale —
+      // discard it entirely. A stale arrival must NEVER repaint or clear state.
+      if (get()._refreshSeq !== mySeq) return get().gmRuntime ? { ...get().gmRuntime, _stale_discarded: true } : null;
+      const inFlightMount = get().mounted?.status === 'mounting';
+      if (inFlightMount && rt.mounted && rt.mounted !== get().mountedCampaignId) {
+        return { ...rt, _stale_discarded: true }; // response from the previous world during a switch
+      }
       const prev = get().gmCampaign;
       const epoch = rt.mount_epoch ?? 0;
       // The mount transaction: every visible projection must agree on this
@@ -57,7 +68,12 @@ export const useGenesis = create((set, get) => ({
       }
       if (!rt.mounted) set({ gmFeed: [], gmOptions: [], gmFocusNpc: null, journal: [], opening: null });
       return rt;
-    } catch { set({ gmRuntime: null }); return null; }
+    } catch {
+      // A failed/aborted refresh NEVER destroys committed state (executed-test
+      // defect fix: the old `set({gmRuntime:null})` here nulled a good mount
+      // when a delayed response errored). Keep truth; report failure.
+      return get().gmRuntime ?? null;
+    }
   },
   setUnresolvedAction: (ua) => set({ unresolvedAction: ua }),
   setActionPrefill: (t) => set({ actionPrefill: t }),
