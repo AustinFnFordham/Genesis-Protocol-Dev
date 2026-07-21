@@ -1,0 +1,73 @@
+{
+ "changed": {
+  "features": {
+   "before_keys": "[{'name': 'Operator Archetype', 'action_type': 'passive', 'exact_effect': '', 'urid': 'feature_operator_archetype'}, {'n",
+   "after_keys": "[{'name': 'Expertise', 'urid': 'feature_operative_expertise', 'source': 'class_operative L1', 'exact_effect': 'Double pr"
+  },
+  "migration": {
+   "before_keys": "None",
+   "after_keys": [
+    "ruling",
+    "from",
+    "to"
+   ]
+  },
+  "proficiencies": {
+   "before_keys": "None",
+   "after_keys": [
+    "skills"
+   ]
+  },
+  "defenses": {
+   "before_keys": [
+    "current_hp",
+    "maximum_hp",
+    "armor_class",
+    "conditions"
+   ],
+   "after_keys": [
+    "current_hp",
+    "maximum_hp",
+    "armor_class",
+    "conditions",
+    "saving_throws",
+    "saving_throw_proficiencies",
+    "hp_formula",
+    "armor_class_formula"
+   ]
+  },
+  "role_markers": {
+   "before_keys": "None",
+   "after_keys": "[{'name': 'Operator Archetype', 'status': 'retired_to_role_marker', 'mechanical': False, 'note': 'nonmechanical campaign"
+  },
+  "identity": {
+   "before_keys": [
+    "name",
+    "species_id",
+    "species_name",
+    "class_id",
+    "class_name",
+    "subclass_id",
+    "subclass_name",
+    "background_id",
+    "background_name",
+    "level"
+   ],
+   "after_keys": [
+    "name",
+    "species_id",
+    "species_name",
+    "class_id",
+    "class_name",
+    "subclass_id",
+    "subclass_name",
+    "background_id",
+    "background_name",
+    "level",
+    "subclass_status"
+   ]
+  }
+ },
+ "added": [],
+ "removed": []
+}

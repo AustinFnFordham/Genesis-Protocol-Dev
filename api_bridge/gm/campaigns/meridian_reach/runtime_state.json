@@ -3,7 +3,7 @@
   "campaign_id": "meridian_reach",
   "session_id": "session_1",
   "scene_id": "scene_shuttle_briefing",
-  "runtime_version": 1,
+  "runtime_version": 2,
   "turn_no": 0,
   "seed": 776211453,
   "active_player": "aero"
@@ -29,7 +29,14 @@
     "level": 1,
     "age": 20,
     "dominant_hand": "right",
-    "preferred_blaster_hand": "left"
+    "preferred_blaster_hand": "left",
+    "species_id": "species_echani",
+    "species_name": "Echani",
+    "class_id": "class_sentinel",
+    "class_name": "Sentinel",
+    "background_id": "background_jedi",
+    "background_name": "Jedi",
+    "planned_subclass_id": "subclass_sentry"
    },
    "abilities": {
     "scores": {
@@ -169,14 +176,16 @@
      "limitations": [
       "Does not grant lightsaber properties.",
       "The adopted unarmed damage die is 1d4."
-     ]
+     ],
+     "urid": "feature_martial_arts_training"
     },
     {
      "name": "Combat Discipline",
      "source": "06-lore-species.zip/official_species_playable/echani.yml",
      "action_type": "passive",
      "exact_effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents.",
-     "information_boundary": "May reveal apparent stance, focus, readiness, fighting approach, or immediate tactical intent; never thoughts, statistics, alignment, or objective truth."
+     "information_boundary": "May reveal apparent stance, focus, readiness, fighting approach, or immediate tactical intent; never thoughts, statistics, alignment, or objective truth.",
+     "urid": "feature_combat_discipline"
     },
     {
      "name": "Combat Communication",
@@ -186,7 +195,8 @@
       "Advantage on Insight checks to read emotions during combat.",
       "Once per short rest, after a meaningful brief sparring match, advantage on one Charisma check."
      ],
-     "limitations": "No blanket Persuasion advantage and no compulsion or mind reading."
+     "limitations": "No blanket Persuasion advantage and no compulsion or mind reading.",
+     "urid": "feature_combat_communication"
     },
     {
      "name": "Force Connection",
@@ -197,7 +207,8 @@
       "passive": "May sense significant Force disturbances without automatically learning identity, location, or explanation.",
       "focused": "As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment."
      },
-     "limitations": "Cannot read thoughts, memories, statistics, alignment, or objective truth; Force shielding may block it."
+     "limitations": "Cannot read thoughts, memories, statistics, alignment, or objective truth; Force shielding may block it.",
+     "urid": "feature_force_connection"
     },
     {
      "name": "Sentinel Balance",
@@ -206,7 +217,8 @@
      "trigger": "After failing a Dexterity or Charisma save but before consequences resolve.",
      "cost": "one use",
      "exact_effect": "Add 1d4 to the failed saving throw, potentially turning it into a success.",
-     "limitations": "Two uses per long rest; cannot affect attacks, checks, damage, AC, or successful saves."
+     "limitations": "Two uses per long rest; cannot affect attacks, checks, damage, AC, or successful saves.",
+     "urid": "feature_sentinel_balance"
     },
     {
      "name": "Lightsaber Deflect - Tier 1",
@@ -214,14 +226,16 @@
      "action_type": "reaction",
      "trigger": "Hit by a perceptible ranged energy attack while wielding an active lightsaber and not incapacitated.",
      "exact_effect": "Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection attack against one visible creature within 30 feet; on a hit it deals the original attack's rolled damage without adding Dexterity.",
-     "limitations": "Cannot affect area attacks, explosions, environmental damage, melee attacks, or attacks declared non-deflectable; normally once per round."
+     "limitations": "Cannot affect area attacks, explosions, environmental damage, melee attacks, or attacks declared non-deflectable; normally once per round.",
+     "urid": "feature_lightsaber_deflect_tier_1"
     },
     {
      "name": "Former Master and Jedi Network",
      "source": "04-game_data.zip/backgrounds/background_jedi.yml; rank-adapted presentation",
      "action_type": "narrative or social",
      "exact_effect": "Knows Master Taron's last confirmed region and how to identify or locate established Jedi safe houses and trusted contacts. Reasonably available contacts may offer guidance, basic information, or temporary shelter.",
-     "limitations": "Does not guarantee supplies, credits, transport, obedience, or safety; specific contacts and safe houses are established only through sourced play."
+     "limitations": "Does not guarantee supplies, credits, transport, obedience, or safety; specific contacts and safe houses are established only through sourced play.",
+     "urid": "feature_jedi_network"
     },
     {
      "name": "Echani Grappling Training",
@@ -235,7 +249,8 @@
       "Drag at half speed; target may use its action for a contested escape; release freely.",
       "Shove or Takedown requires a separate attack and contest.",
       "Pushing the target away normally ends the grapple."
-     ]
+     ],
+     "urid": "feature_echani_grappling_training"
     }
    ],
    "powers": [
@@ -251,7 +266,8 @@
      "exact_effect": "Choose one visible creature. Aero has advantage on his next attack against it. The effect ends after that attack, if concentration breaks, if the target becomes invalid, or after 1 minute.",
      "legal_at_level_1": true,
      "source": "04-game_data.zip/powers/power_battle_insight.yml",
-     "rules_status": "Confirmed effect with adopted duration override; source duration is 1 round."
+     "rules_status": "Confirmed effect with adopted duration override; source duration is 1 round.",
+     "urid": "power_battle_insight"
     },
     {
      "name": "Burst",
@@ -265,7 +281,8 @@
      "exact_effect": "Every other creature in the radius, including allies, makes a Dexterity save against DC 12. Failure deals 1d4 force damage and knocks the creature prone; success causes neither. Aero is unaffected.",
      "legal_at_level_1": true,
      "source": "04-game_data.zip/powers/power_burst.yml",
-     "rules_status": "Level, cost, radius, and damage confirmed; save, self-exclusion, success result, and prone rider are adopted table rulings."
+     "rules_status": "Level, cost, radius, and damage confirmed; save, self-exclusion, success result, and prone rider are adopted table rulings.",
+     "urid": "power_burst"
     }
    ],
    "equipment": {
@@ -282,7 +299,8 @@
       "The mantle repairs ordinary minor cuts, scorch marks, and wear during a short rest.",
       "The mantle grants no AC bonus."
      ],
-     "source": "04-game_data.zip/items/armor_modular.yml; Chronicle continuity; adopted AC and mantle implementation"
+     "source": "04-game_data.zip/items/armor_modular.yml; Chronicle continuity; adopted AC and mantle implementation",
+     "instance_id": "iteminst_aero_jedi_robes_001"
     },
     "weapons": [
      {
@@ -319,7 +337,8 @@
        },
        "craft_history": "Taron personally forged the chassis and focusing architecture; Aero bonded with the crystals and participated in sacred assembly."
       },
-      "source": "04-game_data.zip/items/weapons.yml; adopted repair and custom design"
+      "source": "04-game_data.zip/items/weapons.yml; adopted repair and custom design",
+      "instance_id": "iteminst_aero_lightsaber_001"
      },
      {
       "name": "Standard Blaster Pistol",
@@ -344,7 +363,8 @@
       "ammunition_total": 50,
       "kyber_attunement": "none",
       "design": "Compact dark-gunmetal Republic service pistol with brushed-silver controls and a left-hand-shaped grip.",
-      "source": "04-game_data.zip/items/weapons_expanded.yml; adopted repaired combat profile"
+      "source": "04-game_data.zip/items/weapons_expanded.yml; adopted repaired combat profile",
+      "item_id": "item_standard_blaster_pistol"
      },
      {
       "name": "Unarmed Strike",
@@ -355,69 +375,82 @@
       "damage_type": "kinetic",
       "range": "5 feet",
       "special_rules": "May use fists, feet, elbows, knees, or similar strikes; does not require an empty hand; does not trigger lightsaber-only effects.",
-      "source": "06-lore-species.zip/official_species_playable/echani.yml; adopted 1d4 die"
+      "source": "06-lore-species.zip/official_species_playable/echani.yml; adopted 1d4 die",
+      "item_id": "action_unarmed_strike"
      }
     ],
     "inventory": [
      {
       "item": "Security Kit",
       "quantity": 1,
-      "exact_effect": "Enables physical-security Technology checks at +3; no blanket advantage and no double proficiency."
+      "exact_effect": "Enables physical-security Technology checks at +3; no blanket advantage and no double proficiency.",
+      "item_id": "item_security_kit"
      },
      {
       "item": "Meditation Kit",
       "quantity": 1,
-      "exact_effect": "Once per long rest during an uninterrupted short rest, restore up to 2 spent Force Points."
+      "exact_effect": "Once per long rest during an uninterrupted short rest, restore up to 2 spent Force Points.",
+      "item_id": "item_meditation_kit"
      },
      {
       "item": "Backpack",
       "quantity": 1,
-      "exact_effect": "mundane storage"
+      "exact_effect": "mundane storage",
+      "item_id": "item_backpack"
      },
      {
       "item": "Bedroll",
       "quantity": 1,
-      "exact_effect": "mundane sleeping equipment"
+      "exact_effect": "mundane sleeping equipment",
+      "item_id": "item_bedroll"
      },
      {
       "item": "Compact mess kit",
       "quantity": 1,
-      "exact_effect": "mundane eating and cooking equipment"
+      "exact_effect": "mundane eating and cooking equipment",
+      "item_id": "item_compact_mess_kit"
      },
      {
       "item": "Ration pack",
       "quantity": 10,
-      "exact_effect": "one ordinary field ration each"
+      "exact_effect": "one ordinary field ration each",
+      "item_id": "item_ration_pack"
      },
      {
       "item": "Canteen",
       "quantity": 1,
-      "exact_effect": "mundane water container"
+      "exact_effect": "mundane water container",
+      "item_id": "item_canteen"
      },
      {
       "item": "Compact Jedi glowrod",
       "quantity": 1,
-      "exact_effect": "adjustable cool-white illumination with magnetic belt clip; no automatic combat benefit"
+      "exact_effect": "adjustable cool-white illumination with magnetic belt clip; no automatic combat benefit",
+      "item_id": "item_compact_jedi_glowrod"
      },
      {
       "item": "Syntherope",
       "quantity": 1,
-      "exact_effect": "50 feet of mundane utility rope"
+      "exact_effect": "50 feet of mundane utility rope",
+      "item_id": "item_syntherope"
      },
      {
       "item": "Basic fire-starting tool",
       "quantity": 1,
-      "exact_effect": "ordinary fire-starting where conditions permit"
+      "exact_effect": "ordinary fire-starting where conditions permit",
+      "item_id": "item_basic_fire_starting_tool"
      },
      {
       "item": "Personal comlink",
       "quantity": 1,
-      "exact_effect": "ordinary communications where networks permit"
+      "exact_effect": "ordinary communications where networks permit",
+      "item_id": "item_personal_comlink"
      },
      {
       "item": "Blaster ammunition",
       "quantity": 50,
-      "exact_effect": "50 total shots; pistol capacity 12"
+      "exact_effect": "50 total shots; pistol capacity 12",
+      "item_id": "item_blaster_ammunition"
      }
     ],
     "credits": 50
@@ -507,6 +540,30 @@
      "Force Technique and Saber Ward were replaced because the Level 1 list did not permit them.",
      "Sentinel equipment is a declared repair because its source block is absent.",
      "Jedi robe records conflict; adopted unarmored AC is used."
+    ]
+   },
+   "progression": {
+    "current_level": 1,
+    "unlocked_feature_urids": [
+     "feature_martial_arts_training",
+     "feature_combat_discipline",
+     "feature_combat_communication",
+     "feature_force_connection",
+     "feature_sentinel_balance",
+     "feature_lightsaber_deflect_tier_1",
+     "feature_jedi_network",
+     "feature_echani_grappling_training"
+    ],
+    "selected_choice_urids": [
+     "power_battle_insight",
+     "power_burst"
+    ]
+   },
+   "asset_relationships": {
+    "current_vessel_id": "republic_shuttle_escort",
+    "owned_vessel_ids": [],
+    "assigned_vessel_ids": [
+     "republic_shuttle_escort"
     ]
    }
   }

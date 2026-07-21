@@ -1,0 +1,15 @@
+urid: feature_operative_expertise
+entity_type: ClassFeature
+name: Expertise
+status: validated
+authority_lane: golden_slice
+class_id: class_operative
+provenance:
+  primary_source: SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)
+  granted_by: class_operative L1/L6
+  enriched_from: runtime_inline
+mechanics:
+  exact_effect: Choose two proficiencies (skills or tools); double proficiency bonus
+    with them. Two more selections at 6th level.
+effect: Double proficiency bonus for Piloting and Deception (resolved selections).
+mechanical_match: true

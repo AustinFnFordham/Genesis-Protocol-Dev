@@ -1,0 +1,22 @@
+ruling:
+  id: aran_to_operative
+  date: 2026-07-21
+  authority: owner (Austin)
+  decision: >-
+    Assign class_id: class_operative. Corrective migration of an incomplete
+    generated character, not an inference from the word "smuggler".
+  reconciliation: mechanically_honest_level_5
+  granted: [Expertise (Piloting/Deception, resolved from generated profile),
+            Sneak Attack 3d6, Cunning Action, Operative Exploits (2 slots — choices unresolved),
+            Bad Feeling, Uncanny Dodge]
+  withheld: [Operative Practice — unresolved, subclass NOT inferred]
+  recalculated:
+    hp: '38 = 8+2 + 4x(5+2) (class_operative d8 avg formula)'
+    ac: '14 = 10 + DEX 4 (unarmored; no sourced armor item; prior AC 16 had no equipment basis)'
+    saves: 'DEX +7, INT +3 (proficient); others modifier-only'
+    skills: 'Piloting*, Deception* (Expertise), Persuasion, Sleight of Hand'
+  legacy_features:
+    operator_archetype: retired_to_nonmechanical_role_marker
+    smugglers_cunning: campaign_local_provisional (typed effect, non-duplicating)
+    daring_pilot: campaign_local_provisional (typed effect, non-duplicating)
+  artifacts: [before.json, after.json, diff.json, validation.json, rollback/runtime_state.pre_migration.json]

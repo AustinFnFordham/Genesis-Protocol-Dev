@@ -287,6 +287,7 @@ def _measure_reference_integrity(sheet, registry, unresolved_vessels):
         'resolved_reference_slots': len(resolved),
         'missing_required_references': len(missing_required),
         'unresolved_references': len(unresolved) + len(unresolved_vessels),
+        'unresolved_reference_list': unresolved + [f'vessel:{v}' for v in unresolved_vessels],
         'low_confidence_mappings': 0,
         'inline_legacy_definitions': inline_legacy,
         'registry_resolution_coverage_percent': cov,

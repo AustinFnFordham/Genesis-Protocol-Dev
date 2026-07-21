@@ -1,0 +1,18 @@
+urid: feature_operative_sneak_attack
+entity_type: ClassFeature
+name: Sneak Attack
+status: validated
+authority_lane: golden_slice
+class_id: class_operative
+provenance:
+  primary_source: SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)
+  granted_by: class_operative L1
+  enriched_from: runtime_inline
+mechanics:
+  exact_effect: Once per turn, deal extra damage (1d6 scaling to 10d6 per the class
+    table) on a hit with a finesse or ranged weapon when you have advantage, or when
+    another enemy of the target is within 5 ft, that enemy is not incapacitated, and
+    you lack disadvantage.
+effect: Once per turn, +3d6 damage (L5) on a hit with a finesse or ranged weapon with
+  advantage, or when another enemy of the target is within 5 ft.
+mechanical_match: true

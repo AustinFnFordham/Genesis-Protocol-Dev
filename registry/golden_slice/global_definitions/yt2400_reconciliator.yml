@@ -1,0 +1,17 @@
+urid: yt2400_reconciliator
+entity_type: Starship
+name: The Reconciliator (YT-2400)
+status: validated
+authority_lane: golden_slice
+campaign_scope: shadows_of_empire
+provenance:
+  primary_source: api_bridge/gm/campaigns/shadows_of_empire runtime builder (campaign vessel)
+  note: 'Assigned (not owned) party vessel; referenced by asset_relationships.current_vessel_id'
+mechanics:
+  silhouette: 4
+  speed: 3
+  armor: 3
+  hull_threshold: 22
+  strain_threshold: 15
+  stations: [pilot, navigation, turret_dorsal, engineering]
+  weapons: [dorsal_laser_cannon]

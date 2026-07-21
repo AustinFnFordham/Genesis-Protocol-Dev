@@ -2,7 +2,7 @@
  "mounted": "shadows_of_empire",
  "campaign_id": "shadows_of_empire",
  "mount_epoch": 2,
- "state_revision": 8,
+ "state_revision": 10,
  "runtime_mode": "live",
  "selected_character_id": "char_smuggler_pilot_aran_voss",
  "campaign": {
@@ -20,8 +20,8 @@
      "name": "Human"
     },
     "class": {
-     "class_id": null,
-     "name": null
+     "class_id": "class_operative",
+     "name": "Operative"
     },
     "subclass": {
      "subclass_id": null,
@@ -54,10 +54,24 @@
     "proficiency_bonus": 3
    },
    "defenses": {
-    "current_hp": 45,
-    "maximum_hp": 45,
-    "armor_class": 16,
-    "conditions": []
+    "current_hp": 38,
+    "maximum_hp": 38,
+    "armor_class": 14,
+    "conditions": [],
+    "saving_throws": {
+     "strength": 1,
+     "dexterity": 7,
+     "constitution": 2,
+     "intelligence": 3,
+     "wisdom": 1,
+     "charisma": 3
+    },
+    "saving_throw_proficiencies": [
+     "dexterity",
+     "intelligence"
+    ],
+    "hp_formula": "8+2 + 4x(5+2) = 38 (class_operative d8 avg)",
+    "armor_class_formula": "10 + DEX 4 = 14 (unarmored; no sourced armor item identified; prior AC 16 had no equipment basis)"
    },
    "movement": {
     "speed": 30
@@ -65,22 +79,47 @@
    "resources": {},
    "features": [
     {
-     "name": "Operator Archetype",
-     "action_type": "passive",
-     "exact_effect": "",
-     "urid": "feature_operator_archetype"
+     "name": "Expertise",
+     "urid": "feature_operative_expertise",
+     "source": "class_operative L1",
+     "exact_effect": "Double proficiency bonus for Piloting and Deception (resolved selections)."
     },
     {
-     "name": "Smuggler's Cunning",
-     "action_type": "passive",
-     "exact_effect": "",
-     "urid": "feature_smuggler_s_cunning"
+     "name": "Sneak Attack",
+     "urid": "feature_operative_sneak_attack",
+     "source": "class_operative L1",
+     "exact_effect": "Once per turn, +3d6 damage (L5) on a hit with a finesse or ranged weapon with advantage, or when another enemy of the target is within 5 ft."
     },
     {
-     "name": "Daring Pilot",
-     "action_type": "passive",
-     "exact_effect": "",
-     "urid": "feature_daring_pilot"
+     "name": "Cunning Action",
+     "urid": "feature_operative_cunning_action",
+     "source": "class_operative L2",
+     "exact_effect": "Dash, Disengage, or Hide as a bonus action."
+    },
+    {
+     "name": "Operative Exploits",
+     "urid": "feature_operative_exploits",
+     "source": "class_operative L2",
+     "exact_effect": "Two exploit slots at L5.",
+     "selection_status": "unresolved — exploit choices pending player/owner selection"
+    },
+    {
+     "name": "Bad Feeling",
+     "urid": "feature_operative_bad_feeling",
+     "source": "class_operative L3",
+     "exact_effect": "When you roll initiative, move up to your speed before initiative order begins."
+    },
+    {
+     "name": "Operative Practice",
+     "urid": "feature_operative_practice",
+     "source": "class_operative L3",
+     "selection_status": "UNRESOLVED — subclass not inferred per owner ruling"
+    },
+    {
+     "name": "Uncanny Dodge",
+     "urid": "feature_operative_uncanny_dodge",
+     "source": "class_operative L5",
+     "exact_effect": "Reaction: halve the damage of an attack from an attacker you can see."
     }
    ],
    "powers": [],
@@ -121,14 +160,18 @@
    },
    "progression": {
     "current_level": 5,
-    "class_id": null,
+    "class_id": "class_operative",
     "subclass_id": null,
     "planned_subclass_id": null,
     "planned_subclass": null,
     "unlocked_feature_urids": [
-     "feature_operator_archetype",
-     "feature_smuggler_s_cunning",
-     "feature_daring_pilot"
+     "feature_operative_expertise",
+     "feature_operative_sneak_attack",
+     "feature_operative_cunning_action",
+     "feature_operative_exploits",
+     "feature_operative_bad_feeling",
+     "feature_operative_practice",
+     "feature_operative_uncanny_dodge"
     ],
     "selected_choice_urids": [],
     "pending_choice_groups": [],
@@ -142,20 +185,71 @@
     "assigned_vessel_ids": [
      "yt2400_reconciliator"
     ]
+   },
+   "proficiencies": {
+    "skills": {
+     "piloting": {
+      "modifier": 10,
+      "expertise": true,
+      "source": "class_operative Expertise (selection resolved from generated profile)"
+     },
+     "deception": {
+      "modifier": 9,
+      "expertise": true,
+      "source": "class_operative Expertise (selection resolved from generated profile)"
+     },
+     "persuasion": {
+      "modifier": 6,
+      "source": "class_operative skill selection"
+     },
+     "sleight_of_hand": {
+      "modifier": 7,
+      "source": "class_operative skill selection"
+     }
+    }
+   },
+   "role_markers": [
+    {
+     "name": "Operator Archetype",
+     "status": "retired_to_role_marker",
+     "mechanical": false,
+     "note": "nonmechanical campaign-local role marker (Operative/Operator conflation resolved)"
+    },
+    {
+     "name": "Smuggler's Cunning",
+     "status": "campaign_local_provisional",
+     "mechanical": true,
+     "exact_effect": "Advantage on Deception checks to conceal cargo or misdirect inspections. Non-duplicating (no Operative feature grants this)."
+    },
+    {
+     "name": "Daring Pilot",
+     "status": "campaign_local_provisional",
+     "mechanical": true,
+     "exact_effect": "Advantage on Piloting checks during hazardous or evasive vehicle maneuvers. Non-duplicating."
+    }
+   ],
+   "migration": {
+    "ruling": "aran_to_operative 2026-07-21",
+    "from": "class_id:null",
+    "to": "class_operative"
    }
   },
   "available_actions": [],
   "conditions": [],
   "progression_summary": {
    "current_level": 5,
-   "class_id": null,
+   "class_id": "class_operative",
    "subclass_id": null,
    "planned_subclass_id": null,
    "planned_subclass": null,
    "unlocked_feature_urids": [
-    "feature_operator_archetype",
-    "feature_smuggler_s_cunning",
-    "feature_daring_pilot"
+    "feature_operative_expertise",
+    "feature_operative_sneak_attack",
+    "feature_operative_cunning_action",
+    "feature_operative_exploits",
+    "feature_operative_bad_feeling",
+    "feature_operative_practice",
+    "feature_operative_uncanny_dodge"
    ],
    "selected_choice_urids": [],
    "pending_choice_groups": [],
@@ -164,27 +258,26 @@
    "earned_relationship_maneuver_urids": []
   },
   "asset_relationships": {
-   "owned_vessel_ids": [],
-   "assigned_vessel_ids": [
+   "owned_vessel_ids": [
     "yt2400_reconciliator"
    ],
+   "assigned_vessel_ids": [],
    "accessible_vessel_ids": [
     "yt2400_reconciliator"
    ],
    "current_vessel_id": "yt2400_reconciliator"
   },
   "reference_integrity": {
-   "required_reference_slots": 9,
-   "populated_reference_slots": 8,
-   "resolved_reference_slots": 8,
-   "missing_required_references": 1,
-   "unresolved_references": 1,
+   "required_reference_slots": 13,
+   "populated_reference_slots": 13,
+   "resolved_reference_slots": 13,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "unresolved_reference_list": [],
    "low_confidence_mappings": 0,
    "inline_legacy_definitions": 0,
-   "registry_resolution_coverage_percent": 88.9,
-   "missing_domains": [
-    "class"
-   ]
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
   }
  },
  "party": {
@@ -199,12 +292,16 @@
     "player_visible_runtime_summary": {
      "display_name": "Aran Voss",
      "level": 5,
-     "current_hp": 45,
-     "maximum_hp": 45,
-     "armor_class": 16,
+     "current_hp": 38,
+     "maximum_hp": 38,
+     "armor_class": 14,
      "species": {
       "species_id": "species_human",
       "name": "Human"
+     },
+     "class": {
+      "class_id": "class_operative",
+      "name": "Operative"
      }
     }
    },
@@ -382,33 +479,6 @@
   "ship_vessel_id": "yt2400_reconciliator"
  },
  "definitions": {
-  "feature_smuggler_s_cunning": {
-   "urid": "feature_smuggler_s_cunning",
-   "entity_type": "Feature",
-   "authority_lane": "campaign_local",
-   "source_path": null,
-   "content_hash": "318a8cb96db03e81",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": null,
-   "aliases": [
-    "smuggler s cunning",
-    "smuggler s cunnings"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "method": "authored",
-    "source": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
-    "note": "player-defined archetype feature; not a global definition"
-   },
-   "campaign_scope": "shadows_of_empire",
-   "validation_status": "provisional",
-   "resolution_status": "campaign_local_adaptation",
-   "name": "Smuggler's Cunning"
-  },
   "species_human": {
    "urid": "species_human",
    "entity_type": "Species",
@@ -434,59 +504,304 @@
    "resolution_status": "genuine_missing_authored",
    "name": "Human"
   },
-  "feature_daring_pilot": {
-   "urid": "feature_daring_pilot",
-   "entity_type": "Feature",
-   "authority_lane": "campaign_local",
-   "source_path": null,
-   "content_hash": "b82961b397f0024b",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": null,
-   "aliases": [
-    "daring pilot",
-    "daring pilots"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
+  "feature_operative_expertise": {
+   "urid": "feature_operative_expertise",
+   "entity_type": "ClassFeature",
+   "name": "Expertise",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
    "provenance": {
-    "method": "authored",
-    "source": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
-    "note": "player-defined archetype feature; not a global definition"
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L1/L6",
+    "enriched_from": "runtime_inline"
    },
-   "campaign_scope": "shadows_of_empire",
-   "validation_status": "provisional",
-   "resolution_status": "campaign_local_adaptation",
-   "name": "Daring Pilot"
+   "mechanics": {
+    "exact_effect": "Choose two proficiencies (skills or tools); double proficiency bonus with them. Two more selections at 6th level."
+   },
+   "effect": "Double proficiency bonus for Piloting and Deception (resolved selections).",
+   "mechanical_match": true
   },
-  "feature_operator_archetype": {
-   "urid": "feature_operator_archetype",
-   "entity_type": "Feature",
-   "authority_lane": "campaign_local",
-   "source_path": null,
-   "content_hash": "99df4e9458fd8627",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": null,
-   "aliases": [
-    "operator archetype",
-    "operator archetypes"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
+  "feature_operative_practice": {
+   "urid": "feature_operative_practice",
+   "entity_type": "ClassFeature",
+   "name": "Operative Practice",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
    "provenance": {
-    "method": "authored",
-    "source": "SW5e_Data_Hub\\forge_v3\\data\\campaign_local\\Character__char_smuggler_pilot_aran_voss.yml",
-    "note": "player-defined archetype feature; not a global definition"
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L3"
    },
-   "campaign_scope": "shadows_of_empire",
-   "validation_status": "provisional",
-   "resolution_status": "campaign_local_adaptation",
-   "name": "Operator Archetype"
+   "mechanics": {
+    "exact_effect": "Choose an Operative Practice granting features at 3rd, 9th, 13th, and 17th level."
+   }
+  },
+  "feature_operative_bad_feeling": {
+   "urid": "feature_operative_bad_feeling",
+   "entity_type": "ClassFeature",
+   "name": "Bad Feeling",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L3",
+    "enriched_from": "runtime_inline"
+   },
+   "mechanics": {
+    "exact_effect": "When you roll for initiative, you can move up to your speed before the initiative order begins."
+   },
+   "effect": "When you roll initiative, move up to your speed before initiative order begins.",
+   "mechanical_match": true
+  },
+  "feature_operative_cunning_action": {
+   "urid": "feature_operative_cunning_action",
+   "entity_type": "ClassFeature",
+   "name": "Cunning Action",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L2",
+    "enriched_from": "runtime_inline"
+   },
+   "mechanics": {
+    "exact_effect": "Take the Dash, Disengage, or Hide action as a bonus action on each of your turns."
+   },
+   "effect": "Dash, Disengage, or Hide as a bonus action.",
+   "mechanical_match": true
+  },
+  "feature_operative_sneak_attack": {
+   "urid": "feature_operative_sneak_attack",
+   "entity_type": "ClassFeature",
+   "name": "Sneak Attack",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L1",
+    "enriched_from": "runtime_inline"
+   },
+   "mechanics": {
+    "exact_effect": "Once per turn, deal extra damage (1d6 scaling to 10d6 per the class table) on a hit with a finesse or ranged weapon when you have advantage, or when another enemy of the target is within 5 ft, that enemy is not incapacitated, and you lack disadvantage."
+   },
+   "effect": "Once per turn, +3d6 damage (L5) on a hit with a finesse or ranged weapon with advantage, or when another enemy of the target is within 5 ft.",
+   "mechanical_match": true
+  },
+  "feature_operative_uncanny_dodge": {
+   "urid": "feature_operative_uncanny_dodge",
+   "entity_type": "ClassFeature",
+   "name": "Uncanny Dodge",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L5",
+    "enriched_from": "runtime_inline"
+   },
+   "mechanics": {
+    "exact_effect": "When an attacker you can see deals damage to you with an attack, use your reaction to halve the attack's damage against you."
+   },
+   "effect": "Reaction: halve the damage of an attack from an attacker you can see.",
+   "mechanical_match": true
+  },
+  "class_operative": {
+   "urid": "class_operative",
+   "entity_type": "Class",
+   "name": "Operative",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "schema_version": "1.0",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt",
+    "source_locations": [
+     "PHB p.107-109 (chapter 3, CLASSES / OPERATIVE, char offsets ~357404-364400)",
+     "PHB p.14 Building Han Solo: \"Han Solo is best depicted as an operative... 1 Hit Die - a d8, hit points equal to 8 + Constitution modifier\" (~43454)"
+    ],
+    "corroborating_records": [
+     "SW5e_Data_Hub/forge_v3/backend/feats/operative_feats.yml (requires Operative class)",
+     "SW5e_Data_Hub/forge_v3/backend/feats/operative_infiltrator_feats.yml (requires Operative + Infiltrator)",
+     "SW5e_Data_Hub/forge_v3/backend/subclasses/operative_subclasses/ (operative.infiltrator, operative.stealth_specialist)"
+    ],
+    "correction_note": "Surgical C.6 correction 2026-07-21. Previous investigation conflated \"Operator\" (a false inference from a Bounty Hunter subclass file, since removed) with \"Operative\", the genuine PHB base class. This record is extracted from the authoritative source text, not inferred."
+   },
+   "mechanics": {
+    "hit_die": "d8",
+    "hit_points_level_1": "8 + Constitution modifier",
+    "hit_points_higher": "1d8 (or 5) + Constitution modifier per operative level after 1st",
+    "proficiencies": {
+     "armor": [
+      "Light armor"
+     ],
+     "weapons": [
+      "Simple blasters",
+      "Simple vibroweapons",
+      "Martial blasters lacking auto, special, strength, and two-handed properties",
+      "Martial vibroweapons with the finesse property"
+     ],
+     "tools": [
+      "One specialist's kit of your choice"
+     ],
+     "saving_throws": [
+      "Dexterity",
+      "Intelligence"
+     ],
+     "skills": "Choose any four"
+    },
+    "starting_wealth_variant": "7d4 x 100 cr",
+    "primary_ability": "Dexterity",
+    "progression": {
+     "level_1": {
+      "proficiency_bonus": 2,
+      "features": [
+       "Expertise",
+       "Sneak Attack"
+      ],
+      "sneak_attack": "1d6",
+      "exploits": 0
+     },
+     "level_2": {
+      "proficiency_bonus": 2,
+      "features": [
+       "Cunning Action",
+       "Operative Exploits"
+      ],
+      "sneak_attack": "1d6",
+      "exploits": 2
+     },
+     "level_3": {
+      "proficiency_bonus": 2,
+      "features": [
+       "Bad Feeling",
+       "Operative Practice"
+      ],
+      "sneak_attack": "2d6",
+      "exploits": 2
+     },
+     "level_4": {
+      "proficiency_bonus": 2,
+      "features": [
+       "Ability Score Improvement"
+      ],
+      "sneak_attack": "2d6",
+      "exploits": 2
+     },
+     "level_5": {
+      "proficiency_bonus": 3,
+      "features": [
+       "Uncanny Dodge"
+      ],
+      "sneak_attack": "3d6",
+      "exploits": 2
+     },
+     "level_6": {
+      "proficiency_bonus": 3,
+      "features": [
+       "Expertise"
+      ],
+      "sneak_attack": "3d6",
+      "exploits": 2
+     },
+     "level_7": {
+      "proficiency_bonus": 3,
+      "features": [
+       "Evasion"
+      ],
+      "sneak_attack": "4d6",
+      "exploits": 3
+     },
+     "level_9": {
+      "proficiency_bonus": 4,
+      "features": [
+       "Practice feature"
+      ],
+      "sneak_attack": "5d6",
+      "exploits": 3
+     },
+     "level_11": {
+      "proficiency_bonus": 4,
+      "features": [
+       "Reliable Talent"
+      ],
+      "sneak_attack": "6d6",
+      "exploits": 3
+     },
+     "level_14": {
+      "proficiency_bonus": 5,
+      "features": [
+       "Blindsense"
+      ],
+      "sneak_attack": "7d6",
+      "exploits": 4
+     },
+     "level_15": {
+      "proficiency_bonus": 5,
+      "features": [
+       "Slippery Mind"
+      ],
+      "sneak_attack": "8d6",
+      "exploits": 4
+     },
+     "level_18": {
+      "proficiency_bonus": 6,
+      "features": [
+       "Elusive"
+      ],
+      "sneak_attack": "9d6",
+      "exploits": 5
+     },
+     "level_20": {
+      "proficiency_bonus": 6,
+      "features": [
+       "Stroke of Luck"
+      ],
+      "sneak_attack": "10d6",
+      "exploits": 5
+     }
+    },
+    "subclass_progression": "Operative Practice chosen at level 3; Practice features at 9, 13, 17",
+    "subclasses_known": [
+     "operative.infiltrator",
+     "operative.stealth_specialist",
+     "Acquisitions Practice (PHB p.112)",
+     "Beguiler Practice (PHB p.113)"
+    ],
+    "feat_references": [
+     "operative_feats.yml",
+     "operative_infiltrator_feats.yml"
+    ]
+   },
+   "validation": {
+    "class_progression": "confirmed (PHB table p.108)",
+    "hit_die": "confirmed (d8, corroborated twice)",
+    "proficiencies": "confirmed",
+    "saving_throws": "confirmed (DEX/INT)",
+    "level_1_features": "confirmed (Expertise, Sneak Attack 1d6)",
+    "subclass_progression": "confirmed",
+    "references": "confirmed (feats + subclass dirs exist in two source generations)"
+   }
+  },
+  "feature_operative_exploits": {
+   "urid": "feature_operative_exploits",
+   "entity_type": "ClassFeature",
+   "name": "Operative Exploits",
+   "status": "validated",
+   "authority_lane": "golden_slice",
+   "class_id": "class_operative",
+   "provenance": {
+    "primary_source": "SW5e_Data_Hub/forge_v3/backend/clean_source/SW5e_PHB.txt (p.108-109)",
+    "granted_by": "class_operative L2",
+    "enriched_from": "runtime_inline"
+   },
+   "mechanics": {
+    "exact_effect": "Adopt two exploits; additional exploits at 7th, 13th, and 17th level."
+   },
+   "effect": "Two exploit slots at L5.",
+   "mechanical_match": true
   }
  },
  "visibility": {
@@ -501,10 +816,10 @@
   "campaign_source": "gm/campaigns/shadows_of_empire/runtime_state.json",
   "character_runtime_source": "runtime.player_characters.char_smuggler_pilot_aran_voss",
   "campaign_instance_id": "shadows_of_empire__1784613879",
-  "registry_build_id": "reg_112_1784627585",
+  "registry_build_id": "reg_121_1784663822",
   "projection_builder_version": "1.2.0-c5",
   "fixture_filter": {
-   "candidates_examined": 6,
+   "candidates_examined": 11,
    "known_fixture_urids": 20,
    "rejected_fixture_urids": 0,
    "fixture_membership_attempts": 0,
@@ -512,17 +827,16 @@
    "live_projection_fixture_hits": 0
   },
   "reference_integrity": {
-   "required_reference_slots": 9,
-   "populated_reference_slots": 8,
-   "resolved_reference_slots": 8,
-   "missing_required_references": 1,
-   "unresolved_references": 1,
+   "required_reference_slots": 13,
+   "populated_reference_slots": 13,
+   "resolved_reference_slots": 13,
+   "missing_required_references": 0,
+   "unresolved_references": 0,
+   "unresolved_reference_list": [],
    "low_confidence_mappings": 0,
    "inline_legacy_definitions": 0,
-   "registry_resolution_coverage_percent": 88.9,
-   "missing_domains": [
-    "class"
-   ]
+   "registry_resolution_coverage_percent": 100.0,
+   "missing_domains": []
   },
   "unresolved_progression_refs": 0,
   "hidden_fields_removed": true
@@ -531,9 +845,7 @@
   "schema_valid": true,
   "semantic_valid": true,
   "errors": [],
-  "warnings": [
-   "identity:class_unresolved"
-  ],
+  "warnings": [],
   "malformed_equipment_entries": 0,
   "duplicate_character_sources": 0
  },

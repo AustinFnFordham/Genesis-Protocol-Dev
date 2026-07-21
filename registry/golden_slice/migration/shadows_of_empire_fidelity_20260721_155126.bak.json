@@ -1,0 +1,636 @@
+{
+ "metadata": {
+  "campaign_id": "shadows_of_empire",
+  "session_id": "session_1",
+  "scene_id": "scene_vardos_aftermath",
+  "runtime_version": 9,
+  "turn_no": 0,
+  "seed": 378539591,
+  "active_player": "char_smuggler_pilot_aran_voss"
+ },
+ "campaign": {
+  "era": "New_Republic",
+  "current_time": "2025-09-15",
+  "current_location": "docking bay 9, Vardos orbital transfer station",
+  "active_objectives": [
+   "deliver the exfiltrated listening-post intel",
+   "shake the local enforcers"
+  ],
+  "campaign_flags": {}
+ },
+ "player_characters": {
+  "char_smuggler_pilot_aran_voss": {
+   "identity": {
+    "name": "Aran Voss",
+    "species_id": "species_human",
+    "species_name": "Human",
+    "class_id": "class_operative",
+    "class_name": "Operative",
+    "subclass_id": null,
+    "subclass_name": null,
+    "background_id": "background_smuggler",
+    "background_name": "Smuggler",
+    "level": 5,
+    "subclass_status": "unresolved_operative_practice — owner/evidence required, not inferred"
+   },
+   "abilities": {
+    "scores": {
+     "strength": 12,
+     "dexterity": 18,
+     "constitution": 14,
+     "intelligence": 10,
+     "wisdom": 12,
+     "charisma": 16
+    },
+    "modifiers": {
+     "strength": 1,
+     "dexterity": 4,
+     "constitution": 2,
+     "intelligence": 0,
+     "wisdom": 1,
+     "charisma": 3
+    },
+    "proficiency_bonus": 3
+   },
+   "defenses": {
+    "current_hp": 38,
+    "maximum_hp": 38,
+    "armor_class": 14,
+    "conditions": [],
+    "saving_throws": {
+     "strength": 1,
+     "dexterity": 7,
+     "constitution": 2,
+     "intelligence": 3,
+     "wisdom": 1,
+     "charisma": 3
+    },
+    "saving_throw_proficiencies": [
+     "dexterity",
+     "intelligence"
+    ],
+    "hp_formula": "8+2 + 4x(5+2) = 38 (class_operative d8 avg)",
+    "armor_class_formula": "10 + DEX 4 = 14 (unarmored; no sourced armor item identified; prior AC 16 had no equipment basis)"
+   },
+   "movement": {
+    "speed": 30
+   },
+   "resources": {},
+   "features": [
+    {
+     "name": "Expertise",
+     "urid": "feature_operative_expertise",
+     "source": "class_operative L1",
+     "exact_effect": "Double proficiency bonus for Piloting and Deception (resolved selections)."
+    },
+    {
+     "name": "Sneak Attack",
+     "urid": "feature_operative_sneak_attack",
+     "source": "class_operative L1",
+     "exact_effect": "Once per turn, +3d6 damage (L5) on a hit with a finesse or ranged weapon with advantage, or when another enemy of the target is within 5 ft."
+    },
+    {
+     "name": "Cunning Action",
+     "urid": "feature_operative_cunning_action",
+     "source": "class_operative L2",
+     "exact_effect": "Dash, Disengage, or Hide as a bonus action."
+    },
+    {
+     "name": "Operative Exploits",
+     "urid": "feature_operative_exploits",
+     "source": "class_operative L2",
+     "exact_effect": "Two exploit slots at L5.",
+     "selection_status": "unresolved — exploit choices pending player/owner selection"
+    },
+    {
+     "name": "Bad Feeling",
+     "urid": "feature_operative_bad_feeling",
+     "source": "class_operative L3",
+     "exact_effect": "When you roll initiative, move up to your speed before initiative order begins."
+    },
+    {
+     "name": "Operative Practice",
+     "urid": "feature_operative_practice",
+     "source": "class_operative L3",
+     "selection_status": "UNRESOLVED — subclass not inferred per owner ruling"
+    },
+    {
+     "name": "Uncanny Dodge",
+     "urid": "feature_operative_uncanny_dodge",
+     "source": "class_operative L5",
+     "exact_effect": "Reaction: halve the damage of an attack from an attacker you can see."
+    }
+   ],
+   "powers": [],
+   "equipment": {
+    "weapons": [
+     {
+      "name": "Blaster Pistol",
+      "entity_type": "Item",
+      "item_type": "Weapon",
+      "quantity": 1,
+      "equipped": true,
+      "item_id": "item_blaster_pistol"
+     }
+    ],
+    "armor": [],
+    "gear": [
+     {
+      "name": "Flight Jacket",
+      "entity_type": "Item",
+      "item_type": "Gear",
+      "quantity": 1,
+      "equipped": false,
+      "item_id": "item_flight_jacket"
+     },
+     {
+      "name": "Lucky Sabacc Chip",
+      "entity_type": "Item",
+      "item_type": "Trade_Good",
+      "quantity": 1,
+      "equipped": false,
+      "item_id": "item_lucky_sabacc_chip"
+     }
+    ],
+    "vehicles": [],
+    "starships": [
+     {
+      "name": "YT-2400 Freighter",
+      "entity_type": "Item",
+      "item_type": "Starship",
+      "quantity": 1,
+      "equipped": false
+     }
+    ],
+    "inventory": []
+   },
+   "progression": {
+    "current_level": 5,
+    "unlocked_feature_urids": [
+     "feature_operator_archetype",
+     "feature_smuggler_s_cunning",
+     "feature_daring_pilot"
+    ],
+    "selected_choice_urids": []
+   },
+   "asset_relationships": {
+    "current_vessel_id": "yt2400_reconciliator",
+    "owned_vessel_ids": [],
+    "assigned_vessel_ids": [
+     "yt2400_reconciliator"
+    ]
+   },
+   "proficiencies": {
+    "skills": {
+     "piloting": {
+      "modifier": 10,
+      "expertise": true,
+      "source": "class_operative Expertise (selection resolved from generated profile)"
+     },
+     "deception": {
+      "modifier": 9,
+      "expertise": true,
+      "source": "class_operative Expertise (selection resolved from generated profile)"
+     },
+     "persuasion": {
+      "modifier": 6,
+      "source": "class_operative skill selection"
+     },
+     "sleight_of_hand": {
+      "modifier": 7,
+      "source": "class_operative skill selection"
+     }
+    }
+   },
+   "role_markers": [
+    {
+     "name": "Operator Archetype",
+     "status": "retired_to_role_marker",
+     "mechanical": false,
+     "note": "nonmechanical campaign-local role marker (Operative/Operator conflation resolved)"
+    },
+    {
+     "name": "Smuggler's Cunning",
+     "status": "campaign_local_provisional",
+     "mechanical": true,
+     "exact_effect": "Advantage on Deception checks to conceal cargo or misdirect inspections. Non-duplicating (no Operative feature grants this)."
+    },
+    {
+     "name": "Daring Pilot",
+     "status": "campaign_local_provisional",
+     "mechanical": true,
+     "exact_effect": "Advantage on Piloting checks during hazardous or evasive vehicle maneuvers. Non-duplicating."
+    }
+   ],
+   "migration": {
+    "ruling": "aran_to_operative 2026-07-21",
+    "from": "class_id:null",
+    "to": "class_operative"
+   }
+  },
+  "char_former_isb_analyst_tala_ren": {
+   "identity": {
+    "name": "Tala Ren",
+    "species_id": "human",
+    "species_name": null,
+    "class_id": null,
+    "class_name": null,
+    "subclass_id": null,
+    "subclass_name": null,
+    "background_id": "infiltrator",
+    "background_name": null,
+    "level": 5
+   },
+   "abilities": {
+    "scores": {
+     "strength": 8,
+     "dexterity": 12,
+     "constitution": 10,
+     "intelligence": 18,
+     "wisdom": 16,
+     "charisma": 8
+    },
+    "modifiers": {
+     "strength": -1,
+     "dexterity": 1,
+     "constitution": 0,
+     "intelligence": 4,
+     "wisdom": 3,
+     "charisma": -1
+    },
+    "proficiency_bonus": 3
+   },
+   "defenses": {
+    "current_hp": 16,
+    "maximum_hp": 16,
+    "armor_class": 14,
+    "conditions": []
+   },
+   "movement": {
+    "speed": 30
+   },
+   "resources": {},
+   "features": [
+    {
+     "name": "Brilliant Pattern-Reader",
+     "action_type": "passive",
+     "exact_effect": ""
+    },
+    {
+     "name": "Guarded Mindset",
+     "action_type": "passive",
+     "exact_effect": ""
+    },
+    {
+     "name": "Expert Slicer",
+     "action_type": "passive",
+     "exact_effect": ""
+    }
+   ],
+   "powers": [],
+   "equipment": {
+    "weapons": [
+     {
+      "name": "Holdout blaster",
+      "entity_type": "Item",
+      "item_type": "Weapon",
+      "quantity": 1,
+      "equipped": true
+     }
+    ],
+    "armor": [],
+    "gear": [
+     {
+      "name": "Encrypted datapad",
+      "entity_type": "Item",
+      "item_type": "Gear",
+      "quantity": 1,
+      "equipped": false
+     }
+    ],
+    "vehicles": [],
+    "starships": [],
+    "inventory": []
+   }
+  },
+  "char_iridonian_guardian_kass_zoran": {
+   "identity": {
+    "name": "Kass Zoran",
+    "species_id": "species_zabrak",
+    "species_name": null,
+    "class_id": null,
+    "class_name": null,
+    "subclass_id": null,
+    "subclass_name": null,
+    "background_id": "background_guardian",
+    "background_name": null,
+    "level": 7
+   },
+   "abilities": {
+    "scores": {
+     "strength": 18,
+     "dexterity": 12,
+     "constitution": 14,
+     "intelligence": 10,
+     "wisdom": 16,
+     "charisma": 8
+    },
+    "modifiers": {
+     "strength": 4,
+     "dexterity": 1,
+     "constitution": 2,
+     "intelligence": 0,
+     "wisdom": 3,
+     "charisma": -1
+    },
+    "proficiency_bonus": 3
+   },
+   "defenses": {
+    "current_hp": 68,
+    "maximum_hp": 68,
+    "armor_class": 20,
+    "conditions": []
+   },
+   "movement": {
+    "speed": 30
+   },
+   "resources": {},
+   "features": [
+    {
+     "name": "Force Points",
+     "action_type": "passive",
+     "exact_effect": ""
+    },
+    {
+     "name": "Guardian Bond",
+     "action_type": "passive",
+     "exact_effect": ""
+    },
+    {
+     "name": "Protection",
+     "action_type": "passive",
+     "exact_effect": ""
+    },
+    {
+     "name": "Vigilance",
+     "action_type": "passive",
+     "exact_effect": ""
+    }
+   ],
+   "powers": [],
+   "equipment": {
+    "weapons": [
+     {
+      "name": "Lightsaber Pike (Green)",
+      "entity_type": "Item",
+      "item_type": "Weapon",
+      "quantity": 1,
+      "equipped": true
+     }
+    ],
+    "armor": [
+     {
+      "name": "Heavy Zabrak Guard Armor with Senatorial Crest",
+      "entity_type": "Item",
+      "item_type": "Armor",
+      "quantity": 1,
+      "equipped": true
+     }
+    ],
+    "gear": [
+     {
+      "name": "Comlink",
+      "entity_type": "Item",
+      "item_type": "Gear",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "name": "Potion of Healing",
+      "entity_type": "Item",
+      "item_type": "Gear",
+      "quantity": 1,
+      "equipped": false
+     },
+     {
+      "name": "Rations (1 week)",
+      "entity_type": "Item",
+      "item_type": "Gear",
+      "quantity": 1,
+      "equipped": false
+     }
+    ],
+    "vehicles": [],
+    "starships": [],
+    "inventory": []
+   }
+  }
+ },
+ "active_npcs": {
+  "enforcer_captain_reyes": {
+   "name": "Captain Dara Reyes",
+   "role": "Vardos enforcer captain",
+   "disposition": "suspicious, procedural, watching the docking manifests",
+   "memories": [],
+   "knowledge_boundary": "knows a listening post was breached; no descriptions yet"
+  },
+  "dockhand_yuel": {
+   "name": "Yuel",
+   "role": "dockhand and information broker",
+   "disposition": "transactional, friendly to credits",
+   "memories": [],
+   "knowledge_boundary": "dock traffic and rumors only"
+  }
+ },
+ "combat": {
+  "active": false,
+  "combat_id": null,
+  "initiative": [],
+  "positions": {},
+  "round": 0,
+  "turn": null,
+  "effects": []
+ },
+ "environment": {
+  "visible_objects": [
+   "fuel lines",
+   "cargo sleds",
+   "manifest kiosk"
+  ],
+  "hidden_objects": [],
+  "exits": [
+   "transit tube",
+   "maintenance crawlway",
+   "the Reconciliators' freighter ramp"
+  ],
+  "hazards": [],
+  "world_damage": [],
+  "interactables": [
+   "manifest kiosk",
+   "comm booth",
+   "cargo sled"
+  ],
+  "positions": {
+   "char_smuggler_pilot_aran_voss": "docking_bay_floor",
+   "char_former_isb_analyst_tala_ren": "docking_bay_floor",
+   "char_iridonian_guardian_kass_zoran": "docking_bay_floor",
+   "enforcer_captain_reyes": "bay_entrance_25_ft",
+   "dockhand_yuel": "beside_cargo_sled_10_ft"
+  }
+ },
+ "relationships": {},
+ "quests": {
+  "listening_post_intel": {
+   "state": "active",
+   "summary": "The party traced falsified cargo tags to a decommissioned listening post on Vardos' dark side. They exfiltrated intel but drew the attention of local enforcers."
+  }
+ },
+ "factions": {},
+ "inventory_state": {},
+ "open_threads": {},
+ "player_knowledge": {
+  "char_smuggler_pilot_aran_voss": [
+   "the intel is hot",
+   "enforcers are alerted"
+  ],
+  "char_former_isb_analyst_tala_ren": [
+   "the intel is hot",
+   "enforcers are alerted"
+  ],
+  "char_iridonian_guardian_kass_zoran": [
+   "the intel is hot",
+   "enforcers are alerted"
+  ]
+ },
+ "hidden_gm_state": {
+  "established_hidden_history": [],
+  "unresolved_truths": [
+   {
+    "id": "thread_intel_buyer",
+    "status": "unresolved",
+    "constraint": "who wants the listening-post intel must be established through play"
+   }
+  ],
+  "future_reveal_guardrails": [
+   "no reveal without an earned causal path"
+  ]
+ },
+ "chronicle_reference": "chronicle.jsonl",
+ "validation": {
+  "last_approved_patch": null,
+  "unresolved_data": [],
+  "provisional_rulings": []
+ },
+ "scene_state": {
+  "mode": "dialogue",
+  "action_lock": false,
+  "player_interrupts_allowed": true,
+  "physical_actions_allowed": true,
+  "powers_allowed": true,
+  "movement_allowed": true,
+  "custom_action_allowed": true
+ },
+ "ship": {
+  "vessel_id": "yt2400_reconciliator",
+  "name": "The Reconciliator (YT-2400)",
+  "silhouette": 4,
+  "speed": 3,
+  "armor": 3,
+  "hull": {
+   "current": 22,
+   "threshold": 22
+  },
+  "strain": {
+   "current": 15,
+   "threshold": 15
+  },
+  "shields": {
+   "fore": 1,
+   "aft": 1,
+   "port": 0,
+   "starboard": 0
+  },
+  "systems": {
+   "engines": "operational",
+   "navigation": "operational",
+   "communications": "operational",
+   "weapons": "operational",
+   "shields": "operational"
+  },
+  "stations": [
+   {
+    "station_id": "pilot",
+    "name": "Pilot",
+    "occupied_by": "char_smuggler_pilot_aran_voss",
+    "required_proficiencies": [
+     "piloting"
+    ],
+    "status": "operational",
+    "available_actions": [
+     "Fly/Drive",
+     "Evasive Maneuvers",
+     "Gain the Advantage",
+     "Punch It"
+    ],
+    "disabled_actions": []
+   },
+   {
+    "station_id": "navigation",
+    "name": "Navigation",
+    "occupied_by": "char_former_isb_analyst_tala_ren",
+    "required_proficiencies": [
+     "astrogation"
+    ],
+    "status": "operational",
+    "available_actions": [
+     "Plot Course",
+     "Scan the Enemy",
+     "Calculate Hyperroute"
+    ],
+    "disabled_actions": []
+   },
+   {
+    "station_id": "turret_dorsal",
+    "name": "Dorsal Turret",
+    "occupied_by": null,
+    "required_proficiencies": [
+     "gunnery"
+    ],
+    "status": "operational",
+    "available_actions": [
+     "Fire Turret",
+     "Suppressing Fire",
+     "Aim"
+    ],
+    "disabled_actions": []
+   },
+   {
+    "station_id": "engineering",
+    "name": "Engineering",
+    "occupied_by": "char_iridonian_guardian_kass_zoran",
+    "required_proficiencies": [
+     "mechanics"
+    ],
+    "status": "operational",
+    "available_actions": [
+     "Damage Control",
+     "Boost Shields",
+     "Reroute Power"
+    ],
+    "disabled_actions": []
+   }
+  ],
+  "weapons": [
+   {
+    "weapon_id": "dorsal_laser_cannon",
+    "arc": "dorsal 360",
+    "range": "close",
+    "damage": 6,
+    "qualities": [
+     "Accurate 1"
+    ],
+    "current_status": "operational"
+   }
+  ]
+ }
+}

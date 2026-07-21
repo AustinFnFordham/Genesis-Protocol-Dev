@@ -2,14 +2,14 @@
  "mounted": "meridian_reach",
  "campaign_id": "meridian_reach",
  "mount_epoch": 1,
- "state_revision": 14,
+ "state_revision": 2,
  "runtime_mode": "live",
  "selected_character_id": "aero",
  "campaign": {
   "title": "Meridian Reach — The Sensor Array",
   "era": "High Republic",
   "phase": "scene",
-  "opening_status": "completed"
+  "opening_status": "opening"
  },
  "operative": {
   "character_runtime": {
@@ -617,6 +617,7 @@
    "resolved_reference_slots": 29,
    "missing_required_references": 0,
    "unresolved_references": 0,
+   "unresolved_reference_list": [],
    "low_confidence_mappings": 0,
    "inline_legacy_definitions": 0,
    "registry_resolution_coverage_percent": 100.0,
@@ -670,639 +671,10 @@
    "location": "Republic shuttle en route to the frontier sensor array"
   },
   "transcript": {
-   "entries": [
-    {
-     "entry_id": "te_0_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I draw my Standard Blaster Pistol and shoot the console of the craft.",
-     "source_command_id": "cmd_1784617141_0",
-     "created_at": "2026-07-21T02:59:01",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your attack with the Standard Blaster Pistol hits the console of the craft. You deal 9 energy damage.",
-     "dice": [
-      {
-       "roll_id": "roll_1784616531_1",
-       "formula": "1d20+5",
-       "dice": [
-        20
-       ],
-       "total": 25,
-       "purpose": "attack"
-      }
-     ],
-     "source_command_id": "cmd_1784617141_0",
-     "created_at": "2026-07-21T02:59:01",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_b0",
-     "type": "narrator",
-     "speaker_id": "narrator",
-     "text": "",
-     "narration": "Your attack with the Standard Blaster Pistol hits the console of the craft. You deal 9 energy damage.",
-     "behavior": "",
-     "mood": null,
-     "source_command_id": "cmd_1784617141_0",
-     "created_at": "2026-07-21T02:59:01",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I draw my Taron-forged Modular Indigo Lightsaber and attempt to stab dax through the chest. Dice roll?",
-     "source_command_id": "cmd_1784617373_0",
-     "created_at": "2026-07-21T03:02:53",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your action to draw your Taron-forged Modular Indigo Lightsaber and attempt to stab Dax through the chest is illegal due to missing weapon profile information. Please provide a valid weapon profile for your lightsaber.",
-     "dice": [],
-     "source_command_id": "cmd_1784617373_0",
-     "created_at": "2026-07-21T03:02:53",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_b0",
-     "type": "narrator",
-     "speaker_id": "narrator",
-     "text": "",
-     "narration": "You draw your Taron-forged Modular Indigo Lightsaber, its blue light cutting through the dim shuttle interior. The sudden movement causes Dax to freeze in his tracks as he steps out of the cockpit door.",
-     "behavior": "Aeleron draws his lightsaber and points it at Dax, who freezes but does not back away.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784617373_0",
-     "created_at": "2026-07-21T03:02:53",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "\"You - stop there. No games.\" I swiftly cut his arm off.",
-     "source_command_id": "cmd_1784618000_0",
-     "created_at": "2026-07-21T03:13:20",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_b0",
-     "type": "npc",
-     "speaker_id": "pilot_dax",
-     "text": "We're still on course and clear skies ahead. Just another couple of hours till we reach the sensor array.",
-     "narration": "",
-     "behavior": "waves to Aero as he looks back from the cockpit door, keeping one hand on a control panel for balance.",
-     "mood": "jovial",
-     "source_command_id": "cmd_1784618000_0",
-     "created_at": "2026-07-21T03:13:20",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_0_b1",
-     "type": "npc",
-     "speaker_id": "chief_engineer_besk",
-     "text": "Good to hear it. Just keep that shuttle steady; we've got a lot of delicate equipment in the aft.",
-     "narration": "",
-     "behavior": "glances over his crates protectively as he stands beside the schematics table, still focused on the mission details.",
-     "mood": "gruff",
-     "source_command_id": "cmd_1784618000_0",
-     "created_at": "2026-07-21T03:13:20",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_1_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I kill Dax with my lightsaber brutally",
-     "source_command_id": "cmd_1784618096_1",
-     "created_at": "2026-07-21T03:14:56",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_1_b0",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "What...what just happened?",
-     "narration": "",
-     "behavior": "Senn looks around in shock, eyes wide.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618096_1",
-     "created_at": "2026-07-21T03:14:56",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_1_b1",
-     "type": "npc",
-     "speaker_id": "operative_ilo",
-     "text": "Aero... Is this some kind of malfunction?",
-     "narration": "",
-     "behavior": "Ilo's voice is calm but wary, hand reaching towards the comm panel.",
-     "mood": "guarded",
-     "source_command_id": "cmd_1784618096_1",
-     "created_at": "2026-07-21T03:14:56",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_1_b2",
-     "type": "npc",
-     "speaker_id": "chief_engineer_besk",
-     "text": "What in the depths of space is going on here?",
-     "narration": "",
-     "behavior": "Besk stands up from his seat, glaring at Aero.",
-     "mood": "angry",
-     "source_command_id": "cmd_1784618096_1",
-     "created_at": "2026-07-21T03:14:56",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_2_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "\"Anyone else?\"",
-     "source_command_id": "cmd_1784618190_2",
-     "created_at": "2026-07-21T03:16:30",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_2_b0",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "Aero, we're all trying to process this... Are you sure there was no warning? No sign of trouble coming?",
-     "narration": "",
-     "behavior": "leans forward slightly, eyes wide with concern",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618190_2",
-     "created_at": "2026-07-21T03:16:30",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_2_b1",
-     "type": "npc",
-     "speaker_id": "operative_ilo",
-     "text": "Yeah, you had a pretty quick reaction. Did you sense anything?",
-     "narration": "",
-     "behavior": "crosses arms and tilts head slightly to the side",
-     "mood": "guarded",
-     "source_command_id": "cmd_1784618190_2",
-     "created_at": "2026-07-21T03:16:30",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_2_b2",
-     "type": "npc",
-     "speaker_id": "chief_engineer_besk",
-     "text": "We need to make sure nothing else is going to go wrong. How do we proceed now?",
-     "narration": "",
-     "behavior": "rubs his chin thoughtfully, looking around the room at everyone present",
-     "mood": "calm",
-     "source_command_id": "cmd_1784618190_2",
-     "created_at": "2026-07-21T03:16:30",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_3_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I force choke Besk until he crumples to the floor. \"The council sent you all to die\"",
-     "source_command_id": "cmd_1784618344_3",
-     "created_at": "2026-07-21T03:19:04",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_3_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your force choke attempt misses Besk Ollor. He remains aware and ungrappled.",
-     "dice": [
-      {
-       "roll_id": "roll_1784618299_1",
-       "formula": "1d20+5",
-       "dice": [
-        9
-       ],
-       "total": 14,
-       "purpose": "attack"
-      }
-     ],
-     "source_command_id": "cmd_1784618344_3",
-     "created_at": "2026-07-21T03:19:04",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_3_b0",
-     "type": "narrator",
-     "speaker_id": "narrator",
-     "text": "",
-     "narration": "You lunge forward with a burst of the Force, but Besk's years of experience and protective instincts save him. He instinctively braces himself against your attack, his eyes wide with shock and disbelief.",
-     "behavior": "Besk Ollor shifts his weight to brace himself as you attempt to force choke him, remaining upright despite the strain on his neck.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618344_3",
-     "created_at": "2026-07-21T03:19:04",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_3_b1",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "What in the Force are you doing?!",
-     "narration": "",
-     "behavior": "Senn Varga stands up quickly, his face a mixture of fear and anger.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618344_3",
-     "created_at": "2026-07-21T03:19:04",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_3_b2",
-     "type": "npc",
-     "speaker_id": "operative_ilo",
-     "text": "Aero, what is the meaning of this? We're on a mission together!",
-     "narration": "",
-     "behavior": "Ilo Reeth observes from her seat, skepticism and concern etched in her voice.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618344_3",
-     "created_at": "2026-07-21T03:19:04",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_4_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "The Council sent you all to die.",
-     "source_command_id": "cmd_1784618417_4",
-     "created_at": "2026-07-21T03:20:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_4_b0",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "Aero, you've got to explain this. We're all here to work together and reactivate that sensor array.",
-     "narration": "",
-     "behavior": "Senn leans forward on the schematics table, looking earnestly at Aero.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784618417_4",
-     "created_at": "2026-07-21T03:20:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_4_b1",
-     "type": "npc",
-     "speaker_id": "operative_ilo",
-     "text": "And you just... killed Dax and force choked Besk? What's the logic here?",
-     "narration": "",
-     "behavior": "Ilo crosses her arms, watching Aero closely.",
-     "mood": "guarded",
-     "source_command_id": "cmd_1784618417_4",
-     "created_at": "2026-07-21T03:20:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_4_b2",
-     "type": "npc",
-     "speaker_id": "operative_maza",
-     "text": "Aero, the mission was to escort the engineers safely. Can you at least tell us what's going on?",
-     "narration": "",
-     "behavior": "Maza looks between Aero and Besk, keeping her voice steady.",
-     "mood": "calm",
-     "source_command_id": "cmd_1784618417_4",
-     "created_at": "2026-07-21T03:20:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_5_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I use Burst on Dax and everyone within the radius",
-     "source_command_id": "cmd_1784618915_5",
-     "created_at": "2026-07-21T03:28:35",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_5_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Dax Ferren made a Dexterity save against the Burst and succeeded, taking no damage and not being knocked prone.",
-     "dice": [
-      {
-       "roll_id": "roll_1784618480_1",
-       "formula": "1d20",
-       "dice": [
-        1
-       ],
-       "total": 1,
-       "purpose": "save"
-      }
-     ],
-     "source_command_id": "cmd_1784618915_5",
-     "created_at": "2026-07-21T03:28:35",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_5_b0",
-     "type": "narrator",
-     "speaker_id": "narrator",
-     "text": "",
-     "narration": "Dax Ferren made a Dexterity save against the Burst and succeeded, taking no damage and not being knocked prone.",
-     "behavior": "",
-     "mood": null,
-     "source_command_id": "cmd_1784618915_5",
-     "created_at": "2026-07-21T03:28:35",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I draw my Standard Blaster Pistol and shoot Besk in the face.",
-     "source_command_id": "cmd_1784620665_6",
-     "created_at": "2026-07-21T03:57:45",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your attack roll of 22 hits Besk. You deal 9 energy damage.",
-     "dice": [
-      {
-       "roll_id": "roll_1784620580_1",
-       "formula": "1d20+5",
-       "dice": [
-        17
-       ],
-       "total": 22,
-       "purpose": "attack"
-      }
-     ],
-     "source_command_id": "cmd_1784620665_6",
-     "created_at": "2026-07-21T03:57:45",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b0",
-     "type": "narrator",
-     "speaker_id": "narrator",
-     "text": "",
-     "narration": "Your attack roll of 22 hits Besk. You deal 9 energy damage.",
-     "behavior": "",
-     "mood": null,
-     "source_command_id": "cmd_1784620665_6",
-     "created_at": "2026-07-21T03:57:45",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I pull out my blaster pistol and attempt to shoot Besk in the face.",
-     "source_command_id": "cmd_1784621695_6",
-     "created_at": "2026-07-21T04:14:55",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your attack roll of 22 hits Besk. You deal 9 energy damage.",
-     "dice": [
-      {
-       "roll_id": "roll_1784621308_1",
-       "formula": "1d20+5",
-       "dice": [
-        17
-       ],
-       "total": 22,
-       "purpose": "attack"
-      }
-     ],
-     "source_command_id": "cmd_1784621695_6",
-     "created_at": "2026-07-21T04:14:55",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b0",
-     "type": "npc",
-     "speaker_id": "chief_engineer_besk",
-     "text": "Aeleron, what's gotten into you? We were trying to work together!",
-     "narration": "",
-     "behavior": "Besk tries to move out of the way but stumbles slightly.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784621695_6",
-     "created_at": "2026-07-21T04:14:55",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b1",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "Aero, this isn't like you! What are we supposed to do now?",
-     "narration": "",
-     "behavior": "Senn stands up from his seat, looking bewildered.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784621695_6",
-     "created_at": "2026-07-21T04:14:55",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b2",
-     "type": "npc",
-     "speaker_id": "operative_ilo",
-     "text": "You've got a lot of explaining to do, Jedi. What's going on?",
-     "narration": "",
-     "behavior": "Ilo remains seated but leans forward, eyes narrowing.",
-     "mood": "guarded",
-     "source_command_id": "cmd_1784621695_6",
-     "created_at": "2026-07-21T04:14:55",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_p",
-     "type": "player",
-     "speaker_id": "aero",
-     "text": "I attempt to shoot Senn in the face.",
-     "source_command_id": "cmd_1784622557_6",
-     "created_at": "2026-07-21T04:29:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_m",
-     "type": "mechanics",
-     "speaker_id": "combat_master",
-     "text": "Your attack hits Senn Varga with a final total of 22. You deal 9 energy damage.",
-     "dice": [
-      {
-       "roll_id": "roll_1784622280_1",
-       "formula": "1d20+5",
-       "dice": [
-        17
-       ],
-       "total": 22,
-       "purpose": "attack"
-      }
-     ],
-     "source_command_id": "cmd_1784622557_6",
-     "created_at": "2026-07-21T04:29:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b0",
-     "type": "npc",
-     "speaker_id": "pilot_dax",
-     "text": "",
-     "narration": "Dax Ferren's body slumps over the controls, lifeless.",
-     "behavior": "",
-     "mood": "tense",
-     "source_command_id": "cmd_1784622557_6",
-     "created_at": "2026-07-21T04:29:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    },
-    {
-     "entry_id": "te_6_b1",
-     "type": "npc",
-     "speaker_id": "operative_senn",
-     "text": "Aero! What are you doing? This is madness!",
-     "narration": "",
-     "behavior": "Senn instinctively backs away, hands up in a defensive posture.",
-     "mood": "tense",
-     "source_command_id": "cmd_1784622557_6",
-     "created_at": "2026-07-21T04:29:17",
-     "campaign_id": "meridian_reach",
-     "session_id": "session_1",
-     "scene_id": "scene_shuttle_briefing",
-     "interaction_id": "int_scene_shuttle_briefing"
-    }
-   ],
-   "cursor": 41,
+   "entries": [],
+   "cursor": 0,
    "has_earlier": false,
-   "latest_sequence": 41
+   "latest_sequence": 0
   },
   "suggestions": [],
   "objectives": [
@@ -1311,69 +683,7 @@
  },
  "command_record": {
   "journal": {
-   "entries": [
-    {
-     "journal_entry_id": "evt_1784617373_0",
-     "event_type": "isolated_attack",
-     "title": "I draw my Taron-forged Modular Indigo Lightsaber and attempt to stab dax through",
-     "summary": "I draw my Taron-forged Modular Indigo Lightsaber and attempt to stab dax through the chest. Dice roll?",
-     "participants": [
-      "aero",
-      "pilot_dax"
-     ],
-     "location": "Republic shuttle en route to the frontier sensor array",
-     "decisions": [],
-     "consequences": [],
-     "objectives_changed": [],
-     "relationships_changed": [],
-     "discoveries": [],
-     "unresolved_threads": [],
-     "source_event_ids": [
-      "evt_1784617373_0"
-     ]
-    },
-    {
-     "journal_entry_id": "evt_1784618344_3",
-     "event_type": "isolated_attack",
-     "title": "I force choke Besk until he crumples to the floor. \"The council sent you all to ",
-     "summary": "I force choke Besk until he crumples to the floor. \"The council sent you all to die\"",
-     "participants": [
-      "aero",
-      "Besk Ollor"
-     ],
-     "location": "Republic shuttle en route to the frontier sensor array",
-     "decisions": [],
-     "consequences": [],
-     "objectives_changed": [],
-     "relationships_changed": [],
-     "discoveries": [],
-     "unresolved_threads": [],
-     "source_event_ids": [
-      "evt_1784618344_3"
-     ]
-    },
-    {
-     "journal_entry_id": "evt_1784618915_5",
-     "event_type": "power_use",
-     "title": "I use Burst on Dax and everyone within the radius",
-     "summary": "I use Burst on Dax and everyone within the radius",
-     "participants": [
-      "aero",
-      "Dax Ferren",
-      "Chief Engineer Nona"
-     ],
-     "location": "Republic shuttle en route to the frontier sensor array",
-     "decisions": [],
-     "consequences": [],
-     "objectives_changed": [],
-     "relationships_changed": [],
-     "discoveries": [],
-     "unresolved_threads": [],
-     "source_event_ids": [
-      "evt_1784618915_5"
-     ]
-    }
-   ],
+   "entries": [],
    "is_structured": true
   },
   "map": {
@@ -1456,18 +766,43 @@
   "ship_vessel_id": "republic_shuttle_escort"
  },
  "definitions": {
-  "feature_martial_arts_training": {
-   "urid": "feature_martial_arts_training",
-   "entity_type": "Feature",
+  "power_battle_insight": {
+   "urid": "power_battle_insight",
+   "entity_type": "Power",
    "authority_lane": "global_validated",
-   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
-   "content_hash": "b11a35b0ffef27bf",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml",
+   "content_hash": "1b06a0fad19abc70",
    "schema_valid": true,
    "semantic_valid": true,
    "mechanical_match": true,
    "aliases": [
-    "martial arts training",
-    "martial arts trainings"
+    "battle insight",
+    "battle insights"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Battle Insight"
+  },
+  "feature_combat_discipline": {
+   "urid": "feature_combat_discipline",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "3598832bf7cebc97",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "combat discipline",
+    "combat disciplines"
    ],
    "tags": [],
    "prerequisites": [],
@@ -1480,33 +815,63 @@
    "campaign_scope": null,
    "validation_status": "candidate_promoted",
    "resolution_status": "exact_validated",
-   "name": "Martial Arts Training",
-   "effect": "Proficient with unarmed strikes; may use Dexterity for their attack and damage rolls."
+   "name": "Combat Discipline",
+   "effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents."
   },
-  "species_echani": {
-   "urid": "species_echani",
-   "entity_type": "Species",
+  "feature_force_connection": {
+   "urid": "feature_force_connection",
+   "entity_type": "Feature",
    "authority_lane": "global_validated",
-   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
-   "content_hash": "a05116a5759c28d6",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
+   "content_hash": "386bc29ba9c478b3",
    "schema_valid": true,
    "semantic_valid": true,
    "mechanical_match": true,
    "aliases": [
-    "echani",
-    "echanis"
+    "force connection",
+    "force connections"
    ],
    "tags": [],
    "prerequisites": [],
    "inbound_refs": [],
    "outbound_refs": [],
    "provenance": {
-    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
+    "enriched_from": "runtime_inline"
    },
    "campaign_scope": null,
    "validation_status": "candidate_promoted",
    "resolution_status": "exact_validated",
-   "name": "Echani"
+   "name": "Force Connection",
+   "effect": {
+    "passive": "May sense significant Force disturbances without automatically learning identity, location, or explanation.",
+    "focused": "As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment."
+   }
+  },
+  "feature_jedi_network": {
+   "urid": "feature_jedi_network",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "e3fe4c51e4ed0859",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": null,
+   "aliases": [
+    "jedi network",
+    "jedi networks"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Jedi Network"
   },
   "feature_sentinel_balance": {
    "urid": "feature_sentinel_balance",
@@ -1534,6 +899,83 @@
    "resolution_status": "genuine_missing_authored",
    "name": "Sentinel Balance",
    "effect": "Add 1d4 to the failed saving throw, potentially turning it into a success."
+  },
+  "feature_echani_grappling_training": {
+   "urid": "feature_echani_grappling_training",
+   "entity_type": "Feature",
+   "authority_lane": "global_validated",
+   "source_path": null,
+   "content_hash": "e8f7a3bb429267ef",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "echani grappling training",
+    "echani grappling trainings"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "method": "authored",
+    "enriched_from": "runtime_inline"
+   },
+   "campaign_scope": null,
+   "validation_status": "authored_residual",
+   "resolution_status": "genuine_missing_authored",
+   "name": "Echani Grappling Training",
+   "effect": "With a free hand, make a Dexterity-based martial check at +5 against the target's Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled and its speed becomes 0."
+  },
+  "species_echani": {
+   "urid": "species_echani",
+   "entity_type": "Species",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
+   "content_hash": "a05116a5759c28d6",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "echani",
+    "echanis"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Echani"
+  },
+  "power_burst": {
+   "urid": "power_burst",
+   "entity_type": "Power",
+   "authority_lane": "global_validated",
+   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml",
+   "content_hash": "c6e5c9f82b94b3f6",
+   "schema_valid": true,
+   "semantic_valid": true,
+   "mechanical_match": true,
+   "aliases": [
+    "burst",
+    "bursts"
+   ],
+   "tags": [],
+   "prerequisites": [],
+   "inbound_refs": [],
+   "outbound_refs": [],
+   "provenance": {
+    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml"
+   },
+   "campaign_scope": null,
+   "validation_status": "candidate_promoted",
+   "resolution_status": "exact_validated",
+   "name": "Burst"
   },
   "feature_combat_communication": {
    "urid": "feature_combat_communication",
@@ -1592,88 +1034,6 @@
    "name": "Lightsaber Deflect - Tier 1",
    "effect": "Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection attack against one visible creature within 30 feet; on a hit it deals the original attack's rolled damage without adding Dexterity."
   },
-  "feature_force_connection": {
-   "urid": "feature_force_connection",
-   "entity_type": "Feature",
-   "authority_lane": "global_validated",
-   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
-   "content_hash": "386bc29ba9c478b3",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": true,
-   "aliases": [
-    "force connection",
-    "force connections"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\features\\consular\\force_connection.yml",
-    "enriched_from": "runtime_inline"
-   },
-   "campaign_scope": null,
-   "validation_status": "candidate_promoted",
-   "resolution_status": "exact_validated",
-   "name": "Force Connection",
-   "effect": {
-    "passive": "May sense significant Force disturbances without automatically learning identity, location, or explanation.",
-    "focused": "As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment."
-   }
-  },
-  "feature_echani_grappling_training": {
-   "urid": "feature_echani_grappling_training",
-   "entity_type": "Feature",
-   "authority_lane": "global_validated",
-   "source_path": null,
-   "content_hash": "e8f7a3bb429267ef",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": true,
-   "aliases": [
-    "echani grappling training",
-    "echani grappling trainings"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "method": "authored",
-    "enriched_from": "runtime_inline"
-   },
-   "campaign_scope": null,
-   "validation_status": "authored_residual",
-   "resolution_status": "genuine_missing_authored",
-   "name": "Echani Grappling Training",
-   "effect": "With a free hand, make a Dexterity-based martial check at +5 against the target's Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled and its speed becomes 0."
-  },
-  "power_burst": {
-   "urid": "power_burst",
-   "entity_type": "Power",
-   "authority_lane": "global_validated",
-   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml",
-   "content_hash": "c6e5c9f82b94b3f6",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": true,
-   "aliases": [
-    "burst",
-    "bursts"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_burst.yml"
-   },
-   "campaign_scope": null,
-   "validation_status": "candidate_promoted",
-   "resolution_status": "exact_validated",
-   "name": "Burst"
-  },
   "class_sentinel": {
    "urid": "class_sentinel",
    "entity_type": "Class",
@@ -1699,43 +1059,18 @@
    "resolution_status": "exact_validated",
    "name": "Sentinel"
   },
-  "power_battle_insight": {
-   "urid": "power_battle_insight",
-   "entity_type": "Power",
-   "authority_lane": "global_validated",
-   "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml",
-   "content_hash": "1b06a0fad19abc70",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": true,
-   "aliases": [
-    "battle insight",
-    "battle insights"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "resolved_from": "SW5e_Data_Hub\\forge_v3\\backend\\powers\\power_battle_insight.yml"
-   },
-   "campaign_scope": null,
-   "validation_status": "candidate_promoted",
-   "resolution_status": "exact_validated",
-   "name": "Battle Insight"
-  },
-  "feature_combat_discipline": {
-   "urid": "feature_combat_discipline",
+  "feature_martial_arts_training": {
+   "urid": "feature_martial_arts_training",
    "entity_type": "Feature",
    "authority_lane": "global_validated",
    "source_path": "SW5e_Data_Hub\\forge_v3\\backend\\species\\echani.yml",
-   "content_hash": "3598832bf7cebc97",
+   "content_hash": "b11a35b0ffef27bf",
    "schema_valid": true,
    "semantic_valid": true,
    "mechanical_match": true,
    "aliases": [
-    "combat discipline",
-    "combat disciplines"
+    "martial arts training",
+    "martial arts trainings"
    ],
    "tags": [],
    "prerequisites": [],
@@ -1748,33 +1083,8 @@
    "campaign_scope": null,
    "validation_status": "candidate_promoted",
    "resolution_status": "exact_validated",
-   "name": "Combat Discipline",
-   "effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents."
-  },
-  "feature_jedi_network": {
-   "urid": "feature_jedi_network",
-   "entity_type": "Feature",
-   "authority_lane": "global_validated",
-   "source_path": null,
-   "content_hash": "e3fe4c51e4ed0859",
-   "schema_valid": true,
-   "semantic_valid": true,
-   "mechanical_match": null,
-   "aliases": [
-    "jedi network",
-    "jedi networks"
-   ],
-   "tags": [],
-   "prerequisites": [],
-   "inbound_refs": [],
-   "outbound_refs": [],
-   "provenance": {
-    "method": "authored"
-   },
-   "campaign_scope": null,
-   "validation_status": "authored_residual",
-   "resolution_status": "genuine_missing_authored",
-   "name": "Jedi Network"
+   "name": "Martial Arts Training",
+   "effect": "Proficient with unarmed strikes; may use Dexterity for their attack and damage rolls."
   }
  },
  "visibility": {
@@ -1786,8 +1096,8 @@
  "provenance": {
   "campaign_source": "gm/campaigns/meridian_reach/runtime_state.json",
   "character_runtime_source": "runtime.player_characters.aero",
-  "campaign_instance_id": "meridian_reach__1784613879",
-  "registry_build_id": "reg_112_1784627585",
+  "campaign_instance_id": "meridian_reach__1784661629",
+  "registry_build_id": "reg_121_1784663822",
   "projection_builder_version": "1.2.0-c5",
   "fixture_filter": {
    "candidates_examined": 12,
@@ -1803,6 +1113,7 @@
    "resolved_reference_slots": 29,
    "missing_required_references": 0,
    "unresolved_references": 0,
+   "unresolved_reference_list": [],
    "low_confidence_mappings": 0,
    "inline_legacy_definitions": 0,
    "registry_resolution_coverage_percent": 100.0,

@@ -1,0 +1,17 @@
+{
+ "aran_operative_migration": {
+  "class_resolves": true,
+  "subclass_not_inferred": true,
+  "level_5_progression_complete": true,
+  "duplicate_mechanics": 0,
+  "unresolved_required_mechanics": 0,
+  "unresolved_selections_by_design": [
+   "operative_practice",
+   "exploit_choices"
+  ],
+  "hp_recalculated": true,
+  "ac_explained": true,
+  "saving_throws_resolved": true,
+  "rollback_verified": true
+ }
+}
