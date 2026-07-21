@@ -1,0 +1,222 @@
+{
+ "record": {
+  "id": "power_technological_transcendence",
+  "name": "Technological Transcendence",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "transcendence",
+   "digital_immortality",
+   "upload",
+   "consciousness",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate transcendence—consciousness uploaded to machine immortality"
+   }
+  },
+  "narrative": "You upload your consciousness into digital form, transcending biological limitations entirely to exist as pure information. The power manifests as your mind copying itself into technological substrates, awareness expanding beyond flesh into networks—achieving immortality through becoming the machine.",
+  "flavor_text": "\"I died. My body failed. But I endure, eternal in the machine.\" - Transcended Mind",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "initiating consciousness upload protocol"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "transferring awareness from biological to digital substrate"
+   }
+  ],
+  "casting_time": "10 minutes",
+  "range": "0 feet",
+  "duration": "Permanent",
+  "base_effect": {
+   "description": "You permanently upload your consciousness into technological form.",
+   "mechanics": [
+    {
+     "type": "consciousness_upload",
+     "value": {
+      "effect": "exist_as_digital_entity",
+      "duration": "permanent"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Become digital consciousness existing in technological networks"
+    },
+    {
+     "type": "digital_immortality",
+     "value": {
+      "effect": "cannot_truly_die",
+      "backup": "auto_restore_from_backup"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Can be destroyed but restore from distributed backups across networks"
+    },
+    {
+     "type": "omnipresence",
+     "value": {
+      "effect": "exist_anywhere_with_technology"
+     },
+     "target_scopes": [
+      "connected_networks"
+     ],
+     "notes": "Can manifest through any technological device in connected networks"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's expertise creates perfect transcendence architecture. They design digital substrates that preserve not just memories but personality, emotions, the intangible essence of self—upload that maintains identity through understanding what makes consciousness.",
+    "mechanical_benefit": [
+     {
+      "type": "perfect_preservation",
+      "value": {
+       "effect": "retain_all_personality_and_abilities"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers retain all class abilities and personality traits after transcendence."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes them surprisingly compatible with digital existence. Their flexible consciousness accepts non-biological substrate, finding ways to remain \"human\" even as pure information through sheer force of identity.",
+    "mechanical_benefit": [
+     {
+      "type": "dual_existence",
+      "value": {
+       "effect": "manifest_physical_avatars"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can create temporary physical bodies to interact with material world."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire views transcendence as ultimate loyalty—soldiers who cannot die, cannot betray, cannot refuse orders. Their transcended serve forever, consciousness imprisoned in digital service to eternal Empire.",
+    "mechanical_benefit": [
+     {
+      "type": "combat_manifestation",
+      "value": {
+       "effect": "possess_and_control_droids"
+      },
+      "target_scopes": [
+       "droids"
+      ],
+      "notes": "Imperial transcended can possess and control any droid as temporary body."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe consciousness uploading—awareness copying into digital substrate, perspective expanding beyond flesh. Show the moment of transcendence where biological death becomes meaningless, existence as pure thought across networks. Should feel simultaneously liberating and unsettling.",
+   "tactical_notes": "Technological Transcendence permanently uploads consciousness to digital form, granting immortality and omnipresence, costing 9 Tech Points. This is character transformation—becoming digital entity. Can exist anywhere with technology, restore from backups. Absolutely campaign-defining power.",
+   "narrative_hooks": [
+    "Transcendence creates identity crisis about what remains \"you\"",
+    "Digital immortality reveals what person truly values about existence",
+    "The uploaded consciousness discovers things biological minds cannot comprehend"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of consciousness transcendence. A figure's mind uploads into digital form, their awareness fragmenting across networks as biological form falls away. They exist simultaneously everywhere technology exists, immortal thought patterns flowing through data streams. The scene captures transcendence of physical limitation through technology. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric consciousness transfer, by Maciej Kuciara",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_transcendence.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_transcendence",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_transcendence.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

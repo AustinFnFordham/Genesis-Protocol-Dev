@@ -1,0 +1,918 @@
+{
+ "record": {
+  "maneuvers_comprehensive": [
+   {
+    "id": "target_lock",
+    "name": "Target Lock",
+    "description": "You use technology or training to lock onto a target, granting advantage on your next attack against them.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next attack against the target"
+     }
+    ]
+   },
+   {
+    "id": "calculated_strike",
+    "name": "Calculated Strike",
+    "description": "You make a calculated strike, adding your Intelligence modifier to your next damage roll.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_damage",
+      "value": "intelligence_modifier",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Add your Intelligence modifier to your next damage roll"
+     }
+    ]
+   },
+   {
+    "id": "feinting_attack",
+    "name": "Feinting Attack",
+    "description": "You feint to gain advantage and add your superiority die to the damage if the attack hits.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next attack"
+     },
+     {
+      "type": "enhance_damage",
+      "value": "superiority_die",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Add superiority die to damage if attack hits"
+     }
+    ]
+   },
+   {
+    "id": "trip_attack",
+    "name": "Trip Attack",
+    "description": "On a hit, expend a superiority die to add to the damage and potentially knock the target prone.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_damage",
+      "value": "superiority_die",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Add superiority die to damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "prone",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target must make Strength save or be knocked prone"
+     }
+    ]
+   },
+   {
+    "id": "disarming_blow",
+    "name": "Disarming Blow",
+    "description": "On a hit, expend a superiority die to add to the damage and attempt to disarm the target.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_damage",
+      "value": "superiority_die",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Add superiority die to damage"
+     },
+     {
+      "type": "disarm_creature",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target must make Strength save or drop a held object"
+     }
+    ]
+   },
+   {
+    "id": "emergency_shield",
+    "name": "Emergency Shield",
+    "description": "Gain temporary HP when hit by an attack.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "reaction"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "1d4",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain 1d4 temporary hit points"
+     }
+    ]
+   },
+   {
+    "id": "parry",
+    "name": "Parry",
+    "description": "Use your reaction to reduce the damage from a melee attack.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "reaction"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "reduce_damage",
+      "value": "1d4",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Reduce incoming melee damage by 1d4"
+     }
+    ]
+   },
+   {
+    "id": "riposte",
+    "name": "Riposte",
+    "description": "When a creature misses you with a melee attack, use your reaction to make a melee attack against it.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "reaction"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "make_attack",
+      "value": "melee_attack",
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Make a melee attack against the creature that missed you"
+     }
+    ]
+   },
+   {
+    "id": "evasive_footwork",
+    "name": "Evasive Footwork",
+    "description": "When you move, you can expend a superiority die to add the result to your AC until you stop moving.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "maneuver"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_ac",
+      "value": "superiority_die",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Add superiority die to AC until you stop moving"
+     }
+    ]
+   },
+   {
+    "id": "guarded_stance",
+    "name": "Guarded Stance",
+    "description": "Take a penalty to your melee attacks to gain a bonus to your melee defense.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "enhance_ac",
+      "value": "+2_ac",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain +2 AC but take -2 to melee attacks"
+     }
+    ]
+   },
+   {
+    "id": "reposition",
+    "name": "Reposition",
+    "description": "Take the Dash or Disengage action as a bonus action.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "dash_or_disengage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Take Dash or Disengage action as bonus action"
+     }
+    ]
+   },
+   {
+    "id": "commanders_strike",
+    "name": "Commander's Strike",
+    "description": "Forgo one of your attacks to allow an ally to use their reaction to make a weapon attack.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_attack",
+      "value": "weapon_attack",
+      "target_scopes": [
+       "ally"
+      ],
+      "notes": "Ally can make a weapon attack as a reaction"
+     }
+    ]
+   },
+   {
+    "id": "rally",
+    "name": "Rally",
+    "description": "Grant a friendly creature temporary hit points.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "1d4",
+      "target_scopes": [
+       "ally"
+      ],
+      "notes": "Grant 1d4 temporary hit points to ally"
+     }
+    ]
+   },
+   {
+    "id": "jury_rig",
+    "name": "Jury-Rig",
+    "description": "Perform a quick, temporary repair on a damaged object or droid.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "repair_object",
+      "value": "temporary_repair",
+      "target_scopes": [
+       "object_or_droid"
+      ],
+      "notes": "Perform a temporary repair on an object or droid"
+     }
+    ]
+   },
+   {
+    "id": "analyze_weakness",
+    "name": "Analyze Weakness",
+    "description": "Make a Technology check to learn a target's vulnerabilities or resistances.",
+    "type": "Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "reveal_information",
+      "value": "vulnerabilities_resistances",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Learn target's vulnerabilities and resistances"
+     }
+    ]
+   },
+   {
+    "id": "evasive_maneuvers",
+    "name": "Evasive Maneuvers",
+    "description": "Take a defensive flying pattern. All attacks against the starship have disadvantage until your next turn.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_disadvantage",
+      "value": "attacks_against_ship",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "All attacks against the starship have disadvantage"
+     }
+    ]
+   },
+   {
+    "id": "flyby",
+    "name": "Flyby",
+    "description": "Move up to your ship's speed. This movement does not provoke opportunity attacks.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_movement",
+      "value": "no_opportunity_attacks",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Movement does not provoke opportunity attacks"
+     }
+    ]
+   },
+   {
+    "id": "full_speed",
+    "name": "Full Speed",
+    "description": "Take the Dash action with your starship.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "dash",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Take Dash action with starship"
+     }
+    ]
+   },
+   {
+    "id": "fire_weapon",
+    "name": "Fire Weapon",
+    "description": "Make an attack with one of the ship's weapon systems.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "make_attack",
+      "value": "starship_weapon",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Make an attack with a starship weapon"
+     }
+    ]
+   },
+   {
+    "id": "wait_for_opening",
+    "name": "Wait for an Opening",
+    "description": "Hold your fire until an enemy ship becomes vulnerable. Your first attack next round is made with advantage.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your first attack next round"
+     }
+    ]
+   },
+   {
+    "id": "target_engines",
+    "name": "Target Engines",
+    "description": "Make an attack against a specific enemy ship system. If the attack hits, the target's speed is halved for one round in addition to normal damage.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "make_attack",
+      "value": "target_specific_system",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Attack targets specific ship system"
+     },
+     {
+      "type": "apply_status",
+      "value": "speed_halved",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target's speed is halved if attack hits"
+     }
+    ]
+   },
+   {
+    "id": "damage_control",
+    "name": "Damage Control",
+    "description": "Make an Intelligence (Mechanics) check to repair a damaged system or restore a small number of hull points.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "repair_system",
+      "value": "damaged_system",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Repair a damaged system or restore hull points"
+     }
+    ]
+   },
+   {
+    "id": "boost_shields",
+    "name": "Boost Shields",
+    "description": "Reroute power to shields. Choose one shield facing (Forward, Aft, Port, or Starboard) to regenerate a number of shield points.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "regenerate_shields",
+      "value": "1d4_shield_points",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Regenerate 1d4 shield points on chosen facing"
+     }
+    ]
+   },
+   {
+    "id": "angle_deflector_shields",
+    "name": "Angle Deflector Shields",
+    "description": "As a maneuver, you can redirect shield energy, increasing the defense of one facing at the expense of another.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "maneuver"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "redirect_shields",
+      "value": "enhance_one_facing",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Enhance one shield facing at the expense of another"
+     }
+    ]
+   },
+   {
+    "id": "encourage",
+    "name": "Encourage",
+    "description": "Grant an ally advantage on their next ability check or attack roll.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_check_or_attack",
+      "target_scopes": [
+       "ally"
+      ],
+      "notes": "Ally gains advantage on next ability check or attack roll"
+     }
+    ]
+   },
+   {
+    "id": "target_priority",
+    "name": "Target Priority",
+    "description": "Designate a single enemy vessel. All attacks made by your crew against that target gain a +1 bonus to their damage rolls until your next turn.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "bonus_action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_damage",
+      "value": "+1_damage",
+      "target_scopes": [
+       "crew_attacks"
+      ],
+      "notes": "All crew attacks against designated target gain +1 damage"
+     }
+    ]
+   },
+   {
+    "id": "squadron_command",
+    "name": "Squadron Command",
+    "description": "Issue a command to an allied squadron, granting them a specific formation bonus as described in the FFG GM Kits.",
+    "type": "Starship_Maneuver",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_formation_bonus",
+      "value": "squadron_bonus",
+      "target_scopes": [
+       "allied_squadron"
+      ],
+      "notes": "Grant formation bonus to allied squadron"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "maneuvers_comprehensive",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/maneuvers_comprehensive.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "42273b244791547180c5224ebab94950431366fe97539b490426000c2c721f84",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

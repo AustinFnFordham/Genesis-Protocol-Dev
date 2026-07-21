@@ -1,0 +1,482 @@
+{
+ "record": {
+  "id": "weequay",
+  "name": "Weequay",
+  "tags": [
+   "bodyguard",
+   "constitution",
+   "dirty_fighter",
+   "enforcer",
+   "iconic",
+   "loyal",
+   "mercenary",
+   "resilient",
+   "strength_based",
+   "suppression",
+   "uncommon",
+   "weequay"
+  ],
+  "description": "Weequay are a weathered, humanoid species known for their loyalty, toughness, and mercenary nature. Their leathery skin and hardy constitution make them well-suited for harsh environments and dangerous work. They are commonly found as bodyguards, mercenaries, and enforcers, where their reliability and combat skills are highly valued.",
+  "ability_score_increases": [
+   {
+    "ability": "Constitution",
+    "value": 2
+   },
+   {
+    "ability": "Strength",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Weequay"
+  ],
+  "base_hp": 12,
+  "base_strain": 8,
+  "starting_xp": 110,
+  "innate_traits": [
+   {
+    "id": "weequay_weathered_endurance",
+    "name": "Weathered Endurance",
+    "narrative": "Your species' leathery skin and hardy constitution make you exceptionally resistant to environmental hazards and physical punishment. You can endure conditions that would cripple other species.",
+    "mechanics": [
+     {
+      "effect": "grant_resistance",
+      "value": "environmental_damage",
+      "description": "You have resistance to damage from extreme heat, cold, and radiation."
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "constitution_saves",
+      "conditions": [
+       {
+        "key": "save_type",
+        "op": "in",
+        "value": [
+         "poison",
+         "disease",
+         "exhaustion"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "weequay_weathered_despair",
+     "ui_transition": {
+      "animation": "WeatherEnduranceCorruption",
+      "sfx": "Snarl"
+     }
+    }
+   },
+   {
+    "id": "weequay_mercenary_instincts",
+    "name": "Mercenary Instincts",
+    "narrative": "Your species' reputation as reliable mercenaries and bodyguards has given you excellent combat instincts and tactical awareness. You excel in dangerous situations and protecting others.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Athletics"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "initiative_rolls",
+      "conditions": [
+       {
+        "key": "situation",
+        "op": "in",
+        "value": [
+         "combat",
+         "danger",
+         "protection_duty"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "weequay_mercenary_hate",
+     "ui_transition": {
+      "animation": "MercInstinctCorruption",
+      "sfx": "Hiss"
+     }
+    }
+   },
+   {
+    "id": "weequay_loyal_retainer",
+    "name": "Loyal Retainer",
+    "narrative": "Weequay are known for their fierce loyalty to those they serve. Once you commit to a cause or employer, you are incredibly difficult to turn against them.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Insight"
+     },
+     {
+      "effect": "grant_resistance",
+      "value": "mind_control",
+      "description": "You have advantage on saving throws against mind control, charm, and other effects that would make you betray your allies."
+     }
+    ]
+   }
+  ],
+  "source": "Star Wars: Return of the Jedi, FFG Edge of the Empire",
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Leathery skin",
+    "Weathered appearance",
+    "Loyal bearing",
+    "Mercenary build",
+    "Hardy constitution"
+   ],
+   "skin_color_variants": [
+    "Brown",
+    "Dark Brown",
+    "Grey Brown",
+    "Olive",
+    "Weathered patterns"
+   ],
+   "facial_features": [
+    "Weathered, leathery skin",
+    "Scarred from harsh environments",
+    "Hardy, resilient features",
+    "Loyal, trustworthy expression"
+   ],
+   "eye_color_variants": [
+    "Dark eyes",
+    "Brown eyes",
+    "Grey eyes",
+    "Amber eyes"
+   ],
+   "common_adornments": [
+    "Mercenary armor and gear",
+    "Bodyguard equipment",
+    "Practical, durable clothing",
+    "Protective gear and weapons",
+    "Loyalty symbols and tokens"
+   ],
+   "llm_description_prompt": "Describe a Weequay character. Emphasize their weathered, leathery skin that shows the scars and resilience of someone who has survived in harsh environments, and their loyal, trustworthy bearing that reflects their reputation as reliable mercenaries and bodyguards. Their build should be strong and hardy, suggesting someone who can endure conditions that would cripple others. Consider their mercenary background and the way they carry themselves with the confident, reliable bearing of someone who has proven their loyalty and toughness time and again."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Weequay's natural protective instincts and Loyal Retainer abilities make them exceptional Guardians, able to protect others with unwavering loyalty and toughness.",
+    "mechanical_benefits": [
+     "Loyal Retainer trait prevents betrayal and mind control",
+     "Weathered Endurance trait enhances durability in protection",
+     "Mercenary Instincts trait improves combat awareness"
+    ]
+   },
+   {
+    "class": "Soldier (Mercenary)",
+    "narrative": "Weequay's natural combat abilities and Mercenary Instincts make them excellent Soldiers, able to fight reliably in any environment with their weathered endurance.",
+    "mechanical_benefits": [
+     "Mercenary Instincts trait enhances combat effectiveness",
+     "Weathered Endurance trait provides environmental resistance",
+     "Loyal Retainer trait ensures reliability in combat"
+    ]
+   },
+   {
+    "class": "Scout (Survivalist)",
+    "narrative": "Weequay's natural endurance and survival abilities make them excellent Scouts, able to navigate and survive in the galaxy's most dangerous environments.",
+    "mechanical_benefits": [
+     "Weathered Endurance trait enables survival in harsh environments",
+     "Mercenary Instincts trait aids in dangerous exploration",
+     "Loyal Retainer trait supports team operations"
+    ]
+   },
+   {
+    "class": "Berserker",
+    "narrative": "Weequay's natural toughness and loyalty make them excellent Berserkers, able to fight fiercely to protect their allies and causes.",
+    "mechanical_benefits": [
+     "Weathered Endurance trait enhances berserker durability",
+     "Loyal Retainer trait prevents betrayal during berserker rage",
+     "Mercenary Instincts trait improves combat effectiveness"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Mercenary Companies",
+    "narrative": "Weequay are highly valued by mercenary companies for their natural loyalty, toughness, and reliable combat skills."
+   },
+   {
+    "faction": "Security Organizations",
+    "narrative": "Many Weequay work for security organizations as bodyguards and protectors, using their natural protective instincts and loyalty."
+   },
+   {
+    "faction": "Independent Mercenaries",
+    "narrative": "Many Weequay prefer to work as independent mercenaries and bodyguards, using their natural abilities to serve causes they believe in."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your weathered endurance becomes more refined, allowing you to survive in even more extreme environments and conditions.",
+     "mechanical_benefit": "You gain advantage on all Constitution saving throws, and you can survive in any environment without special equipment for up to 24 hours."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your mercenary instincts reach new heights, allowing you to sense danger and protect allies with incredible precision.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Wisdom-based skill checks for the next minute when protecting allies or in dangerous situations."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your loyalty and toughness combine to make you a more formidable protector and fighter.",
+     "mechanical_benefit": "When protecting allies or fighting for a cause you believe in, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced protective instincts."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your loyalty and endurance reach their peak, making you nearly impossible to turn against your allies or defeat through environmental means.",
+     "mechanical_benefit": "You have advantage on all saving throws against mind control and environmental effects, and you can use your reaction to take damage for an ally within 5 feet."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Loyalty Rituals",
+    "type": "ceremonial",
+    "description": "Weequay have sacred rituals that celebrate loyalty and commitment, often involving oaths of service and bonds of trust.",
+    "narrative_impact": "Provides cultural depth and loyalty demonstration. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Mercenary Traditions",
+    "type": "traditional",
+    "description": "Weequay mercenary traditions emphasize reliability, toughness, and the importance of keeping one's word and protecting one's allies.",
+    "narrative_impact": "Creates mercenary identity and protective scenarios. Can be used for training and mentoring situations."
+   },
+   {
+    "name": "Endurance Training",
+    "type": "cultural",
+    "description": "Weequay communities place great emphasis on endurance training, teaching each generation how to survive in harsh environments and protect others.",
+    "narrative_impact": "Provides training opportunities and survival scenarios. Can be used for skill development and team-building situations."
+   },
+   {
+    "name": "Protective Brotherhood",
+    "type": "narrative",
+    "description": "Weequay form tight-knit protective groups based on mutual loyalty and shared experiences in dangerous environments.",
+    "narrative_impact": "Provides community bonding and protective roleplaying. Can be used for team dynamics and loyalty scenarios."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "harsh",
+    "adaptation_name": "Harsh Environment Mastery",
+    "description": "Your weathered endurance allows you to thrive in harsh environments that would kill other species.",
+    "mechanical_benefit": "You have advantage on all skill checks in harsh environments, and you can sense environmental hazards within 30 feet."
+   },
+   {
+    "environment": "dangerous",
+    "adaptation_name": "Danger Sense",
+    "description": "Your mercenary instincts allow you to sense and respond to danger with incredible speed and accuracy.",
+    "mechanical_benefit": "You have advantage on Perception checks to detect hidden threats, and you can sense the presence of dangerous creatures within 60 feet."
+   },
+   {
+    "environment": "protective",
+    "adaptation_name": "Protective Presence",
+    "description": "Your natural protective instincts create a zone of safety around your allies in dangerous situations.",
+    "mechanical_benefit": "Allies within 10 feet of you have advantage on saving throws against fear effects, and you can sense when they are in danger."
+   },
+   {
+    "environment": "loyal",
+    "adaptation_name": "Loyal Bond",
+    "description": "Your fierce loyalty allows you to form unbreakable bonds with allies and causes you believe in.",
+    "mechanical_benefit": "You have advantage on saving throws against effects that would make you betray your allies, and you can sense when your allies need help."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on protective abilities and environmental endurance, complementing rather than overshadowing class features",
+    "Loyalty and endurance improvements maintain the species' unique identity while providing meaningful advancement",
+    "Protective and survival abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on loyalty traditions and protective culture rather than mechanical advantages",
+    "Loyalty rituals and mercenary traditions provide unique roleplaying opportunities and cultural depth",
+    "Endurance training and protective brotherhood enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for harsh and dangerous environments where loyalty and endurance are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Protective presence and loyal bond provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    {
+     "skin_type": "leathery"
+    },
+    {
+     "eye_color": "various (e.g. brown, blue, green)"
+    },
+    {
+     "hair_type": "none or short, coarse"
+    },
+    {
+     "facial_features": "rugged, weathered"
+    },
+    {
+     "body_shape": "muscular, athletic"
+    },
+    {
+     "texture": "scaly, rough"
+    }
+   ],
+   "morphology": {
+    "head_type": "humanoid",
+    "body_type": "bipedal",
+    "average_height": "180 cm (5 ft 11 in)"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "facial_features": "youthful",
+      "skin_type": "smoother"
+     },
+     "adult": {
+      "facial_features": "rugged, weathered",
+      "skin_type": "leathery"
+     },
+     "elder": {
+      "facial_features": "deeply lined",
+      "skin_type": "wrinkled"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "tattoos or scarification on arms or torso",
+      "eye color turns yellowish or redish",
+      "skin takes on a darker, more leathery tone"
+     ],
+     "light_side": [
+      "scars from past battles or injuries heal quickly",
+      "eyes take on a brighter, more vibrant color",
+      "skin shows signs of improved health and vitality"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "scars",
+    "tattoos",
+    "facial markings"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A Weequay with {skin_type} skin and {eye_color} eyes, standing at {average_height} cm tall.",
+    "contextual_modifiers": [
+     "with a scar above their left eyebrow",
+     "wearing a leather jacket or armor",
+     "holding a heavy blaster or melee weapon"
+    ]
+   }
+  },
+  "flavor_text": "A Weequay's loyalty is as unyielding as the harsh environments they call home. Born on the unforgiving world of Vexar, they are hardened by the brutal winds and sandstorms that whip across its dunes. For a Weequay, honor is tied to service - to their clan, their employer, or even their employer's employer. Their rugged constitution and battle-hardened instincts make them formidable enforcers, but it is their unwavering commitment that forges unshakeable bonds with those who earn their trust.",
+  "llm_guidance": {
+   "roleplay_guidance": "Weequay are driven by a strong sense of loyalty and duty. They value honor above all else and will go to great lengths to protect their kin, employer, or allies. Weequay are also fiercely independent and non-conformist, often challenging authority and tradition when it conflicts with their own moral code.",
+   "narrative_hooks": [
+    "The player's character is hired by a prominent Hutt crime lord to serve as personal bodyguard for one of their influential clients.",
+    "A Weequay clan leader seeks out the player's character for aid in a long-standing feud against a rival clan.",
+    "A mysterious disease sweeping through Vexar threatens the very survival of the Weequay people, and the player must navigate complex social dynamics to uncover the truth behind its origins."
+   ],
+   "social_dynamics": "Weequay are often at odds with their own kin when they prioritize individual loyalty over clan ties. They may struggle with trust issues when working alongside non-Weequay allies or employers, but will fiercely defend those who earn their respect.",
+   "common_motivations": [
+    "Protecting loved ones",
+    "Seeking redemption for past transgressions",
+    "Escaping the harsh realities of Vexar's environment"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "cunning_scoundrel",
+   "overrides": {
+    "ai_behavior": {
+     "personality": "Confident, tough, practical, unyielding, duty-bound.\n",
+     "motivations": "Personal loyalty to allies and clients. Desire for financial reward and recognition of skills.\n",
+     "combat_behavior": "Employ strength-based tactics when possible, using brute force to overwhelm opponents. Adapt to changing situations by adjusting strategy accordingly.\n",
+     "social_behavior": "Display unwavering loyalty to those you deem worthy, while being cautious around strangers or those who try to deceive you.\n"
+    },
+    "relationship_tracking": {
+     "trust_levels": "Start at low trust (25%), increase as companions prove themselves in battle and fulfill their duties.",
+     "loyalty_triggers": "Trigger increased loyalty when the companion stands up for a friend in danger or completes a particularly challenging mission."
+    },
+    "services": "Offer combat training, tactical advice, or escort services to allies. Help negotiate with underworld figures or hostile factions."
+   }
+  },
+  "nemesis_engine": {
+   "overrides": {
+    "nemesis_template": "Weequay Nemesis",
+    "nemesis_progression": [
+     {
+      "condition": "The player has failed to deliver on a promise made to a Weequay employer or ally.",
+      "trigger": "The nemesis becomes increasingly aggressive and dismissive of the player's character."
+     },
+     {
+      "condition": "The player has betrayed a Weequay kin or clan leader.",
+      "trigger": "The nemesis seeks revenge against the player, often targeting their loved ones or allies."
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "overrides": {
+    "romance_template": "Weequay Romantic Partner",
+    "romance_progression": [
+     {
+      "condition": "The player has consistently demonstrated loyalty and honor towards the Weequay romantic interest.",
+      "trigger": "The Weequay character begins to form a deep bond with the player, valuing their trust above all else."
+     },
+     {
+      "condition": "The player has shown willingness to defy tradition or authority for the sake of the Weequay romantic interest.",
+      "trigger": "The Weequay character comes to see the player as a kindred spirit, one who respects and understands their unique perspective."
+     }
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "weequay",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/weequay.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

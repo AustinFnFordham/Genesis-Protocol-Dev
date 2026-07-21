@@ -1,0 +1,697 @@
+{
+ "record": {
+  "id": "trooper",
+  "name": "Trooper",
+  "tags": [
+   "trooper",
+   "soldier",
+   "military",
+   "strength_based",
+   "heavy_weapons",
+   "tactical",
+   "suppression",
+   "battlefield_control",
+   "elite",
+   "squad_specialist"
+  ],
+  "description": "Troupers are elite military specialists trained in heavy weapons, tactical warfare, and battlefield control. They excel at suppressing enemy positions, providing covering fire, and coordinating with their squadmates to achieve tactical objectives.",
+  "hit_die": 12,
+  "primary_ability": "strength",
+  "primary_resource": "ammunition_points",
+  "proficiencies": {
+   "armor": [
+    "light",
+    "medium",
+    "heavy"
+   ],
+   "weapons": [
+    "simple",
+    "blaster_pistols",
+    "blaster_rifles",
+    "heavy_weapons",
+    "vibroweapons"
+   ],
+   "tools": [
+    "demolitions_kit",
+    "military_radio",
+    "tactical_visor"
+   ],
+   "saving_throws": [
+    "strength",
+    "constitution"
+   ],
+   "skills": {
+    "choose": 3,
+    "from": [
+     "athletics",
+     "intimidation",
+     "investigation",
+     "perception",
+     "survival",
+     "technology"
+    ]
+   }
+  },
+  "progression_tree": [
+   {
+    "node_id": "heavy_weapons_training_1",
+    "feature_id": "heavy_weapons_training",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": [],
+    "description": "You are proficient with heavy weapons and can use them without disadvantage. Additionally, you can carry heavy weapons without suffering movement penalties.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "heavy_weapons_proficiency",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Proficient with heavy weapons without disadvantage"
+     },
+     {
+      "type": "apply_status",
+      "value": "no_movement_penalty",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "No movement penalty for carrying heavy weapons"
+     }
+    ]
+   },
+   {
+    "node_id": "trooper_style_1",
+    "feature_id": "trooper_style",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "heavy_weapons_training_1"
+    ],
+    "choice_group": "trooper_style_level_1",
+    "description": "Choose your approach to military tactics."
+   },
+   {
+    "node_id": "heavy_weapons_specialist_2",
+    "feature_id": "heavy_weapons_specialist",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "trooper_style_1"
+    ],
+    "choice_group": "trooper_focus_level_2",
+    "description": "Focus on heavy weapons and firepower."
+   },
+   {
+    "node_id": "tactics_specialist_2",
+    "feature_id": "tactics_specialist",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "trooper_style_1"
+    ],
+    "choice_group": "trooper_focus_level_2",
+    "description": "Focus on tactical coordination and battlefield control."
+   },
+   {
+    "node_id": "trooper_specialization_3",
+    "feature_id": "trooper_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "heavy_weapons_specialist_2",
+     "tactics_specialist_2"
+    ],
+    "choice_group": "trooper_specialization",
+    "description": "Choose your specialization as a Trooper."
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "trooper_specialization_3"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ],
+    "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn.",
+    "effects": [
+     {
+      "type": "grant_extra_attack",
+      "value": "extra_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Attack twice with Attack action"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_6",
+    "feature_id": "subclass_feature",
+    "level_requirement": 6,
+    "type": "core",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "tactical_awareness_7",
+    "feature_id": "tactical_awareness",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_6"
+    ],
+    "description": "You can use your bonus action to grant advantage on the next attack roll made by an ally within 30 feet of you before the end of your next turn.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "ally_attack",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "using_tactical_awareness",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Grant advantage to ally's next attack"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "tactical_awareness_7"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_9",
+    "feature_id": "subclass_feature",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "covering_fire_10",
+    "feature_id": "covering_fire",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_9"
+    ],
+    "description": "When an ally within 30 feet of you is targeted by an attack, you can use your reaction to impose disadvantage on the attack roll.",
+    "effects": [
+     {
+      "type": "apply_disadvantage",
+      "value": "attack_roll",
+      "target_scopes": [
+       "attacker"
+      ],
+      "conditions": [
+       {
+        "key": "ally_targeted",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Impose disadvantage on attack against ally"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "covering_fire_10"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "tactical_superiority_14",
+    "feature_id": "tactical_superiority",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ],
+    "description": "You can use your action to grant all allies within 30 feet of you advantage on their next attack roll before the end of your next turn.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_allies_attack",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "using_tactical_superiority",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Grant advantage to all allies' next attacks"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "tactical_superiority_14"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "battlefield_control_18",
+    "feature_id": "battlefield_control",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ],
+    "description": "You can use your action to create a zone of control. Choose a 20-foot radius sphere centered on yourself. Enemies in this area have disadvantage on attack rolls against creatures other than you.",
+    "effects": [
+     {
+      "type": "apply_disadvantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "enemies"
+      ],
+      "conditions": [
+       {
+        "key": "in_zone_of_control",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disadvantage on attacks against others in zone"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_19",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "battlefield_control_18"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "master_trooper_20",
+    "feature_id": "master_trooper",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_19"
+    ],
+    "description": "You have mastered the art of tactical warfare. You can use your action to enter a state of tactical focus. For 1 minute, you have advantage on all attack rolls, and your allies within 30 feet of you have advantage on their attack rolls.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tactical_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all attack rolls during tactical focus"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "ally_attack_rolls",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "tactical_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Allies have advantage on attack rolls during tactical focus"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "armor_plating",
+    "heavy_blaster_rifle",
+    "combat_vest",
+    "tactical_helmet"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Bulky stance, heavy blasters at the ready, tactical eyes scanning for threats",
+    "energy_signature": "Glows with a faint blue light, signifying technological prowess and coordination"
+   },
+   "prompt_schema": {
+    "base_prompt": "Elite military specialist in a firefight",
+    "contextual_modifiers": [
+     "Suppressing enemy positions",
+     "Providing covering fire",
+     "Coordinating with squadmates"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "The Trooper's military prowess is seen as a threat to those who value cunning over brute force.",
+    "escalation": "As the Trooper gains recognition for their tactical victories, they begin to attract the attention of rival soldiers seeking to outdo them.",
+    "confrontation": "A direct challenge from a rival soldier forces the Trooper to defend their reputation and tactics in a high-stakes showdown."
+   },
+   "resolution_paths": {
+    "victory": "The Trooper emerges victorious, solidifying their position as a top-tier military specialist and earning respect from their peers.",
+    "redemption": "Despite initial setbacks, the Trooper adapts their tactics and wins over their rival through strategic alliances and mutual respect.",
+    "escape": "The Trooper narrowly escapes the confrontation, vowing to return stronger and more determined than ever to prove themselves in battle."
+   },
+   "conflict_triggers": [
+    "Unorthodox tactics that disregard established military protocols",
+    "Inconsistent team coordination and communication skills",
+    "Overemphasis on individual success at the expense of squadmate well-being"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "The Trooper's rugged, no-nonsense demeanor hides a romantic interest in the player character. A subtle flirting exchange hints at deeper feelings.",
+    "stage2": "As trust builds between the Trooper and the player character, they begin to open up about their personal life, revealing vulnerabilities and fears.",
+    "stage3": "The Trooper invites the player character to join them on a mission, providing an opportunity for shared experiences and growth in their relationship.",
+    "stage4": "Confronting a traumatic event from their past, the Trooper turns to the player character for support and comfort, strengthening their emotional bond.",
+    "stage5": "With their relationship at its peak, the Trooper must navigate the complexities of military life while nurturing their love for the player character amidst the chaos of battle."
+   },
+   "lifestyle_challenges": [
+    "Frequent deployments and extended separations",
+    "High-stress environments that test patience and understanding in relationships",
+    "Duty-bound priorities often conflicting with romantic interests"
+   ]
+  },
+  "flavor_text": "A loyal protector of the galaxy, Troopers stand unwavering on the battlefield.",
+  "llm_guidance": {
+   "roleplay_guidance": "The Trooper class excels at suppressing enemy positions and providing covering fire. When interacting with players, emphasize the importance of teamwork and coordination to achieve tactical objectives.\n",
+   "narrative_hooks": [
+    "As a seasoned soldier, you've seen your fair share of battles.",
+    "Your comms device crackles to life, briefing you on the mission's parameters.",
+    "A blaster bolt whizzes past your ear, snapping you back into focus."
+   ],
+   "social_dynamics": "Troopers are known for their discipline and loyalty. Players can expect a strong sense of camaraderie with their fellow troopers, but beware of strict adherence to protocol.\n"
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Disciplined",
+      "Loyal"
+     ],
+     "flaws": [
+      "Overly reliant on protocols"
+     ],
+     "behavior": "Cautious, but willing to take calculated risks"
+    },
+    "motivations": {
+     "primary_goal": "Complete the mission",
+     "secondary_goals": [
+      "Protect fellow soldiers",
+      "Maintain order in the battlefield"
+     ],
+     "conflicting_motivations": [
+      "Follow orders without question",
+      "Question authority when necessary"
+     ]
+    },
+    "combat_behavior": {
+     "tactics": [
+      "Suppress enemy positions with heavy fire",
+      "Provide covering fire for fellow soldiers"
+     ],
+     "strategy": "Coordinate with squadmates to achieve tactical objectives",
+     "weaknesses": [
+      "Vulnerability to precision attacks",
+      "Difficulty navigating unfamiliar terrain"
+     ]
+    },
+    "social_behavior": {
+     "social_patterns": [
+      "Maintain a professional demeanor at all times"
+     ],
+     "personal_connections": [
+      "Form strong bonds with fellow troopers"
+     ]
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Developed through shared combat experiences",
+     "Eroded by repeated questioning of authority"
+    ],
+    "loyalty_triggers": [
+     "Betrayal of fellow soldiers",
+     "Disregard for established protocols"
+    ]
+   },
+   "services": [
+    "Provide tactical support and guidance to players",
+    "Offer expertise on military protocols and procedures",
+    "Coordinate with other NPCs to provide comprehensive support"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "trooper",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/trooper.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

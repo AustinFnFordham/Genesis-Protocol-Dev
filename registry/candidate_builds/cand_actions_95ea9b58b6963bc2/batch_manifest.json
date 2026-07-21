@@ -1,0 +1,60 @@
+{
+ "forge_batch": {
+  "job_id": "job_cand_actions_95ea9b58b6963bc2",
+  "domain": "actions",
+  "source_query": "SELECT DISTINCT source_pointer FROM entity_candidates WHERE source_pointer LIKE '%/actions/%' AND source_pointer LIKE '%.yml'",
+  "source_candidate_ids": [
+   "SW5e_Data_Hub/forge_v3/backend/actions/attack_action.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/bonus_actions.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/combat_actions.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/hack_terminal_action.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/hack_terminal_master.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/reactions.yml",
+   "SW5e_Data_Hub/forge_v3/backend/actions/specialized_actions.yml",
+   "SW5e_Data_Hub/forge_v3/backend/starships/actions/combat_actions.yml",
+   "SW5e_Data_Hub/forge_v3/backend/starships/actions/non_combat_actions.yml",
+   "SW5e_Data_Hub/source_data/actions/attack_action.yml",
+   "SW5e_Data_Hub/source_data/actions/hack_terminal_action.yml",
+   "SW5e_Data_Hub/source_data/starships/actions/combat_actions.yml",
+   "SW5e_Data_Hub/source_data/starships/actions/non_combat_actions.yml"
+  ],
+  "input_hash": "95ea9b58b6963bc2",
+  "forge_version": "forge_worker_v1.0",
+  "schema_versions": [
+   "schema-lite-v1 (strict schemas at promotion)"
+  ],
+  "validation_required": {
+   "strict_parse": true,
+   "duplicate_detection": true,
+   "schema": true,
+   "semantic": true,
+   "mechanical": true,
+   "references": true,
+   "cardinality": true,
+   "articles_of_creation": true,
+   "atomic": true,
+   "soul": true,
+   "chaos": true
+  },
+  "promotion": {
+   "automatic": false,
+   "allowed_outputs": [
+    "draft",
+    "quarantine",
+    "validated_candidate"
+   ]
+  },
+  "resume": {
+   "checkpoint_every": 10,
+   "idempotent": true,
+   "restart_safe": true
+  }
+ },
+ "results_summary": {
+  "processed": 13,
+  "passed": 0,
+  "draft": 5,
+  "quarantined": 8,
+  "failed": 0
+ }
+}

@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "power_spare_the_dying",
+  "name": "Spare the Dying",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 0,
+  "tags": [
+   "light_side",
+   "healing",
+   "stabilization",
+   "life_preservation",
+   "mercy",
+   "compassion"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Dark-aligned user may resist channeling compassion by acknowledging the value of preserving tools.",
+     "ability": "Wisdom",
+     "dc": 12
+    }
+   }
+  },
+  "narrative": "You channel the light side's life-preserving energy into a dying creature, stabilizing them at death's threshold. The power manifests as gentle golden light flowing from your hands, death's grip loosening as the Force refuses to let them slip away, buying time for proper healing.",
+  "flavor_text": "\"Not today. Not on my watch.\" - Field Medic",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "laying hands on dying creature"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling life-preserving Force energy"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You stabilize a dying creature, preventing death.",
+   "mechanics": [
+    {
+     "type": "stabilize",
+     "value": {
+      "effect": "stop_death_saves"
+     },
+     "target_scopes": [
+      "dying_creature"
+     ],
+     "conditions": [
+      {
+       "key": "target_at_0_hp",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Target stops making death saving throws and becomes stable at 0 HP"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's protective instinct makes Spare the Dying reflexive. They've stabilized so many allies in desperate situations that it's become muscle memory—death denied through practiced compassion under fire.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_range",
+      "value": {
+       "range": {
+        "distance": 30,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "dying_creature"
+      ],
+      "notes": "Guardians can stabilize dying creatures up to 30 feet away through Force projection."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human empathy makes their stabilization deeply personal. They don't just prevent death mechanically—they project comfort, reassurance, the feeling that someone cares whether they live, making survival feel worth fighting for.",
+    "mechanical_benefit": [
+     {
+      "type": "restore_consciousness",
+      "value": {
+       "hp_restored": 1
+      },
+      "target_scopes": [
+       "dying_creature"
+      ],
+      "notes": "Human stabilization also restores 1 HP, bringing target to consciousness."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Spare the Dying as fundamental expression of light side philosophy—the commitment to preserve life even in hopeless situations. Their techniques emphasize that every life has value worth saving.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_temporary_hp",
+      "value": {
+       "temp_hp": 5
+      },
+      "target_scopes": [
+       "stabilized_creature"
+      ],
+      "notes": "Jedi stabilization also grants 5 temporary HP as buffer against further damage."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe gentle golden light flowing from your hands into the dying creature, their breathing stabilizing, color returning to their face. Show death's grip loosening as the Force preserves life. The stabilization should feel compassionate and hopeful.",
+   "tactical_notes": "Spare the Dying is a cantrip that stabilizes dying creatures at 5 feet with no resource cost. Essential for preventing death but doesn't restore HP (except with synergies). The close range requires getting into danger. Perfect for light side healers committed to preserving every life.",
+   "narrative_hooks": [
+    "Stabilizing an enemy reveals character's compassion and creates moral debt",
+    "Spare the Dying keeps an ally alive long enough for critical information",
+    "The light side energy reveals Force sensitivity to dying creature"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Jedi stabilizing a dying ally. Gentle golden Force energy flows from their hands into the wounded creature, death's grip visibly loosening. The dying creature's breathing stabilizes, color returning to their face as life is preserved. The scene captures compassionate light side healing at the threshold of death.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/spare_the_dying.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_spare_the_dying",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_spare_the_dying.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

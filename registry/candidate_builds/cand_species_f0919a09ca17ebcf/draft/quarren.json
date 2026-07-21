@@ -1,0 +1,582 @@
+{
+ "record": {
+  "id": "quarren",
+  "name": "Quarren",
+  "tags": [
+   "calculating",
+   "charisma_based",
+   "corporate",
+   "cunning",
+   "diplomat",
+   "intelligence_based",
+   "mechanics",
+   "negotiator",
+   "professional",
+   "quarren",
+   "uncommon"
+  ],
+  "description": "Quarren are squid-faced humanoids native to the water world of Mon Cala, though they have spread throughout the galaxy. Known for their shrewd business sense and corporate acumen, they excel in trade, commerce, and political maneuvering. Their aquatic heritage gives them natural advantages in water environments, while their cultural emphasis on commerce has made them excellent negotiators and deal-makers.",
+  "ability_score_increases": [
+   {
+    "ability": "Intelligence",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Quarrenese"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "starting_xp": 110,
+  "innate_traits": [
+   {
+    "id": "quarren_aquatic_heritage",
+    "name": "Aquatic Heritage",
+    "narrative": "Your species evolved in the oceans of Mon Cala, giving you natural adaptations for aquatic environments. You can breathe underwater and move through water with ease.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "value": "amphibious_breathing",
+      "description": "You can breathe both air and water."
+     },
+     {
+      "effect": "modify_movement",
+      "value": "swimming_speed",
+      "description": "You have a swimming speed equal to your walking speed."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_aquatic_heritage",
+     "ui_transition": {
+      "animation": "water_distortion",
+      "sfx": "tentacle_slither"
+     }
+    }
+   },
+   {
+    "id": "quarren_corporate_acumen",
+    "name": "Corporate Acumen",
+    "narrative": "Quarren culture emphasizes commerce, trade, and business relationships. You have an innate understanding of markets, negotiations, and corporate politics.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Negotiation"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "negotiation_checks",
+      "conditions": [
+       {
+        "key": "situation",
+        "op": "in",
+        "value": [
+         "business_deal",
+         "trade_negotiation",
+         "corporate_meeting"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "quarren_shrewd_insight",
+    "name": "Shrewd Insight",
+    "narrative": "Your species' reputation for being shrewd and calculating has given you excellent instincts for reading people and situations. You can quickly assess the value of deals and the motivations of others.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Insight"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "insight_checks",
+      "conditions": [
+       {
+        "key": "target_type",
+        "op": "in",
+        "value": [
+         "merchant",
+         "businessperson",
+         "politician",
+         "trader"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_shrewd_insight",
+     "ui_transition": {
+      "animation": "eye_burning",
+      "sfx": "mind_shatter"
+     }
+    }
+   }
+  ],
+  "source": "Star Wars: Return of the Jedi, FFG Edge of the Empire",
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Squid-like facial features",
+    "Aquatic adaptations",
+    "Business attire",
+    "Shrewd expression",
+    "Corporate bearing"
+   ],
+   "skin_color_variants": [
+    "Grey",
+    "Dark Grey",
+    "Blue Grey",
+    "Olive Grey",
+    "Mottled patterns"
+   ],
+   "facial_tentacle_variants": [
+    "Long, flowing tentacles",
+    "Short, practical tentacles",
+    "Thick, muscular tentacles",
+    "Thin, delicate tentacles",
+    "Decorative tentacle arrangements"
+   ],
+   "eye_color_variants": [
+    "Dark eyes",
+    "Grey eyes",
+    "Blue eyes",
+    "Green eyes",
+    "Amber eyes"
+   ],
+   "common_adornments": [
+    "Business suits and formal attire",
+    "Corporate and trade clothing",
+    "Aquatic cultural garments",
+    "Professional accessories",
+    "Trade and commerce equipment"
+   ],
+   "llm_description_prompt": "Describe a Quarren character. Emphasize their distinctive squid-like facial features and the way their tentacles move, suggesting their aquatic heritage and shrewd nature. Their attire should reflect their corporate background and business acumen. Consider their reputation for being shrewd and calculating, and the way they carry themselves with the confident, business-like bearing of someone who understands the value of every deal and relationship."
+  },
+  "class_synergies": [
+   {
+    "class": "Scoundrel",
+    "narrative": "Quarren's natural Corporate Acumen and Shrewd Insight make them exceptional Scoundrels, able to navigate complex business deals and political situations with ease.",
+    "mechanical_benefits": [
+     "Corporate Acumen trait enhances negotiation and business skills",
+     "Shrewd Insight trait improves reading people and situations",
+     "High Intelligence and Charisma support social manipulation"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Quarren's natural diplomatic abilities and corporate background make them excellent Consulars, able to negotiate complex agreements and build business relationships.",
+    "mechanical_benefits": [
+     "Corporate Acumen trait enhances diplomatic negotiations",
+     "Shrewd Insight trait aids in understanding motivations",
+     "Aquatic Heritage trait provides unique environmental advantages"
+    ]
+   },
+   {
+    "class": "Scholar (Economics)",
+    "narrative": "Quarren's natural intelligence and business acumen make them excellent Scholars, particularly in economics, trade, and corporate studies.",
+    "mechanical_benefits": [
+     "Corporate Acumen trait provides insights into business and trade",
+     "Shrewd Insight trait enhances research and analysis",
+     "High Intelligence supports academic pursuits"
+    ]
+   },
+   {
+    "class": "Scout (Aquatic)",
+    "narrative": "Quarren's Aquatic Heritage and natural adaptability make them excellent Scouts, particularly in aquatic environments and trade routes.",
+    "mechanical_benefits": [
+     "Aquatic Heritage trait enables underwater exploration",
+     "Shrewd Insight trait aids in route planning and assessment",
+     "Corporate Acumen trait supports trade route navigation"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Trade Federation",
+    "narrative": "Quarren are highly valued by the Trade Federation for their natural business acumen and corporate expertise in trade and commerce."
+   },
+   {
+    "faction": "Corporate Sector",
+    "narrative": "Many Quarren work in the Corporate Sector as executives, negotiators, and business leaders, using their natural corporate abilities."
+   },
+   {
+    "faction": "Independent Traders",
+    "narrative": "Many Quarren prefer to work as independent traders and merchants, using their business acumen and aquatic heritage to pursue their own commercial interests."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your corporate acumen becomes more refined, allowing you to navigate even more complex business situations and negotiations.",
+     "mechanical_benefit": "You gain advantage on all Negotiation checks, and you can use your action to gain insight into the value of any trade deal or business opportunity within 60 feet."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your shrewd insight reaches new heights, allowing you to read people and situations with incredible accuracy.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Charisma-based skill checks for the next minute when dealing with business or political situations."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your aquatic heritage combines with business experience to provide unique advantages in aquatic trade environments.",
+     "mechanical_benefit": "When in aquatic environments, you gain a +2 bonus to attack rolls and damage rolls, representing your comfort and advantage in water-based situations."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your corporate mastery reaches its peak, making you nearly impossible to deceive in business dealings.",
+     "mechanical_benefit": "You have advantage on all saving throws against deception and manipulation, and you can sense the presence of hidden agendas within 30 feet."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Trade Rituals",
+    "type": "ceremonial",
+    "description": "Quarren have sacred rituals that celebrate trade and commerce, often involving the blessing of trade goods and the sealing of business agreements.",
+    "narrative_impact": "Provides cultural depth and business connection. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Corporate Traditions",
+    "type": "traditional",
+    "description": "Quarren corporate traditions emphasize negotiation, deal-making, and the importance of building lasting business relationships.",
+    "narrative_impact": "Creates business identity and negotiation scenarios. Can be used for training and mentoring situations."
+   },
+   {
+    "name": "Aquatic Commerce",
+    "type": "cultural",
+    "description": "Quarren aquatic commerce traditions utilize their underwater heritage for unique trade opportunities and aquatic business ventures.",
+    "narrative_impact": "Provides unique business opportunities and aquatic trade scenarios. Can be used for specialized commerce and exploration."
+   },
+   {
+    "name": "Shrewd Negotiation",
+    "type": "narrative",
+    "description": "Quarren practice techniques that enhance their negotiation abilities and business intuition.",
+    "narrative_impact": "Provides negotiation opportunities and business development. Can be used for deal-making and relationship building scenarios."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "aquatic",
+    "adaptation_name": "Aquatic Mastery",
+    "description": "Your species is perfectly adapted to aquatic environments, allowing you to conduct business and trade in underwater locations.",
+    "mechanical_benefit": "You have advantage on all skill checks in aquatic environments, and you can sense underwater trade opportunities within 60 feet."
+   },
+   {
+    "environment": "corporate",
+    "adaptation_name": "Corporate Environment",
+    "description": "Your natural business acumen allows you to thrive in corporate environments where others would struggle.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks in corporate environments, and you can sense business opportunities within 30 feet."
+   },
+   {
+    "environment": "trade",
+    "adaptation_name": "Trade Routes",
+    "description": "Your shrewd insight allows you to navigate and understand trade routes and commercial networks with ease.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks related to trade and commerce, and you can sense profitable trade opportunities."
+   },
+   {
+    "environment": "political",
+    "adaptation_name": "Political Maneuvering",
+    "description": "Your corporate background and shrewd nature allow you to navigate complex political situations and power structures.",
+    "mechanical_benefit": "You have advantage on saving throws against political manipulation, and you can sense hidden agendas within 30 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on corporate abilities and business acumen, complementing rather than overshadowing class features",
+    "Corporate expertise improvements maintain the species' unique identity while providing meaningful advancement",
+    "Business and negotiation abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on corporate traditions and trade culture rather than mechanical advantages",
+    "Trade rituals and corporate traditions provide unique roleplaying opportunities and cultural depth",
+    "Aquatic commerce and shrewd negotiation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for corporate and aquatic environments where business acumen is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Political maneuvering and trade route mastery provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "aquatic_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "tentacled_head",
+     "scaly_skin",
+     "humanoid_body",
+     "webbed_feet",
+     "large_eyes"
+    ],
+    "morphology": {
+     "head_type": "cephalopod-like",
+     "body_type": "quadrupedal",
+     "average_height": "1.75 m"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "skin_color": "pastel_purple",
+       "tentacle_pattern": "swirly"
+      },
+      "adult": {
+       "skin_color": "deep_blue",
+       "tentacle_pattern": "striped"
+      },
+      "elder": {
+       "skin_color": "weathered_gray",
+       "tentacle_pattern": "frayed"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "scarred_tentacles",
+       "sunken_eyes",
+       "mottled_scales"
+      ],
+      "light_side": [
+       "shimmering_scales",
+       "radiant_aura",
+       "wispy_tentacles"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "random_tentacle_pattern",
+     "unique_scale_coloration"
+    ],
+    "prompt_schema": {
+     "base_prompt": "Quarren with {color} skin and {pattern} tentacles, standing in a market on Mon Cala.",
+     "contextual_modifiers": [
+      "in_a_suit",
+      "with_a_computing_device",
+      "negotiating_with_another_species"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "name": "A Rival Entrepreneur",
+     "description": "The Quarren's business acumen sparks a rivalry with a fellow merchant or entrepreneur.",
+     "trigger": "The player is involved in a high-stakes trade negotiation.",
+     "outcome": "A rival merchant gains the upper hand, making the Quarren more determined to succeed."
+    },
+    "escalation": {
+     "name": "A Corporate Saboteur",
+     "description": "The Quarren's business tactics are seen as underhanded or deceitful by others.",
+     "trigger": "The player is accused of corporate sabotage or espionage.",
+     "outcome": "Their reputation suffers, and relationships with other merchants begin to fray."
+    },
+    "confrontation": {
+     "name": "An Unyielding Adversary",
+     "description": "The Quarren's actions lead to a direct conflict with their adversary.",
+     "trigger": "A merchant or entrepreneur refuses to deal with the player due to past disputes.",
+     "outcome": "The Quarren must face off against their rival in a high-stakes negotiation or confrontation."
+    }
+   },
+   "resolution_paths": {
+    "victory": {
+     "name": "Settling Accounts",
+     "description": "The Quarren emerges victorious, but at great personal cost."
+    },
+    "redemption": {
+     "name": "A New Path Forward",
+     "description": "The Quarren seeks to make amends for past mistakes and rebuild their reputation."
+    },
+    "escape": {
+     "name": "Fleeing the Scene",
+     "description": "The Quarren attempts to flee the situation or escape their responsibilities."
+    }
+   },
+   "conflict_triggers": [
+    "The player is involved in a high-stakes trade negotiation that goes awry.",
+    "A merchant or entrepreneur refuses to deal with the player due to past disputes.",
+    "The Quarren's actions lead to a direct conflict with another merchant or entrepreneur."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The player is involved in a high-stakes trade negotiation that goes awry.",
+     "A merchant or entrepreneur refuses to deal with the player due to past disputes."
+    ],
+    "vendetta_type": "Professional"
+   },
+   "overrides": {
+    "tragic_flaw": "The pursuit of power and wealth above all else can lead to a loss of empathy and compassion, causing Quarren to alienate those closest to them.",
+    "historical_enemy": "The Empire's brutal suppression of Mon Cala has left an indelible mark on the Quarren psyche. They view the Empire as an existential threat and will stop at nothing to prevent its resurgence."
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "species": "human",
+     "traits": [
+      "charming",
+      "diplomatic"
+     ]
+    },
+    {
+     "species": "Mon Calamari",
+     "traits": [
+      "adventurous",
+      "diplomatic"
+     ]
+    },
+    {
+     "species": "Bothan",
+     "traits": [
+      "calculating",
+      "diplomatic"
+     ]
+    }
+   ],
+   "romance_progression": {
+    "stage1": {
+     "name": "A Chance Encounter",
+     "description": "The Quarren meets the romantic interest in a business or social setting."
+    },
+    "stage2": {
+     "name": "Building Rapport",
+     "description": "The Quarren and their romantic interest begin to form a bond through shared activities."
+    },
+    "stage3": {
+     "name": "Deeper Connections",
+     "description": "The Quarren and their romantic interest develop deeper feelings for one another."
+    },
+    "stage4": {
+     "name": "Public Display of Affection",
+     "description": "The Quarren and their romantic interest become more open about their relationship."
+    },
+    "stage5": {
+     "name": "Commitment",
+     "description": "The Quarren and their romantic interest make a public commitment to each other."
+    }
+   },
+   "romance_events": [
+    "The player is asked to help their romantic interest with a business proposal.",
+    "The player's romantic interest is involved in a high-stakes trade negotiation that goes awry.",
+    "The player and their romantic interest share a romantic dinner or evening out."
+   ],
+   "romance_modifiers": [
+    {
+     "trait": "cunning",
+     "effect": "Increases the Quarren's chances of success in business negotiations with their romantic interest."
+    },
+    {
+     "trait": "diplomatic",
+     "effect": "Enhances the Quarren's ability to navigate complex social situations with their romantic interest."
+    }
+   ],
+   "overrides": {
+    "cultural_approach": "Quarren place a high value on mutual respect, trust, and loyalty in their relationships. They often engage in elaborate courtship rituals, showcasing their family's status and reputation.",
+    "common_traits": [
+     "Ambition",
+     "Intellectual curiosity"
+    ]
+   }
+  },
+  "flavor_text": "As a Quarren, you hail from the revered city of Otoh Gunga on Mon Cala. Your people's history is woven with tales of resilience and ingenuity in the face of adversity. From the devastating loss of the great Mon Calamari fleet to the Empire's brutal occupation, your kind has consistently demonstrated an unwavering dedication to commerce, freedom, and the pursuit of knowledge. Yet, beneath this veneer of success lies a complex web of family ties, ancient rivalries, and the weight of tradition.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Quarren, you embody the duality of your people: where business acumen and cunning meet an unyielding passion for freedom. You navigate complex webs of intrigue with ease, leveraging your natural affinity for aquatic environments to stay one step ahead in both physical and mental battles. However, beware the dark undertow of tradition and family obligations that can sometimes pull you under.",
+   "narrative_hooks": [
+    "A long-lost ancestor's legacy is revealed, threatening to upend your understanding of your family's history and role in the galaxy."
+   ],
+   "social_dynamics": "Quarren are known for their masterful manipulation of social hierarchies. They have an innate ability to read between the lines and navigate intricate networks of alliances and rivalries. When interacting with other species, they often employ a mix of charm and intimidation to achieve their goals.",
+   "common_motivations": [
+    "Securing lucrative trade agreements",
+    "Uncovering hidden family secrets",
+    "Protecting Mon Cala's sovereignty"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Calm",
+      "Calculating",
+      "Cunning"
+     ],
+     "flaws": [
+      "Overly reliant on intelligence-based abilities"
+     ],
+     "values": [
+      "Ambition",
+      "Loyalty",
+      "Professionalism"
+     ]
+    },
+    "motivations": {
+     "primary": "Gain wealth and influence through strategic business deals",
+     "secondary": "Protect the interests of Mon Cala and its people"
+    },
+    "combat_behavior": "Use ranged attacks to outmaneuver enemies, focusing on hit-and-run tactics",
+    "social_behavior": "Build rapport with allies and negotiate with enemies, using charisma and intelligence-based abilities to outwit opponents"
+   },
+   "relationship_tracking": {
+    "trust_levels": "Develop a system to track the Quarren's relationships with other characters, adjusting their behavior based on the level of trust established",
+    "loyalty_triggers": "Trigger loyalty responses when the character completes successful negotiations or achieves significant business milestones"
+   },
+   "services": [
+    {
+     "name": "Negotiation",
+     "description": "Use charisma and intelligence-based abilities to negotiate complex deals and resolve disputes"
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "quarren",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/quarren.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,243 @@
+{
+ "record": {
+  "id": "power_force_harm",
+  "name": "Force Harm",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 2,
+  "tags": [
+   "dark_side",
+   "necrotic",
+   "life_drain",
+   "vampiric",
+   "healing",
+   "corruption"
+  ],
+  "narrative": "You channel the dark side of the Force to drain life and vitality from your enemies, transferring their essence into yourself with malevolent intent. This is the corrupted mirror of Force Heal - where healing gives life, harm takes it. The power flows through you like cold shadow, draining the life force of your target and feeding your own dark hunger, bringing pain and despair to those who stand against you.",
+  "flavor_text": "'I will drain the life from you.' - Darth Vader",
+  "casting_time": "1 Action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 3
+   },
+   {
+    "type": "Hit_Points",
+    "cost_mode": "percent_of_max",
+    "percentage": 5,
+    "apply_to": "max",
+    "recovery": "long_rest"
+   }
+  ],
+  "manifestation": [
+   "Somatic (clawed hand grasping toward target)",
+   "Mental Focus (channeling hatred and malice)"
+  ],
+  "corruption_transform": {
+   "can_corrupt": true,
+   "corrupts_to_power_id": "power_force_harm",
+   "can_purify": true,
+   "purifies_to_power_id": "power_force_heal",
+   "retains_mastery": true,
+   "mapping_notes": "Necrotic damage dice map 1:1 to healing dice; targeting flips enemy->ally."
+  },
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "allowed_at_extremes": true,
+    "threshold": 90,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    }
+   }
+  },
+  "base_effect": {
+   "description": "You drain vitality from a creature you touch, dealing necrotic damage and healing yourself.",
+   "mechanics": [
+    {
+     "effect": "apply_damage",
+     "parameters": {
+      "damage_dice": "3d8",
+      "damage_type": "necrotic"
+     }
+    },
+    {
+     "effect": "apply_healing",
+     "parameters": {
+      "healing_dice": "3d8",
+      "target": "self"
+     }
+    }
+   ]
+  },
+  "upgrades": [
+   {
+    "id": "harm_upgrade_drain_life",
+    "name": "Drain Life",
+    "description": "Increase the amount of life drained.",
+    "xp_cost": 6,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_damage_dice",
+      "parameters": {
+       "damage_dice": "4d8"
+      }
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_healing_dice",
+      "parameters": {
+       "healing_dice": "4d8"
+      }
+     }
+    ]
+   },
+   {
+    "id": "harm_upgrade_soul_rend",
+    "name": "Soul Rend",
+    "description": "Tear deeper into the target's life force.",
+    "xp_cost": 8,
+    "prerequisites": [
+     "harm_upgrade_drain_life"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_power_cost",
+      "description": "Channeling this much dark power takes a heavy toll on your own life force.",
+      "modification": "increase_cost",
+      "parameters": {
+       "type": "Hit_Points",
+       "amount": 5
+      }
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_damage_dice",
+      "parameters": {
+       "damage_dice": "5d8"
+      }
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_healing_dice",
+      "parameters": {
+       "healing_dice": "5d8"
+      }
+     }
+    ]
+   }
+  ],
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "Sith Warriors excel at channeling their rage into destructive Force techniques.",
+    "mechanical_benefit": "Reduce HP sacrifice percentage by 1 (min 1%)."
+   },
+   {
+    "class_id": "sith_assassin",
+    "narrative": "Sith Assassins use Force Harm to eliminate targets while sustaining themselves.",
+    "mechanical_benefit": "Gain advantage on Force Harm attacks against surprised targets."
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human ambition and capacity for darkness makes them particularly effective at channeling this dark power.",
+    "mechanical_benefit": "Humans can reduce the Hit Point cost by 2 when casting Force Harm."
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order has preserved the ancient techniques for draining life force.",
+    "mechanical_benefit": "Sith gain +2 to Force Harm damage rolls."
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Force Harm should feel like a violation of the natural order - the dark side reaching out to consume life itself. Describe the target's life force being visibly drained, their skin paling, their eyes dimming, while the caster's own vitality is restored through this dark communion.",
+   "tactical_notes": "Force Harm is excellent for sustaining yourself in combat while dealing damage, but the HP cost makes it risky. Use it strategically when you need both damage and healing, but be careful not to overextend yourself.",
+   "narrative_hooks": [
+    "A fallen Jedi uses Force Harm in a moment of desperation, sealing their corruption",
+    "A Sith Lord demonstrates their power by draining the life from a captured enemy",
+    "The power is used as a last resort when all other options have failed",
+    "Ancient Sith texts describe Force Harm as the ultimate expression of dark side mastery"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dark figure channels malevolent Force energy, their clawed hand extended toward a victim whose life force is being visibly drained. Dark, shadowy tendrils of energy flow from the target to the caster, while the victim's skin pales and their eyes dim. The scene is ominous and terrifying, representing the dark side's power to consume life itself.",
+   "base_negative_keywords": [
+    "bright",
+    "healing",
+    "peaceful",
+    "cartoonish",
+    "blurry"
+   ],
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "The character is wreathed in dark energy, their eyes glowing with malevolent power, and their expression twisted with dark satisfaction."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "The Force Harm creates visible dark energy streams that drain life from the target while restoring the caster's vitality."
+    },
+    {
+     "target_type": "Location",
+     "modifier_text": "The dark energy leaves shadowy traces in the environment, with the very air seeming to grow colder and more oppressive."
+    }
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_harm.svg",
+   "color": "#8B0000"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_harm",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_harm.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

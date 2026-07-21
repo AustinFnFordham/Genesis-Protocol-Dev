@@ -1,0 +1,254 @@
+{
+ "record": {
+  "id": "power_force_lightning",
+  "name": "Force Lightning",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 1,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "narrative": "You channel pure dark side energy through your body, unleashing it as devastating bolts of lightning from your fingertips. The power manifests as blue-white arcs of electricity that leap toward your victim, crackling with malevolent energy and the unmistakable scent of ozone.",
+  "flavor_text": "'Unlimited power!' - Emperor Palpatine",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "extending fingers, channeling dark energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "embracing hatred and rage"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You unleash a devastating bolt of dark side energy that arcs toward your target, dealing massive electrical damage.",
+   "mechanics": [
+    {
+     "type": "single_target_damage",
+     "value": "2d8_lightning",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_hit",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Force attack roll, 2d8 lightning damage on hit"
+    },
+    {
+     "type": "apply_status",
+     "value": "stunned",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Constitution save or be stunned until end of next turn"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "For a Guardian to embrace Force Lightning requires confronting their deepest instincts, transforming protection into something darker. This inner conflict fuels their channeling raw electrical fury through fingertips, allowing them to crackling electricity with a corrupting rage born of personal struggle.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": "+2_damage",
+      "condition": "melee_combat",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Gain +2 to Force Lightning damage when using it in melee combat"
+     }
+    ]
+   },
+   {
+    "class_id": "consular",
+    "narrative": "For a Consular to embrace Force Lightning requires confronting their deepest instincts, transforming diplomacy into something darker. This inner conflict fuels their channeling raw electrical fury through fingertips, allowing them to crackling electricity with a corrupting rage born of personal struggle.",
+    "mechanical_benefit": [
+     {
+      "type": "area_effect",
+      "value": "intimidate",
+      "range": "30_feet",
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Can use Force Lightning to intimidate all enemies within 30 feet"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Humans' emotional nature makes them particularly susceptible to the dark side's call, allowing them to channel powerful emotions into Force Lightning.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": "+1_damage",
+      "condition": "emotional_state",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Gain +1 to Force Lightning damage when using it while angry or afraid"
+     }
+    ]
+   },
+   {
+    "species_id": "zabrak",
+    "narrative": "Zabraks' natural aggression and warrior culture makes them particularly adept at channeling rage into Force Lightning.",
+    "mechanical_benefit": [
+     {
+      "type": "reaction_trigger",
+      "trigger": "taking_damage",
+      "action_type": "bonus_action",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Can use Force Lightning as a bonus action when they take damage"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Force Lightning as the ultimate expression of dark side power, using it to dominate and destroy enemies.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": "+2_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Gain +2 to Force Lightning damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "fear",
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Can use Force Lightning to cause fear in enemies"
+     }
+    ]
+   },
+   {
+    "faction_id": "empire",
+    "narrative": "The Empire uses Force Lightning as a tool of terror and control, demonstrating the power of the dark side to intimidate enemies.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "value": "+2_attack_rolls",
+      "condition": "intimidation_attempts",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Gain +2 to Force Lightning attack rolls when using it to intimidate"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the lightning erupting from fingertips—blue-white arcs of pure electrical hatred, the victim's body convulsing as electricity courses through them, the smell of ozone and burnt flesh. Show the dark side user's face twisted in rage or cruel satisfaction.",
+   "tactical_notes": "Force Lightning is the iconic dark side power. 2d8 lightning damage with potential stun makes it deadly. The 60-foot range keeps you safe. Constitution saves are often weak on casters. This power immediately identifies you as a dark side user.",
+   "narrative_hooks": [
+    "The first use of Force Lightning marks a fall to the dark side",
+    "Victims scream as electricity courses through their nervous system",
+    "The lightning leaves branching scars on survivors"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.2), A dramatic digital painting of Force Lightning in action. Blue-white bolts of electricity arc from outstretched fingers, crackling through the air toward a victim. The dark side user's face is illuminated by the lightning, eyes glowing with malevolent power. The victim writhes in agony as electricity courses through them. The scene captures raw dark side fury, by Daarken and Raymond Swanland",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_lightning.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_lightning",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_lightning.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

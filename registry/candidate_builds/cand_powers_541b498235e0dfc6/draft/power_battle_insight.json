@@ -1,0 +1,180 @@
+{
+ "record": {
+  "id": "power_battle_insight",
+  "name": "Battle Insight",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "force",
+   "light_side",
+   "prescience",
+   "combat",
+   "tactical",
+   "advantage",
+   "prediction",
+   "support",
+   "buff",
+   "concentration",
+   "utility",
+   "jedi",
+   "foresight",
+   "enhanced_perception"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Force-enhanced combat awareness available to any Force-sensitive"
+   }
+  },
+  "narrative": "You open yourself to the Force's flow during combat, gaining prescient flashes of your opponent's next move. The power manifests as time seeming to slow, their defensive patterns becoming clear as you see the perfect opening before it exists.",
+  "flavor_text": "'In battle, the Force guides your hand.' - Jedi Knight",
+  "manifestation": [
+   {
+    "type": "somatic",
+    "description": "focusing gesture toward target"
+   },
+   {
+    "type": "mental_focus",
+    "description": "reading the Force currents around your opponent"
+   }
+  ],
+  "casting_time": {
+   "type": "action",
+   "value": 1
+  },
+  "range": {
+   "value": 30,
+   "unit": "feet"
+  },
+  "duration": {
+   "type": "concentration",
+   "value": 1,
+   "unit": "round"
+  },
+  "base_effect": {
+   "description": "Through the Force, you gain a brief insight into a target's defenses, allowing you to strike with greater precision.",
+   "mechanics": [
+    {
+     "effect": "apply_status",
+     "parameters": {
+      "status_id": "battle_insight_target",
+      "target_scope": "target",
+      "duration": {
+       "type": "concentration",
+       "value": 1,
+       "unit": "round"
+      }
+     }
+    },
+    {
+     "effect": "grant_advantage",
+     "parameters": {
+      "check_type": "attack_roll",
+      "scope": "next_attack",
+      "target_scope": "self",
+      "duration": {
+       "type": "concentration",
+       "value": 1,
+       "unit": "round"
+      },
+      "condition": {
+       "type": "has_status",
+       "target_scope": "target",
+       "status": "battle_insight_target"
+      }
+     }
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment of clarity as the Force reveals the target's defensive gaps. Time seems to slow, their guard drops for a fraction of a second that only you can perceive. Your next attack flows with perfect precision toward the revealed weakness.",
+   "tactical_notes": "Battle Insight grants advantage on your next attack, significantly increasing hit chance and critical potential. The 30-foot range and 1-round duration means you must strike quickly. Excellent for ensuring important attacks connect.",
+   "narrative_hooks": [
+    "A padawan's first successful use of Battle Insight during lightsaber training",
+    "The power reveals a hidden injury the enemy was protecting",
+    "Battle Insight shows the exact moment an enemy's concentration wavers"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Force user's eyes glowing with prescient knowledge during combat. Ghostly afterimages show the opponent's future movements, with glowing lines indicating the perfect attack trajectory. The scene captures the moment of Force-granted tactical clarity.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/battle_insight.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_battle_insight",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_battle_insight.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

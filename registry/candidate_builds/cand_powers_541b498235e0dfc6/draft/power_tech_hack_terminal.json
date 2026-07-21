@@ -1,0 +1,216 @@
+{
+ "record": {
+  "id": "power_tech_hack_terminal",
+  "name": "Hack Terminal",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "narrative": "You interface with computer systems, bypassing security protocols and gaining access to restricted data or functions. This is the art of digital infiltration - a dance between human intuition and machine logic. Your fingers fly across interfaces, your mind processes code streams, and you become one with the system, bending it to your will through sheer technical expertise and creative problem-solving.",
+  "flavor_text": "'I'll bypass the security system.' - R2-D2",
+  "casting_time": "1 Action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 3
+   }
+  ],
+  "manifestation": [
+   "Somatic (typing on interface)",
+   "Verbal (muttering commands)",
+   "Mental Focus (concentration on code)"
+  ],
+  "material_components": [
+   {
+    "item_id": "item_slicing_tool",
+    "consumed": false,
+    "narrative": "A specialized device for interfacing with computer systems and bypassing security.",
+    "substitutes": [
+     "item_datapad",
+     "item_interface_glove"
+    ]
+   }
+  ],
+  "base_effect": {
+   "description": "You attempt to hack a computer terminal or system within range. Make a Technology (INT) check against the system's security DC.",
+   "mechanics": [
+    {
+     "effect": "skill_check",
+     "parameters": {
+      "skill": "Technology (INT)",
+      "dc_type": "variable",
+      "variable_source": "terminal_security_level"
+     }
+    },
+    {
+     "effect": "gain_system_access",
+     "parameters": {
+      "access_level": "user",
+      "duration": "1 hour"
+     }
+    }
+   ]
+  },
+  "upgrades": [
+   {
+    "id": "hack_upgrade_stealth",
+    "name": "Stealth Hack",
+    "description": "Your hacking attempts leave no trace of intrusion.",
+    "xp_cost": 5,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "add_stealth_component",
+      "parameters": {
+       "detection_chance": 0.1
+      }
+     }
+    ]
+   },
+   {
+    "id": "hack_upgrade_remote",
+    "name": "Remote Access",
+    "description": "You can hack terminals from a distance using wireless connections.",
+    "xp_cost": 8,
+    "prerequisites": [
+     "hack_upgrade_stealth"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_range_to_30_feet"
+     },
+     {
+      "effect": "modify_power_cost",
+      "description": "Remote hacking requires more sophisticated equipment and energy.",
+      "modification": "increase_cost",
+      "parameters": {
+       "type": "Tech_Points",
+       "amount": 2
+      }
+     }
+    ]
+   },
+   {
+    "id": "hack_upgrade_master",
+    "name": "Master Slicer",
+    "description": "You can access administrative functions and control entire systems.",
+    "xp_cost": 15,
+    "prerequisites": [
+     "hack_upgrade_remote"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "upgrade_access_level_to_admin"
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "extend_duration_to_24_hours"
+     }
+    ]
+   }
+  ],
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "Engineers have specialized training in system architecture and security protocols.",
+    "mechanical_benefit": "Engineers gain advantage on Technology checks when hacking systems they're familiar with."
+   },
+   {
+    "class_id": "operative",
+    "narrative": "Operatives excel at covert operations and leaving no trace of their activities.",
+    "mechanical_benefit": "Operatives automatically succeed on stealth components of hacking attempts."
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "droid",
+    "narrative": "Droids have a natural affinity for computer systems and digital interfaces.",
+    "mechanical_benefit": "Droids can hack systems as a bonus action once per short rest."
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebellion relies heavily on slicing to gather intelligence and sabotage Imperial systems.",
+    "mechanical_benefit": "Rebel operatives gain +2 to Technology checks when hacking Imperial systems."
+   }
+  ],
+  "llm_guidance": {
+   "iconic_usage": "R2-D2 and other astromech droids frequently hack into Imperial systems to disable security, open doors, or extract vital information.",
+   "tactical_notes": "Hacking is essential for bypassing security systems, gathering intelligence, and controlling environmental hazards. It's often the key to non-violent problem solving.",
+   "narrative_hooks": [
+    "A slicer hacks into a corporate database to expose corruption",
+    "A droid interfaces with ancient systems to unlock forgotten knowledge",
+    "A tech specialist bypasses security to rescue hostages",
+    "The power is used to control automated defenses or environmental systems"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A detailed digital painting of a tech specialist hacking a terminal. The character is hunched over a computer interface, their fingers flying across the keyboard or touchscreen. Digital code streams across the screen, with security protocols being bypassed in real-time. The interface glows with blue and green light, casting dramatic shadows on the character's face. The scene shows the intense concentration and technical skill required for successful hacking.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "The character is focused intently on their work, with reflected screen light illuminating their determined expression and highlighting their technical expertise."
+    },
+    {
+     "target_type": "Location",
+     "modifier_text": "The terminal area is filled with the ambient glow of multiple screens and the hum of computer systems, creating a high-tech atmosphere."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "The hacking creates visible digital effects, with security systems being disabled and automated defenses shutting down."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/powers/tech_hack_terminal.png",
+   "icon": "/assets/icons/powers/hack_terminal.svg"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_tech_hack_terminal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/tech_hack_terminal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "1900654ddd5015a1503cc2476b9120cff5988514b5064e6606bd90b20cdfb120",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

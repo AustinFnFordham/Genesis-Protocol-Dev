@@ -1,0 +1,215 @@
+{
+ "record": {
+  "id": "power_tactical_barrier",
+  "name": "Tactical Barrier",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "defensive",
+   "cover",
+   "barrier",
+   "protection",
+   "energy_shield",
+   "tactical"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Deployable energy barrier technology for battlefield cover"
+   }
+  },
+  "narrative": "You deploy a portable energy barrier that creates instant cover, translucent shield wall providing protection where none existed. The power manifests as shimmering energy field springing from deployed emitters, attacks splashing harmlessly against the barrier's surface while you fire back from safety.",
+  "flavor_text": "\"Good soldiers create their own cover.\" - Tactical Commander",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "deploying barrier emitter or projector"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating barrier strength and coverage area"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 10 minutes",
+  "base_effect": {
+   "description": "You create an energy barrier that provides cover.",
+   "mechanics": [
+    {
+     "type": "create_cover",
+     "value": {
+      "cover_type": "three_quarters",
+      "size": {
+       "length": 10,
+       "height": 10,
+       "unit": "feet"
+      }
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Create 10-foot long, 10-foot high barrier providing three-quarters cover"
+    },
+    {
+     "type": "barrier_hp",
+     "value": {
+      "hit_points": 50
+     },
+     "target_scopes": [
+      "barrier"
+     ],
+     "notes": "Barrier has 50 HP and can be destroyed"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's shield technology expertise creates reinforced barriers. They've optimized emitter patterns and power distribution, their barriers absorbing more punishment through superior engineering before failing.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_barrier",
+      "value": {
+       "hit_points": 100
+      },
+      "target_scopes": [
+       "barrier"
+      ],
+      "notes": "Engineer barriers have 100 HP instead of 50 from reinforced construction."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity transforms Tactical Barrier into versatile protection. They angle barriers for deflection, create overlapping fields, even use them offensively to trap enemies—finding applications beyond simple cover.",
+    "mechanical_benefit": [
+     {
+      "type": "mobile_barrier",
+      "value": {
+       "movement": "15_feet_per_round"
+      },
+      "target_scopes": [
+       "barrier"
+      ],
+      "notes": "Humans can move their barrier up to 15 feet per round (bonus action)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Tactical Barrier for asymmetric warfare. Their versions can be rapidly deployed to create instant fortifications, turning any terrain into defensive position against superior Imperial forces.",
+    "mechanical_benefit": [
+     {
+      "type": "two_way_barrier",
+      "value": {
+       "effect": "allies_can_shoot_through"
+      },
+      "target_scopes": [
+       "barrier"
+      ],
+      "notes": "Rebel barriers allow allies to shoot through while blocking enemy fire (one-way shield)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the barrier shimmering to life, translucent energy wall creating instant cover. Show attacks splashing against the shield's surface, allies using it for protection while returning fire. The barrier should feel tactically valuable and reassuring.",
+   "tactical_notes": "Tactical Barrier creates three-quarters cover (10x10 feet, 50 HP) for 10 minutes with concentration, costing 2 Tech Points. Excellent for creating defensive positions. The barrier can be destroyed but lasts long enough for most encounters. Perfect for holding positions or advancing under fire.",
+   "narrative_hooks": [
+    "Tactical barrier allows advance through killing field under cover",
+    "The portable fortification reveals advanced military technology",
+    "Barrier destruction at critical moment creates vulnerability"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tactical energy barrier deployed on battlefield. The translucent shield wall provides three-quarters cover, attacks splashing harmlessly against its surface. Allies fire from behind the barrier while enemies' shots are blocked. The scene captures instant fortification through advanced technology.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/tactical_barrier.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_tactical_barrier",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_tactical_barrier.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,224 @@
+{
+ "record": {
+  "id": "power_technological_ascension",
+  "name": "Technological Ascension",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "enhancement",
+   "transcendence",
+   "cyborg",
+   "augmentation",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate self-enhancement through technological transcendence"
+   }
+  },
+  "narrative": "You integrate advanced technology into your very being, flesh merging with machine until the distinction becomes meaningless. The power manifests as cybernetic enhancements spreading across your body, neural implants expanding consciousness, your form transcending biological limitations to become something beyond human—the next step in technological evolution.",
+  "flavor_text": "\"Flesh is weak. Technology is eternal. I am both. I am more.\" - Ascended One",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating full-body cybernetic integration"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "merging consciousness with machine intelligence"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Permanent (until dispelled)",
+  "base_effect": {
+   "description": "You permanently enhance yourself through technological integration.",
+   "mechanics": [
+    {
+     "type": "ability_enhancement",
+     "value": {
+      "all_abilities": 4
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Increase all ability scores by 4 (max 24) through cybernetic augmentation"
+    },
+    {
+     "type": "damage_resistance",
+     "value": {
+      "resistance_types": "all_physical"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain resistance to bludgeoning, piercing, and slashing damage"
+    },
+    {
+     "type": "enhanced_senses",
+     "value": {
+      "vision": "120_feet_darkvision",
+      "hearing": "enhanced",
+      "tactical": "threat_detection"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain 120 feet darkvision and enhanced threat detection"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's cybernetic expertise creates perfect ascension. They integrate systems that complement rather than replace biology, achieving symbiosis where machine and flesh work in harmony—transcendence through understanding.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_enhancement",
+      "value": {
+       "intelligence_wisdom": 2
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers gain +2 more to Intelligence and Wisdom from neural optimization."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes them ideal candidates for ascension. Their flexible biology accepts augmentation better than rigid alien physiologies, their minds adapting to machine intelligence with surprising ease—evolution's gift for technological transcendence.",
+    "mechanical_benefit": [
+     {
+      "type": "retain_humanity",
+      "value": {
+       "effect": "no_personality_loss",
+       "bonus": "charisma_unaffected"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans retain full Charisma and personality despite cybernetic conversion."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire views Technological Ascension as next evolution of Imperial superiority. Their ascended soldiers are perfect weapons—loyalty hardwired, skills downloaded, flesh made steel through mandatory augmentation.",
+    "mechanical_benefit": [
+     {
+      "type": "combat_optimization",
+      "value": {
+       "bonus_ac": 4,
+       "bonus_damage": 2
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Imperial ascension grants +4 AC and +2 to all damage rolls."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe cybernetic systems spreading across your body—skin becoming plating, muscles enhanced by synthetic fibers, neural implants expanding consciousness. Show the transcendence moment where you become more than human, biological limitations falling away. The ascension should feel powerful but alien.",
+   "tactical_notes": "Technological Ascension permanently increases all abilities by 4 (max 24) and grants physical resistance for 9 Tech Points. This is permanent character transformation—literal transcendence of biological limits. The permanent duration makes it character-defining. Game-breaking power level.",
+   "narrative_hooks": [
+    "Ascension creates identity crisis about humanity and machine",
+    "The transformation horrifies allies who see organic life as sacred",
+    "Perfect augmentation reveals what person truly values about themselves"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of technological ascension. A figure's body transforms as cybernetic systems integrate, flesh merging seamlessly with advanced technology. Neural implants glow beneath skin, mechanical enhancements visible through translucent flesh. The ascended form radiates power, transcending biological limitations. The scene captures the moment of technological transcendence. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric cybernetic effects, by Maciej Kuciara",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_ascension.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_ascension",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_ascension.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

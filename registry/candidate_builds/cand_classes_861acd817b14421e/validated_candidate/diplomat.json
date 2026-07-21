@@ -1,0 +1,422 @@
+{
+ "record": {
+  "id": "diplomat",
+  "name": "Diplomat",
+  "tags": [
+   "diplomat",
+   "charisma_based",
+   "negotiator",
+   "social_specialist",
+   "persuasion",
+   "political",
+   "support",
+   "skill_specialist",
+   "peaceful",
+   "influence"
+  ],
+  "description": "Diplomats are masters of negotiation, persuasion, and political intrigue. They use their charm, wit, and understanding of social dynamics to navigate complex political situations, broker deals, and influence the course of events through words rather than weapons.",
+  "class_features": [
+   "diplomatic_expertise",
+   "political_awareness",
+   "silver_tongue",
+   "master_negotiator",
+   "legendary_diplomat"
+  ],
+  "hit_die": 6,
+  "primary_ability": "Charisma",
+  "saving_throw_proficiencies": [
+   "Charisma",
+   "Wisdom"
+  ],
+  "armor_proficiencies": [
+   "light_armor"
+  ],
+  "weapon_proficiencies": [
+   "simple_weapons",
+   "blaster_pistols"
+  ],
+  "tool_proficiencies": [
+   "diplomatic_kit",
+   "communications_equipment"
+  ],
+  "skill_proficiencies": {
+   "choose": 4,
+   "from": [
+    "Deception",
+    "Insight",
+    "Intimidation",
+    "Investigation",
+    "Perception",
+    "Persuasion",
+    "Performance",
+    "Technology"
+   ]
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "diplomatic_suit",
+    "datapad",
+    "credit_chips"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The diplomat assumes a confident, expansive stance, using their surroundings to create an aura of calm authority.",
+    "energy_signature": "A soft blue glow emanates from the diplomat's hands and eyes, signifying their mastery of persuasion and negotiation."
+   },
+   "prompt_schema": {
+    "base_prompt": "%name% is trying to negotiate with %target% in a tense meeting about %topic%",
+    "contextual_modifiers": [
+     {
+      "success": "The diplomat successfully navigated the complex web of alliances and interests, securing a mutually beneficial agreement."
+     },
+     {
+      "failure": "The diplomat's words fell on deaf ears, and they were forced to retreat with nothing but bruises to their pride."
+     },
+     {
+      "surprise": "The target suddenly revealed a shocking secret that completely upended the negotiation, leaving the diplomat scrambling to adapt."
+     }
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A diplomat is assigned to a rival nation or faction, where they must navigate complex diplomatic relationships while being mindful of the potential for conflict.",
+    "escalation": "Tensions rise as the diplomat's efforts are met with resistance, sabotage, or outright hostility from their rival. The diplomat must adapt and find new ways to achieve their goals without resorting to aggression.",
+    "confrontation": "The final showdown between the diplomat and their rival. This can be a tense negotiation, a clever deception, or even a dramatic gesture of defiance. The outcome determines the fate of the diplomatic mission and the relationship between the two nations."
+   },
+   "resolution_paths": {
+    "victory": "The diplomat successfully resolves the conflict through diplomacy, earning respect and admiration from their counterpart.",
+    "redemption": "The diplomat is given a second chance to redeem themselves after making a critical mistake or failing in their previous attempts. They must prove their worth by delivering a significant breakthrough or compromise.",
+    "escape": "The diplomat narrowly escapes with their life, but the mission is compromised, and they are forced to flee without achieving their objectives."
+   },
+   "conflict_triggers": [
+    "Inadequate resources",
+    "Misaligned priorities",
+    "Personal biases and prejudices",
+    "Cultural or linguistic barriers"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "The diplomat is immediately drawn to their love interest, but the pressure of their diplomatic duties keeps them apart.",
+    "stage2": "As they grow closer, they must navigate the complexities of their different roles and responsibilities, finding ways to balance their duty to their nation with their desire for each other.",
+    "stage3": "They are forced to confront the challenges of maintaining a long-distance relationship while also dealing with the stress of their diplomatic work. They must find creative solutions to stay connected and committed to one another.",
+    "stage4": "Their love becomes a source of strength and inspiration, helping them navigate even the most treacherous diplomatic waters. However, they must be careful not to let their personal feelings compromise their professional judgment.",
+    "stage5": "Ultimately, they succeed in their mission, but it comes at a great cost. They are forced to confront the difficult choices they made along the way and the impact on their relationship."
+   },
+   "lifestyle_challenges": [
+    "Frequent travel and separation",
+    "High-stress work environment",
+    "Inconsistent schedules and availability",
+    "Limited personal space and privacy"
+   ]
+  },
+  "flavor_text": "A skilled diplomat is a master weaver of words and intentions, capable of persuading even the most recalcitrant foe with charm and guile.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Diplomat, you navigate complex social situations with ease. Your goal is to resolve conflicts through negotiation, persuade others to see your perspective, and maintain relationships that benefit all parties involved.\n",
+   "narrative_hooks": [
+    "A heated debate between rival factions threatens to boil over into violence.",
+    "The leader of the Resistance seeks your counsel on how to negotiate a peace treaty with the Empire.",
+    "You are tasked with mediating a dispute between two powerful allies who have differing opinions on how to proceed."
+   ],
+   "social_dynamics": "As a Diplomat, you excel at reading people and understanding their motivations. Use this insight to build rapport, establish trust, and influence those around you.\n",
+   "common_motivations": [
+    "Gain the respect of others through your words and actions",
+    "Secure alliances that benefit all parties involved",
+    "Protect the innocent from harm or exploitation"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "charming",
+      "diplomatic",
+      "resourceful"
+     ],
+     "tone": "calm"
+    },
+    "motivations": [
+     "gain respect and admiration",
+     "maintain relationships with key figures",
+     "achieve peaceful resolution to conflicts"
+    ],
+    "combat_behavior": "When diplomacy fails, Diplomats become adept at using their surroundings to evade danger. Use stealth, cunning, and creative problem-solving to extricate yourself from combat situations.\n",
+    "social_behavior": "As a master of social dynamics, use your charm and persuasive abilities to build rapport with NPCs. Establish trust, gather information, and influence key decisions through clever negotiation.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "low": "Your reputation is tarnished; others are wary of you."
+     },
+     {
+      "medium": "You have established a working relationship, but there's still room for growth."
+     },
+     {
+      "high": "Others respect and admire you; your words carry significant weight."
+     }
+    ],
+    "loyalty_triggers": [
+     "Aiding those in need or protecting the innocent",
+     "Maintaining open communication and honesty in relationships",
+     "Demonstrating expertise or leadership abilities"
+    ]
+   },
+   "services": [
+    "Mediation",
+    "Negotiation",
+    "Relationship-building",
+    "Strategic counseling"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "Diplomat",
+   "key_attributes": [
+    "Charisma",
+    "Intelligence"
+   ],
+   "iconic_gear": [
+    "Commlink",
+    "Holocron"
+   ],
+   "role_in_galaxy": "Influencer and Negotiator",
+   "famous_exemplars": [
+    "Mon Mothma",
+    "Gial Ackbar"
+   ],
+   "species_synergies": [
+    {
+     "species": "Bothan",
+     "narrative": "Bothans are known for their cunning and negotiation skills, making them natural diplomats."
+    },
+    {
+     "species": "Trandoshan",
+     "narrative": "Trandoshans are skilled hunters and trackers, but also have a talent for diplomacy and mediation."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "Galactic Republic",
+     "narrative": "Diplomats within the Galactic Republic often find themselves in positions of great influence, brokering deals between star systems and negotiating treaties."
+    },
+    {
+     "faction": "New Republic",
+     "narrative": "As a new government formed from the ashes of the Empire, the New Republic relies heavily on skilled diplomats to navigate the complex web of intergalactic politics."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "diplomatic_training_1",
+    "feature_id": "diplomatic_training",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Gain proficiency in one skill of your choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomacy_focus_2",
+    "feature_id": "diplomacy_focus",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "You gain advantage on all Charisma checks you make to persuade creatures.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "advantage",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomatic_network_3",
+    "feature_id": "diplomatic_network",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can add a contact to your network, granting you access to information and resources.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "contact",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "additional_language_4",
+    "feature_id": "additional_language",
+    "level_requirement": 4,
+    "type": "core",
+    "description": "You learn a new language of your choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "expertise_5",
+    "feature_id": "expertise",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "Choose two skills to improve your proficiency in. Your proficiency bonus is doubled for these skills.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "When you make a melee attack, you can deal an additional damage.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "damage",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomatic_immunity_6",
+    "feature_id": "diplomatic_immunity",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "You gain immunity to being charmed, frightened, or intimidated.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "immunity",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomacy_focus_upgrade_7",
+    "feature_id": "diplomacy_focus_upgrade",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Your advantage on Charisma checks to persuade creatures increases to a +3 bonus.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+3",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomatic_insight_9",
+    "feature_id": "diplomatic_insight",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "You gain insight into the motivations and intentions of those around you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "insight",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomacy_focus_upgrade_2_11",
+    "feature_id": "diplomacy_focus_upgrade_2",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Your advantage on Charisma checks to persuade creatures increases to a +4 bonus.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+4",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomatic_tactician_13",
+    "feature_id": "diplomatic_tactician",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "additional_language_upgrade_4_16",
+    "feature_id": "additional_language_upgrade_4",
+    "level_requirement": 16,
+    "type": "core",
+    "description": "You learn a new language of your choice, and gain proficiency in one skill related to that language.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": ""
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "diplomat",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/diplomat.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,228 @@
+{
+ "record": {
+  "id": "power_singularity_cannon",
+  "name": "Singularity Cannon",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "gravity",
+   "singularity",
+   "black_hole",
+   "devastating",
+   "legendary",
+   "physics_weapon"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate gravity weapon creating localized singularities"
+   }
+  },
+  "narrative": "You fire a projectile that collapses into a micro-singularity on impact, gravitational forces so intense they tear apart matter at the atomic level. The power manifests as reality warping around the singularity's event horizon, everything within being compressed to infinite density before the black hole evaporates in a burst of Hawking radiation.",
+  "flavor_text": "\"I have become death, destroyer of worlds—through applied physics.\" - Singularity Weaponeer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "firing singularity cannon and designating impact point"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating gravitational collapse parameters"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "1 mile",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You create a localized singularity that devastates everything in its area.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 20,
+      "dice_size": 6,
+      "damage_type": "force",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_40_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Dexterity save or take 20d6 force damage in 40-foot radius"
+    },
+    {
+     "type": "gravitational_pull",
+     "value": {
+      "effect": "pull_to_center",
+      "distance": "20_feet"
+     },
+     "target_scopes": [
+      "creatures_in_area"
+     ],
+     "notes": "Creatures pulled 20 feet toward singularity center before detonation"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's mastery of gravitational physics transforms Singularity Cannon into controllable apocalypse. They can fine-tune the event horizon, direct gravitational vectors, even harvest the Hawking radiation—turning cosmic destruction into precision instrument.",
+    "mechanical_benefit": [
+     {
+      "type": "shaped_singularity",
+      "value": {
+       "exclude_allies": true
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers can exclude allies from the singularity's effects through gravitational shaping."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical genius makes their singularities devastatingly effective. They time detonation for maximum enemy clustering, position singularities to create cascading structural failures—turning physics weapon into strategic annihilation.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_damage",
+      "value": {
+       "dice_count": 5,
+       "dice_size": 6,
+       "damage_type": "force",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans deal an additional 5d6 force damage (25d6 total) from optimized timing."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Singularity Cannon as ultimate deterrent—demonstrating absolute technological supremacy through weaponized black holes. Their versions can target planets, their operators trained to show no mercy, singularities embodying Imperial dominance.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_devastation",
+      "value": {
+       "radius": {
+        "distance": 60,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Imperial singularities affect 60-foot radius for maximum terror."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe reality warping as the singularity forms, light bending around the event horizon. Show everything being pulled inexorably toward infinite gravity, matter compressed beyond recognition before the black hole evaporates in brilliant radiation. The destruction should feel cosmically absolute.",
+   "tactical_notes": "Singularity Cannon deals 20d6 force damage in 40-foot radius from 1 mile away, pulling enemies toward center first. Costs 9 Tech Points. This is legendary-tier destruction—literal black holes as weapons. Use for climactic battles or ultimate threats. The gravitational pull creates clustering for maximum damage.",
+   "narrative_hooks": [
+    "A singularity's gravitational pull reveals its formation before detonation, creating horror",
+    "The weapon's use creates lasting gravitational anomalies in the area",
+    "Collapsing a singularity at the wrong moment creates permanent black hole"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a micro-singularity forming on a battlefield. Reality warps and distorts around the event horizon, light bending impossibly as gravitational forces tear apart matter. Everything is pulled inexorably toward infinite density before the black hole evaporates in a burst of Hawking radiation. The scene captures the terrifying power of weaponized gravity. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric gravitational distortion, by Kilian Eng",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/singularity_cannon.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_singularity_cannon",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_singularity_cannon.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

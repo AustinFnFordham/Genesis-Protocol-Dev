@@ -1,0 +1,466 @@
+{
+ "record": {
+  "id": "bounty_hunter",
+  "name": "Bounty Hunter",
+  "era": "Galactic_Empire",
+  "rarity": "uncommon",
+  "tags": [
+   "bounty_hunter",
+   "tracker",
+   "hunter",
+   "mercenary",
+   "martial",
+   "dexterity_based",
+   "ranged_specialist",
+   "intimidation",
+   "gadgets",
+   "tactical"
+  ],
+  "narrative": "Bounty Hunters are the galaxy's most feared and respected hunters, operating in the shadows between law and lawlessness. They are masters of tracking, combat, and intimidation, using their skills to capture or eliminate targets for profit. In a galaxy where justice is often bought and sold, Bounty Hunters are the instruments of that justice, whether they serve the Empire, criminal syndicates, or their own personal code.",
+  "flavor_text": "I'm just a simple man trying to make my way in the universe. - Jango Fett",
+  "cultural_significance": "Bounty Hunters are viewed with a mix of fear and respect across the galaxy. To criminals, they are the boogeymen that keep them looking over their shoulders. To law enforcement, they are sometimes allies, sometimes rivals. To the common citizen, they represent the harsh reality that in the galaxy, everything has a price.",
+  "description": "Skilled hunters of sentient life, tracking down fugitives for credits. They are a force to be reckoned with in the galaxy's underworld.",
+  "origin_story": "The profession of bounty hunting has existed for millennia, but it reached new prominence during the Clone Wars and Galactic Civil War. The Empire's use of bounty hunters to track down rebels and the New Republic's reliance on them to capture Imperial war criminals has made them an integral part of galactic politics.",
+  "class_identity_profile": {
+   "core_fantasy": "A relentless and resourceful predator, using a combination of tactical skill, specialized gear, and sheer intimidation to always get their mark.",
+   "key_attributes": [
+    "Wisdom (for tracking and perception)",
+    "Strength or Dexterity (for combat prowess)"
+   ],
+   "iconic_gear": [
+    "Customized Blaster Rifle",
+    "Heavy Armor with integrated systems",
+    "Jetpack",
+    "An array of gadgets: restraining bolts, tracking fobs, thermal detonators."
+   ],
+   "role_in_galaxy": "Bounty Hunters are the instruments of justice, revenge, or simple business in the lawless parts of the galaxy. They are the boogeymen that fugitives fear, their reputation often being their most powerful weapon.",
+   "famous_exemplars": [
+    "Boba Fett",
+    "Din Djarin",
+    "Aurra Sing",
+    "Cad Bane",
+    "Bossk"
+   ],
+   "species_synergies": [
+    {
+     "species": "trandoshan",
+     "narrative": "The Trandoshan culture of hunting for glory makes them natural Bounty Hunters."
+    },
+    {
+     "species": "human",
+     "narrative": "Human ambition and adaptability allow them to excel in the demanding and varied life of a hunter."
+    },
+    {
+     "species": "zabrak",
+     "narrative": "Zabrak determination and physical prowess make them formidable hunters who never give up on a target."
+    },
+    {
+     "species": "twi_lek",
+     "narrative": "Twi'lek charm and social skills help them gather information and navigate the criminal underworld."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "bounty_hunters_guild",
+     "narrative": "The Guild provides structure, contracts, and a code of honor for hunters across the galaxy."
+    },
+    {
+     "faction": "criminal_syndicates",
+     "narrative": "Many hunters find lucrative but dangerous work in the employ of the Hutts, Pykes, or Black Sun."
+    },
+    {
+     "faction": "galactic_empire",
+     "narrative": "The Empire frequently employs bounty hunters to track down rebels and fugitives."
+    }
+   ]
+  },
+  "hit_die": "1d10",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Martial weapons",
+    "Blaster pistols",
+    "Blaster rifles"
+   ],
+   "tools": [
+    "Bounty Hunter's Kit",
+    "Tracking Kit",
+    "Stun Cuffs",
+    "Targeting Computer",
+    "Grappling Hook",
+    "Jetpack",
+    "Thermal Detonators"
+   ],
+   "saving_throws": [
+    "Strength",
+    "Wisdom"
+   ],
+   "skills": {
+    "choose": 3,
+    "from": [
+     "Athletics",
+     "Deception",
+     "Intimidation",
+     "Investigation",
+     "Perception",
+     "Stealth",
+     "Survival",
+     "Technology"
+    ]
+   }
+  },
+  "primary_ability": "Strength or Wisdom",
+  "primary_resource": "Hunter's Focus",
+  "connections": [
+   {
+    "target_id": "bounty_hunters_guild",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "The Bounty Hunters Guild provides structure, contracts, and a code of honor for hunters across the galaxy.",
+    "mechanical_benefit": "Access to guild contracts and resources"
+   },
+   {
+    "target_id": "criminal_syndicates",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "Many hunters find lucrative but dangerous work in the employ of criminal organizations.",
+    "mechanical_benefit": "Access to criminal networks and information"
+   },
+   {
+    "target_id": "galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "The Empire frequently employs bounty hunters to track down rebels and fugitives.",
+    "mechanical_benefit": "Access to Imperial resources and intelligence"
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "As a Bounty Hunter, your character is driven by the thrill of the hunt. They are constantly on the move,\ntracking down fugitives and bringing them in for a price. Your character's reputation and skills as a\ntracker are crucial to their success.\n",
+   "narrative_hooks": [
+    "You've received a tip about a high-priority target.",
+    "A local crime lord has offered you a lucrative contract.",
+    "Your ship is damaged, and you need to make repairs quickly."
+   ],
+   "social_dynamics": "Bounty Hunters often find themselves at odds with the law, which can create tension in their relationships\nwith other characters. However, they also have a code of honor that guides their actions.\n",
+   "common_motivations": [
+    "Gain notoriety and respect within the galaxy's underworld.",
+    "Acquire wealth and resources through successful bounties.",
+    "Protect one's reputation and standing as a hunter."
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A professional bounty hunter in the Star Wars universe, wearing practical armor and carrying specialized equipment",
+   "contextual_modifiers": [
+    {
+     "target_type": "Portrait",
+     "modifier_text": "Close-up portrait showing weathered features and determined expression"
+    },
+    {
+     "target_type": "Action_Shot",
+     "modifier_text": "In combat or tracking, using specialized gear and weapons"
+    },
+    {
+     "target_type": "Class_Scene",
+     "modifier_text": "In a cantina or guild hall, surrounded by other hunters and contracts"
+    }
+   ]
+  },
+  "ui": {
+   "image": "images/classes/bounty_hunter.jpg",
+   "icon": "icons/classes/bounty_hunter.svg",
+   "color": "#8B4513"
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Mandalorian armor",
+    "Heavy blaster pistol",
+    "Comlink",
+    "Blaster rifle (holstered)",
+    "Hunting mask (tactical eyewear)"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Stalking stance, with one knee bent and eyes scanning the surroundings",
+    "energy_signature": "Glinting, metallic aura surrounding the Bounty Hunter's form as they move"
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled bounty hunter {ADJECTIVE} is on a mission to track down a fugitive {SUBJECT}. They have reached a key location and are preparing for a confrontation.",
+    "contextual_modifiers": [
+     "The bounty hunter is equipped with advanced gear, including ",
+     "The target is known to be accompanied by skilled allies",
+     "The bounty hunter's reputation as a ruthless tracker has preceded them, causing fear among the locals"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A nemesis emerges as a rival bounty hunter seeking to outdo you in the credits game. They may challenge your skills or sabotage your hunts.\n",
+    "escalation": "The rivalry escalates as your nemesis starts to target your clients, making it harder for you to earn a living. They might even kidnap your allies or steal your equipment.\n",
+    "confrontation": "You finally confront your nemesis in a high-stakes hunt. If victorious, you claim the credit and reputation boost. If defeated, your nemesis becomes more powerful and ruthless.\n"
+   },
+   "resolution_paths": {
+    "victory": "Claiming the bounty and defeating your nemesis earns you the respect of the underworld and a significant increase in credits.\n",
+    "redemption": "Your nemesis offers you a chance to redeem yourself by working together on a lucrative hunt. If successful, your reputation improves, but if failed, the nemesis disappears, leaving you with more questions than answers.\n",
+    "escape": "You manage to outsmart your nemesis and escape with your life. However, your reputation takes a hit, and you're forced to work harder to regain the trust of your clients.\n"
+   },
+   "conflict_triggers": [
+    "Rivalry in credits",
+    "Sabotage of hunts",
+    "Kidnapping of allies",
+    "Stealing of equipment"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "Your love interest is a fellow bounty hunter or someone you've helped on one of your hunts. They're intrigued by your skills and reputation.\n",
+    "stage2": "As you spend more time together, your love interest becomes more invested in your life, asking about your clients and hunts. You start to open up about your past and fears.\n",
+    "stage3": "With each successful hunt, your love interest's admiration grows, but they also become increasingly concerned about the dangers of your job. They may try to convince you to retire or take on less-risky work.\n",
+    "stage4": "As your relationship deepens, your love interest becomes more involved in your life, joining you on hunts or helping with client negotiations. However, this also puts them at risk, making it harder for you to balance work and love.\n",
+    "stage5": "Your love interest has become an integral part of your life, but their presence also attracts unwanted attention from your rivals and enemies. You must decide whether to keep them safe or continue pursuing your bounty hunting career.\n"
+   },
+   "lifestyle_challenges": [
+    "Unstable schedules due to hunts",
+    "Difficulty balancing work and personal life",
+    "Constant danger from bounty hunting",
+    "Trust issues due to past experiences"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "paranoid",
+      "analytical"
+     ],
+     "quirks": [
+      "has a habit of muttering to themselves when concentrating"
+     ],
+     "emotions": [
+      "fear",
+      "anger"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "Complete the current bounty",
+     "secondary_goals": [
+      "Build relationships with other hunters",
+      "Improve their skills and reputation"
+     ]
+    },
+    "combat_behavior": {
+     "tactics": [
+      "Use stealth and deception to get close to targets",
+      "Employ deadly force when necessary"
+     ],
+     "behaviors": [
+      "Cautious",
+      "Adaptable"
+     ]
+    },
+    "social_behavior": {
+     "interactions": [
+      "Friendly",
+      "Distant",
+      "Confrontational"
+     ],
+     "behaviors": [
+      "Charismatic",
+      "Introspective",
+      "Aggressive"
+     ]
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "initial_trust": 20,
+     "max_trust": 100,
+     "min_trust": 0
+    },
+    "loyalty_triggers": {
+     "high_reward": 50,
+     "betrayal_threshold": 80
+    }
+   },
+   "services": [
+    "tracking_down_fugitives",
+    "gathering_info_from_local_sources",
+    "negotiating_with_crime_lords"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "hunter_quarry_1",
+    "feature_id": "hunter_quarry",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "This feature allows the Bounty Hunter to track and hunt down their quarry, using their skills and abilities to close in for the kill.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Hunter Quarry +1",
+      "notes": "Adds a bonus to the Bounty Hunter's ability to track their quarry."
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_1",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "At this level, the Bounty Hunter gains an additional proficiency in one skill of their choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Choice of Proficiency",
+      "notes": "Grants a bonus to proficiency in one skill."
+     }
+    ]
+   },
+   {
+    "node_id": "fighting_style_2",
+    "feature_id": "fighting_style",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "The Bounty Hunter becomes proficient in a combat style, granting them advantage on certain checks and allowing them to deal more damage.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Fighting Style +1",
+      "notes": "Grants an additional effect based on the chosen fighting style."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_choice_3",
+    "feature_id": "subclass_choice",
+    "level_requirement": 3,
+    "type": "choice",
+    "description": "At this level, the Bounty Hunter gains access to a new subclass and its associated features.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Subclass Choice",
+      "notes": "Allows the player to choose a new subclass."
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "The Bounty Hunter gains an additional attack, dealing more damage in combat.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Extra Attack +1",
+      "notes": "Grants an additional attack."
+     }
+    ]
+   },
+   {
+    "node_id": "hunter_instinct_6",
+    "feature_id": "hunter_instinct",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "The Bounty Hunter gains a bonus to their ability to track and hunt down their quarry.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Hunter Instinct +1",
+      "notes": "Grants an additional effect based on the Bounty Hunter's instincts."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "The Bounty Hunter gains access to a new feature associated with their chosen subclass.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Subclass Feature",
+      "notes": "Grants an additional effect based on the chosen subclass."
+     }
+    ]
+   },
+   {
+    "node_id": "bounty_hunter_mastery_20",
+    "feature_id": "bounty_hunter_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "The Bounty Hunter gains mastery over their craft, granting them additional benefits in combat and tracking.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Bounty Hunter Mastery +1",
+      "notes": "Grants an additional effect based on the Bounty Hunter's mastery."
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_20",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "At this level, the Bounty Hunter gains an additional proficiency in one skill of their choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Choice of Proficiency",
+      "notes": "Grants a bonus to proficiency in one skill."
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "bounty_hunter",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/bounty_hunter.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

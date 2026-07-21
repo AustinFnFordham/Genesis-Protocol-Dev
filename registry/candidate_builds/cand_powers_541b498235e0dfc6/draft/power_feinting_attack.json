@@ -1,0 +1,210 @@
+{
+ "record": {
+  "id": "power_feinting_attack",
+  "name": "Feinting Attack",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "deception",
+   "tactical",
+   "melee",
+   "feint",
+   "superiority",
+   "misdirection"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Deceptive combat technique"
+   }
+  },
+  "narrative": "You execute a masterful deception, selling a false attack so convincingly that your opponent commits to defending against a strike that never comes. The power manifests as perfectly choreographed misdirection—a glance at the wrong target, a weight shift suggesting one direction while striking another, making your true attack utterly unpredictable.",
+  "flavor_text": "\"The best lies contain a grain of truth.\" - Operative Training Manual",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "deceptive body language and false attack telegraphs"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "reading opponent's defensive habits to exploit them"
+   }
+  ],
+  "casting_time": "1 Bonus_Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You feint to gain advantage and add your superiority die to the damage if the attack hits.",
+   "mechanics": [
+    {
+     "type": "grant_advantage",
+     "value": {
+      "target_stat": "next_attack"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Advantage on your next attack"
+    },
+    {
+     "type": "enhance_damage",
+     "value": {
+      "source": "superiority_die"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Add superiority die to damage if attack hits"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's deception training transforms Feinting Attack into psychological warfare. Their feints include false tells, misdirected glances, and body language that sells the deception completely, making even experienced fighters fall for the ruse.",
+    "mechanical_benefit": [
+     {
+      "type": "double_feint",
+      "value": {
+       "attacks": 2
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Operatives gain advantage on their next two attacks instead of one."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human unpredictability makes their feints nearly impossible to read. They blend real attacks with false ones so seamlessly that opponents can't tell which movements are genuine until it's too late.",
+    "mechanical_benefit": [
+     {
+      "type": "confusion_effect",
+      "value": {
+       "effect": "disadvantage_on_reaction"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human feints prevent the target from taking reactions for 1 round."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "mandalorian",
+    "narrative": "Mandalorian combat doctrine incorporates feints as honor-bound misdirection. Their warrior culture has refined deceptive movements that maintain combat honor while devastating effectiveness.",
+    "mechanical_benefit": [
+     {
+      "type": "expose_weakness",
+      "value": {
+       "effect": "reduce_ac",
+       "amount": 2
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Mandalorian feints reduce target's AC by 2 for 1 round."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the deception—the false tell, the misdirected glance, the weight shift that sells the lie. Show the opponent's guard moving to block the phantom strike, leaving them completely open for the real attack that follows. The moment of realization in their eyes comes too late.",
+   "tactical_notes": "Feinting Attack uses a bonus action and superiority die to gain advantage on your next attack, adding the die to damage if you hit. Perfect setup for crucial strikes or when facing high AC enemies. The advantage significantly increases critical hit chances.",
+   "narrative_hooks": [
+    "A master duelist's feint is so convincing it becomes a teaching moment",
+    "The feint accidentally reveals the opponent's secret fighting style",
+    "A desperate feint against multiple opponents creates an opening for escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior executing a perfect feint in combat. Their body language suggests an attack from the left while their weapon strikes from the right. The opponent's guard is completely wrong, their eyes widening in realization. Motion blur shows the false movement, while the real strike cuts through their failed defense. The scene captures the art of combat deception.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/feinting_attack.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_feinting_attack",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_feinting_attack.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

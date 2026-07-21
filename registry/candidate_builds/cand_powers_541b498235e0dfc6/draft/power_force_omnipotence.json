@@ -1,0 +1,213 @@
+{
+ "record": {
+  "id": "power_force_omnipotence",
+  "name": "Force Omnipotence",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 8,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 16
+   }
+  ],
+  "narrative": "You impose omnipotent upon your target, forcing them to suffer experience omnipotent.",
+  "flavor_text": "'The Force flows through me like a river.' - Legendary Jedi",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clear, forceful gesture extending telekinetic energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "visualizing the desired effect and channeling Force energy"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 unlimited",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You achieve unlimited power over reality itself, capable of altering the fundamental laws of the universe.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": "omnipotent",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Can alter any aspect of reality at will"
+    },
+    {
+     "type": "modify_stat",
+     "value": "unlimited_power",
+     "target_property": "all_capabilities",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Unlimited power slots, no casting time, no range limitations"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "reality_control",
+     "target_scopes": [
+      "universe"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Can rewrite the laws of physics, create or destroy universes"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardian approaches Force Omnipotence through the lens of protection, finding unexpected harmony in the manipulating the Force to achieve the impossible. Their defensive combat and protection of others guides them to vibrating air with a focused resolve that reflects their unique perspective.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain +4 to Force power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master new powers.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches the proper use of Force powers.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi gain +2 to Force power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the omnipotent effect taking hold. Focus on how the power's effects manifest physically and mechanically, emphasizing apply omnipotent status.",
+   "tactical_notes": "Force Omnipotence is excellent for applying omnipotent effects to control groups of enemies. Use it at 0 unlimited range. The effects last 1 round.",
+   "narrative_hooks": [
+    "Force Omnipotence forces a target to suffer omnipotent, changing the course of the encounter",
+    "The omnipotent effect of Force Omnipotence creates an opportunity that would otherwise not exist"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Force Omnipotence. in action. applying omnipotent effects. The mood is dominating will, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_omnipotence.svg",
+   "color": "#FF6600"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_omnipotence",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_omnipotence.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

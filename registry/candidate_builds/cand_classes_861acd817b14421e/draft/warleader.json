@@ -1,0 +1,163 @@
+{
+ "record": {
+  "id": "warleader",
+  "name": "Warleader",
+  "class_id": "guardian",
+  "base_class": "guardian",
+  "tags": [
+   "guardian",
+   "warleader",
+   "leader",
+   "defensive",
+   "tactical",
+   "inspiring",
+   "commander",
+   "protector",
+   "support",
+   "light_side",
+   "jedi"
+  ],
+  "description": "Warleaders are masters of leading defensive operations and inspiring troops. They excel at coordinating protective strategies, motivating defenders, and using their leadership abilities to ensure victory through superior defensive tactics.",
+  "specialization_features": [
+   "defensive_leadership",
+   "troop_inspiration",
+   "strategic_defense",
+   "warleader_mastery",
+   "legendary_warleader"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master defenders who inspire their allies to protect and serve.",
+   "role_in_group": "Protector",
+   "visual_signals": [
+    "Warleader's Crest",
+    "Shield of Unity"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "warleader_protect_level_3",
+    "feature_id": "indomitable_will",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can use your bonus action to grant yourself a temporary hit point equal to your level. This hit point lasts for 1 minute and is not lost if you fall unconscious.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Constitution"
+     }
+    ]
+   },
+   {
+    "node_id": "warleader_command_level_7",
+    "feature_id": "battle_command",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can use your action to grant one of your allies a bonus to their Armor Class equal to your Charisma modifier (minimum +1). This bonus lasts for 1 minute.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Charisma"
+     }
+    ]
+   },
+   {
+    "node_id": "warleader_lead_level_11",
+    "feature_id": "lead_by_example",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can use your bonus action to grant all allies within 30 feet of you a bonus to their initiative equal to your Charisma modifier (minimum +1). This bonus lasts for 1 minute.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Charisma"
+     }
+    ]
+   },
+   {
+    "node_id": "warleader_support_level_15",
+    "feature_id": "supportive_leader",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your action to grant one of your allies a bonus to their attack and damage rolls equal to your Charisma modifier (minimum +1). This bonus lasts for 1 minute.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Charisma"
+     }
+    ]
+   },
+   {
+    "node_id": "warleader_tactics_level_18",
+    "feature_id": "tactical_mastermind",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You can use your bonus action to grant all allies within 30 feet of you a bonus to their attack and damage rolls equal to your Charisma modifier (minimum +1). This bonus lasts for 1 minute.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Charisma"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Warleader's Crest",
+    "Guardian Emblem"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The Warleader assumes a powerful stance, feet shoulder-width apart and knees slightly bent, radiating an aura of confidence and authority as they prepare for battle.",
+    "energy_signature": "A soft blue glow emanates from the Warleader's body, pulsing with a gentle yet intense power that seems to harmonize with their surroundings and inspire those around them to defend the innocent."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a wise and courageous guardian Warleader standing tall in combat, surrounded by their loyal allies, radiating wisdom, strength, and protection.",
+    "contextual_modifiers": [
+     "Include the Warleader's noble steed, a majestic creature with a coat as white as snow and mane that shimmers like gold in the sunlight.",
+     "Depict the battle-scarred terrain of the planet they are defending, with twisted trees and rocks providing cover for their allies as they prepare to face the enemy hordes."
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "warleader",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian_warleader.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

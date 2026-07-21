@@ -1,0 +1,202 @@
+{
+ "record": {
+  "id": "power_emergency_shield",
+  "name": "Emergency Shield",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "defensive",
+   "reaction",
+   "shield",
+   "temporary_hp",
+   "survival",
+   "emergency"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Instinctive defensive reaction"
+   }
+  },
+  "narrative": "In the split second before impact, your combat instincts kick in—rolling with the blow, activating personal shields, or simply tensing muscles to absorb damage. The power manifests as a shimmer of protective energy or perfect defensive positioning that turns a devastating hit into a glancing blow.",
+  "flavor_text": "\"Not today.\" - Every survivor ever",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "instinctive defensive posture or shield activation"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "split-second damage mitigation calculation"
+   }
+  ],
+  "casting_time": "1 Reaction",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Gain temporary HP when hit by an attack.",
+   "mechanics": [
+    {
+     "type": "grant_temporary_hp",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "modifier": 0
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain 1d4 temporary hit points"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's defensive mastery transforms Emergency Shield from desperate reaction to calculated defense. They've trained their body to automatically shift into protective stances, channeling the Force to reinforce their natural resilience at the moment of impact.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_temporary_hp",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain an additional 1d4 temporary HP (2d4 total)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human survival instinct makes Emergency Shield almost supernatural. Their adrenaline-fueled reactions tap into deep evolutionary programming, allowing them to somehow always find the angle that minimizes damage, even from attacks they didn't see coming.",
+    "mechanical_benefit": [
+     {
+      "type": "damage_reduction",
+      "value": {
+       "amount": 1
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans also reduce the triggering attack's damage by 1."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance teaches Emergency Shield as basic survival training. Fighting against overwhelming odds has honed their ability to take hits and keep fighting, turning near-death experiences into tactical advantages through sheer determination.",
+    "mechanical_benefit": [
+     {
+      "type": "movement",
+      "value": {
+       "distance": 5,
+       "unit": "feet"
+      },
+      "timing": "after_reaction",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebels can immediately move 5 feet without provoking attacks."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the split-second save—the character twisting to take the hit on armor instead of flesh, a personal shield flaring to life, or pure willpower creating a momentary barrier. Show how what should have been devastating becomes manageable.",
+   "tactical_notes": "Emergency Shield is a reaction that grants 1d4 temporary HP when hit. No resource cost makes it invaluable for survival. The temp HP applies before damage, potentially preventing unconsciousness. Can only be used once per turn.",
+   "narrative_hooks": [
+    "Emergency Shield absorbs a killing blow, keeping a hero in the fight",
+    "The temporary barrier buys just enough time for healing to arrive",
+    "A character's Emergency Shield training saves them from an assassin's strike"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior activating an emergency shield at the moment of impact. A shimmering barrier of energy materializes just as a weapon strikes, absorbing the blow in a flash of light. The defender's face shows grim determination as they weather the assault. Dynamic motion blur emphasizes the split-second timing.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/emergency_shield.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_emergency_shield",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_emergency_shield.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,177 @@
+{
+ "record": {
+  "id": "heavy",
+  "name": "Heavy",
+  "class_id": "hired_gun",
+  "base_class": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "heavy",
+   "heavy_weapons",
+   "suppression",
+   "battlefield_control",
+   "strength_based",
+   "mercenary",
+   "ranged_specialist",
+   "tactical"
+  ],
+  "description": "Heavies wield overwhelming firepower—suppressing positions, breaking cover, and turning the tide with devastating area control.",
+  "specialization_features": [
+   "suppressing_fire",
+   "cover_breaker",
+   "area_dominance",
+   "overwhelming_barrage",
+   "legendary_heavy"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Heavies are hulking mercs with a talent for suppression and battlefield control.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Heavy armor and oversized firearms"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "heavy_hulk",
+    "feature_id": "hulk",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain a boost to your Strength score, making you more formidable in combat.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": 1
+     }
+    ]
+   },
+   {
+    "node_id": "heavy_hammer",
+    "feature_id": "hammer",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Deal extra damage with your heavy blasters, turning the tide of battle in your favor.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "hammer_strike",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_attack"
+       }
+      ],
+      "notes": "A heavy blow from the hammer deals +2d6 damage."
+     }
+    ]
+   },
+   {
+    "node_id": "heavy_suppression",
+    "feature_id": "suppression",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Suppress enemy positions with your heavy firepower, limiting their mobility and options.",
+    "effects": [
+     {
+      "type": "area_suppression",
+      "value": "10-foot radius"
+     }
+    ]
+   },
+   {
+    "node_id": "heavy_control",
+    "feature_id": "control",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Establish battlefield control with your heavy blasters, pinning down enemies and limiting their ability to move or attack.",
+    "effects": [
+     {
+      "type": "area_control",
+      "value": "20-foot radius"
+     }
+    ]
+   },
+   {
+    "node_id": "heavy_veteran",
+    "feature_id": "veteran",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "Gain expertise in using your heavy blasters, making you a more formidable and deadly opponent.",
+    "effects": [
+     {
+      "type": "proficiency_gain",
+      "value": "Heavy Blasters"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Biped_Rig",
+    "Heavy_Gun"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, left foot forward, and a steady aim with the rifle.",
+    "energy_signature": "A palpable aura of aggression surrounds him, as if his very presence on the battlefield is a warning to potential threats."
+   },
+   "prompt_schema": {
+    "base_prompt": "A heavily armed mercenary, standing in combat readiness, with a tactical expression",
+    "contextual_modifiers": [
+     [
+      "Heavy_Gun",
+      "Left_Hand"
+     ],
+     [
+      "Body_Armor",
+      "Muted_Colors"
+     ]
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "heavy",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun_heavy.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

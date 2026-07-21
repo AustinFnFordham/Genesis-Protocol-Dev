@@ -1,0 +1,171 @@
+{
+ "record": {
+  "id": "archaeologist",
+  "name": "Archaeologist",
+  "class_id": "explorer",
+  "base_class": "explorer",
+  "tags": [
+   "explorer",
+   "archaeologist",
+   "scholar",
+   "intelligence_based",
+   "ancient_knowledge",
+   "discovery",
+   "researcher",
+   "analytical",
+   "professional"
+  ],
+  "description": "Archaeologists are masters of ancient civilizations and lost knowledge, using their expertise to uncover secrets of the past and preserve valuable artifacts.",
+  "specialization_features": [
+   "archaeological_expertise",
+   "artifact_analysis",
+   "ancient_knowledge",
+   "preservation_mastery",
+   "legendary_archaeologist"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Uncovering ancient secrets and preserving valuable artifacts.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Tattered journal",
+    "Worn out explorer's hat"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "archaeologist-proficiency",
+    "feature_id": "proficient-in-arcana-history-and-natural-worlds",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Proficient in Arcana, History, and Natural World skills.",
+    "effects": [
+     {
+      "type": "skill_proficiency",
+      "value": [
+       "arcana",
+       "history",
+       "natural_world"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "archaeologist-tool-specialization",
+    "feature_id": "tool-specialization-in-excavation-equipment-and-artifacts",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Specialized in excavation equipment and artifacts.",
+    "effects": [
+     {
+      "type": "tool_proficiency",
+      "value": [
+       "excavation_equipment",
+       "artifacts"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "archaeologist-researcher",
+    "feature_id": "researcher-and-discovery-expertise",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Expertise in research and discovery.",
+    "effects": [
+     {
+      "type": "expertise",
+      "value": [
+       "arcana",
+       "history"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "archaeologist-ancient-knowledge",
+    "feature_id": "ancient-knowledge-and-discovery",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Gain access to ancient knowledge and discovery.",
+    "effects": [
+     {
+      "type": "feature-effect",
+      "value": "Gain access to the ancient knowledge table in the DMG."
+     }
+    ]
+   },
+   {
+    "node_id": "archaeologist-legendary-researcher",
+    "feature_id": "legendary-research-and-discovery-expertise",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "Legendary expertise in research and discovery.",
+    "effects": [
+     {
+      "type": "legendary-action",
+      "value": "Use legendary action to ask a question related to your investigation and receive an answer from the DM."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "armor_pieces",
+    "holstered_blaster"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "assumes a defensive stance with the blaster at the ready, scanning the surroundings for any signs of danger",
+    "energy_signature": "surrounds the character with a gentle hum, indicating their connection to the Force and their ability to sense disturbances in the balance of energy"
+   },
+   "prompt_schema": {
+    "base_prompt": "generate an image of an archaeologist discovering a ancient temple on a distant planet, surrounded by mysterious artifacts and ruins",
+    "contextual_modifiers": [
+     "include a faint image of a lightsaber hilt on the belt",
+     "add a hint of moisture in the air to convey the humid environment"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "archaeologist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/explorer_subclasses/explorer_archaeologist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

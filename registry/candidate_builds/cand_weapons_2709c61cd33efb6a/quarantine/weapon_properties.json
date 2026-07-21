@@ -1,0 +1,889 @@
+{
+ "record": {
+  "weapon_properties": [
+   {
+    "id": "finesse",
+    "name": "Finesse",
+    "description": "When making an attack with a weapon with this property, you use your choice of your Strength or Dexterity modifier for the attack and damage rolls. You must use the same modifier for both rolls.",
+    "application_tags": [
+     "weapon",
+     "melee"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "attack_ability_choice",
+      "target_property": "attack_modifier",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Choose between Strength or Dexterity for attack and damage rolls"
+     }
+    ]
+   },
+   {
+    "id": "light",
+    "name": "Light",
+    "description": "A light weapon is small and easy to handle, making it ideal for fighting with two weapons.",
+    "application_tags": [
+     "weapon",
+     "melee",
+     "ranged"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "light_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be used for two-weapon fighting"
+     }
+    ]
+   },
+   {
+    "id": "heavy",
+    "name": "Heavy",
+    "description": "Heavy weapons are unwieldy and require significant strength to use effectively.",
+    "application_tags": [
+     "weapon",
+     "melee",
+     "ranged"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "heavy_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Small creatures have disadvantage on attack rolls"
+     },
+     {
+      "type": "modify_stat",
+      "value": "strength_requirement",
+      "target_property": "minimum_strength",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Requires minimum Strength score to use effectively"
+     }
+    ]
+   },
+   {
+    "id": "two_handed",
+    "name": "Two-Handed",
+    "description": "This weapon requires two hands to use when attacking.",
+    "application_tags": [
+     "weapon",
+     "melee",
+     "ranged"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "two_handed_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Requires both hands to attack"
+     }
+    ]
+   },
+   {
+    "id": "versatile",
+    "name": "Versatile",
+    "description": "This weapon can be used with one or two hands. A damage value in parentheses appears with the property—the damage when the weapon is used with two hands.",
+    "application_tags": [
+     "weapon",
+     "melee"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "versatile_damage",
+      "target_property": "damage_dice",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_two_hands",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Increased damage when used with two hands"
+     }
+    ]
+   },
+   {
+    "id": "power_cell",
+    "name": "Power Cell",
+    "description": "This weapon uses power cells for ammunition. The range is listed in parentheses.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "energy"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "power_cell_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Uses power cells instead of physical ammunition"
+     },
+     {
+      "type": "modify_stat",
+      "value": "range_bonus",
+      "target_property": "range",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Extended range compared to slug weapons"
+     }
+    ]
+   },
+   {
+    "id": "slug_cartridge",
+    "name": "Slug Cartridge",
+    "description": "This weapon uses physical slug cartridges for ammunition. The range is listed in parentheses.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "kinetic"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "slug_cartridge_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Uses physical slug cartridges"
+     },
+     {
+      "type": "modify_stat",
+      "value": "armor_penetration",
+      "target_property": "damage_modifier",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Better against armored targets"
+     }
+    ]
+   },
+   {
+    "id": "reload",
+    "name": "Reload",
+    "description": "This weapon can be fired a number of times equal to its reload value before it must be reloaded.",
+    "application_tags": [
+     "weapon",
+     "ranged"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "reload_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Limited shots before reloading required"
+     },
+     {
+      "type": "modify_stat",
+      "value": "reload_actions",
+      "target_property": "action_cost",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Reloading requires an action"
+     }
+    ]
+   },
+   {
+    "id": "thrown",
+    "name": "Thrown",
+    "description": "If a weapon has the thrown property, you can throw the weapon to make a ranged attack.",
+    "application_tags": [
+     "weapon",
+     "melee",
+     "ranged"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "thrown_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be thrown for ranged attacks"
+     },
+     {
+      "type": "modify_stat",
+      "value": "thrown_range",
+      "target_property": "range",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Specific range for thrown attacks"
+     }
+    ]
+   },
+   {
+    "id": "auto",
+    "name": "Auto",
+    "description": "Weapons with this property can only fire in burst, penetrating, or rapid modes. You can only use one mode at a time.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "advanced"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "auto_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use burst, penetrating, or rapid fire modes"
+     },
+     {
+      "type": "modify_stat",
+      "value": "fire_mode_choice",
+      "target_property": "attack_mode",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Must choose fire mode before attacking"
+     }
+    ]
+   },
+   {
+    "id": "burst",
+    "name": "Burst",
+    "description": "When you would make a ranged weapon attack, you can instead spray a 10-foot-cube area within range with shots.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "area"
+    ],
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "burst_damage",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "using_burst_mode",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Area damage to all creatures in 10-foot cube"
+     },
+     {
+      "type": "modify_stat",
+      "value": "ammunition_consumption",
+      "target_property": "ammo_cost",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Consumes ammunition equal to burst number"
+     }
+    ]
+   },
+   {
+    "id": "penetrating",
+    "name": "Penetrating",
+    "description": "When you hit with an attack using this weapon, the target takes extra damage equal to the penetrating value.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "armor_piercing"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "extra_damage",
+      "target_property": "damage_dice",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Extra damage equal to penetrating value"
+     }
+    ]
+   },
+   {
+    "id": "rapid",
+    "name": "Rapid",
+    "description": "When you take the Attack action and attack with only this weapon, you can use a bonus action to make an additional attack with this weapon.",
+    "application_tags": [
+     "weapon",
+     "ranged",
+     "automatic"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "bonus_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attack_action_taken",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "only_this_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Bonus action attack with same weapon"
+     }
+    ]
+   },
+   {
+    "id": "disguised",
+    "name": "Disguised",
+    "description": "You have advantage on Charisma (Deception) checks made to hide the nature of a weapon with this property.",
+    "application_tags": [
+     "weapon",
+     "concealable"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "deception_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "hiding_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Deception checks to hide weapon"
+     }
+    ]
+   },
+   {
+    "id": "hidden",
+    "name": "Hidden",
+    "description": "This weapon is designed to be easily concealed and difficult to detect.",
+    "application_tags": [
+     "weapon",
+     "concealable",
+     "stealth"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "hidden_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Easier to conceal and harder to detect"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "concealing_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Stealth checks when concealing"
+     }
+    ]
+   },
+   {
+    "id": "luminous",
+    "name": "Luminous",
+    "description": "This weapon emits light when activated, illuminating the area around it.",
+    "application_tags": [
+     "weapon",
+     "light_source"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "light_source",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Illuminates area around wielder"
+     },
+     {
+      "type": "modify_stat",
+      "value": "light_radius",
+      "target_property": "illumination",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Specific radius of illumination"
+     }
+    ]
+   },
+   {
+    "id": "returning",
+    "name": "Returning",
+    "description": "When you throw this weapon, it returns to your hand immediately after the attack.",
+    "application_tags": [
+     "weapon",
+     "thrown",
+     "magical"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "returning_weapon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_thrown",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Weapon returns to hand after throwing"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "return_to_hand",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attack_completed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatic return after attack"
+     }
+    ]
+   },
+   {
+    "id": "vicious",
+    "name": "Vicious",
+    "description": "When you roll a 20 on your attack roll with this weapon, the target takes an extra 7 damage of the weapon's type.",
+    "application_tags": [
+     "weapon",
+     "critical",
+     "damage"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "critical_damage",
+      "target_property": "extra_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Extra 7 damage on critical hits"
+     }
+    ]
+   },
+   {
+    "id": "vorpal",
+    "name": "Vorpal",
+    "description": "When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads.",
+    "application_tags": [
+     "weapon",
+     "critical",
+     "decapitation"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "decapitation",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "target_has_head",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Decapitation on critical hit"
+     }
+    ]
+   },
+   {
+    "id": "keen",
+    "name": "Keen",
+    "description": "This weapon scores a critical hit on a roll of 19 or 20.",
+    "application_tags": [
+     "weapon",
+     "critical",
+     "precision"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "critical_range",
+      "target_property": "critical_threshold",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Critical hit on 19-20 instead of just 20"
+     }
+    ]
+   },
+   {
+    "id": "force_attuned",
+    "name": "Force-Attuned",
+    "description": "This weapon resonates with the Force, allowing Force users to channel their power through it.",
+    "application_tags": [
+     "weapon",
+     "force",
+     "enhanced"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "force_attuned",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can channel Force powers through weapon"
+     },
+     {
+      "type": "modify_stat",
+      "value": "force_damage_bonus",
+      "target_property": "damage_dice",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_force_power",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Bonus damage when using Force powers"
+     }
+    ]
+   },
+   {
+    "id": "kyber_crystal",
+    "name": "Kyber Crystal",
+    "description": "This weapon contains a kyber crystal that enhances its power and allows for Force channeling.",
+    "application_tags": [
+     "weapon",
+     "force",
+     "kyber"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "kyber_enhanced",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced by kyber crystal"
+     },
+     {
+      "type": "modify_stat",
+      "value": "force_resonance",
+      "target_property": "force_power_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Enhanced Force power effectiveness"
+     }
+    ]
+   },
+   {
+    "id": "smart_targeting",
+    "name": "Smart Targeting",
+    "description": "This weapon has advanced targeting systems that assist with accuracy.",
+    "application_tags": [
+     "weapon",
+     "tech",
+     "targeting"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "ranged_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ranged_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on ranged attack rolls"
+     },
+     {
+      "type": "modify_stat",
+      "value": "targeting_bonus",
+      "target_property": "attack_modifier",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Bonus to attack rolls"
+     }
+    ]
+   },
+   {
+    "id": "adaptive_ammo",
+    "name": "Adaptive Ammunition",
+    "description": "This weapon can automatically adjust its ammunition type based on the target.",
+    "application_tags": [
+     "weapon",
+     "tech",
+     "ammunition"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "adaptive_ammo",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatic ammunition type adjustment"
+     },
+     {
+      "type": "modify_stat",
+      "value": "damage_type_adaptation",
+      "target_property": "damage_type",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Damage type changes based on target"
+     }
+    ]
+   },
+   {
+    "id": "energy_conservation",
+    "name": "Energy Conservation",
+    "description": "This weapon is designed to use energy efficiently, requiring less frequent reloading.",
+    "application_tags": [
+     "weapon",
+     "tech",
+     "efficiency"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "reload_bonus",
+      "target_property": "reload_value",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Increased reload capacity"
+     },
+     {
+      "type": "apply_status",
+      "value": "energy_efficient",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "More efficient energy usage"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "weapon_properties",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/properties/weapon_properties.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "732e0eb832510775fbdd8b60f19b02728f7424285006af359ae625726b932d16",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

@@ -1,0 +1,367 @@
+{
+ "record": {
+  "id": "human_alderaanian",
+  "name": "Alderaanian Human",
+  "tags": [
+   "charisma_based",
+   "diplomat",
+   "human",
+   "human_alderaanian",
+   "iconic",
+   "intelligence_based",
+   "noble_background",
+   "peaceful",
+   "scholar",
+   "uncommon"
+  ],
+  "description": "Alderaanians are humans from the cultured world of Alderaan, known for their refined manners, artistic talents, and diplomatic skills. They value peace, beauty, and intellectual pursuits, often serving as diplomats, artists, or scholars.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Intelligence",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Alderaanian"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "traits": [
+   {
+    "name": "Cultural Refinement",
+    "level": 1,
+    "description": "Your upbringing in Alderaan's cultured society grants you proficiency in Performance and advantage on Charisma (Persuasion) checks when dealing with civilized societies.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Performance"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "persuasion_civilized_societies",
+      "conditions": [
+       {
+        "key": "society_type",
+        "op": "equals",
+        "value": "civilized"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Diplomatic Training",
+    "level": 1,
+    "description": "You excel at negotiation and conflict resolution. You have advantage on Insight checks to read emotions and once per short rest, you can gain advantage on a Charisma check to de-escalate a situation.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "insight_read_emotions"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "charisma_deescalate_once_per_short_rest",
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Artistic Sensibility",
+    "level": 1,
+    "description": "Your appreciation for beauty and art grants you advantage on Intelligence (History) checks related to art, culture, or history, and you can identify the cultural significance of objects.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "history_art_culture",
+      "conditions": [
+       {
+        "key": "knowledge_type",
+        "op": "in",
+        "value": [
+         "art",
+         "culture",
+         "history"
+        ]
+       }
+      ]
+     },
+     {
+      "type": "grant_action",
+      "value": "Cultural Analysis",
+      "description": "Identify cultural significance of objects"
+     }
+    ]
+   }
+  ],
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "skin_tone",
+     "eye_color",
+     "hair_color",
+     "facial_features",
+     "body_type",
+     "age"
+    ],
+    "morphology": {
+     "head_type": "humanoid",
+     "body_type": "slender",
+     "average_height": "170-185 cm"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "skin_tone": "pale",
+       "eye_color": "blue",
+       "hair_color": "blonde",
+       "facial_features": "smooth complexion, small nose, full lips",
+       "body_type": "slight build"
+      },
+      "adult": {
+       "skin_tone": "fair",
+       "eye_color": "bright blue",
+       "hair_color": "light brown",
+       "facial_features": "prominent cheekbones, strong jawline, piercing eyes",
+       "body_type": "lean physique"
+      },
+      "elder": {
+       "skin_tone": "weathered",
+       "eye_color": "pale blue",
+       "hair_color": "white",
+       "facial_features": "lined face, wispy eyebrows, warm smile",
+       "body_type": "frail build"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "sunken eyes",
+       "sharp cheekbones",
+       "pale skin",
+       "raven hair"
+      ],
+      "light_side": [
+       "radiant complexion",
+       "bright blue eyes",
+       "golden hair",
+       "delicate features"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "facial markings",
+     "scar patterns",
+     "birthmarks"
+    ],
+    "prompt_schema": {
+     "base_prompt": "A refined and cultured Alderaanian diplomat",
+     "contextual_modifiers": [
+      [
+       "diplomatic role",
+       "artistic talent",
+       "intellectual pursuit"
+      ]
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "The nemesis is a fellow diplomat who challenges our character's reputation for fairness.",
+      "goals": "Maintain diplomatic relations with the nemesis, while protecting one's own reputation.",
+      "motivations": "Prove oneself as a better diplomat than the nemesis."
+     },
+     "escalation": {
+      "description": "The nemesis escalates tensions by sabotaging our character's diplomatic efforts.",
+      "goals": "Rebuild damaged relationships and maintain credibility.",
+      "motivations": "Clear one's name and restore fairness to the situation."
+     },
+     "confrontation": {
+      "description": "The nemesis publicly attacks our character, forcing a direct confrontation.",
+      "goals": "Defend oneself against the nemesis' accusations while maintaining composure.",
+      "motivations": "Protect reputation and resolve the conflict through open dialogue."
+     }
+    },
+    "resolution_paths": {
+     "victory": [
+      "The nemesis is forced to apologize for their actions.",
+      "Our character's diplomatic efforts succeed, and the situation is resolved peacefully."
+     ],
+     "redemption": [
+      "The nemesis shows remorse for their past mistakes.",
+      "A mutual understanding is reached, and relationships are mended."
+     ],
+     "escape": [
+      "The nemesis' actions are exposed to the public, forcing them to retreat.",
+      "Our character flees the planet to avoid further conflict."
+     ]
+    },
+    "conflict_triggers": [
+     "Betrayal of a trust",
+     "Sabotage of one's work",
+     "Public humiliation"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "Being publicly humiliated by the nemesis",
+      "Witnessing harm caused to loved ones by the nemesis"
+     ],
+     "vendetta_type": "Intellectual duel"
+    },
+    "historical_enemies": [
+     "The Empire's Grand Moffs, such as Moff Jerjerrod or Admiral Piett"
+    ],
+    "tragic_flaws": [
+     "Alderaanian over-reliance on diplomacy",
+     "Their tendency to underestimate the power of the dark side"
+    ]
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "Both are diplomats or scholars",
+     "Both share a passion for intellectual pursuits"
+    ],
+    "romance_progression": {
+     "stage1": {
+      "description": "Initial acquaintance and polite conversation.",
+      "goals": "Get to know the romantic interest while maintaining professionalism."
+     },
+     "stage2": {
+      "description": "Exchange of stories about one's background and experiences.",
+      "goals": "Build emotional connection through shared understanding."
+     },
+     "stage3": {
+      "description": "Shared activities and mutual support in times of need.",
+      "goals": "Deepen trust and intimacy through shared responsibilities."
+     },
+     "stage4": {
+      "description": "Romantic gestures and public displays of affection.",
+      "goals": "Embrace love openly while navigating societal expectations."
+     },
+     "stage5": {
+      "description": "Commitment to a long-term partnership or marriage.",
+      "goals": "Navigate the challenges of a committed relationship."
+     }
+    },
+    "romance_events": [
+     "A private dinner invitation",
+     "A joint expedition or adventure",
+     "A public declaration of affection"
+    ],
+    "romance_modifiers": [
+     "Increased charm and diplomacy skills when around the romantic interest",
+     "Enhanced ability to understand and communicate effectively with the romantic interest"
+    ],
+    "cultural_approach_to_love": [
+     "Romantic love is seen as a deep emotional connection, often accompanied by intellectual and artistic pursuits"
+    ],
+    "bonding_mechnisms": [
+     "Shared experiences in art or music",
+     "Mutual support for personal growth and self-improvement"
+    ]
+   }
+  },
+  "flavor_text": "Alderaanians are known for their elegant mannerisms and appreciation of the finer things in life. Their world, Alderaan, is a shining example of peace and prosperity, but beneath its polished surface lies a complex history of struggle against the Empire's tyranny.",
+  "llm_guidance": {
+   "roleplay_guidance": "Alderaanians are natural diplomats and mediators, often taking on roles that require tact, empathy, and creative problem-solving. They value knowledge, artistry, and personal growth, but may be seen as naive or overly idealistic by those who don't understand their perspective.",
+   "narrative_hooks": [
+    "Alderaanian refugees have been displaced due to Imperial aggression",
+    "A mysterious event is threatening the cultural heritage of Alderaan"
+   ],
+   "social_dynamics": "Alderaanians are naturally inclined towards harmony and cooperation. However, this can sometimes make them vulnerable to exploitation or manipulation by those who prey on their trust.",
+   "common_motivations": [
+    "Protecting their culture and way of life",
+    "Seeking knowledge and understanding"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "friendly, curious, diplomatic\n",
+    "motivations": [
+     "to establish meaningful connections with others",
+     "to learn and grow in their chosen field of study or art",
+     "to maintain peace and resolve conflicts peacefully"
+    ],
+    "combat_behavior": "Your companion will prioritize non-violent resolution methods whenever possible. When conflict is unavoidable, they'll use their diplomatic skills to try and de-escalate the situation.\n",
+    "social_behavior": "Your companion will build rapport with other characters through active listening, asking insightful questions, and sharing their own artistic or scholarly endeavors.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Alderaanian Humans tend to form strong bonds with those they consider friends",
+     "Their diplomatic nature allows them to establish trust quickly in professional settings",
+     "However, they may struggle to open up to others due to their reserved nature"
+    ],
+    "loyalty_triggers": [
+     "Perceived injustice or mistreatment of others",
+     "Discovery of hidden artistic talents within themselves or others",
+     "A personal connection or shared experience that creates a deep sense of camaraderie"
+    ]
+   },
+   "services": []
+  }
+ },
+ "validation": {
+  "candidate_urid": "human_alderaanian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/human_alderaanian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

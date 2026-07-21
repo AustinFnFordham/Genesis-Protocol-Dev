@@ -1,0 +1,156 @@
+{
+ "record": {
+  "id": "power_capacity_boost",
+  "name": "Capacity Boost",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "enhancement",
+   "augmentation",
+   "cybernetic",
+   "stimulant",
+   "performance",
+   "biological",
+   "buff",
+   "support",
+   "utility",
+   "close_range",
+   "temporary",
+   "physical_enhancement"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced bio-augmentation technology for temporary enhancement"
+   }
+  },
+  "narrative": "You inject a cocktail of nano-stimulants and cybernetic boosters that temporarily enhance biological or mechanical capabilities. The power manifests as micro-machines flooding the target's system, optimizing neural pathways, reinforcing muscle fibers, or overclocking processors to push performance beyond normal limits.",
+  "flavor_text": "\"Push past your limits—technology will catch you.\" - Cybernetics Specialist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "injecting stim-pack or activating enhancement device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating enhancement parameters for target's physiology"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You use technology to boost a creature's physical or mental capacity.",
+   "mechanics": [
+    {
+     "type": "enhance_ability",
+     "value": {
+      "amount": 2,
+      "target": "single_ability"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target gains +2 to one ability score of your choice"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the rush of enhancement—pupils dilating, muscles tensing with new strength, synapses firing faster. The target should feel the artificial boost coursing through them, granting capabilities beyond their natural limits. Show the slight tremor of overclocked systems and the heightened awareness.",
+   "tactical_notes": "Capacity Boost is incredibly versatile—boost Strength for melee combat, Dexterity for ranged attacks and AC, Constitution for survivability, or mental stats for skill challenges. The concentration requirement means protecting the caster is crucial. Consider the 1-minute duration for timing.",
+   "narrative_hooks": [
+    "A desperate boost allows someone to lift debris off trapped allies",
+    "Enhanced intelligence helps crack an impossible code under time pressure",
+    "The boost's side effects manifest at a critical moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a figure being injected with glowing nano-stimulants, their body surging with enhanced power. Visible energy courses through their veins in circuit-like patterns, muscles visibly strengthening, eyes glowing with augmented awareness. The enhancement device shows holographic readouts of boosted vital signs.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/capacity_boost.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_capacity_boost",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_capacity_boost.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

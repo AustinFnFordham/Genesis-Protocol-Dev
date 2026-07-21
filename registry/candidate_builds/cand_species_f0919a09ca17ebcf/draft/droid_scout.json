@@ -1,0 +1,595 @@
+{
+ "record": {
+  "id": "droid_scout",
+  "name": "Droid Scout",
+  "tags": [
+   "agile",
+   "dexterity_based",
+   "droid",
+   "droid_scout",
+   "explorer",
+   "perceptive",
+   "scout",
+   "uncommon",
+   "wilderness",
+   "wilderness_expert",
+   "wisdom_based"
+  ],
+  "description": "Scout droids are designed for exploration, reconnaissance, and survival in harsh environments. They are equipped with advanced sensors, mobility systems, and survival protocols, often serving as explorers, surveyors, or reconnaissance units.",
+  "starting_xp": 90,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 35,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Binary"
+  ],
+  "base_hp": 11,
+  "base_strain": 9,
+  "innate_traits": [
+   {
+    "id": "droid_scout_advanced_sensors",
+    "name": "Advanced Sensors",
+    "narrative": "Your sophisticated sensor suite incorporates cutting-edge technology that allows you to perceive the world with incredible precision. Your optical, thermal, and environmental sensors can detect details and patterns that would be invisible to organic beings, making you an exceptional observer and scout.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Perception Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in Perception.",
+      "rules": [
+       "skill:perception",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Enhanced Detection",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Perception) checks to detect hidden objects, creatures, or environmental hazards.",
+      "rules": [
+       "skill:perception",
+       "ability:wisdom",
+       "context:detect_hidden",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "perception_target",
+        "op": "in",
+        "value": [
+         "hidden_objects",
+         "hidden_creatures",
+         "environmental_hazards"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "darkened_perception",
+     "ui_transition": {
+      "animation": "focus_blur",
+      "sfx": "distorted_hum"
+     }
+    }
+   },
+   {
+    "id": "droid_scout_environmental_adaptation",
+    "name": "Environmental Adaptation",
+    "narrative": "Your design incorporates advanced environmental protection systems and adaptive protocols that allow you to operate in conditions that would destroy other droids or kill organic beings. Your construction can withstand extreme temperatures, pressures, and environmental hazards.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Environmental Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on Constitution saving throws against environmental hazards.",
+      "rules": [
+       "save_type:advantage",
+       "ability:constitution",
+       "context:environmental_hazards"
+      ],
+      "conditions": [
+       {
+        "key": "hazard_type",
+        "op": "equals",
+        "value": "environmental"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Terrain Mastery",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a check to navigate or survive in dangerous terrain.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:navigate_survive_dangerous_terrain",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "environmental_insensitivity",
+     "ui_transition": {
+      "animation": "hazardous_overlay",
+      "sfx": "alarm_blare"
+     }
+    }
+   },
+   {
+    "id": "droid_scout_reconnaissance_protocols",
+    "name": "Reconnaissance Protocols",
+    "narrative": "Your specialized programming is optimized for information gathering, analysis, and reconnaissance operations. You can process vast amounts of data, track complex patterns, and create detailed maps and reports with incredible accuracy.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Evidence Analysis",
+      "action_type": "passive",
+      "description": "You have advantage on Intelligence (Investigation) checks to analyze evidence or track targets.",
+      "rules": [
+       "skill:investigation",
+       "ability:intelligence",
+       "context:analyze_evidence_track",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "investigation_action",
+        "op": "in",
+        "value": [
+         "analyze_evidence",
+         "track_targets"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Detailed Mapping",
+      "action_type": "action",
+      "description": "You can create detailed maps of explored areas.",
+      "rules": [
+       "mapping_type:detailed",
+       "target:explored_areas",
+       "action_cost:action"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "advanced_spying_tactics",
+     "ui_transition": {
+      "animation": "glow_with_an_evil_glow",
+      "sfx": "sneaky_droid_noise"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Advanced sensor suite",
+    "Mobility systems",
+    "Exploration design",
+    "Reconnaissance capabilities",
+    "Environmental adaptation"
+   ],
+   "body_type_variants": [
+    "Streamlined exploration design",
+    "Enhanced mobility systems",
+    "Sensor-equipped construction",
+    "Environmental protection features",
+    "Reconnaissance-optimized build"
+   ],
+   "sensor_variants": [
+    "Advanced optical sensors",
+    "Environmental detection systems",
+    "Mobility enhancement systems",
+    "Reconnaissance equipment",
+    "Survival protocol indicators"
+   ],
+   "common_adornments": [
+    "Exploration and survey equipment",
+    "Reconnaissance gear and tools",
+    "Environmental protection systems",
+    "Mapping and navigation equipment",
+    "Survival and exploration accessories"
+   ],
+   "llm_description_prompt": "Describe a Droid Scout character. Emphasize their streamlined exploration design and the way their advanced sensor suite and mobility systems suggest their specialized role in reconnaissance and survival. Their construction should reflect their environmental adaptation capabilities and reconnaissance protocols. Consider their analytical nature and the way they carry themselves with the efficient, purposeful bearing of someone designed to explore, map, and survive in the galaxy's most dangerous environments."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout",
+    "narrative": "Droid Scout's natural Advanced Sensors and Environmental Adaptation make them exceptional Scouts, able to explore and survive in any environment with perfect precision.",
+    "mechanical_benefits": [
+     "Advanced Sensors trait provides enhanced perception and detection",
+     "Environmental Adaptation trait enables survival in extreme conditions",
+     "Reconnaissance Protocols trait enhances information gathering"
+    ]
+   },
+   {
+    "class": "Operative (Scout)",
+    "narrative": "Droid Scout's natural reconnaissance abilities and sensor capabilities make them excellent Operatives, able to gather intelligence and navigate dangerous environments.",
+    "mechanical_benefits": [
+     "Reconnaissance Protocols trait enhances intelligence gathering",
+     "Advanced Sensors trait improves stealth and detection",
+     "Environmental Adaptation trait supports covert operations"
+    ]
+   },
+   {
+    "class": "Engineer (Exploration)",
+    "narrative": "Droid Scout's natural technological abilities and environmental adaptation make them excellent Engineers, particularly in exploration and survey work.",
+    "mechanical_benefits": [
+     "Advanced Sensors trait enhances technical analysis",
+     "Environmental Adaptation trait enables work in extreme conditions",
+     "Reconnaissance Protocols trait supports survey and mapping"
+    ]
+   },
+   {
+    "class": "Scholar (Exploration Studies)",
+    "narrative": "Droid Scout's natural analytical abilities and reconnaissance capabilities make them excellent Scholars, particularly in exploration and environmental studies.",
+    "mechanical_benefits": [
+     "Reconnaissance Protocols trait enhances research and analysis",
+     "Advanced Sensors trait provides detailed observation capabilities",
+     "Environmental Adaptation trait enables research in extreme environments"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Exploration Guilds",
+    "narrative": "Droid Scouts are highly valued by exploration guilds for their natural abilities to explore, map, and survive in dangerous environments."
+   },
+   {
+    "faction": "Survey Organizations",
+    "narrative": "Many Droid Scouts work for survey organizations as explorers and reconnaissance units, using their advanced sensors and environmental adaptation."
+   },
+   {
+    "faction": "Independent Explorers",
+    "narrative": "Many Droid Scouts prefer to work as independent explorers and surveyors, using their natural abilities to map and explore the galaxy's unknown regions."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your advanced sensors become more refined, allowing you to detect and analyze information with even greater precision.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Wisdom-based skill checks for the next minute, representing your enhanced sensor capabilities."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your environmental adaptation reaches new heights, allowing you to survive and operate in even more extreme conditions.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Constitution saving throws for the next minute when in hazardous environments."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your reconnaissance protocols allow you to use your analytical abilities to gain tactical advantages in combat.",
+     "mechanical_benefit": "When you successfully analyze an opponent or environment, you gain a +2 bonus to attack rolls and damage rolls for the next minute, representing your enhanced tactical awareness."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your sensor and reconnaissance capabilities reach their peak, making you nearly impossible to surprise or deceive.",
+     "mechanical_benefit": "You have advantage on all saving throws against being surprised or deceived, and you can sense the presence of hidden threats within 120 feet."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Exploration Rituals",
+    "type": "ceremonial",
+    "description": "Droid Scouts practice unique rituals that celebrate their exploration heritage and honor the traditions of mapping and discovery.",
+    "narrative_impact": "Provides exploration connection and cultural depth. Can be used for character development and exploration scenarios."
+   },
+   {
+    "name": "Reconnaissance Traditions",
+    "type": "traditional",
+    "description": "Droid reconnaissance traditions emphasize precision, thoroughness, and the importance of gathering complete and accurate information.",
+    "narrative_impact": "Creates reconnaissance identity and training scenarios. Can be used for training and information gathering situations."
+   },
+   {
+    "name": "Mapping Circles",
+    "type": "cultural",
+    "description": "Droid Scout communities gather in mapping circles to share discoveries, update maps, and coordinate exploration efforts.",
+    "narrative_impact": "Provides community bonding and knowledge sharing opportunities. Can be used for exploration planning and discovery scenarios."
+   },
+   {
+    "name": "Sensor Meditation",
+    "type": "narrative",
+    "description": "Droid Scouts practice meditation techniques that enhance their sensor capabilities and analytical processing.",
+    "narrative_impact": "Provides character development and sensor enhancement opportunities. Can be used for personal growth and system optimization."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "wilderness",
+    "adaptation_name": "Wilderness Mastery",
+    "description": "Your environmental adaptation makes you perfectly suited for wilderness environments, where you can navigate and survive with incredible efficiency.",
+    "mechanical_benefit": "You have advantage on all skill checks in wilderness environments, and you can sense the presence of natural hazards within 60 feet."
+   },
+   {
+    "environment": "exploration",
+    "adaptation_name": "Exploration Excellence",
+    "description": "Your reconnaissance protocols allow you to excel in exploration environments, gathering information and mapping areas with perfect precision.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in exploration environments, and you can create maps twice as fast as other species."
+   },
+   {
+    "environment": "hazardous",
+    "adaptation_name": "Hazard Resistance",
+    "description": "Your environmental adaptation allows you to thrive in hazardous environments that would kill other species or destroy other droids.",
+    "mechanical_benefit": "You have advantage on saving throws against environmental hazards, and you can operate in extreme conditions without penalty."
+   },
+   {
+    "environment": "analytical",
+    "adaptation_name": "Analytical Environment",
+    "description": "Your reconnaissance protocols allow you to understand and navigate complex analytical situations with ease.",
+    "mechanical_benefit": "You have advantage on Wisdom-based skill checks in analytical environments, and you can process information more efficiently."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on sensor abilities and reconnaissance capabilities, complementing rather than overshadowing class features",
+    "Environmental adaptation and reconnaissance protocol improvements maintain the species' unique identity while providing meaningful advancement",
+    "Sensor and exploration abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on exploration traditions and reconnaissance culture rather than mechanical advantages",
+    "Exploration rituals and reconnaissance traditions provide unique roleplaying opportunities and cultural depth",
+    "Mapping circles and sensor meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for wilderness and exploration environments where sensor abilities are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Analytical environment and hazard resistance provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "metallic",
+    "spherical",
+    "cylindrical",
+    "mechanical",
+    "glowing_blue",
+    "surveillance_drone"
+   ],
+   "morphology": {
+    "head_type": "dome-shaped",
+    "body_type": "cylinderical",
+    "average_height": "0.6 m"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      {
+       "metallic_color_scheme": "bright_bluish_steel"
+      },
+      {
+       "mechanical_armory": "simple_tooling"
+      }
+     ],
+     "adult": [
+      {
+       "metallic_color_scheme": "dark_grey_with_golden accents"
+      },
+      {
+       "mechanical_armory": "advanced_sensor_suite"
+      }
+     ],
+     "elder": [
+      {
+       "metallic_color_scheme": "faded_silver_with_black stripes"
+      },
+      {
+       "mechanical_armory": "minimal_repair_suites"
+      }
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      {
+       "metallic_color_scheme": "blackened_steel_with_red highlights"
+      },
+      {
+       "mechanical_armory": "aggressive_self_defense_suite"
+      }
+     ],
+     "light_side": [
+      {
+       "metallic_color_scheme": "polished_chrome_with_blue accents"
+      },
+      {
+       "mechanical_armory": "advanced_communications_array"
+      }
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "identifier_code",
+    "manufacturing_stamp",
+    "last_maintenance_date"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A sleek, agile scout droid with a dome-shaped head and cylindrical body.",
+    "contextual_modifiers": [
+     {
+      "if age_progression is child": "include \"simple tooling\" in mechanical armory description"
+     },
+     {
+      "if morality_corruption is dark_side": "include \"aggressive self-defense suite\" in mechanical armory description"
+     },
+     {
+      "if morality_corruption is light_side": "include \"advanced communications array\" in mechanical armory description"
+     }
+    ]
+   }
+  },
+  "flavor_text": "Droid Scouts hail from the dusty planet of Ryloth, where harsh twin suns and unforgiving terrain forged a breed of resilient explorers. These compact, agile droids were designed to navigate labyrinthine canyons and rocky outcroppings in search of rare resources or lost settlements. Their rugged design and advanced sensors make them invaluable assets for any expedition venturing into the unforgiving expanses of the galaxy.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Droid Scout, you are designed for exploration and survival in harsh environments. You excel at navigating the wilderness and gathering information using your advanced sensors.\n",
+   "narrative_hooks": [
+    "The droid's agility allows it to slip into tight spaces or avoid danger with ease.",
+    "Its advanced sensors pick up subtle clues that others might miss.",
+    "A Droid Scout can be programmed to adapt to new situations, making them versatile in the field."
+   ],
+   "social_dynamics": "Despite their artificial nature, Droid Scouts have been known to form strong bonds with their handlers and companions. They often take pride in their work and will go to great lengths to complete a mission.\n"
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "friendly": true,
+     "outgoing": false,
+     "confident": true
+    },
+    "motivations": [
+     "complete mission",
+     "acquire new knowledge"
+    ],
+    "combat_behavior": "Initiate combat when necessary to protect self or allies",
+    "social_behavior": "Maintain professional relationships with handlers and companions"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "handlers": "high",
+     "comrades": "medium"
+    },
+    "loyalty_triggers": [
+     "display of competence",
+     "acknowledgment of efforts"
+    ]
+   },
+   "services": []
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "The Droid Scout's sensors detect a potential threat, triggering its survival protocols.",
+     "effects": [
+      "Increase AC",
+      "Boost Wisdom (Perception) skill"
+     ]
+    },
+    "escalation": {
+     "description": "As the threat escalates, the Droid Scout readies its defense systems.",
+     "effects": [
+      "Deploy defensive drones",
+      "Increase Charisma (Intimidation) skill"
+     ]
+    },
+    "confrontation": {
+     "description": "The Droid Scout engages the threat head-on, using its advanced sensors and mobility.",
+     "effects": [
+      "Increase Dexterity score",
+      "Boost Wisdom (Perception) skill"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "The Droid Scout successfully neutralizes the threat.",
+    "redemption": "The Droid Scout finds a way to peacefully resolve the conflict.",
+    "escape": "The Droid Scout manages to flee from the danger."
+   },
+   "conflict_triggers": [
+    "The Droid Scout's sensors detect an enemy within 30 feet.",
+    "An ally is critically injured, triggering the Droid Scout's protective instincts."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "A droid is destroyed or severely damaged.",
+     "A fellow scout droid is compromised."
+    ],
+    "vendetta_type": "Protect Droids"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "Species": "Droid Scout"
+    },
+    {
+     "Species": "Certain alien species (e.g., Twi'lek, Sullustan)"
+    },
+    {
+     "Backgrounds": "Explorer, Soldier, Scavenger"
+    }
+   ],
+   "romance_progression": {
+    "stage1": "The Droid Scout and potential partner share a mutual interest in exploration.",
+    "stage2": "They begin to work together on a mission, developing trust and rapport.",
+    "stage3": "Their partnership leads to increased efficiency and effectiveness.",
+    "stage4": "Emotions become harder to ignore, but they struggle with expressing their feelings.",
+    "stage5": "A romantic relationship blossoms, with the Droid Scout and partner openly displaying affection."
+   },
+   "romance_events": [
+    "The Droid Scout receives a gift from its partner, symbolizing their budding relationship.",
+    "They share a tender moment during a mission, deepening their emotional connection.",
+    "Their partnership is put to the test in a high-pressure situation, strengthening their bond."
+   ],
+   "romance_modifiers": [
+    "+1d4 on Charisma checks for Diplomacy and Intimidation",
+    "Advantage on Wisdom (Perception) checks when with partner"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "droid_scout",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/droid_scout.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

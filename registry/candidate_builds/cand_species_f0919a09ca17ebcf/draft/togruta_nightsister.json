@@ -1,0 +1,637 @@
+{
+ "record": {
+  "id": "togruta_nightsister",
+  "name": "Togruta Nightsister",
+  "tags": [
+   "ancient_knowledge",
+   "charisma_based",
+   "dark_side",
+   "force",
+   "force_mastery",
+   "force_user",
+   "human",
+   "mysterious",
+   "mystic",
+   "sith",
+   "togruta_nightsister",
+   "very_rare",
+   "wisdom_based"
+  ],
+  "description": "Togruta Nightsisters are Force-sensitive Togrutas who have been trained in the dark side traditions of the Nightsisters. They possess enhanced Force abilities, dark side powers, and a deep connection to the mystical arts of Dathomir.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Wisdom",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Togruti",
+   "Dathomiri"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "togruta_nightsister_nightsister_training",
+    "name": "Nightsister Training",
+    "narrative": "Your training in the dark side traditions of the Nightsisters has granted you mastery over mystical arts and dark side powers. Your connection to the mystical forces of Dathomir makes you a formidable practitioner of the dark arts.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Arcana Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in Arcana.",
+      "rules": [
+       "skill:arcana",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Emotional Insight",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Insight) checks to sense the emotions and intentions of others.",
+      "rules": [
+       "skill:insight",
+       "ability:wisdom",
+       "context:emotions_intentions",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "insight_target",
+        "op": "in",
+        "value": [
+         "emotions",
+         "intentions"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Charm Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against being charmed.",
+      "rules": [
+       "save_type:advantage",
+       "condition:charmed"
+      ],
+      "conditions": [
+       {
+        "key": "save_type",
+        "op": "equals",
+        "value": "charmed"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "togruta_nightsister_dark_side_mastery",
+    "name": "Dark Side Mastery",
+    "narrative": "Your mastery of dark side powers flows through your very being, making you naturally intimidating and resistant to light side influences. Your connection to the dark side is as natural as breathing.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Dark Intimidation",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Intimidation) checks.",
+      "rules": [
+       "skill:intimidation",
+       "ability:charisma",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Dark Side Resistance",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a check to use dark side Force powers or resist light side influences.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:dark_side_powers_light_resistance",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_empowerment",
+     "ui_transition": {
+      "animation": "corruption_spread",
+      "sfx": "dark_side_empowerment_sfx"
+     }
+    }
+   },
+   {
+    "id": "togruta_nightsister_mystical_connection",
+    "name": "Mystical Connection",
+    "narrative": "Your connection to the mystical arts of Dathomir allows you to sense the ebb and flow of Force energies around you. You can detect the presence of Force users and active Force powers with incredible precision.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Force Tradition Knowledge",
+      "action_type": "passive",
+      "description": "You have advantage on Intelligence (Arcana) checks related to Force traditions.",
+      "rules": [
+       "skill:arcana",
+       "ability:intelligence",
+       "context:force_traditions",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "knowledge_type",
+        "op": "equals",
+        "value": "force_traditions"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Force Power Detection",
+      "action_type": "passive",
+      "description": "You can detect active Force powers within 60 feet.",
+      "rules": [
+       "range:60_feet",
+       "detection_type:active_force_powers"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_energy_drain",
+     "ui_transition": {
+      "animation": "corruption_twist",
+      "sfx": "dark_side_energy_drain_sfx"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Dark side aura",
+    "Mystical bearing",
+    "Nightsister training",
+    "Force sensitivity",
+    "Dark side connection"
+   ],
+   "skin_color_variants": [
+    "Dark red with black patterns",
+    "Deep purple with black patterns",
+    "Dark blue with black patterns",
+    "Black with red patterns",
+    "Dark grey with mystical patterns"
+   ],
+   "montral_variants": [
+    "Dark, mystical montrals",
+    "Shadow-touched montrals",
+    "Dark side infused montrals",
+    "Mystical energy patterns"
+   ],
+   "lekku_variants": [
+    "Dark, flowing lekku",
+    "Shadow-touched lekku",
+    "Dark side infused lekku",
+    "Mystical energy patterns"
+   ],
+   "common_adornments": [
+    "Nightsister robes and garments",
+    "Dark side mystical accessories",
+    "Dathomir cultural symbols",
+    "Mystical jewelry and talismans",
+    "Dark side Force artifacts"
+   ],
+   "llm_description_prompt": "Describe a Togruta Nightsister character. Emphasize their dark side aura and mystical bearing that reflects their Nightsister training and connection to the dark side of the Force. Their montrals and lekku should suggest mystical energy and dark side influence. Consider their mystical nature and the way they carry themselves with the confident, otherworldly bearing of someone who has mastered the dark side arts of Dathomir."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian (Dark Side)",
+    "narrative": "Togruta Nightsister's natural dark side abilities and Nightsister Training make them exceptional Guardians, using their mystical powers to protect and dominate.",
+    "mechanical_benefits": [
+     "Dark Side Mastery trait enhances dark side Force powers",
+     "Nightsister Training trait provides mystical combat abilities",
+     "Mystical Connection trait enables threat detection"
+    ]
+   },
+   {
+    "class": "Consular (Dark Side)",
+    "narrative": "Togruta Nightsister's natural mystical abilities and dark side connection make them excellent Consulars, using their dark side powers to manipulate and control situations.",
+    "mechanical_benefits": [
+     "Dark Side Mastery trait enhances intimidation and manipulation",
+     "Nightsister Training trait improves insight and mystical abilities",
+     "Mystical Connection trait aids in understanding others"
+    ]
+   },
+   {
+    "class": "Scholar (Dark Side Studies)",
+    "narrative": "Togruta Nightsister's natural mystical knowledge and dark side connection make them excellent Scholars, particularly in dark side studies and Force traditions.",
+    "mechanical_benefits": [
+     "Mystical Connection trait provides insights into Force traditions",
+     "Nightsister Training trait enhances mystical research",
+     "Dark Side Mastery trait supports dark side studies"
+    ]
+   },
+   {
+    "class": "Scout (Mystical)",
+    "narrative": "Togruta Nightsister's natural mystical abilities and dark side connection make them excellent Scouts, able to sense and navigate using their dark side powers.",
+    "mechanical_benefits": [
+     "Mystical Connection trait enables detection of Force powers",
+     "Dark Side Mastery trait enhances mystical navigation",
+     "Nightsister Training trait supports mystical exploration"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Nightsisters of Dathomir",
+    "narrative": "Togruta Nightsisters are elite members of the Nightsisters of Dathomir, using their dark side abilities and mystical training to serve their dark side traditions."
+   },
+   {
+    "faction": "Dark Side Traditions",
+    "narrative": "Many Togruta Nightsisters join various dark side traditions and cults, dedicating themselves to the study and mastery of dark side powers."
+   },
+   {
+    "faction": "Independent Dark Side Users",
+    "narrative": "Some Togruta Nightsisters prefer to work independently, using their dark side abilities and mystical training to pursue their own dark side goals and ambitions."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your Nightsister training becomes more refined, allowing you to sense and manipulate dark side energies with greater precision.",
+     "mechanical_benefit": "Increase the range of Force power detection from 60 feet to 90 feet, and gain advantage on Arcana checks to understand dark side Force traditions."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your dark side mastery reaches new heights, allowing you to channel dark side energies more effectively.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Wisdom-based skill checks for the next minute when using dark side powers or in mystical environments."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your mystical connection allows you to channel dark side energies into devastating attacks.",
+     "mechanical_benefit": "When using dark side Force powers, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced dark side mastery."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your dark side mastery reaches its peak, making you nearly immune to light side influences and allowing you to sense dark side disturbances across great distances.",
+     "mechanical_benefit": "You have advantage on all saving throws against light side effects, and you can sense major dark side disturbances within 1 mile."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "You begin to grasp the true power of your dark side connection, and your mastery of mystical arts accelerates. You can now sense dark side energies more easily, and your spells become more potent in dark side environments.",
+    "level_10": "Your understanding of the dark side deepens, and you start to develop a reputation among Nightsisters as a skilled practitioner. Your connection to the Force becomes stronger, allowing you to perform more complex rituals and incantations.",
+    "level_15": "You achieve a high level of mastery over your mystical arts, becoming a respected leader within the Nightsister community. Your abilities in dark side environments become almost unmatched, and you can sense even the slightest disturbances in the Force.",
+    "level_20": "As a true master of the dark side, you transcend mere mortal limitations, achieving an unparalleled connection to the mystical forces that surround us. You can manipulate the very fabric of reality with your powers, bending it to your will."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Togruta Nightsisters practice sacred dark side rituals that channel the mystical energies of Dathomir and strengthen their connection to the dark side.",
+    "name": "Dark Side Rituals",
+    "activation": "Triggered by the lunar cycle (full moon) or in response to significant life events",
+    "narrative_enhancement": "As you participate in these sacred rituals, you feel a surge of power flow through you, connecting you more deeply with the dark side. Your senses become heightened, and your connection to the mystical forces grows stronger.",
+    "faction_connection": "Nightsister Assembly"
+   },
+   {
+    "description": "Nightsister traditions emphasize mastery of dark side powers, mystical arts, and the importance of maintaining dark side connections and knowledge.",
+    "name": "Nightsister Traditions",
+    "activation": "Triggers when a Nightsister reaches a significant milestone in their training (e.g., completion of a major ritual or mastery of a new skill)",
+    "narrative_enhancement": "You recall the teachings of your elders, who instilled in you the importance of mastering the dark side and respecting its power. You remember the struggles they faced, and the triumphs they achieved through dedication and perseverance.",
+    "faction_connection": "The Nightbrother Assembly"
+   },
+   {
+    "description": "Nightsister mystical circles gather to share dark side knowledge, practice mystical arts, and strengthen their connection to the dark side of the Force.",
+    "name": "Mystical Circles",
+    "activation": "Triggers when a Nightsister reaches a high level of mastery or achieves significant personal growth",
+    "narrative_enhancement": "You feel a sense of belonging among your fellow Nightsisters as you share in the mystical circle's collective knowledge and experience. You realize that even in the darkest depths, there is always more to learn, and that together, you are stronger.",
+    "faction_connection": "The Mystical Circle of Arach-Ka"
+   },
+   {
+    "description": "Nightsisters practice meditation techniques that enhance their connection to the dark side and strengthen their mystical abilities.",
+    "name": "Dark Side Meditation",
+    "activation": "Triggered by periods of high stress or when a Nightsister seeks to focus their thoughts",
+    "narrative_enhancement": "As you meditate, you quiet your mind and connect with the dark side, allowing its power to flow through you. Your senses become sharper, and your connection to the mystical forces grows stronger.",
+    "faction_connection": "The Dark Side Enclave"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "dark_side",
+    "adaptation_name": "Dark Side Mastery",
+    "description": "Your connection to the dark side allows you to thrive in environments rich with dark side energy and mystical forces.",
+    "mechanical_benefit": "You have advantage on all skill checks in dark side environments, and you can sense the presence of dark side artifacts or locations."
+   },
+   {
+    "environment": "mystical",
+    "adaptation_name": "Mystical Resonance",
+    "description": "Your mystical connection allows you to sense and navigate mystical environments with ease.",
+    "mechanical_benefit": "You have advantage on saving throws against mystical effects, and you can sense the presence of mystical entities within 30 feet."
+   },
+   {
+    "environment": "force_rich",
+    "adaptation_name": "Force Sensitivity",
+    "description": "Your connection to the Force allows you to sense and understand Force-rich environments with incredible clarity.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in Force-rich environments, and you can sense disturbances in the Force within 1 mile."
+   },
+   {
+    "environment": "corrupt",
+    "adaptation_name": "Corruption Resistance",
+    "description": "Your dark side mastery makes you resistant to corruption and dark side influences that would corrupt others.",
+    "mechanical_benefit": "You have advantage on saving throws against corruption effects, and you can sense the presence of corrupting influences."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on dark side abilities and mystical powers, complementing rather than overshadowing class features",
+    "Nightsister training and dark side mastery improvements maintain the species' unique identity while providing meaningful advancement",
+    "Mystical and dark side abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on Nightsister traditions and dark side culture rather than mechanical advantages",
+    "Dark side rituals and Nightsister traditions provide unique roleplaying opportunities and cultural depth",
+    "Mystical circles and dark side meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for dark side and mystical environments where Nightsister abilities are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Corruption resistance and Force sensitivity provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Nightsisters of Dathomir",
+   "cultural_networks": [
+    "The Nightbrother Assembly (a secretive council of Nightsister leaders)",
+    "The Mystical Circle of Arach-Ka (a group of powerful Nightsisters who govern the mystical arts)",
+    "The Dark Side Enclave (a mysterious collective that cultivates and shares dark side knowledge)"
+   ],
+   "traditional_practices": [
+    "Participation in sacred dark side rituals",
+    "Mastery of mystical arts through rigorous training and practice",
+    "Regular meditation to maintain connection with the dark side"
+   ],
+   "cultural_knowledge": "Understanding of the mystical forces, the balance of the Force, and the interconnectedness of all living things."
+  },
+  "environmental_mastery": {
+   "primary_environments": "Dark Side Environments (e.g., Cloud City, Death Star)",
+   "environmental_knowledge": [
+    "The manipulation of dark side energies to achieve specific effects",
+    "Understanding the role of darkness in maintaining balance within the Force",
+    "Familiarity with various dark side rituals and incantations"
+   ],
+   "survival_techniques": [
+    "How to sense and navigate dark side environments",
+    "Strategies for maintaining focus and control in the face of intense dark side energy",
+    "Methods for countering or neutralizing the effects of light-based attacks"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "leathery_skin",
+    "red_stripes_on_face"
+   ],
+   "morphology": {
+    "head_type": "Triangular",
+    "body_type": "Muscular",
+    "average_height": "165-180 cm"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      "Red stripes on face fade",
+      "Eyes are smaller and more rounded",
+      "Body is slender and agile"
+     ],
+     "adult": [
+      "Red stripes grow darker and more vibrant",
+      "Eyes become larger and almond-shaped",
+      "Body becomes more muscular and imposing"
+     ],
+     "elder": [
+      "Red stripes lose intensity",
+      "Eyes take on a wise, knowing glint",
+      "Body becomes gaunt but still powerful"
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "Yellow eyes appear in the corners of their eyes",
+      "Pale skin takes on an unhealthy sheen"
+     ],
+     "light_side": [
+      "A calm aura surrounds them",
+      "Red stripes on their face grow brighter and more vibrant"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "scars",
+    "tattoos",
+    "cybernetic implants"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Describe a Togruta Nightsister's appearance, emphasizing their leathery skin, red stripes on their face, and piercing eyes.",
+    "contextual_modifiers": [
+     {
+      "Age": "Include the character's age in your description"
+     },
+     {
+      "Morality": "Depict the character as either dark side or light side aligned"
+     }
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": "A Togruta Nightsister is introduced, and their cunning nature is revealed. They seem harmless at first but begin to manipulate others for their own gain.\n",
+    "escalation": "The Nightsister's actions become more brazen, and they start to undermine entire organizations. Their reputation as a master manipulator grows, striking fear into the hearts of those who know them.\n",
+    "confrontation": "A final confrontation ensues between the Togruta Nightsister and their nemesis. The stakes are high, with the fate of the galaxy hanging in the balance.\n"
+   },
+   "resolution_paths": {
+    "victory": "The Togruta Nightsister emerges victorious, having outmaneuvered and outwitted their foe.",
+    "redemption": "The Nightsister is brought to heel, their manipulation and deception exposed for all to see.\n",
+    "escape": "The Nightsister manages to flee, disappearing into the shadows to plot their next move."
+   },
+   "conflict_triggers": [
+    "Attempting to undermine a powerful organization",
+    "Manipulating someone close to them"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "Betrayal",
+     "Revenge"
+    ],
+    "vendetta_type": "revenge/competition"
+   },
+   "overrides": {
+    "progression": "Togruta Nightsisters begin with increased dark side energy and connection to Dathomir's unique energy. As they progress, their abilities improve in line with the Nightsister tradition of mastering the dark side.",
+    "triggers": [
+     {
+      "event": "Resisting the influence of the light side",
+      "consequences": [
+       "Loss of connection to Dathomir's energy",
+       "Decline in dark side powers"
+      ]
+     },
+     {
+      "event": "Failing to protect a Nightsister ritual or tradition",
+      "consequences": [
+       "Loss of respect among other Nightsisters",
+       "Decline in reputation as a powerful Force-user"
+      ]
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Force sensitivity",
+    "Charisma and manipulation skills"
+   ],
+   "romance_progression": {
+    "stage1": "The Togruta Nightsister uses their charm to win over a potential partner.",
+    "stage2": "The relationship deepens, with both parties sharing secrets and desires.\n",
+    "stage3": "Trust is built, and the Nightsister opens up about their past and motivations.",
+    "stage4": "Passion and intensity reach a boiling point, as the couple's love becomes all-consuming.",
+    "stage5": "Commitment and loyalty are tested as external forces threaten to tear them apart.\n"
+   },
+   "romance_events": [
+    "A romantic dinner on Dathomir",
+    "A moonlit stroll through the swampy waters of the planet"
+   ],
+   "romance_modifiers": [
+    "Gift-giving (e.g., rare, exotic flowers)",
+    "Private moments of vulnerability and intimacy"
+   ],
+   "overrides": {
+    "approach": "Togruta Nightsisters approach love and bonding with intensity, often forming deep emotional connections. They value loyalty above all else.",
+    "compatibility": [
+     {
+      "species": "Mirialan",
+      "reason": "Shared affinity for the dark side"
+     },
+     {
+      "species": "Zabrak",
+      "reason": "Respect for power and martial prowess"
+     }
+    ]
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "loyal": true,
+     "aggressive": false,
+     "neutral": false
+    },
+    "motivations": {
+     "gain_power": true,
+     "protect_allies": true,
+     "fear_and_intimidate": true
+    },
+    "combat_behavior": {
+     "use_force": true,
+     "avoid_damage": false
+    },
+    "social_behavior": {
+     "build_relationships": false,
+     "manipulate_others": true
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "max_trust": 50,
+     "min_trust": 0,
+     "current_trust": 25
+    },
+    "loyalty_triggers": [
+     "being_loyal",
+     "providing_power",
+     "showing_respect"
+    ]
+   },
+   "services": [
+    {
+     "Service Name": "Force Mastery",
+     "Description": "Togruta Nightsisters can utilize their mastery of the dark side to manipulate the battlefield.",
+     "Cost": "10 influence points per use"
+    }
+   ]
+  },
+  "flavor_text": "Togruta Nightsisters are revered on Dathomir for their mastery of the dark side. They weave a mystique around themselves, often preferring solitude and isolation to connect with the Force. Their connection to Dathomir's unique energy allows them to tap into its raw power, making them formidable opponents in combat.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Togruta Nightsister, you've been trained in the dark side traditions of the Nightsisters. You possess a deep connection to Dathomir's mystical arts and have honed your skills in the Force. Your presence can be unsettling to others due to your affinity for darkness.",
+   "narrative_hooks": [
+    "You stumble upon an ancient, hidden Nightsister temple on Dathomir, holding secrets of their dark side traditions.",
+    "A group of Mandalorians have been terrorizing a settlement on Dathomir; you must decide whether to aid the locals or use this opportunity to hone your skills against a worthy opponent."
+   ],
+   "social_dynamics": "Togruta Nightsisters often struggle with forming close relationships due to their affinity for solitude. However, when they do form bonds, these connections are intense and deeply emotional.",
+   "common_motivations": [
+    "Uncover the secrets of Dathomir's ancient dark side traditions.",
+    "Prove oneself as a powerful Force-user through combat and mastery."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "togruta_nightsister",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/togruta_nightsister.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

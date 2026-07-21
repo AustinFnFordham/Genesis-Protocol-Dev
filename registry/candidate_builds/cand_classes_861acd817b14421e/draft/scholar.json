@@ -1,0 +1,201 @@
+{
+ "record": {
+  "id": "scholar",
+  "name": "Scholar",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "scholar",
+   "intelligence_based",
+   "professional",
+   "analytical",
+   "researcher",
+   "teacher",
+   "ancient_knowledge",
+   "wise"
+  ],
+  "description": "Scholars are masters of knowledge and research, using their academic expertise to uncover secrets, solve problems, and provide valuable insights to their allies.",
+  "specialization_features": [
+   "academic_expertise",
+   "research_mastery",
+   "knowledge_network",
+   "theoretical_application",
+   "legendary_scholar"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Academic Expert",
+   "role_in_group": "Researcher and Problem Solver",
+   "visual_signals": [
+    "Elegant yet worn attire",
+    "Wire-rimmed glasses"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "scholar_researcher",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Learn to research and analyze complex problems.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "scholarly_clarity",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_score",
+        "op": "equals",
+        "value": "intelligence"
+       }
+      ],
+      "notes": "As the scholar delves into ancient texts, their mind becomes sharper, granting a +1 bonus to Intelligence-based skill checks."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "scholar_archivist",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Gain access to ancient knowledge and forgotten texts.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "scholarly_heritage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": "gte",
+        "value": "5"
+       }
+      ],
+      "notes": "As a master of ancient lore, you've unearthed forgotten texts that grant an unexpected linguistic gift. Your mind is now attuned to decipher the subtleties of new languages, unlocking one additional language proficiency slot."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "scholar_analyst",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Develop expertise in analyzing and interpreting data.",
+    "effects": [
+     {
+      "type": "feature_effect",
+      "value": "scholar_focus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "is_active_feature",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "has_class_feature",
+        "op": "equals",
+        "value": "scholar_analyst"
+       }
+      ],
+      "notes": "As a Scholar's mind sharpens, their analysis becomes more acute. When making Intelligence-based skill checks, the colonist may add +2 to the roll, drawing upon their extensive knowledge and research."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_15",
+    "feature_id": "scholar_mentor",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Share your knowledge and mentor others.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "scholarly_insight",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "has_skill_check",
+        "op": "true"
+       },
+       {
+        "key": "skill_type",
+        "op": "equals",
+        "value": "intelligence"
+       }
+      ],
+      "notes": "The scholar's mentorship shines through, granting a subtle boost to their ally's keen minds. As the scholar makes a mental note of their ally's query, they imbue them with an uncanny insight, allowing for a +1 bonus to Intelligence-based skill checks."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "scholar_hat",
+    "academic_sash"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance, eyes narrowed to focus on opponent's weak points.",
+    "energy_signature": "Surrounds self with an aura of concentrated knowledge, pulsing with a soft blue light."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a Scholar character in a dimly lit library, surrounded by ancient texts and dusty scrolls.",
+    "contextual_modifiers": [
+     " Include a faint glow emanating from the scholar's hands as they study an open book",
+     " Depict the scholar wearing a pair of reading glasses perched on the end of their nose"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "scholar",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_scholar.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

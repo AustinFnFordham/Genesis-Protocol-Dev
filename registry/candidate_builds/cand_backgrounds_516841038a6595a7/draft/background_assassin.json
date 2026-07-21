@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "background_assassin",
+  "name": "Assassin",
+  "tags": [
+   "background",
+   "assassin",
+   "deadly",
+   "stealth",
+   "dexterity_based",
+   "infiltrator",
+   "underworld",
+   "precision",
+   "cunning",
+   "ruthless"
+  ],
+  "description": "You are a professional killer, dark operative, or someone who has been trained in the art of death. Whether you work for criminal syndicates, government agencies, or as an independent contractor, your skills in stealth, combat, and eliminating targets make you a feared presence. You understand the value of patience, precision, and the importance of leaving no trace.",
+  "proficiencies": {
+   "skills": [
+    "Stealth",
+    "Investigation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Poisoner's Kit",
+      "Disguise Kit",
+      "Lockpicking Kit",
+      "Surveillance Kit",
+      "Silent Weapons",
+      "Tracking Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Death Dealer",
+   "level": 1,
+   "description": "Your training in assassination has given you exceptional abilities to eliminate targets. You have advantage on attack rolls against surprised creatures, and you can use your action to study a target, gaining advantage on your next attack roll against them. Additionally, you can move through difficult terrain without penalty when moving stealthily.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "surprise_attack",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "target_surprised",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on attacks against surprised creatures"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "target_study",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "studying_target",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Use action to study target for advantage on next attack"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Excellence. I strive to be the best at everything I do.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Justice. I bring criminals to justice."
+   ],
+   "bonds": [
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I owe a debt to the person who trained me.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission.",
+    "I'll do anything for a big payday.",
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_assassin",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_assassin.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

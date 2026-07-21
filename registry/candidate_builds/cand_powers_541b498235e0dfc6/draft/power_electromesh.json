@@ -1,0 +1,213 @@
+{
+ "record": {
+  "id": "power_electromesh",
+  "name": "Electromesh",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "electrical",
+   "trap",
+   "area_control",
+   "electromagnetic",
+   "restraint",
+   "field"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Electromagnetic containment field technology"
+   }
+  },
+  "narrative": "You deploy a crackling electromagnetic mesh that springs to life, creating a cage of pure electrical energy. The power manifests as a shimmering grid of blue-white lightning that pulses with barely contained power, sparking violently when anything passes through its charged lattice.",
+  "flavor_text": "\"Step into my web.\" - Tech Specialist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "deploying electromagnetic field generators"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating field strength and containment parameters"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create an electromagnetic mesh that can trap and damage creatures.",
+   "mechanics": [
+    {
+     "type": "create_area_effect",
+     "value": {
+      "effect_type": "electromagnetic_field",
+      "area": {
+       "shape": "radius",
+       "radius": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      }
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Create an electromagnetic field in a 10-foot radius"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's electromagnetic mastery transforms Electromesh from simple containment to adaptive prison. They modulate the field's frequency in real-time, increasing conductivity against metal armor while reducing collateral damage to allies' equipment.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "lightning",
+       "modifier": 0
+      },
+      "target_scopes": [
+       "enemies_in_area"
+      ],
+      "notes": "Engineers add 1d4 lightning damage when creatures enter or start turn in mesh."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity with Electromesh is unmatched. They use it to block doorways, protect objectives, channel enemy movement into kill zones, or even create impromptu electric fences—seeing battlefield control where others see only a trap.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_area",
+      "value": {
+       "radius": {
+        "distance": 15,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans can create a 15-foot radius mesh instead of 10-foot."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Electromesh for guerrilla warfare. Their version can be remotely activated, left as traps in Imperial facilities, or used to protect extraction points—turning retreat routes into deadly electrical mazes.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "speed_halved"
+      },
+      "target_scopes": [
+       "enemies_in_area"
+      ],
+      "notes": "Rebel mesh also halves movement speed of enemies within."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the mesh materializing—generators deploying, electricity arcing between nodes, the air itself becoming charged. Show creatures caught in it convulsing as current flows through them, or desperately trying to navigate the deadly lattice.",
+   "tactical_notes": "Electromesh creates a 10-foot radius field that damages and restrains. Concentration up to 1 minute makes it excellent for area denial. Position it to control choke points or protect allies. Remember that it affects all creatures entering, not just enemies.",
+   "narrative_hooks": [
+    "An electromesh trap springs during an ambush, turning hunters into prey",
+    "The mesh shorts out a facility's power grid, creating cascading failures",
+    "Creative placement blocks a hangar bay, preventing enemy escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an electromagnetic mesh field crackling with energy. Blue-white lightning forms a deadly grid pattern in the air, sparking violently as figures struggle against its electrical embrace. The mesh pulses with power, casting harsh shadows and filling the air with the smell of ozone.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/electromesh.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_electromesh",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_electromesh.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

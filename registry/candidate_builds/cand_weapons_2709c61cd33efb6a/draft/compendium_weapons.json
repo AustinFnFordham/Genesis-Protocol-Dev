@@ -1,0 +1,694 @@
+{
+ "record": {
+  "id": "compendium_weapons",
+  "category": "equipment",
+  "subcategory": "weapons",
+  "tags": [
+   "equipment",
+   "compendium",
+   "weapons",
+   "combat",
+   "armory",
+   "common_to_rare",
+   "melee",
+   "ranged",
+   "military",
+   "civilian",
+   "varied_rarity",
+   "martial_gear"
+  ],
+  "weapons": [
+   {
+    "id": "weapon_vibroknife",
+    "name": "Vibroknife",
+    "description": "A compact vibroblade with a humming energy field that enhances cutting power.",
+    "type": "Weapon",
+    "subtype": "Simple Melee",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "simple",
+     "vibro",
+     "light"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d4",
+      "damage_type": "slashing",
+      "range": "melee",
+      "critical_rating": 1
+     }
+    },
+    "properties": [
+     "finesse",
+     "light",
+     "thrown"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "precise_cut",
+     "concealed_strike",
+     "vibro_hum"
+    ]
+   },
+   {
+    "id": "weapon_stun_baton",
+    "name": "Stun Baton",
+    "description": "A non-lethal weapon that delivers electrical shocks to incapacitate targets.",
+    "type": "Weapon",
+    "subtype": "Simple Melee",
+    "cost": 75,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "simple",
+     "stun",
+     "non_lethal"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d6",
+      "damage_type": "lightning",
+      "range": "melee",
+      "critical_rating": 2
+     }
+    },
+    "properties": [
+     "stunning"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stun_effect",
+     "electrical_spark",
+     "non_lethal_takedown"
+    ]
+   },
+   {
+    "id": "weapon_force_pike",
+    "name": "Force Pike",
+    "description": "A ceremonial weapon with a retractable energy blade, often used by guards and nobles.",
+    "type": "Weapon",
+    "subtype": "Simple Melee",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "simple",
+     "ceremonial",
+     "reach"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d8",
+      "damage_type": "piercing",
+      "range": "melee",
+      "critical_rating": 2
+     }
+    },
+    "properties": [
+     "reach",
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ceremonial_strike",
+     "reach_advantage",
+     "noble_weapon"
+    ]
+   },
+   {
+    "id": "weapon_vibrosword",
+    "name": "Vibrosword",
+    "description": "A traditional sword enhanced with vibro-technology for devastating cutting power.",
+    "type": "Weapon",
+    "subtype": "Martial Melee",
+    "cost": 500,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "martial",
+     "vibro",
+     "sword"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d8",
+      "damage_type": "slashing",
+      "range": "melee",
+      "critical_rating": 2
+     }
+    },
+    "properties": [
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "vibro_cut",
+     "sword_mastery",
+     "energy_field"
+    ]
+   },
+   {
+    "id": "weapon_electrostaff",
+    "name": "Electrostaff",
+    "description": "A double-ended staff with energy fields at both ends, favored by Force users.",
+    "type": "Weapon",
+    "subtype": "Martial Melee",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "martial",
+     "energy",
+     "double_ended"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d10",
+      "damage_type": "lightning",
+      "range": "melee",
+      "critical_rating": 3
+     }
+    },
+    "properties": [
+     "two_handed",
+     "versatile",
+     "double_ended"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_enhanced",
+     "energy_discharge",
+     "staff_mastery"
+    ]
+   },
+   {
+    "id": "weapon_vibroaxe",
+    "name": "Vibroaxe",
+    "description": "A heavy vibro-enhanced axe capable of cleaving through armor and flesh alike.",
+    "type": "Weapon",
+    "subtype": "Martial Melee",
+    "cost": 600,
+    "rarity": 2,
+    "weight": 6.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "martial",
+     "vibro",
+     "heavy"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d12",
+      "damage_type": "slashing",
+      "range": "melee",
+      "critical_rating": 3
+     }
+    },
+    "properties": [
+     "heavy",
+     "two_handed"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "armor_cleave",
+     "vibro_resonance",
+     "heavy_strike"
+    ]
+   },
+   {
+    "id": "weapon_holdout_blaster",
+    "name": "Holdout Blaster",
+    "description": "A small, easily concealed blaster pistol perfect for backup or covert operations.",
+    "type": "Weapon",
+    "subtype": "Simple Ranged",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "simple",
+     "blaster",
+     "concealed"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d6",
+      "damage_type": "energy",
+      "range": "30/90",
+      "critical_rating": 1
+     }
+    },
+    "properties": [
+     "light",
+     "concealed"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "concealed_shot",
+     "backup_weapon",
+     "covert_strike"
+    ]
+   },
+   {
+    "id": "weapon_sling",
+    "name": "Sling",
+    "description": "A simple but effective weapon that hurls projectiles with surprising accuracy.",
+    "type": "Weapon",
+    "subtype": "Simple Ranged",
+    "cost": 5,
+    "rarity": 0,
+    "weight": 0.5,
+    "tags": [
+     "weapon",
+     "ranged",
+     "simple",
+     "primitive",
+     "ammunition"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d4",
+      "damage_type": "bludgeoning",
+      "range": "30/120",
+      "critical_rating": 1
+     }
+    },
+    "properties": [
+     "ammunition",
+     "primitive"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "primitive_accuracy",
+     "ammunition_versatility",
+     "simple_reliability"
+    ]
+   },
+   {
+    "id": "weapon_heavy_blaster_pistol",
+    "name": "Heavy Blaster Pistol",
+    "description": "A powerful blaster pistol with enhanced damage output and range.",
+    "type": "Weapon",
+    "subtype": "Martial Ranged",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "martial",
+     "blaster",
+     "heavy"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d8",
+      "damage_type": "energy",
+      "range": "40/120",
+      "critical_rating": 2
+     }
+    },
+    "properties": [
+     "heavy"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "powerful_shot",
+     "blaster_mastery",
+     "heavy_damage"
+    ]
+   },
+   {
+    "id": "weapon_blaster_rifle",
+    "name": "Blaster Rifle",
+    "description": "A versatile rifle that balances accuracy, damage, and rate of fire.",
+    "type": "Weapon",
+    "subtype": "Martial Ranged",
+    "cost": 500,
+    "rarity": 2,
+    "weight": 4.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "martial",
+     "blaster",
+     "rifle"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d10",
+      "damage_type": "energy",
+      "range": "80/240",
+      "critical_rating": 2
+     }
+    },
+    "properties": [
+     "two_handed",
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rifle_accuracy",
+     "versatile_fire",
+     "military_grade"
+    ]
+   },
+   {
+    "id": "weapon_heavy_blaster_rifle",
+    "name": "Heavy Blaster Rifle",
+    "description": "A massive rifle designed for maximum damage output and suppression fire.",
+    "type": "Weapon",
+    "subtype": "Martial Ranged",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "martial",
+     "blaster",
+     "heavy",
+     "suppression"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d12",
+      "damage_type": "energy",
+      "range": "100/300",
+      "critical_rating": 3
+     }
+    },
+    "properties": [
+     "heavy",
+     "two_handed",
+     "suppression"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "suppression_fire",
+     "heavy_damage",
+     "military_spec"
+    ]
+   },
+   {
+    "id": "weapon_repeating_blaster",
+    "name": "Repeating Blaster",
+    "description": "A heavy weapon capable of sustained automatic fire, devastating in the right hands.",
+    "type": "Weapon",
+    "subtype": "Heavy Weapon",
+    "cost": 1500,
+    "rarity": 4,
+    "weight": 15.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "heavy",
+     "automatic",
+     "mounted"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "2d8",
+      "damage_type": "energy",
+      "range": "150/450",
+      "critical_rating": 4
+     }
+    },
+    "properties": [
+     "heavy",
+     "two_handed",
+     "automatic",
+     "mounted"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "automatic_fire",
+     "heavy_suppression",
+     "mounted_weapon"
+    ]
+   },
+   {
+    "id": "weapon_rocket_launcher",
+    "name": "Rocket Launcher",
+    "description": "A devastating weapon that fires explosive rockets, capable of destroying vehicles and groups.",
+    "type": "Weapon",
+    "subtype": "Heavy Weapon",
+    "cost": 2000,
+    "rarity": 4,
+    "weight": 12.0,
+    "tags": [
+     "weapon",
+     "ranged",
+     "heavy",
+     "explosive",
+     "area"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "3d6",
+      "damage_type": "fire",
+      "range": "60/180",
+      "critical_rating": 5
+     }
+    },
+    "properties": [
+     "heavy",
+     "two_handed",
+     "explosive",
+     "area"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "explosive_blast",
+     "area_damage",
+     "vehicle_destroyer"
+    ]
+   },
+   {
+    "id": "weapon_lightsaber",
+    "name": "Lightsaber",
+    "description": "An elegant weapon of a more civilized age, powered by a kyber crystal and the Force.",
+    "type": "Weapon",
+    "subtype": "Special Melee",
+    "cost": 5000,
+    "rarity": 5,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "special",
+     "lightsaber",
+     "force"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d10",
+      "damage_type": "radiant",
+      "range": "melee",
+      "critical_rating": 3
+     }
+    },
+    "properties": [
+     "finesse",
+     "versatile",
+     "force_enhanced"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_enhanced",
+     "elegant_weapon",
+     "kyber_resonance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls when wielded by Force-sensitive users"
+     }
+    ]
+   },
+   {
+    "id": "weapon_darksaber",
+    "name": "Darksaber",
+    "description": "An ancient black-bladed lightsaber with unique properties and a storied history.",
+    "type": "Weapon",
+    "subtype": "Special Melee",
+    "cost": 10000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "melee",
+     "special",
+     "darksaber",
+     "force",
+     "unique"
+    ],
+    "stats": {
+     "weapon_stats": {
+      "damage_dice": "1d12",
+      "damage_type": "radiant",
+      "range": "melee",
+      "critical_rating": 4
+     }
+    },
+    "properties": [
+     "finesse",
+     "versatile",
+     "force_enhanced",
+     "unique"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_power",
+     "unique_weapon",
+     "dark_resonance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls when wielded by Force-sensitive users"
+     },
+     {
+      "type": "modify_stat",
+      "value": "enhanced_damage",
+      "target_property": "damage_dice",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "against_armor",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Additional 1d6 damage against armored targets"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_weapons",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/weapons.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

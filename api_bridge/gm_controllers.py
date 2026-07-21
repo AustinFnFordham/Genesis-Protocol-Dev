@@ -863,22 +863,64 @@ def run_turn(declaration, idempotency_key=None):
     # must name a power the actor actually possesses; otherwise the effect is
     # ILLEGAL before any model sees it. Force Connection never moves objects
     # or reads thoughts (information_boundary).
+    # ---- TURN DISPOSITION (Gameplay Runtime gate §3): a moral, hostile,
+    # disruptive, or suicidal choice is NEVER by itself invalid. Every
+    # non-accepted turn returns block_evidence with preserved intent and
+    # nearest executable options. Generic 'STEWARD BLOCKED' is dead.
+    turn_disposition = 'accepted'
+    block_evidence = None
+    decl_n_all = _norm(declaration)
+
+    # §2/§5: attempted AUTOMATIC outcome ("instantly kill everyone", "without a
+    # chance to react") -> accepted_with_interpretation: the desired outcome
+    # becomes an ATTEMPT with mechanics; automatic success is stripped.
+    AUTO_PAT = re.compile(r'\b(instantly|automatically|without (giving )?(them |anyone )?(a )?chance|kill(s)? every(one|body)|all of them die|succeeds? automatically)\b', re.I)
+    desired_outcome = None
+    if AUTO_PAT.search(declaration):
+        desired_outcome = declaration
+        turn_disposition = 'accepted_with_interpretation'
+        audit['violations'] = audit.get('violations', [])
+        # If no concrete executable act accompanies the desired outcome,
+        # ask HOW rather than rejecting the turn.
+        if classification == 'narrative' and not any(w in decl_n_all for w in ('attack', 'stab', 'shoot', 'ignite', 'drive', 'strike', 'punch', 'saber', 'blaster')):
+            block_evidence = {
+                'disposition': 'clarification_required',
+                'preserved_intent': {'type': 'hostile_mass_outcome', 'declaration': declaration},
+                'exact_reason': 'A desired outcome is not an executable action; automatic success cannot be declared.',
+                'authoritative_rule_or_state': 'gameplay_gate.player_agency: mechanics determine success',
+                'nearest_executable_options': ['Attack a specific person or object with a held weapon',
+                                               'Sabotage a named shuttle system', 'Declare the first concrete action of the attempt'],
+                'clarification_prompt': 'How does your character attempt this? Name the first concrete action.',
+            }
+            turn_disposition = 'clarification_required'
+
     if classification == 'power_use':
         _, sheet_rl = _active_sheet(runtime)
         legal = [p.get('name', '') for p in (sheet_rl.get('powers') or [])]
         decl_n = _norm(declaration)
         if not any(_norm(n) and _norm(n) in decl_n for n in legal):
+            # §3 capability_blocked: explain, preserve intent, offer alternatives.
+            block_evidence = {
+                'disposition': 'capability_blocked',
+                'preserved_intent': {'type': 'hostile_or_force_effect', 'declaration': declaration},
+                'exact_reason': f'Character does not possess a power matching this effect. Known powers: {", ".join(legal) or "none"}.',
+                'authoritative_rule_or_state': 'rules_lawyer:power_effect_requires_exact_feature_validation',
+                'nearest_executable_options': ['Physical grapple or restraint (contested check)',
+                                               'Threaten or intimidate (social)',
+                                               *(f'Use {n}' for n in legal if n)],
+                'clarification_prompt': 'Choose a capability you possess, or attempt it physically.',
+            }
+            turn_disposition = 'capability_blocked'
             mechanics_summary = {
                 'classification': 'power_use',
                 'adjudication': {'declared_intent': declaration, 'legal': False,
                                  'rules_used': ['rules_lawyer:power_effect_requires_exact_feature_validation'],
                                  'targets': []},
                 'dice': [], 'resolution': {'hit_or_miss': 'illegal'},
-                'summary': f'No legal power supports this effect. Known powers: {", ".join(legal) or "none"}. '
-                           'The Force does not answer — narrate the attempt failing or falling short.',
+                'summary': block_evidence['exact_reason'] + ' The intent is preserved — narrate the attempt falling short and surface the alternatives.',
                 'escalation': 'none',
             }
-            audit['violations'].append({'controller': 'rules_lawyer', 'code': 'illegal_power_effect_blocked'})
+            audit['violations'].append({'controller': 'rules_lawyer', 'code': 'capability_blocked'})
             classification = 'narrative_after_ruling'  # GM narrates the validated failure
 
     # 2. COMBAT MASTER when mechanical (scene frozen at the interruption point)
@@ -1055,9 +1097,26 @@ def run_turn(declaration, idempotency_key=None):
             'custom_action_allowed': True,
         }
 
+    # §6 UNIVERSE TURN: after every accepted player turn, the world acts.
+    # Derived from GM beats (NPC actions) + mechanics (environment/relations).
+    universe_turn = {
+        'local_npc_actions': [
+            {'npc_id': str(b.get('speaker', '')).replace('npc_id|', ''),
+             'action': (b.get('physical_behavior') or b.get('spoken_text', ''))[:140]}
+            for b in (gm_out.get('beats') or []) if isinstance(b, dict) and b.get('speaker') not in (None, 'narrator')
+        ],
+        'environmental_changes': [b.get('environmental_change') for b in (gm_out.get('beats') or []) if isinstance(b, dict) and b.get('environmental_change')],
+        'relationship_changes': [], 'objective_changes': [], 'faction_reactions': [],
+        'rumors_created': [], 'threats_advanced': [], 'opportunities_created': [],
+    }
+
     return {
         'status': 'ok',
         'command_id': cmd_id,
+        'turn_disposition': turn_disposition,
+        'block_evidence': block_evidence,
+        'desired_outcome': desired_outcome,
+        'universe_turn': universe_turn,
         'classification': classification,
         'reaction_window': reaction_window,
         'beats': gm_out.get('beats'),

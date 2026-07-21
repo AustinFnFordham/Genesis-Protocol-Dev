@@ -1,0 +1,206 @@
+{
+ "record": {
+  "id": "tactician",
+  "name": "Tactician",
+  "class_id": "commander",
+  "base_class": "commander",
+  "tags": [
+   "commander",
+   "tactician",
+   "strategic",
+   "intelligence_based",
+   "tactical",
+   "leadership",
+   "battlefield_control",
+   "analytical",
+   "support"
+  ],
+  "description": "Tacticians are master strategists and battlefield commanders, using their analytical minds and tactical genius to develop complex battle plans and outmaneuver enemies.",
+  "specialization_features": [
+   "strategic_expertise",
+   "battlefield_analysis",
+   "tactical_planning",
+   "tactician_mastery",
+   "legendary_tactician"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Tactical Mastermind",
+   "role_in_group": "Strategic Commander",
+   "visual_signals": [
+    "Battle Map",
+    "Strategy Tablet"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level1",
+    "feature_id": "tactical-initiative",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain a +1 bonus to initiative.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_prep (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "Before striking, the Commander gains a surge of tactical acumen, briefly increasing their initiative by +2."
+     }
+    ]
+   },
+   {
+    "node_id": "level2",
+    "feature_id": "battlefield-vision",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Develop your tactical awareness, gaining advantage on Wisdom (Perception) checks related to the battlefield.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "battlefield_intuition",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_perception"
+       }
+      ],
+      "notes": "As the commander surveys the battlefield, intuition heightens their senses. They gain advantage on all Intelligence (Perception) checks for a brief moment, allowing them to pinpoint hidden threats or opportunities."
+     }
+    ]
+   },
+   {
+    "node_id": "level3",
+    "feature_id": "strategic-planning",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Develop complex battle plans, gaining advantage on Intelligence checks related to strategy and tactics.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "strategic_edge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "commander"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "tactician"
+       }
+      ],
+      "notes": "While in a tactical mindset, the commander gains expertise on one ability check of their choice per session, granting advantage on that Intelligence check."
+     }
+    ]
+   },
+   {
+    "node_id": "level4",
+    "feature_id": "commander's-insight",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Gain insight into the battlefield, gaining a +2 bonus to Wisdom (Insight) checks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "commander_insight_trigger (snake_case)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "attack_type",
+        "op": "in",
+        "value": [
+         "melee",
+         "ranged"
+        ]
+       }
+      ],
+      "notes": "As the commander unleashes a well-timed strike, their keen tactical mind sparks a flash of insight. The commander gains advantage on all Intelligence checks made before the start of their next turn."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "commander_saber_hilt",
+    "tactical_viewfinder"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a battle-hardened stance with feet shoulder-width apart and lightsaber at the ready.",
+    "energy_signature": "Surrounds self with an aura of blue and red energy, indicative of a master tactician's control over the Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "A wise and seasoned commander stands on a windswept cliff overlooking a distant battlefield, lightsaber at their side.",
+    "contextual_modifiers": [
+     "with a hint of moisture in the air",
+     "and a faint hum of starfighters in the distance"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "tactician",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/commander_subclasses/commander_tactician.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

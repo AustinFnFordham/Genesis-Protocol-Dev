@@ -1,0 +1,218 @@
+{
+ "record": {
+  "id": "power_scramble_interface",
+  "name": "Scramble Interface",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "hacking",
+   "disruption",
+   "electronics",
+   "interference",
+   "jamming",
+   "slicing"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Electronic interface disruption and jamming technology"
+   }
+  },
+  "narrative": "You transmit scrambling signals that corrupt electronic interfaces, displays showing gibberish, controls responding incorrectly, systems becoming unresponsive as your interference turns reliable technology into frustrating chaos. The power manifests as screens flickering with corrupted data, inputs registering wrong commands, operators cursing their betrayed equipment.",
+  "flavor_text": "\"Have you tried turning it off and on again? No? Good.\" - Slicer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "transmitting jamming signal via tech device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "targeting and corrupting interface protocols"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You scramble electronic interfaces, making them difficult or impossible to use.",
+   "mechanics": [
+    {
+     "type": "apply_disadvantage",
+     "value": {
+      "affected_rolls": "all_tech_checks"
+     },
+     "target_scopes": [
+      "electronic_device"
+     ],
+     "notes": "Impose disadvantage on all checks made using the scrambled interface"
+    },
+    {
+     "type": "disable_interface",
+     "value": {
+      "severity": "partial"
+     },
+     "target_scopes": [
+      "electronic_device"
+     ],
+     "conditions": [
+      {
+       "key": "intelligence_save_failed",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Interface becomes unusable on failed Intelligence save"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of systems architecture makes their scrambling surgical sabotage. They don't just create random interference—they inject specific corruption that cascades through networks, one scrambled interface compromising entire systems.",
+    "mechanical_benefit": [
+     {
+      "type": "cascade_scramble",
+      "value": {
+       "additional_interfaces": "all_connected"
+      },
+      "target_scopes": [
+       "networked_devices"
+      ],
+      "notes": "Engineers scramble all interfaces connected to the targeted system."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human hacking creativity makes their scrambling devastatingly effective. They inject false data that looks legitimate, creating confusion rather than obvious malfunction—enemies troubleshooting phantom problems while real sabotage proceeds.",
+    "mechanical_benefit": [
+     {
+      "type": "stealth_scramble",
+      "value": {
+       "detection_difficulty": "increased_dc_5"
+      },
+      "target_scopes": [
+       "electronic_device"
+      ],
+      "notes": "Human scrambling is harder to detect (+5 DC to notice interference)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance uses Scramble Interface for critical sabotage operations. Their versions can target Imperial communications, navigation, or weapons systems—turning the Empire's technological superiority into liability through clever interference.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 10,
+       "unit": "minutes"
+      },
+      "target_scopes": [
+       "electronic_device"
+      ],
+      "notes": "Rebel scrambling lasts 10 minutes instead of 1 without concentration."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe screens flickering with corrupted data, controls responding incorrectly, operators' frustration mounting as systems betray them. Show the chaos of unreliable technology, the scrambling turning sophisticated equipment into expensive paperweights.",
+   "tactical_notes": "Scramble Interface imposes disadvantage or disables electronics for 1 minute with concentration, costing 1 Tech Point. Perfect for disrupting enemy communications, navigation, or weapons. The 30-foot range is tactical. Watch for enemies with backup systems.",
+   "narrative_hooks": [
+    "Scrambled navigation causes enemies to get hopelessly lost",
+    "The interference reveals reliance on technology as a weakness",
+    "Scrambling creates opening for infiltration or escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of electronic interfaces being scrambled. Screens flicker with corrupted data and glitched displays, controls sparking and responding incorrectly. An operator stares in frustration as their systems betray them, scrambling signals visible as electromagnetic interference waves. The scene captures technology turned against its users.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/scramble_interface.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_scramble_interface",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_scramble_interface.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

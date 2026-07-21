@@ -1,0 +1,1084 @@
+{
+ "record": {
+  "id_file": "compendium_starship_noncombat_actions",
+  "category": "starships",
+  "subcategory": "actions",
+  "tags": [
+   "starships",
+   "compendium",
+   "actions",
+   "non_combat",
+   "exploration",
+   "social",
+   "utility",
+   "crew_stations",
+   "travel",
+   "ffg_system",
+   "roleplay"
+  ],
+  "exploration_actions": [
+   {
+    "id": "action_ship_scan_system",
+    "name": "Scan System",
+    "description": "Use ship sensors to scan a star system for planets, anomalies, and points of interest.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Technology",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Discover 1-3 points of interest",
+      "Identify basic system layout",
+      "Detect obvious threats or opportunities"
+     ],
+     "advantage": [
+      "Discover additional hidden locations",
+      "Gain detailed information about discoveries",
+      "Identify rare resources or phenomena"
+     ],
+     "triumph": [
+      "Perfect scan reveals all system secrets",
+      "Discover legendary or unique locations",
+      "Gain comprehensive system knowledge"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_system_discovery",
+     "narrative_outcome_anomaly_detection",
+     "narrative_outcome_resource_find"
+    ]
+   },
+   {
+    "id": "action_ship_explore_anomaly",
+    "name": "Explore Anomaly",
+    "description": "Investigate mysterious readings, spatial distortions, or unusual phenomena.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Investigation",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Identify anomaly type and nature",
+      "Determine if it's safe to approach",
+      "Gain basic information about the phenomenon"
+     ],
+     "advantage": [
+      "Discover hidden benefits or resources",
+      "Avoid potential dangers",
+      "Gain detailed scientific data"
+     ],
+     "triumph": [
+      "Perfect understanding of the anomaly",
+      "Discover unique opportunities or treasures",
+      "Gain legendary knowledge or artifacts"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_mystery_solved",
+     "narrative_outcome_scientific_breakthrough",
+     "narrative_outcome_legendary_find"
+    ]
+   },
+   {
+    "id": "action_ship_chart_route",
+    "name": "Chart Route",
+    "description": "Plot optimal hyperspace routes and identify potential hazards or shortcuts.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Astrogation",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Plot safe hyperspace route",
+      "Identify standard travel time",
+      "Avoid known hazards"
+     ],
+     "advantage": [
+      "Discover faster alternative routes",
+      "Identify resource-rich waypoints",
+      "Find hidden hyperspace lanes"
+     ],
+     "triumph": [
+      "Perfect route with maximum efficiency",
+      "Discover legendary hyperspace shortcuts",
+      "Create new hyperspace lane"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_route_discovery",
+     "narrative_outcome_shortcut_found",
+     "narrative_outcome_pathfinding_mastery"
+    ]
+   }
+  ],
+  "social_actions": [
+   {
+    "id": "action_ship_hail_vessel",
+    "name": "Hail Vessel",
+    "description": "Establish communication with another ship for trade, information, or diplomacy.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Persuasion",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Establish basic communication",
+      "Gain general information about the vessel",
+      "Open dialogue for potential interaction"
+     ],
+     "advantage": [
+      "Establish friendly relations",
+      "Gain valuable information or trade opportunities",
+      "Create lasting contacts"
+     ],
+     "triumph": [
+      "Perfect diplomatic success",
+      "Gain powerful allies or valuable intelligence",
+      "Establish legendary reputation"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_diplomatic_success",
+     "narrative_outcome_trade_opportunity",
+     "narrative_outcome_alliance_formed"
+    ]
+   },
+   {
+    "id": "action_ship_negotiate_trade",
+    "name": "Negotiate Trade",
+    "description": "Bargain with other vessels for goods, services, or information exchange.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Negotiation",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Complete basic trade transaction",
+      "Exchange goods at fair market value",
+      "Establish trade relationship"
+     ],
+     "advantage": [
+      "Secure favorable trade terms",
+      "Gain rare or valuable items",
+      "Create exclusive trade agreements"
+     ],
+     "triumph": [
+      "Perfect trade deal with exceptional value",
+      "Gain legendary items or exclusive access",
+      "Establish monopoly or exclusive rights"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_trade_mastery",
+     "narrative_outcome_rare_find",
+     "narrative_outcome_merchant_success"
+    ]
+   },
+   {
+    "id": "action_ship_crew_interaction",
+    "name": "Crew Interaction",
+    "description": "Build relationships with crew members, improve morale, and strengthen bonds.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Leadership",
+     "difficulty": "Easy"
+    },
+    "effects": {
+     "success": [
+      "Improve crew morale",
+      "Strengthen crew bonds",
+      "Reduce crew strain"
+     ],
+     "advantage": [
+      "Significantly boost crew performance",
+      "Unlock crew special abilities",
+      "Create lasting crew loyalty"
+     ],
+     "triumph": [
+      "Perfect crew unity and motivation",
+      "Crew gains legendary dedication",
+      "Unlock crew's full potential"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_crew_bonding",
+     "narrative_outcome_morale_boost",
+     "narrative_outcome_leadership_mastery"
+    ]
+   }
+  ],
+  "travel_actions": [
+   {
+    "id": "action_ship_hyperspace_jump",
+    "name": "Hyperspace Jump",
+    "description": "Execute a hyperspace jump to travel between star systems.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Astrogation",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Successful hyperspace jump",
+      "Arrive at destination safely",
+      "Standard travel time"
+     ],
+     "advantage": [
+      "Faster than expected travel",
+      "Avoid hyperspace hazards",
+      "Discover interesting phenomena"
+     ],
+     "triumph": [
+      "Perfect jump with maximum efficiency",
+      "Discover hyperspace shortcuts",
+      "Gain hyperspace insights"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_smooth_jump",
+     "narrative_outcome_hyperspace_wonder",
+     "narrative_outcome_navigation_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_emergency_jump",
+    "name": "Emergency Jump",
+    "description": "Execute a dangerous emergency hyperspace jump to escape threats.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Escape immediate threat",
+      "Arrive at random location",
+      "Ship suffers minor damage"
+     ],
+     "advantage": [
+      "Escape with minimal damage",
+      "Maintain some control over destination",
+      "Avoid worst hyperspace hazards"
+     ],
+     "triumph": [
+      "Perfect emergency escape",
+      "Arrive at ideal location",
+      "No ship damage"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_narrow_escape",
+     "narrative_outcome_emergency_mastery",
+     "narrative_outcome_lucky_break"
+    ]
+   },
+   {
+    "id": "action_ship_stealth_travel",
+    "name": "Stealth Travel",
+    "description": "Navigate through space while avoiding detection by other vessels.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Stealth",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Avoid detection by most vessels",
+      "Maintain course and speed",
+      "Minimal sensor signature"
+     ],
+     "advantage": [
+      "Complete invisibility to most sensors",
+      "Maintain full speed and maneuverability",
+      "Gather intelligence on other vessels"
+     ],
+     "triumph": [
+      "Perfect stealth with no detection possible",
+      "Gain intelligence on all nearby vessels",
+      "Create false sensor readings"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_shadow_maneuver",
+     "narrative_outcome_ghost_ship",
+     "narrative_outcome_stealth_mastery"
+    ]
+   }
+  ],
+  "maintenance_actions": [
+   {
+    "id": "action_ship_routine_maintenance",
+    "name": "Routine Maintenance",
+    "description": "Perform regular ship maintenance to keep systems running smoothly.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Mechanics",
+     "difficulty": "Easy"
+    },
+    "effects": {
+     "success": [
+      "Prevent system degradation",
+      "Maintain ship performance",
+      "Identify minor issues"
+     ],
+     "advantage": [
+      "Improve ship performance",
+      "Prevent future problems",
+      "Gain system insights"
+     ],
+     "triumph": [
+      "Perfect maintenance with performance boost",
+      "Discover optimization opportunities",
+      "Prevent all potential issues"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_ship_care",
+     "narrative_outcome_engineering_insight",
+     "narrative_outcome_maintenance_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_install_upgrade",
+    "name": "Install Upgrade",
+    "description": "Install new equipment or modifications to improve ship capabilities.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Technology",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Successfully install upgrade",
+      "Gain new ship capability",
+      "Maintain ship stability"
+     ],
+     "advantage": [
+      "Install upgrade with bonus effects",
+      "Optimize upgrade performance",
+      "Discover additional benefits"
+     ],
+     "triumph": [
+      "Perfect installation with maximum benefits",
+      "Unlock hidden upgrade potential",
+      "Create unique ship modifications"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_upgrade_success",
+     "narrative_outcome_technical_breakthrough",
+     "narrative_outcome_engineering_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_repair_systems",
+    "name": "Repair Systems",
+    "description": "Repair damaged ship systems and restore full functionality.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Mechanics",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Repair damaged systems",
+      "Restore normal functionality",
+      "Prevent further damage"
+     ],
+     "advantage": [
+      "Repair with improved performance",
+      "Strengthen repaired systems",
+      "Gain system insights"
+     ],
+     "triumph": [
+      "Perfect repair with system enhancement",
+      "Improve system beyond original specs",
+      "Gain legendary repair knowledge"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_repair_mastery",
+     "narrative_outcome_system_restoration",
+     "narrative_outcome_engineering_genius"
+    ]
+   }
+  ],
+  "downtime_actions": [
+   {
+    "id": "action_ship_crew_training",
+    "name": "Crew Training",
+    "description": "Conduct training exercises to improve crew skills and coordination.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Leadership",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Improve crew skills",
+      "Enhance coordination",
+      "Boost morale"
+     ],
+     "advantage": [
+      "Significant skill improvements",
+      "Unlock new crew abilities",
+      "Create training programs"
+     ],
+     "triumph": [
+      "Perfect training with maximum benefits",
+      "Crew gains legendary skills",
+      "Establish elite training standards"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_skill_improvement",
+     "narrative_outcome_crew_excellence",
+     "narrative_outcome_training_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_entertainment",
+    "name": "Crew Entertainment",
+    "description": "Provide entertainment and recreation to boost crew morale and reduce stress.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Performance",
+     "difficulty": "Easy"
+    },
+    "effects": {
+     "success": [
+      "Boost crew morale",
+      "Reduce crew strain",
+      "Improve crew relations"
+     ],
+     "advantage": [
+      "Significant morale boost",
+      "Create lasting positive memories",
+      "Strengthen crew bonds"
+     ],
+     "triumph": [
+      "Perfect entertainment with legendary impact",
+      "Create unforgettable crew experiences",
+      "Establish legendary crew culture"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_crew_joy",
+     "narrative_outcome_entertainment_mastery",
+     "narrative_outcome_legendary_fun"
+    ]
+   },
+   {
+    "id": "action_ship_meditation",
+    "name": "Crew Meditation",
+    "description": "Lead crew in meditation or relaxation exercises to reduce stress and improve focus.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Insight",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Reduce crew stress",
+      "Improve mental clarity",
+      "Enhance focus"
+     ],
+     "advantage": [
+      "Significant stress reduction",
+      "Improve crew mental abilities",
+      "Create peaceful atmosphere"
+     ],
+     "triumph": [
+      "Perfect meditation with profound effects",
+      "Crew gains mental clarity and wisdom",
+      "Create legendary peaceful environment"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_mental_clarity",
+     "narrative_outcome_inner_peace",
+     "narrative_outcome_spiritual_mastery"
+    ]
+   }
+  ],
+  "narrative_outcomes_non_combat": [
+   {
+    "id": "narrative_outcome_system_discovery",
+    "name": "System Discovery",
+    "description": "The ship's sensors reveal a previously unknown world or phenomenon.",
+    "effects": [
+     "Crew gains excitement and wonder",
+     "Opens new exploration opportunities",
+     "Creates sense of discovery"
+    ]
+   },
+   {
+    "id": "narrative_outcome_anomaly_detection",
+    "name": "Anomaly Detection",
+    "description": "The crew discovers something truly strange and mysterious in space.",
+    "effects": [
+     "Creates mystery and intrigue",
+     "Opens potential adventure hooks",
+     "Enhances sense of wonder"
+    ]
+   },
+   {
+    "id": "narrative_outcome_resource_find",
+    "name": "Resource Find",
+    "description": "The scan reveals valuable resources or rare materials.",
+    "effects": [
+     "Provides economic opportunities",
+     "Creates strategic advantages",
+     "Opens trade possibilities"
+    ]
+   },
+   {
+    "id": "narrative_outcome_mystery_solved",
+    "name": "Mystery Solved",
+    "description": "The crew successfully unravels the secrets of a space anomaly.",
+    "effects": [
+     "Gains valuable knowledge",
+     "Solves ancient mysteries",
+     "Creates legendary discoveries"
+    ]
+   },
+   {
+    "id": "narrative_outcome_scientific_breakthrough",
+    "name": "Scientific Breakthrough",
+    "description": "The investigation leads to a major scientific discovery.",
+    "effects": [
+     "Advances scientific knowledge",
+     "Gains academic recognition",
+     "Opens research opportunities"
+    ]
+   },
+   {
+    "id": "narrative_outcome_legendary_find",
+    "name": "Legendary Find",
+    "description": "The crew discovers something of legendary significance.",
+    "effects": [
+     "Gains legendary status",
+     "Creates galactic impact",
+     "Opens epic storylines"
+    ]
+   },
+   {
+    "id": "narrative_outcome_route_discovery",
+    "name": "Route Discovery",
+    "description": "The crew discovers a new or forgotten hyperspace route.",
+    "effects": [
+     "Gains strategic advantage",
+     "Opens new travel options",
+     "Creates economic opportunities"
+    ]
+   },
+   {
+    "id": "narrative_outcome_shortcut_found",
+    "name": "Shortcut Found",
+    "description": "The crew finds a faster way to reach their destination.",
+    "effects": [
+     "Saves travel time",
+     "Gains competitive advantage",
+     "Creates efficiency benefits"
+    ]
+   },
+   {
+    "id": "narrative_outcome_pathfinding_mastery",
+    "name": "Pathfinding Mastery",
+    "description": "The crew demonstrates legendary navigation skills.",
+    "effects": [
+     "Gains navigation reputation",
+     "Creates new travel standards",
+     "Establishes legendary status"
+    ]
+   },
+   {
+    "id": "narrative_outcome_diplomatic_success",
+    "name": "Diplomatic Success",
+    "description": "The crew successfully establishes positive relations with another vessel.",
+    "effects": [
+     "Gains new contacts",
+     "Opens trade opportunities",
+     "Creates alliance possibilities"
+    ]
+   },
+   {
+    "id": "narrative_outcome_trade_opportunity",
+    "name": "Trade Opportunity",
+    "description": "The interaction leads to valuable trade opportunities.",
+    "effects": [
+     "Gains economic benefits",
+     "Opens new markets",
+     "Creates business relationships"
+    ]
+   },
+   {
+    "id": "narrative_outcome_alliance_formed",
+    "name": "Alliance Formed",
+    "description": "The crew forms a lasting alliance with another vessel or faction.",
+    "effects": [
+     "Gains powerful allies",
+     "Opens strategic opportunities",
+     "Creates lasting relationships"
+    ]
+   },
+   {
+    "id": "narrative_outcome_trade_mastery",
+    "name": "Trade Mastery",
+    "description": "The crew demonstrates legendary trading skills.",
+    "effects": [
+     "Gains merchant reputation",
+     "Opens exclusive deals",
+     "Creates economic empire"
+    ]
+   },
+   {
+    "id": "narrative_outcome_rare_find",
+    "name": "Rare Find",
+    "description": "The crew acquires rare or valuable items through trade.",
+    "effects": [
+     "Gains valuable assets",
+     "Opens new possibilities",
+     "Creates strategic advantages"
+    ]
+   },
+   {
+    "id": "narrative_outcome_merchant_success",
+    "name": "Merchant Success",
+    "description": "The crew establishes themselves as successful merchants.",
+    "effects": [
+     "Gains merchant reputation",
+     "Opens business opportunities",
+     "Creates economic influence"
+    ]
+   },
+   {
+    "id": "narrative_outcome_crew_bonding",
+    "name": "Crew Bonding",
+    "description": "The crew strengthens their relationships and bonds.",
+    "effects": [
+     "Improves crew morale",
+     "Strengthens team unity",
+     "Creates lasting friendships"
+    ]
+   },
+   {
+    "id": "narrative_outcome_morale_boost",
+    "name": "Morale Boost",
+    "description": "The crew's spirits are lifted and their motivation increases.",
+    "effects": [
+     "Improves performance",
+     "Reduces stress",
+     "Creates positive atmosphere"
+    ]
+   },
+   {
+    "id": "narrative_outcome_leadership_mastery",
+    "name": "Leadership Mastery",
+    "description": "The commander demonstrates legendary leadership skills.",
+    "effects": [
+     "Gains leadership reputation",
+     "Inspires crew loyalty",
+     "Creates legendary command"
+    ]
+   },
+   {
+    "id": "narrative_outcome_smooth_jump",
+    "name": "Smooth Jump",
+    "description": "The hyperspace jump is executed with perfect precision.",
+    "effects": [
+     "Efficient travel",
+     "Reduced wear on ship",
+     "Professional piloting"
+    ]
+   },
+   {
+    "id": "narrative_outcome_hyperspace_wonder",
+    "name": "Hyperspace Wonder",
+    "description": "The crew witnesses amazing phenomena during hyperspace travel.",
+    "effects": [
+     "Creates sense of wonder",
+     "Opens exploration opportunities",
+     "Enhances travel experience"
+    ]
+   },
+   {
+    "id": "narrative_outcome_navigation_mastery",
+    "name": "Navigation Mastery",
+    "description": "The crew demonstrates legendary navigation skills.",
+    "effects": [
+     "Gains navigation reputation",
+     "Creates travel efficiency",
+     "Establishes expertise"
+    ]
+   },
+   {
+    "id": "narrative_outcome_narrow_escape",
+    "name": "Narrow Escape",
+    "description": "The crew barely escapes from a dangerous situation.",
+    "effects": [
+     "Creates dramatic tension",
+     "Strengthens crew bonds",
+     "Provides adventure hooks"
+    ]
+   },
+   {
+    "id": "narrative_outcome_emergency_mastery",
+    "name": "Emergency Mastery",
+    "description": "The crew handles an emergency with perfect skill.",
+    "effects": [
+     "Gains emergency reputation",
+     "Improves crew confidence",
+     "Creates legendary status"
+    ]
+   },
+   {
+    "id": "narrative_outcome_lucky_break",
+    "name": "Lucky Break",
+    "description": "The crew experiences an unexpected stroke of luck.",
+    "effects": [
+     "Creates positive outcomes",
+     "Opens new opportunities",
+     "Enhances adventure"
+    ]
+   },
+   {
+    "id": "narrative_outcome_shadow_maneuver",
+    "name": "Shadow Maneuver",
+    "description": "The ship moves through space like a shadow, undetected.",
+    "effects": [
+     "Maintains secrecy",
+     "Gains tactical advantage",
+     "Creates stealth reputation"
+    ]
+   },
+   {
+    "id": "narrative_outcome_ghost_ship",
+    "name": "Ghost Ship",
+    "description": "The ship becomes completely invisible to all sensors.",
+    "effects": [
+     "Perfect stealth",
+     "Gains intelligence",
+     "Creates legendary stealth"
+    ]
+   },
+   {
+    "id": "narrative_outcome_stealth_mastery",
+    "name": "Stealth Mastery",
+    "description": "The crew demonstrates legendary stealth capabilities.",
+    "effects": [
+     "Gains stealth reputation",
+     "Opens covert opportunities",
+     "Creates legendary status"
+    ]
+   },
+   {
+    "id": "narrative_outcome_ship_care",
+    "name": "Ship Care",
+    "description": "The crew lovingly maintains their vessel with perfect attention.",
+    "effects": [
+     "Improves ship performance",
+     "Prevents problems",
+     "Creates pride in vessel"
+    ]
+   },
+   {
+    "id": "narrative_outcome_engineering_insight",
+    "name": "Engineering Insight",
+    "description": "The crew gains deep understanding of ship systems.",
+    "effects": [
+     "Improves technical skills",
+     "Opens optimization opportunities",
+     "Creates engineering expertise"
+    ]
+   },
+   {
+    "id": "narrative_outcome_maintenance_mastery",
+    "name": "Maintenance Mastery",
+    "description": "The crew demonstrates legendary maintenance skills.",
+    "effects": [
+     "Gains engineering reputation",
+     "Improves ship reliability",
+     "Creates legendary expertise"
+    ]
+   },
+   {
+    "id": "narrative_outcome_upgrade_success",
+    "name": "Upgrade Success",
+    "description": "The crew successfully installs new ship improvements.",
+    "effects": [
+     "Improves ship capabilities",
+     "Gains technical skills",
+     "Creates pride in work"
+    ]
+   },
+   {
+    "id": "narrative_outcome_technical_breakthrough",
+    "name": "Technical Breakthrough",
+    "description": "The crew makes a significant technical advancement.",
+    "effects": [
+     "Gains technical reputation",
+     "Opens innovation opportunities",
+     "Creates engineering legacy"
+    ]
+   },
+   {
+    "id": "narrative_outcome_engineering_mastery",
+    "name": "Engineering Mastery",
+    "description": "The crew demonstrates legendary engineering skills.",
+    "effects": [
+     "Gains engineering reputation",
+     "Creates technical innovations",
+     "Establishes legendary status"
+    ]
+   },
+   {
+    "id": "narrative_outcome_repair_mastery",
+    "name": "Repair Mastery",
+    "description": "The crew repairs systems with legendary skill.",
+    "effects": [
+     "Gains repair reputation",
+     "Improves ship reliability",
+     "Creates technical expertise"
+    ]
+   },
+   {
+    "id": "narrative_outcome_system_restoration",
+    "name": "System Restoration",
+    "description": "The crew perfectly restores damaged ship systems.",
+    "effects": [
+     "Improves ship performance",
+     "Prevents future damage",
+     "Creates technical pride"
+    ]
+   },
+   {
+    "id": "narrative_outcome_engineering_genius",
+    "name": "Engineering Genius",
+    "description": "The crew demonstrates genius-level engineering skills.",
+    "effects": [
+     "Gains legendary reputation",
+     "Creates technical innovations",
+     "Establishes engineering legacy"
+    ]
+   },
+   {
+    "id": "narrative_outcome_skill_improvement",
+    "name": "Skill Improvement",
+    "description": "The crew significantly improves their skills through training.",
+    "effects": [
+     "Improves crew capabilities",
+     "Boosts confidence",
+     "Creates learning culture"
+    ]
+   },
+   {
+    "id": "narrative_outcome_crew_excellence",
+    "name": "Crew Excellence",
+    "description": "The crew achieves excellence in their training.",
+    "effects": [
+     "Improves performance",
+     "Gains expertise",
+     "Creates elite standards"
+    ]
+   },
+   {
+    "id": "narrative_outcome_training_mastery",
+    "name": "Training Mastery",
+    "description": "The crew demonstrates legendary training capabilities.",
+    "effects": [
+     "Gains training reputation",
+     "Creates training programs",
+     "Establishes legendary standards"
+    ]
+   },
+   {
+    "id": "narrative_outcome_crew_joy",
+    "name": "Crew Joy",
+    "description": "The crew experiences pure joy and happiness.",
+    "effects": [
+     "Boosts morale significantly",
+     "Strengthens bonds",
+     "Creates positive memories"
+    ]
+   },
+   {
+    "id": "narrative_outcome_entertainment_mastery",
+    "name": "Entertainment Mastery",
+    "description": "The crew creates legendary entertainment experiences.",
+    "effects": [
+     "Gains entertainment reputation",
+     "Creates lasting memories",
+     "Establishes legendary culture"
+    ]
+   },
+   {
+    "id": "narrative_outcome_legendary_fun",
+    "name": "Legendary Fun",
+    "description": "The crew experiences the most fun they've ever had.",
+    "effects": [
+     "Creates unforgettable memories",
+     "Strengthens crew bonds",
+     "Establishes legendary status"
+    ]
+   },
+   {
+    "id": "narrative_outcome_mental_clarity",
+    "name": "Mental Clarity",
+    "description": "The crew achieves perfect mental clarity and focus.",
+    "effects": [
+     "Improves mental abilities",
+     "Reduces stress",
+     "Creates peaceful atmosphere"
+    ]
+   },
+   {
+    "id": "narrative_outcome_inner_peace",
+    "name": "Inner Peace",
+    "description": "The crew finds inner peace and tranquility.",
+    "effects": [
+     "Reduces stress significantly",
+     "Improves mental health",
+     "Creates spiritual growth"
+    ]
+   },
+   {
+    "id": "narrative_outcome_spiritual_mastery",
+    "name": "Spiritual Mastery",
+    "description": "The crew achieves legendary spiritual understanding.",
+    "effects": [
+     "Gains spiritual wisdom",
+     "Creates peaceful environment",
+     "Establishes legendary status"
+    ]
+   }
+  ],
+  "integration_notes": {
+   "class_integration": [
+    "Pilot class gains advantage on all pilot actions",
+    "Engineer class gains advantage on maintenance and upgrade actions",
+    "Commander class gains advantage on social and leadership actions",
+    "Scout class gains advantage on exploration actions",
+    "Operative class gains advantage on stealth actions"
+   ],
+   "power_integration": [
+    "Force powers can enhance exploration and social actions",
+    "Tech powers can improve maintenance and upgrade actions",
+    "Powers can provide additional narrative outcomes",
+    "Force users can sense hidden locations or threats",
+    "Tech users can optimize ship systems beyond normal limits"
+   ],
+   "faction_integration": [
+    "Imperial Navy training provides bonus to military and diplomatic actions",
+    "Rebel Alliance training provides bonus to stealth and exploration actions",
+    "Mandalorian training provides bonus to combat and maintenance actions",
+    "Smuggler training provides bonus to trade and stealth actions",
+    "Jedi training provides bonus to Force-enhanced actions"
+   ],
+   "era_specific_notes": [
+    "High Republic: Advanced technology, sophisticated social interactions",
+    "Old Republic: Ancient techniques, powerful Force users",
+    "Clone Wars: Military precision, coordinated actions",
+    "Galactic Civil War: Desperate tactics, resource limitations",
+    "New Republic: Rebuilding, new techniques"
+   ]
+  },
+  "development_status": "Complete",
+  "last_updated": "2024-12-19",
+  "version": "1.0"
+ },
+ "validation": {
+  "candidate_urid": "non_combat_actions",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/starships/actions/non_combat_actions.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

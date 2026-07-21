@@ -1,0 +1,651 @@
+{
+ "record": {
+  "id": "scoundrel",
+  "name": "Scoundrel",
+  "tags": [
+   "scoundrel",
+   "rogue",
+   "dexterity_based",
+   "deception",
+   "stealth",
+   "underworld",
+   "opportunist",
+   "cunning",
+   "skill_specialist",
+   "dirty_fighter"
+  ],
+  "description": "Scoundrels are cunning opportunists who thrive in the shadows and seedy underbelly of the galaxy. They excel at deception, stealth, and turning any situation to their advantage through quick thinking and dirty tricks.",
+  "hit_die": 8,
+  "primary_ability": "dexterity",
+  "primary_resource": "luck_points",
+  "proficiencies": {
+   "armor": [
+    "light"
+   ],
+   "weapons": [
+    "simple",
+    "blaster_pistols",
+    "vibroweapons"
+   ],
+   "tools": [
+    "thieves_tools",
+    "gaming_set"
+   ],
+   "saving_throws": [
+    "dexterity",
+    "charisma"
+   ],
+   "skills": {
+    "choose": 4,
+    "from": [
+     "acrobatics",
+     "athletics",
+     "deception",
+     "insight",
+     "intimidation",
+     "investigation",
+     "perception",
+     "persuasion",
+     "sleight_of_hand",
+     "stealth"
+    ]
+   }
+  },
+  "progression_tree": [
+   {
+    "node_id": "lucky_scoundrel_1",
+    "feature_id": "lucky_scoundrel",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": [],
+    "description": "You have an uncanny knack for getting out of trouble. You gain access to Luck Points, which you can spend to reroll failed ability checks, attack rolls, or saving throws.",
+    "effects": [
+     {
+      "type": "grant_resource",
+      "value": "luck_points",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain Luck Points equal to your level"
+     }
+    ]
+   },
+   {
+    "node_id": "scoundrel_style_1",
+    "feature_id": "scoundrel_style",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "lucky_scoundrel_1"
+    ],
+    "choice_group": "scoundrel_style_level_1",
+    "description": "Choose your approach to being a scoundrel."
+   },
+   {
+    "node_id": "stealth_mastery_2",
+    "feature_id": "stealth_mastery",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "scoundrel_style_1"
+    ],
+    "choice_group": "scoundrel_focus_level_2",
+    "description": "Focus on stealth and infiltration techniques."
+   },
+   {
+    "node_id": "deception_mastery_2",
+    "feature_id": "deception_mastery",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "scoundrel_style_1"
+    ],
+    "choice_group": "scoundrel_focus_level_2",
+    "description": "Focus on deception and social manipulation."
+   },
+   {
+    "node_id": "scoundrel_specialization_3",
+    "feature_id": "scoundrel_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "stealth_mastery_2",
+     "deception_mastery_2"
+    ],
+    "choice_group": "scoundrel_specialization",
+    "description": "Choose your specialization as a Scoundrel."
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "scoundrel_specialization_3"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "sneak_attack_5",
+    "feature_id": "sneak_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ],
+    "description": "You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "sneak_attack_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "has_advantage",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal extra 1d6 damage on advantaged attacks"
+     }
+    ]
+   },
+   {
+    "node_id": "enhanced_stealth_6",
+    "feature_id": "enhanced_stealth",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "sneak_attack_5"
+    ],
+    "choice_group": "scoundrel_enhancement_level_6",
+    "description": "Enhance your stealth and infiltration abilities."
+   },
+   {
+    "node_id": "enhanced_deception_6",
+    "feature_id": "enhanced_deception",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "sneak_attack_5"
+    ],
+    "choice_group": "scoundrel_enhancement_level_6",
+    "description": "Enhance your deception and social manipulation abilities."
+   },
+   {
+    "node_id": "uncanny_dodge_7",
+    "feature_id": "uncanny_dodge",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_stealth_6",
+     "enhanced_deception_6"
+    ],
+    "description": "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "halve_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "being_attacked",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Halve damage from visible attacker"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "evasion_7"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_9",
+    "feature_id": "subclass_feature",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "reliable_talent_10",
+    "feature_id": "reliable_talent",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_9"
+    ],
+    "description": "You have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.",
+    "effects": [
+     {
+      "type": "modify_roll",
+      "value": "minimum_roll_10",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "proficient_ability_check",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Treat d20 rolls of 9 or lower as 10"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "reliable_talent_10"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "blindsense_14",
+    "feature_id": "blindsense",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ],
+    "description": "If you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "blindsense",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Aware of hidden/invisible creatures within 10 feet"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "blindsense_14"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "elusive_18",
+    "feature_id": "elusive",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ],
+    "description": "You are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren't incapacitated.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "no_advantage_against",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "No attack rolls have advantage against you"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_19",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "elusive_18"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "stroke_of_luck_20",
+    "feature_id": "stroke_of_luck",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_19"
+    ],
+    "description": "You have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "turn_miss_to_hit",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attack_missed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Turn attack miss into hit"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "treat_failed_check_as_20",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check_failed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Treat failed ability check as natural 20"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Blaster Pistol",
+    "Holster Belt",
+    "Smuggler's Cloak",
+    "Masking Hood (disguise kit)",
+    "Cyberdeck (modified comms device)",
+    "Thug's Gauntlets (brass knuckles)",
+    "Crew Satchel (tactical backpack)"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A nimble, darting stance with a blaster at the ready, eyes scanning for escape routes and potential targets.",
+    "energy_signature": "A faint aura of swirling smoke or holographic decoys, hinting at the Scoundrel's reliance on cunning and misdirection."
+   },
+   "prompt_schema": {
+    "base_prompt": "Create an image of a {species} Scoundrel engaging in {situation}, using their skills to outwit and outmaneuver their foes.",
+    "contextual_modifiers": [
+     "In a dimly lit cantina on a lawless planet",
+     "While attempting to steal a valuable cargo from a rival gang's transport",
+     "During a high-stakes sabacc game in an underground casino"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A Scoundrel may encounter a nemesis during a heist gone wrong, or by crossing paths with a ruthless crime lord.",
+    "escalation": "As the Scoundrel's reputation grows, so does their notoriety among the underworld. A rival crime lord may emerge to challenge them for dominance.",
+    "confrontation": "A final showdown between the Scoundrel and their nemesis could involve a high-stakes gamble or a cunning plot to outwit and outmaneuver their opponent."
+   },
+   "resolution_paths": {
+    "victory": "The Scoundrel emerges victorious, earning respect from their peers and cementing their position as a top-tier operator.",
+    "redemption": "The Scoundrel finds a way to redeem themselves by taking down a corrupt authority figure or exposing a deep-seated conspiracy.",
+    "escape": "The Scoundrel narrowly escapes their nemesis's clutches, but not without sustaining significant damage and losing valuable resources."
+   },
+   "conflict_triggers": [
+    "Crossing paths with a powerful crime lord",
+    "Stealing from a rival faction's territory",
+    "Betraying an ally for personal gain"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "A Scoundrel and their romantic interest might meet in a seedy cantina or during a high-stakes heist.",
+    "stage2": "As the relationship deepens, the Scoundrel must confront the trust issues stemming from their shady past.",
+    "stage3": "The couple faces challenges due to the Scoundrel's occupation, such as having to choose between love and loyalty to their crew or organization.",
+    "stage4": "A rival suitor emerges, seeking to win the romantic interest away from the Scoundrel with promises of a more stable life.",
+    "stage5": "The relationship reaches a critical point where the Scoundrel must decide whether to leave their old life behind for love."
+   },
+   "lifestyle_challenges": [
+    "Frequent disappearances due to missions or obligations",
+    "Trust issues stemming from past betrayals or deceptions",
+    "Incompatible moral codes between the Scoundrel's occupation and their romantic interest's values"
+   ]
+  },
+  "flavor_text": "A scoundrel's wit and charm can talk their way out of a blaster fight, but only if they're not already running from one.",
+  "llm_guidance": {
+   "roleplay_guidance": "Embody a cunning opportunistic with a talent for deception and stealth. Scoundrels often find themselves at the center of intrigue, using their wit and charm to manipulate situations to their advantage.\n",
+   "narrative_hooks": [
+    "A valuable shipment has been hijacked.",
+    "The Empire is cracking down on underground activities.",
+    "An old flame reaches out with a lucrative proposal.",
+    "You've received intel about a secret meeting.",
+    "Someone has stolen your most prized possession."
+   ],
+   "social_dynamics": "Scoundrels often find themselves at odds with authority figures, but they can also form unexpected alliances. Use humor and charm to diffuse tense situations or manipulate NPCs.\n",
+   "common_motivations": [
+    "Gain wealth and influence",
+    "Protect loved ones from harm",
+    "Escape the Empire's notice"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": "\"A scoundrel is always on the lookout for the next big score. They're charismatic, quick-witted, and often take risks.\"",
+    "motivations": "\"Gain wealth and influence by manipulating situations to their advantage. Protect loved ones from harm by using their cunning and stealth.\"",
+    "combat_behavior": "\"Use stealth and deception to get close to enemies before striking with a swift attack or a well-placed blaster bolt.\"",
+    "social_behavior": "\"Befriend underworld figures, smugglers, and other scoundrels. Use charm and wit to negotiate deals and manipulate situations.\""
+   },
+   "relationship_tracking": {
+    "trust_levels": "Establishing trust takes time and effort. Initial encounters may be rocky, but consistent behavior can earn the NPC's trust.\n",
+    "loyalty_triggers": "Betraying or harming loved ones triggers a deep sense of betrayal and resentment. Failing to deliver on promises or showing disloyalty also damages trust."
+   },
+   "services": [
+    "Investigation",
+    "Thievery",
+    "Sabotage"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "scoundrel",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/scoundrel.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

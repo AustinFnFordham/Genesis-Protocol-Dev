@@ -1,0 +1,671 @@
+{
+ "record": {
+  "id": "juggernaut",
+  "name": "Juggernaut",
+  "tags": [
+   "force_user",
+   "juggernaut",
+   "dark_side",
+   "sith",
+   "tank",
+   "strength_based",
+   "brutal",
+   "overwhelming_force",
+   "armor_specialist",
+   "devastating"
+  ],
+  "description": "Juggernauts are heavily armored dark side warriors who combine brute force with devastating dark side powers. They excel at breaking through enemy lines and crushing opposition with overwhelming strength and dark side abilities.",
+  "hit_die": 12,
+  "primary_ability": "strength",
+  "primary_resource": "dark_side_points",
+  "proficiencies": {
+   "armor": [
+    "light",
+    "medium",
+    "heavy"
+   ],
+   "weapons": [
+    "simple",
+    "martial"
+   ],
+   "tools": [
+    "smith's_tools"
+   ],
+   "saving_throws": [
+    "strength",
+    "constitution"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "athletics",
+     "intimidation",
+     "perception",
+     "survival",
+     "intimidation",
+     "athletics"
+    ]
+   }
+  },
+  "progression_tree": [
+   {
+    "node_id": "dark_side_initiate_1",
+    "feature_id": "dark_side_initiate",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": [],
+    "description": "You have begun your journey into the dark side of the Force. You gain access to Dark Side Points, which you can spend to enhance your abilities and powers.",
+    "effects": [
+     {
+      "type": "grant_resource",
+      "value": "dark_side_points",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain Dark Side Points equal to your level"
+     }
+    ]
+   },
+   {
+    "node_id": "heavy_armor_mastery_2",
+    "feature_id": "heavy_armor_mastery",
+    "level_requirement": 2,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_initiate_1"
+    ],
+    "description": "You have mastered the use of heavy armor. While wearing heavy armor, you gain resistance to bludgeoning, piercing, and slashing damage from non-magical weapons.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "damage_resistance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "wearing_heavy_armor",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to non-magical bludgeoning, piercing, and slashing damage"
+     }
+    ]
+   },
+   {
+    "node_id": "juggernaut_specialization_3",
+    "feature_id": "juggernaut_specialization",
+    "level_requirement": 3,
+    "type": "choice",
+    "prerequisites": [
+     "heavy_armor_mastery_2"
+    ],
+    "choice_group": "juggernaut_specialization",
+    "description": "Choose your specialization as a Juggernaut."
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "juggernaut_specialization_3"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "dark_side_rage_5",
+    "feature_id": "dark_side_rage",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ],
+    "description": "You can use your bonus action to enter a state of dark side rage. While raging, you have advantage on Strength checks and saving throws, and your weapon attacks deal additional damage equal to your Strength modifier.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "strength_checks_saves",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "dark_raging",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Strength checks and saving throws"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "additional_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "dark_raging",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add Strength modifier to weapon damage"
+     }
+    ]
+   },
+   {
+    "node_id": "unstoppable_force_6",
+    "feature_id": "unstoppable_force",
+    "level_requirement": 6,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_rage_5"
+    ],
+    "description": "You can use your action to charge forward, moving up to your speed in a straight line. Any creature you pass through must succeed on a Strength saving throw or be knocked prone and take bludgeoning damage equal to your Strength modifier.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "charge_attack",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "failed_strength_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Knock prone and deal bludgeoning damage"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "unstoppable_force_6"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "dark_side_resilience_9",
+    "feature_id": "dark_side_resilience",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ],
+    "description": "Your connection to the dark side makes you incredibly resilient. You have advantage on saving throws against being frightened or charmed.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "fear_charm_saves",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Advantage on saves against fear and charm effects"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_10",
+    "feature_id": "subclass_feature",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_resilience_9"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "devastating_strike_11",
+    "feature_id": "devastating_strike",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_10"
+    ],
+    "description": "You can use your action to make a devastating attack. When you hit with a weapon attack, you can choose to deal maximum damage instead of rolling.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "maximum_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_devastating_strike",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal maximum weapon damage"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "devastating_strike_11"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "dark_side_mastery_14",
+    "feature_id": "dark_side_mastery",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ],
+    "description": "Your mastery of the dark side has reached new heights. You can use your Dark Side Points to enhance your attacks, granting them additional damage and effects.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "dark_side_enhancement",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "spending_dark_side_points",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhance attacks with dark side power"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_mastery_14"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "unstoppable_juggernaut_18",
+    "feature_id": "unstoppable_juggernaut",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ],
+    "description": "You have become an unstoppable force of destruction. You can use your action to enter a state of perfect dark side mastery. For 1 minute, you have advantage on all attack rolls and saving throws, and you can't be knocked prone.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "unstoppable_juggernaut_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all attack rolls and saving throws"
+     },
+     {
+      "type": "apply_status",
+      "value": "cannot_be_knocked_prone",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "unstoppable_juggernaut_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cannot be knocked prone"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_19",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "unstoppable_juggernaut_18"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "dark_lord_20",
+    "feature_id": "dark_lord",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_19"
+    ],
+    "description": "You have achieved the pinnacle of dark side power. Your Strength and Constitution scores increase by 4, and your maximum for those scores is now 24.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "strength_constitution_boost",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase Strength and Constitution by 4, maximum 24"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "dark_side_warrior_helm",
+    "juggernaut_armor",
+    "double_bladed_saber"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A Juggernaut stands tall, feet shoulder-width apart, with their saber at the ready. Their armor is emblazoned with dark side markings that seem to shift and writhe like living shadow.",
+    "energy_signature": "The air around a Juggernaut crackles with dark energy as they unleash devastating Force powers, their very presence seeming to warp reality."
+   },
+   "prompt_schema": {
+    "base_prompt": "Juggernaut wielding lightsaber in combat",
+    "contextual_modifiers": [
+     "dark_side_focus",
+     "powerful_force_powers",
+     "heavily_armor"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Enemies are wary but not openly hostile, and see you as a formidable warrior with an impressive build.",
+    "escalation": "You've gained a reputation for being merciless on the battlefield, causing opponents to fear facing you in combat.",
+    "confrontation": "Your dark side abilities have drawn the attention of powerful foes who will stop at nothing to eliminate you."
+   },
+   "resolution_paths": {
+    "victory": "Defeating a nemesis in combat results in their grudging respect and a temporary truce.",
+    "redemption": "Showing mercy to a defeated foe can lead to them becoming an ally or even a friend.",
+    "escape": "Fleeing the scene of a confrontation can result in your nemesis being distracted by other enemies, giving you time to regroup."
+   },
+   "conflict_triggers": [
+    "Your brutal tactics on the battlefield",
+    "Your tendency to disregard orders and follow your own agenda",
+    "Your growing attachment to dark side powers"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "You've caught someone's eye, but they're hesitant to get close due to your intimidating appearance.",
+    "stage2": "As you spend more time together, your partner begins to see past your rough exterior and values the strong connection you share.",
+    "stage3": "Your relationship deepens, but the weight of your dark side powers threatens to tear you apart.",
+    "stage4": "You're forced to confront the possibility of losing someone you care about due to your own destructive tendencies.",
+    "stage5": "You've found a way to balance your love life with your duties as a Juggernaut, and have formed a lasting bond."
+   },
+   "lifestyle_challenges": [
+    "Your busy schedule leaves little time for romance",
+    "Your dark side abilities make it difficult to form intimate connections",
+    "Your tendency to disregard danger puts those you care about in harm's way"
+   ]
+  },
+  "flavor_text": "A behemoth of dark side energy, driven to shatter all who dare stand against them.",
+  "llm_guidance": {
+   "roleplay_guidance": "Embody a warrior driven by unyielding determination and an insatiable hunger for destruction. A Juggernaut seeks to shatter all opposition, no matter the cost.\n",
+   "narrative_hooks": [
+    "You've been tasked with leading a charge against an entrenched enemy position.",
+    "A rival clan has challenged your authority; respond accordingly."
+   ],
+   "social_dynamics": "As a Juggernaut, you are both feared and respected. Allies will often look to you for protection, while enemies will seek to exploit any weaknesses they can find.\n",
+   "common_motivations": [
+    "Dominate the battlefield",
+    "Crush opposition at all costs",
+    "Uncover the secrets of the dark side"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "aggressive",
+      "confident"
+     ],
+     "quirks": [
+      "occasionally uses force choke as a greeting"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "dominate_the_battlefield",
+     "secondary_goals": [
+      "crush_opposition",
+      "uncover_secrets_of_dark_side"
+     ]
+    },
+    "combat_behavior": [
+     "use_overwhelming_force_to_break_enemy_lines",
+     "apply_devastating_dark_side_powers_when_appropriate"
+    ],
+    "social_behavior": "build_alliances_through_fear_and_respect"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "loyal_subjects",
+     "neutral_contacts",
+     "sworn_enemies"
+    ],
+    "loyalty_triggers": [
+     "failure_to_protect_me_or_mine",
+     "betrayal_of_my_trust"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "juggernaut",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/juggernaut.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

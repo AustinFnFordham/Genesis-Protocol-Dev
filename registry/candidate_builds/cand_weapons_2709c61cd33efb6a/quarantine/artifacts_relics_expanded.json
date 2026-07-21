@@ -1,0 +1,1323 @@
+{
+ "record": {
+  "artifacts_relics_expanded": [
+   {
+    "id": "artifact_force_crystal_basic",
+    "name": "Ancient Force Crystal",
+    "description": "A crystal that has been imbued with the Force over millennia, providing basic Force enhancement and resonance.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ancient Force Artifact",
+    "cost": 50000,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "force",
+     "crystal",
+     "ancient",
+     "enhancement",
+     "resonance"
+    ],
+    "properties": [
+     "force_enhancement",
+     "ancient_resonance",
+     "crystal_power"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_enhancement",
+     "ancient_resonance",
+     "crystal_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_crystal_attuned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force checks when Force crystal is attuned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_crystal_advanced",
+    "name": "Advanced Force Crystal",
+    "description": "A powerful Force crystal that has absorbed immense Force energy, providing significant enhancement and amplification.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ancient Force Artifact",
+    "cost": 150000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "force",
+     "crystal",
+     "advanced",
+     "powerful",
+     "amplification"
+    ],
+    "properties": [
+     "force_amplification",
+     "powerful_enhancement",
+     "significant_energy"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_amplification",
+     "powerful_enhancement",
+     "significant_energy"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_force_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_crystal_attuned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all Force checks when advanced Force crystal is attuned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_holocron",
+    "name": "Ancient Force Holocron",
+    "description": "A mysterious holocron containing ancient Force knowledge and teachings from long-forgotten masters.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ancient Force Artifact",
+    "cost": 200000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "artifact",
+     "force",
+     "holocron",
+     "ancient",
+     "knowledge",
+     "teachings"
+    ],
+    "properties": [
+     "ancient_knowledge",
+     "force_teachings",
+     "holocron_wisdom"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_knowledge",
+     "force_teachings",
+     "holocron_wisdom"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "knowledge_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holocron_accessed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on knowledge checks when Force holocron is accessed"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_weapon",
+    "name": "Ancient Force Weapon",
+    "description": "A weapon that has been imbued with the Force through ancient rituals and battles, providing enhanced combat capabilities.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ancient Force Artifact",
+    "cost": 300000,
+    "rarity": 6,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "force",
+     "weapon",
+     "ancient",
+     "rituals",
+     "enhanced"
+    ],
+    "properties": [
+     "force_weapon",
+     "ancient_rituals",
+     "enhanced_combat"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_weapon",
+     "ancient_rituals",
+     "enhanced_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_weapon_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on combat checks when ancient Force weapon is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_historical_basic",
+    "name": "Historical Artifact",
+    "description": "An item of historical significance that provides insight into past events and cultural heritage.",
+    "type": "Artifacts & Relics",
+    "subtype": "Historical Item",
+    "cost": 25000,
+    "rarity": 3,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "historical",
+     "significance",
+     "past_events",
+     "cultural"
+    ],
+    "properties": [
+     "historical_significance",
+     "past_insight",
+     "cultural_heritage"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "historical_significance",
+     "past_insight",
+     "cultural_heritage"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "history_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "historical_artifact_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on history checks when historical artifact is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_historical_legendary",
+    "name": "Legendary Historical Artifact",
+    "description": "A legendary item of immense historical importance that shaped the course of galactic history.",
+    "type": "Artifacts & Relics",
+    "subtype": "Historical Item",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 10.0,
+    "tags": [
+     "artifact",
+     "historical",
+     "legendary",
+     "immense",
+     "galactic",
+     "shaped"
+    ],
+    "properties": [
+     "legendary_importance",
+     "galactic_history",
+     "shaped_course"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_importance",
+     "galactic_history",
+     "shaped_course"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_history_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_artifact_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all history checks when legendary historical artifact is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_royal_crown",
+    "name": "Royal Crown",
+    "description": "A crown that once belonged to a powerful ruler, carrying the authority and prestige of ancient royalty.",
+    "type": "Artifacts & Relics",
+    "subtype": "Historical Item",
+    "cost": 200000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "royal",
+     "crown",
+     "powerful",
+     "authority",
+     "prestige"
+    ],
+    "properties": [
+     "royal_authority",
+     "ancient_prestige",
+     "powerful_ruler"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "royal_authority",
+     "ancient_prestige",
+     "powerful_ruler"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "authority_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "royal_crown_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on authority checks when royal crown is worn"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ancient_scroll",
+    "name": "Ancient Scroll",
+    "description": "A scroll containing ancient wisdom and knowledge that has been preserved through the ages.",
+    "type": "Artifacts & Relics",
+    "subtype": "Historical Item",
+    "cost": 75000,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "ancient",
+     "scroll",
+     "wisdom",
+     "knowledge",
+     "preserved"
+    ],
+    "properties": [
+     "ancient_wisdom",
+     "preserved_knowledge",
+     "scroll_insights"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_wisdom",
+     "preserved_knowledge",
+     "scroll_insights"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "wisdom_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ancient_scroll_studied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on wisdom checks when ancient scroll is studied"
+     }
+    ]
+   },
+   {
+    "id": "artifact_treasure_basic",
+    "name": "Unique Treasure",
+    "description": "A rare and valuable item that is unique in the galaxy, providing both material and cultural value.",
+    "type": "Artifacts & Relics",
+    "subtype": "Unique Treasure",
+    "cost": 100000,
+    "rarity": 4,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "treasure",
+     "unique",
+     "rare",
+     "valuable",
+     "cultural"
+    ],
+    "properties": [
+     "unique_value",
+     "rare_treasure",
+     "cultural_significance"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "unique_value",
+     "rare_treasure",
+     "cultural_significance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "appraisal_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "unique_treasure_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on appraisal checks when unique treasure is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_treasure_legendary",
+    "name": "Legendary Treasure",
+    "description": "A legendary treasure of immense value and significance that is sought after by collectors and historians alike.",
+    "type": "Artifacts & Relics",
+    "subtype": "Unique Treasure",
+    "cost": 1000000,
+    "rarity": 6,
+    "weight": 15.0,
+    "tags": [
+     "artifact",
+     "treasure",
+     "legendary",
+     "immense",
+     "sought",
+     "collectors"
+    ],
+    "properties": [
+     "legendary_value",
+     "immense_significance",
+     "sought_after"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_value",
+     "immense_significance",
+     "sought_after"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_treasure_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_treasure_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all treasure checks when legendary treasure is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_precious_gem",
+    "name": "Precious Gem",
+    "description": "A gem of extraordinary beauty and rarity that holds both material and mystical value.",
+    "type": "Artifacts & Relics",
+    "subtype": "Unique Treasure",
+    "cost": 150000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "artifact",
+     "precious",
+     "gem",
+     "beauty",
+     "rarity",
+     "mystical"
+    ],
+    "properties": [
+     "extraordinary_beauty",
+     "mystical_value",
+     "precious_gem"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "extraordinary_beauty",
+     "mystical_value",
+     "precious_gem"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "beauty_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "precious_gem_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on beauty checks when precious gem is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ancient_coin",
+    "name": "Ancient Coin",
+    "description": "A coin from an ancient civilization that carries historical and numismatic significance.",
+    "type": "Artifacts & Relics",
+    "subtype": "Unique Treasure",
+    "cost": 50000,
+    "rarity": 3,
+    "weight": 0.1,
+    "tags": [
+     "artifact",
+     "ancient",
+     "coin",
+     "civilization",
+     "numismatic",
+     "historical"
+    ],
+    "properties": [
+     "ancient_civilization",
+     "numismatic_value",
+     "historical_significance"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_civilization",
+     "numismatic_value",
+     "historical_significance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "numismatic_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ancient_coin_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on numismatic checks when ancient coin is owned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_mystical_basic",
+    "name": "Mystical Relic",
+    "description": "A relic that carries mystical properties and ancient magic, providing supernatural abilities and protection.",
+    "type": "Artifacts & Relics",
+    "subtype": "Mystical Relic",
+    "cost": 100000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "mystical",
+     "relic",
+     "magic",
+     "supernatural",
+     "protection"
+    ],
+    "properties": [
+     "mystical_properties",
+     "ancient_magic",
+     "supernatural_abilities"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mystical_properties",
+     "ancient_magic",
+     "supernatural_abilities"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "mystical_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "mystical_relic_attuned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on mystical checks when mystical relic is attuned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_mystical_advanced",
+    "name": "Advanced Mystical Relic",
+    "description": "A powerful mystical relic that contains immense magical energy and provides extraordinary supernatural abilities.",
+    "type": "Artifacts & Relics",
+    "subtype": "Mystical Relic",
+    "cost": 300000,
+    "rarity": 5,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "mystical",
+     "relic",
+     "advanced",
+     "magical",
+     "extraordinary"
+    ],
+    "properties": [
+     "immense_magic",
+     "extraordinary_abilities",
+     "powerful_relic"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "immense_magic",
+     "extraordinary_abilities",
+     "powerful_relic"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_mystical_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_relic_attuned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all mystical checks when advanced mystical relic is attuned"
+     }
+    ]
+   },
+   {
+    "id": "artifact_protective_talisman",
+    "name": "Protective Talisman",
+    "description": "A talisman that provides mystical protection against various forms of harm and supernatural threats.",
+    "type": "Artifacts & Relics",
+    "subtype": "Mystical Relic",
+    "cost": 150000,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "protective",
+     "talisman",
+     "mystical",
+     "protection",
+     "supernatural"
+    ],
+    "properties": [
+     "mystical_protection",
+     "supernatural_warding",
+     "protective_talisman"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mystical_protection",
+     "supernatural_warding",
+     "protective_talisman"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "supernatural_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "protective_talisman_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to supernatural damage when protective talisman is worn"
+     }
+    ]
+   },
+   {
+    "id": "artifact_healing_relic",
+    "name": "Healing Relic",
+    "description": "A relic that possesses mystical healing properties and can restore health and vitality to those who use it.",
+    "type": "Artifacts & Relics",
+    "subtype": "Mystical Relic",
+    "cost": 200000,
+    "rarity": 5,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "healing",
+     "relic",
+     "mystical",
+     "restore",
+     "vitality"
+    ],
+    "properties": [
+     "mystical_healing",
+     "health_restoration",
+     "vitality_enhancement"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mystical_healing",
+     "health_restoration",
+     "vitality_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "healing_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "healing_relic_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on healing checks when healing relic is used"
+     }
+    ]
+   },
+   {
+    "id": "artifact_legendary_weapon_basic",
+    "name": "Legendary Weapon",
+    "description": "A weapon of legendary status that has been wielded by great heroes and carries immense power and prestige.",
+    "type": "Artifacts & Relics",
+    "subtype": "Legendary Weapon",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 8.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "weapon",
+     "heroes",
+     "immense",
+     "prestige"
+    ],
+    "properties": [
+     "legendary_power",
+     "heroic_prestige",
+     "immense_weapon"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_power",
+     "heroic_prestige",
+     "immense_weapon"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_weapon_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all combat checks when legendary weapon is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_legendary_sword",
+    "name": "Legendary Sword",
+    "description": "A sword of legendary craftsmanship that has been passed down through generations of warriors and heroes.",
+    "type": "Artifacts & Relics",
+    "subtype": "Legendary Weapon",
+    "cost": 750000,
+    "rarity": 6,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "sword",
+     "craftsmanship",
+     "warriors",
+     "heroes"
+    ],
+    "properties": [
+     "legendary_craftsmanship",
+     "warrior_heritage",
+     "heroic_sword"
+    ],
+    "modifications": {
+     "slots": 12,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_craftsmanship",
+     "warrior_heritage",
+     "heroic_sword"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "sword_combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_sword_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on sword combat checks when legendary sword is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_legendary_bow",
+    "name": "Legendary Bow",
+    "description": "A bow of legendary accuracy and power that has been used by the greatest archers in history.",
+    "type": "Artifacts & Relics",
+    "subtype": "Legendary Weapon",
+    "cost": 600000,
+    "rarity": 6,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "bow",
+     "accuracy",
+     "power",
+     "archers"
+    ],
+    "properties": [
+     "legendary_accuracy",
+     "archer_power",
+     "greatest_bow"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_accuracy",
+     "archer_power",
+     "greatest_bow"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "archery_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_bow_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on archery checks when legendary bow is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_legendary_staff",
+    "name": "Legendary Staff",
+    "description": "A staff of legendary magical power that has been wielded by the greatest sorcerers and mystics.",
+    "type": "Artifacts & Relics",
+    "subtype": "Legendary Weapon",
+    "cost": 800000,
+    "rarity": 6,
+    "weight": 4.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "staff",
+     "magical",
+     "sorcerers",
+     "mystics"
+    ],
+    "properties": [
+     "legendary_magic",
+     "sorcerer_power",
+     "mystic_staff"
+    ],
+    "modifications": {
+     "slots": 15,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_magic",
+     "sorcerer_power",
+     "mystic_staff"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "magic_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_staff_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on magic checks when legendary staff is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_cursed_basic",
+    "name": "Cursed Artifact",
+    "description": "An artifact that carries a dark curse, providing power at a terrible cost to the wielder.",
+    "type": "Artifacts & Relics",
+    "subtype": "Cursed Artifact",
+    "cost": 100000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "cursed",
+     "dark",
+     "power",
+     "terrible",
+     "cost"
+    ],
+    "properties": [
+     "dark_curse",
+     "terrible_cost",
+     "cursed_power"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "dark_curse",
+     "terrible_cost",
+     "cursed_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "cursed_artifact_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on power checks when cursed artifact is wielded, but with consequences"
+     }
+    ]
+   },
+   {
+    "id": "artifact_cursed_advanced",
+    "name": "Advanced Cursed Artifact",
+    "description": "A powerful cursed artifact that provides immense power but carries a devastating curse that affects the wielder.",
+    "type": "Artifacts & Relics",
+    "subtype": "Cursed Artifact",
+    "cost": 300000,
+    "rarity": 5,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "cursed",
+     "advanced",
+     "immense",
+     "devastating",
+     "affects"
+    ],
+    "properties": [
+     "immense_power",
+     "devastating_curse",
+     "advanced_cursed"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "immense_power",
+     "devastating_curse",
+     "advanced_cursed"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_cursed_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all power checks when advanced cursed artifact is wielded, but with severe consequences"
+     }
+    ]
+   },
+   {
+    "id": "artifact_cursed_weapon",
+    "name": "Cursed Weapon",
+    "description": "A weapon that has been cursed with dark magic, providing enhanced combat abilities but corrupting the wielder.",
+    "type": "Artifacts & Relics",
+    "subtype": "Cursed Artifact",
+    "cost": 400000,
+    "rarity": 5,
+    "weight": 6.0,
+    "tags": [
+     "artifact",
+     "cursed",
+     "weapon",
+     "dark",
+     "enhanced",
+     "corrupting"
+    ],
+    "properties": [
+     "dark_magic",
+     "enhanced_combat",
+     "corrupting_influence"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "dark_magic",
+     "enhanced_combat",
+     "corrupting_influence"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "cursed_weapon_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on combat checks when cursed weapon is wielded, but with corruption"
+     }
+    ]
+   },
+   {
+    "id": "artifact_cursed_armor",
+    "name": "Cursed Armor",
+    "description": "Armor that has been cursed with dark enchantments, providing protection but draining the life force of the wearer.",
+    "type": "Artifacts & Relics",
+    "subtype": "Cursed Artifact",
+    "cost": 350000,
+    "rarity": 5,
+    "weight": 15.0,
+    "tags": [
+     "artifact",
+     "cursed",
+     "armor",
+     "dark",
+     "protection",
+     "draining"
+    ],
+    "properties": [
+     "dark_enchantments",
+     "life_draining",
+     "cursed_protection"
+    ],
+    "modifications": {
+     "slots": 12,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "dark_enchantments",
+     "life_draining",
+     "cursed_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "cursed_armor_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to physical damage when cursed armor is worn, but drains life force"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ultimate_weapon",
+    "name": "Ultimate Weapon",
+    "description": "A weapon of ultimate power that can change the course of history and defeat any foe.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ultimate Artifact",
+    "cost": 5000000,
+    "rarity": 6,
+    "weight": 20.0,
+    "tags": [
+     "artifact",
+     "ultimate",
+     "weapon",
+     "power",
+     "history",
+     "defeat"
+    ],
+    "properties": [
+     "ultimate_power",
+     "history_changing",
+     "defeat_any"
+    ],
+    "modifications": {
+     "slots": 50,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ultimate_power",
+     "history_changing",
+     "defeat_any"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_ultimate_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ultimate_weapon_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all ultimate checks when ultimate weapon is wielded"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ultimate_relic",
+    "name": "Ultimate Relic",
+    "description": "A relic of ultimate mystical power that can reshape reality and grant god-like abilities.",
+    "type": "Artifacts & Relics",
+    "subtype": "Ultimate Artifact",
+    "cost": 10000000,
+    "rarity": 6,
+    "weight": 10.0,
+    "tags": [
+     "artifact",
+     "ultimate",
+     "relic",
+     "mystical",
+     "reshape",
+     "god_like"
+    ],
+    "properties": [
+     "ultimate_mystical",
+     "reality_reshaping",
+     "god_like_abilities"
+    ],
+    "modifications": {
+     "slots": 100,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ultimate_mystical",
+     "reality_reshaping",
+     "god_like_abilities"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_reality_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ultimate_relic_attuned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all reality checks when ultimate relic is attuned"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "artifacts_relics_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/artifacts_relics_expanded.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

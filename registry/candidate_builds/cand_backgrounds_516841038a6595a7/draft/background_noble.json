@@ -1,0 +1,147 @@
+{
+ "record": {
+  "id": "background_noble",
+  "name": "Noble",
+  "tags": [
+   "background",
+   "noble",
+   "aristocrat",
+   "charisma_based",
+   "wealthy",
+   "influential",
+   "political",
+   "refined",
+   "leadership",
+   "prestigious"
+  ],
+  "description": "You are a member of the aristocracy, born into a family of wealth, power, and privilege. Whether you're a planetary governor, corporate executive, or hereditary noble, your upbringing has taught you how to navigate the complex world of politics and high society. Your connections, education, and social standing give you access to resources and information that others can only dream of.",
+  "proficiencies": {
+   "skills": [
+    "History",
+    "Persuasion"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Gaming Set",
+      "Musical Instrument",
+      "Noble's Kit",
+      "Diplomatic Kit",
+      "Security Clearance",
+      "Personal Droid"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Position of Privilege",
+   "level": 1,
+   "description": "Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and people assume you have the right to be wherever you are. The common folk make every effort to accommodate you and avoid your displeasure, and other people of high birth treat you as a member of the same social sphere. You can secure an audience with a local noble if you need to.",
+   "effects": [
+    {
+     "type": "grant_authority",
+     "value": "noble_status",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Access to high society and noble audiences"
+    },
+    {
+     "type": "narrative_effect",
+     "value": "social_privilege",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "People assume the best and accommodate your needs"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Power. I will do whatever it takes to become powerful.",
+    "Duty. My duty is to my faction, and I will do whatever it takes to fulfill it.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Greed. I will do whatever it takes to become wealthy."
+   ],
+   "bonds": [
+    "I am protecting a secret that could endanger the galaxy.",
+    "I am the last of my line, and I must not fail.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_noble",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_noble.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

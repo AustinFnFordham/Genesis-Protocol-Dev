@@ -1,0 +1,141 @@
+{
+ "record": {
+  "id_file": "item_lightsaber_guardian",
+  "category": "equipment",
+  "subcategory": "weapons",
+  "tags": [
+   "equipment",
+   "item",
+   "weapon",
+   "lightsaber",
+   "force_imbued",
+   "jedi",
+   "guardian",
+   "legendary",
+   "iconic",
+   "combat",
+   "force_user",
+   "unique"
+  ],
+  "id": "item_lightsaber_guardian",
+  "name": "Guardian Lightsaber",
+  "item_type": "Weapon",
+  "subtype": "Lightsaber",
+  "rarity": "rare",
+  "narrative": "This lightsaber hums with protective energy, its blade slightly wider and more stable than standard models. The hilt is designed for defensive grips and quick parries, feeling like an extension of the Guardian's protective nature.",
+  "flavor_text": "'A true Guardian's blade defends before it strikes.' - Master Yoda",
+  "cost": 1000,
+  "weight": 2.0,
+  "properties": [
+   "defensive_focus",
+   "force_imbued",
+   "customizable"
+  ],
+  "mechanics": [
+   {
+    "effect": "modify_stat",
+    "description": "Grants +1 AC when wielded defensively.",
+    "parameters": {
+     "target_property": "ac",
+     "value": 1
+    },
+    "conditions": [
+     {
+      "key": "wielded_defensively",
+      "op": "==",
+      "value": true
+     },
+     {
+      "key": "lightsaber_equipped",
+      "op": "==",
+      "value": true
+     }
+    ]
+   }
+  ],
+  "weapon_stats": {
+   "damage": "1d8 + 1 force",
+   "damage_type": "force",
+   "range": "melee",
+   "weapon_properties": [
+    "finesse",
+    "versatile"
+   ]
+  },
+  "connections": [
+   {
+    "target_id": "class_guardian",
+    "target_type": "class",
+    "relationship_id": "rel_iconic_to",
+    "narrative": "This lightsaber design is specifically favored by Jedi Guardians for its defensive capabilities."
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This lightsaber should feel like an extension of the Guardian's protective nature. It should hum with a steady, reassuring tone rather than an aggressive buzz, and the blade should feel stable and reliable in defensive stances.",
+   "tactical_notes": "The defensive AC bonus makes this lightsaber ideal for Guardians who focus on protection over offense. The versatile property allows for both one-handed and two-handed use depending on the situation.",
+   "narrative_hooks": [
+    "The lightsaber's crystal was blessed by a Jedi Master known for their legendary protective abilities",
+    "The lightsaber's design incorporates ancient defensive techniques from the early Jedi Order",
+    "The lightsaber responds more strongly to protective Force techniques and defensive stances"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A Guardian lightsaber with a slightly wider, more stable blue blade. The hilt is designed for defensive grips with protective runes etched into the metal. The weapon hums with steady, protective energy and feels balanced for both offense and defense.",
+   "base_negative_keywords": [
+    "aggressive",
+    "red blade",
+    "dark side",
+    "unstable",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/items/lightsaber_guardian.png",
+   "icon": "/assets/icons/items/lightsaber_guardian.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_lightsaber_guardian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/lightsaber_guardian.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

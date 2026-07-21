@@ -1,0 +1,226 @@
+{
+ "record": {
+  "id": "power_plasma_grenade",
+  "name": "Plasma Grenade",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "explosive",
+   "plasma",
+   "fire",
+   "area_effect",
+   "grenade",
+   "incendiary"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "High-yield plasma explosive technology"
+   }
+  },
+  "narrative": "You hurl a plasma grenade that detonates in a sphere of superheated death, temperatures approaching stellar cores vaporizing everything within the blast radius. The power manifests as a brilliant flash, air igniting from sheer heat, plasma spreading in an expanding fireball that leaves nothing but slag and ash.",
+  "flavor_text": "\"Plasma grenades: because sometimes overkill is exactly enough kill.\" - Demolitionist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "priming and throwing plasma grenade"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating trajectory and detonation timing"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You throw a plasma grenade that explodes in a devastating fireball.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 5,
+      "dice_size": 6,
+      "damage_type": "fire",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_15_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Dexterity save or take 5d6 fire damage in 15-foot radius"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's explosives expertise transforms Plasma Grenade into precision demolition. They calculate blast angles, optimize plasma containment, and time detonation for maximum effect—turning raw destruction into surgical elimination through applied physics.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 2,
+       "dice_size": 6,
+       "damage_type": "fire",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers deal an additional 2d6 fire damage with plasma grenades."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity makes their plasma grenades versatile weapons. They've learned to cook grenades for air-burst detonation, bounce them around corners, even use the heat for area denial—finding applications beyond simple throwing and exploding.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_radius",
+      "value": {
+       "radius": {
+        "distance": 20,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Human plasma grenades affect a 20-foot radius instead of 15-foot."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized plasma grenades for maximum impact against Imperial armor. Their modified versions burn hotter and longer, designed to breach AT-AT plating and destroy Imperial walkers—desperation breeding innovation.",
+    "mechanical_benefit": [
+     {
+      "type": "armor_melting",
+      "value": {
+       "ongoing_damage": {
+        "dice_count": 2,
+        "dice_size": 6,
+        "damage_type": "fire",
+        "modifier": 0
+       },
+       "duration": {
+        "amount": 1,
+        "unit": "round"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Rebel plasma grenades leave burning plasma that deals 2d6 fire damage next round to creatures in area."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the grenade's arc through air, the brilliant flash of detonation, the expanding sphere of superheated plasma. Show materials vaporizing instantly, armor melting like wax, the air itself burning. The destruction should feel absolute and terrifying.",
+   "tactical_notes": "Plasma Grenade deals 5d6 fire damage in 15-foot radius at 60 feet range. Costs 2 Tech Points but provides excellent area damage. The Dexterity save allows mitigation but the radius catches multiple enemies. Watch for fire-resistant targets and friendly fire.",
+   "narrative_hooks": [
+    "A plasma grenade destroys a critical enemy position in one blast",
+    "The grenade's heat ignites secondary explosions, creating cascading destruction",
+    "Friendly fire from plasma creates moral crisis about acceptable casualties"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a plasma grenade detonating in a brilliant fireball. Superheated plasma expands in a perfect sphere, vaporizing everything within the blast radius. The heat is so intense the air itself ignites, materials melting and burning in the stellar temperatures. Multiple enemies are caught in the devastation, silhouetted against the blinding light.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/plasma_grenade.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_plasma_grenade",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_plasma_grenade.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,386 @@
+{
+ "record": {
+  "id": "subclass_ranger",
+  "class_id": "soldier",
+  "name": "Ranger",
+  "alignment_theme": "neutral_good",
+  "tags": [
+   "ranger",
+   "soldier",
+   "hunter",
+   "tracker",
+   "wilderness_expert",
+   "scout",
+   "survival_expert",
+   "beast_master",
+   "tactical",
+   "pathfinder"
+  ],
+  "talent_tree_theme": {
+   "background_diorama": "A windswept mesa with long sightlines and sun-faded markers.",
+   "node_style": "Compass-etched brass nodes with etched trails between them.",
+   "connection_style": "Clean, purposeful lines like map routes.",
+   "color_palette": {
+    "primary": "#556B2F",
+    "secondary": "#DAA520"
+   },
+   "ambient_audio": "wind_whistle_and_distant_bird_calls"
+  },
+  "narrative": "A practical hunter-trainer whose bond with a loyal companion is forged through miles walked and battles fought. Rangers trust training, terrain, and teamwork.",
+  "flavor_text": "The trail tells you where it went. Your gut tells you where it will be.",
+  "class_identity_profile": {
+   "core_fantasy": "Tracker and trainer who fights alongside a loyal companion.",
+   "key_attributes": [
+    "Dexterity",
+    "Wisdom"
+   ],
+   "iconic_gear": [
+    "Long rifle",
+    "Handler whistle"
+   ],
+   "role_in_galaxy": "Scout, guide, and hunter of dangerous prey."
+  },
+  "talent_tree": [
+   {
+    "id": "ra_t1_handler_training",
+    "feature_id": "feature_beast_handler_training",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 1,
+    "connections": [
+     "ra_t2_honed_commands"
+    ]
+   },
+   {
+    "id": "ra_t1_fieldcraft",
+    "feature_id": "feature_beast_fieldcraft",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 2,
+    "connections": [
+     "ra_t2_flank_tactics"
+    ]
+   },
+   {
+    "id": "ra_t1_marksmanship",
+    "feature_id": "feature_beast_ranger_marksmanship",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 3,
+    "connections": [
+     "ra_t2_cover_partner"
+    ]
+   },
+   {
+    "id": "ra_t2_honed_commands",
+    "feature_id": "feature_beast_honed_commands",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 1,
+    "prerequisites": [
+     "ra_t1_handler_training"
+    ],
+    "connections": [
+     "ra_t3_dual_hunt"
+    ]
+   },
+   {
+    "id": "ra_t2_flank_tactics",
+    "feature_id": "feature_beast_flank_tactics",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 2,
+    "prerequisites": [
+     "ra_t1_fieldcraft"
+    ],
+    "connections": [
+     "ra_t3_evasive_maneuvers"
+    ]
+   },
+   {
+    "id": "ra_t2_cover_partner",
+    "feature_id": "feature_beast_cover_partner",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 3,
+    "prerequisites": [
+     "ra_t1_marksmanship"
+    ],
+    "connections": [
+     "ra_t3_suppress_and_signal"
+    ]
+   },
+   {
+    "id": "ra_t3_dual_hunt",
+    "feature_id": "feature_beast_dual_hunt",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 1,
+    "prerequisites": [
+     "ra_t2_honed_commands"
+    ],
+    "connections": [
+     "ra_t4_alpha_pair"
+    ]
+   },
+   {
+    "id": "ra_t3_evasive_maneuvers",
+    "feature_id": "feature_beast_evasive_maneuvers",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 2,
+    "prerequisites": [
+     "ra_t2_flank_tactics"
+    ],
+    "connections": [
+     "ra_t4_stalk_and_strike"
+    ]
+   },
+   {
+    "id": "ra_t3_suppress_and_signal",
+    "feature_id": "feature_beast_suppress_and_signal",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 3,
+    "prerequisites": [
+     "ra_t2_cover_partner"
+    ],
+    "connections": [
+     "ra_t4_zone_control"
+    ]
+   },
+   {
+    "id": "ra_t4_alpha_pair",
+    "feature_id": "feature_beast_alpha_pair",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 1,
+    "prerequisites": [
+     "ra_t3_dual_hunt"
+    ],
+    "connections": [
+     "ra_t5_command_presence"
+    ]
+   },
+   {
+    "id": "ra_t4_stalk_and_strike",
+    "feature_id": "feature_beast_stalk_and_strike",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 2,
+    "prerequisites": [
+     "ra_t3_evasive_maneuvers"
+    ],
+    "connections": [
+     "ra_t5_warden_of_the_wilds"
+    ]
+   },
+   {
+    "id": "ra_t4_zone_control",
+    "feature_id": "feature_beast_zone_control",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 3,
+    "prerequisites": [
+     "ra_t3_suppress_and_signal"
+    ],
+    "connections": [
+     "ra_t5_rally_the_pack"
+    ]
+   },
+   {
+    "id": "ra_t5_command_presence",
+    "feature_id": "feature_beast_command_presence",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 1,
+    "prerequisites": [
+     "ra_t4_alpha_pair"
+    ]
+   },
+   {
+    "id": "ra_t5_warden_of_the_wilds",
+    "feature_id": "feature_beast_warden_of_the_wilds",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 2,
+    "prerequisites": [
+     "ra_t4_stalk_and_strike"
+    ]
+   },
+   {
+    "id": "ra_t5_rally_the_pack",
+    "feature_id": "feature_beast_rally_the_pack",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 3,
+    "prerequisites": [
+     "ra_t4_zone_control"
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Pragmatic, disciplined, respectful of the wild.",
+   "narrative_hooks": [
+    "Track a creature menacing frontier towns.",
+    "Guide a convoy across predator-controlled territory."
+   ],
+   "tactical_notes": "Set tempo with signals and angles. You and your companion trade advantage via positioning."
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "RangerHelmet",
+    "Blaster Rifle"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a balanced stance with feet shoulder-width apart and knees slightly bent, ready to draw blaster at a moment's notice.",
+    "energy_signature": "Surrounded by a swirling aura of calm focus, radiating an air of calculated precision and tactical prowess."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone ranger stands atop a rocky outcropping, gazing out into the horizon with a trusted blaster rifle slung over their shoulder, surrounded by an otherworldly landscape reminiscent of the planet of Dantooine.",
+    "contextual_modifiers": [
+     "Low-contrast color palette",
+     "Atmospheric lighting effects"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "The Scouting Ranger excels at tracking and hunting in the wilderness, using their tactical prowess to outmaneuver foes.",
+   "role_in_group": "Scout",
+   "visual_signals": [
+    "Camouflage Uniform",
+    "Survival Knife"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "3_Ranger_Scouting_1",
+    "feature_id": "Ranger_Scouting_Feature",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain proficiency in Survival and Nature skills, and can use your proficiency bonus to add to Survival checks.",
+    "effects": [
+     {
+      "type": "skill_proficiency",
+      "value": [
+       "Survival",
+       "Nature"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "7_Ranger_Hunter_1",
+    "feature_id": "Ranger_Hunter_Feature",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can move through the space of larger creatures, and can use your action to make a Wisdom (Perception) check to track a creature.",
+    "effects": [
+     {
+      "type": "movement_ability",
+      "value": [
+       "Large or smaller"
+      ]
+     },
+     {
+      "type": "feature_action",
+      "value": [
+       "Wisdom (Perception) check to track a creature"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "11_Ranger_Beast_Mastery_1",
+    "feature_id": "Ranger_Beast_Mastery_Feature",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain a beast companion, which fights alongside you in combat.",
+    "effects": [
+     {
+      "type": "beast_companion",
+      "value": [
+       "Level-dependent beast selection"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "15_Ranger_Tactical_Mastery_1",
+    "feature_id": "Ranger_Tactical_Mastery_Feature",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your bonus action to take a tactical maneuver, such as flanking or positioning.",
+    "effects": [
+     {
+      "type": "feature_action",
+      "value": [
+       "Tactical maneuver (flanking or positioning)"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "18_Ranger_Master_Tracker_1",
+    "feature_id": "Ranger_Master_Tracker_Feature",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice, and can use your proficiency bonus to add to Survival checks.",
+    "effects": [
+     {
+      "type": "skill_expertise",
+      "value": [
+       "Two skills of choice"
+      ]
+     },
+     {
+      "type": "feature_action",
+      "value": [
+       "Proficiency bonus on Survival checks"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "subclass_ranger",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/beast_master/ranger.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

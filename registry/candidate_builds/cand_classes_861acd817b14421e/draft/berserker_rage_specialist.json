@@ -1,0 +1,485 @@
+{
+ "record": {
+  "id": "berserker_rage_specialist",
+  "name": "Rage Specialist",
+  "class_id": "berserker",
+  "tags": [
+   "berserker",
+   "rage_specialist",
+   "brutal",
+   "strength_based",
+   "martial",
+   "aggressive",
+   "melee_specialist",
+   "devastating",
+   "resilient"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "enhanced_rage_3",
+    "feature_id": "enhanced_rage",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Your rage becomes more potent and destructive. When you enter a rage, you gain additional benefits: +3 to damage rolls with melee weapon attacks, and you can use your Rage Points to extend the duration of your rage.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "rage_damage_bonus",
+      "target_property": "melee_damage_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+3 to melee weapon damage rolls while raging"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "rage_point_duration_extension",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Rage Points to extend rage duration"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "reckless_attacker_5",
+    "feature_id": "reckless_attacker",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "rage_technique_5",
+    "description": "You can attack with reckless abandon. When you make a melee weapon attack while raging, you can choose to attack recklessly, gaining advantage on the attack roll but giving advantage to all attacks against you until the start of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "reckless_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_active",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "melee_attack_made",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on attack but give advantage to enemies until next turn"
+     }
+    ],
+    "prerequisites": [
+     "enhanced_rage_3"
+    ]
+   },
+   {
+    "node_id": "frenzied_strikes_5",
+    "feature_id": "frenzied_strikes",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "rage_technique_5",
+    "description": "Your rage allows you to strike with incredible speed. When you take the Attack action while raging, you can make one additional melee weapon attack as a bonus action. This attack deals 1d4 less damage than your normal attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "frenzied_bonus_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_active",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "attack_action_taken",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "actions": [
+       "bonus_action"
+      ],
+      "notes": "Additional melee attack as bonus action, -1d4 damage"
+     }
+    ],
+    "prerequisites": [
+     "enhanced_rage_3"
+    ]
+   },
+   {
+    "node_id": "battle_fury_7",
+    "feature_id": "battle_fury",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "rage_focus_7",
+    "description": "Your fury in battle becomes overwhelming. When you spend Rage Points, you can enter a state of battle fury that grants you advantage on all attack rolls and makes you immune to the frightened condition.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "battle_fury_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all attacks and immunity to frightened condition"
+     }
+    ],
+    "prerequisites": [
+     "reckless_attacker_5"
+    ]
+   },
+   {
+    "node_id": "blood_frenzy_7",
+    "feature_id": "blood_frenzy",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "rage_focus_7",
+    "description": "The sight of blood drives you into a frenzy. When you reduce a creature to 0 hit points while raging, you can use your Rage Points to immediately make another melee weapon attack against a different target.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "blood_frenzy_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "creature_reduced_to_zero",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "rage_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Immediate melee attack against different target when reducing creature to 0 HP"
+     }
+    ],
+    "prerequisites": [
+     "frenzied_strikes_5"
+    ]
+   },
+   {
+    "node_id": "rage_mastery_9",
+    "feature_id": "rage_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your mastery of rage becomes overwhelming. When you spend Rage Points, you can achieve both enhanced combat prowess and extended rage duration, making you a terrifying force of destruction.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_rage_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced combat prowess and extended rage duration with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "battle_fury_7",
+     "blood_frenzy_7"
+    ]
+   },
+   {
+    "node_id": "unstoppable_rage_11",
+    "feature_id": "unstoppable_rage",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "rage_technique_11",
+    "description": "Your rage makes you nearly unstoppable. When you spend Rage Points, you can become immune to most conditions and gain resistance to all damage except psychic damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "unstoppable_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Immunity to most conditions and resistance to all damage except psychic"
+     }
+    ],
+    "prerequisites": [
+     "rage_mastery_9"
+    ]
+   },
+   {
+    "node_id": "berserker_legend_11",
+    "feature_id": "berserker_legend",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "rage_technique_11",
+    "description": "You become a legend of berserker fury. When you spend Rage Points, you can enter a state where your attacks deal additional damage equal to your Constitution modifier, and you can't be knocked unconscious by damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_berserker_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Additional damage equal to CON modifier and can't be knocked unconscious by damage"
+     }
+    ],
+    "prerequisites": [
+     "rage_mastery_9"
+    ]
+   },
+   {
+    "node_id": "rage_legend_13",
+    "feature_id": "rage_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of rage. Your Rage Points are more potent, and when you spend them, you can achieve rage capabilities that transcend normal limitations, including the ability to rage indefinitely.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_rage_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rage Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "indefinite_rage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Rage indefinitely with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "unstoppable_rage_11",
+     "berserker_legend_11"
+    ]
+   },
+   {
+    "node_id": "perfect_rage_15",
+    "feature_id": "perfect_rage",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_rage_15",
+    "description": "Your rage achieves perfection. When you spend Rage Points, you can enter a state of perfect rage where you deal maximum damage with all attacks and are immune to all conditions and damage types.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_rage_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal maximum damage and immunity to all conditions and damage types"
+     }
+    ],
+    "prerequisites": [
+     "rage_legend_13"
+    ]
+   },
+   {
+    "node_id": "berserker_perfection_15",
+    "feature_id": "berserker_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_rage_15",
+    "description": "You achieve perfect berserker form. When you spend Rage Points, you can become a force of pure destruction, dealing devastating damage and inspiring fear in all who witness your fury.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "pure_destruction_state",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal devastating damage and inspire fear in enemies"
+     }
+    ],
+    "prerequisites": [
+     "rage_legend_13"
+    ]
+   },
+   {
+    "node_id": "rage_legend_17",
+    "feature_id": "rage_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of berserker fury. When you spend Rage Points, you can achieve rage capabilities that transcend reality itself, including the ability to rage so powerfully that it affects the world around you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "reality_warping_rage",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Rage so powerfully it affects the world around you"
+     }
+    ],
+    "prerequisites": [
+     "perfect_rage_15",
+     "berserker_perfection_15"
+    ]
+   },
+   {
+    "node_id": "perfect_berserker_20",
+    "feature_id": "perfect_berserker",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of berserker rage. When you spend Rage Points, you can achieve rage capabilities that are not only perfect and reality-warping but also allow you to manipulate the very concept of fury itself.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_fury_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the very concept of fury itself"
+     }
+    ],
+    "prerequisites": [
+     "rage_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Blaster Grip"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance with feet shoulder-width apart and lightsaber at the ready",
+    "energy_signature": "A swirling aura of blue and green energy surrounding the wielder, indicative of their connection to the Force"
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a Mandalorian warrior standing atop a rocky outcropping on the planet Nevarro, with a distant battle-scarred spaceship in the background",
+    "contextual_modifiers": [
+     "In-Combat",
+     "Weathering Stormy Conditions"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Embracing their rage, Rage Specialists enter a state of fury in combat, unleashing devastating attacks and shrugging off damage.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Furrowed brow",
+    "Tense posture"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "berserker_rage_specialist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/berserker_subclasses/berserker.rage_specialist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

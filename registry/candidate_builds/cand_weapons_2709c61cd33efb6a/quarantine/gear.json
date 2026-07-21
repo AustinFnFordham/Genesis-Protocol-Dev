@@ -1,0 +1,777 @@
+{
+ "record": {
+  "gear": [
+   {
+    "id": "gear_medpac",
+    "name": "Medpac",
+    "description": "A portable medical kit containing basic supplies for treating injuries and stabilizing patients.",
+    "type": "Gear",
+    "subtype": "Medical",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "medical",
+     "healing",
+     "portable"
+    ],
+    "properties": [
+     "portable",
+     "medical_grade"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "medical_treatment",
+     "stabilization",
+     "field_medicine"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "treat_injury",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medpac_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use action to treat injuries and restore 1d6+2 hit points"
+     }
+    ]
+   },
+   {
+    "id": "gear_advanced_medpac",
+    "name": "Advanced Medpac",
+    "description": "A sophisticated medical kit with advanced healing capabilities and diagnostic tools.",
+    "type": "Gear",
+    "subtype": "Medical",
+    "cost": 500,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "gear",
+     "medical",
+     "advanced",
+     "healing"
+    ],
+    "properties": [
+     "advanced_medical",
+     "diagnostic"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "advanced_healing",
+     "diagnostic_analysis",
+     "sophisticated_treatment"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "advanced_treatment",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_medpac_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use action to treat injuries and restore 2d6+4 hit points"
+     }
+    ]
+   },
+   {
+    "id": "gear_bacta_tank",
+    "name": "Bacta Tank",
+    "description": "A large tank filled with healing bacta fluid for treating severe injuries and conditions.",
+    "type": "Gear",
+    "subtype": "Medical",
+    "cost": 5000,
+    "rarity": 4,
+    "weight": 200.0,
+    "tags": [
+     "gear",
+     "medical",
+     "bacta",
+     "stationary",
+     "advanced"
+    ],
+    "properties": [
+     "stationary",
+     "bacta_healing",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "bacta_healing",
+     "severe_treatment",
+     "regeneration"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "bacta_treatment",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_tank_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use action to treat severe injuries and restore 3d6+6 hit points"
+     }
+    ]
+   },
+   {
+    "id": "gear_datapad",
+    "name": "Datapad",
+    "description": "A portable computer device for accessing information, communications, and basic computing tasks.",
+    "type": "Gear",
+    "subtype": "Technology",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "technology",
+     "computer",
+     "communication"
+    ],
+    "properties": [
+     "portable",
+     "computing",
+     "communication"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "data_access",
+     "communication",
+     "computing_tasks"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "datapad_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Technology checks when using datapad"
+     }
+    ]
+   },
+   {
+    "id": "gear_slicer_toolkit",
+    "name": "Slicer Toolkit",
+    "description": "A specialized set of tools for hacking computer systems and bypassing security measures.",
+    "type": "Gear",
+    "subtype": "Technology",
+    "cost": 1000,
+    "rarity": 3,
+    "weight": 3.0,
+    "tags": [
+     "gear",
+     "technology",
+     "slicing",
+     "hacking",
+     "security"
+    ],
+    "properties": [
+     "slicing_tools",
+     "security_bypass"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "system_hacking",
+     "security_bypass",
+     "data_extraction"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "slicing_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "slicer_toolkit_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on slicing and hacking checks"
+     }
+    ]
+   },
+   {
+    "id": "gear_holoprojector",
+    "name": "Holoprojector",
+    "description": "A device that creates three-dimensional holographic images for communication and display.",
+    "type": "Gear",
+    "subtype": "Technology",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "technology",
+     "holo",
+     "communication",
+     "display"
+    ],
+    "properties": [
+     "holographic",
+     "communication",
+     "display"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "holographic_communication",
+     "visual_display",
+     "remote_meeting"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "communication_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holoprojector_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on communication checks when using holoprojector"
+     }
+    ]
+   },
+   {
+    "id": "gear_survival_kit",
+    "name": "Survival Kit",
+    "description": "A comprehensive kit containing tools and supplies for surviving in harsh environments.",
+    "type": "Gear",
+    "subtype": "Survival",
+    "cost": 150,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "gear",
+     "survival",
+     "environmental",
+     "tools"
+    ],
+    "properties": [
+     "survival_tools",
+     "environmental"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "environmental_survival",
+     "resource_gathering",
+     "shelter_building"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "survival_kit_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Survival checks when using survival kit"
+     }
+    ]
+   },
+   {
+    "id": "gear_jetpack",
+    "name": "Jetpack",
+    "description": "A personal flight device that allows for limited aerial movement and hovering.",
+    "type": "Gear",
+    "subtype": "Mobility",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 15.0,
+    "tags": [
+     "gear",
+     "mobility",
+     "flight",
+     "jetpack",
+     "aerial"
+    ],
+    "properties": [
+     "flight",
+     "aerial_movement",
+     "hover"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "aerial_movement",
+     "flight_advantage",
+     "vertical_mobility"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "flight_speed",
+      "target_property": "movement_speed",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jetpack_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain flight speed equal to walking speed when jetpack is active"
+     },
+     {
+      "type": "grant_action",
+      "value": "hover",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jetpack_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use bonus action to hover in place"
+     }
+    ]
+   },
+   {
+    "id": "gear_grappling_hook",
+    "name": "Grappling Hook",
+    "description": "A retractable grappling hook that allows for climbing and swinging between locations.",
+    "type": "Gear",
+    "subtype": "Mobility",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "mobility",
+     "climbing",
+     "swinging",
+     "grappling"
+    ],
+    "properties": [
+     "climbing",
+     "swinging",
+     "grappling"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "vertical_climbing",
+     "swinging_movement",
+     "grappling_hook"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "climbing_required",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Athletics checks for climbing when using grappling hook"
+     }
+    ]
+   },
+   {
+    "id": "gear_thermal_detonator",
+    "name": "Thermal Detonator",
+    "description": "A powerful explosive device that creates a devastating blast radius.",
+    "type": "Gear",
+    "subtype": "Explosive",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "explosive",
+     "thermal",
+     "blast",
+     "demolition"
+    ],
+    "properties": [
+     "explosive",
+     "blast_radius",
+     "thermal"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "explosive_blast",
+     "area_damage",
+     "demolition"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "throw_thermal",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "thermal_detonator_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use action to throw thermal detonator, dealing 4d6 fire damage in 20-foot radius"
+     }
+    ]
+   },
+   {
+    "id": "gear_concussion_grenade",
+    "name": "Concussion Grenade",
+    "description": "A non-lethal grenade that creates a concussive blast to stun and disorient targets.",
+    "type": "Gear",
+    "subtype": "Explosive",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "explosive",
+     "concussion",
+     "non_lethal",
+     "stun"
+    ],
+    "properties": [
+     "concussive",
+     "non_lethal",
+     "stun"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "concussive_blast",
+     "stun_effect",
+     "non_lethal_takedown"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "throw_concussion",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "concussion_grenade_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use action to throw concussion grenade, stunning targets in 15-foot radius"
+     }
+    ]
+   },
+   {
+    "id": "gear_force_amplifier",
+    "name": "Force Amplifier",
+    "description": "A mystical device that enhances Force abilities and sensitivity for Force users.",
+    "type": "Gear",
+    "subtype": "Force",
+    "cost": 5000,
+    "rarity": 5,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "force",
+     "amplifier",
+     "mystical",
+     "enhancement"
+    ],
+    "properties": [
+     "force_enhanced",
+     "mystical",
+     "amplification"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_amplification",
+     "enhanced_sensitivity",
+     "mystical_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force power checks when using Force amplifier"
+     },
+     {
+      "type": "modify_stat",
+      "value": "force_points_bonus",
+      "target_property": "force_points_max",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_amplifier_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 to maximum Force points when Force amplifier is equipped"
+     }
+    ]
+   },
+   {
+    "id": "gear_tech_enhancement_suite",
+    "name": "Tech Enhancement Suite",
+    "description": "A sophisticated cybernetic enhancement system that improves technological abilities.",
+    "type": "Gear",
+    "subtype": "Technology",
+    "cost": 8000,
+    "rarity": 5,
+    "weight": 5.0,
+    "tags": [
+     "gear",
+     "technology",
+     "enhancement",
+     "cybernetic",
+     "advanced"
+    ],
+    "properties": [
+     "cybernetic",
+     "tech_enhanced",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "tech_enhancement",
+     "cybernetic_improvement",
+     "advanced_technology"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_suite_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all Technology-related checks"
+     },
+     {
+      "type": "modify_stat",
+      "value": "tech_points_bonus",
+      "target_property": "tech_points_max",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_suite_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+3 to maximum Tech points when tech enhancement suite is equipped"
+     }
+    ]
+   },
+   {
+    "id": "gear_stealth_field_generator",
+    "name": "Stealth Field Generator",
+    "description": "An advanced device that creates a stealth field to hide the user from detection.",
+    "type": "Gear",
+    "subtype": "Stealth",
+    "cost": 3000,
+    "rarity": 4,
+    "weight": 8.0,
+    "tags": [
+     "gear",
+     "stealth",
+     "field_generator",
+     "concealment",
+     "advanced"
+    ],
+    "properties": [
+     "stealth_field",
+     "concealment",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stealth_concealment",
+     "invisibility_field",
+     "advanced_stealth"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_field_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Stealth checks when stealth field is active"
+     },
+     {
+      "type": "apply_status",
+      "value": "invisible",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_field_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become invisible while stealth field is active"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "gear",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/gear.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

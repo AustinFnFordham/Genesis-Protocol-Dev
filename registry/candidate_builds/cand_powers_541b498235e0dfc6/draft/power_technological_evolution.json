@@ -1,0 +1,220 @@
+{
+ "record": {
+  "id": "power_technological_evolution",
+  "name": "Technological Evolution",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "adaptation",
+   "evolution",
+   "reactive",
+   "self_improving",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate adaptive technology that evolves in response to threats"
+   }
+  },
+  "narrative": "You activate self-evolving nanite systems that adapt to counter any threat in real-time, your technology learning and improving faster than enemies can adapt. The power manifests as visible nanite swarms reconfiguring your equipment mid-combat, weaknesses eliminated as they're exploited, countermeasures developed instantaneously—evolution compressed from millennia into moments.",
+  "flavor_text": "\"You cant fight what learns from every mistake faster than you can make them.\" - Evolutionary Engineer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating adaptive nanite systems"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "programming evolutionary response protocols"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You gain technology that evolves to counter threats.",
+   "mechanics": [
+    {
+     "type": "adaptive_resistance",
+     "value": {
+      "effect": "gain_resistance_when_damaged"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain resistance to damage types that hit you (stacks during duration)"
+    },
+    {
+     "type": "counter_evolution",
+     "value": {
+      "effect": "+2_AC_against_repeated_attackers"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain +2 AC against creatures that have hit you before"
+    },
+    {
+     "type": "tactical_adaptation",
+     "value": {
+      "effect": "advantage_on_saves_vs_repeated_effects"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain advantage on saves against effects you've encountered before"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of evolutionary algorithms creates perfect adaptation. Their systems don't just counter threats—they predict variants, developing countermeasures to attacks that haven't been used yet through pattern analysis.",
+    "mechanical_benefit": [
+     {
+      "type": "predictive_evolution",
+      "value": {
+       "effect": "gain_immunity_after_3_exposures"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers gain immunity (not just resistance) after being hit 3 times by same damage type."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability synergizes perfectly with evolutionary technology. Their flexible nature accelerates nanite adaptation, creating feedback loops where biological and technological evolution reinforce each other exponentially.",
+    "mechanical_benefit": [
+     {
+      "type": "accelerated_adaptation",
+      "value": {
+       "effect": "evolve_after_1_hit_not_2"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain resistances after being hit once instead of twice."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's evolutionary technology is weapons-grade—designed to overwhelm enemies through rapid tactical superiority. Their systems learn to exploit weaknesses as fast as they discover them, each encounter making them deadlier.",
+    "mechanical_benefit": [
+     {
+      "type": "offensive_evolution",
+      "value": {
+       "effect": "+2_damage_vs_repeated_targets"
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Imperial evolution also grants +2 damage to creatures you've hit before."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe nanites visibly reconfiguring equipment mid-combat—armor plating shifting to deflect repeated attacks, shields tuning to block specific damage types. Show the adaptation happening in real-time, enemies' frustration mounting as their tactics stop working.",
+   "tactical_notes": "Technological Evolution grants adaptive resistance, improved AC, and save advantages against repeated threats for 1 hour with concentration, costing 9 Tech Points. Game-breaking defensive power that becomes stronger the longer combat lasts. Perfect for boss fights where learning enemy patterns matters.",
+   "narrative_hooks": [
+    "Evolution allows victory against impossible odds through adaptation",
+    "The self-improving technology develops unexpected sentience",
+    "Perfect adaptation reveals an exploitable pattern in the evolution itself"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of self-evolving technology adapting mid-combat. Nanite swarms visibly reconfigure equipment, armor shifting to counter attacks, shields tuning to block specific damage. The technology learns in real-time, adapting faster than enemies can react. The scene captures accelerated evolution as weapon. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric nanite effects, by Ash Thorp",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_evolution.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_evolution",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_evolution.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

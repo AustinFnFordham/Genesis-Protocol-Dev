@@ -1,0 +1,194 @@
+{
+ "record": {
+  "id": "niman_disciple",
+  "name": "Niman Disciple",
+  "class_id": "consular",
+  "base_class": "consular",
+  "tags": [
+   "consular",
+   "niman",
+   "balanced",
+   "versatile",
+   "force_mastery",
+   "lightsaber_form",
+   "melee_specialist",
+   "light_side",
+   "jedi"
+  ],
+  "description": "Niman Disciples are masters of balanced lightsaber combat and Force techniques. They excel at combining lightsaber skills with Force abilities, creating a harmonious blend of martial prowess and mystical power.",
+  "specialization_features": [
+   "niman_technique",
+   "balanced_combat",
+   "force_enhanced_strikes",
+   "niman_mastery",
+   "legendary_niman_disciple"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Niman Disciple",
+   "role_in_group": "Consular Jedi",
+   "visual_signals": [
+    "Lightsaber crystal pendant",
+    "Tunics with intricate embroidery"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_1_level_3",
+    "feature_id": "Improved Lightsaber Form",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Increase proficiency in one lightsaber form of choice to expert.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "precision_focus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Niman Disciple focuses their energy, they enter a state of heightened combat awareness, imbuing their chosen lightsaber form with expert proficiency for a brief moment after each hit. Their strikes become swift and deadly, slicing through defenses as if cut by an icy wind."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_2_level_7",
+    "feature_id": "Force Mastery Focus",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Choose a Force technique. You gain expertise in one skill of your choice and can use your proficiency bonus on Intelligence, Wisdom, or Charisma checks with that skill.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "force_focus_flow",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stance",
+        "op": "equals",
+        "value": "niman"
+       }
+      ],
+      "notes": "As you flow with the Force, your mastery of Niman Disciple's techniques allows you to instinctively grasp even the most complex skills. You gain expertise in the skill used in this combat, and apply your proficiency bonus to it."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_3_level_11",
+    "feature_id": "Auroral Flicker",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "When you hit a creature with your lightsaber, you can cause the blade to flicker and deal an additional force effect.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "stellar_laceration",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Niman Disciple's energy surges, their attack is imbued with a burst of stellar force. On hit, deal an additional 2d8 radiant damage."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_4_level_15",
+    "feature_id": "Niman Harmony",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Your lightsaber's hum synchronizes with your connection to the Force. Your lightsaber deals an additional force damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "harmonic_slash",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As a Niman Disciple's lightsaber slices through their target, it resonates with the harmony of the Force, imbuing its blade with an extra burst of energy. The attack deals +1d6 force damage in addition to its normal effects."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Niman staff",
+    "Consular robe"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, lightsaber at the ready, and a fierce determination etched on her face.",
+    "energy_signature": "A soft blue glow emanates from her hands, pulsing in rhythm with her breathing as she connects with the Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "A Niman Disciple stands firm amidst a bustling Jedi Temple, her eyes closed in contemplation and her lightsaber resting on her hip.",
+    "contextual_modifiers": [
+     "serene",
+     "introspective"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "niman_disciple",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular_niman_disciple.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

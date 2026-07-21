@@ -1,0 +1,118 @@
+{
+ "record": {
+  "id": "background_starship_captain",
+  "name": "Captain",
+  "description": "You hold the center—setting bearings, steadying hearts, and making the hard calls that get crews home.",
+  "proficiencies": {
+   "skills": [
+    "Persuasion",
+    "Insight"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Communications Kit",
+      "Command Console",
+      "Navigation Kit",
+      "Security Clearance"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Command Presence",
+   "level": 1,
+   "description": "Once per short rest, you can rally your crew—choose up to two allies within 30 ft; they gain advantage on their next space-related check (Piloting, Astrogation, Weapon Attack, or Repair). You also have advantage on Persuasion checks to coordinate or de-escalate during shipboard crises.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "ally_next_space_check_once_per_short_rest",
+     "target_scopes": [
+      "allies"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "persuasion_shipboard_crisis_coordination",
+     "target_scopes": [
+      "self"
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I listen before I order.",
+    "I share the plan even when it’s ugly."
+   ],
+   "ideals": [
+    "Responsibility. Rank serves the crew.",
+    "Composure. Calm is contagious."
+   ],
+   "bonds": [
+    "A lost ship haunts me; I’ll never repeat that mistake."
+   ],
+   "flaws": [
+    "I hesitate too long when lives are on the line."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_captain",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_captain.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "ec0ab8c6f01ea0a3374dcda441cd0bbb9b863c4e5efe0278071457474b6662b7",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

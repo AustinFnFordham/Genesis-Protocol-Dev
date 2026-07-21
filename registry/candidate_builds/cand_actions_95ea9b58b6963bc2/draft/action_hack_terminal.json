@@ -1,0 +1,195 @@
+{
+ "record": {
+  "action_process": "Analyze the target system, identify vulnerabilities, and use specialized tools and techniques to gain unauthorized access.",
+  "action_type": "Utility",
+  "connections": [
+   {
+    "mechanical_benefit": "Scoundrels gain advantage on Technology checks when hacking",
+    "narrative": "Scoundrels often develop hacking skills as part of their criminal toolkit.",
+    "relationship": "Enhanced By",
+    "target_id": "class_scoundrel",
+    "target_type": "Class"
+   },
+   {
+    "mechanical_benefit": "Engineers can reduce hacking DC by 2",
+    "narrative": "Engineers have deep understanding of systems that makes them natural hackers.",
+    "relationship": "Natural Synergy",
+    "target_id": "class_engineer",
+    "target_type": "Class"
+   },
+   {
+    "mechanical_benefit": "Criminals gain access to specialized hacking tools",
+    "narrative": "Criminal organizations rely heavily on hackers for their operations.",
+    "relationship": "Common Among",
+    "target_id": "faction_criminal_syndicates",
+    "target_type": "Faction"
+   }
+  ],
+  "cost": {
+   "type": "action",
+   "value": 1
+  },
+  "cultural_significance": "Hacking is viewed differently across the galaxy - corporations see it as a threat, criminals as a tool, and governments as both weapon and vulnerability. The ability to slice systems is both feared and respected.",
+  "description": "Attempt to bypass security systems and gain access to a computer terminal or electronic device.",
+  "effects": [
+   {
+    "effect": "gain_system_access",
+    "parameters": {
+     "access_level": "user",
+     "duration": {
+      "unit": "hour",
+      "value": 1
+     }
+    }
+   },
+   {
+    "effect": "extract_information",
+    "parameters": {
+     "information_type": "security_logs",
+     "success_chance": 0.75
+    }
+   }
+  ],
+  "era": "All_Eras",
+  "famous_instances": [
+   "R2-D2's infiltration of the Death Star",
+   "The slicing of Cloud City's security systems",
+   "Imperial database breaches during the Rebellion"
+  ],
+  "famous_users": [
+   "R2-D2",
+   "Lando Calrissian",
+   "K-2SO",
+   "Chopper",
+   "BB-8"
+  ],
+  "flavor_text": "'The best slicer is the one you never see coming.' - Anonymous",
+  "iconic_examples": [
+   "R2-D2 slicing into the Death Star's systems",
+   "Lando Calrissian hacking Cloud City's security",
+   "K-2SO's infiltration of Imperial databases"
+  ],
+  "id": "action_hack_terminal",
+  "image_generation": {
+   "base_prompt": "A character hunched over a computer terminal, fingers flying across the interface as they attempt to bypass security systems. The screen displays scrolling code and security warnings, with the character's face illuminated by the terminal's glow.",
+   "contextual_modifiers": [
+    {
+     "modifier_text": "The character is focused intently on the terminal, their expression showing concentration and determination.",
+     "target_type": "Character_Portrait"
+    },
+    {
+     "modifier_text": "The terminal is located in a dimly lit area, with security cameras and warning signs visible in the background.",
+     "target_type": "Location"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "adventure_seeds": [
+    "Infiltrate a secure facility by hacking its systems",
+    "Recover deleted data from a damaged terminal",
+    "Disable security systems to allow an escape"
+   ],
+   "character_connections": [
+    "Characters may have learned hacking from criminal contacts",
+    "Characters may be wanted for previous hacking activities",
+    "Characters may have specialized hacking equipment"
+   ],
+   "cultural_impact": "Hacking represents the ongoing battle between security and access in the digital age. It's both a tool for freedom fighters and a weapon for criminals.",
+   "narrative_hooks": [
+    "A character's hacking skills reveal unexpected information",
+    "A failed hack attempt triggers security systems",
+    "Hacking becomes a race against time"
+   ],
+   "tactical_significance": "Hacking can completely change the tactical situation by disabling security systems, revealing enemy positions, or gaining access to restricted areas.",
+   "typical_usage": [
+    "Bypassing security systems",
+    "Extracting information from databases",
+    "Disabling automated defenses",
+    "Gaining access to restricted areas"
+   ]
+  },
+  "mood": "Focused and technical, representing the concentration required for successful hacking",
+  "name": "Hack Terminal",
+  "narrative": "The art of slicing into computer systems and electronic devices to bypass security, extract information, or gain control. From simple door locks to complex military networks, hacking represents the intersection of technology and subterfuge in the digital age of the galaxy.",
+  "narrative_outcomes": [
+   "advantage_01",
+   "advantage_02",
+   "advantage_03",
+   "threat_01",
+   "threat_02",
+   "threat_03"
+  ],
+  "origin_story": "Hacking evolved alongside computer technology, with early slicers developing techniques to bypass primitive security systems. As technology advanced, so did the sophistication of both security and hacking methods.",
+  "skill_check": {
+   "dc_type": "variable",
+   "skill": "Technology (INT)",
+   "variable_source": "terminal_security_level"
+  },
+  "tags": [
+   "technology",
+   "utility",
+   "stealth",
+   "information"
+  ],
+  "target": {
+   "conditions": [
+    "must be adjacent to terminal",
+    "must have hacking tools"
+   ],
+   "range": 5,
+   "type": "object"
+  },
+  "themes": [
+   "technology",
+   "subterfuge",
+   "information",
+   "security"
+  ],
+  "ui": {
+   "icon": "/assets/icons/actions/hack_terminal.svg",
+   "image": "/assets/images/actions/hack_terminal_action.png"
+  }
+ },
+ "validation": {
+  "candidate_urid": "action_hack_terminal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/actions/hack_terminal_action.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,630 @@
+{
+ "record": {
+  "id": "clawdite",
+  "name": "Clawdite",
+  "tags": [
+   "adaptable",
+   "assassin",
+   "charisma_based",
+   "clawdite",
+   "deceptive",
+   "dexterity_based",
+   "iconic",
+   "infiltrator",
+   "rare",
+   "spy",
+   "stealth",
+   "transformation",
+   "urban"
+  ],
+  "description": "The Clawdite are a shapeshifting humanoid species from the planet Zolan, known for their ability to change their appearance at will. They are often found working as spies, assassins, or performers, using their natural shapeshifting abilities to blend in and gather information. Their species has a natural affinity for deception and infiltration.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Dexterity",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Clawdite"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "clawdite_shapeshifting",
+    "name": "Shapeshifting",
+    "narrative": "Your species evolved with the incredible ability to change your appearance at will. Your cellular structure is incredibly flexible, allowing you to mimic the appearance of any humanoid you have observed, from facial features to body structure.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Transform",
+      "action_type": "action",
+      "description": "As an action, you can transform into any humanoid form you have seen.",
+      "rules": [
+       "transformation_type:humanoid",
+       "requirement:observed_target",
+       "action_cost:action"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Disguise Mastery",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Deception) checks while disguised.",
+      "rules": [
+       "skill:deception",
+       "ability:charisma",
+       "context:while_disguised",
+       "advantage:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "clawdite_manipulation",
+     "ui_transition": {
+      "animation": "shapeshift_twist",
+      "sfx": "twisted_scream"
+     }
+    }
+   },
+   {
+    "id": "clawdite_natural_infiltrator",
+    "name": "Natural Infiltrator",
+    "narrative": "Your species has spent generations perfecting the art of infiltration and information gathering. Every Clawdite is born with an innate understanding of how to blend in, gather intelligence, and move unnoticed through any environment.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Stealth Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in the Stealth skill.",
+      "rules": [
+       "skill:stealth",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Information Gathering",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Persuasion) checks when trying to gain information.",
+      "rules": [
+       "skill:persuasion",
+       "ability:charisma",
+       "context:information_gathering",
+       "advantage:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "clawdite_psychopathy",
+     "ui_transition": {
+      "animation": "infiltrate_twist",
+      "sfx": "insidious_silence"
+     }
+    }
+   },
+   {
+    "id": "clawdite_adaptive_physiology",
+    "name": "Adaptive Physiology",
+    "narrative": "Your body's incredible flexibility and adaptability evolved to support your shapeshifting abilities. This same flexibility makes you exceptionally difficult to restrain and highly resistant to toxins that would affect other species.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Escape Artist",
+      "action_type": "passive",
+      "description": "You have advantage on Athletics checks to escape grapples.",
+      "rules": [
+       "skill:athletics",
+       "context:escape_grapple",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Toxin Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against poison.",
+      "rules": [
+       "save_type:advantage",
+       "condition:poison"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "clawdite_cannibalism",
+     "ui_transition": {
+      "animation": "adaption_twist",
+      "sfx": "carnivorous_scream"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Natural shapeshifting abilities",
+    "Adaptive physiology",
+    "Flexible form",
+    "Deceptive nature",
+    "Urban adaptability"
+   ],
+   "natural_form_variants": [
+    "Variable appearance",
+    "Adaptive features",
+    "Flexible physiology",
+    "Shapeshifting capabilities"
+   ],
+   "transformation_abilities": [
+    "Any humanoid form",
+    "Adaptive physiology",
+    "Flexible body structure",
+    "Natural infiltration abilities"
+   ],
+   "common_adornments": [
+    "Disguise kits and tools",
+    "Infiltration equipment",
+    "Urban clothing and gear",
+    "Performance and entertainment attire",
+    "Spy and assassin equipment"
+   ],
+   "llm_description_prompt": "Describe a Clawdite character. Emphasize their natural shapeshifting abilities and the way their form seems to subtly shift and adapt, suggesting their ability to change appearance at will. Their movements should be fluid and adaptable, reflecting their natural infiltration abilities. Consider their deceptive nature and the way they carry themselves with the confident, adaptable bearing of someone who can become anyone they need to be."
+  },
+  "class_synergies": [
+   {
+    "class": "Operative (Infiltrator)",
+    "narrative": "Clawdite's natural shapeshifting abilities and infiltration skills make them exceptional Operatives, able to blend into any environment and gather intelligence with perfect disguises.",
+    "mechanical_benefits": [
+     "Shapeshifting trait enables perfect infiltration and disguise",
+     "Natural Infiltrator trait enhances stealth and information gathering",
+     "Adaptive Physiology trait aids in escape and survival"
+    ]
+   },
+   {
+    "class": "Scoundrel",
+    "narrative": "Clawdite's natural deception abilities and shapeshifting make them excellent Scoundrels, able to manipulate situations and people through perfect disguises.",
+    "mechanical_benefits": [
+     "Shapeshifting trait enhances deception and social manipulation",
+     "Natural Infiltrator trait improves information gathering",
+     "High Charisma supports social manipulation"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Clawdite's natural charisma and shapeshifting abilities make them exceptional Consulars, able to adapt their appearance to any diplomatic situation.",
+    "mechanical_benefits": [
+     "Shapeshifting trait enables cultural adaptation for diplomacy",
+     "Natural Infiltrator trait aids in gathering diplomatic intelligence",
+     "High Charisma supports diplomatic functions"
+    ]
+   },
+   {
+    "class": "Scout (Urban)",
+    "narrative": "Clawdite's natural infiltration abilities and urban adaptability make them excellent Scouts, able to navigate and explore urban environments with perfect disguises.",
+    "mechanical_benefits": [
+     "Shapeshifting trait enables urban exploration and reconnaissance",
+     "Natural Infiltrator trait enhances urban survival",
+     "Adaptive Physiology trait aids in urban navigation"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Intelligence Agencies",
+    "narrative": "Clawdite are highly valued by intelligence agencies for their natural shapeshifting abilities and infiltration skills."
+   },
+   {
+    "faction": "Criminal Organizations",
+    "narrative": "Many Clawdite work for criminal organizations as spies and assassins, using their shapeshifting abilities for covert operations."
+   },
+   {
+    "faction": "Independent Operatives",
+    "narrative": "Many Clawdite prefer to work as independent operatives, using their shapeshifting abilities to pursue their own goals and agendas."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your shapeshifting abilities become more refined, allowing you to maintain your disguises longer and change forms more quickly.",
+     "mechanical_benefit": "You can maintain a shapeshifted form for up to 8 hours without concentration, and you can change forms as a bonus action instead of an action."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your infiltration skills reach new heights, allowing you to gather information and blend in with incredible efficiency.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Charisma-based skill checks for the next minute when in a social environment, representing your enhanced infiltration abilities."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your adaptive physiology allows you to use your shapeshifting abilities in combat to gain tactical advantages.",
+     "mechanical_benefit": "When you shapeshift during combat, you gain a +2 bonus to attack rolls and damage rolls for the next minute, representing your enhanced combat adaptability."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your shapeshifting mastery reaches its peak, making you nearly impossible to detect or restrain.",
+     "mechanical_benefit": "You have advantage on saving throws against being detected by magical means, and you can shapeshift as a reaction to avoid being grappled or restrained."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "You start to master your shapeshifting abilities, becoming more confident in your transformations. You can now change your appearance at will, but still struggle with maintaining a consistent identity.",
+    "level_10": "Your infiltration training and performance traditions become second nature. You're no longer just adapting for survival, but also using your abilities to gather information and entertain others. Your communities begin to see you as experts in deception and transformation.",
+    "level_15": "You develop a sense of self that's separate from your transformations. You can now maintain your true identity while constantly adapting your appearance for different situations. This newfound confidence allows you to take on more complex missions and roles within your community.",
+    "level_20": "Your mastery of shapeshifting, deception, and performance traditions has reached new heights. You're seen as a master of disguise, able to blend into any environment or social situation with ease. Your communities look up to you for guidance and inspiration, and you've become a symbol of the Clawdite's unique strengths."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Clawdite have sacred rituals that celebrate their shapeshifting abilities, often involving communal transformations and demonstrations of their unique gifts.",
+    "name": "Shapeshifting Rituals",
+    "activation": "During the full moon, when the Clawdites gather for a grand transformation ritual.",
+    "narrative_enhancement": "As you participate in this sacred ritual, you feel a deep connection to your community and your species' unique abilities. Your transformations become more fluid and natural, and you gain a newfound appreciation for the art of deception and transformation.",
+    "faction_connection": "Kaleeki"
+   },
+   {
+    "description": "Clawdite communities place great emphasis on infiltration training, teaching each generation how to gather information and blend into any environment.",
+    "name": "Infiltration Training",
+    "activation": "When a young Clawdite is ready to begin their training, they are presented with a series of challenges designed to test their skills in deception and stealth.",
+    "narrative_enhancement": "As you undergo this rigorous training, you learn the importance of adaptability and deception in gathering information. You develop new skills and techniques for blending into any environment and staying one step ahead of your enemies.",
+    "faction_connection": "Rallor"
+   },
+   {
+    "description": "Clawdite performance traditions utilize their shapeshifting abilities for entertainment, from elaborate stage shows to street performances.",
+    "name": "Performance Traditions",
+    "activation": "When a Clawdite performer is asked to perform at an event or festival, they are expected to showcase their unique talents and abilities.",
+    "narrative_enhancement": "As you take the stage, you feel a rush of adrenaline as you transform into new forms and personas. Your performance becomes a testament to the power of deception and transformation, captivating your audience with its sheer spectacle and artistry.",
+    "faction_connection": "Kaleeki"
+   },
+   {
+    "description": "Clawdite practice techniques that help them maintain their true identity while constantly adapting their appearance for different situations.",
+    "name": "Adaptive Identity",
+    "activation": "When a Clawdite is faced with a situation where they must adapt their appearance, but still maintain their true identity.",
+    "narrative_enhancement": "As you navigate this complex social situation, you learn to balance your transformation with your need to maintain your sense of self. You develop new strategies for adapting to different environments and personas without losing yourself in the process.",
+    "faction_connection": "Rallor"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "urban",
+    "adaptation_name": "Urban Mastery",
+    "description": "Your shapeshifting abilities make you perfectly suited for urban environments, where you can blend into any crowd or social situation.",
+    "mechanical_benefit": "You have advantage on all skill checks in urban environments, and you can sense the presence of surveillance or security systems within 30 feet."
+   },
+   {
+    "environment": "social",
+    "adaptation_name": "Social Chameleon",
+    "description": "Your natural deception abilities allow you to thrive in any social environment, adapting your appearance and behavior to fit in perfectly.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks in social environments, and you can sense the emotional state of those around you."
+   },
+   {
+    "environment": "covert",
+    "adaptation_name": "Covert Operations",
+    "description": "Your infiltration abilities make you perfectly suited for covert operations and intelligence gathering missions.",
+    "mechanical_benefit": "You have advantage on Stealth and Deception checks in covert environments, and you can sense the presence of hidden threats or surveillance."
+   },
+   {
+    "environment": "flexible",
+    "adaptation_name": "Physical Flexibility",
+    "description": "Your adaptive physiology allows you to navigate and survive in environments that would be impossible for other species.",
+    "mechanical_benefit": "You can squeeze through spaces half your size, and you have advantage on Athletics checks to climb or navigate difficult terrain."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on shapeshifting abilities and infiltration skills, complementing rather than overshadowing class features",
+    "Adaptive physiology improvements maintain the species' unique identity while providing meaningful advancement",
+    "Shapeshifting and infiltration abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on shapeshifting traditions and infiltration culture rather than mechanical advantages",
+    "Performance traditions and infiltration training provide unique roleplaying opportunities and cultural depth",
+    "Adaptive identity and shapeshifting rituals enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for urban and social environments where shapeshifting is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Covert operations and physical flexibility provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Zolan",
+   "cultural_networks": [
+    {
+     "Kaleeki": "A network of Clawdite spies and assassins who work together to gather intelligence and carry out covert operations."
+    },
+    {
+     "Rallor": "A group of Clawdite performers who use their shapeshifting abilities for entertainment, from elaborate stage shows to street performances."
+    }
+   ],
+   "traditional_practices": [
+    {
+     "Shaping the Self": "A rite of passage where young Clawdites learn to control their transformations and find their true identity."
+    },
+    {
+     "The Hunt": "A ritual where Clawdites compete in a series of challenges that test their infiltration, deception, and performance skills."
+    }
+   ],
+   "cultural_knowledge": [
+    {
+     "The Art of Disguise": "An ancient Clawdite technique for creating elaborate disguises using makeup, prosthetics, and other materials."
+    },
+    {
+     "The Language of Transformation": "A complex system of gestures and expressions used by Clawdites to communicate with each other while in different forms."
+    }
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    "urban",
+    "social"
+   ],
+   "environmental_knowledge": [
+    {
+     "Urban Jungle": "Knowledge of how to navigate and survive in urban environments, including the layout of cities, types of surveillance systems, and common security measures."
+    },
+    {
+     "Social Terrain": "Understanding of how to read people's emotions and body language, as well as how to manipulate others through charm and deception."
+    }
+   ],
+   "survival_techniques": [
+    {
+     "Urban Camouflage": "Ability to blend into urban environments, using techniques such as changing your appearance to match the local culture or using advanced disguises."
+    },
+    {
+     "Social Adaptation": "Skill in adapting to different social situations, including being able to mimic the behavior and mannerisms of others."
+    }
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "varied_appearances",
+    "mutable_face_features",
+    "unpredictable_body_language"
+   ],
+   "morphology": {
+    "head_type": "humanoid",
+    "body_type": "slender",
+    "average_height": "1.75m"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      "baby-like features",
+      "playful aura"
+     ],
+     "adult": [
+      "humanoid proportions",
+      "confident posture"
+     ],
+     "elder": [
+      "weathered skin",
+      "grizzled appearance"
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "yellow_eyes",
+      "pale_skin"
+     ],
+     "light_side": [
+      "calm_aura"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "scars",
+    "tattoos",
+    "shifting_hair_color"
+   ],
+   "prompt_schema": {
+    "base_prompt": "a Clawdite with {age} and {morality} tendencies",
+    "contextual_modifiers": [
+     "infiltration role",
+     "theatrical performance"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "A young, ambitious Clawdite seeks to make a name for themselves in the underworld.",
+     "threat_level": "low"
+    },
+    "escalation": {
+     "description": "Our Clawdite nemesis gains notoriety and attracts unwanted attention from rival agencies.",
+     "threat_level": "medium"
+    },
+    "confrontation": {
+     "description": "The Clawdite faces off against their greatest foe yet, with the fate of their reputation hanging in the balance.",
+     "threat_level": "high"
+    }
+   },
+   "resolution_paths": {
+    "victory": [
+     "The Clawdite emerges victorious, but must confront the consequences of their actions."
+    ],
+    "redemption": [
+     "Our nemesis finds a way to redeem themselves, earning back the trust of their peers."
+    ],
+    "escape": [
+     "The Clawdite escapes their pursuers, but at great personal cost."
+    ]
+   },
+   "conflict_triggers": [
+    "Betrayal",
+    "Discovery"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "double-cross",
+     "deception"
+    ],
+    "vendetta_type": "revenge/competition"
+   },
+   "overrides": {
+    "nemesis_type": "Historical Enemy",
+    "nemesis_behavior": "Aggressive Pursuit",
+    "nemesis_trigger": "Discovery of Clawdite's True Identity"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "charisma",
+    "intuition"
+   ],
+   "romance_progression": [
+    {
+     "friendship": "shared interests and playful banter"
+    },
+    {
+     "romantic interest": "secretive glances and stolen moments"
+    },
+    {
+     "committed": "open displays of affection and deep emotional connection"
+    },
+    {
+     "monogamy": "exclusive relationship with a single partner"
+    },
+    {
+     "eternal bond": "a lifelong, unbreakable tie"
+    }
+   ],
+   "romance_events": [
+    "A secret meeting in a hidden location",
+    "A surprise gift or token of affection"
+   ],
+   "romance_modifiers": [
+    "Flirtatious behavior",
+    "Shared secrets or experiences",
+    "Supportive and caring actions"
+   ],
+   "overrides": {
+    "attraction_system": "Chemistry and Trust",
+    "romantic_interest_progression": "Slow Build-up to Intimacy",
+    "cultural_approach_to_love": "Fluid, Adaptive Relationships"
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": [
+     {
+      "trait": "cunning",
+      "description": "The Clawdite's natural affinity for deception makes them expert manipulators."
+     },
+     {
+      "trait": "curious",
+      "description": "Clawdites are driven by a desire to uncover hidden truths and secrets."
+     }
+    ],
+    "motivations": [
+     {
+      "goal": "protect_allies",
+      "weight": 8,
+      "description": "The Clawdite will go to great lengths to safeguard their allies."
+     },
+     {
+      "goal": "acquire_resources",
+      "weight": 5,
+      "description": "Clawdites are constantly seeking new information and resources to further their goals."
+     }
+    ],
+    "combat_behavior": "Use stealth and cunning to outmaneuver opponents, then strike when the time is right.",
+    "social_behavior": "Blend in with your surroundings, using your shapeshifting abilities to gather information and influence those around you."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "type": "ally",
+      "description": "A trusted friend or ally, willing to work together towards a common goal."
+     },
+     {
+      "type": "rival",
+      "description": "A skilled opponent who will stop at nothing to outdo the Clawdite."
+     },
+     {
+      "type": "information_source",
+      "description": "A valuable source of intel, often willing to share secrets in exchange for favors or rewards."
+     }
+    ],
+    "loyalty_triggers": [
+     {
+      "event": "betrayed_by_allied_faction",
+      "consequence": "The Clawdite will become vengeful and seek retribution against the faction that wronged them."
+     }
+    ]
+   },
+   "services": [
+    {
+     "name": "shapeshift",
+     "description": "Change your appearance to blend in with your surroundings or deceive others."
+    }
+   ]
+  },
+  "flavor_text": "The Clawdite's fluid form is a canvas of deception, each shift a whispered secret to those who don't see beyond the surface. On Zolan's twilight streets, their chameleon-like abilities are honed in the shadows, where the line between performer and spy blurs. A Clawdite's mask may hide a thousand truths, but beneath lies a heart as restless as the planet's shifting sands.",
+  "llm_guidance": {
+   "roleplay_guidance": "Clawdites are masters of manipulation, often using their charms to gather information or influence others. Their natural affinity for deception can make them unreliable allies, but also formidable assets in the right hands.",
+   "narrative_hooks": [
+    "Their involvement with the infamous 'Shadowhand' crime syndicate on Coruscant could be a point of contention, potentially drawing unwanted attention from both the authorities and rival underworld factions.",
+    "A long-standing feud with the ruthless Ryloth Twi'lek clan may have begun over a misinterpreted performance or a stolen valuable artifact, leaving a trail of resentment that spans galaxies."
+   ],
+   "social_dynamics": "Clawdites value fluid relationships and are naturally adept at reading social cues. However, their tendency to adapt can make them appear aloof or untrustworthy, forcing others to question whether they're genuine in their affections.",
+   "common_motivations": [
+    "To uncover the truth about their species' mysterious past on Zolan, where ancient artifacts and hidden temples hold secrets of their kind's origin.",
+    "To outwit and outrun a vengeful Ryloth Twi'lek clan member who sees them as responsible for a family tragedy."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "clawdite",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/clawdite.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

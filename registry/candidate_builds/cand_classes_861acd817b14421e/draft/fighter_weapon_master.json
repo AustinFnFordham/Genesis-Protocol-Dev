@@ -1,0 +1,469 @@
+{
+ "record": {
+  "id": "fighter_weapon_master",
+  "name": "Weapon Master",
+  "class_id": "fighter",
+  "tags": [
+   "fighter",
+   "weapon_master",
+   "martial",
+   "strength_based",
+   "melee_specialist",
+   "versatile",
+   "disciplined",
+   "precision"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "weapon_specialization_3",
+    "feature_id": "weapon_specialization",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop specialized mastery of a particular weapon type. Choose one weapon type (swords, axes, polearms, etc.). You gain a +2 bonus to attack rolls and damage rolls with weapons of that type, and you can use your Combat Points to enhance your weapon techniques.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "weapon_specialization_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_type",
+        "op": "equals",
+        "value": "chosen_type"
+       }
+      ],
+      "notes": "+2 to attack and damage with chosen weapon type"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "combat_point_weapon_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Combat Points to enhance weapon techniques"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "weapon_techniques_5",
+    "feature_id": "weapon_techniques",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "weapon_technique_5",
+    "description": "You master advanced weapon techniques. When you spend Combat Points, you can perform special weapon techniques such as disarming strikes, weapon throws, or precision attacks that target specific weak points.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "advanced_weapon_techniques",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform special weapon techniques like disarming strikes or precision attacks"
+     }
+    ],
+    "prerequisites": [
+     "weapon_specialization_3"
+    ]
+   },
+   {
+    "node_id": "weapon_versatility_5",
+    "feature_id": "weapon_versatility",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "weapon_technique_5",
+    "description": "You become versatile with all weapons. When you spend Combat Points, you can temporarily gain proficiency with any weapon you wield, and you can switch between different weapon types without penalty.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "universal_weapon_proficiency",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain proficiency with any weapon and switch weapon types without penalty"
+     }
+    ],
+    "prerequisites": [
+     "weapon_specialization_3"
+    ]
+   },
+   {
+    "node_id": "weapon_mastery_7",
+    "feature_id": "weapon_mastery",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "weapon_focus_7",
+    "description": "You achieve mastery with your chosen weapon. When you spend Combat Points, you can perform devastating weapon combinations and chain attacks, making multiple strikes in rapid succession.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "weapon_combination_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform devastating weapon combinations and chain attacks"
+     }
+    ],
+    "prerequisites": [
+     "weapon_techniques_5"
+    ]
+   },
+   {
+    "node_id": "weapon_legend_7",
+    "feature_id": "weapon_legend",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "weapon_focus_7",
+    "description": "You become a legend with weapons. When you spend Combat Points, you can perform legendary weapon feats such as cutting through armor, deflecting projectiles, or striking multiple targets simultaneously.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_weapon_feats",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform legendary weapon feats like cutting through armor or deflecting projectiles"
+     }
+    ],
+    "prerequisites": [
+     "weapon_versatility_5"
+    ]
+   },
+   {
+    "node_id": "weapon_mastery_9",
+    "feature_id": "weapon_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your weapon mastery becomes overwhelming. When you spend Combat Points, you can achieve both specialized techniques and legendary feats, making you a master of both precision and power.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_weapon_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve both specialized techniques and legendary feats with Combat Points"
+     }
+    ],
+    "prerequisites": [
+     "weapon_mastery_7",
+     "weapon_legend_7"
+    ]
+   },
+   {
+    "node_id": "weapon_perfection_11",
+    "feature_id": "weapon_perfection",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "weapon_technique_11",
+    "description": "You achieve perfect weapon form. When you spend Combat Points, you can perform perfect weapon techniques that never miss their target and always deal maximum damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_weapon_techniques",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform perfect weapon techniques that never miss and deal maximum damage"
+     }
+    ],
+    "prerequisites": [
+     "weapon_mastery_9"
+    ]
+   },
+   {
+    "node_id": "weapon_legend_11",
+    "feature_id": "weapon_legend",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "weapon_technique_11",
+    "description": "You become a legend of weapon combat. When you spend Combat Points, you can perform impossible weapon feats such as cutting through space itself or creating weapon illusions.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "impossible_weapon_feats",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform impossible weapon feats like cutting through space or creating weapon illusions"
+     }
+    ],
+    "prerequisites": [
+     "weapon_mastery_9"
+    ]
+   },
+   {
+    "node_id": "weapon_legend_13",
+    "feature_id": "weapon_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of weapon mastery. Your Combat Points are more potent, and when you spend them, you can achieve weapon capabilities that transcend normal limitations, including the ability to wield weapons made of pure energy.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_combat_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Combat Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "energy_weapon_creation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Wield weapons made of pure energy with Combat Points"
+     }
+    ],
+    "prerequisites": [
+     "weapon_perfection_11",
+     "weapon_legend_11"
+    ]
+   },
+   {
+    "node_id": "weapon_perfection_15",
+    "feature_id": "weapon_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_weapon_15",
+    "description": "Your weapon mastery achieves perfection. When you spend Combat Points, you can perform perfect weapon techniques that transcend normal combat, including the ability to cut through conceptual barriers.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_weapon_cutting",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cut through conceptual barriers with perfect weapon techniques"
+     }
+    ],
+    "prerequisites": [
+     "weapon_legend_13"
+    ]
+   },
+   {
+    "node_id": "weapon_mastery_15",
+    "feature_id": "weapon_mastery",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_weapon_15",
+    "description": "You achieve perfect weapon mastery. When you spend Combat Points, you can become one with your weapon, gaining omniscient awareness of all weapons and the ability to control any weapon in existence.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "weapon_omniscience",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain omniscient awareness of all weapons and control any weapon in existence"
+     }
+    ],
+    "prerequisites": [
+     "weapon_legend_13"
+    ]
+   },
+   {
+    "node_id": "weapon_legend_17",
+    "feature_id": "weapon_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of weapon combat. When you spend Combat Points, you can achieve weapon capabilities that transcend reality itself, including the ability to manipulate the very concept of weaponry.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_weapon_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the very concept of weaponry"
+     }
+    ],
+    "prerequisites": [
+     "weapon_perfection_15",
+     "weapon_mastery_15"
+    ]
+   },
+   {
+    "node_id": "perfect_weapon_master_20",
+    "feature_id": "perfect_weapon_master",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of weapon combat. When you spend Combat Points, you can achieve weapon capabilities that are not only perfect and reality-transcending but also allow you to create weapons from pure thought and will.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "thought_weapon_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "combat_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create weapons from pure thought and will"
+     }
+    ],
+    "prerequisites": [
+     "weapon_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Blaster Bolt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A warrior in mid-combat, standing with feet shoulder-width apart and knees slightly bent.\nTheir lightsaber crackles with energy at the ready.\n",
+    "energy_signature": "An aura of shimmering blue and orange lights surrounds the character, indicating their connection to the Force.\n"
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a scene of a lone Jedi Master facing off against a pack of angry Gamorrean guards.",
+    "contextual_modifiers": [
+     "In a dimly lit corridor on the planet of Coruscant",
+     "With smoke and flames erupting from nearby explosions"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Mastery of various melee and ranged combat techniques, making them versatile on the battlefield.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "The fighter's armor bears symbols or markings representing their proficiency with specific types of weapons.",
+    "Their stance, movements, and body language convey a sense of confidence and skill in combat."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "fighter_weapon_master",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/fighter_subclasses/fighter.weapon_master.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

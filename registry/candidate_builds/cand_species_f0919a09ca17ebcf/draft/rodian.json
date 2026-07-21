@@ -1,0 +1,583 @@
+{
+ "record": {
+  "id": "rodian",
+  "name": "Rodian",
+  "tags": [
+   "agile",
+   "arboreal",
+   "bounty_hunter",
+   "common",
+   "dexterity_based",
+   "hunter",
+   "perceptive",
+   "predator",
+   "ranged_specialist",
+   "rodian",
+   "scout",
+   "tracker",
+   "wilderness",
+   "wisdom_based"
+  ],
+  "description": "Jungle-born hunters, Rodians read sign and scent with ease—predators and trackers shaped by Rodia's dense wilds and modern bounty traditions.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Rodian"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "rodian_natural_hunter",
+    "name": "Natural Hunter",
+    "narrative": "Your ancestors evolved as apex predators in Rodia's dense jungles, developing instincts and skills that have been honed through countless generations of hunting and tracking.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Survival Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in Survival.",
+      "rules": [
+       "skill:survival",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Hunter's Instinct",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Survival) checks to track or navigate wilderness.",
+      "rules": [
+       "skill:survival",
+       "context:tracking_wilderness"
+      ],
+      "conditions": [
+       {
+        "key": "survival_action",
+        "op": "in",
+        "value": [
+         "tracking",
+         "wilderness_navigation"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "natural_predator",
+     "ui_transition": {
+      "animation": "/ui/darkside/predator_growth",
+      "sfx": "UI_DS_Predator_Growth"
+     }
+    }
+   },
+   {
+    "id": "rodian_enhanced_scent",
+    "name": "Enhanced Scent",
+    "narrative": "Your highly developed olfactory system can detect the subtlest scents and track creatures through complex environments. This ancient adaptation has made Rodians legendary hunters across the galaxy.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Olfactory Perception",
+      "action_type": "passive",
+      "description": "You have advantage on Perception checks that rely on smell.",
+      "rules": [
+       "skill:perception",
+       "context:smell"
+      ],
+      "conditions": [
+       {
+        "key": "perception_type",
+        "op": "equals",
+        "value": "smell"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Scent Tracking",
+      "action_type": "passive",
+      "description": "You can track creatures by scent within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "tracking_type:scent",
+       "target:creatures"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "deadly_poison",
+     "ui_transition": {
+      "animation": "/ui/darkside/poison_growth",
+      "sfx": "UI_DS_Poison_Growth"
+     }
+    }
+   },
+   {
+    "id": "rodian_jungle_adaptation",
+    "name": "Jungle Adaptation",
+    "narrative": "Your body and instincts are perfectly adapted to life in dense vegetation. You move through jungles and forests with the same ease as open terrain, your senses and reflexes honed for these environments.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Natural Stealth",
+      "action_type": "passive",
+      "description": "You have advantage on Stealth checks in forests or jungles.",
+      "rules": [
+       "skill:stealth",
+       "environment:forest_jungle"
+      ],
+      "conditions": [
+       {
+        "key": "environment_type",
+        "op": "in",
+        "value": [
+         "forest",
+         "jungle"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Terrain Mastery",
+      "action_type": "passive",
+      "description": "You ignore difficult terrain in natural environments.",
+      "rules": [
+       "terrain_type:natural",
+       "difficult_terrain:ignored"
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Green, scaly skin",
+    "Large, compound eyes",
+    "Antennae",
+    "Slender, agile build",
+    "Natural hunter's stance"
+   ],
+   "skin_color_variants": [
+    "Bright Green",
+    "Dark Green",
+    "Olive Green",
+    "Yellow Green",
+    "Blue Green",
+    "Mottled patterns"
+   ],
+   "eye_color_variants": [
+    "Large, compound eyes",
+    "Red eyes",
+    "Orange eyes",
+    "Yellow eyes",
+    "Black eyes"
+   ],
+   "antennae_variants": [
+    "Long, sensitive antennae",
+    "Short, practical antennae",
+    "Thick antennae",
+    "Thin, delicate antennae"
+   ],
+   "common_adornments": [
+    "Practical hunting gear",
+    "Traditional Rodian ceremonial items",
+    "Combat armor and weapons",
+    "Survival equipment",
+    "Cultural jewelry and accessories"
+   ],
+   "llm_description_prompt": "Describe a Rodian character. Emphasize their large, compound eyes that seem to take in every detail of their surroundings, and their antennae that constantly twitch and move, sensing the environment. Their green, scaly skin should reflect their jungle heritage. Consider their natural hunting instincts and the way they carry themselves with the alert, predatory grace of a born tracker."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout",
+    "narrative": "Rodian's natural hunting abilities and Enhanced Scent make them exceptional Scouts, able to track and navigate through any wilderness environment with unmatched skill.",
+    "mechanical_benefits": [
+     "Natural Hunter trait enhances tracking and wilderness navigation",
+     "Enhanced Scent provides unique tracking abilities",
+     "Jungle Adaptation improves stealth and mobility"
+    ]
+   },
+   {
+    "class": "Bounty Hunter",
+    "narrative": "Rodian's hunting skills and tracking abilities make them natural Bounty Hunters, using their enhanced senses to pursue targets through any environment.",
+    "mechanical_benefits": [
+     "Enhanced Scent aids in tracking and pursuing targets",
+     "Natural Hunter trait supports bounty hunting operations",
+     "Jungle Adaptation enables stealthy approaches"
+    ]
+   },
+   {
+    "class": "Operative (Scout)",
+    "narrative": "Rodian's natural stealth and sensory abilities make them excellent Operatives, able to move silently and gather intelligence through enhanced perception.",
+    "mechanical_benefits": [
+     "Jungle Adaptation trait enhances stealth in natural environments",
+     "Enhanced Scent aids in reconnaissance and detection",
+     "High Dexterity supports Operative's agility-based abilities"
+    ]
+   },
+   {
+    "class": "Soldier (Ranger)",
+    "narrative": "Rodian's natural combat abilities and wilderness skills make them excellent Soldiers, especially in jungle and forest environments.",
+    "mechanical_benefits": [
+     "Jungle Adaptation trait enhances combat mobility",
+     "Natural Hunter trait supports tactical operations",
+     "Enhanced Scent aids in battlefield awareness"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Bounty Hunters Guild",
+    "narrative": "Many Rodians join the Bounty Hunters Guild, using their natural hunting and tracking abilities to excel in the profession."
+   },
+   {
+    "faction": "Rodian Clans",
+    "narrative": "Rodian clans maintain their traditional hunting culture while adapting to modern galactic society, preserving their heritage and skills."
+   },
+   {
+    "faction": "Independent Hunters",
+    "narrative": "Many Rodians prefer to work independently as hunters and trackers, following their own codes and traditions."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your hunting instincts become more refined, allowing you to track even the most elusive prey through complex environments.",
+     "mechanical_benefit": "Increase the range of scent tracking from 30 feet to 60 feet, and gain advantage on Survival checks to track creatures that have attempted to hide their trail."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your jungle adaptation reaches new heights, allowing you to move through even the most treacherous natural environments with ease.",
+     "mechanical_benefit": "You can move through difficult terrain in natural environments at full speed, and gain advantage on Athletics checks to climb or jump in jungle environments."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your predatory instincts combine with combat training to make you a more lethal hunter in natural environments.",
+     "mechanical_benefit": "When fighting in forest or jungle environments, you gain a +2 bonus to damage rolls with ranged weapons and advantage on attack rolls against creatures you've successfully tracked."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your natural adaptations reach their peak, making you nearly impossible to track or ambush in natural environments.",
+     "mechanical_benefit": "You have advantage on saving throws against being surprised, and creatures have disadvantage on attempts to track or follow you through natural environments."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Hunting Rituals",
+    "type": "ceremonial",
+    "description": "Rodian hunting rituals involve complex ceremonies before and after hunts, including offerings to nature spirits and celebrations of successful kills.",
+    "narrative_impact": "Provides cultural depth and social bonding opportunities. Can be used for character development and party interactions."
+   },
+   {
+    "name": "Trophy Collection",
+    "type": "traditional",
+    "description": "Rodian hunters collect trophies from their kills, each representing a significant achievement and telling a story of the hunt.",
+    "narrative_impact": "Creates personal history and character motivation. Can be used for storytelling and quest hooks."
+   },
+   {
+    "name": "Clan Traditions",
+    "type": "cultural",
+    "description": "Rodian clans have unique hunting traditions and techniques passed down through generations, each with their own methods and philosophies.",
+    "narrative_impact": "Provides cultural identity and social connections. Can be used for information gathering and relationship building."
+   },
+   {
+    "name": "Predator's Meditation",
+    "type": "narrative",
+    "description": "Rodian hunters practice meditation techniques that enhance their predatory instincts and sensory awareness.",
+    "narrative_impact": "Provides character development opportunities and unique problem-solving approaches. Can be used for gaining insights or preparing for hunts."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "jungle",
+    "adaptation_name": "Jungle Mastery",
+    "description": "Your body and instincts are perfectly adapted to jungle environments, allowing you to navigate and survive where others would struggle.",
+    "mechanical_benefit": "You have advantage on all skill checks related to jungle survival, and you can move through dense vegetation without penalty."
+   },
+   {
+    "environment": "forest",
+    "adaptation_name": "Forest Adaptation",
+    "description": "Your natural abilities extend to all forest environments, making you equally at home in temperate and tropical forests.",
+    "mechanical_benefit": "You have advantage on Stealth and Survival checks in forest environments, and you can track creatures more effectively."
+   },
+   {
+    "environment": "swamp",
+    "adaptation_name": "Wetland Navigation",
+    "description": "Your hunting skills extend to wetland environments, where your enhanced senses help you navigate treacherous terrain.",
+    "mechanical_benefit": "You can move through swamp and wetland terrain without penalty, and you have advantage on Perception checks in these environments."
+   },
+   {
+    "environment": "urban",
+    "adaptation_name": "Urban Tracking",
+    "description": "Your tracking abilities have adapted to urban environments, allowing you to follow targets through complex cityscapes.",
+    "mechanical_benefit": "You have advantage on Survival checks to track creatures in urban environments, and you can use your enhanced scent to navigate complex city layouts."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on hunting and tracking abilities, complementing rather than overshadowing class features",
+    "Environmental mastery improvements maintain the species' unique identity while providing meaningful advancement",
+    "Tracking and scent abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on hunting traditions and clan identity rather than mechanical advantages",
+    "Hunting rituals and trophy collection provide unique roleplaying opportunities and cultural depth",
+    "Clan traditions and predator's meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for natural environments, especially jungles and forests",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Urban tracking adaptation provides unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "reptilian_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "scale",
+     {
+      "body_fur_color": "green"
+     },
+     {
+      "eye_color": "yellow"
+     },
+     {
+      "ear_type": "pointed"
+     },
+     {
+      "tail_length": "long"
+     }
+    ],
+    "morphology": {
+     "head_type": "flat",
+     "body_type": "slender",
+     "average_height": "1.8 meters"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "body_fur_texture": "fluffy",
+       "tooth_color": "white"
+      },
+      "adult": {
+       "body_fur_texture": "smooth",
+       "tooth_color": "yellowed"
+      },
+      "elder": {
+       "body_fur_texture": "wispy",
+       "tooth_color": "browned"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       {
+        "scar_type": "ritualistic"
+       },
+       {
+        "tattoo_pattern": "tribal"
+       }
+      ],
+      "light_side": [
+       {
+        "accessory_type": "medallion"
+       },
+       {
+        "clothing_style": "formal"
+       }
+      ]
+     }
+    },
+    "unique_identifiers": [
+     {
+      "facial_markings": "scars"
+     },
+     {
+      "eye_shape": "almond"
+     },
+     {
+      "body_modification": "cybernetic_eye"
+     }
+    ],
+    "prompt_schema": {
+     "base_prompt": "a Rodian bounty hunter",
+     "contextual_modifiers": [
+      {
+       "age": "young"
+      },
+      {
+       "location": "forest"
+      },
+      {
+       "activity": "tracking"
+      }
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "blood_feud",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A Rodian bounty hunter is hired to capture a local outlaw, but they soon discover the target is being pursued by a rival bounty hunter."
+     },
+     "escalation": {
+      "description": "The Rodian bounty hunter and their rival engage in a series of escalating confrontations as they each try to gain the upper hand and claim the reward for themselves."
+     },
+     "confrontation": {
+      "description": "A final showdown between the Rodian bounty hunter and their rival, with the outcome determining who will capture the outlaw and claim the reward."
+     }
+    },
+    "resolution_paths": {
+     "victory": "The Rodian bounty hunter successfully captures the outlaw and claims the reward, solidifying their reputation as a skilled tracker.",
+     "redemption": "The Rodian bounty hunter and their rival put aside their differences to work together to take down a greater threat to the community.",
+     "escape": "The Rodian bounty hunter narrowly escapes capture by the rival, but not before they realize that the rivalry has taken a toll on their own morals."
+    },
+    "conflict_triggers": [
+     "Rival Bounty Hunter in the Area",
+     "Outlaw's Desperate Actions"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "Being wronged by a rival bounty hunter",
+      "Having a personal stake in capturing an outlaw"
+     ],
+     "vendetta_type": "Rival Bounty Hunter"
+    },
+    "species_triggers": [
+     "Hunting a species on the brink of extinction",
+     "Targeting a Rodian family member or associate"
+    ],
+    "nemesis_progression": [
+     {
+      "trigger": "Failing to hunt down a high-profile target",
+      "consequence": "Loss of hunting license and reputation damage"
+     },
+     {
+      "trigger": "Betraying a Rodian ally or partner",
+      "consequence": "Exile from the undercity and loss of community standing"
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Rodian"
+   ],
+   "romance_progression": {
+    "stage1": "The two characters meet in a cantina, and the Rodian is immediately drawn to their charisma.",
+    "stage2": "As they spend more time together, the Rodian begins to open up about their past and their struggles as a bounty hunter.",
+    "stage3": "A misunderstanding leads to tension between them, but ultimately they are able to clear the air and deepen their connection.",
+    "stage4": "The Rodian must confront their own morality when faced with a difficult choice that affects their partner's safety.",
+    "stage5": "Together, they face a final challenge that tests their love and their skills as a team."
+   },
+   "romance_events": [
+    "First Date in the Cantina",
+    "Argument Over Past Trauma",
+    "Successful Mission Together",
+    "Betrayal by a Rival"
+   ],
+   "romance_modifiers": [
+    "Increased Trust and Loyalty Through Shared Adventures",
+    "Vulnerability and Emotional Intimacy"
+   ],
+   "overrides": {
+    "species_approach": [
+     {
+      "approach_type": "Courtship",
+      "description": "Rodians traditionally court through hunting and tracking games, testing each other's skills and bond strength."
+     },
+     {
+      "approach_type": "Respect-based Bonding",
+      "description": "In Rodian culture, respect for elders and tradition is paramount. Partners often form bonds by demonstrating mutual respect and a shared commitment to their community."
+     }
+    ],
+    "species_values": [
+     "Family ties",
+     "Community standing",
+     "Loyalty"
+    ]
+   }
+  },
+  "companion_engine": {
+   "archetype": "cunning_scoundrel",
+   "overrides": {}
+  },
+  "flavor_text": "A Rodian's bond with the hunt is not just about tracking prey, but also about honoring their ancestors and respecting the balance of the wilds. For them, every hunt is a dance between predator and prey, where the outcome is never guaranteed. This delicate balance has taught Rodians to be patient, observant, and adaptable - skills that serve them well in the cutthroat world of bounty hunting.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Rodian, you are deeply connected to your homeworld's lush jungles and the ancient traditions that govern your people. Your roleplay should reflect this connection, whether it's through the way you track targets or the manner in which you approach relationships.",
+   "narrative_hooks": [
+    "The hunt for a notorious crime lord has led you to the Rodian undercity of Nar Shaddaa, where ancient traditions and modern corruption collide.",
+    "You've received a cryptic message from an old hunting partner about a rare species on the verge of extinction - one that holds secrets to your people's past."
+   ],
+   "social_dynamics": "Rodians value respect for elders, tradition, and community above all else. They often form close-knit groups based on shared experiences or family ties. However, their bounty hunting lifestyle has also made them wary of outsiders, leading to a 'trust, but verify' approach with new acquaintances.",
+   "common_motivations": [
+    "To protect the balance of the wilds and preserve the ancient traditions that sustain your people.",
+    "To uncover the truth behind a family member's disappearance or untimely death."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "rodian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/rodian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,193 @@
+{
+ "record": {
+  "id": "gadgeteer",
+  "name": "Gadgeteer",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "gadgeteer",
+   "tech_specialist",
+   "intelligence_based",
+   "inventor",
+   "tracker",
+   "gadgets",
+   "tactical",
+   "hunter"
+  ],
+  "description": "Bounty Hunter Gadgeteers are masters of specialized equipment and technology, using advanced tracking devices, weapon modifications, and tactical gear to gain the upper hand in any hunt.",
+  "specialization_features": [
+   "tracking_device",
+   "weapon_modifications",
+   "tactical_scanner",
+   "master_gadgeteer",
+   "legendary_gadgeteer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Gadgeteer: Tinkerer and Tracker",
+   "role_in_group": "Master of Gadgeteered Technology and Equipment",
+   "visual_signals": [
+    "Customized Cybernetic Limb",
+    "Enhanced Tracking Device"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "gadgeteer_tech_specialist",
+    "feature_id": "gadgeteer_tech_specialist",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gadgeteered Tech Specialist",
+    "effects": [
+     {
+      "type": "feature_effect",
+      "value": "gadgeteer_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_character_creation"
+       }
+      ],
+      "notes": "Upon character creation, you focus your mind on a specific device or machine. Your eyes glaze over as the intricacies of its mechanisms become clear to you, granting you proficiency in one type of device or machine."
+     }
+    ]
+   },
+   {
+    "node_id": "gadgeteer_inventor",
+    "feature_id": "gadgeteer_inventor",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Gadgeteered Inventor",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "gadgeteer_genius_burst",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "on_start_of_turn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "As a burst of creative energy, you intuitively improve and refine your gadgets, granting yourself expertise in one device or machine. You may also create a new gadget at the start of each day using basic materials."
+     }
+    ]
+   },
+   {
+    "node_id": "gadgeteer_gadgeteer",
+    "feature_id": "gadgeteer_gadgeteer",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Gadgeteered Gadgeteer",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "inventive_inspiration",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "start_of_turn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "As you touch a device or machine, the tinkerer's spark within you ignites, and your expertise shines through. You can use your proficiency bonus to improve a device or machine, and you may also create two new gadgets at the start of each day using basic materials."
+     }
+    ]
+   },
+   {
+    "node_id": "gadgeteer_tactical_gadgets",
+    "feature_id": "gadgeteer_tactical_gadgets",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Gadgeteered Tactical Gadget",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "gadgeteer_innovate_on_impact",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As you land a critical hit, your quick mind sparks an innovative idea. You may use your proficiency bonus to improve a device or machine on yourself, and at the start of each day, you can create three new gadgets using basic materials."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Scavenger's Scope",
+    "Tinkerer's Tool"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a fluid, adaptable stance with a focus on agility and quick reflexes, reminiscent of a seasoned tracker navigating the dense forests of Endor.",
+    "energy_signature": "Surrounds itself with a pulsating aura of blue-white energy, evoking the hum of a well-tuned droid's power cell and hinting at a deep connection to technology and innovation."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a seasoned Gadgeteer (bounty hunter) Tinkerer, armed with trusty Scavenger's Scope and an assortment of Tinkerer's Tools, navigating the mist-shrouded swamps of Dagobah in pursuit of a rare and elusive target.",
+    "contextual_modifiers": [
+     "captured in a moment of intense focus",
+     "with a subtle hint of playful curiosity"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "gadgeteer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_gadgeteer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

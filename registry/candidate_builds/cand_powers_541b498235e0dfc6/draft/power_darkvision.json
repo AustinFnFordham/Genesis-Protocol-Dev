@@ -1,0 +1,200 @@
+{
+ "record": {
+  "id": "power_darkvision",
+  "name": "Darkvision",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "vision",
+   "enhancement",
+   "night_vision",
+   "infrared",
+   "sensory",
+   "optical"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Optical enhancement technology for low-light operations"
+   }
+  },
+  "narrative": "You activate advanced optical enhancement technology that overlays the target's vision with multiple sensor feeds—infrared, ultraviolet, and light amplification. The power manifests as cybernetic implants activating or tactical visors coming online, pupils dilating with artificial enhancement as darkness becomes as clear as day.",
+  "flavor_text": "\"The darkness is no longer your ally.\" - Night Ops Specialist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "applying optical enhancer or activating visor"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating spectrum filters and light amplification"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You use technology to enhance a creature's vision, allowing them to see in darkness.",
+   "mechanics": [
+    {
+     "type": "grant_darkvision",
+     "value": {
+      "distance": 60,
+      "unit": "feet"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target gains darkvision out to 60 feet"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's optical expertise transforms Darkvision from simple night vision into full-spectrum analysis. They layer thermal imaging, electromagnetic detection, and quantum probability mapping, creating vision that reveals not just what's hidden in darkness, but what's hidden from normal perception entirely.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_darkvision",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineers grant 120 feet darkvision instead of 60 feet.",
+      "value": {
+       "distance": 120,
+       "unit": "feet"
+      }
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human visual processing adapts remarkably well to artificial enhancement. Their brains quickly learn to interpret the flood of new sensory data, distinguishing between heat signatures, electromagnetic fields, and light spectrums with intuitive ease that other species require training to achieve.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "target"
+      ],
+      "condition": "perception_checks",
+      "notes": "Human-enhanced targets gain advantage on Perception checks in darkness."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance's night operations have pushed Darkvision technology to its limits. Using stolen Imperial night-vision gear reverse-engineered and improved with alien tech, Rebel commandos see through smoke, fog, and even light camouflage that would fool standard sensors.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "true_sight"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebel-enhanced vision also reveals invisible creatures within 30 feet."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment vision shifts—colors changing to false-color overlays, heat signatures blooming into view, previously invisible details suddenly crystal clear. The target's eyes might glow faintly with the enhancement, and they should react to seeing things they never noticed before.",
+   "tactical_notes": "Darkvision is essential for operations in darkness, negating disadvantage on attack rolls and Perception checks. The 1-hour duration with concentration makes it perfect for infiltration missions. Remember that magical darkness still blocks darkvision unless specified otherwise.",
+   "narrative_hooks": [
+    "Enhanced vision reveals hidden enemies preparing an ambush in the darkness",
+    "Darkvision allows reading crucial information in a pitch-black vault",
+    "The enhancement reveals heat signatures of invisible infiltrators"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a figure with glowing cybernetic eyes piercing through absolute darkness. Their vision overlay shows multiple spectrums—heat signatures in red and orange, electromagnetic fields in blue, and enhanced light amplification revealing hidden details. The darkness around them is alive with previously invisible information.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/darkvision.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_darkvision",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_darkvision.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

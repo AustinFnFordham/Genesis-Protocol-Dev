@@ -1,0 +1,314 @@
+{
+ "record": {
+  "id": "skip_tracer",
+  "name": "Skip Tracer",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "skip_tracer",
+   "tracker",
+   "intelligence_based",
+   "investigator",
+   "perceptive",
+   "hunter",
+   "information_gatherer",
+   "skill_specialist"
+  ],
+  "description": "Skip Tracers specialize in finding people who don't want to be found—leveraging contacts, databases, and subtle manipulation to locate, corner, and capture targets with minimal collateral.",
+  "specialization_features": [
+   "network_of_contacts",
+   "digital_footprint",
+   "nonlethal_takedown",
+   "paper_trail_erasure",
+   "legendary_skip_tracer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Elusive trackers who specialize in finding those who don't want to be found",
+   "role_in_group": "Support/Specialist",
+   "visual_signals": [
+    "Worn leather jacket with various tools and gadgets attached",
+    "Customized blaster pistol"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "BountyHunter_SkipTracer_L3_TrackingExpertise",
+    "feature_id": "TrackingExpertise",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have a knack for tracking targets, even in unfamiliar terrain. Your proficiency bonus is doubled when making Intelligence (Survival) checks to track creatures.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tracker_precision_bump",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "The bounty hunter's trained eyes seem to anticipate their quarry's next move, granting them expertise on this tracking check. Their proficiency bonus is doubled as a result."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L7_DatabaseAccess",
+    "feature_id": "DatabaseAccess",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have access to a vast network of underworld contacts and databases, allowing you to gather information about targets quickly. You can use your Intelligence modifier instead of Charisma when making Deception or Intimidation checks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "database_hack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_attack"
+       },
+       {
+        "key": "ability_used",
+        "op": "in_list",
+        "value": [
+         "deception",
+         "intimidation"
+        ]
+       }
+      ],
+      "notes": "With a flash of their holographic display, the Skip Tracer's Database Access is triggered, granting them expertise in Deception or Intimidation checks based on the current situation."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L11_InvestigationFocus",
+    "feature_id": "InvestigationFocus",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have a keen eye for detail and can focus your investigation on specific targets. You can add your proficiency bonus to any Intelligence (Investigation) check you make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "investigation_focus_activation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "skip_tracer"
+       }
+      ],
+      "notes": "The Skip Tracer's eyes lock onto their quarry, granting them a surge of focus and clarity. Their Investigation Checks gain the added precision of their Proficiency Bonus."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L15_ExpertGadgeteer",
+    "feature_id": "ExpertGadgeteer",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have become an expert in crafting and utilizing gadgets, allowing you to create and use complex devices to aid in your tracking missions. You can use your Intelligence modifier instead of Dexterity when making Thieves' Tools checks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "gadgeteer_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "skip_tracer"
+       }
+      ],
+      "notes": "The Skip Tracer's fingers dance across the device, granting advantage on all Thieves' Tools checks for a brief moment."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L18_MasterOfDeception",
+    "feature_id": "MasterOfDeception",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have mastered the art of deception, allowing you to convincingly impersonate others. You can add your proficiency bonus to any Deception check you make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "deceptive_stance",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "The bounty hunter's eyes gleam with a mixture of charm and cunning, making it more difficult for enemies to discern their true intentions. When the Skip Tracer hits an enemy in combat, they gain advantage on Deception Checks against that target until the start of their next turn."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L21_ExpertTracker",
+    "feature_id": "ExpertTracker",
+    "level_requirement": 21,
+    "type": "core",
+    "description": "You have become an expert tracker, able to follow targets through even the most treacherous terrain. You can use your Intelligence modifier instead of Wisdom when making Survival checks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tracker_focus",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "You instinctively sense the trajectory of your target, granting you a heightened awareness that allows you to use Intelligence for Survival Checks."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L25_MasterOfStealth",
+    "feature_id": "MasterOfStealth",
+    "level_requirement": 25,
+    "type": "core",
+    "description": "You have mastered the art of stealth, allowing you to move undetected and strike from the shadows. You can add your proficiency bonus to any Stealth check you make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "stealth_amplifier",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_skill",
+        "op": "equals",
+        "value": "Stealth"
+       }
+      ],
+      "notes": "As a master of stealth, the Skip Tracer's instincts amplify their ability to remain undetected, granting an additional layer of subtlety. When making a Stealth check, they add their Proficiency Bonus to the roll."
+     }
+    ]
+   },
+   {
+    "node_id": "BountyHunter_SkipTracer_L30_ExpertOfTheUnderworld",
+    "feature_id": "ExpertOfTheUnderworld",
+    "level_requirement": 30,
+    "type": "core",
+    "description": "You have become an expert in the underworld, able to navigate its complexities with ease. You can use your Intelligence modifier instead of Charisma when making any check related to information gathering.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "underworld_insight",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "skip_tracer"
+       }
+      ],
+      "notes": "Intense scrutiny of the underworld's networks reveals crucial information, granting expertise in any Intelligence check. The shadows themselves seem to whisper secrets in your ear as you navigate the city's hidden corners."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Blaster_Pistol_Grip"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a fluid, cat-like stance with knees bent and weight distributed evenly between both feet",
+    "energy_signature": "Emits a faint hum of blue lights around its fingers, hinting at its connection to the Force"
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone bounty hunter standing in a dusty, dimly lit cantina on a distant planet",
+    "contextual_modifiers": [
+     "Show the character's eyes narrowing into slits as it scans the room for potential threats",
+     "Include a mug of steaming blue milk on the table in front of the character"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "skip_tracer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_skip_tracer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

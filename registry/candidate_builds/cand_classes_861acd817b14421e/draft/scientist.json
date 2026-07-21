@@ -1,0 +1,160 @@
+{
+ "record": {
+  "id": "scientist",
+  "name": "Scientist",
+  "class_id": "engineer",
+  "base_class": "engineer",
+  "tags": [
+   "engineer",
+   "scientist",
+   "scholar",
+   "intelligence_based",
+   "tech_specialist",
+   "inventor",
+   "researcher",
+   "analytical"
+  ],
+  "description": "Scientists are masters of research and experimentation. They excel at conducting experiments, analyzing data, and making breakthrough discoveries that advance technology and understanding.",
+  "specialization_features": [
+   "research_expertise",
+   "experimental_methods",
+   "breakthrough_discovery",
+   "scientist_mastery",
+   "legendary_scientist"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Genius inventors and researchers who drive technological advancements.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Goggles",
+    "Lab coat"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "scientific_theory_level_3",
+    "feature_id": "Scientific Theory",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have developed a comprehensive scientific theory that guides your research. You can use your proficiency bonus to analyze a single piece of evidence and gain insight into the workings of the universe.",
+    "effects": [
+     {
+      "type": "bonus_action",
+      "value": "You can take a bonus action to analyze a piece of evidence, gaining insight into the workings of the universe."
+     }
+    ]
+   },
+   {
+    "node_id": "experimental_device_level_7",
+    "feature_id": "Experimental Device",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have created an experimental device that allows you to manipulate your environment in creative ways. You can use your proficiency bonus to activate the device and gain a benefit.",
+    "effects": [
+     {
+      "type": "rechargeable_ability_score_action",
+      "value": "Once per day, as a reaction, you can recharge one of your ability score actions."
+     }
+    ]
+   },
+   {
+    "node_id": "breakthrough_discovery_level_11",
+    "feature_id": "Breakthrough Discovery",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have made a groundbreaking discovery that reveals new insights into the workings of the universe. You can use your proficiency bonus to apply this knowledge to a specific situation, gaining an advantage.",
+    "effects": [
+     {
+      "type": "advantage",
+      "value": "You gain an advantage on one ability check or skill check per day."
+     }
+    ]
+   },
+   {
+    "node_id": "advanced_technology_level_15",
+    "feature_id": "Advanced Technology",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have developed advanced technology that allows you to manipulate your environment in sophisticated ways. You can use your proficiency bonus to activate the technology and gain a benefit.",
+    "effects": [
+     {
+      "type": "rechargeable_ability_score_action",
+      "value": "Once per day, as a reaction, you can recharge one of your ability score actions."
+     }
+    ]
+   },
+   {
+    "node_id": "paradigm_shift_level_18",
+    "feature_id": "Paradigm Shift",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have undergone a paradigm shift in your understanding of the universe, gaining new insights and perspectives. You can use your proficiency bonus to apply this knowledge to a specific situation, gaining an advantage.",
+    "effects": [
+     {
+      "type": "advantage",
+      "value": "You gain an advantage on one ability check or skill check per day."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "tech_pack_on_back"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, knees slightly bent, and right hand gripping a gleaming lightsaber hilt.",
+    "energy_signature": "A swirling vortex of blue energy emanates from the center of my chest, pulsating in sync with my breathing."
+   },
+   "prompt_schema": {
+    "base_prompt": "A Genius inventor stands amidst a cluttered laboratory, surrounded by holographic displays and various scientific instruments.",
+    "contextual_modifiers": [
+     "with a lightsaber ignited",
+     "in a state of intense focus"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "scientist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer_scientist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

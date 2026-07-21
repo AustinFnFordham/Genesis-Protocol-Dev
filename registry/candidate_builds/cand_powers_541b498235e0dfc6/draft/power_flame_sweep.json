@@ -1,0 +1,213 @@
+{
+ "record": {
+  "id": "power_flame_sweep",
+  "name": "Flame Sweep",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "fire",
+   "cone",
+   "flamethrower",
+   "area_effect",
+   "incendiary",
+   "sweep"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Flamethrower sweep technology"
+   }
+  },
+  "narrative": "You unleash a horizontal arc of flame from your wrist-mounted flamethrower, sweeping it across the battlefield in a deadly fan. The power manifests as a roaring sheet of orange fire that ignites everything in its path, leaving charred ground and the acrid smell of burnt ozone.",
+  "flavor_text": "\"I love the smell of napalm in the morning.\" - Flame Trooper",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "sweeping arm in horizontal arc while firing"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "controlling flame spread and fuel mixture"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You create a sweeping wave of flame that deals fire damage to all creatures in a cone.",
+   "mechanics": [
+    {
+     "type": "cone_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "fire"
+     },
+     "target_scopes": [
+      "cone"
+     ],
+     "notes": "Deal 2d4 fire damage to all creatures in a 30-foot cone"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's pyrotechnic expertise transforms Flame Sweep into precision destruction. They adjust nozzle pressure for maximum spread, mix accelerants for hotter burns, and angle the sweep to create firebreaks that control the battlefield.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "fire"
+      },
+      "target_scopes": [
+       "cone"
+      ],
+      "notes": "Engineers add 1d4 fire damage (3d4 total)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human fascination with fire makes their Flame Sweep particularly artistic. They create patterns in the flames, use environmental factors to spread the fire, turning simple area denial into psychological warfare through controlled pyrotechnics.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "frightened"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "cone"
+      ],
+      "notes": "Humans frighten targets for 1 round on failed save."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's flame troopers have perfected Flame Sweep for terror tactics. Their version burns hotter, spreads wider, and includes chemical additives that make the flames stick to surfaces—turning cover into death traps.",
+    "mechanical_benefit": [
+     {
+      "type": "lingering_flames",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "fire"
+      },
+      "duration": {
+       "timing": "start_of_turn"
+      },
+      "target_scopes": [
+       "cone"
+      ],
+      "notes": "Imperial flames deal 1d4 damage at start of target's turn."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the sweeping arc of flame—the roar of the flamethrower, the wave of heat hitting faces, enemies diving aside as fire washes over them. Show clothing igniting, cover becoming useless, the primal fear that fire evokes.",
+   "tactical_notes": "Flame Sweep deals 2d4 fire damage in a 30-foot cone. No attack roll needed but allows Dex saves. Perfect for clearing groups or denying areas. Watch friendly fire—cones are hard to aim precisely. The wide area compensates for lower damage.",
+   "narrative_hooks": [
+    "A flame sweep ignites volatile gases creating a massive explosion",
+    "The sweeping fire reveals invisible enemies by their silhouettes",
+    "Desperate use of flame sweep creates a firebreak during retreat"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior sweeping a flamethrower in a wide arc. A fan-shaped wall of orange and yellow flames spreads outward, engulfing multiple enemies who scramble for cover. The fire caster stands silhouetted against their own inferno, arm extended as liquid fire pours forth. Heat distortion warps the air.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/flame_sweep.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_flame_sweep",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_flame_sweep.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

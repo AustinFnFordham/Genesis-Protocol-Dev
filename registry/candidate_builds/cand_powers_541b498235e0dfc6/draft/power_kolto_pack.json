@@ -1,0 +1,224 @@
+{
+ "record": {
+  "id": "power_kolto_pack",
+  "name": "Kolto Pack",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "healing",
+   "medical",
+   "kolto",
+   "restoration",
+   "field_medicine",
+   "aquatic"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Kolto-based medical treatment technology"
+   }
+  },
+  "narrative": "You apply a kolto gel pack—the legendary healing substance from Manaan—to injuries, its blue-green luminescence spreading across wounds as aquatic compounds accelerate cellular regeneration. The power manifests as cool relief washing over damage, the kolto's unique properties knitting flesh faster than bacta while soothing pain with chemical precision.",
+  "flavor_text": "\"Kolto heals what bacta cannot reach.\" - Selkath Healer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "applying kolto pack to wound site"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "identifying optimal treatment location and dosage"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use a kolto pack to heal a creature's wounds and provide ongoing regeneration.",
+   "mechanics": [
+    {
+     "type": "apply_healing",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Heal 2d4 hit points"
+    },
+    {
+     "type": "grant_regeneration",
+     "value": {
+      "amount": 1,
+      "hp_per_round": 1
+     },
+     "duration": {
+      "amount": 3,
+      "unit": "rounds"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target regenerates 1 HP at start of their turn for 3 rounds"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's biochemical expertise optimizes kolto delivery through modified applicators and enhanced gel formulations. They understand kolto's molecular structure, using that knowledge to maximize healing efficiency through precise dosage control and improved absorption rates.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_healing",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineers heal an additional 1d4 hit points with kolto."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human medical training allows them to apply kolto with surgical precision, finding exact pressure points and wound channels that maximize healing efficiency. Their anatomical knowledge turns standard kolto application into medical artistry.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_regeneration",
+      "value": {
+       "duration": {
+        "amount": 5,
+        "unit": "rounds"
+       }
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human-applied kolto regenerates for 5 rounds instead of 3."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has learned to stretch precious kolto supplies through careful rationing and mixing with local healing compounds. Their field medics extract maximum value from limited resources, making every pack save multiple lives.",
+    "mechanical_benefit": [
+     {
+      "type": "resource_efficiency",
+      "value": {
+       "chance_percent": 50,
+       "effect": "no_cost"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebels have 50% chance to not consume the kolto pack when used."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the distinctive blue-green glow of kolto spreading across injuries, the cool sensation as it contacts wounds. Show tissue regenerating visibly, cuts closing, bruises fading. The kolto's aquatic properties should feel different from bacta—smoother, more flowing, like water healing from within.",
+   "tactical_notes": "Kolto Pack heals 2d4 HP immediately plus 1 HP per round for 3 rounds (5 HP minimum, potentially more). The ongoing regeneration makes it superior to instant healing in extended combats. The 5-foot range requires proximity. Costs 1 Tech Point but provides sustained healing.",
+   "narrative_hooks": [
+    "Kolto's regeneration keeps a wounded ally fighting through extended combat",
+    "The distinctive glow of kolto reveals a hidden medic's position",
+    "Precious kolto supplies must be rationed among multiple wounded"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a field medic applying glowing blue-green kolto gel to a wounded soldier. The luminescent healing compound spreads across injuries, visibly mending torn flesh. The kolto's aquatic shimmer creates an ethereal healing effect as wounds close and regenerate. Medical readouts show vitals stabilizing, capturing the power of Manaan's legendary healing substance.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/kolto_pack.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_kolto_pack",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_kolto_pack.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

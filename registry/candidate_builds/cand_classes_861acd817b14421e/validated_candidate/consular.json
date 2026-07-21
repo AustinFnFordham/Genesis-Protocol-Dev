@@ -1,0 +1,472 @@
+{
+ "record": {
+  "id": "consular",
+  "name": "Consular",
+  "era": "Galactic_Republic",
+  "rarity": "rare",
+  "tags": [
+   "force_user",
+   "jedi",
+   "consular",
+   "healer",
+   "diplomat",
+   "scholar",
+   "light_side",
+   "wisdom_based",
+   "support",
+   "force_mastery",
+   "peaceful"
+  ],
+  "narrative": "Consulars are Force-wielders who focus on diplomacy, healing, and the deeper mysteries of the Force. They are the scholars and healers of the Jedi Order, using wisdom and compassion to resolve conflicts and advance knowledge. In a galaxy torn by war, Consulars represent the peaceful path of the Force, seeking to heal wounds both physical and spiritual.",
+  "flavor_text": "The Force will be with you, always. - Obi-Wan Kenobi",
+  "cultural_significance": "Consulars are respected as wise counselors and healers, representing the peaceful and scholarly aspects of the Jedi Order. They are often called upon to mediate disputes and provide guidance in times of crisis.",
+  "description": "Consulars are Force-wielders who use the Force to empower their allies and vanquish their foes, often preferring negotiation to combat. They are diplomats, healers, and masters of Force manipulation who seek peaceful solutions but can unleash devastating Force powers when necessary.",
+  "origin_story": "The Consular tradition emerged as the Jedi Order grew, recognizing that not all conflicts could be resolved through combat and that the Force had deeper mysteries to explore. The first Consulars were those who sought to understand the Force's healing and diplomatic applications.",
+  "class_identity_profile": {
+   "core_fantasy": "A wise scholar and healer, using the Force to understand, heal, and bring peace through knowledge and compassion.",
+   "key_attributes": [
+    "Wisdom (for Force mastery and insight)",
+    "Charisma (for diplomacy and leadership)"
+   ],
+   "iconic_gear": [
+    "Lightsaber (often with a green or yellow crystal)",
+    "Jedi Robes",
+    "Meditation crystals",
+    "Healing supplies"
+   ],
+   "role_in_galaxy": "Consulars serve as diplomats, healers, and scholars, using their wisdom to resolve conflicts and advance knowledge.",
+   "famous_exemplars": [
+    "Yoda",
+    "Obi-Wan Kenobi",
+    "Plo Koon",
+    "Shaak Ti",
+    "Aayla Secura"
+   ],
+   "species_synergies": [
+    {
+     "species": "cerean",
+     "narrative": "The Cerean's natural wisdom and analytical mind makes them exceptional Consulars, able to see patterns and solutions others miss."
+    },
+    {
+     "species": "kel_dor",
+     "narrative": "The Kel Dor's deep connection to the Force and peaceful nature aligns perfectly with the Consular's diplomatic approach."
+    },
+    {
+     "species": "miraluka",
+     "narrative": "The Miraluka's unique Force sight gives them insights that make them natural healers and counselors."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "jedi_order",
+     "narrative": "The Jedi Order provides the training and structure that shapes every Consular's path of wisdom and healing."
+    },
+    {
+     "faction": "galactic_republic",
+     "narrative": "Consulars often serve as diplomats and advisors for the Republic, using their wisdom to guide policy and resolve conflicts."
+    }
+   ]
+  },
+  "hit_die": "1d8",
+  "proficiencies": {
+   "armor": [
+    "Light armor"
+   ],
+   "weapons": [
+    "Lightsabers",
+    "Blaster pistols",
+    "Vibroweapons"
+   ],
+   "tools": [
+    "Meditation kit",
+    "Healing supplies",
+    "Diplomatic kit"
+   ],
+   "saving_throws": [
+    "Wisdom",
+    "Charisma"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "Insight",
+     "Medicine",
+     "Persuasion",
+     "Religion",
+     "History",
+     "Nature"
+    ]
+   }
+  },
+  "primary_ability": "Wisdom",
+  "primary_resource": "Force Points",
+  "connections": [
+   {
+    "target_id": "jedi_order",
+    "target_type": "Faction",
+    "relationship": "Iconic To",
+    "narrative": "Consulars are the heart of the Jedi Order, serving as its primary diplomats, healers, and scholars.",
+    "mechanical_benefit": "Access to Jedi training and diplomatic resources"
+   },
+   {
+    "target_id": "galactic_republic",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "Consulars often serve as diplomats and advisors for the Republic, using their wisdom to guide policy.",
+    "mechanical_benefit": "Access to Republic diplomatic channels and intelligence"
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "\"As a Consular, you are a skilled diplomat, healer, and scholar. Use your wisdom and mastery of the Force to resolve conflicts peacefully, but be prepared to unleash devastating powers when necessary.\"\n",
+   "narrative_hooks": [
+    "diplomatic mission",
+    "forceful persuasion",
+    "healing a wounded ally"
+   ],
+   "social_dynamics": "\"Consulars are naturally charismatic and empathetic, often forming strong bonds with their allies. They can use their charm and compassion to negotiate even the most difficult conflicts.\"\n",
+   "common_motivations": [
+    "protect allies",
+    "seek knowledge",
+    "resolve conflicts peacefully"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A Jedi Consular in the Star Wars universe, wearing traditional robes and carrying healing supplies with a wise, peaceful demeanor",
+   "contextual_modifiers": [
+    {
+     "target_type": "Portrait",
+     "modifier_text": "Close-up portrait showing wise, compassionate features and calm serenity"
+    },
+    {
+     "target_type": "Action_Shot",
+     "modifier_text": "In healing or diplomatic stance, using the Force to help others"
+    },
+    {
+     "target_type": "Class_Scene",
+     "modifier_text": "In a Jedi Temple or diplomatic chamber, surrounded by books and healing supplies"
+    }
+   ]
+  },
+  "ui": {
+   "image": "images/classes/consular.jpg",
+   "icon": "icons/classes/consular.svg",
+   "color": "#00AA00"
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "long_white_robes",
+    "star_sapphire_amulet",
+    "lightsaber_hilt",
+    "Consulars_staff_icon"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing in a wide, open stance with their staff raised high for balance and stability, surrounded by a halo of shimmering blue Force energy.",
+    "energy_signature": "A gentle, pulsating glow emanates from the user's hands and eyes, as if the very fabric of the Force is responding to their presence and abilities."
+   },
+   "prompt_schema": {
+    "base_prompt": "Create an image of a wise Consular standing in a tranquil setting, surrounded by lush greenery and adorned with symbols of peace and harmony.",
+    "contextual_modifiers": [
+     "show_their_staff_in_hand",
+     "depict_a_force_energy_field_surrounding_them",
+     "include_symbols_of_peace_and_harmony_in_the_environment"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "When a Consular seeks to negotiate with an unwilling party, and the other side responds aggressively.",
+    "escalation": "As a Consular tries to reason with an increasingly hostile individual or group.",
+    "confrontation": "During a Consular's attempts to protect allies from harm, they face a strong opponent who sees them as threats."
+   },
+   "resolution_paths": {
+    "victory": "The Consular successfully resolves the conflict through diplomacy and the Force.",
+    "redemption": "A former enemy of the Consular seeks their help in making amends for past wrongs.",
+    "escape": "A Consular must flee or be pursued by those who seek to do them harm."
+   },
+   "conflict_triggers": [
+    "Refusal to negotiate",
+    "Failure to protect allies from harm",
+    "Being seen as too powerful or threatening",
+    "Involvement in sensitive or high-stakes situations"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "Mutual respect and admiration develop through shared diplomatic efforts.",
+    "stage2": "The Consular's empathetic nature helps their romantic interest open up about past traumas.",
+    "stage3": "Trust issues arise as the couple navigates situations where power or authority are involved.",
+    "stage4": "The Consular's commitment to peacekeeping is tested by the increasing danger they face together.",
+    "stage5": "Ultimate trust is earned when the couple successfully resolves a high-stakes conflict together."
+   },
+   "lifestyle_challenges": [
+    "Work-related stress and absence due to diplomatic missions",
+    "Difficulty in separating personal and professional life",
+    "Potential for romantic interest to be seen as a threat or liability"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "diplomatic",
+      "empathetic"
+     ],
+     "tone": "calm and collected"
+    },
+    "motivations": {
+     "primary": "protect allies",
+     "secondary": "seek knowledge"
+    },
+    "combat_behavior": "\"Consulars use their mastery of the Force to defend themselves, often focusing on support and protection rather than direct damage. They may attempt to reason with their opponents or use their powers to incapacitate them.\"\n",
+    "social_behavior": "\"Consulars are natural mediators, using their charm and compassion to build relationships and resolve conflicts. They can form strong bonds with their allies and work tirelessly to maintain peace and harmony.\"\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "trust",
+     "caution",
+     "hostility"
+    ],
+    "loyalty_triggers": [
+     "betrayal",
+     "abuse of power",
+     "injury to an ally"
+    ]
+   },
+   "services": [
+    "Negotiation",
+    "Healing",
+    "Information brokerage",
+    "Mediation",
+    "Training in Force manipulation"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "force_connection_1",
+    "feature_id": "force_connection",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Establish a connection with the Force to sense changes in the environment and anticipate threats. The Consular's Force connection is attuned to their surroundings, granting them insight into potential dangers.\n",
+    "effects": [
+     {
+      "type": "sense_environment",
+      "value": "Perceive subtle shifts in the Force",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "diplomatic_approach_1",
+    "feature_id": "diplomatic_approach",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Master the art of diplomacy, using persuasive words and body language to diffuse tense situations. Diplomatic approach helps Consulars navigate complex social dynamics.\n",
+    "effects": [
+     {
+      "type": "modify_interaction",
+      "value": "Increase Charisma checks by +2",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_1",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "As a Consular gains experience, they become more skilled in their chosen abilities. Proficiency bonus grants an increase to ability checks and skill checks.\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+2",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "force_empowerment_2",
+    "feature_id": "force_empowerment",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Harness the power of the Force to enhance their abilities. Consulars can amplify their spells and other abilities, making them more effective.\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Increase spell damage by +1d8",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_choice_3",
+    "feature_id": "subclass_choice",
+    "level_requirement": 3,
+    "type": "choice",
+    "description": "At 3rd level, a Consular gains access to their chosen subclass's unique abilities and playstyle.\n",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Choose a subclass",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "asi",
+    "description": "Increase the Consular's ability scores, making them more effective in various skills and abilities.\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+1 to one ability score",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "peaceful_resolution_5",
+    "feature_id": "peaceful_resolution",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "Use the Force to negotiate a peaceful resolution to conflicts. Consulars can resolve disputes without resorting to violence.\n",
+    "effects": [
+     {
+      "type": "modify_interaction",
+      "value": "Increase Charisma checks by +2",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_5",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "As a Consular gains experience, they become more skilled in their chosen abilities. Proficiency bonus grants an increase to ability checks and skill checks.\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+2",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_6",
+    "feature_id": "subclass_feature",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "Consulars can choose a unique ability from their subclass's list of features.\n",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Choose a subclass feature",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_9",
+    "feature_id": "subclass_feature",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Consulars can choose another unique ability from their subclass's list of features.\n",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Choose a subclass feature",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_10",
+    "feature_id": "subclass_feature",
+    "level_requirement": 10,
+    "type": "core",
+    "description": "Consulars can choose another unique ability from their subclass's list of features.\n",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Choose a subclass feature",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_consular_20",
+    "feature_id": "legendary_consular",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "At 20th level, a Consular becomes a true master of the Force. They gain access to powerful abilities that reflect their unique connection to the universe.\n",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Gain legendary ability",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_20",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "As a Consular gains experience, they become more skilled in their chosen abilities. Proficiency bonus grants an increase to ability checks and skill checks.\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+2",
+      "notes": ""
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "consular",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/consular.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

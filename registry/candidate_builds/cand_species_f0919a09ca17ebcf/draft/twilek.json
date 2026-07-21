@@ -1,0 +1,888 @@
+{
+ "record": {
+  "id": "twilek",
+  "name": "Twi'lek",
+  "tags": [
+   "adaptable",
+   "agile",
+   "charisma_based",
+   "charming",
+   "common",
+   "deceptive",
+   "dexterity_based",
+   "evasion",
+   "influence",
+   "insightful",
+   "resilient",
+   "twilek"
+  ],
+  "description": "Graceful and resourceful, Twi'leks thrive in harsh climates and complex societies, leveraging agility, charm, and resilience honed in the shadow of the galactic underworld.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Ryl",
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "twilek_desert_born",
+    "name": "Desert-Born",
+    "narrative": "Your species evolved on the harsh desert world of Ryloth, developing natural resistance to heat and expertise in surviving arid environments.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on checks to resist environmental effects of heat.",
+      "conditions": [
+       {
+        "key": "environmental_effect",
+        "op": "equals",
+        "value": "heat"
+       }
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Survival checks in arid environments.",
+      "conditions": [
+       {
+        "key": "environment_type",
+        "op": "equals",
+        "value": "desert"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "twilek_desert_born_corrupted",
+     "ui_transition": {
+      "animation": "sandstorm_illumination",
+      "sfx": "twi_darkness_descends"
+     }
+    }
+   },
+   {
+    "id": "twilek_lekku_intuition",
+    "name": "Lekku Intuition",
+    "narrative": "Your lekku are highly sensitive appendages that can convey and read subtle emotional cues, making you exceptionally perceptive in social situations.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Insight checks to read emotions.",
+      "conditions": [
+       {
+        "key": "check_type",
+        "op": "equals",
+        "value": "emotion_reading"
+       }
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Deception or Persuasion checks in social negotiations.",
+      "conditions": [
+       {
+        "key": "situation",
+        "op": "equals",
+        "value": "social_negotiation"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "lekku_twisted_intuition",
+     "ui_transition": {
+      "animation": "/ui/animations/intuition_blur",
+      "sfx": "/sfx/effect/kek_claw_shriek"
+     }
+    }
+   },
+   {
+    "id": "twilek_elegant_dancers",
+    "name": "Elegant Dancers",
+    "narrative": "Your species' natural grace and fluid movements allow you to avoid attacks with almost dance-like precision when unencumbered by heavy armor.",
+    "mechanics": [
+     {
+      "effect": "modify_stat",
+      "parameters": {
+       "target_property": "ac",
+       "value": "floor(@character.prof_bonus / 2)"
+      },
+      "conditions": [
+       {
+        "key": "character.armor_type",
+        "op": "in",
+        "value": [
+         "none",
+         "light"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "twilek_elegant_dancers_corrupted",
+     "ui_transition": {
+      "animation": "twi_tormented_dance",
+      "sfx": "dark_side_ghastly_harmony"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.9m",
+   "distinctions": [
+    "Smooth, hairless skin",
+    "Twin head-tails (lekku)",
+    "Large, expressive eyes",
+    "Graceful, fluid movements",
+    "Elongated head shape"
+   ],
+   "skin_color_variants": [
+    "Blue",
+    "Green",
+    "Red",
+    "Orange",
+    "Yellow",
+    "Purple",
+    "Pink",
+    "White",
+    "Black"
+   ],
+   "lekku_variants": [
+    "Long, flowing lekku",
+    "Short, practical lekku",
+    "Thick, muscular lekku",
+    "Thin, delicate lekku",
+    "Decorated with jewelry and beads"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Blue eyes",
+    "Green eyes",
+    "Purple eyes",
+    "Red eyes",
+    "Gold eyes"
+   ],
+   "common_adornments": [
+    "Flowing, colorful robes and garments",
+    "Lekku jewelry and decorative beads",
+    "Traditional Ryloth desert clothing",
+    "Elegant, form-fitting attire",
+    "Practical desert survival gear"
+   ],
+   "llm_description_prompt": "Describe a Twi'lek character. Emphasize their graceful, fluid movements and the expressive way their lekku move to convey emotions and thoughts. Their skin color should reflect their Ryloth heritage and personal background. Consider their natural elegance and the subtle ways they communicate through lekku movements and body language."
+  },
+  "class_synergies": [
+   {
+    "class": "Scoundrel",
+    "narrative": "Twi'leks' natural charm and lekku intuition make them exceptional Scoundrels, able to read situations and manipulate others with subtle grace.",
+    "mechanical_benefits": [
+     "Lekku Intuition trait enhances deception and persuasion",
+     "High Charisma supports social manipulation",
+     "Elegant Dancers trait improves mobility and evasion"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Twi'leks' natural diplomatic abilities and ability to read emotions through lekku movements make them exceptional Consulars.",
+    "mechanical_benefits": [
+     "Lekku Intuition enhances insight and negotiation",
+     "High Charisma supports diplomatic functions",
+     "Natural grace aids in formal diplomatic settings"
+    ]
+   },
+   {
+    "class": "Operative (Infiltrator)",
+    "narrative": "Twi'leks' natural agility and ability to blend into different social environments make them excellent Operatives.",
+    "mechanical_benefits": [
+     "Elegant Dancers trait enhances mobility and stealth",
+     "Lekku Intuition aids in social infiltration",
+     "High Dexterity supports Operative's agility-based abilities"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Twi'leks' desert heritage and natural agility make them excellent Scouts, especially in harsh environments.",
+    "mechanical_benefits": [
+     "Desert-Born trait enhances survival in harsh conditions",
+     "Elegant Dancers improves mobility and evasion",
+     "Natural adaptability to different environments"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Ryloth Resistance",
+    "narrative": "Many Twi'leks fight against oppression and slavery, forming resistance movements to protect their people and culture."
+   },
+   {
+    "faction": "Hutt Cartels",
+    "narrative": "Unfortunately, many Twi'leks have been forced into servitude by the Hutts, though some have risen to positions of influence within the cartels."
+   },
+   {
+    "faction": "Rebel Alliance",
+    "narrative": "Twi'leks have been strong supporters of the Rebellion, using their diplomatic skills and networks to aid the cause of freedom."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Lekku Intuition",
+   "base_description": "Your species has an innate ability to read emotions and communicate through subtle lekku movements. You have advantage on Insight checks and social negotiations.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your lekku intuition has grown more refined. You can read deeper emotions and communicate more complex thoughts through lekku movements.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Charisma (Deception) checks",
+      "conditions": [
+       {
+        "key": "communication_type",
+        "op": "in",
+        "value": [
+         "lekku_communication",
+         "emotional_manipulation",
+         "social_reading"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your lekku communication has become legendary. You can convey complex messages and emotions through subtle lekku movements.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Lekku Communication",
+      "description": "Once per long rest, you can communicate silently with other Twi'leks or convey complex emotions to any species"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of lekku communication. Your ability to read and manipulate emotions is unparalleled.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Emotional Mastery",
+      "description": "Once per long rest, you can perfectly read any creature's emotions or create powerful emotional responses"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of emotional communication. Your lekku movements can sway hearts and change minds across the galaxy.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Emotional Influence",
+      "description": "Once per long rest, you can create a powerful emotional effect that can influence entire groups or create lasting emotional bonds"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Twi'lek's lekku intuition has grown more refined. Their ability to read emotions and communicate through subtle movements has become increasingly sophisticated.",
+    "level_10": "Your Twi'lek's lekku communication has become legendary. They can convey complex messages and emotions through the most subtle of movements, their communication bordering on the mystical.",
+    "level_15": "Your Twi'lek has become a master of lekku communication. Their ability to read and manipulate emotions is unparalleled, making them a force to be reckoned with in any social situation.",
+    "level_20": "Your Twi'lek is a living legend of emotional communication. Their lekku movements can sway hearts and change minds across the galaxy, their influence transcending language and culture."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Ryloth Heritage",
+    "type": "traditional",
+    "description": "Your deep connection to Ryloth's harsh desert environment and the resilience of your people.",
+    "activation": "When facing adversity or in desert environments",
+    "effect": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "adversity",
+        "harsh_conditions",
+        "desert_survival"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon the strength of your Ryloth ancestors, finding resilience and determination in the face of any challenge.",
+    "faction_connection": "Ryloth Resistance",
+    "optional": true
+   },
+   {
+    "name": "Graceful Adaptation",
+    "type": "cultural",
+    "description": "Your species' natural ability to adapt to different social environments and cultural contexts.",
+    "activation": "When entering new social situations or adapting to different cultures",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "cultural_adaptation",
+        "social_integration",
+        "diplomatic_negotiation"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can seamlessly adapt to any social environment, using your natural grace and lekku communication to bridge cultural divides.",
+    "faction_connection": "Rebel Alliance",
+    "optional": true
+   },
+   {
+    "name": "Freedom Fighter",
+    "type": "narrative",
+    "description": "Your connection to the Twi'lek tradition of fighting against oppression and slavery.",
+    "activation": "When fighting against oppression or protecting the vulnerable",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Intimidation) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "fighting_oppression",
+        "protecting_vulnerable",
+        "resistance_actions"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can inspire others to fight for freedom and justice, drawing upon the long tradition of Twi'lek resistance against oppression.",
+    "faction_connection": "Ryloth Resistance",
+    "optional": true
+   },
+   {
+    "name": "Survivor's Wisdom",
+    "type": "social",
+    "description": "Your species' hard-won wisdom from surviving in harsh conditions and oppressive environments.",
+    "activation": "When sharing wisdom or helping others survive difficult situations",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Insight) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "sharing_wisdom",
+        "survival_advice",
+        "mentoring_others"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can share the hard-won wisdom of your people, helping others survive and thrive in difficult circumstances.",
+    "faction_connection": "Twi'lek Communities",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Twi'lek Resilience and Adaptation",
+   "cultural_networks": [
+    "Ryloth Resistance",
+    "Twi'lek Communities",
+    "Freedom Fighter Networks",
+    "Cultural Adaptation Societies",
+    "Survivor Wisdom Circles"
+   ],
+   "traditional_practices": [
+    "Lekku Communication Rituals",
+    "Desert Survival Training",
+    "Freedom Fighting Traditions",
+    "Cultural Adaptation Ceremonies",
+    "Survivor Wisdom Sharing"
+   ],
+   "cultural_knowledge": [
+    "Desert Survival",
+    "Emotional Communication",
+    "Resistance Tactics",
+    "Cultural Adaptation",
+    "Twi'lek History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "desert",
+    "advantage": "Natural adaptation to harsh desert environments and extreme heat",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Survival checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "desert"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "survival",
+        "navigation",
+        "resource_finding"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through desert environments with natural ease, your species' evolutionary adaptation to Ryloth's harsh climate making you perfectly at home in arid conditions.",
+    "narrative_hooks": [
+     "Desert survival and navigation",
+     "Heat resistance and adaptation",
+     "Desert resource finding",
+     "Arid environment exploration"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "urban",
+    "advantage": "Natural ability to adapt to urban environments and social situations",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "urban"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "social_adaptation",
+        "cultural_integration",
+        "urban_negotiation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural adaptability allows you to thrive in urban environments, seamlessly integrating into different social contexts and cultural situations.",
+    "narrative_hooks": [
+     "Urban social adaptation",
+     "Cultural integration",
+     "Urban negotiation and diplomacy",
+     "City-based social networks"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "social_networks",
+    "advantage": "Enhanced ability to navigate and manipulate social networks",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Deception) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "social_networks"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "social_manipulation",
+        "network_building",
+        "information_gathering"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural understanding of social dynamics and lekku communication allows you to create and manipulate complex webs of influence and information.",
+    "narrative_hooks": [
+     "Social network building",
+     "Information network manipulation",
+     "Social influence campaigns",
+     "Network-based intelligence gathering"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "harsh_conditions",
+    "advantage": "Enhanced resilience and survival in harsh or oppressive conditions",
+    "situational_bonus": {
+     "type": "saving_throw_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "harsh_conditions"
+      },
+      {
+       "key": "save_type",
+       "op": "in",
+       "value": [
+        "constitution",
+        "wisdom",
+        "charisma"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your species' history of surviving oppression and harsh conditions has made you naturally resilient, able to endure and thrive where others would falter.",
+    "narrative_hooks": [
+     "Oppression resistance",
+     "Harsh condition survival",
+     "Resilience demonstrations",
+     "Survivor leadership"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "desert",
+    "urban",
+    "social_networks",
+    "harsh_conditions"
+   ],
+   "environmental_knowledge": [
+    "Desert Survival",
+    "Urban Adaptation",
+    "Social Network Dynamics",
+    "Resistance Tactics",
+    "Cultural Integration",
+    "Survivor Wisdom"
+   ],
+   "survival_techniques": [
+    "Desert Navigation and Survival",
+    "Urban Social Adaptation",
+    "Network Building and Manipulation",
+    "Oppression Resistance",
+    "Cultural Integration",
+    "Survivor Leadership"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "flavor_text": "Born on the twin suns-drenched world of Ryloth, Twi'leks have long been a resilient people, weaving intricate cultural tapestries from the threads of survival. Their iconic frills, once a symbol of status and beauty, now serve as a reminder of their complex history: a testament to the delicate balance between freedom and oppression.",
+  "llm_guidance": {
+   "roleplay_guidance": "Twi'leks are often seen as enigmatic figures, navigating the complexities of galactic politics with an air of sophistication. Their unique blend of agility, charm, and resilience makes them adept at traversing the underworld, but also leaves them vulnerable to exploitation.",
+   "narrative_hooks": [
+    "Explore Ryloth's harsh desert landscapes and delve into the history of Twi'lek slavery.",
+    "Uncover the intricate web of alliances and rivalries that define Twi'lek politics."
+   ],
+   "social_dynamics": "Twi'leks tend to form close-knit communities, often bound together by shared experiences and cultural heritage. They are known for their warmth and hospitality towards those they consider friends, but can be fiercely loyal only to those who have earned their trust.",
+   "common_motivations": [
+    "Seeking justice for past oppressions",
+    "Expanding Twi'lek influence in the galaxy"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "type": "charismatic",
+     "traits": [
+      "adaptable",
+      "charming",
+      "insightful"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "influence",
+     "secondary_goals": [
+      "survival",
+      "advancement"
+     ]
+    },
+    "combat_behavior": "Use agility and evasive maneuvers to avoid taking damage, while occasionally using cunning to outmaneuver opponents.",
+    "social_behavior": "Build relationships through charm and persuasion, often manipulating others to achieve goals."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "initial": "low",
+     "max": "high"
+    },
+    "loyalty_triggers": [
+     "Shared experience in the face of adversity",
+     "Personal gain or benefit"
+    ]
+   },
+   "services": [
+    {
+     "name": "Influence Network",
+     "description": "The Twi'lek companion has established connections within the galaxy, granting access to exclusive information and resources."
+    },
+    {
+     "name": "Smuggling Contacts",
+     "description": "The Twi'lek companion can arrange for transportation through treacherous asteroid fields or other hard-to-reach areas."
+    }
+   ]
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    [
+     "skin_texture",
+     "smooth"
+    ],
+    [
+     "eye_color",
+     "orange",
+     "brown",
+     "blue",
+     "red"
+    ],
+    [
+     "hair_type",
+     "none (lekku)"
+    ],
+    [
+     "facial_features",
+     "prominent cheekbones",
+     "nose ring"
+    ]
+   ],
+   "morphology": {
+    "head_type": "long and slender",
+    "body_type": "graceful and lean",
+    "average_height": "1.8m"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_texture": "soft",
+      "eye_color": "bright",
+      "facial_features": "rounded"
+     },
+     "adult": {
+      "skin_texture": "smooth",
+      "eye_color": "vibrant",
+      "facial_features": "defined"
+     },
+     "elder": {
+      "skin_texture": "lined",
+      "eye_color": "clouded",
+      "facial_features": "gaunt"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      [
+       "skin_texture",
+       "pallid",
+       "veined"
+      ],
+      [
+       "eye_color",
+       "sith yellow"
+      ],
+      [
+       "facial_features",
+       "sunken cheekbones",
+       "sharp angles"
+      ]
+     ],
+     "light_side": [
+      [
+       "skin_texture",
+       "radiant",
+       "smooth"
+      ],
+      [
+       "eye_color",
+       "clear"
+      ],
+      [
+       "facial_features",
+       "serene expression"
+      ]
+     ]
+    }
+   },
+   "unique_identifiers": [
+    [
+     "head crest shape"
+    ],
+    [
+     "body marking pattern"
+    ]
+   ],
+   "prompt_schema": {
+    "base_prompt": "Twi'lek {age} with {morality}",
+    "contextual_modifiers": [
+     "age",
+     "morality",
+     "head_crest_color"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "The Twi'lek sees the nemesis as a valuable ally or resource to leverage for their own gain.",
+     "effects": [
+      "Nemesis is seen as a potential patron or benefactor."
+     ]
+    },
+    "escalation": {
+     "description": "The Twi'lek becomes increasingly manipulative and deceitful in their interactions with the nemesis, pushing boundaries without directly confronting them.",
+     "effects": [
+      "Nemesis begins to question the Twi'lek's true intentions."
+     ]
+    },
+    "confrontation": {
+     "description": "The Twi'lek openly confronts the nemesis, challenging their power or influence.",
+     "effects": [
+      "Nemesis views the Twi'lek as a threat that must be eliminated."
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "The Twi'lek successfully manipulates the nemesis into serving their interests.",
+    "redemption": "The Twi'lek finds a way to make amends for past wrongs done against the nemesis, earning their respect and loyalty.",
+    "escape": "The Twi'lek flees or escapes the conflict with the nemesis, but not without being pursued."
+   },
+   "conflict_triggers": [
+    "The Twi'lek tries to steal valuable resources from the nemesis.",
+    "The Twi'lek attempts to manipulate the nemesis into doing their bidding."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The Twi'lek feels a strong sense of injustice or grievance against the nemesis.",
+     "The Twi'lek sees the nemesis as a major obstacle to their goals or ambitions."
+    ],
+    "vendetta_type": "Manipulation and deception, leveraging the Twi'lek's charisma and agility."
+   },
+   "overrides": {
+    "progression": [
+     {
+      "name": "The Ryloth Raiders",
+      "description": "A notorious group of Twi'leks who have turned to piracy and terrorism to fight against their oppressors."
+     },
+     {
+      "name": "The Mandalorian Empire",
+      "description": "A powerful and expansionist force that seeks to crush any opposition, including the Twi'lek people."
+     }
+    ],
+    "triggers": [
+     {
+      "event": "Twi'leks are enslaved or oppressed.",
+      "response": "Rise up against their oppressors and fight for freedom."
+     },
+     {
+      "event": "A powerful ally or benefactor is gained.",
+      "response": "Seek to expand Twi'lek influence in the galaxy, using newfound resources and alliances."
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Both have a strong sense of resilience and adaptability in the face of adversity.",
+    "Both value cunning and strategy over brute force."
+   ],
+   "romance_progression": {
+    "stage1": "A mutual acquaintance or shared goal brings the Twi'lek and nemesis into close proximity.",
+    "stage2": "The Twi'lek begins to subtly manipulate the nemesis, making them feel seen and appreciated.",
+    "stage3": "Nemesis starts to develop feelings for the Twi'lek, but their trust must be earned through vulnerability.",
+    "stage4": "A major conflict or challenge tests the strength of the Twi'lek-nemesis bond.",
+    "stage5": "The Twi'lek and nemesis share a deep and intimate connection, understanding each other's true nature."
+   },
+   "romance_events": [
+    "The Twi'lek surprises the nemesis with a thoughtful gift or gesture.",
+    "Nemesis is forced to confront their own vulnerabilities in front of the Twi'lek."
+   ],
+   "romance_modifiers": [
+    "A bonus to Charisma checks made by the Twi'lek towards the nemesis.",
+    "Nemesis gains an advantage on Wisdom (Perception) checks when interacting with the Twi'lek, sensing their true intentions."
+   ],
+   "overrides": {
+    "approach": [
+     "Twi'leks often approach love with a sense of caution, valuing loyalty and commitment above all else. They may be hesitant to open themselves up to new relationships, but are fiercely devoted once they have committed."
+    ],
+    "cultural_practices": [
+     "The ritual of the 'Festivals of Lights', where Twi'leks come together to honor their ancestors and celebrate love and community."
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "twilek",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/twilek.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

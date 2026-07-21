@@ -1,0 +1,178 @@
+{
+ "record": {
+  "id": "warden",
+  "name": "Warden",
+  "class_id": "guardian",
+  "base_class": "guardian",
+  "tags": [
+   "guardian",
+   "warden",
+   "defensive",
+   "tank",
+   "protector",
+   "territorial",
+   "battlefield_control",
+   "area_defense",
+   "light_side",
+   "jedi"
+  ],
+  "description": "Wardens are masters of area protection and territorial defense. They excel at protecting specific locations, establishing defensive perimeters, and using their protective abilities to safeguard entire areas from threats.",
+  "specialization_features": [
+   "territorial_defense",
+   "area_protection",
+   "defensive_perimeter",
+   "warden_mastery",
+   "legendary_warden"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Wardens safeguard territory and defend against threats.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Jedi robes",
+    "A lightsaber"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level3_feature1",
+    "feature_id": "Warden_Focus",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Focus your defensive prowess on a specific area, granting you advantage on Wisdom (Perception) checks within that area.",
+    "effects": [
+     {
+      "type": "ability_score_improvement",
+      "value": "Wisdom score increases by 1."
+     }
+    ]
+   },
+   {
+    "node_id": "level7_feature2",
+    "feature_id": "Territorial_Defense",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Establish a defensive perimeter around a location, granting allies within it advantage on Wisdom (Perception) checks and immunity to being charmed.",
+    "effects": [
+     {
+      "type": "ability",
+      "value": "Charmed creatures are immune to the effect."
+     },
+     {
+      "type": "skill_proficiency",
+      "value": "Wisdom (Perception) proficiency."
+     }
+    ]
+   },
+   {
+    "node_id": "level11_feature3",
+    "feature_id": "Protective_Influence",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Your presence has a calming effect on allies within the defensive perimeter, granting them advantage on Wisdom saving throws against being frightened.",
+    "effects": [
+     {
+      "type": "ability",
+      "value": "Frightened creatures are immune to the effect."
+     },
+     {
+      "type": "saving_throw_advantage",
+      "value": "Wisdom saving throw advantage."
+     }
+    ]
+   },
+   {
+    "node_id": "level15_feature4",
+    "feature_id": "Battlefield_Control",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain control over a portion of the battlefield, allowing you to move up to your speed as a bonus action and forcing creatures within that area to make opportunity attacks against you.",
+    "effects": [
+     {
+      "type": "movement",
+      "value": "You can move up to your speed as a bonus action."
+     },
+     {
+      "type": "combat_advantage",
+      "value": "Creatures within the area have disadvantage on opportunity attacks."
+     }
+    ]
+   },
+   {
+    "node_id": "level18_feature5",
+    "feature_id": "Ultimate_Defense",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You enter a state of ultimate defense, granting you a +2 bonus to Armor Class and allowing you to use your reaction to make an opportunity attack.",
+    "effects": [
+     {
+      "type": "armor_class_bonus",
+      "value": "Your AC increases by 2."
+     },
+     {
+      "type": "reaction_feature",
+      "value": "You can use your reaction to make an opportunity attack."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Kyber Crystal Icon",
+    "Guardian Emblem Token"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with lightsaber raised, prepared to deflect incoming blaster fire.",
+    "energy_signature": "Emanates a calming blue aura that stabilizes nearby allies and repels hostile energies."
+   },
+   "prompt_schema": {
+    "base_prompt": "A Warden guardian standing vigilant on the forest moon of Endor, surrounded by towering trees and ancient ruins.",
+    "contextual_modifiers": [
+     "Show Warden's lightsaber in 'guardian mode', with crystal focus and hilt emblems",
+     "Include a faint image of the Warden's loyalty oath on their cloak or armor"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "warden",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian_warden.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

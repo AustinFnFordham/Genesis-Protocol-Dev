@@ -1,0 +1,215 @@
+{
+ "record": {
+  "id": "power_force_immortality",
+  "name": "Force Immortality",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 5,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 5
+   }
+  ],
+  "narrative": "You achieve the ultimate communion with the Living Force, transcending the boundaries between life and death. Your physical form becomes sustained by pure Force energy, immune to age and decay, regenerating from any wound. This is the legendary secret of the ancient Jedi Masters—true immortality through harmony with the Force.",
+  "flavor_text": "\"Death is a natural part of life. Rejoice for those who transform into the Force.\" - Master Yoda",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "body glowing with ethereal light as the Force flows through every cell"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "achieving perfect unity with the Living Force, transcending mortality"
+   }
+  ],
+  "casting_time": "1 Minute",
+  "range": "0 self",
+  "duration": "24 hour",
+  "base_effect": {
+   "description": "You achieve the ultimate mastery of the light side, becoming one with the Force and transcending mortal limitations.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": "immortal",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Cannot die from old age or disease"
+    },
+    {
+     "type": "modify_stat",
+     "value": "regeneration",
+     "target_property": "healing_per_round",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Regenerate 10 hit points at start of each turn"
+    },
+    {
+     "type": "grant_advantage",
+     "value": "all_saves",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on all saving throws"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "jedi_master",
+    "narrative": "The Jedi Master's lifetime of Force study allows them to maintain their consciousness even beyond death. Their immortality extends beyond mere physical preservation—they can manifest as Force ghosts to guide future generations.",
+    "mechanical_benefit": [
+     {
+      "type": "force_ghost",
+      "value": "conscious_after_death",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Jedi Masters can manifest as Force ghosts if killed while immortal"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human willpower allows them to maintain their identity through immortality. While other species might lose themselves in the eternal Force, humans retain their personality, memories, and connections to the mortal world.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_regeneration",
+      "value": "15_hp_per_turn",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans regenerate 15 HP instead of 10 per turn"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's ancient texts contain the true secret of immortality—not mere survival, but eternal service to the Force. Their immortals become living conduits of light side energy, healing others through their presence.",
+    "mechanical_benefit": [
+     {
+      "type": "healing_aura",
+      "value": "1d4_hp_per_round",
+      "target_scopes": [
+       "allies_within_10_feet"
+      ],
+      "notes": "Jedi immortals emit healing energy, restoring 1d4 HP to nearby allies"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the transformation into an immortal being—wounds closing instantly, aging reversing, the body glowing with eternal Force energy. Show the character's newfound immunity to death, their regeneration visible as flesh knits and bones mend. They radiate serenity and power.",
+   "tactical_notes": "Force Immortality is a game-breaking Level 5 power. 10 HP regeneration per turn makes you nearly unkillable. Advantage on all saves provides incredible defense. The 24-hour duration with 1-minute casting makes it a strategic pre-battle choice. This fundamentally changes how you play.",
+   "narrative_hooks": [
+    "The immortal becomes a beacon of hope, unable to fall in battle",
+    "Enemies realize conventional weapons cannot stop an immortal",
+    "The burden of outliving everyone you know weighs heavily"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.3), An ethereal digital painting of Force Immortality. A figure radiates pure light, their body translucent and glowing with Living Force energy. Wounds heal instantly, aging reverses, mortality itself rejected. They stand serene and eternal, untouched by death, a being of pure Force energy in physical form. Golden light streams from their presence, by Marc Simonetti and Peter Mohrbacher",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_immortality.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_immortality",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_immortality.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

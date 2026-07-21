@@ -1,0 +1,208 @@
+{
+ "record": {
+  "id": "starship_weapon_heavy_turbolaser",
+  "name": "Heavy Turbolaser Battery",
+  "weapon_type": "Turbolaser",
+  "weapon_class": "Heavy",
+  "era": "Galactic_Empire",
+  "item_type": "Weapon",
+  "narrative": "A massive energy weapon that fires concentrated bolts of destructive plasma. The heavy turbolaser is the backbone of capital ship armament, capable of devastating enemy vessels with overwhelming firepower.",
+  "flavor_text": "'The turbolaser's power is matched only by its precision.' - Imperial Naval Doctrine",
+  "cultural_significance": "Turbolasers represent the Empire's philosophy of overwhelming force and technological superiority. They are symbols of both protection and oppression, depending on whose side you're on.",
+  "starship_narrative": "The heavy turbolaser battery is the primary offensive weapon of capital ships, mounted in massive turrets that can rotate to track targets across multiple firing arcs. Each battery requires a dedicated crew of gunners and technicians to operate effectively.",
+  "combat_significance": "Heavy turbolasers are the primary weapon for ship-to-ship combat, capable of penetrating shields and hull armor. Their slow rate of fire is compensated by devastating damage output and long range.",
+  "famous_installations": [
+   "Imperial Star Destroyer - Primary armament",
+   "Mon Calamari Cruiser - Heavy defense batteries",
+   "Death Star - Superlaser precursor technology"
+  ],
+  "starship_connections": [
+   {
+    "target_id": "faction_galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Iconic_To",
+    "narrative": "The Empire's Star Destroyers are famous for their heavy turbolaser batteries, which exemplify the Imperial doctrine of overwhelming firepower.",
+    "mechanical_benefit": "Imperial crews gain +1 to attack rolls with turbolasers"
+   },
+   {
+    "target_id": "class_gunner",
+    "target_type": "Class",
+    "relationship": "Required_For",
+    "narrative": "Heavy turbolasers require specialized gunners with extensive training in targeting and fire control systems.",
+    "mechanical_benefit": "Gunners can reduce reload time by 1 round"
+   },
+   {
+    "target_id": "starship_imperial_star_destroyer",
+    "target_type": "Starship",
+    "relationship": "Standard_On",
+    "narrative": "The Imperial Star Destroyer mounts sixty heavy turbolaser batteries as its primary armament.",
+    "mechanical_benefit": "Star Destroyers gain additional turbolaser slots"
+   }
+  ],
+  "starship_llm_guidance": {
+   "combat_hooks": [
+    "A turbolaser battery malfunction creates a dangerous situation during combat",
+    "The crew must defend their turbolaser positions from boarding parties",
+    "A skilled gunner becomes a hero by making impossible shots"
+   ],
+   "mission_seeds": [
+    "Sabotage enemy turbolaser batteries before they can fire",
+    "Rescue a captured gunner who knows secret targeting codes",
+    "Defend a turbolaser battery from enemy fighters"
+   ],
+   "crew_interactions": [
+    "Gunners develop rivalries over who has the best accuracy",
+    "Technicians work overtime to keep turbolasers operational",
+    "Commanders rely on turbolaser crews for tactical decisions"
+   ],
+   "tactical_usage": [
+    "Use turbolasers to soften up enemy shields before closing to close range",
+    "Coordinate multiple turbolaser batteries for devastating broadsides",
+    "Use turbolasers to provide covering fire for smaller ships"
+   ],
+   "maintenance_considerations": "Heavy turbolasers require constant maintenance and calibration. They generate significant heat and power draw, requiring dedicated cooling systems and power management.",
+   "strategic_impact": "Heavy turbolasers determine the outcome of fleet engagements. Their presence or absence can completely change the tactical calculus of space battles."
+  },
+  "starship_mechanics": {
+   "firing_arc": [
+    "Forward",
+    "Port",
+    "Starboard"
+   ],
+   "fire_control_system": "Gunner",
+   "power_draw": 8,
+   "tracking_speed": 6,
+   "reload_time": "2 rounds",
+   "ammunition_capacity": 50,
+   "heat_generation": 5,
+   "accuracy_modifier": 0,
+   "damage_modifier": 2,
+   "range_categories": {
+    "short": 1000,
+    "medium": 5000,
+    "long": 10000,
+    "extreme": 20000
+   },
+   "special_effects": [
+    {
+     "effect_type": "Shield_Drain",
+     "description": "Turbolaser bolts can temporarily overload enemy shield systems",
+     "dc": 18,
+     "duration": "1 round"
+    },
+    {
+     "effect_type": "Hull_Breach",
+     "description": "Direct hits can breach hull armor and damage internal systems",
+     "dc": 20,
+     "duration": "Until repaired"
+    }
+   ]
+  },
+  "description": "A massive energy weapon mounted on capital ships, capable of devastating enemy vessels with concentrated plasma bolts.",
+  "rarity": "Military",
+  "weight": 5000,
+  "value": 50000,
+  "properties": [
+   "heavy_weapon",
+   "energy_weapon",
+   "capital_ship_armament"
+  ],
+  "starship_image_generation": {
+   "base_prompt": "A massive heavy turbolaser battery mounted on a capital ship, with multiple energy focusing arrays and targeting systems. The weapon glows with contained energy, ready to unleash devastating plasma bolts. The scene conveys the overwhelming power and technological sophistication of capital ship armament.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Starship_Exterior",
+     "modifier_text": "The turbolaser battery protrudes from the ship's hull, its massive barrel aimed menacingly into space."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "The turbolaser fires, creating a brilliant streak of energy as plasma bolts streak toward enemy vessels."
+    },
+    {
+     "target_type": "Crew_Station",
+     "modifier_text": "Gunners work frantically at their stations, coordinating targeting and fire control for the massive weapon."
+    }
+   ]
+  },
+  "starship_ui": {
+   "weapon_display_image": "/assets/images/starship_weapons/heavy_turbolaser_battery.png",
+   "weapon_icon": "/assets/icons/starship_weapons/turbolaser.svg",
+   "firing_arc_diagram": "/assets/diagrams/weapons/turbolaser_firing_arc.png",
+   "status_indicator": "/assets/icons/status/turbolaser_ready.svg"
+  },
+  "ui": {
+   "image": "/assets/images/items/weapon_heavy_turbolaser.png",
+   "icon": "/assets/icons/items/turbolaser.svg"
+  },
+  "starship_tags": [
+   "capital_weapon",
+   "energy_weapon",
+   "heavy_armament",
+   "imperial_standard",
+   "shield_breaker"
+  ],
+  "starship_themes": [
+   "overwhelming_force",
+   "technological_superiority",
+   "military_power",
+   "capital_ship_combat"
+  ],
+  "combat_mood": "Intense and overwhelming, representing the raw destructive power of capital ship warfare",
+  "tags": [
+   "weapon",
+   "heavy",
+   "energy",
+   "military",
+   "capital_ship"
+  ],
+  "themes": [
+   "destruction",
+   "power",
+   "technology",
+   "warfare"
+  ],
+  "mood": "Powerful and intimidating, representing the might of military technology"
+ },
+ "validation": {
+  "candidate_urid": "starship_weapon_heavy_turbolaser",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_weapons/heavy_turbolaser.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "6e92e86f0ba136ccdaaea8f27b056eb6b6b2a22858fc6515e57a750f2adc27f8",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

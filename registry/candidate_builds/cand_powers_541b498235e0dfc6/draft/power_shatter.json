@@ -1,0 +1,232 @@
+{
+ "record": {
+  "id": "power_shatter",
+  "name": "Shatter",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "sonic",
+   "thunder",
+   "area_effect",
+   "vibration",
+   "destruction",
+   "resonance"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Sonic resonance weapon for area disruption"
+   }
+  },
+  "narrative": "You emit a devastating sonic pulse tuned to destructive resonance frequencies, sound waves shattering glass, cracking stone, and causing internal injuries through pure vibration. The power manifests as visible sonic rings radiating outward, everything in their path vibrating violently before breaking apart.",
+  "flavor_text": "\"Everything has a resonant frequency. I just found yours.\" - Acoustic Engineer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating sonic emitter or resonance device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating frequencies for maximum destructive resonance"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You create a sonic pulse that shatters objects and damages creatures.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 3,
+      "dice_size": 8,
+      "damage_type": "thunder",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_10_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Constitution save or take 3d8 thunder damage in 10-foot radius"
+    },
+    {
+     "type": "shatter_objects",
+     "value": {
+      "material_types": [
+       "glass",
+       "crystal",
+       "brittle"
+      ]
+     },
+     "target_scopes": [
+      "objects_in_area"
+     ],
+     "notes": "Automatically shatter fragile objects in area"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of resonance frequencies makes their Shatter surgical destruction. They can tune sonic pulses to target specific materials—shattering armor but leaving flesh intact, or vice versa—turning physics into precision weapon.",
+    "mechanical_benefit": [
+     {
+      "type": "selective_shatter",
+      "value": {
+       "options": [
+        "creatures_only",
+        "objects_only",
+        "both"
+       ]
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers choose whether Shatter affects creatures, objects, or both."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity finds unexpected applications for Shatter. They've used it to trigger avalanches, collapse structures, even create impromptu excavations—turning destructive resonance into versatile tool through innovative thinking.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 8,
+       "damage_type": "thunder",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans deal an additional 1d8 thunder damage (4d8 total)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance weaponizes Shatter for sabotage operations. Their versions can collapse Imperial structures, shatter AT-AT viewports, or destroy critical equipment—sonic warfare as force multiplier against superior numbers.",
+    "mechanical_benefit": [
+     {
+      "type": "structural_damage",
+      "value": {
+       "effect": "double_damage_to_structures"
+      },
+      "target_scopes": [
+       "structures"
+      ],
+      "notes": "Rebel Shatter deals double damage to buildings and vehicles."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the sonic pulse radiating outward in visible rings, everything vibrating violently. Show glass exploding, stone cracking, people clutching ears as internal organs vibrate. The destruction should feel visceral and overwhelming through pure sound.",
+   "tactical_notes": "Shatter deals 3d8 thunder damage in 10-foot radius at 60 feet and automatically destroys fragile objects. Costs 2 Tech Points. Thunder damage is rare and potent. Perfect for area damage and environmental destruction. The auto-shatter creates tactical opportunities.",
+   "narrative_hooks": [
+    "Shatter destroys a critical barrier, opening new path",
+    "The sonic pulse reveals hidden structural weaknesses",
+    "Shattering causes catastrophic collateral damage"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a sonic shatter pulse radiating outward. Visible sonic rings expand from the epicenter, glass exploding, stone cracking, materials shattering from pure resonance. Creatures clutch their ears in pain as the devastating vibrations pass through them. The scene captures destruction through weaponized sound.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/shatter.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_shatter",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_shatter.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,223 @@
+{
+ "record": {
+  "id": "power_shock",
+  "name": "Shock",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "electrical",
+   "lightning",
+   "stun",
+   "incapacitation",
+   "non_lethal",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic electrical shock weapon for incapacitation"
+   }
+  },
+  "narrative": "You deliver a concentrated electrical shock that overwhelms the target's nervous system, muscles spasming uncontrollably as current courses through them. The power manifests as crackling arcs of electricity jumping from your weapon or hand, the target convulsing from the jolt before collapsing stunned.",
+  "flavor_text": "\"Non-lethal doesnt mean gentle.\" - Riot Control Officer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "pointing shock weapon or touching target"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating electrical discharge for incapacitation"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You deliver an electrical shock to incapacitate a target.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "lightning",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 lightning damage to target"
+    },
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "stunned"
+     },
+     "duration": {
+      "amount": 1,
+      "unit": "round"
+     },
+     "conditions": [
+      {
+       "key": "constitution_save_failed",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target is stunned for 1 round on failed Constitution save"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of bioelectricity makes their Shock devastatingly precise. They calibrate voltage and amperage to target specific nerve clusters, creating incapacitation that bypasses physical toughness through neurological overload.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_dc",
+      "value": {
+       "bonus": 2,
+       "stat": "save_dc"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineer shocks increase save DC by 2 from optimized calibration."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to adjust Shock for different physiologies. They instinctively calibrate for species differences, making their electrical attacks effective against targets that would normally resist through alien biology.",
+    "mechanical_benefit": [
+     {
+      "type": "bypass_resistance",
+      "value": {
+       "resistance_type": "lightning"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human shocks ignore lightning resistance from adaptive calibration."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Shock for interrogation and crowd control. Their versions are designed for maximum pain without permanent damage—calculated cruelty that breaks resistance through suffering while leaving subjects intact for questioning.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_stun",
+      "value": {
+       "duration": {
+        "amount": 2,
+        "unit": "rounds"
+       }
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Imperial shocks stun for 2 rounds instead of 1 on failed save."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the electrical arc crackling between weapon and target, their body convulsing as current overwhelms their nervous system. Show muscles spasming uncontrollably, the target collapsing stunned. The shock should feel incapacitating and painful but non-lethal.",
+   "tactical_notes": "Shock is a cantrip dealing 1d4 lightning damage with potential stun effect at 5 feet. The stun on failed save is powerful control. Close range is risky but the incapacitation justifies it. Perfect for non-lethal takedowns. No resource cost makes it reliable.",
+   "narrative_hooks": [
+    "Shock incapacitates a guard silently during infiltration",
+    "The electrical attack reveals the user's technical capabilities",
+    "A stunned enemy becomes vulnerable to capture or escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of electrical shock being delivered at close range. Crackling arcs of electricity jump from weapon to target, their body convulsing as current overwhelms their nervous system. Muscles spasm uncontrollably as they collapse stunned, the incapacitation immediate and total. The scene captures non-lethal electrical warfare.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/shock.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_shock",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_shock.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

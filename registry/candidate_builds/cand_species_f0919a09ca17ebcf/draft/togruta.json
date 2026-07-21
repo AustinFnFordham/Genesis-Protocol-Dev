@@ -1,0 +1,498 @@
+{
+ "record": {
+  "id": "togruta",
+  "name": "Togruta",
+  "tags": [
+   "charisma_based",
+   "charismatic",
+   "common",
+   "detection",
+   "force_sensitive",
+   "hunter",
+   "jedi",
+   "mechanics",
+   "perception",
+   "perceptive",
+   "predator",
+   "togruta",
+   "uncommon",
+   "wisdom_based"
+  ],
+  "description": "Togrutas are humanoids from the planet Shili, distinguished by their colorful skin patterns and distinctive montrals and lekku. These sensory organs allow them to perceive the world in ways other species cannot, making them naturally perceptive and charismatic. Their tribal heritage emphasizes community bonds and spiritual awareness.",
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Togruti"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "starting_xp": 110,
+  "innate_traits": [
+   {
+    "id": "togruta_montral_senses",
+    "name": "Montral Senses",
+    "narrative": "Your montrals and lekku are highly sensitive sensory organs that allow you to perceive vibrations, electromagnetic fields, and subtle changes in your environment. This heightened awareness makes you exceptionally perceptive.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Perception"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "perception_checks",
+      "conditions": [
+       {
+        "key": "environment",
+        "op": "in",
+        "value": [
+         "natural",
+         "wilderness",
+         "tribal_settlement"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "monstrous_empathy",
+     "ui_transition": {
+      "animation": "/ui/animations/monster_grow.mp3",
+      "sfx": "player_monsterGrowSound.wav"
+     }
+    }
+   },
+   {
+    "id": "togruta_force_attunement",
+    "name": "Force Attunement",
+    "narrative": "Togrutas have a natural connection to the Force, even if they don't actively use it. Your montrals and lekku can sense the presence of Force-sensitive beings and detect disturbances in the Force around you.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Insight"
+     },
+     {
+      "effect": "grant_ability",
+      "value": "sense_force_sensitive",
+      "description": "You can sense the presence of Force-sensitive beings within 30 feet of you."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "force_aggression",
+     "ui_transition": {
+      "animation": "/ui/animations/aggressive_stance.mp3",
+      "sfx": "player_forceAggressionSound.wav"
+     }
+    }
+   },
+   {
+    "id": "togruta_tribal_heritage",
+    "name": "Tribal Heritage",
+    "narrative": "Your tribal upbringing has taught you the importance of community, storytelling, and spiritual connection. You excel at bringing people together and understanding group dynamics.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Persuasion"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "social_checks",
+      "conditions": [
+       {
+        "key": "situation",
+        "op": "in",
+        "value": [
+         "community_gathering",
+         "tribal_ceremony",
+         "group_negotiation"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_allies",
+     "ui_transition": {
+      "animation": "/ui/animations/dark_side_arrival.mp3",
+      "sfx": "player_darkSideAlliesSound.wav"
+     }
+    }
+   }
+  ],
+  "source": "Star Wars: Clone Wars, FFG Force and Destiny",
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Colorful skin patterns",
+    "Montrals and lekku",
+    "Tribal heritage",
+    "Spiritual bearing",
+    "Enhanced senses"
+   ],
+   "skin_color_variants": [
+    "Red with white patterns",
+    "Orange with white patterns",
+    "Yellow with white patterns",
+    "Blue with white patterns",
+    "Green with white patterns",
+    "Purple with white patterns"
+   ],
+   "montral_variants": [
+    "Long, flowing montrals",
+    "Short, practical montrals",
+    "Thick, muscular montrals",
+    "Thin, delicate montrals",
+    "Decorative montral arrangements"
+   ],
+   "lekku_variants": [
+    "Long, flowing lekku",
+    "Short, practical lekku",
+    "Thick, muscular lekku",
+    "Thin, delicate lekku",
+    "Decorative lekku arrangements"
+   ],
+   "common_adornments": [
+    "Traditional tribal garments",
+    "Cultural jewelry and accessories",
+    "Spiritual and ceremonial attire",
+    "Natural materials and fabrics",
+    "Tribal symbols and markings"
+   ],
+   "llm_description_prompt": "Describe a Togruta character. Emphasize their distinctive colorful skin patterns and the way their montrals and lekku move, suggesting their enhanced sensory abilities and spiritual nature. Their attire should reflect their tribal heritage and cultural background. Consider their natural charisma and the way they carry themselves with the confident, spiritual bearing of someone who is deeply connected to their community and the Force."
+  },
+  "class_synergies": [
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Togruta's natural charisma and Tribal Heritage make them exceptional Consulars, able to bring people together and build community bonds through their spiritual awareness.",
+    "mechanical_benefits": [
+     "Tribal Heritage trait enhances community building and diplomacy",
+     "Montral Senses trait improves perception of others",
+     "Force Attunement trait aids in understanding motivations"
+    ]
+   },
+   {
+    "class": "Guardian (Force User)",
+    "narrative": "Togruta's natural Force Attunement and protective instincts make them excellent Guardians, using their enhanced senses to protect others with spiritual awareness.",
+    "mechanical_benefits": [
+     "Force Attunement trait enables detection of threats",
+     "Montral Senses trait enhances protective awareness",
+     "Tribal Heritage trait supports community protection"
+    ]
+   },
+   {
+    "class": "Scout (Spiritual)",
+    "narrative": "Togruta's natural perception abilities and spiritual awareness make them excellent Scouts, able to navigate and explore with enhanced sensory abilities.",
+    "mechanical_benefits": [
+     "Montral Senses trait enables enhanced perception and navigation",
+     "Force Attunement trait aids in detecting hidden threats",
+     "Tribal Heritage trait supports wilderness survival"
+    ]
+   },
+   {
+    "class": "Scholar (Spiritual Studies)",
+    "narrative": "Togruta's natural wisdom and spiritual connection make them excellent Scholars, particularly in spiritual and cultural studies.",
+    "mechanical_benefits": [
+     "Force Attunement trait provides insights into Force studies",
+     "Tribal Heritage trait enhances cultural understanding",
+     "Montral Senses trait aids in detailed observation"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Jedi Order",
+    "narrative": "Togruta are highly valued by the Jedi Order for their natural Force attunement and spiritual awareness, making them excellent Jedi and Force users."
+   },
+   {
+    "faction": "Tribal Communities",
+    "narrative": "Many Togruta maintain strong connections to their tribal communities, serving as spiritual leaders and cultural ambassadors."
+   },
+   {
+    "faction": "Independent Spiritualists",
+    "narrative": "Many Togruta prefer to work as independent spiritualists and community leaders, using their natural abilities to guide and protect others."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your montral senses become more refined, allowing you to perceive even subtler vibrations and electromagnetic fields.",
+     "mechanical_benefit": "Increase the range of Force-sensitive detection from 30 feet to 60 feet, and gain advantage on Perception checks to detect hidden creatures or objects."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your Force attunement deepens, allowing you to sense and understand the Force currents around you with greater clarity.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Wisdom-based skill checks for the next minute when in natural or spiritual environments."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your tribal heritage and spiritual connection allow you to channel your community bonds into protective abilities.",
+     "mechanical_benefit": "When protecting allies or fighting for your community, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced protective instincts."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your spiritual attunement reaches its peak, making you nearly immune to mental manipulation and allowing you to sense disturbances in the Force across great distances.",
+     "mechanical_benefit": "You have advantage on all saving throws against mental effects, and you can sense major Force disturbances within 1 mile."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Spiritual Rituals",
+    "type": "ceremonial",
+    "description": "Togruta have sacred rituals that celebrate their spiritual connection and tribal heritage, often involving meditation, storytelling, and community bonding.",
+    "narrative_impact": "Provides spiritual connection and cultural depth. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Tribal Traditions",
+    "type": "traditional",
+    "description": "Togruta tribal traditions emphasize community bonds, spiritual awareness, and the importance of maintaining cultural heritage and connections.",
+    "narrative_impact": "Creates tribal identity and community scenarios. Can be used for training and mentoring situations."
+   },
+   {
+    "name": "Storytelling Circles",
+    "type": "cultural",
+    "description": "Togruta communities gather in storytelling circles to share wisdom, history, and spiritual insights, strengthening their bonds and cultural identity.",
+    "narrative_impact": "Provides community bonding and knowledge sharing opportunities. Can be used for cultural events and wisdom gathering."
+   },
+   {
+    "name": "Spiritual Meditation",
+    "type": "narrative",
+    "description": "Togruta practice meditation techniques that enhance their spiritual awareness and connection to the Force and their community.",
+    "narrative_impact": "Provides spiritual development and character growth opportunities. Can be used for personal reflection and community healing."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "natural",
+    "adaptation_name": "Natural Harmony",
+    "description": "Your montral senses allow you to thrive in natural environments, sensing the rhythms and patterns of the natural world.",
+    "mechanical_benefit": "You have advantage on all skill checks in natural environments, and you can sense the presence of natural phenomena within 60 feet."
+   },
+   {
+    "environment": "spiritual",
+    "adaptation_name": "Spiritual Resonance",
+    "description": "Your Force attunement allows you to sense and navigate spiritual environments with ease.",
+    "mechanical_benefit": "You have advantage on saving throws against spiritual effects, and you can sense the presence of spiritual entities within 30 feet."
+   },
+   {
+    "environment": "community",
+    "adaptation_name": "Community Bond",
+    "description": "Your tribal heritage allows you to understand and strengthen community bonds in any environment.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks when working with groups, and you can sense when your community needs help."
+   },
+   {
+    "environment": "sensory",
+    "adaptation_name": "Enhanced Perception",
+    "description": "Your montral senses allow you to perceive details and patterns that others would miss in any environment.",
+    "mechanical_benefit": "You have advantage on Perception checks in all environments, and you can sense hidden threats or opportunities within 30 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on spiritual abilities and sensory perception, complementing rather than overshadowing class features",
+    "Tribal heritage and Force attunement improvements maintain the species' unique identity while providing meaningful advancement",
+    "Spiritual and sensory abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on tribal traditions and spiritual culture rather than mechanical advantages",
+    "Spiritual rituals and tribal traditions provide unique roleplaying opportunities and cultural depth",
+    "Storytelling circles and spiritual meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for natural and spiritual environments where sensory perception is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Community bond and enhanced perception provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "skin_patterns",
+    "montrals",
+    "lekku",
+    "facial_features"
+   ],
+   "morphology": {
+    "head_type": "anthropomorphic",
+    "body_type": "humanoid",
+    "average_height": "1.72 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_patterns": "playful swirls of color",
+      "montrals": "small and rounded",
+      "lekku": "short and thin"
+     },
+     "adult": {
+      "skin_patterns": "vibrant, swirling patterns",
+      "montrals": "large and angular",
+      "lekku": "long and flowing"
+     },
+     "elder": {
+      "skin_patterns": "muted, wispy patterns",
+      "montrals": "small and delicate",
+      "lekku": "short and wispy"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "skin takes on a sickly hue",
+      "montrals grow twisted and gnarled",
+      "lekku become frayed and worn"
+     ],
+     "light_side": [
+      "skin shines with a warm, golden glow",
+      "montrals grow strong and pointed",
+      "lekku become long and flowing"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "tattooed patterns on montrals",
+    "coloration of skin patterns",
+    "shape and size of lekku"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A {species} with {adjective} skin patterns, wearing a traditional {tribal_markings} on their {montrals|lekku}.",
+    "contextual_modifiers": [
+     "{adjective}",
+     "{tribe}",
+     "{clothing|ornamentation}"
+    ]
+   }
+  },
+  "flavor_text": "Togruta culture reveres the ancient Shili ancestors, who are said to have possessed a deep connection with the natural world. The intricate patterns on Togrutan skin are believed to be a manifestation of this bond, and their montrals and lekku are attuned to the subtle vibrations of the Force. When in harmony, these sensory organs grant the Togruta an uncanny ability to read the emotions and intentions of those around them. However, when out of balance, they can become overwhelmed by the cacophony of emotions and thoughts emanating from others.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Togruta, you are deeply attuned to the emotional currents of those around you. You may find yourself empathizing with even the most difficult individuals, but be cautious not to become overwhelmed by their pain or anger. Use your natural charisma and perceptive abilities to navigate complex social situations and build strong bonds with others.",
+   "narrative_hooks": [
+    "You stumble upon an ancient Shili artifact hidden deep within a long-abandoned temple, which holds the secrets of your people's connection to the Force.",
+    "A Togruta elder approaches you with a cryptic message about a growing imbalance in the natural world, and asks for your help to restore harmony."
+   ],
+   "social_dynamics": "Togrutas are known for their strong sense of community and respect for tradition. They often prioritize the needs of others over personal goals, but this can sometimes lead to them being taken advantage of by those who seek to exploit their good nature.",
+   "common_motivations": [
+    "Protecting the natural balance of Shili and preserving the traditions of their ancestors",
+    "Understanding and mastering the secrets of the Force through meditation and connection with the living world"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "charismatic",
+      "perceptive"
+     ],
+     "values": "honesty compassion loyalty"
+    },
+    "motivations": [
+     "Explore the mysteries of the Force",
+     "Protect allies from harm",
+     "Discover hidden information to aid in decision-making"
+    ],
+    "combat_behavior": "Togrutas use their lekku and montrals to navigate through complex battlefields, striking at enemy weaknesses with precision. They're skilled hunters and trackers.\n",
+    "social_behavior": "Togrutas are known for their charming and empathetic nature, often mediating conflicts and facilitating group discussions. Their connection to the Force helps them sense underlying emotions and intentions.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Neutral",
+     "High",
+     "Low"
+    ],
+    "loyalty_triggers": [
+     "Betrayal of a close ally",
+     "Discovery of hidden information related to a companion's past",
+     "Severe injury or loss of a companion"
+    ]
+   },
+   "services": [
+    {
+     "Perception Check": "Roll a d20 and add your Perception modifier. If successful, you gain insight into the situation."
+    },
+    {
+     "Force Sense": "Use your connection to the Force to sense danger or hidden information in the environment."
+    }
+   ]
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "primary_nemesis_species": "Zabrak",
+    "historical_enemies": [
+     "Trandoshans",
+     "Sullustan slavers"
+    ],
+    "tragic_flaw": "Their empathetic nature can make them vulnerable to manipulation and emotional exploitation"
+   }
+  },
+  "romance_engine": {
+   "overrides": {
+    "courtship_rituals": [
+     "A Togruta will often perform a delicate dance, using their lekku to weave intricate patterns in the air",
+     "They may share a traditional Shili poem or song, passed down through generations of their family"
+    ],
+    "cultural_attitudes_toward_love": "Togrutas believe in forming deep emotional connections with others, which they see as essential to building strong community bonds.",
+    "love_interest_traits": [
+     "Empathetic",
+     "Respectful of tradition",
+     "Open-minded"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "togruta",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/togruta.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

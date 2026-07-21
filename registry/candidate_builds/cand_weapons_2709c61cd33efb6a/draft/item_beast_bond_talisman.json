@@ -1,0 +1,131 @@
+{
+ "record": {
+  "id_file": "item_beast_bond_talisman",
+  "category": "equipment",
+  "subcategory": "artifacts",
+  "tags": [
+   "equipment",
+   "item",
+   "artifact",
+   "force_imbued",
+   "unique",
+   "legendary",
+   "mystical",
+   "beast_bond",
+   "companion",
+   "magical",
+   "exotic"
+  ],
+  "id": "item_beast_bond_talisman",
+  "name": "Beast Bond Talisman",
+  "item_type": "Gear",
+  "subtype": "Focus",
+  "rarity": "uncommon",
+  "narrative": "This talisman pulses with the energy of the bond between a Beast Master and their companion, enhancing their connection. It feels alive with the energy of the beast bond, pulsing in sync with the companion's heartbeat.",
+  "flavor_text": "'The bond between master and beast is stronger than any chain.' - Ancient Beast Master Proverb",
+  "cost": 400,
+  "weight": 0.5,
+  "properties": [
+   "beast_attuned",
+   "bond_enhancer",
+   "communication_aid"
+  ],
+  "mechanics": [
+   {
+    "effect": "modify_stat",
+    "description": "Increases companion control range by 50 feet.",
+    "parameters": {
+     "target_property": "companion_control_range",
+     "value": 50
+    },
+    "conditions": [
+     {
+      "key": "companion_bonded",
+      "op": "==",
+      "value": true
+     },
+     {
+      "key": "talisman_worn",
+      "op": "==",
+      "value": true
+     }
+    ]
+   }
+  ],
+  "connections": [
+   {
+    "target_id": "class_beast_master",
+    "target_type": "class",
+    "relationship_id": "rel_iconic_to",
+    "narrative": "This talisman is commonly used by Beast Masters to enhance their connection with their animal companions."
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This talisman should feel alive with the energy of the beast bond, pulsing in sync with the companion's heartbeat. It should feel warm and organic, resonating with the natural energy of the animal kingdom.",
+   "tactical_notes": "The increased control range makes this talisman valuable for Beast Masters who need to coordinate with their companions at a distance. It's particularly useful in large-scale battles or when the companion needs to scout ahead.",
+   "narrative_hooks": [
+    "The talisman was created by a Beast Master who had an unbreakable bond with their companion",
+    "The talisman responds to the strength of the beast bond, growing warmer as the connection deepens",
+    "The talisman can be used to communicate with wild animals, though the effect is weaker than with bonded companions"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A Beast Bond talisman with a warm, organic design that pulses with the energy of the beast bond. The talisman is made from materials that resonate with animal energy, featuring natural patterns and warm, earthy colors.",
+   "base_negative_keywords": [
+    "mechanical",
+    "cold",
+    "metallic",
+    "artificial",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/items/beast_bond_talisman.png",
+   "icon": "/assets/icons/items/beast_bond_talisman.svg",
+   "color": "#228B22"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_beast_bond_talisman",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/beast_bond_talisman.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

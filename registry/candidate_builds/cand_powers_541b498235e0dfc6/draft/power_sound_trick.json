@@ -1,0 +1,201 @@
+{
+ "record": {
+  "id": "power_sound_trick",
+  "name": "Sound Trick",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "illusion",
+   "audio",
+   "deception",
+   "distraction",
+   "ventriloquism",
+   "sonic"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Audio projection technology for creating sounds at distance"
+   }
+  },
+  "narrative": "You project sound from a remote location using directional audio emitters, voices or noises appearing to originate from wherever you choose. The power manifests as convincing audio illusions—footsteps from empty corridors, voices from behind closed doors, alarms from distant rooms—all actually emanating from your hidden speakers.",
+  "flavor_text": "\"The best distractions are the ones they create in their own minds.\" - Infiltrator",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating directional audio emitter"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "programming sound type and projection location"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create illusory sounds at a location of your choice.",
+   "mechanics": [
+    {
+     "type": "create_audio_illusion",
+     "value": {
+      "sound_types": [
+       "voices",
+       "footsteps",
+       "alarms",
+       "natural_sounds"
+      ],
+      "max_volume": "normal_conversation"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Create convincing sounds appearing to come from chosen location"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's deception expertise transforms Sound Trick into perfect misdirection. They create audio illusions that sound natural because they understand exactly what guards expect to hear—realistic because they exploit psychological expectations.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_realism",
+      "value": {
+       "detection_dc_increase": 5
+      },
+      "target_scopes": [
+       "audio_illusion"
+      ],
+      "notes": "Operative sound tricks are much harder to identify as fake (+5 to investigation DC)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity makes their Sound Tricks versatile and unexpected. They've used them to create false alarms, fake conversations, even imitate specific voices—finding applications from tactical to comedic through innovative thinking.",
+    "mechanical_benefit": [
+     {
+      "type": "voice_mimicry",
+      "value": {
+       "effect": "imitate_known_voices"
+      },
+      "target_scopes": [
+       "audio_illusion"
+      ],
+      "notes": "Humans can mimic specific voices they've heard with Sound Trick."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance uses Sound Trick for guerrilla warfare—creating false Imperial patrols, fake comm chatter, or decoy alarms that waste enemy resources while real operations proceed. Audio misdirection as asymmetric advantage.",
+    "mechanical_benefit": [
+     {
+      "type": "multiple_sources",
+      "value": {
+       "additional_locations": 2
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Rebels can project sounds from 3 different locations simultaneously."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the illusion—footsteps echoing from empty corridors, voices arguing behind closed doors, alarms blaring from distant rooms. Show guards investigating phantom sounds, creating opportunities. The audio should be convincing enough that questioning it requires active investigation.",
+   "tactical_notes": "Sound Trick creates audio illusions at 30 feet for up to 1 minute with concentration. Perfect for distraction, misdirection, or setting up ambushes. No resource cost as a cantrip makes it infinitely useful for creative players. Remember concentration can be broken.",
+   "narrative_hooks": [
+    "Sound trick creates distraction allowing critical infiltration",
+    "Fake alarm causes enemies to abandon their posts at perfect moment",
+    "Voice mimicry tricks guards into revealing information"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an infiltrator using sound projection technology. Directional audio emitters create convincing illusions—footsteps echoing from an empty corridor draw guards away while the actual operative sneaks past unseen. The guards investigate the phantom sounds, completely fooled. The scene captures perfect audio misdirection.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/sound_trick.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_sound_trick",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_sound_trick.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

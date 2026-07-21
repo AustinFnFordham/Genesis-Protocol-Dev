@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "power_force_revival",
+  "name": "Force Revival",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 3,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 3
+   }
+  ],
+  "narrative": "You channel the purest expression of the light side to literally pull a soul back from death's threshold. The power manifests as brilliant golden light that floods into the fallen, their wounds closing, their heart restarting, their spirit returning to their body in a miraculous resurrection.",
+  "flavor_text": "\"The Force gives life, and the Force preserves it.\" - Ancient Jedi Healer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "hands glowing with golden light as you reach toward the fallen"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "pouring your life force into the dying, willing them back to life"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the pure light side energy to restore life to a fallen ally, bringing them back from the brink of death.",
+   "mechanics": [
+    {
+     "type": "revive",
+     "value": "restore_consciousness",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_unconscious",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Restore unconscious creature to consciousness"
+    },
+    {
+     "type": "heal",
+     "value": "4d8_plus_modifier",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_revived",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Restore 4d8 + Force modifier hit points"
+    },
+    {
+     "type": "remove_condition",
+     "value": "all_conditions",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_revived",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Remove all conditions affecting the target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's protective instincts transform Force Revival into an unbreakable vow. Their determination to save lives allows them to revive allies even from mortal wounds that would defeat other healers.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_healing",
+      "value": "2d8_additional",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Guardian's Force Revival heals an additional 2d8 hit points"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human compassion and emotional bonds strengthen their Force Revival. Their deep connections to others allow them to reach further into death's realm, pulling back those who have been gone longer.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_window",
+      "value": "2_rounds_dead",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans can revive creatures dead for up to 2 rounds instead of 1"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's ancient healing techniques make their Force Revival a true miracle. Their revivals not only restore life but cleanse the body of toxins and dark side corruption.",
+    "mechanical_benefit": [
+     {
+      "type": "purification",
+      "value": "remove_dark_corruption",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi Force Revival removes poison, disease, and dark side effects"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the miraculous resurrection—golden light flooding the corpse, wounds sealing, color returning to grey skin, the first gasping breath. Show the emotional moment as life returns, the confusion of the revived, the joy of their allies. This is a true miracle.",
+   "tactical_notes": "Force Revival is a Level 3 power that can turn defeat into victory. Restores consciousness, heals 4d8+modifier HP, and removes all conditions. The 60-foot range lets you revive from safety. Save it for critical allies—you won't have many Level 3 slots.",
+   "narrative_hooks": [
+    "The revived character experiences visions from the other side",
+    "Death leaves its mark—white hair, strange dreams, or new perspective",
+    "The miracle of revival inspires allies and terrifies enemies"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A breathtaking digital painting of Force Revival bringing someone back from death. Golden light pours from a Jedi's hands into a fallen warrior, wounds closing, life returning. The body lifts slightly off the ground, surrounded by swirling Force energy. Tears of joy on watching allies' faces. The scene captures the miracle of resurrection, by Tyler Jacobson and Magali Villeneuve",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_revival.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_revival",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_revival.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,681 @@
+{
+ "record": {
+  "tech_powers_extended": [
+   {
+    "id": "quantum_arsenal",
+    "name": "Quantum Arsenal",
+    "description": "You deploy an entire arsenal of quantum-enhanced weapons and equipment, creating a technological force multiplier of unprecedented scale.",
+    "type": "Tech",
+    "level": 6,
+    "prerequisites": [
+     "orbital_strike",
+     "quantum_disruptor"
+    ],
+    "experience_requirement": 150000,
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 500,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 10,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "deploy_arsenal",
+      "value": "quantum_weapons",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deploy 20 quantum-enhanced weapons with CR equal to your level"
+     },
+     {
+      "type": "modify_stat",
+      "value": "arsenal_control",
+      "target_property": "weapon_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Control all deployed weapons as bonus actions"
+     },
+     {
+      "type": "apply_status",
+      "value": "quantum_enhancement",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "ally_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All allies gain quantum-enhanced equipment and abilities"
+     }
+    ],
+    "scaling_effects": {
+     "level_7": {
+      "description": "Arsenal size doubles and weapons become self-replicating.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "arsenal_size",
+        "target_property": "weapon_count",
+        "target_scopes": [
+         "self"
+        ],
+        "notes": "40 weapons instead of 20"
+       },
+       {
+        "type": "apply_status",
+        "value": "self_replicating",
+        "target_scopes": [
+         "weapons"
+        ],
+        "notes": "Weapons automatically repair and replicate themselves"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "technological_evolution",
+    "name": "Technological Evolution",
+    "description": "You achieve the pinnacle of technological advancement, becoming a post-human entity with unlimited technological capabilities.",
+    "type": "Tech",
+    "level": 6,
+    "prerequisites": [
+     "technological_ascension",
+     "nanite_swarm"
+    ],
+    "experience_requirement": 200000,
+    "casting_time": {
+     "value": 10,
+     "unit": "minute"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "timed",
+     "value": 168,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "post_human",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become immune to all damage types except technological"
+     },
+     {
+      "type": "modify_stat",
+      "value": "technological_mastery",
+      "target_property": "all_abilities",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All ability scores become 30"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "tech_actions",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all technology-related checks and actions"
+     }
+    ]
+   },
+   {
+    "id": "reality_engine",
+    "name": "Reality Engine",
+    "description": "You create a technological device capable of rewriting the fundamental laws of reality, bending space, time, and matter to your will.",
+    "type": "Tech",
+    "level": 7,
+    "alignment": "Universal",
+    "prerequisites": [
+     "technological_evolution",
+     "quantum_arsenal"
+    ],
+    "experience_requirement": 500000,
+    "casting_time": {
+     "value": 1,
+     "unit": "hour"
+    },
+    "range": {
+     "value": 2000,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "permanent"
+    },
+    "effects": [
+     {
+      "type": "create_device",
+      "value": "reality_engine",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create a reality engine that can alter the laws of physics"
+     },
+     {
+      "type": "modify_reality",
+      "value": "physics_control",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "engine_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can control gravity, time, space, and matter within range"
+     },
+     {
+      "type": "apply_status",
+      "value": "reality_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can create pocket dimensions and parallel realities"
+     }
+    ]
+   },
+   {
+    "id": "technological_apocalypse",
+    "name": "Technological Apocalypse",
+    "description": "You unleash the ultimate technological weapon, capable of destroying entire civilizations and rendering technology useless across vast areas.",
+    "type": "Tech",
+    "level": 7,
+    "alignment": "Dark",
+    "prerequisites": [
+     "technological_evolution",
+     "singularity_cannon"
+    ],
+    "experience_requirement": 500000,
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 1000,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "apocalypse",
+      "value": "tech_destruction",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_500_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All technology within range is permanently destroyed"
+     },
+     {
+      "type": "area_damage",
+      "value": "15d12_energy",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_500_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 15d12 energy damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "tech_dead_zone",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create a permanent zone where technology cannot function"
+     }
+    ]
+   },
+   {
+    "id": "technological_omniscience",
+    "name": "Technological Omniscience",
+    "description": "You achieve perfect knowledge of all technology past, present, and future, becoming one with the technological network of the universe.",
+    "type": "Tech",
+    "level": 8,
+    "alignment": "Universal",
+    "prerequisites": [
+     "reality_engine",
+     "technological_apocalypse"
+    ],
+    "experience_requirement": 1000000,
+    "casting_time": {
+     "value": 1,
+     "unit": "minute"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "permanent"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "tech_omniscient",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Know all technological knowledge that has existed, exists, or will exist"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "tech_actions",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatic success on all technology-related checks and actions"
+     },
+     {
+      "type": "modify_stat",
+      "value": "perfect_tech_awareness",
+      "target_property": "tech_perception",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can detect and control any technology within the universe"
+     }
+    ]
+   },
+   {
+    "id": "technological_omnipotence",
+    "name": "Technological Omnipotence",
+    "description": "You achieve unlimited power over all technology, capable of creating, controlling, and destroying any technological system in existence.",
+    "type": "Tech",
+    "level": 8,
+    "alignment": "Universal",
+    "prerequisites": [
+     "technological_omniscience"
+    ],
+    "experience_requirement": 1000000,
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "unlimited"
+    },
+    "duration": {
+     "type": "permanent"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "tech_omnipotent",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can control any technological system in the universe"
+     },
+     {
+      "type": "modify_stat",
+      "value": "unlimited_tech_power",
+      "target_property": "all_tech_capabilities",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Unlimited tech power slots, no casting time, no range limitations"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "tech_control",
+      "target_scopes": [
+       "universe"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can control all technology in the universe, create or destroy technological civilizations"
+     }
+    ]
+   },
+   {
+    "id": "technological_transcendence",
+    "name": "Technological Transcendence",
+    "description": "You transcend technological limitations, becoming a being beyond technology itself - the ultimate expression of technological mastery.",
+    "type": "Tech",
+    "level": 9,
+    "alignment": "Universal",
+    "prerequisites": [
+     "technological_omniscience",
+     "technological_omnipotence"
+    ],
+    "experience_requirement": 5000000,
+    "casting_time": {
+     "value": 1,
+     "unit": "instant"
+    },
+    "range": {
+     "value": 0,
+     "unit": "multiverse"
+    },
+    "duration": {
+     "type": "eternal"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "tech_transcendent_being",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become a transcendent technological being beyond mortal comprehension"
+     },
+     {
+      "type": "modify_stat",
+      "value": "infinite_tech_potential",
+      "target_property": "all_tech_attributes",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All technological attributes become infinite"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "tech_cosmic_ascension",
+      "target_scopes": [
+       "multiverse"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become one with all technology, existing in all technological systems simultaneously"
+     },
+     {
+      "type": "apply_status",
+      "value": "tech_immortal_essence",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cannot be killed, destroyed, or affected by any technological force in existence"
+     }
+    ]
+   },
+   {
+    "id": "tech_power_scaling",
+    "name": "Tech Power Scaling",
+    "description": "Scaling mechanics for existing tech powers",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "tech_power_scaling": null,
+    "level_6_scaling": {
+     "jet_of_flame": {
+      "description": "Jet of Flame becomes Plasma Storm",
+      "effects": [
+       "Range increases to 100 feet",
+       "Damage increases to 4d8 + 2d8 per level above 6th",
+       "Can affect multiple targets in a cone",
+       "Creates a persistent plasma storm that lasts for 1 minute"
+      ]
+     },
+     "explosive_fuel": {
+      "description": "Explosive Fuel becomes Nuclear Detonation",
+      "effects": [
+       "Range increases to 300 feet",
+       "Damage increases to 8d6 + 2d6 per level above 6th",
+       "Creates a nuclear blast that affects a 100-foot radius",
+       "Leaves radioactive fallout that persists for 1 hour"
+      ]
+     },
+     "repair_droid": {
+      "description": "Repair Droid becomes Nanite Swarm",
+      "effects": [
+       "Range increases to 200 feet",
+       "Healing increases to 6d6 + 2d6 per level above 6th",
+       "Can heal all allies within range simultaneously",
+       "Can resurrect dead creatures with 0 hit points"
+      ]
+     }
+    },
+    "level_7_scaling": {
+     "shield_barrier": {
+      "description": "Shield Barrier becomes Quantum Shield",
+      "effects": [
+       "Range increases to 500 feet",
+       "Duration becomes permanent until dismissed",
+       "Can protect entire cities or starships",
+       "Reflects all damage back to attackers"
+      ]
+     },
+     "orbital_strike": {
+      "description": "Orbital Strike becomes Planetary Bombardment",
+      "effects": [
+       "Range becomes unlimited",
+       "Can target any location on the planet",
+       "Can destroy entire cities or military bases",
+       "Creates permanent environmental damage"
+      ]
+     }
+    },
+    "level_8_scaling": {
+     "holographic_decoy": {
+      "description": "Holographic Decoy becomes Reality Projection",
+      "effects": [
+       "Range becomes unlimited",
+       "Can create perfect copies of any creature or object",
+       "Duration becomes permanent",
+       "Can create entire armies of holographic soldiers"
+      ]
+     },
+     "targeting_assist": {
+      "description": "Targeting Assist becomes Perfect Accuracy",
+      "effects": [
+       "Grants perfect accuracy for all attacks",
+       "Can predict all possible outcomes",
+       "Automatically grants critical hits",
+       "Can control the trajectory of any projectile"
+      ]
+     }
+    },
+    "level_9_scaling": {
+     "all_tech_powers": {
+      "description": "All tech powers become transcendent abilities",
+      "effects": [
+       "No casting time, range, or duration limitations",
+       "Automatic success on all tech power effects",
+       "Can combine any tech powers into new transcendent abilities",
+       "Tech powers become expressions of pure technological will"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "tech_powers_extended",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/tech_powers_extended.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "de7f087516973e44529b40f4299baf6ac46d72f299b2a6e9754041499764ca59",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

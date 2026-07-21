@@ -1,0 +1,157 @@
+{
+ "record": {
+  "id": "cyber_tech",
+  "name": "Cyber Tech",
+  "class_id": "engineer",
+  "base_class": "engineer",
+  "tags": [
+   "engineer",
+   "cyberneticist",
+   "tech_specialist",
+   "intelligence_based",
+   "medical",
+   "inventor",
+   "support",
+   "enhancement"
+  ],
+  "description": "Cyber Techs are specialists in cybernetic enhancements and biological-mechanical integration, using their skills to create powerful augmentations and repair cybernetic systems.",
+  "specialization_features": [
+   "cybernetic_expertise",
+   "augmentation_mastery",
+   "biological_integration",
+   "cyber_tech_mastery",
+   "legendary_cyber_tech"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Cyber Techs specialize in cybernetic enhancements and repair.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Cybernetic implants visible on arms or legs",
+    "Advanced medical equipment integrated into armor"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level3_feature1",
+    "feature_id": "cybernetic_focus",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop a keen sense of awareness for your cybernetic systems, allowing you to more effectively repair and upgrade them. You gain proficiency in Perception or one tool of your choice.",
+    "effects": [
+     {
+      "type": "ability_proficiency",
+      "value": "perception"
+     }
+    ]
+   },
+   {
+    "node_id": "level7_feature2",
+    "feature_id": "augmentation_deployment",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can now augment your cybernetic systems to enhance specific abilities. Choose one of the following augmentations and gain its benefits: Enhanced Strength, Enhanced Dexterity, or Enhanced Intelligence.",
+    "effects": [
+     {
+      "type": "augmentation_choice"
+     }
+    ]
+   },
+   {
+    "node_id": "level11_feature3",
+    "feature_id": "biomechanical_integration",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can now integrate biological and mechanical components to enhance your abilities. Choose one of the following integrations and gain its benefits: Enhanced Endurance, Enhanced Agility, or Enhanced Intellect.",
+    "effects": [
+     {
+      "type": "integration_choice"
+     }
+    ]
+   },
+   {
+    "node_id": "level15_feature4",
+    "feature_id": "cybernetic_shielding",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain a passive ability to redirect cyber-attacks, granting you advantage on all Constitution saving throws against cyber-attack effects.",
+    "effects": [
+     {
+      "type": "passive_ability"
+     }
+    ]
+   },
+   {
+    "node_id": "level18_feature5",
+    "feature_id": "master_cyberneticist",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have become a master of cybernetic systems, granting you expertise in two tools or languages. Additionally, your proficiency bonus is doubled when repairing cybernetic systems.",
+    "effects": [
+     {
+      "type": "ability_expertise",
+      "value": "two_tools_or_languages"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "CyberneticEyeToken",
+    "NeuroSyncToken"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a neutral stance with legs shoulder-width apart, hands grasping energy blades attuned to my cybernetic enhancements.",
+    "energy_signature": "Surging blue energy tendrils emanating from my cybernetic implants, pulsing in sync with the hum of my suit's power core."
+   },
+   "prompt_schema": {
+    "base_prompt": "Cyber Tech standing amidst a holographic display projecting schematics and technical readouts for a damaged cyberdeck.",
+    "contextual_modifiers": [
+     "Focus on the subtle details of cybernetic integration",
+     "Highlight the contrast between the dark, metallic surfaces and the bright, pulsing energy signatures"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "cyber_tech",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer_cyber_tech.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

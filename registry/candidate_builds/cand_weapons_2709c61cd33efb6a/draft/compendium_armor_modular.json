@@ -1,0 +1,1455 @@
+{
+ "record": {
+  "id": "compendium_armor_modular",
+  "category": "equipment",
+  "subcategory": "armor",
+  "tags": [
+   "equipment",
+   "compendium",
+   "armor",
+   "modular",
+   "protection",
+   "defense",
+   "common_to_rare",
+   "customizable",
+   "tactical",
+   "military",
+   "high_tech",
+   "varied_rarity"
+  ],
+  "armor_modular": [
+   {
+    "id": "armor_head_basic_helmet",
+    "name": "Basic Combat Helmet",
+    "description": "A standard combat helmet that provides basic head protection and communication capabilities.",
+    "type": "Armor",
+    "subtype": "Head Gear",
+    "cost": 500,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "head",
+     "helmet",
+     "basic",
+     "combat",
+     "protection"
+    ],
+    "properties": [
+     "head_protection",
+     "basic_armor",
+     "communication"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "head_protection",
+     "combat_helmet",
+     "basic_communication"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "head_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "helmet_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to head damage when helmet is worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_head_jedi_hood",
+    "name": "Jedi Hood",
+    "description": "A traditional hood worn by Jedi that provides subtle protection and enhances Force sensitivity.",
+    "type": "Armor",
+    "subtype": "Head Gear",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "armor",
+     "head",
+     "hood",
+     "jedi",
+     "traditional",
+     "force_sensitive"
+    ],
+    "properties": [
+     "subtle_protection",
+     "force_enhancement",
+     "jedi_tradition"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "jedi_appearance",
+     "force_enhancement",
+     "traditional_hood"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force checks when wearing Jedi hood"
+     }
+    ]
+   },
+   {
+    "id": "armor_head_sensory_dampener",
+    "name": "Sensory Dampener",
+    "description": "A specialized headgear that dampens sensory input, useful for Force users and those in high-stress environments.",
+    "type": "Armor",
+    "subtype": "Head Gear",
+    "cost": 1000,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "armor",
+     "head",
+     "sensory",
+     "dampener",
+     "force_user",
+     "specialized"
+    ],
+    "properties": [
+     "sensory_dampening",
+     "force_user",
+     "stress_reduction",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sensory_dampening",
+     "stress_reduction",
+     "force_focus"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "sensory_dampened",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "dampener_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Sensory Dampened status for reduced stress and enhanced focus"
+     }
+    ]
+   },
+   {
+    "id": "armor_head_targeting_visor",
+    "name": "Targeting Visor",
+    "description": "An advanced helmet with integrated targeting systems that enhance accuracy and provide tactical information.",
+    "type": "Armor",
+    "subtype": "Head Gear",
+    "cost": 3000,
+    "rarity": 3,
+    "weight": 2.5,
+    "tags": [
+     "armor",
+     "head",
+     "visor",
+     "targeting",
+     "advanced",
+     "tactical"
+    ],
+    "properties": [
+     "targeting_system",
+     "tactical_info",
+     "accuracy_enhancement",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "targeting_assistance",
+     "tactical_information",
+     "accuracy_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "ranged_attack_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "targeting_visor_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on ranged attack checks when targeting visor is active"
+     }
+    ]
+   },
+   {
+    "id": "armor_chest_basic_vest",
+    "name": "Basic Armor Vest",
+    "description": "A standard armor vest that provides basic protection for the torso and vital organs.",
+    "type": "Armor",
+    "subtype": "Chest Armor",
+    "cost": 800,
+    "rarity": 1,
+    "weight": 4.0,
+    "tags": [
+     "armor",
+     "chest",
+     "vest",
+     "basic",
+     "protection",
+     "torso"
+    ],
+    "properties": [
+     "torso_protection",
+     "basic_armor",
+     "vital_organ_protection"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "torso_protection",
+     "basic_armor",
+     "vital_organ_safety"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "torso_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "armor_vest_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to torso damage when armor vest is worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_chest_jedi_robes",
+    "name": "Jedi Robes",
+    "description": "Traditional Jedi robes that provide subtle protection while maintaining the dignified appearance of a Jedi.",
+    "type": "Armor",
+    "subtype": "Chest Armor",
+    "cost": 300,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "chest",
+     "robes",
+     "jedi",
+     "traditional",
+     "dignified"
+    ],
+    "properties": [
+     "subtle_protection",
+     "jedi_appearance",
+     "traditional",
+     "dignified"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "jedi_appearance",
+     "dignified_presence",
+     "traditional_robes"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "diplomacy_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jedi_robes_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on diplomacy checks when wearing Jedi robes"
+     }
+    ]
+   },
+   {
+    "id": "armor_chest_smuggler_jacket",
+    "name": "Smuggler's Jacket",
+    "description": "A rugged, practical jacket favored by smugglers and scoundrels, with hidden compartments and reinforced panels.",
+    "type": "Armor",
+    "subtype": "Chest Armor",
+    "cost": 600,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "armor",
+     "chest",
+     "jacket",
+     "smuggler",
+     "hidden_compartments",
+     "reinforced"
+    ],
+    "properties": [
+     "hidden_compartments",
+     "reinforced_panels",
+     "smuggler_style",
+     "practical"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "smuggler_appearance",
+     "hidden_storage",
+     "reinforced_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "smuggler_jacket_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on stealth checks when wearing smuggler's jacket"
+     }
+    ]
+   },
+   {
+    "id": "armor_chest_poncho",
+    "name": "Practical Poncho",
+    "description": "A versatile poncho that provides protection from the elements while maintaining mobility and style.",
+    "type": "Armor",
+    "subtype": "Chest Armor",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 1.5,
+    "tags": [
+     "armor",
+     "chest",
+     "poncho",
+     "versatile",
+     "weather_protection",
+     "mobile"
+    ],
+    "properties": [
+     "weather_protection",
+     "versatile",
+     "mobile",
+     "practical"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "weather_protection",
+     "versatile_style",
+     "mobile_comfort"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "environmental_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "poncho_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to environmental damage when poncho is worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_chest_heavy_plates",
+    "name": "Heavy Combat Plates",
+    "description": "Heavy armor plates that provide maximum protection for the torso, used by military personnel and heavy combat specialists.",
+    "type": "Armor",
+    "subtype": "Chest Armor",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "armor",
+     "chest",
+     "plates",
+     "heavy",
+     "military",
+     "maximum_protection"
+    ],
+    "properties": [
+     "maximum_protection",
+     "heavy_armor",
+     "military_grade",
+     "combat_specialist"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "maximum_protection",
+     "military_appearance",
+     "heavy_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_plates_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced resistance to physical damage when heavy plates are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_gloves_basic",
+    "name": "Basic Gloves",
+    "description": "Standard gloves that provide basic hand protection and grip enhancement.",
+    "type": "Armor",
+    "subtype": "Gloves",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "armor",
+     "gloves",
+     "basic",
+     "hand_protection",
+     "grip_enhancement"
+    ],
+    "properties": [
+     "hand_protection",
+     "grip_enhancement",
+     "basic"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "hand_protection",
+     "grip_enhancement",
+     "basic_gloves"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "grip_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "basic_gloves_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on grip checks when basic gloves are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_gloves_combat",
+    "name": "Combat Gloves",
+    "description": "Reinforced gloves designed for combat situations, with enhanced protection and grip.",
+    "type": "Armor",
+    "subtype": "Gloves",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "armor",
+     "gloves",
+     "combat",
+     "reinforced",
+     "enhanced_protection"
+    ],
+    "properties": [
+     "enhanced_protection",
+     "reinforced",
+     "combat_grade",
+     "enhanced_grip"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_protection",
+     "combat_gloves",
+     "reinforced_grip"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "hand_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_gloves_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to hand damage when combat gloves are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_gloves_tech",
+    "name": "Tech Gloves",
+    "description": "Specialized gloves with integrated technology for slicing, repair work, and technical operations.",
+    "type": "Armor",
+    "subtype": "Gloves",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 0.8,
+    "tags": [
+     "armor",
+     "gloves",
+     "tech",
+     "slicing",
+     "repair",
+     "technical"
+    ],
+    "properties": [
+     "tech_integration",
+     "slicing_capability",
+     "repair_enhancement",
+     "technical"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "tech_operations",
+     "slicing_capability",
+     "repair_work"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "tech_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_gloves_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on tech checks when tech gloves are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_pants_basic",
+    "name": "Basic Pants",
+    "description": "Standard pants that provide basic leg protection and comfort for everyday wear.",
+    "type": "Armor",
+    "subtype": "Pants",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "pants",
+     "basic",
+     "leg_protection",
+     "comfort"
+    ],
+    "properties": [
+     "leg_protection",
+     "comfort",
+     "basic",
+     "everyday"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "leg_protection",
+     "comfortable_wear",
+     "basic_pants"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "leg_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "basic_pants_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to leg damage when basic pants are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_pants_combat",
+    "name": "Combat Pants",
+    "description": "Reinforced pants designed for combat situations, with enhanced protection and mobility.",
+    "type": "Armor",
+    "subtype": "Pants",
+    "cost": 600,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "armor",
+     "pants",
+     "combat",
+     "reinforced",
+     "mobility",
+     "enhanced_protection"
+    ],
+    "properties": [
+     "enhanced_protection",
+     "reinforced",
+     "mobility",
+     "combat_grade"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_protection",
+     "combat_mobility",
+     "reinforced_pants"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "mobility_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_pants_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on mobility checks when combat pants are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_pants_jedi",
+    "name": "Jedi Pants",
+    "description": "Traditional Jedi pants that provide subtle protection while maintaining the dignified appearance of a Jedi.",
+    "type": "Armor",
+    "subtype": "Pants",
+    "cost": 400,
+    "rarity": 2,
+    "weight": 2.5,
+    "tags": [
+     "armor",
+     "pants",
+     "jedi",
+     "traditional",
+     "dignified",
+     "subtle_protection"
+    ],
+    "properties": [
+     "subtle_protection",
+     "jedi_appearance",
+     "traditional",
+     "dignified"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "jedi_appearance",
+     "dignified_style",
+     "traditional_pants"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "presence_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jedi_pants_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on presence checks when wearing Jedi pants"
+     }
+    ]
+   },
+   {
+    "id": "armor_boots_basic",
+    "name": "Basic Boots",
+    "description": "Standard boots that provide basic foot protection and comfort for everyday wear.",
+    "type": "Armor",
+    "subtype": "Boots",
+    "cost": 150,
+    "rarity": 1,
+    "weight": 1.5,
+    "tags": [
+     "armor",
+     "boots",
+     "basic",
+     "foot_protection",
+     "comfort"
+    ],
+    "properties": [
+     "foot_protection",
+     "comfort",
+     "basic",
+     "everyday"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "foot_protection",
+     "comfortable_wear",
+     "basic_boots"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "foot_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "basic_boots_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to foot damage when basic boots are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_boots_combat",
+    "name": "Combat Boots",
+    "description": "Reinforced boots designed for combat situations, with enhanced protection and traction.",
+    "type": "Armor",
+    "subtype": "Boots",
+    "cost": 400,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "boots",
+     "combat",
+     "reinforced",
+     "traction",
+     "enhanced_protection"
+    ],
+    "properties": [
+     "enhanced_protection",
+     "reinforced",
+     "traction",
+     "combat_grade"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_protection",
+     "combat_traction",
+     "reinforced_boots"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_boots_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks when combat boots are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_boots_stealth",
+    "name": "Stealth Boots",
+    "description": "Specialized boots designed for stealth operations, with sound dampening and enhanced mobility.",
+    "type": "Armor",
+    "subtype": "Boots",
+    "cost": 600,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "armor",
+     "boots",
+     "stealth",
+     "sound_dampening",
+     "mobility",
+     "specialized"
+    ],
+    "properties": [
+     "sound_dampening",
+     "stealth_enhancement",
+     "mobility",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stealth_operations",
+     "sound_dampening",
+     "enhanced_mobility"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_boots_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on stealth checks when stealth boots are worn"
+     }
+    ]
+   },
+   {
+    "id": "armor_belt_basic",
+    "name": "Basic Belt",
+    "description": "A standard belt that provides basic support and can hold small items and tools.",
+    "type": "Armor",
+    "subtype": "Belt",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "armor",
+     "belt",
+     "basic",
+     "support",
+     "storage",
+     "utility"
+    ],
+    "properties": [
+     "basic_support",
+     "storage",
+     "utility",
+     "everyday"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_support",
+     "utility_storage",
+     "everyday_belt"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "small_item_storage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "basic_belt_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can store small items and tools on basic belt"
+     }
+    ]
+   },
+   {
+    "id": "armor_belt_tactical",
+    "name": "Tactical Belt",
+    "description": "A reinforced belt designed for tactical operations, with multiple attachment points and enhanced storage.",
+    "type": "Armor",
+    "subtype": "Belt",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "armor",
+     "belt",
+     "tactical",
+     "reinforced",
+     "attachment_points",
+     "enhanced_storage"
+    ],
+    "properties": [
+     "tactical_grade",
+     "attachment_points",
+     "enhanced_storage",
+     "reinforced"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "tactical_operations",
+     "enhanced_storage",
+     "attachment_capability"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "tactical_equipment_storage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tactical_belt_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can store tactical equipment and tools on tactical belt"
+     }
+    ]
+   },
+   {
+    "id": "armor_holster_standard",
+    "name": "Standard Holster",
+    "description": "A basic holster designed to safely carry and quickly access blaster weapons.",
+    "type": "Armor",
+    "subtype": "Holster",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "armor",
+     "holster",
+     "standard",
+     "weapon_carry",
+     "quick_access"
+    ],
+    "properties": [
+     "weapon_carry",
+     "quick_access",
+     "safe_storage",
+     "standard"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "weapon_carry",
+     "quick_access",
+     "safe_storage"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "weapon_draw_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "standard_holster_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on weapon draw checks when using standard holster"
+     }
+    ]
+   },
+   {
+    "id": "armor_holster_quick_draw",
+    "name": "Quick-Draw Holster",
+    "description": "A specialized holster designed for rapid weapon deployment and quick-draw techniques.",
+    "type": "Armor",
+    "subtype": "Holster",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 0.8,
+    "tags": [
+     "armor",
+     "holster",
+     "quick_draw",
+     "rapid_deployment",
+     "specialized",
+     "fast"
+    ],
+    "properties": [
+     "rapid_deployment",
+     "quick_draw",
+     "specialized",
+     "fast_access"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rapid_deployment",
+     "quick_draw_technique",
+     "fast_access"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "initiative_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "quick_draw_holster_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on initiative checks when using quick-draw holster"
+     }
+    ]
+   },
+   {
+    "id": "armor_bandoleer_standard",
+    "name": "Standard Bandoleer",
+    "description": "A bandoleer designed to carry ammunition, grenades, and other combat supplies across the chest.",
+    "type": "Armor",
+    "subtype": "Bandoleer",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 1.5,
+    "tags": [
+     "armor",
+     "bandoleer",
+     "standard",
+     "ammunition_carry",
+     "combat_supplies"
+    ],
+    "properties": [
+     "ammunition_carry",
+     "combat_supplies",
+     "chest_storage",
+     "standard"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ammunition_carry",
+     "combat_supplies",
+     "chest_storage"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "ammunition_storage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "standard_bandoleer_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can store ammunition and combat supplies on standard bandoleer"
+     }
+    ]
+   },
+   {
+    "id": "armor_bandoleer_tactical",
+    "name": "Tactical Bandoleer",
+    "description": "An advanced bandoleer with specialized compartments for different types of ammunition and equipment.",
+    "type": "Armor",
+    "subtype": "Bandoleer",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "bandoleer",
+     "tactical",
+     "specialized_compartments",
+     "advanced",
+     "organized"
+    ],
+    "properties": [
+     "specialized_compartments",
+     "organized_storage",
+     "advanced",
+     "tactical_grade"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "organized_storage",
+     "tactical_equipment",
+     "specialized_compartments"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "equipment_access_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tactical_bandoleer_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on equipment access checks when using tactical bandoleer"
+     }
+    ]
+   },
+   {
+    "id": "armor_back_pack",
+    "name": "Backpack",
+    "description": "A standard backpack for carrying supplies, equipment, and personal items during travel and missions.",
+    "type": "Armor",
+    "subtype": "Back Attachment",
+    "cost": 150,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "back",
+     "pack",
+     "storage",
+     "supplies",
+     "equipment"
+    ],
+    "properties": [
+     "storage",
+     "supplies_carry",
+     "equipment_storage",
+     "standard"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "supplies_carry",
+     "equipment_storage",
+     "travel_gear"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "supplies_storage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "backpack_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can store supplies and equipment in backpack"
+     }
+    ]
+   },
+   {
+    "id": "armor_back_jetpack",
+    "name": "Jetpack",
+    "description": "A propulsion system that allows for limited flight and enhanced mobility in combat and exploration.",
+    "type": "Armor",
+    "subtype": "Back Attachment",
+    "cost": 5000,
+    "rarity": 4,
+    "weight": 15.0,
+    "tags": [
+     "armor",
+     "back",
+     "jetpack",
+     "propulsion",
+     "flight",
+     "mobility"
+    ],
+    "properties": [
+     "propulsion",
+     "limited_flight",
+     "enhanced_mobility",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "limited_flight",
+     "enhanced_mobility",
+     "propulsion_system"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "jetpack_flight",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jetpack_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform limited flight with jetpack"
+     }
+    ]
+   },
+   {
+    "id": "armor_back_shield_generator",
+    "name": "Personal Shield Generator",
+    "description": "A portable shield generator that creates a protective energy barrier around the wearer.",
+    "type": "Armor",
+    "subtype": "Back Attachment",
+    "cost": 8000,
+    "rarity": 5,
+    "weight": 8.0,
+    "tags": [
+     "armor",
+     "back",
+     "shield",
+     "generator",
+     "protective",
+     "energy_barrier"
+    ],
+    "properties": [
+     "shield_generation",
+     "protective_barrier",
+     "energy_shield",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "protective_barrier",
+     "shield_generation",
+     "energy_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "energy_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "shield_generator_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy damage when shield generator is active"
+     }
+    ]
+   },
+   {
+    "id": "armor_back_medical_unit",
+    "name": "Medical Backpack Unit",
+    "description": "A specialized backpack containing advanced medical equipment and supplies for field treatment.",
+    "type": "Armor",
+    "subtype": "Back Attachment",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 5.0,
+    "tags": [
+     "armor",
+     "back",
+     "medical",
+     "unit",
+     "field_treatment",
+     "advanced_medical"
+    ],
+    "properties": [
+     "medical_equipment",
+     "field_treatment",
+     "advanced_medical",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "field_treatment",
+     "medical_equipment",
+     "advanced_medical"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medical_unit_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medicine checks when medical unit is available"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_armor_modular",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/armor_modular.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

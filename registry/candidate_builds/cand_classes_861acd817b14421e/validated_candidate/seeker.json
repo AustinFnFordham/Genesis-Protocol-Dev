@@ -1,0 +1,347 @@
+{
+ "record": {
+  "id": "seeker",
+  "name": "Seeker",
+  "tags": [
+   "force_user",
+   "seeker",
+   "explorer",
+   "discovery",
+   "wisdom_based",
+   "pathfinder",
+   "versatile",
+   "force_sensitive",
+   "navigation",
+   "ancient_knowledge"
+  ],
+  "description": "Seekers are Force-wielders who excel at exploration and discovery. They are masters of finding hidden paths, uncovering ancient secrets, and navigating the unknown with their connection to the Force guiding them toward their goals.",
+  "class_features": [
+   "pathfinding_instinct",
+   "explorer_spirit",
+   "hidden_discovery",
+   "seeker_mastery",
+   "legendary_seeker"
+  ],
+  "proficiencies": {
+   "armor": [
+    "light"
+   ],
+   "weapons": [
+    "lightsabers",
+    "blaster_pistols",
+    "simple_weapons"
+   ],
+   "tools": [
+    "meditation_kit",
+    "force_imbued_items",
+    "exploration_gear"
+   ],
+   "saving_throws": [
+    "dexterity",
+    "wisdom"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "athletics",
+     "insight",
+     "investigation",
+     "perception",
+     "survival",
+     "stealth"
+    ]
+   }
+  },
+  "starting_equipment": [
+   "A lightsaber",
+   "A blaster pistol and 50 rounds",
+   "Meditation kit",
+   "Exploration gear",
+   "Explorer's pack",
+   "50 credits"
+  ],
+  "hit_die": 8,
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "explorer_vest",
+    "Jedi_robes",
+    "utility_belt",
+    "comlink"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A fluid, agile stance with a focus on dodging and weaving between attacks.",
+    "energy_signature": "A soft blue glow emanating from the user's hands, indicating their connection to the Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "Create a visual representation of a Seeker in a [situation/scene] using their skills to uncover hidden secrets or navigate treacherous terrain.",
+    "contextual_modifiers": [
+     "Include a dramatic lighting effect to highlight the Seeker's focus and determination.",
+     "Showcase the Seeker's ability to adapt and improvise in response to changing circumstances."
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Uncovered a hidden Sith temple, threatening the balance of power.",
+    "escalation": "Continuously pushed against rival Force-users' exploration and discovery efforts.",
+    "confrontation": "Tried to claim ancient relics as their own, sparking rivalries between Seekers."
+   },
+   "resolution_paths": {
+    "victory": "Proved superior in a series of competitive challenges, earning respect from rivals.",
+    "redemption": "Offered knowledge and expertise to help a rival overcome personal struggles, rebuilding trust.",
+    "escape": "Used cunning and stealth to outwit a rival's ambush, but left the situation unresolved."
+   },
+   "conflict_triggers": [
+    "Overclaimed resources or territories.",
+    "Engaged in rivalries that drew attention from powerful organizations.",
+    "Prioritized individual goals over community interests."
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "Shared a tender moment, but the weight of their responsibilities as Seekers kept them apart.",
+    "stage2": "Commenced a series of clandestine meetings to discuss their feelings and goals.",
+    "stage3": "Revealed personal secrets, opening themselves up for vulnerability and trust.",
+    "stage4": "Collaborated on a high-stakes mission, their chemistry becoming undeniable.",
+    "stage5": "Formally declared their commitment to each other amidst the celebration of their shared accomplishment."
+   },
+   "lifestyle_challenges": [
+    "Constantly being called away on missions left little time for romance.",
+    "Fears about losing partners in the line of duty created tension.",
+    "Balancing personal goals and relationship expectations proved difficult."
+   ]
+  },
+  "flavor_text": "\"The Force is strong with Seekers, guiding them toward hidden truths and ancient secrets. Their curiosity is boundless, and their connection to the cosmos is unmatched.\"\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Seekers are known for their curiosity and adaptability. Embody these traits by being open to new experiences, and using your skills in creative ways.",
+   "narrative_hooks": [
+    "You stumble upon an ancient Sith temple, rumored to contain powerful artifacts.",
+    "A mysterious energy signature emanates from a nearby planet."
+   ],
+   "social_dynamics": "Seekers often find themselves at the forefront of exploration, but their humility can sometimes lead them to downplay their own importance in discovery. Roleplay this contrast between confidence and modesty.",
+   "common_motivations": [
+    "Uncover hidden secrets and uncover forgotten knowledge",
+    "Find a way to share discoveries with others"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "curious",
+      "open-minded",
+      "analytical",
+      "empathetic",
+      "humble"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "Discover hidden secrets and uncover forgotten knowledge",
+     "secondary_motivations": [
+      "Share discoveries with others",
+      "Protect the discovery from falling into wrong hands"
+     ]
+    },
+    "combat_behavior": {
+     "attack_style": "Use Force powers to analyze environment, then target weak points in enemy armor"
+    },
+    "social_behavior": "Gently guide allies towards discovering hidden paths and uncovering secrets"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "low_trust_action": "Ask questions about Seeker's goals and motivations",
+     "high_trust_action": "Share own discovery of a hidden secret with the Seeker"
+    },
+    "loyalty_triggers": [
+     "Seeker shares a significant discovery with you",
+     "You assist Seeker in uncovering their deepest mystery"
+    ]
+   },
+   "services": [
+    "Guide adventurers through unexplored territories",
+    "Use Force abilities to analyze and navigate challenging terrain"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "A Seeker's connection to the Force guides them toward hidden paths and ancient secrets.",
+   "key_attributes": [
+    "Charisma",
+    "Wisdom"
+   ],
+   "iconic_gear": [
+    "Lightsaber Crystal",
+    "Holocron of Ancient Knowledge"
+   ],
+   "role_in_galaxy": "Seekers navigate the unknown, uncovering secrets and charting new paths for those who follow in their footsteps.",
+   "famous_exemplars": [
+    "Kao Cen Darach",
+    "Rinneth"
+   ],
+   "species_synergies": [
+    {
+     "species": "human",
+     "narrative": "Humans have a natural affinity for exploration and discovery, making them well-suited to the Seeker's path."
+    },
+    {
+     "species": "twi'lek",
+     "narrative": "Twi'leks bring a unique perspective to the Force, often sensing hidden patterns and currents that others miss."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "Jedi Order",
+     "narrative": "The Jedi Order values Seekers as guides and mentors, recognizing their ability to navigate the complexities of the galaxy."
+    },
+    {
+     "faction": "Sith Empire",
+     "narrative": "The Sith Empire sees Seekers as potential tools for conquest, using their abilities to uncover hidden weaknesses in their enemies."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "force_sensitive_initiation_1",
+    "feature_id": "force_sensitive_initiation",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "The Seeker's connection to the Force begins to manifest, granting them insight into the flow of energy in the world.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Force Sensitive Initiation",
+      "notes": "Grants proficiency with one type of device or tool from the artificer toolkit."
+     }
+    ]
+   },
+   {
+    "node_id": "seeker_sense_1",
+    "feature_id": "seeker_sense",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "A Seeker's intuition grows, allowing them to sense danger and hidden paths.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Wisdom",
+      "notes": "+2 bonus to Wisdom (Perception) checks."
+     }
+    ]
+   },
+   {
+    "node_id": "ancestral_knowledge_2",
+    "feature_id": "ancestral_knowledge",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Seekers begin to tap into their ancestors' collective knowledge, gaining insight into ancient secrets.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Intelligence",
+      "notes": "+1 bonus to Intelligence checks."
+     }
+    ]
+   },
+   {
+    "node_id": "force_focus_3",
+    "feature_id": "force_focus",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "A Seeker's connection to the Force grows stronger, allowing them to focus their will and channel energy.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Force Focus",
+      "notes": "Grants proficiency with one type of device or tool from the artificer toolkit."
+     }
+    ]
+   },
+   {
+    "node_id": "force_mastery_6",
+    "feature_id": "force_mastery",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "Seekers achieve mastery over their connection to the Force, unlocking new abilities.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Charisma",
+      "notes": "+2 bonus to Charisma checks."
+     }
+    ]
+   },
+   {
+    "node_id": "ancestral_power_7",
+    "feature_id": "ancestral_power",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "A Seeker's connection to their ancestors grows, granting them access to ancient powers.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Ancestral Power",
+      "notes": "Unlocks a new ability score improvement feature."
+     }
+    ]
+   },
+   {
+    "node_id": "force_strategem_12",
+    "feature_id": "force_strategem",
+    "level_requirement": 12,
+    "type": "core",
+    "description": "Seekers develop strategic thinking, allowing them to anticipate and counter their opponents' moves.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Intelligence",
+      "notes": "+1 bonus to Intelligence checks."
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "seeker",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/seeker.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

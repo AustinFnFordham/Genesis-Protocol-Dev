@@ -1,0 +1,558 @@
+{
+ "record": {
+  "id": "gank",
+  "name": "Gank",
+  "tags": [
+   "bounty_hunter",
+   "brutal",
+   "constitution",
+   "gank",
+   "hired_gun",
+   "mercenary",
+   "predator",
+   "resilient",
+   "strength_based",
+   "technology",
+   "uncommon",
+   "warrior"
+  ],
+  "description": "The Gank are a humanoid species from the planet Gank, known for their distinctive appearance and their natural talent for survival and combat. They are often found working as bounty hunters, mercenaries, or survivalists, using their natural toughness and combat skills to their advantage. Their species has a natural affinity for harsh environments and dangerous situations.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Constitution",
+    "value": 2
+   },
+   {
+    "ability": "Strength",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Gank"
+  ],
+  "base_hp": 12,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "gank_natural_survivor",
+    "name": "Natural Survivor",
+    "narrative": "Your species evolved in one of the galaxy's most hostile environments, developing incredible resilience and the ability to survive conditions that would kill other species instantly. Your body has adapted to extract maximum benefit from minimal resources.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Constitutional Fortitude",
+      "action_type": "passive",
+      "description": "You have advantage on Constitution saving throws.",
+      "rules": [
+       "save_type:advantage",
+       "ability:constitution"
+      ]
+     },
+     {
+      "effect": "grant_resistance",
+      "name": "Environmental Resistance",
+      "action_type": "passive",
+      "description": "You gain resistance to environmental damage.",
+      "rules": [
+       "damage_type:environmental",
+       "resistance:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_aggressive_survival",
+     "ui_transition": {
+      "animation": "survival_instinct_twist",
+      "sfx": "growl"
+     }
+    }
+   },
+   {
+    "id": "gank_combat_instincts",
+    "name": "Combat Instincts",
+    "narrative": "Your species has been fighting for survival since the dawn of time. Every Gank is born with an innate understanding of combat and survival, honed through generations of living in constant danger.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Survival Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in the Survival skill.",
+      "rules": [
+       "skill:survival",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Danger Sense",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Survival) checks in dangerous environments.",
+      "rules": [
+       "skill:survival",
+       "ability:wisdom",
+       "context:dangerous_environments",
+       "advantage:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_berserker_fury",
+     "ui_transition": {
+      "animation": "berserk_face_melt",
+      "sfx": "rage_scream"
+     }
+    }
+   },
+   {
+    "id": "gank_harsh_environment_adaptation",
+    "name": "Harsh Environment Adaptation",
+    "narrative": "Your physiology has evolved to handle extreme conditions that would kill other species. Your body can regulate temperature, filter toxins, and survive in environments that others would find lethal.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Environmental Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against extreme heat, cold, and radiation.",
+      "rules": [
+       "save_type:advantage",
+       "context:extreme_environments"
+      ],
+      "conditions": [
+       {
+        "key": "environment_type",
+        "op": "in",
+        "value": [
+         "extreme_heat",
+         "extreme_cold",
+         "radiation"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "modify_stat",
+      "name": "Extended Breath Holding",
+      "action_type": "passive",
+      "description": "You can hold your breath for twice as long.",
+      "rules": [
+       "breath_holding:doubled"
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.8m - 2.0m",
+   "distinctions": [
+    "Tough, weathered appearance",
+    "Adapted to harsh environments",
+    "Survivalist build",
+    "Resilient features",
+    "Combat-ready stance"
+   ],
+   "skin_color_variants": [
+    "Grey",
+    "Dark Grey",
+    "Brown",
+    "Olive",
+    "Mottled patterns"
+   ],
+   "physical_features": [
+    "Weathered, tough skin",
+    "Scarred from harsh environments",
+    "Muscular, survivalist build",
+    "Adapted to extreme conditions"
+   ],
+   "eye_color_variants": [
+    "Dark eyes",
+    "Grey eyes",
+    "Brown eyes",
+    "Amber eyes",
+    "Red eyes"
+   ],
+   "common_adornments": [
+    "Practical survival gear",
+    "Combat armor and weapons",
+    "Environmental protection equipment",
+    "Utility belts and tools",
+    "Mercenary and bounty hunter gear"
+   ],
+   "llm_description_prompt": "Describe a Gank character. Emphasize their tough, weathered appearance that reflects their adaptation to harsh environments, and their natural survivalist build. Their features should show the scars and resilience of someone who has survived in the galaxy's most dangerous conditions. Consider their mercenary background and the way they carry themselves with the confident, battle-ready stance of someone who has learned to thrive in adversity."
+  },
+  "class_synergies": [
+   {
+    "class": "Soldier (Survivalist)",
+    "narrative": "Gank's natural toughness and Combat Instincts make them exceptional Soldiers, able to survive and fight in the most dangerous environments.",
+    "mechanical_benefits": [
+     "Natural Survivor trait enhances durability in combat",
+     "Combat Instincts trait improves survival and tactical awareness",
+     "Harsh Environment Adaptation enables operations in extreme conditions"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Gank's natural survival abilities and environmental adaptation make them excellent Scouts, able to navigate and survive in the galaxy's most dangerous environments.",
+    "mechanical_benefits": [
+     "Combat Instincts trait enhances wilderness survival",
+     "Harsh Environment Adaptation enables exploration of extreme environments",
+     "Natural Survivor trait supports long-term operations"
+    ]
+   },
+   {
+    "class": "Bounty Hunter",
+    "narrative": "Gank's natural toughness and survival skills make them excellent Bounty Hunters, able to pursue targets through any environment.",
+    "mechanical_benefits": [
+     "Combat Instincts trait aids in tracking and pursuing targets",
+     "Harsh Environment Adaptation enables hunts in dangerous environments",
+     "Natural Survivor trait supports long hunts"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Gank's natural resilience and protective instincts make them excellent Guardians, able to protect others in the most dangerous situations.",
+    "mechanical_benefits": [
+     "Natural Survivor trait enhances protective abilities",
+     "Harsh Environment Adaptation enables protection in extreme conditions",
+     "High Constitution supports defensive role"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Bounty Hunters Guild",
+    "narrative": "Many Gank join the Bounty Hunters Guild, using their natural survival skills and toughness to excel in the dangerous profession of bounty hunting."
+   },
+   {
+    "faction": "Mercenary Companies",
+    "narrative": "Gank are highly valued by mercenary companies for their natural toughness and ability to operate in harsh environments."
+   },
+   {
+    "faction": "Independent Survivors",
+    "narrative": "Many Gank prefer to work independently as survivalists and mercenaries, using their natural abilities to thrive in the galaxy's most dangerous environments."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your survival instincts become more refined, allowing you to sense danger and adapt to new environments with incredible speed.",
+     "mechanical_benefit": "You can use your action to gain advantage on all skill checks for the next minute when in a dangerous environment, representing your enhanced survival instincts."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your environmental adaptation reaches new heights, allowing you to survive in conditions that would kill even other Gank.",
+     "mechanical_benefit": "You gain immunity to non-magical environmental damage, and you can survive in any atmosphere without special equipment for up to 24 hours."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your combat instincts combine with survival experience to make you a more lethal fighter in dangerous environments.",
+     "mechanical_benefit": "When fighting in harsh or dangerous environments, you gain a +2 bonus to attack rolls and damage rolls, representing your comfort in adversity."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your survival adaptations reach their peak, making you nearly impossible to kill through environmental means.",
+     "mechanical_benefit": "You have advantage on all saving throws against environmental effects, and you can survive in any environment indefinitely without special equipment."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Survival Rituals",
+    "type": "ceremonial",
+    "description": "Gank have ancient rituals that celebrate survival and resilience, often involving endurance challenges and tests of toughness.",
+    "narrative_impact": "Provides cultural depth and endurance demonstration opportunities. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Mercenary Traditions",
+    "type": "traditional",
+    "description": "Gank mercenary traditions emphasize reliability, toughness, and the ability to complete missions regardless of environmental conditions.",
+    "narrative_impact": "Creates professional identity and mission-focused roleplaying. Can be used for contract scenarios and character motivation."
+   },
+   {
+    "name": "Survival Training",
+    "type": "cultural",
+    "description": "Gank communities place great emphasis on survival training, teaching each generation how to thrive in the galaxy's most dangerous environments.",
+    "narrative_impact": "Provides educational opportunities and skill development scenarios. Can be used for training and mentoring situations."
+   },
+   {
+    "name": "Endurance Competitions",
+    "type": "narrative",
+    "description": "Gank hold regular endurance competitions that test their ability to survive in extreme conditions, from temperature extremes to toxic environments.",
+    "narrative_impact": "Provides competitive opportunities and character development. Can be used for community events and personal challenges."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "harsh",
+    "adaptation_name": "Harsh Environment Mastery",
+    "description": "Your body is perfectly adapted to harsh environments, allowing you to function normally in conditions that would incapacitate other species.",
+    "mechanical_benefit": "You have advantage on all skill checks in harsh environments, and you can sense environmental hazards within 30 feet."
+   },
+   {
+    "environment": "toxic",
+    "adaptation_name": "Toxic Resistance",
+    "description": "Your physiology can handle toxic environments and substances that would kill other species.",
+    "mechanical_benefit": "You have advantage on saving throws against poison and disease, and you can survive in toxic atmospheres without special equipment."
+   },
+   {
+    "environment": "extreme",
+    "adaptation_name": "Extreme Condition Survival",
+    "description": "Your body can handle extreme temperatures, pressures, and radiation levels that would kill other species.",
+    "mechanical_benefit": "You have advantage on saving throws against extreme environmental effects, and you can survive in any extreme condition for extended periods."
+   },
+   {
+    "environment": "dangerous",
+    "adaptation_name": "Danger Sense",
+    "description": "Your survival instincts allow you to sense and avoid danger in any environment.",
+    "mechanical_benefit": "You have advantage on Perception checks to detect hidden threats, and you can sense the presence of dangerous creatures within 60 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on survival abilities and environmental adaptation, complementing rather than overshadowing class features",
+    "Environmental mastery improvements maintain the species' unique identity while providing meaningful advancement",
+    "Survival and combat abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on survival traditions and mercenary culture rather than mechanical advantages",
+    "Survival rituals and endurance competitions provide unique roleplaying opportunities and cultural depth",
+    "Mercenary traditions and survival training enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for harsh and dangerous environments where survival is challenging",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Danger sense and toxic resistance provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "scaly_skin",
+    "sharp_features",
+    "athletic_build"
+   ],
+   "morphology": {
+    "head_type": "angular",
+    "body_type": "muscular",
+    "average_height": "5'9\""
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      {
+       "eyes": "bright green"
+      },
+      {
+       "hair": "short and spiky, black with red highlights"
+      }
+     ],
+     "adult": [
+      {
+       "skin tone": "olive-brown"
+      },
+      {
+       "scars": "minor cuts on the face and arms"
+      }
+     ],
+     "elder": [
+      {
+       "eyes": "yellowed, with vertical pupils"
+      },
+      {
+       "wrinkles": "deep creases around the mouth and eyes"
+      }
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "yellow_eyes",
+      "pale_skin (from avoiding sunlight)"
+     ],
+     "light_side": [
+      "calm_aura (soft blue glow surrounding them)"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "scars",
+    "tattoos",
+    "cybernetic limbs"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A rugged, athletic humanoid with scaly skin and angular features, armed for combat.",
+    "contextual_modifiers": [
+     "height",
+     "scars (if present)"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "The Gank Nemesis begins as a minor annoyance, taking small bounties or offering their services to the party.",
+     "threat_level": "Low-Moderate"
+    },
+    "escalation": {
+     "description": "As they gain notoriety and success, they begin to set their sights on more valuable targets, becoming increasingly aggressive in pursuit of their goals.",
+     "threat_level": "Moderate-High"
+    },
+    "confrontation": {
+     "description": "The Gank Nemesis has become a formidable foe, using all available resources to eliminate the party or claim the prize for themselves.",
+     "threat_level": "High-Very High"
+    }
+   },
+   "resolution_paths": {
+    "victory": "Defeating the Gank Nemesis earns great rewards and prestige within their community.",
+    "redemption": "If the Gank Nemesis is redeemed, they offer valuable insights into their species' culture and customs.",
+    "escape": "The party must navigate complex politics to prevent the Gank Nemesis from escaping justice."
+   },
+   "conflict_triggers": [
+    "Directly competing with the Gank Nemesis for bounties or targets",
+    "Betraying a shared ally or partner of the Gank Nemesis",
+    "Violating their code of honor by harming an innocent Gank"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "Betrayal",
+     "Disrespect"
+    ],
+    "vendetta_type": "revenge"
+   },
+   "overrides": {
+    "historical_enemy": "The infamous Gank slaver, Vexar, who brutalized countless Gank civilians during the Great Scorched Plains Uprising.",
+    "tragic_flaw": "A deep-seated need for validation and recognition from others, which can lead to reckless behavior and poor decision-making."
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "strong will",
+    "bravery",
+    "loyalty"
+   ],
+   "romance_progression": [
+    {
+     "Friendship": "Building trust through shared adventures and mutual respect."
+    },
+    {
+     "Favored Companion": "The Gank begins to rely on the romantic interest for support and guidance."
+    },
+    {
+     "Committed Partner": "They make a public declaration of their relationship, earning acceptance from both parties' communities."
+    },
+    {
+     "Family Ties": "Together, they start a family or establish a long-term bond through shared goals."
+    }
+   ],
+   "romance_events": [
+    "A private ceremony to celebrate a shared milestone (e.g., completing a difficult quest).",
+    "A joint expedition to explore an unknown world or uncover hidden secrets."
+   ],
+   "romance_modifiers": [
+    "Spending quality time together in a natural setting, like a hunt or picnic.",
+    "Offering gifts that hold sentimental value or personal significance."
+   ],
+   "overrides": {
+    "courtship_rituals": "Gank courtship often involves a series of physical challenges and competitions, where the suitor must prove their worth to the intended partner.",
+    "relationship_dynamics": "In Gank culture, relationships are built on mutual respect and trust, forged through shared experiences and adversity. Romantic partners are expected to support each other in times of need and celebrate each other's successes."
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "aggressive cunning loyal (to those who earn their trust) cold-blooded (when it comes to enemies)\n",
+    "motivations": [
+     "Protect myself and my allies at all costs",
+     "Eliminate threats to our survival and success",
+     "Secure wealth and resources for myself and others"
+    ],
+    "combat_behavior": "aggressive, always looking for the next fight uses their environment to their advantage (e.g., hiding in shadows, using terrain to flank enemies) favors melee combat over ranged attacks\n",
+    "social_behavior": "may initially come across as aloof or standoffish, but will warm up to those who demonstrate worthiness values loyalty and dedication above all else\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "0-20%: Hostile/Uncooperative",
+     "21-40%: Cautious/Wary",
+     "41-60%: Tolerant/Somewhat Trustworthy",
+     "61-80%: Loyal/Dedicated",
+     "81-100%: Unwaveringly Loyal"
+    ],
+    "loyalty_triggers": [
+     "Betrayal or perceived betrayal of trust",
+     "Failing to protect oneself or others in a critical situation",
+     "Engaging in dishonorable behavior (e.g., cheating, lying)"
+    ]
+   },
+   "services": [
+    {
+     "name": "Combat Training",
+     "description": "Teaches the Gank's signature combat style, emphasizing adaptability and situational awareness."
+    },
+    {
+     "name": "Survival Skills",
+     "description": "Instructs on how to navigate and thrive in hostile environments, using natural resources for survival."
+    }
+   ]
+  },
+  "flavor_text": "Gank are born to thrive in the unforgiving environment of their homeworld. From a young age, they're taught to respect and harness the raw power of Gank's dual suns, learning to navigate the treacherous terrain and exploit its resources. This deep connection with nature shapes their culture, where honor is tied to survival and loyalty is forged in the crucible of adversity.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Gank, you embody the spirit of your people: resilient, resourceful, and fiercely independent. Your natural affinity for harsh environments makes you an asset in any situation where survival is at stake. However, this same instinct can also lead to recklessness and a disregard for authority.",
+   "narrative_hooks": [
+    "Your Gank heritage has given you a unique connection to the dual suns of your homeworld, allowing you to sense changes in the environment that others might miss.",
+    "You have a talent for finding valuable resources in the most inhospitable places, but this skill can also make you a target for those who seek to exploit your abilities."
+   ],
+   "social_dynamics": "Gank are often viewed with a mix of respect and suspicion by other species. While they're admired for their survival skills and combat prowess, some see them as unsophisticated or uncouth. However, when given the chance to prove themselves, Gank can form strong bonds with those who understand and appreciate their unique culture.",
+   "common_motivations": [
+    "Protecting one's family and clan is a fundamental aspect of Gank culture, often taking precedence over personal interests or allegiances.",
+    "Gank are driven by a desire to prove themselves as superior survivors, constantly seeking new challenges and opportunities to test their skills."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "gank",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/gank.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

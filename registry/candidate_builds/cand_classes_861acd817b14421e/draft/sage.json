@@ -1,0 +1,200 @@
+{
+ "record": {
+  "id": "sage",
+  "name": "Sage",
+  "class_id": "consular",
+  "base_class": "consular",
+  "tags": [
+   "consular",
+   "sage",
+   "scholar",
+   "healer",
+   "wise",
+   "force_mastery",
+   "ancient_knowledge",
+   "light_side",
+   "jedi",
+   "wisdom_based",
+   "support"
+  ],
+  "description": "Sages are masters of healing and wisdom, using the Force to mend wounds and share knowledge. They are the keepers of ancient lore and the most skilled healers in the galaxy.",
+  "specialization_features": [
+   "force_healing",
+   "sage_knowledge",
+   "mass_healing",
+   "sage_wisdom",
+   "master_healer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Healing and Wisdom Master",
+   "role_in_group": "Support Healer",
+   "visual_signals": [
+    "Sage's Robes",
+    "Staff of the Ancients"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level3",
+    "feature_id": "wise_healer_feature",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain proficiency in two skills of your choice from Medicine, History, Arcana, or Investigation.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "sage_insight_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Sage's healing magic resonates with your own inner wisdom, you gain proficiency on a skill of your choice for one minute. Once used, this effect cannot be activated again until you complete a short or long rest."
+     }
+    ]
+   },
+   {
+    "node_id": "level7",
+    "feature_id": "ancient_knowledge_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can add the result of a failed Wisdom (Medicine) check to the target's hit points.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ancient_purification_failure",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "health_threshold",
+        "op": "below",
+        "value": 0
+       }
+      ],
+      "notes": "As the Consular's life force dwindles, their connection to the Force fails, causing any applied medicine to temporarily exacerbate their condition."
+     }
+    ]
+   },
+   {
+    "node_id": "level11",
+    "feature_id": "force_healing_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can use your action to heal a creature within 10 feet of you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "sage_empowerment",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the sage's staff crackles with arcane energy, a soothing aura surrounds them, channeling life force from incoming attacks to mend their wounds."
+     }
+    ]
+   },
+   {
+    "node_id": "level15",
+    "feature_id": "wise_sage_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice from Medicine, History, Arcana, or Investigation.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "sage_reflection",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "ability_target",
+        "op": "is",
+        "value": "enemies"
+       }
+      ],
+      "notes": "When you hit an enemy with your attack, your consular Sage's innate resilience sparks a counterattack. Your weapon becomes attuned to their momentum, redirecting any incoming force back at the aggressor."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Consular Robes",
+    "Staff of Light"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, hands clasped behind the back, and eyes closed in focus on the surroundings, as if sensing disturbances in the Force.",
+    "energy_signature": "A soft blue glow emanating from the character's fingers and staff, pulsing gently to indicate their connection to the Living Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "A wise and compassionate consular standing amidst a serene environment, surrounded by lush greenery and ancient trees, with a subtle blue energy aura enveloping them as they channel the power of the Force for healing and guidance.",
+    "contextual_modifiers": [
+     "low-light",
+     "peaceful"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "sage",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular_sage.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

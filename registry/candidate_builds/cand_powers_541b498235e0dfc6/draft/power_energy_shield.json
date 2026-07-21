@@ -1,0 +1,213 @@
+{
+ "record": {
+  "id": "power_energy_shield",
+  "name": "Energy Shield",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "defensive",
+   "shield",
+   "energy",
+   "protection",
+   "temporary_hp",
+   "tech_armor"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Personal energy shield generator technology"
+   }
+  },
+  "narrative": "You activate a personal energy shield that shimmers into existence around your body, creating a translucent barrier of pure energy. The power manifests as a humming field of blue-white force that flares brightly when absorbing impacts, dissipating kinetic energy before it can reach you.",
+  "flavor_text": "\"Shields up!\" - Every spacer who survived long enough",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating shield generator on belt or armor"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating shield frequency and power distribution"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create an energy shield that can absorb damage and deflect attacks.",
+   "mechanics": [
+    {
+     "type": "grant_temporary_hp",
+     "value": {
+      "dice_count": 3,
+      "dice_size": 4,
+      "modifier": 0
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain 3d4 temporary hit points"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's shield expertise transforms Energy Shield from basic protection to adaptive defense. They modulate frequencies to counter specific damage types, overclock projectors for extra capacity, and even angle the field to create partial coverage for nearby allies.",
+    "mechanical_benefit": [
+     {
+      "type": "area_shield",
+      "value": {
+       "temp_hp": {
+        "dice_count": 2,
+        "dice_size": 4,
+        "modifier": 0
+       }
+      },
+      "range": {
+       "distance": 5,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Engineers can extend shield to grant 2d4 temp HP to allies within 5 feet."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human innovation with Energy Shield technology is legendary. They've learned to pulse the shield for mobility, use it to ram through obstacles, or even overload it deliberately to create an electromagnetic pulse—finding offensive uses for defensive tech.",
+    "mechanical_benefit": [
+     {
+      "type": "damage_reflection",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "energy",
+       "modifier": 0
+      },
+      "target_scopes": [
+       "melee_attackers"
+      ],
+      "notes": "Humans reflect 1d4 energy damage to melee attackers."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has modified Energy Shield for guerrilla warfare. Their version uses salvaged ship shields miniaturized through necessity, creating barriers that can withstand Imperial firepower despite being cobbled together from spare parts.",
+    "mechanical_benefit": [
+     {
+      "type": "resistance",
+      "value": {
+       "damage_source": "energy_weapons"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebel shields grant resistance to energy weapon damage."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the shield's activation—generators humming to life, the air shimmering as the field forms, the feeling of being wrapped in protective energy. When hit, show the shield flaring bright, absorbing and dispersing the impact across its surface.",
+   "tactical_notes": "Energy Shield grants 3d4 temporary HP with concentration for up to 1 minute. Excellent pre-combat buff or emergency defense. The temp HP absorbs any damage type. Remember concentration can be broken by damage.",
+   "narrative_hooks": [
+    "An energy shield absorbs a sniper's killing shot at a crucial moment",
+    "The shield's power source creates interference that reveals hidden enemies",
+    "Overloading the shield creates a distraction for escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior surrounded by a shimmering energy shield. The translucent blue-white barrier ripples with hexagonal patterns, flaring bright where projectiles impact and dissipate. Energy cascades across the shield's surface like liquid lightning. The protected figure stands confident within their technological cocoon.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/energy_shield.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_energy_shield",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_energy_shield.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

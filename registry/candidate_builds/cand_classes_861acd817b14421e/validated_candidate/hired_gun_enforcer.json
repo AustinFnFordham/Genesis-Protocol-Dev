@@ -1,0 +1,235 @@
+{
+ "record": {
+  "id": "hired_gun_enforcer",
+  "name": "Enforcer",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "enforcer",
+   "intimidating",
+   "brutal",
+   "strength_based",
+   "mercenary",
+   "melee_specialist",
+   "martial",
+   "tactical"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_enforcer_entry_3",
+    "feature_id": "hired_gun_enforcer_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Enforcers impose their will through calculated force—breaking lines with shock tactics, subduing dissent, and forcing compliance through fear."
+   },
+   {
+    "node_id": "shock_and_awe_7",
+    "feature_id": "shock_and_awe",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_enforcer_entry_3"
+    ],
+    "description": "As an action, you can unleash a terrifying display. Creatures of your choice within 10 feet that can see or hear you must succeed on a Wisdom saving throw or become frightened of you until the end of your next turn. Creatures that fail by 5 or more also drop what they are holding.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "frighten_and_disarm",
+      "target_scopes": [
+       "creatures_within_10"
+      ],
+      "conditions": [],
+      "notes": "Frighten; fail by 5+ also disarms"
+     }
+    ]
+   },
+   {
+    "node_id": "compliance_hold_11",
+    "feature_id": "compliance_hold",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "shock_and_awe_7"
+    ],
+    "description": "When you hit a creature with a melee weapon attack, you can force it to make a Strength saving throw. On a failure, it is grappled and restrained until the end of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "grapple_and_restrain_on_melee_hit",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "melee_attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "STR save or grappled & restrained until your next turn"
+     }
+    ]
+   },
+   {
+    "node_id": "crowd_control_expert_13",
+    "feature_id": "crowd_control_expert",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "compliance_hold_11"
+    ],
+    "description": "Creatures frightened of you have their speed reduced by 10 feet, and when a frightened creature starts its turn within 10 feet of you, it takes psychic damage equal to your Charisma modifier (minimum 1).",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "reduce_speed_frightened_by_10",
+      "target_scopes": [
+       "frightened_creatures"
+      ],
+      "conditions": [],
+      "notes": "Frightened creatures have -10 ft speed"
+     },
+     {
+      "type": "apply_damage",
+      "value": "charisma_mod_psychic_start_turn",
+      "target_scopes": [
+       "frightened_creatures_within_10"
+      ],
+      "conditions": [],
+      "notes": "Psychic damage equal to CHA mod at start of their turn"
+     }
+    ]
+   },
+   {
+    "node_id": "riot_breaker_17",
+    "feature_id": "riot_breaker",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "crowd_control_expert_13"
+    ],
+    "description": "As an action, you can make a special sweeping attack against each creature of your choice within 5 feet. Make a separate melee attack roll against each target. A creature hit must succeed on a Strength saving throw or be knocked prone and disarmed.",
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "sweeping_melee_against_adjacent",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Sweep attack vs each adjacent; save or prone+disarm"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_enforcer_19",
+    "feature_id": "legendary_enforcer",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "riot_breaker_17"
+    ],
+    "description": "For 1 minute (once per long rest), you radiate oppressive dominance. You have advantage on Intimidation checks and your melee attacks against frightened creatures deal additional damage equal to your Charisma modifier.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "intimidation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "enforcer_aura_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Intimidation"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "extra_damage_vs_frightened_equal_cha_mod",
+      "target_scopes": [
+       "frightened_targets"
+      ],
+      "conditions": [
+       {
+        "key": "enforcer_aura_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+CHA mod damage vs frightened targets"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Mandalorian Armor Plates",
+    "Kyber Crystal Fragment"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A calculated stance, feet shoulder-width apart, with a lightsaber poised at the ready.",
+    "energy_signature": "A vibrant aura of blue and white light emanating from within, like the hum of a Jedi's connection to the Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone Jedi Knight standing on a windswept cliffside, gazing out into the horizon, with a faint glow of sunset in the background.",
+    "contextual_modifiers": [
+     "with a hint of Imperial entanglement",
+     "and an emphasis on dramatic lighting"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Hired guns for hire, known for their skills in combat and tactics. They often take on mercenary work to earn a living.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Combat armor",
+    "Tactical visor"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_enforcer",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.enforcer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

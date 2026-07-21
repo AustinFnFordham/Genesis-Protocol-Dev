@@ -1,0 +1,220 @@
+{
+ "record": {
+  "id": "power_cryogenic_burst",
+  "name": "Cryogenic Burst",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "ice",
+   "cold",
+   "cryogenic",
+   "freezing",
+   "projectile",
+   "frost"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Cryogenic weapon technology available to any equipped combatant"
+   }
+  },
+  "narrative": "You fire a cryogenic projectile that flash-freezes on impact, coating the target in a layer of supercooled particles that sap heat and slow movement. The power manifests as a crystalline burst of absolute zero, frost spreading from the impact point as moisture in the air instantly freezes into deadly ice shards.",
+  "flavor_text": "\"Ice them.\" - Bounty Hunter",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "firing cryo-launcher or throwing cryo-grenade"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating thermal differential for maximum effect"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire a small cryogenic projectile that deals cold damage and can slow the target.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "cold"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 cold damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "Engineers understand cryogenic technology at a molecular level, optimizing coolant mixtures and pressure systems to achieve temperatures approaching absolute zero for maximum tissue damage and system shock.",
+    "mechanical_benefit": [
+     {
+      "type": "brittle_freeze",
+      "value": {
+       "vulnerability": "physical"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineer's absolute zero makes target vulnerable to physical damage for 1 round."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to adjust cryogenic compounds for different atmospheres and gravities, their improvisational skills turning environmental factors into tactical advantages.",
+    "mechanical_benefit": [
+     {
+      "type": "environmental_freeze",
+      "value": {
+       "effect": "ice_patch",
+       "area": {
+        "shape": "circle",
+        "radius": {
+         "distance": 5,
+         "unit": "feet"
+        }
+       }
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "minute"
+      },
+      "target_scopes": [
+       "ground"
+      ],
+      "notes": "Humans create a 5-foot ice patch (difficult terrain) where the burst hits."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "Rebel saboteurs have weaponized industrial coolants and repurposed Imperial cryo-storage units into improvised weapons, their resourcefulness turning maintenance equipment into battlefield assets.",
+    "mechanical_benefit": [
+     {
+      "type": "slow_effect",
+      "value": {
+       "speed_change": {
+        "amount": 10,
+        "unit": "feet",
+        "direction": "reduce"
+       }
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebel cryo-bursts reduce target's speed by 10 feet for 1 round."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the instant formation of ice crystals on impact, the target's breath becoming visible as their body temperature plummets. Frost spreads across armor and skin, joints stiffening as the cold penetrates. The air around the impact point shimmers with frozen moisture.",
+   "tactical_notes": "Cryogenic Burst offers consistent cold damage at range. The 1d4 damage is modest but reliable. Cold damage is rarely resisted, making it effective against most targets. Consider environmental effects - frozen surfaces, brittle equipment, or thermal shock to electronics.",
+   "narrative_hooks": [
+    "A cryo-burst shatters a droid's hydraulic fluid, freezing it solid mid-movement",
+    "The cold reveals hidden thermal signatures as everything else freezes",
+    "A desperate shot flash-freezes water, creating an ice bridge or barrier"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a cryogenic projectile exploding in a burst of supercooled particles. Ice crystals form instantly in the air, creating a beautiful but deadly cloud of frozen shards. The target is coated in rapidly spreading frost, their armor cracking from thermal shock. Blue-white energy radiates from the impact point as absolute zero temperatures flash-freeze everything nearby.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/cryogenic_burst.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_cryogenic_burst",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_cryogenic_burst.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

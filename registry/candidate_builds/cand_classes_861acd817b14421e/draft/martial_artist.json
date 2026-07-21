@@ -1,0 +1,259 @@
+{
+ "record": {
+  "id": "martial_artist",
+  "name": "Martial Artist",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "martial_artist",
+   "melee_specialist",
+   "dexterity_based",
+   "disciplined",
+   "hunter",
+   "agile",
+   "tactical",
+   "precise"
+  ],
+  "description": "Bounty Hunter Martial Artists rely on disciplined unarmed combat, control techniques, and close-quarters prowess to subdue targets swiftly and efficiently.",
+  "specialization_features": [
+   "close_quarters_mastery",
+   "stunning_technique",
+   "disarming_throw",
+   "lethal_precision",
+   "legendary_martial_focus"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Bounty Hunter Martial Artist",
+   "role_in_group": "Martial Expert, Unarmed Combatant",
+   "visual_signals": [
+    "Unsettling Stance",
+    "Disciplined Focus"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "martial_artist_3",
+    "feature_id": "Unarmed Mastery",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain proficiency in Intimidation, Perception, and Persuasion.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "inner_balance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "martial_artist"
+       }
+      ],
+      "notes": "The Bounty Hunter's inner balance shifts as they land a hit, granting proficiency in Intimidation, Perception, and Persuasion skills for the remainder of the turn."
+     }
+    ]
+   },
+   {
+    "node_id": "martial_artist_7",
+    "feature_id": "Controlled Strike",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Deal an additional 1d4 damage with unarmed strikes.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_strike",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As your martial arts mastery reaches its peak, you channel the energy of your opponent's impact into a precise counterattack. Deal an additional 1d4 damage with unarmed strikes."
+     }
+    ]
+   },
+   {
+    "node_id": "martial_artist_11",
+    "feature_id": "Grappling Expertise",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Gain expertise in one type of grapple or grappling technique.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "thread_the_needle",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "martial_artist"
+       }
+      ],
+      "notes": "With a swift and deadly motion, the bounty hunter's fingers wrap around their opponent's wrist or ankle, momentarily stunning them with the sudden grasp."
+     }
+    ]
+   },
+   {
+    "node_id": "martial_artist_15",
+    "feature_id": "Master of the Mind",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your action to make a Wisdom (Insight) check against a creature's Wisdom saving throw.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "mind_slip (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "Your eyes lock onto your foe, and with a swift mental jab, you discern their intentions. Make a Wisdom (Insight) check against the creature's Wisdom saving throw to uncover hidden information or anticipate their next move."
+     }
+    ]
+   },
+   {
+    "node_id": "martial_artist_18",
+    "feature_id": "Unarmed Finesse Mastery",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "Gain proficiency in finesse melee attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "unarmed_finesse_flow (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "Martial Artist"
+       },
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "bounty_hunter"
+       }
+      ],
+      "notes": "As a burst of focused energy, your unarmed strikes become precision tools. You gain proficiency in finesse melee attacks, weaving together the intricacies of combat with the elegance of art."
+     }
+    ]
+   },
+   {
+    "node_id": "martial_artist_22",
+    "feature_id": "Tactical Unarmed Combat",
+    "level_requirement": 22,
+    "type": "core",
+    "description": "You can use your bonus action to make an unarmed attack with advantage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_slam",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "With a swift, economical strike, you can use your bonus action to unleash a devastating combination of unarmed attacks with advantage against a foe that has just attacked you."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Kyber Crystal Focus",
+    "Bounty Hunter Armor Plating"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance with legs spread wide, hands clasped behind back and eyes scanning the horizon for potential threats.",
+    "energy_signature": "A faint hum of blue Force energy emanates from the individual's fingertips, as if they are channeling their ki to enhance their physical prowess."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone Bounty Hunter Martial Artist stands atop a dusty desert planet's rocky outcropping, gazing out at the twin suns setting over the horizon with a mixture of determination and trepidation in their expression.",
+    "contextual_modifiers": [
+     "High-contrast color palette to emphasize texture and lighting",
+     "Dynamic pose with subtle motion blur to convey a sense of movement"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "martial_artist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_martial_artist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

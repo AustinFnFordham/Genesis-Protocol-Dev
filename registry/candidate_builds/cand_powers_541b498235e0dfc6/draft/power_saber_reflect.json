@@ -1,0 +1,196 @@
+{
+ "record": {
+  "id": "power_saber_reflect",
+  "name": "Saber Reflect",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "lightsaber",
+   "defense",
+   "deflection",
+   "blaster_bolt",
+   "jedi",
+   "iconic"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Iconic lightsaber defense technique available to any Force-sensitive"
+   }
+  },
+  "narrative": "You intercept incoming blaster fire with your lightsaber, the blade's energy field deflecting bolts harmlessly away or back toward attackers. The power manifests as brilliant flashes where plasma meets plasma, your weapon becoming a shield of light that turns ranged attacks into ineffective light shows.",
+  "flavor_text": "\"So uncivilized.\" - Obi-Wan Kenobi (deflecting blaster fire)",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "precise lightsaber positioning to intercept bolts"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "using the Force to predict trajectory and timing"
+   }
+  ],
+  "casting_time": "1 Reaction",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use your lightsaber to deflect ranged weapon attacks.",
+   "mechanics": [
+    {
+     "type": "damage_reduction",
+     "value": {
+      "amount": "attack_damage_roll",
+      "special": "deflect_projectiles"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Reduce ranged attack damage, potentially deflecting attack entirely"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's defensive mastery makes Saber Reflect near-perfect protection. They've trained deflection until it's muscle memory—blaster bolts bouncing off their blade without conscious thought, defense so complete it looks effortless.",
+    "mechanical_benefit": [
+     {
+      "type": "reflect_to_attacker",
+      "value": {
+       "damage": "reflected_amount"
+      },
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Guardians can reflect attacks back at the shooter, dealing reflected damage."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to deflect attacks from unconventional angles and unexpected sources. They've learned to reflect not just blaster bolts but slugthrower rounds, arrows, even thrown weapons through innovative technique.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_deflection",
+      "value": {
+       "projectile_types": "all_ranged"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can deflect any ranged attack, not just energy weapons."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Saber Reflect as fundamental lightsaber technique—the iconic defense that defines Jedi combat. Their methods emphasize calm precision, letting the Force guide deflection for perfect interception.",
+    "mechanical_benefit": [
+     {
+      "type": "deflect_to_target",
+      "value": {
+       "accuracy": "force_ability_modifier"
+      },
+      "target_scopes": [
+       "chosen_target"
+      ],
+      "notes": "Jedi can deflect attacks toward chosen targets (attack roll using Force mod)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the lightsaber intercepting blaster bolts in brilliant flashes, plasma on plasma creating light shows. Show the defender's calm focus, blade moving with preternatural precision to catch every shot. The deflection should feel iconic and effortless.",
+   "tactical_notes": "Saber Reflect reduces ranged attack damage as a reaction, potentially negating it entirely. Essential defensive technique for lightsaber users. Uses your reaction but provides excellent protection against ranged threats. Requires wielding a lightsaber.",
+   "narrative_hooks": [
+    "Perfect deflection saves allies from a deadly barrage",
+    "The technique reveals Force sensitivity to witnesses",
+    "Reflecting a bolt back kills the shooter, creating moral complexity"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a Jedi deflecting blaster fire with their lightsaber. Multiple bolts impact the glowing blade in brilliant flashes, plasma splashing harmlessly away. The defender stands calm and focused, their lightsaber moving with preternatural precision to intercept every shot. The scene captures the iconic Jedi defense. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric lightsaber effects, by Doug Chiang",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/saber_reflect.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_saber_reflect",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_saber_reflect.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,379 @@
+{
+ "record": {
+  "id": "human_corellian",
+  "name": "Corellian Human",
+  "tags": [
+   "dexterity_based",
+   "engineer",
+   "human",
+   "human_corellian",
+   "influence",
+   "intelligence_based",
+   "pilot",
+   "smuggler",
+   "starship_pilot",
+   "tech_specialist",
+   "uncommon"
+  ],
+  "description": "Corellians are humans from the shipbuilding world of Corellia, known for their exceptional piloting skills, engineering expertise, and independent spirit. They are natural-born spacers and often serve as pilots, engineers, or smugglers.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Intelligence",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Corellian"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "traits": [
+   {
+    "name": "Natural Pilot",
+    "level": 1,
+    "description": "Your Corellian heritage grants you proficiency in Piloting and advantage on Dexterity checks related to vehicle operation or navigation.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Piloting"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "dexterity_vehicle_operation",
+      "conditions": [
+       {
+        "key": "activity",
+        "op": "in",
+        "value": [
+         "piloting",
+         "navigation",
+         "vehicle_operation"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Engineering Aptitude",
+    "level": 1,
+    "description": "You have a natural understanding of mechanical systems. You gain proficiency in Technology and have advantage on Intelligence (Technology) checks to repair or modify vehicles.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Technology"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "technology_vehicle_repair_modify",
+      "conditions": [
+       {
+        "key": "technology_action",
+        "op": "in",
+        "value": [
+         "repair",
+         "modify"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Spacer's Instinct",
+    "level": 1,
+    "description": "Your experience in space grants you advantage on Survival checks in space environments and once per short rest, you can gain advantage on a check to avoid or escape a dangerous situation.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_space_environments",
+      "conditions": [
+       {
+        "key": "environment_type",
+        "op": "equals",
+        "value": "space"
+       }
+      ]
+     },
+     {
+      "type": "grant_advantage",
+      "value": "escape_danger_once_per_short_rest",
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "humanoid_body",
+     "corellian_hair_color",
+     "human_skin_tone",
+     "pilot_glasses",
+     "tattooed_arm"
+    ],
+    "morphology": {
+     "head_type": "humanoid_head",
+     "body_type": "muscular_build",
+     "average_height": "5'9"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "skin_texture": "smooth_and_luminous",
+       "facial_features": "large_nose_small_mouth",
+       "body_shape": "slender_and_athletic"
+      },
+      "adult": {
+       "skin_texture": "leathery_and_weathered",
+       "facial_features": "prominent_cheekbones_strong_jawline",
+       "body_shape": "lean_and_agile"
+      },
+      "elder": {
+       "skin_texture": "wrinkled_and_translucent",
+       "facial_features": "deeply-lined_wrinkled_nose",
+       "body_shape": "frail_and_emaciated"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "scar_over_left_eye",
+       "tattoo_of_dark_side_symbol",
+       "malevolent_glare"
+      ],
+      "light_side": [
+       "sparkling_stars_in_eye",
+       "aura_of_confidence",
+       "benevolent_smile"
+      ]
+     }
+    },
+    "unique_identifiers": [],
+    "prompt_schema": {
+     "base_prompt": "Corellian Human with [hair_color] hair and [skin_tone] skin, wearing pilot glasses and a tattooed arm.",
+     "contextual_modifiers": [
+      {
+       "influence": "engineer"
+      },
+      {
+       "skill_level": "expert"
+      }
+     ]
+    }
+   }
+  },
+  "flavor_text": "Corellians are the descendants of ancient shipbuilders who fled their homeworld's catastrophic asteroid fields. They've honed their piloting skills and engineering expertise through generations of spacefaring innovation, often taking on jobs that others won't touch - from smuggling to rescue missions. Their independent spirit and adaptability have made them a staple in the galaxy's underbelly.",
+  "llm_guidance": {
+   "roleplay_guidance": "Play Corellians as pilots who are always looking for their next big score, but also fiercely loyal to those they consider friends. They're natural-born tinkerers and engineers, often taking apart and reassembling equipment to improve its performance. Be mindful of the complex history between Corellia and the Galactic Empire - some Corellians may harbor resentment or loyalty towards the New Republic.",
+   "narrative_hooks": [
+    "A long-lost family heirloom or relic from their homeworld's ancient past holds secrets to a galaxy-shaking technology.",
+    "Their reputation as smugglers has attracted unwanted attention from Hutt Cartel agents, who will stop at nothing to acquire their expertise."
+   ],
+   "social_dynamics": "Corellians tend to form close-knit groups based on shared experiences and skills. They often have a hard time trusting authority figures, preferring to rely on themselves and their peers. However, this independence can lead them into trouble when dealing with bureaucratic organizations or alien cultures.",
+   "common_motivations": [
+    "Seeking financial gain through high-risk smuggling jobs",
+    "Uncovering the truth about their family's past or the events leading up to Corellia's devastating asteroid fields"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "Independent, resourceful, and fiercely loyal, with a hint of recklessness",
+    "motivations": "Self-improvement, exploration, and protection of those I care about",
+    "combat_behavior": "I'll take point, using my piloting skills to outmaneuver enemies. Don't worry, I've got this!",
+    "social_behavior": "I'm charming and persuasive, but also fiercely protective of my friends and allies."
+   },
+   "relationship_tracking": {
+    "trust_levels": "Earned through shared adventures and demonstrated loyalty",
+    "loyalty_triggers": "When someone puts themselves in harm's way to protect me or mine"
+   },
+   "services": [
+    "Ship navigation and repair",
+    "Engineering expertise for complex systems",
+    "Smuggling and black market connections (discreetly, of course)"
+   ]
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A rival Corellian pilot challenges you to a high-stakes flight competition on Coruscant.",
+      "reward": "Reputation among the pilots of the galaxy increases by 10%.",
+      "consequence": "The rival pilot begins to sabotage your ship's reputation, causing a minor setback in your mission."
+     },
+     "escalation": {
+      "description": "Your nemesis steals one of your prized possession or valuable resources.",
+      "reward": "You gain access to advanced ship customization options for 1 week.",
+      "consequence": "The stolen item is used against you in a future conflict."
+     },
+     "confrontation": {
+      "description": "A high-stakes chase through the galaxy culminates in an intense space battle.",
+      "reward": "Your piloting skills are upgraded, granting +2 bonus to all Piloting checks for 1 month.",
+      "consequence": "Your reputation as a pilot takes a significant hit due to the reckless nature of the conflict."
+     }
+    },
+    "resolution_paths": {
+     "victory": "You emerge victorious and claim the title of top Corellian pilot in the galaxy.",
+     "redemption": "Your nemesis apologizes and offers to make amends by providing you with rare resources for your ship.",
+     "escape": "You narrowly evade capture and escape into hiding, but your reputation is tarnished."
+    },
+    "conflict_triggers": [
+     "Rival pilot emerges as a top contender in the galaxy's prestigious flight competitions.",
+     "Nemesis steals one of your prized possessions or valuable resources.",
+     "High-stakes mission requires you to fly at breakneck speeds through treacherous asteroid fields or dense forest moon terrain."
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "A close friend or family member is killed in a tragic accident, and you blame yourself for not being able to prevent it.",
+      "You suffer a significant financial loss due to your nemesis's actions."
+     ],
+     "vendetta_type": "Seek vengeance against the person responsible for the harm."
+    },
+    "primary_nemesis": "Hutt Cartel (specifically, a ruthless and cunning Hutt crime lord)",
+    "secondary_nemesis": "Galactic Empire ( legacy of oppression and occupation)",
+    "progression": [
+     {
+      "threshold": 0.3,
+      "nemesis_level": "Informant"
+     },
+     {
+      "threshold": 0.6,
+      "nemesis_level": "Thug"
+     },
+     {
+      "threshold": 1.0,
+      "nemesis_level": "Mentor"
+     }
+    ],
+    "triggers": [
+     {
+      "trigger_name": "Reputation",
+      "description": "Their smuggling activities have raised the ire of a Hutt Cartel crime lord.",
+      "outcome": "The Hutt Cartel sends agents to capture or eliminate them."
+     },
+     {
+      "trigger_name": "Legacy",
+      "description": "A relic from their family's past holds secrets about Corellia's asteroid fields.",
+      "outcome": "They uncover a dark secret that puts them at odds with the Galactic Empire's legacy."
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     {
+      "Species": "Corellian Human"
+     },
+     {
+      "Class": "Pilot, Engineer, Smuggler"
+     },
+     {
+      "Personality": "Adventurous, Charismatic, Resourceful"
+     },
+     {
+      "Appearance": "Physically fit, Fashionable, Exotic features"
+     }
+    ],
+    "romance_progression": {
+     "stage1": "You lock eyes with a charming Corellian human pilot in a crowded cantina. You feel an instant attraction.",
+     "stage2": "The pilot approaches you and introduces themselves as 'Kira'. You learn that she's also a skilled engineer and shares your love for fast ships.",
+     "stage3": "Kira reveals her past experiences with smuggling operations on Corellia, sparking a deep connection with you.",
+     "stage4": "You discover Kira has family connections to the Corellian underworld. You must decide whether to trust her or not.",
+     "stage5": "The relationship blossoms into something more as you and Kira start working together on a high-stakes mission."
+    },
+    "romance_events": [
+     "Kira helps you fix your damaged ship, revealing her engineering expertise.",
+     "You're caught in an awkward situation with another character due to your feelings for Kira.",
+     "A close friend or family member expresses concern about your relationship with Kira."
+    ],
+    "romance_modifiers": [
+     "Increased Influence (diplomacy) checks when interacting with Kira",
+     "Reduced Intimidation ( Persuasion) checks with NPCs who disapprove of the relationship"
+    ],
+    "approach_to_love": [
+     {
+      "value": 0.7,
+      "description": "Emotional Intimacy"
+     },
+     {
+      "value": 0.3,
+      "description": "Practical Cooperation"
+     }
+    ],
+    "bonding_cues": [
+     {
+      "cue_name": "Mutual Respect",
+      "description": "They show respect for each other's skills and expertise.",
+      "outcome": "Their bond grows stronger as they collaborate on challenging projects."
+     },
+     {
+      "cue_name": "Trust in Shared Danger",
+      "description": "They put themselves at risk to protect their partner during a perilous mission.",
+      "outcome": "Their trust in each other deepens, forming an unbreakable bond."
+     }
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "human_corellian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/human_corellian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

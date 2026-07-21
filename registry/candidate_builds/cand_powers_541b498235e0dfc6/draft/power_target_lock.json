@@ -1,0 +1,199 @@
+{
+ "record": {
+  "id": "power_target_lock",
+  "name": "Target Lock",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "targeting",
+   "accuracy",
+   "tracking",
+   "guidance",
+   "aim_assist",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic target tracking and aim assistance technology"
+   }
+  },
+  "narrative": "You establish a targeting lock on an enemy, your weapon systems tracking their movements and predicting trajectories. The power manifests as targeting reticle turning from yellow to red, lock tone sounding as computers calculate perfect firing solution.",
+  "flavor_text": "\"Target locked. Fox two.\" - Pilot",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "designating target and establishing tracking lock"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "maintaining targeting lock and tracking movement"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "60 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You establish a targeting lock on a creature or vehicle.",
+   "mechanics": [
+    {
+     "type": "grant_advantage",
+     "value": {
+      "benefit": "attack_advantage",
+      "source": "targeting_lock"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain advantage on attacks against locked target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's targeting algorithms create locks that predict enemy movement patterns. Their systems don't just track current position—they calculate future trajectories, making evasion futile against computational precision.",
+    "mechanical_benefit": [
+     {
+      "type": "ignore_cover",
+      "value": {
+       "cover_types": [
+        "half",
+        "three_quarters"
+       ]
+      },
+      "target_scopes": [
+       "locked_target"
+      ],
+      "notes": "Engineers ignore half and three-quarters cover against locked targets."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human intuition enhances targeting locks beyond pure computation. They blend instinct with data, their locks anticipating irrational enemy maneuvers that computers can't predict through pure pattern recognition.",
+    "mechanical_benefit": [
+     {
+      "type": "multi_target_lock",
+      "value": {
+       "additional_targets": 1
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Humans can maintain locks on 2 targets simultaneously."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's targeting technology represents military superiority through overwhelming computational power. Their locks integrate fleet-wide sensor data, creating targeting solutions that account for every variable.",
+    "mechanical_benefit": [
+     {
+      "type": "share_lock",
+      "value": {
+       "allies": "all_within_100_feet"
+      },
+      "target_scopes": [
+       "locked_target"
+      ],
+      "notes": "Imperial locks are shared with all allies within 100 feet for coordinated fire."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe targeting reticle acquiring lock—changing from yellow to red, lock tone sounding. Show tracking system following target movement, compensating for evasion, maintaining perfect aim through complex maneuvers.",
+   "tactical_notes": "Target Lock grants advantage on attacks against one target for up to 1 minute with concentration. No resource cost as cantrip makes it reliable. Perfect for focusing fire. The bonus action timing allows establishing lock before attacking. Concentration requirement means defensive positioning matters.",
+   "narrative_hooks": [
+    "Target lock allows impossible shot through complex evasive maneuvers",
+    "The lock reveals advanced targeting technology to enemies",
+    "Breaking concentration at wrong moment wastes critical firing opportunity"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting showing targeting lock acquisition. A reticle tracks an enemy's movements, changing from yellow to red as lock establishes. Targeting data streams across displays, showing perfect firing solution calculated. The scene captures technological precision in combat targeting.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/target_lock.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_target_lock",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_target_lock.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

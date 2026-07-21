@@ -1,0 +1,347 @@
+{
+ "record": {
+  "id": "human_lothal",
+  "name": "Lothal Human",
+  "tags": [
+   "adaptable",
+   "common",
+   "explorer",
+   "frontier",
+   "human",
+   "human_lothal",
+   "precise",
+   "resilient",
+   "scout",
+   "uncommon",
+   "wilderness",
+   "wilderness_expert",
+   "wisdom_based"
+  ],
+  "description": "Lothal humans are from the frontier world of Lothal, known for their adaptability, resourcefulness, and survival skills. They are independent, practical, and often serve as scouts, traders, or settlers on the galactic frontier.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Constitution",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Lothalian"
+  ],
+  "base_hp": 11,
+  "base_strain": 10,
+  "traits": [
+   {
+    "name": "Frontier Survival",
+    "level": 1,
+    "description": "Your life on the frontier has taught you to survive in harsh conditions. You gain proficiency in Survival and have advantage on Constitution saving throws against environmental hazards.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Survival"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "constitution_environmental_hazards",
+      "conditions": [
+       {
+        "key": "hazard_type",
+        "op": "equals",
+        "value": "environmental"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Resourceful Adaptation",
+    "level": 1,
+    "description": "You excel at making the most of limited resources. You have advantage on Intelligence (Technology) checks to repair or modify equipment with limited materials, and once per short rest, you can gain advantage on a check to find or create useful items.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "technology_limited_materials",
+      "conditions": [
+       {
+        "key": "material_availability",
+        "op": "equals",
+        "value": "limited"
+       }
+      ]
+     },
+     {
+      "type": "grant_advantage",
+      "value": "find_create_items_once_per_short_rest",
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Independent Spirit",
+    "level": 1,
+    "description": "Your frontier upbringing has made you self-reliant and perceptive. You have advantage on Wisdom (Perception) checks to notice threats or opportunities, and you can sense when someone is trying to take advantage of you.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_threats_opportunities",
+      "conditions": [
+       {
+        "key": "perception_target",
+        "op": "in",
+        "value": [
+         "threats",
+         "opportunities"
+        ]
+       }
+      ]
+     },
+     {
+      "type": "grant_action",
+      "value": "Exploitation Detection",
+      "description": "Sense when someone is trying to take advantage"
+     }
+    ]
+   }
+  ],
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "tanned_skin",
+     "wavy_hair",
+     "athletic_build"
+    ],
+    "morphology": {
+     "head_type": "oval",
+     "body_type": "muscular",
+     "average_height": "5'9\""
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": [
+       "large_eyes",
+       "curly_hair"
+      ],
+      "adult": [
+       "sharp_features",
+       "tanned_skin"
+      ],
+      "elder": [
+       "wisdom_lines",
+       "graying_hair"
+      ]
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "yellow_eyes",
+       "pale_skin"
+      ],
+      "light_side": [
+       "calm_aura"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos",
+     "cybernetics"
+    ],
+    "prompt_schema": {
+     "base_prompt": "A rugged, resourceful Lothal human standing at the edge of a desert canyon",
+     "contextual_modifiers": [
+      "weather: sunny",
+      "pose: relaxed"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": "At first, your nemesis seems like any ordinary threat. They're skilled, but you can handle them.\nHowever, as the battle rages on, their tactics become more and more unpredictable, forcing you to adapt on the fly.",
+     "escalation": "Your nemesis begins to push the limits of what's acceptable in combat, using underhanded tactics and exploiting your weaknesses.\nYou must stay one step ahead of them, anticipating their moves before they can strike.",
+     "confrontation": "The stakes are higher than ever. Your nemesis has become a ruthless adversary who will stop at nothing to emerge victorious.\nYou must summon every last ounce of skill and determination to defeat them in an epic showdown."
+    },
+    "resolution_paths": {
+     "victory": "You outwit and overpower your nemesis, claiming the upper hand in this intense confrontation.",
+     "redemption": "Despite your best efforts, you are defeated by your nemesis. However, through their mercy, you learn valuable lessons and emerge stronger for it.",
+     "escape": "In a desperate bid to survive, you narrowly escape the clutches of your nemesis, but not without scars – both physical and emotional."
+    },
+    "conflict_triggers": [
+     "Direct challenge",
+     "Sabotage or theft of resources",
+     "Betrayal or deception"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "direct insult",
+      "stealing from me",
+      "betraying a trust"
+     ],
+     "vendetta_type": "revenge"
+    },
+    "historical_enemies": [
+     "Imperial Forces",
+     "Sith Cults"
+    ],
+    "tragic_flaws": [
+     "Hubris, leading to recklessness and overconfidence; Frustration, stemming from the struggle for survival on Lothal"
+    ]
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "adaptable",
+     "explorer",
+     "precise"
+    ],
+    "romance_progression": [
+     {
+      "Stage 1": "Friendship – Sharing stories of adventures and misadventures"
+     },
+     {
+      "Stage 2": "Acrimony – Friendly rivalry and playful teasing"
+     },
+     {
+      "Stage 3": "Intimacy – Opening up about personal struggles and fears"
+     },
+     {
+      "Stage 4": "Commitment – Discussing long-term goals and aspirations"
+     },
+     {
+      "Stage 5": "Passion – Expressing deep emotions and affection"
+     }
+    ],
+    "romance_events": [
+     "A romantic picnic amidst a breathtaking sunset on Lothal's scenic coast",
+     "A surprise getaway to an exotic, secluded resort for a weekend of relaxation",
+     "A heartfelt, tearful apology after a hurtful misunderstanding"
+    ],
+    "romance_modifiers": [
+     "Showing genuine interest in their hobbies or passions",
+     "Offering words of encouragement and support during tough times",
+     "Cooking a romantic meal together, sharing stories and laughter"
+    ],
+    "cultural_approach_to_love": [
+     {
+      "description": "The rough-around-the-edges charm of a survivor.",
+      "effect": "+10 to Intimacy (Charming)"
+     },
+     {
+      "description": "A deep-seated need for security and stability in relationships.",
+      "effect": "+20 to Intimacy (Reliable)"
+     }
+    ],
+    "romantic_interests": [
+     "Survivalists, Traders, Smugglers"
+    ]
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "adaptable",
+      "resilient"
+     ]
+    },
+    "motivations": {
+     "goals": [
+      "Maintain independence",
+      "Secure resources for survival"
+     ]
+    },
+    "combat_behavior": "Aggressive, precise attacks when threatened.",
+    "social_behavior": "Friendly but reserved until trust is established."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "initial": "Low",
+     "max": "High"
+    },
+    "loyalty_triggers": [
+     "Long-term companionship",
+     "Mutual aid in times of need",
+     "Respectful treatment"
+    ]
+   },
+   "services": [
+    "Exploration assistance ( navigation, tracking )",
+    "Survival skills (first aid, foraging)"
+   ]
+  },
+  "flavor_text": "Born on the harsh, unforgiving world of Lothal, these humans are forged in fire and tempered by hardship. Theirs is a culture that prizes resilience above all else - where the strong survive and thrive, while the weak fade into the shadows. This unforgiving environment has bred a people who are fiercely independent, resourceful, and adept at navigating the complexities of the galaxy's underbelly.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Lothal human, you have been shaped by your harsh environment into a capable, adaptable individual. You possess a deep-seated drive to survive and thrive in the face of adversity, which can manifest as recklessness or impulsiveness at times. However, this resilience also grants you an uncanny ability to navigate treacherous situations and find creative solutions to complex problems.",
+   "narrative_hooks": [
+    "You have a personal vendetta against the Empire for some past injustice suffered by your family or community.",
+    "You're searching for a long-lost relative or friend who went missing on Lothal during an Imperial raid."
+   ],
+   "social_dynamics": "Lothal humans are often viewed with suspicion and distrust by other cultures due to their reputation as scavengers, smugglers, and opportunists. However, they have a deep sense of loyalty and camaraderie among themselves, particularly towards those who share their rough-around-the-edges roots.",
+   "common_motivations": [
+    "Acquiring resources or supplies for the community back on Lothal.",
+    "Tracking down Imperial forces responsible for raids or destruction in their homeworld."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "human_lothal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/human_lothal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

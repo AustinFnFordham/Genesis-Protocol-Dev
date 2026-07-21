@@ -1,0 +1,191 @@
+{
+ "record": {
+  "id": "power_force_heal",
+  "name": "Force Heal",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 2,
+  "narrative": "You channel the light side of the Force to knit flesh and mend spirits, transferring your own vitality into an ally with serene focus. This is the purest expression of the light side - the willingness to sacrifice of yourself to heal others. The power flows through you like warm sunlight, mending wounds both physical and spiritual, bringing hope and restoration to those in need.",
+  "flavor_text": "'To heal is to give of oneself.' - Jedi Healer's Code",
+  "casting_time": "1 Action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 3
+   },
+   {
+    "type": "Hit_Points",
+    "cost_mode": "percent_of_max",
+    "percentage": 5,
+    "apply_to": "max",
+    "recovery": "long_rest"
+   }
+  ],
+  "manifestation": [
+   "Somatic (two hands over the wound, soft glow)",
+   "Mental Focus (calm, compassionate intent)"
+  ],
+  "corruption_transform": {
+   "can_corrupt": true,
+   "corrupts_to_power_id": "power_force_harm",
+   "can_purify": true,
+   "purifies_to_power_id": "power_force_heal",
+   "retains_mastery": true,
+   "mapping_notes": "Healing dice map 1:1 to necrotic damage dice; targeting flips ally->enemy."
+  },
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "allowed_at_extremes": true,
+    "threshold": 90,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    }
+   }
+  },
+  "base_effect": {
+   "description": "You restore vitality to a willing creature you touch.",
+   "mechanics": [
+    {
+     "effect": "apply_healing",
+     "parameters": {
+      "healing_dice": "3d8",
+      "bonus": 0
+     }
+    }
+   ]
+  },
+  "upgrades": [
+   {
+    "id": "heal_upgrade_mend_wounds",
+    "name": "Mend Wounds",
+    "description": "Increase the amount healed.",
+    "xp_cost": 6,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_healing_dice",
+      "parameters": {
+       "healing_dice": "4d8"
+      }
+     }
+    ]
+   },
+   {
+    "id": "heal_upgrade_selfless_sacrifice",
+    "name": "Selfless Sacrifice",
+    "description": "Pour more of yourself into the healing.",
+    "xp_cost": 8,
+    "prerequisites": [
+     "heal_upgrade_mend_wounds"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_power_cost",
+      "description": "Sacrifice more of your vitality to heal more.",
+      "modification": "increase_cost",
+      "parameters": {
+       "type": "Hit_Points",
+       "amount": 5
+      }
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_healing_dice",
+      "parameters": {
+       "healing_dice": "5d8"
+      }
+     }
+    ]
+   }
+  ],
+  "class_synergies": [
+   {
+    "class_id": "consular",
+    "narrative": "Consulars are masters of restorative Force techniques.",
+    "mechanical_benefit": "Reduce HP sacrifice percentage by 1 (min 1%)."
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human compassion and empathy makes them particularly effective at healing others.",
+    "mechanical_benefit": "Humans gain advantage on Force Heal rolls when healing allies."
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches the proper use of healing powers.",
+    "mechanical_benefit": "Jedi gain +2 to Force Heal healing rolls."
+   }
+  ],
+  "llm_guidance": {
+   "iconic_usage": "A Jedi healer stabilizes a wounded ally in the heart of battle.",
+   "tactical_notes": "Trading max HP for burst healing is powerful but risky; time uses around rests.",
+   "narrative_hooks": [
+    "Healing a nemesis creates a fragile truce"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A serene Jedi channels a warm, golden Force glow into a wounded ally's injuries; calm focus and compassion.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "Soft golden light illuminates hands and wound."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/powers/force_heal.png",
+   "icon": "/assets/icons/powers/force_heal.svg"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_heal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_heal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

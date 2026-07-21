@@ -1,0 +1,522 @@
+{
+ "record": {
+  "id": "rules_trade_goods",
+  "category": "rules",
+  "subcategory": "gameplay",
+  "tags": [
+   "rules",
+   "gameplay",
+   "trade_goods",
+   "commerce",
+   "economic",
+   "system_rules",
+   "merchant",
+   "documentation"
+  ],
+  "trade_goods_rules": {
+   "basic_mechanics": {
+    "trade_good_acquisition": {
+     "description": "How trade goods are acquired and managed",
+     "acquisition_methods": [
+      "Purchase from merchants and traders",
+      "Mining and resource extraction",
+      "Manufacturing and crafting",
+      "Trading with other characters",
+      "Finding in the environment",
+      "Looting from defeated enemies",
+      "Rewards from quests and missions"
+     ]
+    },
+    "trade_good_storage": {
+     "description": "Rules for storing and transporting trade goods",
+     "storage_rules": [
+      "Trade goods have weight and volume considerations",
+      "Some goods require special storage conditions",
+      "Bulk goods may require specialized containers",
+      "Valuable goods may need secure storage",
+      "Perishable goods have time limitations"
+     ]
+    },
+    "trade_good_quality": {
+     "description": "How trade good quality affects value and usability",
+     "quality_factors": [
+      "Purity and refinement level",
+      "Condition and damage",
+      "Age and preservation",
+      "Source and origin",
+      "Processing and treatment"
+     ]
+    }
+   },
+   "economy_mechanics": {
+    "supply_demand": {
+     "description": "How supply and demand affect trade good prices",
+     "supply_factors": [
+      "Regional availability and production",
+      "Transportation and logistics",
+      "Political stability and trade routes",
+      "Seasonal variations and cycles",
+      "Technological advancement and efficiency"
+     ],
+     "demand_factors": [
+      "Population needs and consumption",
+      "Industrial and military requirements",
+      "Cultural and social trends",
+      "Economic conditions and prosperity",
+      "Technological development and innovation"
+     ]
+    },
+    "price_fluctuations": {
+     "description": "Rules for price changes based on market conditions",
+     "fluctuation_types": {
+      "market_boom": {
+       "description": "Economic prosperity increases demand",
+       "effects": [
+        "Luxury goods increase in value",
+        "Industrial goods maintain stable prices",
+        "Basic goods may decrease in relative value"
+       ]
+      },
+      "market_recession": {
+       "description": "Economic downturn affects trade",
+       "effects": [
+        "Essential goods increase in value",
+        "Luxury goods decrease in demand",
+        "Industrial goods may become cheaper"
+       ]
+      },
+      "supply_shortage": {
+       "description": "Limited availability drives up prices",
+       "effects": [
+        "All goods in short supply increase in value",
+        "Substitute goods may increase in demand",
+        "Black market activity may increase"
+       ]
+      },
+      "supply_surplus": {
+       "description": "Excess availability drives down prices",
+       "effects": [
+        "Goods become cheaper and more accessible",
+        "Storage and preservation become important",
+        "Export opportunities may arise"
+       ]
+      }
+     }
+    },
+    "regional_variations": {
+     "description": "How different regions affect trade good values",
+     "regional_factors": {
+      "core_worlds": {
+       "description": "Wealthy, developed regions",
+       "characteristics": [
+        "High demand for luxury goods",
+        "Stable markets and regulations",
+        "Advanced technology and infrastructure",
+        "Higher prices for quality goods"
+       ]
+      },
+      "mid_rim": {
+       "description": "Moderately developed regions",
+       "characteristics": [
+        "Balanced demand for various goods",
+        "Moderate regulation and stability",
+        "Mixed technology levels",
+        "Competitive pricing"
+       ]
+      },
+      "outer_rim": {
+       "description": "Less developed, frontier regions",
+       "characteristics": [
+        "High demand for basic necessities",
+        "Limited regulation and stability",
+        "Lower technology levels",
+        "Higher prices for imported goods"
+       ]
+      }
+     }
+    }
+   },
+   "category_mechanics": {
+    "raw_materials": {
+     "description": "Rules for raw material trade goods",
+     "characteristics": [
+      "Require processing before use",
+      "Bulk and weight considerations",
+      "Quality varies by source",
+      "Subject to market fluctuations",
+      "Often require specialized transport"
+     ],
+     "processing_rules": [
+      "Raw materials can be refined into usable products",
+      "Processing requires appropriate skills and facilities",
+      "Quality of raw material affects final product",
+      "Processing time and cost must be considered"
+     ]
+    },
+    "refined_resources": {
+     "description": "Rules for refined resource trade goods",
+     "characteristics": [
+      "Ready for immediate use",
+      "Higher value than raw materials",
+      "Consistent quality standards",
+      "Easier to transport and store",
+      "More stable market prices"
+     ],
+     "usage_rules": [
+      "Can be used directly in crafting and construction",
+      "Quality affects final product effectiveness",
+      "May require additional processing for specialized uses",
+      "Storage conditions may affect longevity"
+     ]
+    },
+    "valuable_commodities": {
+     "description": "Rules for valuable commodity trade goods",
+     "characteristics": [
+      "High value relative to weight",
+      "Subject to significant price fluctuations",
+      "May be regulated or illegal",
+      "Often require secure storage",
+      "High risk, high reward trading"
+     ],
+     "trading_rules": [
+      "Value can change rapidly based on market conditions",
+      "May require special permits or licenses",
+      "Black market trading has additional risks",
+      "Quality and authenticity are crucial"
+     ]
+    },
+    "agricultural_goods": {
+     "description": "Rules for agricultural trade goods",
+     "characteristics": [
+      "Subject to seasonal variations",
+      "May have limited shelf life",
+      "Require appropriate storage conditions",
+      "Affected by environmental factors",
+      "Essential for population sustenance"
+     ],
+     "preservation_rules": [
+      "Proper storage extends shelf life",
+      "Environmental conditions affect quality",
+      "Processing can improve preservation",
+      "Transportation time affects freshness"
+     ]
+    },
+    "technological_components": {
+     "description": "Rules for technological component trade goods",
+     "characteristics": [
+      "Require technical knowledge to evaluate",
+      "Quality affects performance",
+      "May be regulated for security reasons",
+      "Subject to technological obsolescence",
+      "Often require specialized handling"
+     ],
+     "evaluation_rules": [
+      "Technical skills needed to assess quality",
+      "Compatibility with existing systems important",
+      "May require testing before purchase",
+      "Warranty and support considerations"
+     ]
+    },
+    "exotic_materials": {
+     "description": "Rules for exotic material trade goods",
+     "characteristics": [
+      "Extremely rare and valuable",
+      "May have unique properties",
+      "Often regulated or restricted",
+      "Require specialized knowledge",
+      "High risk of fraud or misrepresentation"
+     ],
+     "handling_rules": [
+      "Special handling and storage requirements",
+      "Authentication and verification crucial",
+      "May require special permits or licenses",
+      "High security considerations"
+     ]
+    }
+   },
+   "crafting_mechanics": {
+    "refining_process": {
+     "description": "Rules for refining raw materials into usable products",
+     "process_steps": [
+      {
+       "step": "Material Assessment",
+       "description": "Evaluate quality and suitability of raw materials",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "1 hour"
+      },
+      {
+       "step": "Preparation",
+       "description": "Prepare materials for processing",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "2-4 hours"
+      },
+      {
+       "step": "Processing",
+       "description": "Transform raw materials into refined products",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "4-8 hours"
+      },
+      {
+       "step": "Quality Control",
+       "description": "Test and verify final product quality",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "1-2 hours"
+      }
+     ]
+    },
+    "manufacturing_process": {
+     "description": "Rules for manufacturing products from trade goods",
+     "process_steps": [
+      {
+       "step": "Design and Planning",
+       "description": "Design the final product and plan manufacturing",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "2-4 hours"
+      },
+      {
+       "step": "Material Preparation",
+       "description": "Prepare and organize required materials",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "1-2 hours"
+      },
+      {
+       "step": "Assembly and Construction",
+       "description": "Assemble and construct the final product",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "4-12 hours"
+      },
+      {
+       "step": "Testing and Finishing",
+       "description": "Test functionality and apply finishing touches",
+       "skill_required": "Appropriate crafting skill",
+       "time_required": "1-3 hours"
+      }
+     ]
+    },
+    "quality_factors": {
+     "description": "Factors that affect the quality of crafted products",
+     "factors": [
+      "Quality of raw materials used",
+      "Skill level of the crafter",
+      "Quality of tools and facilities",
+      "Time and care taken in crafting",
+      "Environmental conditions during crafting"
+     ]
+    }
+   },
+   "trading_mechanics": {
+    "trade_negotiations": {
+     "description": "Rules for negotiating trade deals",
+     "negotiation_factors": [
+      "Market knowledge and research",
+      "Reputation and relationships",
+      "Supply and demand conditions",
+      "Quality and condition of goods",
+      "Payment terms and methods",
+      "Transportation and delivery",
+      "Risk and liability considerations"
+     ]
+    },
+    "trade_routes": {
+     "description": "Rules for establishing and using trade routes",
+     "route_factors": [
+      "Distance and travel time",
+      "Security and piracy risks",
+      "Infrastructure and facilities",
+      "Regulatory requirements",
+      "Market demand and competition",
+      "Transportation costs and methods"
+     ]
+    },
+    "black_market_trading": {
+     "description": "Rules for illegal or restricted trade goods",
+     "black_market_characteristics": [
+      "Higher profit margins",
+      "Increased risk of detection",
+      "Quality and authenticity concerns",
+      "Criminal competition and violence",
+      "Legal consequences if caught",
+      "Requires criminal connections"
+     ]
+    }
+   },
+   "integration_mechanics": {
+    "class_integration": {
+     "description": "How different classes interact with trade goods",
+     "class_specializations": {
+      "scoundrel": {
+       "description": "Specialized in smuggling and black market trading",
+       "advantages": [
+        "Better prices for illegal goods",
+        "Reduced risk of detection",
+        "Access to restricted markets",
+        "Criminal connections and reputation"
+       ]
+      },
+      "trooper": {
+       "description": "Specialized in military and legitimate trading",
+       "advantages": [
+        "Better access to military goods",
+        "Legitimate trading opportunities",
+        "Government contracts and deals",
+        "Stable and reliable markets"
+       ]
+      },
+      "tracker": {
+       "description": "Specialized in resource extraction and wilderness trading",
+       "advantages": [
+        "Better resource discovery",
+        "Wilderness trading opportunities",
+        "Natural resource expertise",
+        "Survival and sustainability knowledge"
+       ]
+      }
+     }
+    },
+    "power_integration": {
+     "description": "How trade goods integrate with Force and Tech powers",
+     "power_requirements": {
+      "force_powers": {
+       "description": "Force powers may require specific trade goods",
+       "requirements": [
+        "Kyber crystals for lightsabers",
+        "Force crystals for Force-enhanced equipment",
+        "Rare materials for powerful artifacts"
+       ]
+      },
+      "tech_powers": {
+       "description": "Tech powers may require specific trade goods",
+       "requirements": [
+        "Energy cores for power systems",
+        "Circuit boards for electronic devices",
+        "Specialized components for advanced technology"
+       ]
+      }
+     }
+    },
+    "property_integration": {
+     "description": "How trade goods provide properties to crafted items",
+     "property_application": [
+      "Trade goods can grant properties to crafted items",
+      "Quality of trade goods affects property strength",
+      "Some properties require specific trade goods",
+      "Properties may have activation requirements"
+     ]
+    }
+   },
+   "balance_mechanics": {
+    "economic_balance": {
+     "description": "Rules for maintaining economic balance",
+     "balance_factors": [
+      "Supply and demand equilibrium",
+      "Regional price variations",
+      "Market competition and monopolies",
+      "Government regulation and taxation",
+      "Technological advancement and obsolescence"
+     ]
+    },
+    "risk_reward": {
+     "description": "Balancing risk and reward in trade goods",
+     "risk_factors": [
+      "Market volatility and price fluctuations",
+      "Transportation and storage risks",
+      "Regulatory and legal risks",
+      "Quality and authenticity risks",
+      "Competition and market saturation"
+     ],
+     "reward_factors": [
+      "Profit margins and markups",
+      "Market demand and scarcity",
+      "Specialized knowledge and skills",
+      "Network and relationship benefits",
+      "Long-term investment potential"
+     ]
+    },
+    "progression_scaling": {
+     "description": "How trade goods scale with character progression",
+     "scaling_factors": [
+      "Access to better trade routes and markets",
+      "Improved skills and knowledge",
+      "Better equipment and facilities",
+      "Enhanced reputation and connections",
+      "Greater capital and resources"
+     ]
+    }
+   },
+   "implementation_guidelines": {
+    "trade_scenarios": {
+     "description": "Guidelines for creating trade scenarios",
+     "scenario_elements": [
+      "Market conditions and fluctuations",
+      "Supply and demand dynamics",
+      "Competition and rival traders",
+      "Regulatory and legal considerations",
+      "Transportation and logistics challenges"
+     ]
+    },
+    "trade_good_generation": {
+     "description": "Guidelines for generating trade goods",
+     "generation_factors": [
+      "Regional characteristics and resources",
+      "Economic conditions and market trends",
+      "Technological level and capabilities",
+      "Cultural and social factors",
+      "Political and regulatory environment"
+     ]
+    },
+    "trade_good_documentation": {
+     "description": "Requirements for documenting trade goods",
+     "documentation_requirements": [
+      "Clear description and characteristics",
+      "Mechanical effects and interactions",
+      "Economic value and market factors",
+      "Crafting and usage requirements",
+      "Integration with existing systems"
+     ]
+    }
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "rules_trade_goods",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/trade_goods_rules.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

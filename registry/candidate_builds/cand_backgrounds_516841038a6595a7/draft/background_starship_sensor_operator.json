@@ -1,0 +1,118 @@
+{
+ "record": {
+  "id": "background_starship_sensor_operator",
+  "name": "Sensor Operator",
+  "description": "You turn static into signal—finding threats, masking signatures, and seeing patterns others miss.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Investigation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Sensor Suite",
+      "Electronic Countermeasures",
+      "Communications Kit",
+      "Encryption Suite"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Scan, Jam, Spoof",
+   "level": 1,
+   "description": "You have advantage on checks to scan, jam, or spoof sensor signatures. Once per short rest, you can impose disadvantage on an enemy ship’s next attempt to lock sensors or weapons on your ship.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "scan_jam_spoof",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "apply_status",
+     "value": "enemy_next_lock_disadvantage_once_per_short_rest",
+     "target_scopes": [
+      "enemy_ship"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I close my eyes to listen to the noise.",
+    "I annotate everything."
+   ],
+   "ideals": [
+    "Vigilance. Nothing slips the net.",
+    "Subtlety. Noise is a tool."
+   ],
+   "bonds": [
+    "I promised a convoy I'd watch their backs."
+   ],
+   "flaws": [
+    "I over-jam and blind my own crew."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_sensor_operator",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_sensor_operator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "4557f9ca6103f1f6d6cbd49cb486e1c0f067559f1cdfbe66305e73be17ec7a35",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

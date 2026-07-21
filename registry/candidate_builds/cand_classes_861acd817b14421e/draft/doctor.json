@@ -1,0 +1,204 @@
+{
+ "record": {
+  "id": "doctor",
+  "name": "Doctor",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "doctor",
+   "healer",
+   "medical",
+   "wisdom_based",
+   "support",
+   "professional",
+   "compassionate",
+   "civic_leader"
+  ],
+  "description": "Doctors are practitioners of the medical arts, capable of stabilizing the gravely wounded, enhancing recovery, and keeping allies in peak condition under fire.",
+  "specialization_features": [
+   "field_medic",
+   "trauma_specialist",
+   "rapid_triage",
+   "surgical_precision",
+   "legendary_physician"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A compassionate practitioner of the medical arts",
+   "role_in_group": "Healer",
+   "visual_signals": [
+    {
+     "Signal1": "Medical insignia on armor"
+    },
+    {
+     "Signal2": "Doctor's kit on person"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "Medical Savant",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain proficiency in Medicine and can add your proficiency bonus to any Medicine check you make that doesn't already include your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "medical_reflex",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "colonist"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "doctor"
+       }
+      ],
+      "notes": "The Medical Savant's training allows them to instinctively diagnose and treat injuries, granting a +2 bonus to Medicine checks."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "Healing Hands",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can use your bonus action to touch a creature and stabilize it, ending the bleeding.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "blood_stasis_field",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "The Doctor's hands weave a subtle pattern, siphoning the wound's chaotic energy and stabilizing its flow."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "Medicine Mastery",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain expertise in Medicine and can add your proficiency bonus to any Medicine check you make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "medicinal_intervention",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "The Doctor instinctively assesses the damage, and their trained hands apply a precise touch to mitigate the wound. They gain +1d6 bonus healing when treating wounds."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_15",
+    "feature_id": "Critical Care",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "When a creature you are treating with Medicine is reduced to 0 hit points, they can use their reaction to make a Constitution saving throw against your DC. If successful, the creature is stabilized.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "critical_stabilization_trigger",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "With a swift and practiced hand, you quickly assess the critical wound. You administer an injection of stabilizing serum, halting further blood loss and preventing shock."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Jedi_Robe"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, left foot slightly forward and weight evenly distributed between both feet.",
+    "energy_signature": "A soft blue glow emanating from the character's hands and surrounding their body."
+   },
+   "prompt_schema": {
+    "base_prompt": "A compassionate Doctor standing in a peaceful forest, surrounded by lush greenery and towering trees.",
+    "contextual_modifiers": [
+     "Low_Light",
+     "Soft_Focus"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "doctor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_doctor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

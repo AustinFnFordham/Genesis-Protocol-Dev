@@ -1,0 +1,236 @@
+{
+ "record": {
+  "id": "power_force_ascension",
+  "name": "Force Ascension",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 6,
+  "tags": [
+   "transcendence",
+   "enlightenment",
+   "legendary",
+   "divine",
+   "transformation",
+   "ascended"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 12
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Transcendent Force mastery beyond alignment"
+   }
+  },
+  "narrative": "You transcend physical existence itself, dissolving your mortal form to become a living conduit of pure Force energy. The power manifests as your body becoming translucent, then radiant, then something beyond light—a consciousness that exists simultaneously everywhere and nowhere, wielding the Force as naturally as breathing once was.",
+  "flavor_text": "\"Luminous beings are we, not this crude matter.\" - Master Yoda",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "body dissolving into pure Force energy, becoming incorporeal light"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "releasing all attachment to physical form and merging with the cosmic Force"
+   }
+  ],
+  "casting_time": "10 Minute",
+  "range": "0 self",
+  "duration": "168 hour",
+  "base_effect": {
+   "description": "You transcend mortal limitations, becoming a being of pure Force energy with god-like abilities and immortality.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "force_being"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Become immune to all damage types except Force"
+    },
+    {
+     "type": "modify_stat",
+     "value": {
+      "effect": "godlike_abilities"
+     },
+     "target_property": "all_abilities",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "All ability scores become 30"
+    },
+    {
+     "type": "grant_advantage",
+     "value": {
+      "target_stat": "all_checks"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on all ability checks, attack rolls, and saving throws"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "jedi_master",
+    "narrative": "The Jedi Master's lifetime of Force study allows them to maintain their identity during Ascension. While others might lose themselves in the cosmic Force, Masters retain their consciousness and purpose, becoming guardians of reality itself.",
+    "mechanical_benefit": [
+     {
+      "type": "retain_self",
+      "value": "maintain_personality",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Jedi Masters can still communicate and act with purpose while ascended"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human potential for growth makes their Ascension particularly dramatic. Their species' unique connection to the Force allows them to achieve levels of transcendence that even Force-sensitive species find impossible.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_ascension",
+      "value": "permanent_option",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can choose to make Ascension permanent, becoming Force ghosts"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's ancient texts contain the secret of controlled Ascension. Through their teachings, what would be dissolution into chaos becomes purposeful transformation, allowing ascended Jedi to guide future generations.",
+    "mechanical_benefit": [
+     {
+      "type": "force_manifestation",
+      "value": "interact_with_physical",
+      "target_scopes": [
+       "environment"
+      ],
+      "notes": "Jedi can manifest Force effects in the physical world while ascended"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the transformation—flesh becoming light, thoughts expanding beyond individual consciousness, perception encompassing all things simultaneously. The ascended being exists as pure will, reshaping reality through thought alone. They appear as shifting auroras of Force energy.",
+   "tactical_notes": "Force Ascension is a game-breaking Level 6 power. The 10-minute casting and 168-hour duration make it a strategic choice. Immunity to all non-Force damage and ability scores of 30 make you nearly invincible. This power fundamentally changes gameplay.",
+   "narrative_hooks": [
+    "Ascension reveals the true nature of the Force and the universe",
+    "The ascended being must choose between godhood and humanity",
+    "Other Force users sense the ascension across the galaxy"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.3), A breathtaking digital painting of Force Ascension. A figure dissolves into pure Force energy, their body becoming translucent streams of light that spiral upward. Reality bends around them as they transcend physical form. Cosmic energy flows through their ascending consciousness, connecting them to all living things. The scene captures the moment between mortality and godhood, by Greg Rutkowski and Wojtek Fus",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_ascension.svg",
+   "color": "#FFAA00"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_ascension",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_ascension.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

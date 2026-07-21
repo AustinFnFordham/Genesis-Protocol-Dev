@@ -1,0 +1,634 @@
+{
+ "record": {
+  "id": "zabrak_dathomirian",
+  "name": "Zabrak Dathomirian",
+  "tags": [
+   "charisma_based",
+   "dark_side",
+   "force_sensitive",
+   "force_user",
+   "human",
+   "intense",
+   "intimidating",
+   "passionate",
+   "sith",
+   "very_rare",
+   "wisdom_based",
+   "zabrak",
+   "zabrak_dathomirian"
+  ],
+  "description": "Dathomirian Zabraks are Force-sensitive Zabraks from the dark world of Dathomir, where they have been influenced by the Nightsisters and dark side energies. They possess enhanced Force sensitivity and a natural affinity for dark side powers.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Zabrak",
+   "Dathomiri"
+  ],
+  "base_hp": 11,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "zabrak_dathomirian_dark_side_affinity",
+    "name": "Dark Side Affinity",
+    "narrative": "Your connection to Dathomir's dark energies flows through your very being, making you naturally intimidating and resistant to fear. The dark side of the Force resonates with your soul, granting you power that other Zabraks cannot comprehend.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Dark Intimidation",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Intimidation) checks.",
+      "rules": [
+       "skill:intimidation",
+       "ability:charisma",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_resistance",
+      "name": "Fear Resistance",
+      "action_type": "passive",
+      "description": "You have resistance to fear effects.",
+      "rules": [
+       "condition:fear",
+       "resistance:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Fear Immunity",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against being frightened.",
+      "rules": [
+       "save_type:advantage",
+       "condition:frightened"
+      ],
+      "conditions": [
+       {
+        "key": "save_type",
+        "op": "equals",
+        "value": "frightened"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "zabrak_dathomirian_enhanced_force_sensitivity",
+    "name": "Enhanced Force Sensitivity",
+    "narrative": "Dathomir's dark energies have heightened your Force sensitivity beyond that of ordinary Zabraks. You can sense emotions and Force currents with incredible clarity, and your connection to the dark side makes your Force powers more potent.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Emotional Sensing",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Insight) checks to sense emotions.",
+      "rules": [
+       "skill:insight",
+       "ability:wisdom",
+       "context:emotions",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "insight_target",
+        "op": "equals",
+        "value": "emotions"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Dark Side Enhancement",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a Force power check.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:force_power_check",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "zabrak_dathomirian_dark_side_force_focus",
+     "ui_transition": {
+      "animation": "force_energy_distortion",
+      "sfx": "dark_side_force_effect"
+     }
+    }
+   },
+   {
+    "id": "zabrak_dathomirian_nightsister_heritage",
+    "name": "Nightsister Heritage",
+    "narrative": "Your connection to the Nightsister traditions runs deep in your blood. You possess ancient knowledge of dark side Force powers and can sense the presence of other Force users with incredible precision.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Dark Side Knowledge",
+      "action_type": "passive",
+      "description": "You have advantage on Intelligence (Arcana) checks related to dark side Force powers.",
+      "rules": [
+       "skill:arcana",
+       "ability:intelligence",
+       "context:dark_side_powers",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "knowledge_type",
+        "op": "equals",
+        "value": "dark_side_powers"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Force User Detection",
+      "action_type": "passive",
+      "description": "You can sense the presence of other Force users within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "detection_type:force_users"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "zabrak_dathomirian_dark_side_shadow_weaving",
+     "ui_transition": {
+      "animation": "dark_side_energy_wrap",
+      "sfx": "nightsister_shadow_effect"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Dark side aura",
+    "Enhanced horns",
+    "Dathomir influence",
+    "Force sensitivity",
+    "Dark side connection"
+   ],
+   "skin_color_variants": [
+    "Dark red with black patterns",
+    "Deep purple with black patterns",
+    "Dark grey with red patterns",
+    "Black with dark red patterns",
+    "Dark brown with mystical patterns"
+   ],
+   "horn_variants": [
+    "Dark side infused horns",
+    "Shadow-touched horns",
+    "Mystical energy patterns",
+    "Dark side enhanced horns",
+    "Dathomir influenced horns"
+   ],
+   "eye_color_variants": [
+    "Dark red",
+    "Deep purple",
+    "Amber with dark side aura",
+    "Yellow with mystical glow",
+    "Dark with Force sensitivity"
+   ],
+   "common_adornments": [
+    "Dark side robes and garments",
+    "Dathomir cultural symbols",
+    "Nightsister influenced accessories",
+    "Dark side Force artifacts",
+    "Mystical jewelry and talismans"
+   ],
+   "llm_description_prompt": "Describe a Zabrak Dathomirian character. Emphasize their dark side aura and the way their horns seem to pulse with dark side energy, suggesting their connection to Dathomir's dark energies and Nightsister heritage. Their features should reflect the influence of dark side energies and their enhanced Force sensitivity. Consider their intense nature and the way they carry themselves with the confident, dark side bearing of someone who has been touched by Dathomir's mystical energies."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian (Dark Side)",
+    "narrative": "Zabrak Dathomirian's natural dark side abilities and Enhanced Force Sensitivity make them exceptional Guardians, using their dark side powers to protect and dominate.",
+    "mechanical_benefits": [
+     "Dark Side Affinity trait enhances intimidation and protective abilities",
+     "Enhanced Force Sensitivity trait improves Force power usage",
+     "Nightsister Heritage trait enables threat detection"
+    ]
+   },
+   {
+    "class": "Consular (Dark Side)",
+    "narrative": "Zabrak Dathomirian's natural mystical abilities and dark side connection make them excellent Consulars, using their dark side powers to manipulate and control situations.",
+    "mechanical_benefits": [
+     "Dark Side Affinity trait enhances intimidation and manipulation",
+     "Enhanced Force Sensitivity trait improves Force-based diplomacy",
+     "Nightsister Heritage trait aids in understanding others"
+    ]
+   },
+   {
+    "class": "Scholar (Dark Side Studies)",
+    "narrative": "Zabrak Dathomirian's natural mystical knowledge and dark side connection make them excellent Scholars, particularly in dark side studies and Force traditions.",
+    "mechanical_benefits": [
+     "Nightsister Heritage trait provides insights into dark side powers",
+     "Enhanced Force Sensitivity trait enhances Force-related research",
+     "Dark Side Affinity trait supports dark side studies"
+    ]
+   },
+   {
+    "class": "Scout (Mystical)",
+    "narrative": "Zabrak Dathomirian's natural mystical abilities and dark side connection make them excellent Scouts, able to sense and navigate using their dark side powers.",
+    "mechanical_benefits": [
+     "Enhanced Force Sensitivity trait enables detection of Force users",
+     "Nightsister Heritage trait enhances mystical navigation",
+     "Dark Side Affinity trait supports dark side exploration"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Nightsisters of Dathomir",
+    "narrative": "Zabrak Dathomirians are closely connected to the Nightsisters of Dathomir, using their dark side abilities and Nightsister heritage to serve their dark side traditions."
+   },
+   {
+    "faction": "Dark Side Traditions",
+    "narrative": "Many Zabrak Dathomirians join various dark side traditions and cults, dedicating themselves to the study and mastery of dark side powers."
+   },
+   {
+    "faction": "Independent Dark Side Users",
+    "narrative": "Some Zabrak Dathomirians prefer to work independently, using their dark side abilities and mystical heritage to pursue their own dark side goals and ambitions."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your dark side affinity becomes more refined, allowing you to channel Dathomir's dark energies with greater precision.",
+     "mechanical_benefit": "Increase the range of Force user detection from 30 feet to 60 feet, and gain advantage on Intimidation checks when using dark side powers."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your enhanced Force sensitivity reaches new heights, allowing you to sense and manipulate dark side energies more effectively.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Wisdom-based skill checks for the next minute when using dark side powers or in mystical environments."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your Nightsister heritage allows you to channel dark side energies into devastating attacks.",
+     "mechanical_benefit": "When using dark side Force powers, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced dark side mastery."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your dark side affinity reaches its peak, making you nearly immune to light side influences and allowing you to sense dark side disturbances across great distances.",
+     "mechanical_benefit": "You have advantage on all saving throws against light side effects, and you can sense major dark side disturbances within 1 mile."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Zabrak Dathomirians practice sacred dark side rituals that channel Dathomir's dark energies and strengthen their connection to the dark side.",
+    "name": "Dark Side Rituals",
+    "activation": "Upon reaching level 5, after completing a meditation session focused on connecting with the dark side.",
+    "narrative_enhancement": "As you perform the ritual, you feel the dark side energy coursing through your veins. Your connection to the force grows stronger, and you sense the presence of dark side artifacts and energies nearby.",
+    "faction_connection": "Nightsisters' Enclave"
+   },
+   {
+    "description": "Nightsister traditions emphasize mastery of dark side powers, mystical arts, and the importance of maintaining dark side connections and knowledge.",
+    "name": "Nightsister Traditions",
+    "activation": "Upon reaching level 10, after completing a training session focused on mastering dark side powers.",
+    "narrative_enhancement": "As you delve deeper into the Nightsisters' traditions, you begin to see visions of your future as a powerful Force-user. Your connection to the dark side grows stronger, and you sense the presence of mystical forces guiding your path.",
+    "faction_connection": "Dark Side Cults"
+   },
+   {
+    "description": "Dathomir heritage traditions celebrate the connection to the dark world and its mystical energies, strengthening bonds with the dark side.",
+    "name": "Dathomir Heritage",
+    "activation": "Upon reaching level 15, after completing a celebration focused on honoring Dathomir's dark side energies.",
+    "narrative_enhancement": "As you honor your Dathomir heritage, you feel a deep connection to the dark side and its mystical forces. Your senses grow sharper, and you sense the presence of powerful Force-users nearby.",
+    "faction_connection": "Sith Temples"
+   },
+   {
+    "description": "Zabrak Dathomirians practice meditation techniques that enhance their connection to the dark side and strengthen their mystical abilities.",
+    "name": "Dark Side Meditation",
+    "activation": "Upon reaching level 20, after completing a deep meditation session focused on connecting with the dark side.",
+    "narrative_enhancement": "As you meditate, you feel your connection to the force grow stronger. Your senses are heightened, and you sense the presence of all living beings in the galaxy. You realize your true potential as a Force-user and understand your role in shaping the galaxy's destiny.",
+    "faction_connection": "Sith Temples"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "dark_side",
+    "adaptation_name": "Dark Side Mastery",
+    "description": "Your connection to the dark side allows you to thrive in environments rich with dark side energy and mystical forces.",
+    "mechanical_benefit": "You have advantage on all skill checks in dark side environments, and you can sense the presence of dark side artifacts or locations."
+   },
+   {
+    "environment": "mystical",
+    "adaptation_name": "Mystical Resonance",
+    "description": "Your mystical connection allows you to sense and navigate mystical environments with ease.",
+    "mechanical_benefit": "You have advantage on saving throws against mystical effects, and you can sense the presence of mystical entities within 30 feet."
+   },
+   {
+    "environment": "force_rich",
+    "adaptation_name": "Force Sensitivity",
+    "description": "Your enhanced Force sensitivity allows you to sense and understand Force-rich environments with incredible clarity.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in Force-rich environments, and you can sense disturbances in the Force within 1 mile."
+   },
+   {
+    "environment": "corrupt",
+    "adaptation_name": "Corruption Resistance",
+    "description": "Your dark side affinity makes you resistant to corruption and dark side influences that would corrupt others.",
+    "mechanical_benefit": "You have advantage on saving throws against corruption effects, and you can sense the presence of corrupting influences."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on dark side abilities and mystical powers, complementing rather than overshadowing class features",
+    "Nightsister heritage and dark side affinity improvements maintain the species' unique identity while providing meaningful advancement",
+    "Mystical and dark side abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on Nightsister traditions and dark side culture rather than mechanical advantages",
+    "Dark side rituals and Nightsister traditions provide unique roleplaying opportunities and cultural depth",
+    "Dathomir heritage and dark side meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for dark side and mystical environments where Nightsister abilities are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Corruption resistance and Force sensitivity provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    {
+     "skin_tone": "dark_green"
+    },
+    {
+     "eye_color": "yellow"
+    },
+    {
+     "facial_features": "pointed_ears"
+    },
+    {
+     "body_shape": "muscular_build"
+    },
+    {
+     "hair_texture": "wild_and_unkempt"
+    },
+    {
+     "horns_type": "twisted_horns"
+    }
+   ],
+   "morphology": {
+    "head_type": "humanoid_with_head_tusks",
+    "body_type": "bipedal_with_muscular_build",
+    "average_height": "1.8 to 2 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_tone": "pale_green",
+      "facial_features": "pointed_ears_with_kidney_shaped_marks",
+      "horns_type": "small_and_twisted_horns"
+     },
+     "adult": {
+      "eye_color": "yellow_with_vertical_pupils",
+      "body_shape": "athletic_build",
+      "hair_texture": "wild_and_matted"
+     },
+     "elder": {
+      "skin_tone": "dark_green_with_age_spots",
+      "facial_features": "pointed_ears_with_long_white_beard",
+      "horns_type": "large_and_twisted_horns"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "red_orange_aura",
+      "dark_smoke_exhaling_from_nose_mouth",
+      "pale_red_eye_color"
+     ],
+     "light_side": [
+      "soft_blue_glowing_aura",
+      "leafy_green_plants_growth_on_body",
+      "gentle_gray_eye_color"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "unique_horn_pattern",
+    "special_markings_on_face_or_torso",
+    "rare_clothing_items"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Dathomirian Zabrak with dark side influence",
+    "contextual_modifiers": [
+     "age: young/adult/elder",
+     "morality: light/dark",
+     "environment: Dathomir/space/living world"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "The nemesis emerges from the shadows, fueled by dark side energies.",
+     "trigger_events": [
+      "nemesis_appears_in_nightclub",
+      "nemesis_is_seeking_power_in_force_sensitive_world"
+     ]
+    },
+    "escalation": {
+     "description": "The nemesis increases their influence, manipulating others to do their bidding.",
+     "trigger_events": [
+      "ally_turns_against_player_due_to_nemesis_influence",
+      "player_faces_nemesis_in_force_confrontation"
+     ]
+    },
+    "confrontation": {
+     "description": "The final confrontation with the nemesis.",
+     "trigger_events": [
+      "nemesis_attempts_to_kidnap_or_enslave_the_player"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "The nemesis is defeated, but their dark legacy remains.",
+    "redemption": "The nemesis sees the error of their ways and turns to the light side.",
+    "escape": "The nemesis escapes, leaving the player with a sense of unease."
+   },
+   "conflict_triggers": [
+    "player_refuses_to_join_nemesis_in_dark_side_quest",
+    "player_discovers_nemesis_secret"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "player_kills_or_defeats_someone_nemesis_cares_about",
+     "nemesis_feels_betrayed_by_player"
+    ],
+    "vendetta_type": "A deep-seated grudge, fueled by a sense of betrayal and injustice."
+   },
+   "overrides": {
+    "primary_nemesis": "The Empire's Dark Side Hunters, who seek to exploit and control Dathomirian Zabraks' powers for their own gain",
+    "secondary_nemesis": "Other Nightsisters, who may view them as threats to their power or see potential in their abilities"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "species": "Zabrak Dathomirian",
+     "trait": "Force-sensitive",
+     "interest_level": "high"
+    }
+   ],
+   "romance_progression": {
+    "stage1": "The player is intrigued by the nemesis's charisma and mysterious nature.",
+    "stage2": "The player begins to see a softer side of the nemesis, but still senses a darkness lurking beneath.",
+    "stage3": "The player and nemesis share a passionate moment, but tensions between them remain high.",
+    "stage4": "The player and nemesis engage in a deeper emotional connection, revealing secrets and vulnerabilities.",
+    "stage5": "The player and nemesis share a romantic encounter, solidifying their bond and commitment to each other."
+   },
+   "romance_events": [
+    "shared_moment_of_passion_and_terror",
+    "nemesis_shares_secret_with_player_leading_to_deeper_connection"
+   ],
+   "romance_modifiers": [
+    "affectionate_nemesis_towards_player (5)",
+    "player_feeling_protected_by_nemesis (3)"
+   ],
+   "overrides": {
+    "relationship_styles": [
+     "Intense and passionate, built on a foundation of mutual respect and trust",
+     "Forbidden love, between two outcasts forced together by circumstance"
+    ],
+    "courtship_rituals": [
+     "A ritualistic 'binding' ceremony, where the couple is tied together through dark side energies"
+    ]
+   }
+  },
+  "flavor_text": "Dathomirian Zabraks are a breed apart from their horned kin, forged in the dark energies of Dathomir. Born to mothers who have walked the twisted paths of the Nightsisters' power, they are often shunned by their own kind for their unnatural affinity for the dark side. Yet, it is this very bond with the darkness that makes them formidable Force-sensitives, capable of wielding powers both feared and reviled throughout the galaxy.",
+  "llm_guidance": {
+   "roleplay_guidance": "When playing a Dathomirian Zabrak, remember that their connection to the dark side is not just a natural talent, but also a heavy burden. They have been taught by the Nightsisters that strength lies in embracing one's darker emotions, and this can lead to a volatile mix of raw power and emotional turmoil. Theirs is a world where might makes right, and those who cannot or will not wield darkness are often cast out.",
+   "narrative_hooks": [
+    "The calling of the dark side is strong within you...",
+    "A Nightsister's prophecy foretells your destiny..."
+   ],
+   "social_dynamics": "Dathomirian Zabraks are often isolated from their own kind, seen as unclean by some and a necessary evil by others. As a result, they may be drawn to outsiders or those who understand them, forming tight bonds with those few who can see beyond their dark reputation.",
+   "common_motivations": [
+    "Seeking power and recognition in a galaxy that fears and shuns them",
+    "Uncovering the secrets of their mysterious heritage"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personaility": {
+     "traits": [
+      "intense",
+      "passionate"
+     ],
+     "values": [
+      "power",
+      "influence"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "Expand my dark side abilities",
+     "secondary_motivations": [
+      "Seek out new sources of power",
+      "Protect my allies"
+     ]
+    },
+    "combat_behavior": {
+     "tactics": [
+      "aggressive",
+      "maneuver warfare"
+     ],
+     "special_tactics": [
+      "Force lightning"
+     ]
+    },
+    "social_behavior": {
+     "behavior_traits": [
+      "formal",
+      "intimidating"
+     ],
+     "communication_styles": [
+      "blunt",
+      "assertive"
+     ]
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "high": "Your words carry significant weight",
+     "low": "Your actions raise suspicions"
+    },
+    "loyalty_triggers": {
+     "trigger_event": "A rival seeks to usurp my power",
+     "response": "I will not stand idly by..."
+    }
+   },
+   "services": [
+    {
+     "name": "Dark Side Focus",
+     "description": "Maintain your focus on the dark side, increasing your ability to cast Force powers."
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "zabrak_dathomirian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/zabrak_dathomirian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

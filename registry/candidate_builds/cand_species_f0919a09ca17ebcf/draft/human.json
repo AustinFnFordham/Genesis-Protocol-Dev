@@ -1,0 +1,831 @@
+{
+ "record": {
+  "id": "human",
+  "name": "Human",
+  "tags": [
+   "adaptable",
+   "ambitious",
+   "balanced",
+   "charismatic",
+   "civic_leader",
+   "common",
+   "human",
+   "professional",
+   "resilient",
+   "sith_order",
+   "skill_specialist",
+   "starship_pilot",
+   "support",
+   "urban",
+   "versatile"
+  ],
+  "description": "Adaptable and ambitious, Humans are found in every corner of the galaxy, shaping trade routes, politics, and the destinies of worlds.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Choice",
+    "value": 1
+   },
+   {
+    "ability": "Choice",
+    "value": 1
+   },
+   {
+    "ability": "Choice",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "human_adaptable",
+    "name": "Adaptable",
+    "narrative": "Your species' incredible adaptability allows you to quickly learn and master new skills, making you capable of excelling in any role or environment.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Choice:Skill"
+      }
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_by_desperation",
+     "ui_transition": {
+      "animation": "/anims/Corruption/AdaptabilityDespair",
+      "sfx": "/sfx/Negative/Aweless"
+     }
+    }
+   },
+   {
+    "id": "human_broad_experience",
+    "name": "Broad Experience",
+    "narrative": "Your species' diverse experiences across the galaxy have given you a broad foundation of knowledge that you can draw upon in unfamiliar situations.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Background Knowledge",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a skill check that reflects your background or past experiences.",
+      "rules": [
+       "cooldown:short_rest",
+       "trigger:skill_check"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_by_paranoia",
+     "ui_transition": {
+      "animation": "/anims/Corruption/BroadExperienceParanoia",
+      "sfx": "/sfx/Negative/HorrifiedScream"
+     }
+    }
+   },
+   {
+    "id": "human_cultural_fluency",
+    "name": "Cultural Fluency",
+    "narrative": "Your species' widespread presence across the galaxy has given you an innate ability to learn and adapt to different cultures and languages.",
+    "mechanics": [
+     {
+      "effect": "grant_language",
+      "parameters": {
+       "language": "Choice:Language"
+      }
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.5m - 2.0m",
+   "distinctions": [
+    "Highly variable appearance",
+    "Adaptable to different environments",
+    "Diverse cultural expressions",
+    "Versatile physical builds"
+   ],
+   "skin_color_variants": [
+    "Pale",
+    "Fair",
+    "Olive",
+    "Tan",
+    "Brown",
+    "Dark Brown",
+    "Black",
+    "Various mixed heritage combinations"
+   ],
+   "hair_color_variants": [
+    "Black",
+    "Brown",
+    "Blonde",
+    "Red",
+    "Grey",
+    "White",
+    "Various shades and combinations"
+   ],
+   "eye_color_variants": [
+    "Brown",
+    "Blue",
+    "Green",
+    "Hazel",
+    "Grey",
+    "Amber",
+    "Various combinations"
+   ],
+   "common_adornments": [
+    "Diverse cultural clothing and styles",
+    "Professional attire for various careers",
+    "Practical gear for different environments",
+    "Cultural jewelry and accessories",
+    "Military and civilian uniforms"
+   ],
+   "llm_description_prompt": "Describe a Human character. Emphasize their adaptability and the way their appearance reflects their background, culture, and experiences. Consider their heritage, profession, and the environment they've adapted to. Their clothing and mannerisms should tell the story of where they come from and what they've experienced in the galaxy."
+  },
+  "class_synergies": [
+   {
+    "class": "Any Class",
+    "narrative": "Humans' adaptability and broad experience make them capable of excelling in any class, quickly learning and adapting to new roles and challenges.",
+    "mechanical_benefits": [
+     "Adaptable trait allows skill proficiency in any area",
+     "Broad Experience provides flexibility in unfamiliar situations",
+     "Cultural Fluency aids in communication and integration"
+    ]
+   },
+   {
+    "class": "Guardian",
+    "narrative": "Humans' strong sense of duty and protective instincts make them natural Guardians, willing to defend others and adapt their fighting style to any situation.",
+    "mechanical_benefits": [
+     "Adaptable trait allows Guardian to learn defensive techniques quickly",
+     "Broad Experience aids in protecting against various threats",
+     "Natural leadership abilities enhance Guardian's protective role"
+    ]
+   },
+   {
+    "class": "Scoundrel",
+    "narrative": "Humans' adaptability and cultural fluency make them excellent Scoundrels, able to blend into any environment and manipulate situations to their advantage.",
+    "mechanical_benefits": [
+     "Cultural Fluency aids in deception and social manipulation",
+     "Adaptable trait supports various criminal activities",
+     "Broad Experience helps navigate complex social situations"
+    ]
+   },
+   {
+    "class": "Scholar",
+    "narrative": "Humans' natural curiosity and adaptability make them excellent Scholars, able to learn and synthesize knowledge from diverse sources.",
+    "mechanical_benefits": [
+     "Cultural Fluency aids in research and communication",
+     "Adaptable trait supports learning new fields of study",
+     "Broad Experience provides context for academic pursuits"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Humans have been central to the Republic's governance and military, with their adaptability making them effective administrators and soldiers."
+   },
+   {
+    "faction": "Rebel Alliance",
+    "narrative": "Humans form the backbone of the Rebellion, their adaptability and determination making them effective resistance fighters and leaders."
+   },
+   {
+    "faction": "Imperial Military",
+    "narrative": "Many humans serve in the Imperial military, their organizational skills and adaptability making them effective officers and soldiers."
+   },
+   {
+    "faction": "Independent Systems",
+    "narrative": "Humans can be found throughout the galaxy, adapting to local cultures and forming their own communities and organizations."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Adaptable",
+   "base_description": "Your species' incredible adaptability allows you to quickly learn and master new skills, making you capable of excelling in any role or environment.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your adaptability has grown more sophisticated. You can learn new skills more quickly and adapt to changing situations with greater ease.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Skill checks",
+      "conditions": [
+       {
+        "key": "skill_type",
+        "op": "equals",
+        "value": "newly_learned"
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your adaptability has become legendary. You can quickly master any skill or technique you observe.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Quick Study",
+      "description": "Once per long rest, you can gain proficiency in any skill you witness being used successfully"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of adaptation. Your ability to learn and adapt is unparalleled.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Master Adaptation",
+      "description": "Once per long rest, you can temporarily gain expertise in any skill for 1 hour"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of adaptability. Your ability to learn and adapt transcends normal limitations.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Adaptation",
+      "description": "Once per long rest, you can gain mastery of any skill or technique for 1 minute"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Human's adaptability has grown more sophisticated. They can learn new skills more quickly and adapt to changing situations with greater ease.",
+    "level_10": "Your Human's adaptability has become legendary. They can quickly master any skill or technique they observe, their learning abilities bordering on the supernatural.",
+    "level_15": "Your Human has become a master of adaptation. Their ability to learn and adapt is unparalleled, making them capable of excelling in any situation.",
+    "level_20": "Your Human is a living legend of adaptability. Their ability to learn and adapt transcends normal limitations, making them a true master of any craft or skill."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Galactic Citizen",
+    "type": "cultural",
+    "description": "Your deep connection to the diverse cultures and communities across the galaxy.",
+    "activation": "When interacting with different cultures or adapting to new social situations",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "cultural_interaction",
+        "social_adaptation",
+        "diplomatic_negotiation"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can seamlessly adapt to any cultural context, understanding and respecting different traditions and customs.",
+    "faction_connection": "Galactic Republic",
+    "optional": true
+   },
+   {
+    "name": "Versatile Expertise",
+    "type": "narrative",
+    "description": "Your species' natural ability to develop expertise in multiple fields and adapt to different roles.",
+    "activation": "When switching between different roles or applying knowledge from one field to another",
+    "effect": {
+     "type": "advantage",
+     "value": "Intelligence checks",
+     "conditions": [
+      {
+       "key": "knowledge_type",
+       "op": "in",
+       "value": [
+        "cross_disciplinary",
+        "role_adaptation",
+        "skill_transfer"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can apply knowledge and skills from one area to solve problems in another, your versatility making you a valuable asset in any situation.",
+    "faction_connection": "Independent Systems",
+    "optional": true
+   },
+   {
+    "name": "Resilient Spirit",
+    "type": "traditional",
+    "description": "Your species' incredible resilience and determination in the face of adversity.",
+    "activation": "When facing challenges or overcoming obstacles",
+    "effect": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "adversity",
+        "challenge",
+        "obstacle_overcoming"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon your species' incredible resilience, finding strength and determination even in the most difficult circumstances.",
+    "faction_connection": "Rebel Alliance",
+    "optional": true
+   },
+   {
+    "name": "Innovative Thinking",
+    "type": "social",
+    "description": "Your species' natural creativity and ability to find innovative solutions to problems.",
+    "activation": "When solving complex problems or creating new solutions",
+    "effect": {
+     "type": "advantage",
+     "value": "Intelligence (Investigation) checks",
+     "conditions": [
+      {
+       "key": "problem_type",
+       "op": "in",
+       "value": [
+        "complex_problem",
+        "innovative_solution",
+        "creative_thinking"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can think outside the box and find creative solutions to problems that others might consider impossible.",
+    "faction_connection": "Galactic Republic",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Galactic Human Diversity",
+   "cultural_networks": [
+    "Galactic Republic",
+    "Rebel Alliance",
+    "Imperial Military",
+    "Independent Systems",
+    "Human Diaspora Communities"
+   ],
+   "traditional_practices": [
+    "Cultural Adaptation Ceremonies",
+    "Skill Learning Rituals",
+    "Innovation Celebrations",
+    "Resilience Demonstrations",
+    "Cross-Cultural Exchange"
+   ],
+   "cultural_knowledge": [
+    "Galactic Cultures",
+    "Adaptation Techniques",
+    "Innovation Methods",
+    "Resilience Training",
+    "Human History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "urban",
+    "advantage": "Natural expertise in urban environments and social navigation",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "urban"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "social_navigation",
+        "cultural_adaptation",
+        "urban_negotiation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through urban environments with natural ease, your species' evolutionary adaptation to city life making you perfectly at home in crowded streets and bustling markets.",
+    "narrative_hooks": [
+     "Urban social adaptation",
+     "Cultural integration",
+     "Urban negotiation and diplomacy",
+     "City-based social networks"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "space",
+    "advantage": "Enhanced comfort and performance in space environments",
+    "situational_bonus": {
+     "type": "skill_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "space"
+      },
+      {
+       "key": "skill_type",
+       "op": "in",
+       "value": [
+        "piloting",
+        "technology",
+        "survival"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your species' natural affinity for space travel and exploration makes you feel at home in the void, understanding ship systems and space environments instinctively.",
+    "narrative_hooks": [
+     "Space navigation and piloting",
+     "Starship operations",
+     "Space exploration",
+     "Zero-gravity adaptation"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "diverse_cultures",
+    "advantage": "Enhanced ability to adapt to and navigate diverse cultural environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Insight) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "diverse_cultures"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "cultural_understanding",
+        "social_adaptation",
+        "diplomatic_interaction"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural understanding of diverse cultures allows you to navigate complex social landscapes and adapt to different cultural contexts with ease.",
+    "narrative_hooks": [
+     "Cultural diplomacy",
+     "Cross-cultural communication",
+     "Social adaptation",
+     "Cultural exchange"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "changing_conditions",
+    "advantage": "Enhanced ability to adapt to rapidly changing conditions and environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Dexterity saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "changing_conditions"
+      },
+      {
+       "key": "change_type",
+       "op": "in",
+       "value": [
+        "rapid_change",
+        "environmental_shift",
+        "situational_adaptation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your species' incredible adaptability allows you to quickly adjust to changing conditions, making you perfectly suited for dynamic and unpredictable environments.",
+    "narrative_hooks": [
+     "Rapid adaptation",
+     "Environmental flexibility",
+     "Situational adjustment",
+     "Dynamic response"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "urban",
+    "space",
+    "diverse_cultures",
+    "changing_conditions"
+   ],
+   "environmental_knowledge": [
+    "Urban Navigation",
+    "Space Exploration",
+    "Cultural Adaptation",
+    "Environmental Flexibility",
+    "Social Dynamics",
+    "Innovation Techniques"
+   ],
+   "survival_techniques": [
+    "Urban Social Adaptation",
+    "Space Environment Navigation",
+    "Cultural Integration",
+    "Rapid Environmental Adaptation",
+    "Cross-Cultural Communication",
+    "Innovative Problem Solving"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "varied_skin_tones",
+     "diverse_hair",
+     "average_build"
+    ],
+    "morphology": {
+     "head_type": "round",
+     "body_type": "muscular",
+     "average_height": "175cm"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": [
+       "plump_face",
+       "curly_hair"
+      ],
+      "adult": [
+       "angular_features",
+       "sharp_jawline"
+      ],
+      "elder": [
+       "weathered_skin",
+       "thinning_hair"
+      ]
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "yellow_eyes",
+       "pale_skin"
+      ],
+      "light_side": [
+       "calm_aura"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos",
+     "cybernetics"
+    ],
+    "prompt_schema": {
+     "base_prompt": "{name} is a human with {trait} who has just arrived on the planet of {location}.",
+     "contextual_modifiers": [
+      {
+       "adjective": [
+        "strange",
+        "interesting",
+        "unsettling"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": "The nemesis begins as a minor annoyance, but their true intentions and abilities are slowly revealed over time.\nThreat level: Low\n",
+     "escalation": "As the nemesis's power grows, they become more and more aggressive in pursuit of their goals, forcing the protagonist to adapt their strategies.\nThreat level: Medium\n",
+     "confrontation": "In a final, desperate bid for victory, the nemesis unleashes their full fury upon the protagonist, pushing them to their limits.\nThreat level: High\n"
+    },
+    "resolution_paths": [
+     {
+      "victory": "The protagonist emerges victorious, having defeated the nemesis and secured a major victory."
+     },
+     {
+      "redemption": "The protagonist manages to redeem the nemesis, turning them away from their destructive path."
+     },
+     {
+      "escape": "The protagonist narrowly escapes the clutches of the nemesis, fleeing into exile."
+     }
+    ],
+    "conflict_triggers": [
+     "betraying a trust",
+     "stealing a valuable resource",
+     "attempting to assassinate"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "a human is betrayed by someone they trusted"
+     ],
+     "vendetta_type": "revenge/ideological"
+    },
+    "Tragic Flaw": "The tendency to overextend themselves, courting disaster through hubris and ambition.",
+    "Historical Enemies": [
+     "The Mandalorians, with whom they have clashed in numerous conflicts throughout history",
+     "The Sith Empire, whose destruction of the Jedi Order has left a lasting scar on Human society"
+    ],
+    "Progression Triggers": [
+     {
+      "Event Type": "Major Conflict",
+      "Trigger Condition": "Human forces are at war against a powerful foe (e.g., Mandalorians, Sith)",
+      "Consequences": [
+       {
+        "Effect": "Loss of key leaders or resources",
+        "Description": "The war has taken its toll on Human society, with losses mounting and morale waning."
+       }
+      ]
+     },
+     {
+      "Event Type": "Social Uprising",
+      "Trigger Condition": "A significant segment of the Human population begins to question their leadership's decisions (e.g., Corellian rebellion)",
+      "Consequences": [
+       {
+        "Effect": "Loss of trust in authority, fragmentation within society",
+        "Description": "The Human people are at odds with each other, questioning the very foundations of their civilization."
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "charisma",
+     "empathy"
+    ],
+    "romance_progression": {
+     "stage1": {
+      "description": "Casual acquaintances"
+     },
+     "stage2": {
+      "description": "Growing intimacy"
+     },
+     "stage3": {
+      "description": "Committed relationship"
+     },
+     "stage4": {
+      "description": "Deep emotional connection"
+     },
+     "stage5": {
+      "description": "Long-term partnership"
+     }
+    },
+    "romance_events": [
+     "a romantic dinner on a scenic planet",
+     "a heartfelt confession in the midst of chaos",
+     "a tender moment shared between lovers"
+    ],
+    "romance_modifiers": [
+     "giving gifts",
+     "listening actively",
+     "displaying affection"
+    ],
+    "Courtship Rites": [
+     {
+      "Type": "Gift-Giving",
+      "Description": "Humans often show affection through small gifts or tokens, which can be used to initiate a romantic relationship."
+     }
+    ],
+    "Intimacy Progression": [
+     {
+      "Level 1": "Casual Flirting (e.g., playful banter)",
+      "Description": "A lighthearted and playful approach to getting to know one another, often through humor or friendly teasing.",
+      "Unlock Condition": "One party has shown clear interest in the other."
+     },
+     {
+      "Level 2": "Romantic Gestures (e.g., surprise dates)",
+      "Description": "A more overt display of affection, such as planning a special date or surprise gift.",
+      "Unlock Condition": "Both parties have demonstrated mutual attraction and are actively seeking to deepen their connection."
+     },
+     {
+      "Level 3": "Emotional Vulnerability (e.g., sharing personal struggles)",
+      "Description": "A deeper level of intimacy, where both partners feel comfortable sharing their fears, hopes, and dreams with one another.",
+      "Unlock Condition": "Both parties have established a strong emotional connection and are willing to be vulnerable with each other."
+     }
+    ]
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personlity": {
+     "traits": [
+      "Confident",
+      "Ambitious"
+     ],
+     "behaviors": [
+      "Charismatic Leadership",
+      "Strategic Negotiation"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "Respect and Recognition",
+     "secondary_motivation": "Protection of the Innocent"
+    },
+    "combat_behavior": "Tactical Analysis and Strategic Execution",
+    "social_behavior": "The AI will embody confident leadership traits, often taking charge in group settings.\nIn combat, it will prioritize strategic execution over individual heroics.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "default": 50,
+     "min": 0,
+     "max": 100
+    },
+    "loyalty_triggers": [
+     "Betrayal of Trust",
+     "Failure to Deliver on Promises"
+    ]
+   },
+   "services": {
+    "name": "Galactic Advisor",
+    "description": "As a skilled diplomat and strategist, this AI provides expert guidance on navigating the complexities of intergalactic politics."
+   }
+  },
+  "flavor_text": "Humans have always been a species of unyielding resilience, forging civilizations from the ashes of war-torn worlds. From the ancient colonies on Coruscant to the sprawling metropolises of Corellia, their capacity for adaptability and innovation has left an indelible mark on the galaxy. Yet, amidst their triumphs, lies a thread of hubris - a tendency to overextend themselves, courting the very destruction they seek to prevent.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Human, you embody the species' inherent drive for self-improvement and progress. Your actions are guided by an insatiable curiosity about the workings of the universe, often leading you down paths of discovery that challenge conventional wisdom. Be mindful of your tendency to prioritize individual ambition over collective well-being.",
+   "narrative_hooks": [
+    "The scars of past wars still linger on Coruscant, and the memory of the Great Hyperspace War continues to shape Human politics.",
+    "As a skilled diplomat, you find yourself at odds with the isolationist tendencies of the Human colonists on Tatooine."
+   ],
+   "social_dynamics": "Humans tend to form close-knit communities based on shared interests or values. They often seek out mentors or role models within their social circles and are fiercely loyal to those who have helped them grow.",
+   "common_motivations": [
+    "Exploring the mysteries of the Force",
+    "Advancing technological innovation"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "human",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/human.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "26e09932f5d5800b76f398a109aa22dd274e736cfed754f0299afc4bd4f4b072",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

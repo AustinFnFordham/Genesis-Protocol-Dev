@@ -1,0 +1,217 @@
+{
+ "record": {
+  "id": "power_rebuke",
+  "name": "Rebuke",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 0,
+  "tags": [
+   "light_side",
+   "radiant",
+   "damage_reflection",
+   "protection",
+   "divine",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Dark-aligned user may resist channeling pure righteousness by maintaining moral ambiguity.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You channel the light side's righteous power to punish those who would harm you, brilliant energy reflecting their attack back upon them. The power manifests as a flash of golden light that burns the wicked, their hostile intent turned to suffering as the Force itself rebukes their aggression.",
+  "flavor_text": "\"The light protects the just and punishes the cruel.\" - Jedi Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "raising hand to deflect attack with light"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling righteous energy through the Force"
+   }
+  ],
+  "casting_time": "1 Reaction",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You rebuke an attacker with light side energy when they hit you.",
+   "mechanics": [
+    {
+     "type": "damage_reflection",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "radiant",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "attacker"
+     ],
+     "trigger": "when_hit_by_attack",
+     "notes": "Deal 1d4 radiant damage to attacker when they hit you"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's protective philosophy transforms Rebuke into perfect defense. Their light doesn't just punish attackers—it shields allies, their righteousness creating protective auras that burn the wicked who dare threaten innocents.",
+    "mechanical_benefit": [
+     {
+      "type": "protective_rebuke",
+      "value": {
+       "effect": "reduce_damage",
+       "amount": "half_radiant_dealt"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians reduce triggering attack's damage by half the radiant damage dealt."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human moral conviction amplifies Rebuke's righteous power. Their clarity of purpose makes the light burn brighter, their certainty in justice creating radiance that punishes evil with uncompromising intensity.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "radiant",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Humans deal an additional 1d4 radiant damage (2d4 total)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Rebuke as manifestation of light side philosophy—defense without aggression, protection without cruelty. Their version punishes evil while offering redemption, showing that even righteousness can be merciful.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "blinded"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Jedi Rebuke also blinds attacker for 1 round with brilliant light (Constitution save)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the flash of golden-white light as the attack connects, the attacker recoiling as righteous energy burns them. Show the light's purity, the way it punishes wickedness while protecting the just. The rebuke should feel divinely appropriate.",
+   "tactical_notes": "Rebuke is a cantrip dealing 1d4 radiant damage to attackers as a reaction. Perfect for punishing enemies who hit you while dealing rare radiant damage. No resource cost makes it reliable defensive option. Only triggers when you're hit, encouraging defensive play.",
+   "narrative_hooks": [
+    "Rebuke's radiant damage reveals a character's light side alignment",
+    "The reflected energy burns dark side users more severely",
+    "A Jedi uses Rebuke to demonstrate that violence brings only suffering"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Jedi rebuking an attacker with radiant light. Golden-white energy flashes from the defender as an attack connects, the light burning the aggressor with righteous power. The attacker recoils from the brilliant radiance, their hostile intent punished by the Force itself. The scene captures the light side's protective judgment.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/rebuke.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_rebuke",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_rebuke.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

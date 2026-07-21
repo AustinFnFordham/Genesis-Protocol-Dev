@@ -1,0 +1,227 @@
+{
+ "record": {
+  "id": "power_force_leap",
+  "name": "Force Leap",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You bend space and physics to your will, granting leap incredible distances with enhanced agility. The power manifests as enhanced momentum, fluid motion, creating a moment of liberating freedom.",
+  "flavor_text": "'Size matters not. Look at me. Judge me by my size, do you?' - Yoda",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clear, forceful gesture extending telekinetic energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "visualizing the desired effect and channeling Force energy"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the Force to enhance your jumping ability, allowing you to leap great distances.",
+   "mechanics": [
+    {
+     "type": "enhance_movement",
+     "value": {
+      "target": "jump_distance",
+      "multiplier": 2
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Your jump distance is doubled for this turn"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardian approaches Force Leap through the lens of protection, finding unexpected harmony in the propelling through air with enhanced agility. Their defensive combat and protection of others guides them to vibrating air with a focused resolve that reflects their unique perspective.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_action",
+      "action_type": "melee_attack",
+      "timing": "as_part_of_this_action",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Make a melee attack as part of the Force Leap action"
+     }
+    ]
+   },
+   {
+    "class_id": "sentinel",
+    "narrative": "Sentinels use Force Leap for infiltration and reconnaissance, using it to access difficult-to-reach locations and escape routes.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_condition",
+      "condition": "silent_movement",
+      "duration": {
+       "amount": 1,
+       "unit": "turn"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Movement made with Force Leap is silent and leaves no tracks"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Humans' natural adaptability makes them particularly adept at the coordination and timing required for Force Leap.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "condition": "avoiding_opportunity_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain advantage on Force Leap when jumping to avoid attacks of opportunity"
+     }
+    ]
+   },
+   {
+    "species_id": "mirialan",
+    "narrative": "Mirialans' natural grace and agility makes them particularly skilled at the controlled movements required for Force Leap.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_movement",
+      "value": {
+       "effect": "omnidirectional_leap"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Can use Force Leap to move in any direction, not just forward"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Force Leap as a fundamental mobility technique, emphasizing its use for peaceful movement and exploration.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_movement",
+      "value": {
+       "distance": 2,
+       "unit": "feet"
+      },
+      "condition": "non_combat_use",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain +2 to Force Leap distance when using it for non-combat purposes"
+     }
+    ]
+   },
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Force Leap as a means of dominating combat, using it to control the battlefield and intimidate enemies.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "condition": "intimidation_attempts",
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Gain advantage on intimidation attempts when using Force Leap"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the enhanced movement capabilities. Focus on how the power's effects manifest physically and mechanically, emphasizing provide movement abilities.",
+   "tactical_notes": "Force Leap is excellent for reaching elevated positions or crossing gaps. Use it at 0 feet range.",
+   "narrative_hooks": [
+    "Force Leap allows for incredible mobility, reaching places that should be impossible to access",
+    "The movement granted by Force Leap creates tactical advantages that surprise everyone"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Force Leap. in action. leaping incredible distances with Force-enhanced agility. with enhanced momentum, fluid motion. The mood is liberating freedom, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_leap.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_leap",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_leap.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

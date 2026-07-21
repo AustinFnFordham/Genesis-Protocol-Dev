@@ -1,0 +1,201 @@
+{
+ "record": {
+  "id": "power_target_priority",
+  "name": "Target Priority",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "tactical",
+   "coordination",
+   "focus_fire",
+   "leadership",
+   "targeting",
+   "superiority"
+  ],
+  "power_cost": [
+   {
+    "type": "Superiority_Dice",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced tactical technique for coordinating concentrated fire"
+   }
+  },
+  "narrative": "You designate a priority target for concentrated fire, your tactical guidance directing all allies' attacks toward maximum effect. The power manifests as comm chatter coordinating fire, targeting data shared across the squad, unified assault overwhelming the designated enemy.",
+  "flavor_text": "\"All guns, target that ship. Fire at will.\" - Fleet Commander",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "designating priority target with tactical markers"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "coordinating allied fire for maximum effect"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "60 feet",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You designate a priority target for concentrated allied fire.",
+   "mechanics": [
+    {
+     "type": "mark_target",
+     "value": {
+      "effect": "allies_add_superiority_die"
+     },
+     "target_scopes": [
+      "enemy"
+     ],
+     "notes": "Allies add your superiority die to damage against marked target this round"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "scholar",
+    "narrative": "The Scholar's tactical analysis identifies not just targets but optimal strike points. Their priority designations highlight specific vulnerabilities, turning concentrated fire into surgical strikes against critical weak points.",
+    "mechanical_benefit": [
+     {
+      "type": "critical_targeting",
+      "value": {
+       "effect": "allies_score_crit_on_19_20"
+      },
+      "target_scopes": [
+       "marked_target"
+      ],
+      "notes": "Scholar priority targets can be critically hit on rolls of 19-20."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human leadership charisma makes their target designation inspiring. Allies don't just focus fire mechanically—they're motivated to excel, their shots more accurate from confidence in human tactical judgment.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "value": {
+       "benefit": "attack_advantage"
+      },
+      "target_scopes": [
+       "allies_attacking_marked"
+      ],
+      "notes": "Human priority calls grant advantage to allies attacking the marked target."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's doctrine of overwhelming firepower makes Target Priority devastating. Their coordinated volleys can delete targets from existence through sheer volume of concentrated Imperial fire.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_damage_die",
+      "value": {
+       "dice_count": 2,
+       "dice_type": "superiority_die"
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Imperial priority targets take 2 superiority dice of extra damage instead of 1."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the tactical call—crisp order designating priority target, allies responding with coordinated fire. Show targeting data sharing, shots converging on marked enemy, overwhelming firepower eliminating threat through unity of purpose.",
+   "tactical_notes": "Target Priority lets allies add superiority die to damage against one enemy for 1 round, costing a superiority die. Devastating force multiplier for coordinated teams. The bonus action timing allows marking then attacking. Perfect for eliminating dangerous enemies quickly.",
+   "narrative_hooks": [
+    "Priority targeting eliminates critical threat before it acts",
+    "The coordinated fire reveals squad's tactical training",
+    "Allies' unified response demonstrates trust in commander's judgment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of coordinated fire on a priority target. Multiple combatants focus attacks on a single designated enemy, shots converging from all angles. Targeting markers highlight the priority threat while coordinated fire overwhelms their defenses. The scene captures devastating focus fire through tactical leadership.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/target_priority.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_target_priority",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_target_priority.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

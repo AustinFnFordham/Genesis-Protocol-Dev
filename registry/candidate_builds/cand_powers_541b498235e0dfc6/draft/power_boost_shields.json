@@ -1,0 +1,153 @@
+{
+ "record": {
+  "id": "power_boost_shields",
+  "name": "Boost Shields",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "starship",
+   "shields",
+   "regeneration",
+   "defensive",
+   "emergency",
+   "power_management",
+   "support",
+   "utility",
+   "vehicular",
+   "space_combat",
+   "engineer",
+   "protection",
+   "energy"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Emergency shield regeneration technique for starship combat"
+   }
+  },
+  "narrative": "You reroute your starship's power systems to boost shield regeneration, channeling energy from non-critical systems into the shield generators. The power manifests as shield capacitors humming with overcharge, blue energy crackling along the shield matrix as it rebuilds itself.",
+  "flavor_text": "\"Divert all power to the rear shields!\" - Every pilot in retreat",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "manipulating shield power controls"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating optimal power distribution"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Reroute power to shields. Choose one shield facing (Forward, Aft, Port, or Starboard) to regenerate a number of shield points.",
+   "mechanics": [
+    {
+     "type": "regenerate_shields",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "resource": "shield_points"
+     },
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "Regenerate 1d4 shield points on chosen facing"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the whine of generators spinning up, console lights flickering as power is diverted. The shield indicator climbs from red through yellow to green as regenerated energy reinforces the protective barrier. Sparks might fly from overloaded conduits as you push the systems to their limits.",
+   "tactical_notes": "Boost Shields provides crucial shield regeneration during combat. The 1d4 shield points can mean the difference between survival and destruction. Choose the facing taking the most fire. Remember this costs your action, so time it between enemy volleys.",
+   "narrative_hooks": [
+    "An engineer boosts shields just in time to absorb a proton torpedo",
+    "Desperate shield boosting keeps a damaged freighter alive during an Imperial bombardment",
+    "The last-second shield boost saves the ship from a collision with an asteroid"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a starship's shield bubble visibly strengthening and regenerating. Blue energy flows through the shield matrix like lightning, damaged sections knitting back together with crackling power. The engineering console shows power being diverted from engines and weapons to shields, with the shield strength indicator rising. The scene captures the desperate moment of emergency shield restoration under fire.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/boost_shields.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_boost_shields",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_boost_shields.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

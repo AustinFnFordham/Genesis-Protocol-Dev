@@ -1,0 +1,127 @@
+{
+ "record": {
+  "id": "background_starship_ace_pilot",
+  "name": "Ace Pilot",
+  "description": "You live by the stick and throttle, turning inert mass into grace and momentum.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Vehicle (Space)",
+      "Vehicle (Air)",
+      "Starship Repair Kit",
+      "Navigation Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Ace Manoeuvres",
+   "level": 1,
+   "description": "Gain proficiency in Piloting (Space). Once per short rest, gain advantage on a Piloting (Space) check to evade or pursue. You also maintain access to pilot networks and friendly hangars.",
+   "effects": [
+    {
+     "type": "grant_proficiency",
+     "value": "Piloting (Space)"
+    },
+    {
+     "type": "grant_advantage",
+     "value": "piloting_space_evade_or_pursue_once_per_short_rest",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    },
+    {
+     "type": "narrative_effect",
+     "value": "pilot_networks_hangar_access",
+     "target_scopes": [
+      "self"
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I talk to my ship; it talks back in its own way.",
+    "I push limits to learn where they are.",
+    "I count vectors before I count odds.",
+    "I trust a clean preflight more than a promise."
+   ],
+   "ideals": [
+    "Freedom. The sky is a promise, not a limit.",
+    "Mastery. Every drift can be cleaner.",
+    "Duty. My crew gets home."
+   ],
+   "bonds": [
+    "A mechanic kept me flying; I keep their tools pristine.",
+    "A rival ace makes me better—I’ll chase them to the rim."
+   ],
+   "flaws": [
+    "I underestimate turbulence until I’m in it.",
+    "I fly angry when someone insults my ship."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_ace_pilot",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_ace_pilot.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "b07025d9d9ef5912b6e5f68ff381c0b623fc2ec871ced8535c964bc31e211d16",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,199 @@
+{
+ "record": {
+  "id": "power_minor_hologram",
+  "name": "Minor Hologram",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "illusion",
+   "hologram",
+   "deception",
+   "projection",
+   "visual",
+   "communication"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic holographic projection technology"
+   }
+  },
+  "narrative": "You project a small three-dimensional hologram—a flickering image suspended in air that can display messages, mimic objects, or create simple illusions. The power manifests as translucent blue light forming recognizable shapes, the projection's artificial nature obvious but its utility undeniable.",
+  "flavor_text": "\"Help me, Obi-Wan Kenobi. Youre my only hope.\" - Princess Leia (hologram)",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating holographic projector"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "programming image and projection parameters"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create a small holographic image that can be used for communication or simple illusions.",
+   "mechanics": [
+    {
+     "type": "create_illusion",
+     "value": {
+      "size": "5_foot_cube",
+      "type": "visual_only",
+      "fidelity": "basic"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Create silent holographic image no larger than 5-foot cube"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's deception expertise transforms Minor Hologram into perfect misdirection. They program holograms to move convincingly, react to observers, even simulate realistic behavior patterns—creating illusions that fool even trained eyes through behavioral authenticity.",
+    "mechanical_benefit": [
+     {
+      "type": "animated_hologram",
+      "value": {
+       "movement": "realistic",
+       "interaction": "responsive"
+      },
+      "target_scopes": [
+       "illusion"
+      ],
+      "notes": "Operative holograms can move and respond to observers realistically."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity makes their holograms unexpectedly versatile. They use them for art, entertainment, tactical planning, even psychological warfare—finding applications from the practical to the inspired, turning simple projection into Swiss Army tool.",
+    "mechanical_benefit": [
+     {
+      "type": "include_sound",
+      "value": {
+       "audio": "simple_sounds"
+      },
+      "target_scopes": [
+       "illusion"
+      ],
+      "notes": "Human holograms can include simple sounds, not just visual elements."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Minor Hologram for covert operations. Their versions can be recorded and deployed remotely, creating false meetings, fake patrols, or decoy objectives that waste Imperial resources while real operations proceed unnoticed.",
+    "mechanical_benefit": [
+     {
+      "type": "persistent_recording",
+      "value": {
+       "duration": "permanent",
+       "activation": "remote"
+      },
+      "target_scopes": [
+       "illusion"
+      ],
+      "notes": "Rebels can record holograms for later playback without concentration."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the blue-tinted hologram flickering to life, its translucent nature making it obviously artificial but still recognizable. Show it displaying messages, mimicking objects, or creating simple scenes. The projection should feel useful despite technical limitations.",
+   "tactical_notes": "Minor Hologram creates a 5-foot cube visual illusion for communication, distraction, or planning. Perfect for displaying maps, sending messages, or creating simple diversions. Requires concentration for up to 1 minute. No resource cost as a cantrip.",
+   "narrative_hooks": [
+    "A holographic message delivers vital intelligence at a critical moment",
+    "A projected illusion distracts guards long enough for infiltration",
+    "A hologram displays tactical plans during mission briefing"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a small holographic projection displaying a three-dimensional image. Blue-tinted light forms a translucent figure or scene suspended in air, the projection's scan lines and flicker revealing its artificial nature. The hologram glows softly, illuminating nearby faces with its ethereal light. The scene captures the iconic Star Wars aesthetic of holographic communication.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/minor_hologram.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_minor_hologram",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_minor_hologram.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

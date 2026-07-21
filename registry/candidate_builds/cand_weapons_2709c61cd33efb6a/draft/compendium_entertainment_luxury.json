@@ -1,0 +1,1044 @@
+{
+ "record": {
+  "id": "compendium_entertainment_luxury",
+  "category": "equipment",
+  "subcategory": "gear",
+  "tags": [
+   "equipment",
+   "compendium",
+   "gear",
+   "entertainment",
+   "luxury",
+   "civilian",
+   "common_to_rare",
+   "leisure",
+   "social",
+   "non_combat",
+   "varied_rarity"
+  ],
+  "entertainment_luxury": [
+   {
+    "id": "ent_basic_holo_game",
+    "name": "Basic Holo-Game Console",
+    "description": "A standard holographic gaming console that provides immersive entertainment experiences.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Game",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 3.0,
+    "tags": [
+     "entertainment",
+     "holo_game",
+     "console",
+     "basic",
+     "immersive",
+     "gaming"
+    ],
+    "properties": [
+     "holographic_gaming",
+     "immersive_experience",
+     "entertainment"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "holographic_gaming",
+     "immersive_entertainment",
+     "gaming_experience"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "entertained",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_game_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Entertained status when playing holo-games"
+     }
+    ]
+   },
+   {
+    "id": "ent_advanced_holo_game",
+    "name": "Advanced Holo-Game Console",
+    "description": "A sophisticated holographic gaming system with enhanced graphics, multiple player support, and virtual reality capabilities.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Game",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 5.0,
+    "tags": [
+     "entertainment",
+     "holo_game",
+     "console",
+     "advanced",
+     "virtual_reality",
+     "multiplayer"
+    ],
+    "properties": [
+     "enhanced_graphics",
+     "virtual_reality",
+     "multiplayer_support"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "virtual_reality_gaming",
+     "enhanced_entertainment",
+     "multiplayer_experience"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "deeply_entertained",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_holo_game_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Deeply Entertained status with enhanced gaming experience"
+     }
+    ]
+   },
+   {
+    "id": "ent_holo_theater",
+    "name": "Holo-Theater System",
+    "description": "A large-scale holographic entertainment system that creates immersive cinematic experiences in your own space.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Game",
+    "cost": 15000,
+    "rarity": 4,
+    "weight": 20.0,
+    "tags": [
+     "entertainment",
+     "holo_theater",
+     "cinematic",
+     "immersive",
+     "large_scale",
+     "luxury"
+    ],
+    "properties": [
+     "cinematic_experience",
+     "large_scale_entertainment",
+     "luxury"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "cinematic_experience",
+     "immersive_theater",
+     "luxury_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "cinematically_entertained",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_theater_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Cinematically Entertained status during holo-theater experiences"
+     }
+    ]
+   },
+   {
+    "id": "ent_portable_holo_projector",
+    "name": "Portable Holo-Projector",
+    "description": "A compact device that can project holographic entertainment content anywhere, perfect for travel and outdoor use.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Game",
+    "cost": 5000,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "entertainment",
+     "holo_projector",
+     "portable",
+     "compact",
+     "travel",
+     "outdoor"
+    ],
+    "properties": [
+     "portable_entertainment",
+     "compact_design",
+     "travel_friendly"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "portable_entertainment",
+     "travel_gaming",
+     "outdoor_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "portable_entertainment",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "projector_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can provide entertainment anywhere with portable holo-projector"
+     }
+    ]
+   },
+   {
+    "id": "ent_luxury_clothing",
+    "name": "Luxury Clothing Set",
+    "description": "Exquisitely crafted clothing made from the finest materials, designed for those who appreciate the finer things in life.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 10000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "clothing",
+     "exquisite",
+     "fine_materials",
+     "status"
+    ],
+    "properties": [
+     "exquisite_craftsmanship",
+     "fine_materials",
+     "status_symbol"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_appearance",
+     "status_display",
+     "exquisite_style"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "charisma_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_clothing_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on charisma checks when wearing luxury clothing"
+     }
+    ]
+   },
+   {
+    "id": "ent_precious_jewelry",
+    "name": "Precious Jewelry Collection",
+    "description": "A collection of rare and valuable jewelry pieces that serve as both adornment and investment.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 25000,
+    "rarity": 5,
+    "weight": 1.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "jewelry",
+     "precious",
+     "valuable",
+     "investment"
+    ],
+    "properties": [
+     "precious_materials",
+     "valuable_investment",
+     "status_display"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_adornment",
+     "status_display",
+     "valuable_investment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "nobility_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "precious_jewelry_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on interactions with nobility when wearing precious jewelry"
+     }
+    ]
+   },
+   {
+    "id": "ent_rare_artwork",
+    "name": "Rare Artwork",
+    "description": "A masterpiece of artistic expression that serves as both decoration and a valuable cultural artifact.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 50000,
+    "rarity": 5,
+    "weight": 5.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "artwork",
+     "rare",
+     "masterpiece",
+     "cultural"
+    ],
+    "properties": [
+     "artistic_masterpiece",
+     "cultural_value",
+     "rare_collectible"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "artistic_appreciation",
+     "cultural_value",
+     "masterpiece_display"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "culture_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "artwork_displayed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on culture and art-related checks when artwork is displayed"
+     }
+    ]
+   },
+   {
+    "id": "ent_luxury_vehicle",
+    "name": "Luxury Vehicle",
+    "description": "A high-end vehicle that combines performance, comfort, and status in a single impressive package.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 100000,
+    "rarity": 5,
+    "weight": 2000.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "vehicle",
+     "high_end",
+     "performance",
+     "status"
+    ],
+    "properties": [
+     "high_performance",
+     "luxury_comfort",
+     "status_vehicle"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_transportation",
+     "status_display",
+     "high_performance_travel"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "piloting_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_vehicle_operated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on piloting checks when operating luxury vehicle"
+     }
+    ]
+   },
+   {
+    "id": "ent_sporting_equipment",
+    "name": "Sporting Equipment Set",
+    "description": "A comprehensive collection of equipment for various sports and recreational activities.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 3000,
+    "rarity": 2,
+    "weight": 10.0,
+    "tags": [
+     "entertainment",
+     "recreational",
+     "sporting",
+     "equipment",
+     "comprehensive",
+     "activities"
+    ],
+    "properties": [
+     "sporting_equipment",
+     "recreational_activities",
+     "comprehensive"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sporting_activities",
+     "recreational_fun",
+     "physical_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "sporting_equipment_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks when using sporting equipment"
+     }
+    ]
+   },
+   {
+    "id": "ent_musical_instruments",
+    "name": "Musical Instruments Collection",
+    "description": "A collection of high-quality musical instruments for entertainment and artistic expression.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 15.0,
+    "tags": [
+     "entertainment",
+     "recreational",
+     "musical",
+     "instruments",
+     "artistic",
+     "expression"
+    ],
+    "properties": [
+     "musical_entertainment",
+     "artistic_expression",
+     "high_quality"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "musical_entertainment",
+     "artistic_expression",
+     "musical_performance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "performance_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "musical_instruments_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on performance checks when using musical instruments"
+     }
+    ]
+   },
+   {
+    "id": "ent_garden_equipment",
+    "name": "Luxury Garden Equipment",
+    "description": "High-end equipment for creating and maintaining beautiful gardens and outdoor spaces.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 5000,
+    "rarity": 3,
+    "weight": 20.0,
+    "tags": [
+     "entertainment",
+     "recreational",
+     "garden",
+     "equipment",
+     "luxury",
+     "outdoor"
+    ],
+    "properties": [
+     "garden_maintenance",
+     "luxury_equipment",
+     "outdoor_recreation"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "garden_creation",
+     "outdoor_recreation",
+     "luxury_maintenance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "nature_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "garden_equipment_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on nature checks when using luxury garden equipment"
+     }
+    ]
+   },
+   {
+    "id": "ent_cooking_equipment",
+    "name": "Gourmet Cooking Equipment",
+    "description": "Professional-grade cooking equipment for creating exquisite culinary experiences.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 12000,
+    "rarity": 4,
+    "weight": 25.0,
+    "tags": [
+     "entertainment",
+     "recreational",
+     "cooking",
+     "gourmet",
+     "professional",
+     "culinary"
+    ],
+    "properties": [
+     "gourmet_cooking",
+     "professional_equipment",
+     "culinary_experience"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "gourmet_cooking",
+     "culinary_experience",
+     "professional_cuisine"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "cooking_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "cooking_equipment_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on cooking checks when using gourmet cooking equipment"
+     }
+    ]
+   },
+   {
+    "id": "ent_party_equipment",
+    "name": "Party Equipment Set",
+    "description": "A comprehensive collection of equipment for hosting memorable social gatherings and celebrations.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 6000,
+    "rarity": 3,
+    "weight": 30.0,
+    "tags": [
+     "entertainment",
+     "social",
+     "party",
+     "equipment",
+     "gatherings",
+     "celebrations"
+    ],
+    "properties": [
+     "social_entertainment",
+     "party_hosting",
+     "comprehensive"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "social_gatherings",
+     "party_hosting",
+     "memorable_celebrations"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "charisma_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "party_equipment_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on charisma checks when hosting parties"
+     }
+    ]
+   },
+   {
+    "id": "ent_communication_center",
+    "name": "Luxury Communication Center",
+    "description": "A sophisticated communication system for staying connected with friends, family, and business contacts across the galaxy.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 20000,
+    "rarity": 4,
+    "weight": 10.0,
+    "tags": [
+     "entertainment",
+     "social",
+     "communication",
+     "luxury",
+     "galactic",
+     "sophisticated"
+    ],
+    "properties": [
+     "galactic_communication",
+     "luxury_system",
+     "sophisticated"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "galactic_communication",
+     "social_networking",
+     "luxury_connectivity"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "communication_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "communication_center_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on communication checks when using luxury communication center"
+     }
+    ]
+   },
+   {
+    "id": "ent_entertainment_room",
+    "name": "Entertainment Room System",
+    "description": "A complete entertainment room setup with multiple systems for various forms of recreation and relaxation.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 30000,
+    "rarity": 5,
+    "weight": 100.0,
+    "tags": [
+     "entertainment",
+     "social",
+     "room",
+     "system",
+     "complete",
+     "luxury"
+    ],
+    "properties": [
+     "complete_entertainment",
+     "luxury_system",
+     "multiple_activities"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "complete_entertainment",
+     "luxury_recreation",
+     "multiple_activities"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "luxuriously_entertained",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "entertainment_room_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Luxuriously Entertained status when using entertainment room"
+     }
+    ]
+   },
+   {
+    "id": "ent_personal_chef",
+    "name": "Personal Chef Service",
+    "description": "A professional chef who provides personalized culinary experiences and gourmet meal preparation.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 50000,
+    "rarity": 5,
+    "weight": 0.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "service",
+     "chef",
+     "personal",
+     "gourmet"
+    ],
+    "properties": [
+     "personal_service",
+     "gourmet_cuisine",
+     "luxury_experience"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "gourmet_cuisine",
+     "personal_service",
+     "luxury_dining"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "gourmet_fed",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "personal_chef_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Gourmet Fed status when personal chef is available"
+     }
+    ]
+   },
+   {
+    "id": "ent_butler_service",
+    "name": "Butler Service",
+    "description": "A professional butler who provides personalized service and attention to all your needs and preferences.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 75000,
+    "rarity": 5,
+    "weight": 0.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "service",
+     "butler",
+     "personal",
+     "professional"
+    ],
+    "properties": [
+     "personal_service",
+     "professional_attention",
+     "luxury_care"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "personal_service",
+     "luxury_care",
+     "professional_attention"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "social_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "butler_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on social checks when butler service is available"
+     }
+    ]
+   },
+   {
+    "id": "ent_security_service",
+    "name": "Luxury Security Service",
+    "description": "Professional security personnel who provide protection and peace of mind for luxury lifestyles.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 100000,
+    "rarity": 5,
+    "weight": 0.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "service",
+     "security",
+     "protection",
+     "professional"
+    ],
+    "properties": [
+     "professional_protection",
+     "peace_of_mind",
+     "luxury_security"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "professional_protection",
+     "peace_of_mind",
+     "luxury_security"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "security_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "security_service_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on security-related checks when security service is active"
+     }
+    ]
+   },
+   {
+    "id": "ent_rare_collectibles",
+    "name": "Rare Collectibles Collection",
+    "description": "A curated collection of rare and valuable items that serve as both investment and conversation pieces.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 150000,
+    "rarity": 6,
+    "weight": 50.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "collectibles",
+     "rare",
+     "valuable",
+     "investment"
+    ],
+    "properties": [
+     "rare_collection",
+     "valuable_investment",
+     "conversation_pieces"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rare_collection",
+     "valuable_investment",
+     "conversation_starters"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "knowledge_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "collectibles_displayed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on knowledge checks when rare collectibles are displayed"
+     }
+    ]
+   },
+   {
+    "id": "ent_exotic_pets",
+    "name": "Exotic Pet Collection",
+    "description": "A collection of rare and exotic pets that serve as both companions and status symbols.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 80000,
+    "rarity": 5,
+    "weight": 100.0,
+    "tags": [
+     "entertainment",
+     "luxury",
+     "pets",
+     "exotic",
+     "rare",
+     "companions"
+    ],
+    "properties": [
+     "exotic_companions",
+     "rare_pets",
+     "status_symbols"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "exotic_companionship",
+     "rare_pets",
+     "status_display"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "animal_handling_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "exotic_pets_present",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on animal handling checks when exotic pets are present"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_entertainment_luxury",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/entertainment_luxury.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

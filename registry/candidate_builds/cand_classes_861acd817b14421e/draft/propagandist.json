@@ -1,0 +1,211 @@
+{
+ "record": {
+  "id": "propagandist",
+  "name": "Propagandist",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "propagandist",
+   "charisma_based",
+   "deceptive",
+   "manipulative",
+   "social_specialist",
+   "cunning",
+   "information_warfare",
+   "tactical"
+  ],
+  "description": "Propagandists are masters of media manipulation and public perception. They excel at crafting compelling narratives, controlling information flow, and using propaganda to achieve their faction's goals through psychological warfare.",
+  "specialization_features": [
+   "media_manipulation",
+   "narrative_control",
+   "psychological_warfare",
+   "propagandist_mastery",
+   "legendary_propagandist"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Cunning information specialists who master media manipulation and public perception.",
+   "role_in_group": "Propagandists use their charisma to shape the narrative, control information flow, and achieve their faction's goals through psychological warfare.",
+   "visual_signals": [
+    "They often wear a data pad or holographic display as a visible indicator of their profession.",
+    "Their attire may include subtle, easily removable insignia or logos that reflect their allegiance to various factions."
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "propagandist_feature_1",
+    "feature_id": "feature_id_propaganda_tools",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain a data pad or similar device that allows you to access and analyze information, use it as a focus for your spells, and interface with various computer systems.",
+    "effects": [
+     {
+      "type": "feature",
+      "value": "techno_charisma_edge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability",
+        "op": "equals",
+        "value": "cha"
+       },
+       {
+        "key": "skill_type",
+        "op": "in_list",
+        "value": [
+         "int",
+         "wis",
+         "cha"
+        ]
+       }
+      ],
+      "notes": "Your Propaganda Tools grant you a boost to your technological interactions. When you use Charisma to influence or persuade an electronic device, you can add your proficiency bonus to the check."
+     }
+    ]
+   },
+   {
+    "node_id": "propagandist_feature_2",
+    "feature_id": "feature_id_psychological_warfare",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You learn how to use psychological warfare techniques to demoralize your enemies, boost the morale of allies, and manipulate public opinion.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "psychological_manipulation",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check",
+        "op": "equals",
+        "value": "charisma"
+       },
+       {
+        "key": "skill_name",
+        "op": "in",
+        "value": [
+         "intimidation",
+         "persuasion"
+        ]
+       }
+      ],
+      "notes": "You whisper a carefully crafted phrase, making the target question their own judgment. If you succeed, they must make a Wisdom saving throw (DC 15 + your level). On a failed save, they become frightened of you for 1 minute."
+     }
+    ]
+   },
+   {
+    "node_id": "propagandist_feature_3",
+    "feature_id": "feature_id_propaganda_network",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You establish connections with various factions and organizations, granting you access to a network of allies and informants who can provide you with valuable information.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "insightful_query",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_start_turn"
+       }
+      ],
+      "notes": "As you begin your turn, you may choose to ask the DM for information about a specific location or event. The DM must provide you with a truthful answer, which can be used to inform your future actions."
+     }
+    ]
+   },
+   {
+    "node_id": "propagandist_feature_4",
+    "feature_id": "feature_id_media_manipulation",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You learn how to manipulate media and information flow to achieve your goals, including the ability to create fake news stories, propaganda videos, or other forms of disinformation.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "propaganda_sway",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "charisma_check_result",
+        "op": "greater_than_or_equal_to",
+        "value": 1
+       }
+      ],
+      "notes": "You weave a subtle web of deceit, as your words seem to hold an almost hypnotic power. Those who listen too closely may find themselves swayed by the false information you present."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Imperial Officer Uniform",
+    "Blaster Pistol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with blaster at the ready, scanning surroundings for potential threats.",
+    "energy_signature": "Exudes an aura of calculated confidence, with subtle fluctuations in aura color indicating shifting mental focus."
+   },
+   "prompt_schema": {
+    "base_prompt": "A cunning Propagandist masterfully manipulates media to sway public opinion, expertly navigating the complexities of intergalactic diplomacy.",
+    "contextual_modifiers": [
+     "In a dimly lit corridor on a heavily fortified Imperial Star Destroyer",
+     "As they deliver a high-stakes briefing to a senior Imperial officer"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "propagandist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_propagandist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "demolitionist",
+  "name": "Demolitionist",
+  "class_id": "hired_gun",
+  "base_class": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "demolitionist",
+   "explosive",
+   "demolitions",
+   "tactical",
+   "mercenary",
+   "battlefield_control",
+   "destructive",
+   "intelligence_based"
+  ],
+  "description": "Demolitionists are experts in explosives—breaching defenses, collapsing fortifications, and controlling the battlefield through calculated detonations.",
+  "specialization_features": [
+   "breach_charge",
+   "controlled_detonation",
+   "area_denial",
+   "chain_reaction",
+   "legendary_demolitionist"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master of explosive mayhem, controlling the battlefield with precision and fury.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Cracked visor",
+    "Smoke-trailing boots"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "demolitionist_expertise_level3",
+    "feature_id": "demolitionist_expertise",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice that require Intelligence (Investigation) checks, such as Perception or Thieves' Tools.",
+    "effects": [
+     {
+      "type": "ability_score_proficiency",
+      "value": "Intelligence"
+     }
+    ]
+   },
+   {
+    "node_id": "detonation_control_level7",
+    "feature_id": "detonation_control",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can use your action to set up a detonation timer on an explosive device, allowing you to cancel the detonation if need be. The device must have a visible countdown timer or some other clear indication of when it will explode.",
+    "effects": [
+     {
+      "type": "action_option",
+      "value": "Cancel Detonation"
+     }
+    ]
+   },
+   {
+    "node_id": "shockwave_level11",
+    "feature_id": "shockwave",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "When you deal damage with an explosive device, the area around the target is affected by a shockwave, knocking creatures prone and potentially disrupting enemy formations.",
+    "effects": [
+     {
+      "type": "area_effect_damage",
+      "value": "1d8 bludgeoning damage per creature"
+     }
+    ]
+   },
+   {
+    "node_id": "precise_demolition_level15",
+    "feature_id": "precise_demolition",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain the ability to target specific parts of a structure, such as a wall or a door, when using an explosive device.",
+    "effects": [
+     {
+      "type": "action_option",
+      "value": "Target Specific Part"
+     }
+    ]
+   },
+   {
+    "node_id": "master_demolitions_level18",
+    "feature_id": "master_demolitions",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice that require Intelligence (Thieves' Tools) checks, such as Sleight of Hand or Disguise Self.",
+    "effects": [
+     {
+      "type": "ability_score_proficiency",
+      "value": "Intelligence"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Demolitionist_Gun",
+    "Explosive_Payload"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a precise stance, feet shoulder-width apart, with the explosive device at the ready",
+    "energy_signature": "Emitting a pulsating aura of blue and orange flames, symbolizing the mastery over destructive forces"
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled Demolitionist stands amidst a battlefield, surrounded by destruction and chaos, radiating an aura of fury and control",
+    "contextual_modifiers": [
+     "Explosive_Charge_Mode",
+     "Precision_Rocket_Launcher"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "demolitionist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun_demolitionist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

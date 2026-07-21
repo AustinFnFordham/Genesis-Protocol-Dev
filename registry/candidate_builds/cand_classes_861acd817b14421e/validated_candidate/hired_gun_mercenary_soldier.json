@@ -1,0 +1,227 @@
+{
+ "record": {
+  "id": "hired_gun_mercenary_soldier",
+  "name": "Mercenary Soldier",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "mercenary",
+   "soldier",
+   "tactical",
+   "disciplined",
+   "strength_based",
+   "martial",
+   "combat_specialist",
+   "professional"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_mercenary_soldier_entry_3",
+    "feature_id": "hired_gun_mercenary_soldier_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Mercenary Soldiers are disciplined professionals who coordinate allies, execute fire-and-maneuver tactics, and turn chaos into calculated advantage."
+   },
+   {
+    "node_id": "fire_team_commander_7",
+    "feature_id": "fire_team_commander",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_mercenary_soldier_entry_3"
+    ],
+    "description": "As a bonus action, you can direct one ally who can see or hear you to move up to half their speed without provoking opportunity attacks, or make one weapon attack. You can use this feature a number of times per long rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "grant_bonus_action",
+      "value": "direct_ally_move_or_attack",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [],
+      "notes": "Command ally to move (no OAs) or attack"
+     }
+    ]
+   },
+   {
+    "node_id": "coordinated_barrage_11",
+    "feature_id": "coordinated_barrage",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "fire_team_commander_7"
+    ],
+    "description": "When you hit a creature with a ranged weapon attack, choose an ally who can see the target. That ally can use their reaction to make one ranged weapon attack against the same target.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ally_reaction_attack_on_your_hit",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ranged_attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "On your hit, ally uses reaction to make a ranged attack"
+     }
+    ]
+   },
+   {
+    "node_id": "tactical_cover_13",
+    "feature_id": "tactical_cover",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "coordinated_barrage_11"
+    ],
+    "description": "You can establish suppressive lanes and shift cover. As an action, designate up to two 10-foot cubes within 60 feet. Allies in those cubes gain half cover until the start of your next turn.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "grant_half_cover_to_allies",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [],
+      "notes": "Grant half cover in two cubes for allies"
+     }
+    ]
+   },
+   {
+    "node_id": "bounding_maneuver_17",
+    "feature_id": "bounding_maneuver",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "tactical_cover_13"
+    ],
+    "description": "When you take the Attack action, you can forgo one of your attacks to allow up to two allies to move up to their speed. This movement does not provoke opportunity attacks.",
+    "effects": [
+     {
+      "type": "modify_action",
+      "value": "trade_attack_for_allied_movement",
+      "target_scopes": [
+       "self",
+       "allies"
+      ],
+      "conditions": [],
+      "notes": "Trade one attack to move up to two allies without OAs"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_commander_19",
+    "feature_id": "legendary_commander",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "bounding_maneuver_17"
+    ],
+    "description": "For 1 minute (once per long rest), your commands sharpen the team. Allies who can see or hear you add your proficiency bonus to their weapon damage rolls and have advantage on saving throws against being frightened.",
+    "effects": [
+     {
+      "type": "modify_damage",
+      "value": "add_commander_pb_to_ally_damage",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "commander_aura_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Allies add your PB to weapon damage"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "ally_saves_vs_frightened",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "commander_aura_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Allies have advantage vs frightened"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Darth_Vader_Mask"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance with wide legs, preparing for lightsaber combat.",
+    "energy_signature": "Surrounds itself in an aura of dark side energy, radiating malevolent intent."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of Darth Vader standing victorious on the battlefield",
+    "contextual_modifiers": [
+     "Angled_Camera_View",
+     "High_Fantasy_Texture_Style"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Dead-eye mercenaries with a talent for taking out high-priority targets.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Tattoos or scars indicating military service",
+    "Modified blaster rifle"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_mercenary_soldier",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.mercenary_soldier.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

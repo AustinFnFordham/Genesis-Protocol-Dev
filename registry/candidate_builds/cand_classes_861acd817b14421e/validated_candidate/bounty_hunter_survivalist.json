@@ -1,0 +1,305 @@
+{
+ "record": {
+  "id": "bounty_hunter_survivalist",
+  "name": "Survivalist",
+  "class_id": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "survivalist",
+   "wilderness_expert",
+   "tracker",
+   "wisdom_based",
+   "hunter",
+   "resilient",
+   "scout",
+   "predator"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "bounty_hunter_survivalist_entry_3",
+    "feature_id": "bounty_hunter_survivalist_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "bounty_hunter_specialization",
+    "description": "Bounty Hunter Survivalists are masters of the wild. They excel at tracking prey across unforgiving terrain, enduring harsh environments, and turning nature itself into an ally during the hunt."
+   },
+   {
+    "node_id": "wilderness_mastery_7",
+    "feature_id": "wilderness_mastery",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "bounty_hunter_survivalist_entry_3"
+    ],
+    "description": "You are exceptionally adept at surviving in natural environments. You gain advantage on Wisdom (Survival) checks, can track creatures at a normal pace, and moving through nonmagical difficult terrain costs you no extra movement.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Advantage on Survival checks"
+     },
+     {
+      "type": "apply_status",
+      "value": "ignore_difficult_terrain",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Ignore nonmagical difficult terrain movement cost"
+     },
+     {
+      "type": "modify_rule",
+      "value": "track_at_normal_pace",
+      "target_scopes": [
+       "party"
+      ],
+      "conditions": [],
+      "notes": "Tracking doesn't impose slow travel penalty"
+     }
+    ]
+   },
+   {
+    "node_id": "endure_elements_11",
+    "feature_id": "endure_elements",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "wilderness_mastery_7"
+    ],
+    "description": "You have adapted to extreme climates. You and allies within 10 feet ignore the effects of extreme heat and cold, have advantage on saving throws against environmental hazards, and gain resistance to nonmagical environmental damage.",
+    "effects": [
+     {
+      "type": "grant_aura",
+      "value": "environmental_resilience",
+      "target_scopes": [
+       "allies_within_10"
+      ],
+      "conditions": [],
+      "notes": "Ignore extreme heat/cold penalties"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "environmental_saves",
+      "target_scopes": [
+       "self",
+       "allies_within_10"
+      ],
+      "conditions": [],
+      "notes": "Advantage on saves vs environmental hazards"
+     },
+     {
+      "type": "apply_resistance",
+      "value": "environmental_nonmagical",
+      "target_scopes": [
+       "self",
+       "allies_within_10"
+      ],
+      "conditions": [],
+      "notes": "Resistance to nonmagical environmental damage"
+     }
+    ]
+   },
+   {
+    "node_id": "ambush_expert_13",
+    "feature_id": "ambush_expert",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "endure_elements_11"
+    ],
+    "description": "You excel at striking first in your favored terrain. When you are in a natural environment, you have advantage on initiative rolls, and the first time you hit a creature on the first round of combat, you deal extra weapon damage equal to one of the weapon's damage dice.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "initiative_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "in_natural_environment",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on initiative in natural terrain"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "opening_strike_bonus_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "round_number",
+        "op": "equals",
+        "value": 1
+       },
+       {
+        "key": "first_hit_this_round",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add one weapon damage die to first hit on round 1"
+     }
+    ]
+   },
+   {
+    "node_id": "master_survivalist_17",
+    "feature_id": "master_survivalist",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ambush_expert_13"
+    ],
+    "description": "You can quickly adapt to your surroundings. As a bonus action, choose one: gain blindsense (10 ft) until the start of your next turn; gain tremorsense (10 ft) until the start of your next turn while in contact with the ground; or become lightly obscured by natural camouflage until you move or take an action. You can use this a number of times per long rest equal to your Wisdom modifier (minimum 1).",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "adaptive_senses",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bonus_action_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Choose temporary blindsense, tremorsense, or camouflage"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_survivalist_19",
+    "feature_id": "legendary_survivalist",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "master_survivalist_17"
+    ],
+    "description": "You can enter a state of perfect survival focus for 1 minute (once per long rest). During this time, you have advantage on Wisdom checks and saving throws, ignore nonmagical difficult terrain, and reduce environmental damage you take to 0.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "wisdom_all",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "survival_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Wisdom checks and saves"
+     },
+     {
+      "type": "apply_status",
+      "value": "ignore_difficult_terrain",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "survival_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ignore nonmagical difficult terrain"
+     },
+     {
+      "type": "modify_damage",
+      "value": "environmental_damage_to_zero",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "survival_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Reduce environmental damage to 0 during focus"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "TIE Fighter Hull",
+    "Stormtrooper Armor"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a wide stance, feet shoulder-width apart, with knees slightly bent and weight evenly distributed between both legs.",
+    "energy_signature": "A vibrant blue plasma aura emanating from the lightsaber, pulsing in sync with the user's breathing, as if the very fabric of reality is being woven by the blade's power."
+   },
+   "prompt_schema": {
+    "base_prompt": "A group of Rebel soldiers, led by Princess Leia Organa, engaging Imperial stormtroopers on the forest moon of Endor",
+    "contextual_modifiers": [
+     "low-light",
+     "action-packed"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A skilled tracker and outdoorsperson, able to survive in even the most hostile environments.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Scars from harsh environment exposure",
+    "Bounty Hunter's armor"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "bounty_hunter_survivalist",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter.survivalist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

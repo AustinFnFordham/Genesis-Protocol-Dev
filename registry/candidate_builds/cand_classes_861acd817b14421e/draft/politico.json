@@ -1,0 +1,207 @@
+{
+ "record": {
+  "id": "politico",
+  "name": "Politico",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "politico",
+   "political",
+   "charisma_based",
+   "diplomat",
+   "professional",
+   "negotiator",
+   "civic_leader",
+   "influential"
+  ],
+  "description": "Politicos are masters of social manipulation and leadership, using their charisma and political acumen to influence others and shape the course of events.",
+  "specialization_features": [
+   "silver_tongue",
+   "motivating_diplomat",
+   "force_of_personality",
+   "reassemble",
+   "beguiling_presence"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of politics and diplomacy, a Politico excels at influencing others to achieve their goals.",
+   "role_in_group": "Politico",
+   "visual_signals": [
+    {
+     "Signal1": "Respected Leader"
+    },
+    {
+     "Signal2": "Charismatic Figure"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "politician_level_3",
+    "feature_id": "charismatic_presence",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain a boost to your Charisma score, reflecting your growing reputation as a skilled politician.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_charisma_bloom",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "target_is_enemy",
+        "op": "is_true"
+       }
+      ],
+      "notes": "The politico's presence bursts forth, radiating charisma and commanding attention. In the heat of battle, they gain a burst of persuasive power, amplifying their charm and magnetism."
+     }
+    ]
+   },
+   {
+    "node_id": "negotiation_proficiency_7",
+    "feature_id": "negotiation_profiency",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Develop your skills in negotiation and persuasion, allowing you to extract more concessions from others.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "linguistic_acumen",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_class",
+        "op": "equals",
+        "value": "colonist"
+       },
+       {
+        "key": "has_subclass",
+        "op": "equals",
+        "value": "politico"
+       }
+      ],
+      "notes": "With calculated ease, the colonist's Politico subclass activates their linguistic acumen, granting them proficiency in two languages of choice. As a native linguist, they effortlessly navigate even the most complex dialects."
+     }
+    ]
+   },
+   {
+    "node_id": "charismatic_action_11",
+    "feature_id": "charismatic_action",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Learn a new technique for using your charisma to influence others, such as a persuasive speech or a clever quip.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "silver_tongue_advantage",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "character_uses_action",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "As the Politico uses an action, their words gain resonance with the crowd. They can choose to apply their Charisma bonus to a single skill check or ability check they make within the same turn."
+     }
+    ]
+   },
+   {
+    "node_id": "civic_leadership_15",
+    "feature_id": "civic_leadership",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Demonstrate your mastery of politics by taking a leadership role in your community.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "civic_influence",
+      "target_scopes": [
+       "ally",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "has_ability",
+        "op": "equals",
+        "value": "leadership"
+       }
+      ],
+      "notes": "The Politico's charisma is palpable, granting nearby allies a +1 bonus to their leadership ability."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "PoliticoMask",
+    "GalacticGestures"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes the stance of a seasoned politician, ready to negotiate or persuade with an air of confidence and authority.",
+    "energy_signature": "Surrounded by an aura of subtle yet palpable influence, as if their words have a tangible effect on those around them."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a portrait of a skilled Politico standing confidently in a dimly lit room, surrounded by holographic projections and data streams.",
+    "contextual_modifiers": [
+     "WithAFocusOnFacialExpression",
+     "HighlightingTheirDiplomaticSkills"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "politico",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_politico.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

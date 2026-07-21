@@ -1,0 +1,204 @@
+{
+ "record": {
+  "id": "strategist",
+  "name": "Strategist",
+  "class_id": "commander",
+  "base_class": "commander",
+  "tags": [
+   "commander",
+   "strategist",
+   "strategic",
+   "intelligence_based",
+   "tactical",
+   "leadership",
+   "analytical",
+   "support",
+   "organized"
+  ],
+  "description": "Strategists are master planners and long-term thinkers, using their analytical minds and strategic vision to develop comprehensive military campaigns and achieve victory through superior planning.",
+  "specialization_features": [
+   "strategic_vision",
+   "campaign_planning",
+   "long_term_strategy",
+   "strategist_mastery",
+   "legendary_strategist"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "feature_strategist_3",
+    "feature_id": "strategist_planning_focus",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop a keen sense of strategic planning, allowing you to better anticipate and prepare for battles.",
+    "effects": [
+     {
+      "type": "feature_effect",
+      "value": "strategist_planning_edge",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check_type",
+        "op": "equals",
+        "value": "wisdom"
+       },
+       {
+        "key": "ability_check_sub_type",
+        "op": "equals",
+        "value": "perception"
+       }
+      ],
+      "notes": "As you focus your strategic mind, the surrounding environment becomes clearer. Your allies within 30 feet gain advantage on Wisdom (Perception) checks related to enemy movements. Additionally, when an ally scores a success in one of these perception checks, they can move up to 10 feet towards the source of the perception as a bonus action."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_strategist_7",
+    "feature_id": "strategic_intelligence_network",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You establish an extensive network of spies and scouts, granting you access to information that would otherwise be beyond your reach.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "strategic_scouting (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "on_turn",
+        "op": "equals",
+        "value": "bonus_action"
+       }
+      ],
+      "notes": "With a swift gesture, you extend your awareness across the battlefield. You gain advantage on Intelligence checks related to enemy plans for the next hour."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_strategist_11",
+    "feature_id": "tactical_analysis",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You develop a talent for dissecting complex battles, allowing you to predict and counter your enemies' moves with ease.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_assessment",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "attack_type",
+        "op": "equals",
+        "value": "melee"
+       }
+      ],
+      "notes": "As you land a melee blow, you seize the opportunity to re-evaluate the battlefield. You can spend your bonus action to shift your focus and gain advantage on Wisdom (Perception) checks related to the enemy's next turn. You may also take up to 10 feet of movement towards them as part of this assessment."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_strategist_15",
+    "feature_id": "strategic_reserves",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You maintain a network of hidden caches and strategic reserves, allowing you to rapidly redeploy forces across the battlefield.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "strategic_summon (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "on_turn_start"
+       }
+      ],
+      "notes": "As a bonus action, you focus on your strategic reserves, and a burst of coordinated effort erupts around you. A unit of allies materializes within 30 feet, fueled by your tactical prowess."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "blaster_emitter"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance, with lightsaber at the ready and eyes scanning for potential threats.",
+    "energy_signature": "Surrounding the Strategist is an aura of blue and orange plasma energy, pulsating with intense heat and power."
+   },
+   "prompt_schema": {
+    "base_prompt": "A seasoned Imperial Officer, cloaked in shadows, stands on the edge of a forest moon's twilight horizon, looking out into the unknown.",
+    "contextual_modifiers": [
+     "Show the Strategist in mid-athletic movement",
+     "Highlight the energy signature around them with warm, golden light"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A master tactician who excels at directing their allies' movements and abilities.",
+   "role_in_group": "Controller",
+   "visual_signals": [
+    "Battlefield maps etched into their mind's eye",
+    "Strategic plans written on a hidden datapad"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "strategist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/commander_subclasses/commander_strategist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

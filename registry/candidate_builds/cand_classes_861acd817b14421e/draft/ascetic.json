@@ -1,0 +1,232 @@
+{
+ "record": {
+  "id": "ascetic",
+  "name": "Ascetic",
+  "class_id": "consular",
+  "base_class": "consular",
+  "tags": [
+   "consular",
+   "ascetic",
+   "spiritual",
+   "disciplined",
+   "force_mastery",
+   "ancient_knowledge",
+   "wise",
+   "light_side",
+   "jedi",
+   "mystic"
+  ],
+  "description": "Ascetics are masters of spiritual discipline and Force mastery through meditation. They excel at deep meditation, self-discipline, and achieving profound insights through contemplation and spiritual practices.",
+  "specialization_features": [
+   "spiritual_discipline",
+   "deep_meditation",
+   "profound_insights",
+   "ascetic_mastery",
+   "legendary_ascetic"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of spiritual discipline and Force mastery",
+   "role_in_group": "Support, Healing, and Insight",
+   "visual_signals": [
+    "A symbol of balance between the light and dark side",
+    "A staff or a crystal for focusing one's energy"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "ascetic-consular-meditation-feature",
+    "feature_id": "meditation-enhanced",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Deepen your connection to the Force through meditation, increasing your focus and clarity.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "meditation_focus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_begin_turn"
+       }
+      ],
+      "notes": "As the Ascetic focuses their meditation, they gain insight into the workings of the universe. Their Wisdom (Insight) score increases by +1 for a single round."
+     }
+    ]
+   },
+   {
+    "node_id": "ascetic-consular-insights-feature",
+    "feature_id": "insights-gained",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Gain profound insights into the workings of the Force, improving your ability to sense and interpret subtle energies.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ascetic_vision",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": "gte",
+        "value": 1
+       }
+      ],
+      "notes": "Your eyes burn with an inner light, granting you insight into the workings of the universe. As a result, your Wisdom (Insight) score increases by +1."
+     }
+    ]
+   },
+   {
+    "node_id": "ascetic-consular-discipline-feature",
+    "feature_id": "discipline-enhanced",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Cultivate your inner balance, granting you increased self-control and resilience.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ascetic_endurance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "ascetic"
+       },
+       {
+        "key": "feature_level",
+        "op": "greater_than_or_equal_to",
+        "value": "1"
+       }
+      ],
+      "notes": "The consular's ascetic discipline amplifies their physical resilience, granting them a +1 bonus to Constitution due to their years of self-mortification and spiritual focus."
+     },
+     {
+      "type": "trigger_effect",
+      "value": "ascetic_respite",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bonus_action",
+        "op": "is_true"
+       }
+      ],
+      "notes": "As you focus your mind, you take a brief moment to collect yourself. You can use this respite to prepare for the next challenge ahead."
+     }
+    ]
+   },
+   {
+    "node_id": "ascetic-consular-force-mastery-feature",
+    "feature_id": "force-mastery-enhanced",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Tap into the raw power of the Force, amplifying your abilities and granting you new means to interact with it.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ascetic_wisdom_attunement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": "greater_than_or_equal_to",
+        "value": 10
+       },
+       {
+        "key": "ability_score_modifier",
+        "op": "equals",
+        "value": "wisdom"
+       }
+      ],
+      "notes": "As the Ascetic's mastery of force deepens, their perception of the universe is refined. Their Insight score increases by +2 at will."
+     },
+     {
+      "type": "trigger_effect",
+      "value": "ascetic_force_focus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_used",
+        "op": "equals",
+        "value": "action"
+       }
+      ],
+      "notes": "As you focus the Force, a localized energy nexus forms around you, allowing you to manipulate energy or matter within 10 feet of your person. Your connection to the Force strengthens, granting you fine control over the workings of the universe."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Ascetic_stance",
+    "Consular_energy_signature"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The Ascetic assumes a calm and centered stance, feet shoulder-width apart, with weight evenly distributed between both legs. Their hands are clasped behind their back, radiating an aura of inner peace.",
+    "energy_signature": "A soft blue glow emanates from the Ascetic's body, signifying their connection to the Force. The energy pulsates gently, as if infused with a calming essence."
+   },
+   "prompt_schema": {
+    "base_prompt": "A majestic Jedi Consular, surrounded by a serene Star Wars landscape, radiating peace and harmony through their mastery of the Force.",
+    "contextual_modifiers": [
+     " Include subtle hints of ancient wisdom in the Ascetic's expression",
+     "Emphasize the soft blue color palette, with accents of misty green and sandy beige to reflect the tranquil surroundings"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "ascetic",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular_ascetic.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

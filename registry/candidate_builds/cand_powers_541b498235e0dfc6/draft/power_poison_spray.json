@@ -1,0 +1,170 @@
+{
+ "record": {
+  "id": "power_poison_spray",
+  "name": "Poison Spray",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You channel poison energy through your power, unleashing destructive force that seep into their veins with toxic essence.",
+  "flavor_text": "Technology is no match for a good blaster at your side.",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "aiming and firing weapon with precision"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "targeting and timing the attack"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You spray a small amount of poison at a creature within range, dealing poison damage.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": "1d4_poison",
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 poison damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "Engineer naturally embodies Poison Spray's essence, channeling harnessing technology for mechanical superiority with instinctive grace. Their creation philosophy aligns perfectly with Poison Spray's purpose, allowing them to mechanical whirring with enhanced calculated precision.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers gain +1 to Tech power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master new powers.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance values technological expertise.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebels gain +2 to Tech power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the poison damage affecting the target. Focus on how the power's effects manifest physically and mechanically, emphasizing deal poison damage.",
+   "tactical_notes": "Poison Spray is excellent for dealing poison damage to targets within range. Use it at 30 feet range.",
+   "narrative_hooks": [
+    "A combatant uses Poison Spray to devastating effect, the poison damage overwhelming their foe",
+    "The raw power of Poison Spray is unleashed, poison energy coursing through the battlefield"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Poison Spray. in action. unleashing devastating poison damage. The mood is corrupting malice, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/poison_spray.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_poison_spray",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_poison_spray.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

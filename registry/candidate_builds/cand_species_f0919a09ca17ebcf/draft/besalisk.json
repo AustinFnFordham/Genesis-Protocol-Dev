@@ -1,0 +1,516 @@
+{
+ "record": {
+  "id": "besalisk",
+  "name": "Besalisk",
+  "tags": [
+   "besalisk",
+   "bodyguard",
+   "melee_specialist",
+   "predator",
+   "protective",
+   "resilient",
+   "strength",
+   "strength_based",
+   "tank",
+   "uncommon",
+   "warrior"
+  ],
+  "description": "The Besalisk are a large, four-armed humanoid species from the planet Ojom, known for their massive size, four arms, and their natural strength and resilience. They are often found working as laborers, bodyguards, or warriors, using their physical might to their advantage. Their species has a natural affinity for physical tasks and combat.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Large",
+  "languages": [
+   "Basic",
+   "Besalisk"
+  ],
+  "base_hp": 14,
+  "base_strain": 8,
+  "innate_traits": [
+   {
+    "id": "besalisk_four_armed_strength",
+    "name": "Four-Armed Strength",
+    "narrative": "Your massive four-armed physiology evolved for power and versatility. Each of your four arms can work independently or in perfect coordination, allowing you to perform feats of strength that would be impossible for two-armed species.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Athletic Prowess",
+      "action_type": "passive",
+      "description": "You have advantage on Strength (Athletics) checks.",
+      "rules": [
+       "skill:athletics",
+       "ability:strength",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "modify_stat",
+      "name": "Enhanced Carrying Capacity",
+      "action_type": "passive",
+      "description": "You can carry twice the normal amount of weight.",
+      "rules": [
+       "carrying_capacity:doubled"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_besalisk_arm_adept",
+     "ui_transition": {
+      "animation": "corruption_sparks_twist",
+      "sfx": "distorted_power_sound"
+     }
+    }
+   },
+   {
+    "id": "besalisk_natural_resilience",
+    "name": "Natural Resilience",
+    "narrative": "Your species evolved in harsh conditions, developing incredibly thick skin and dense muscle tissue that can absorb punishment that would incapacitate other species.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Constitutional Fortitude",
+      "action_type": "passive",
+      "description": "You have advantage on Constitution saving throws.",
+      "rules": [
+       "save_type:advantage",
+       "ability:constitution"
+      ]
+     },
+     {
+      "effect": "grant_resistance",
+      "name": "Bludgeoning Resistance",
+      "action_type": "passive",
+      "description": "You gain resistance to bludgeoning damage.",
+      "rules": [
+       "damage_type:bludgeoning",
+       "resistance:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_besalisk_tainted_body",
+     "ui_transition": {
+      "animation": "corruption_rot_twist",
+      "sfx": "tainted_power_sound"
+     }
+    }
+   },
+   {
+    "id": "besalisk_multi_armed_combat",
+    "name": "Multi-Armed Combat",
+    "narrative": "Your four arms allow for complex combat maneuvers that would be impossible for other species. You can coordinate multiple attacks simultaneously, creating devastating combinations.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Four-Armed Strike",
+      "action_type": "bonus_action",
+      "description": "Once per short rest, you can make an additional unarmed strike as a bonus action.",
+      "rules": [
+       "cooldown:short_rest",
+       "attack_type:unarmed",
+       "action_cost:bonus_action"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "2.1m - 2.4m",
+   "distinctions": [
+    "Four arms",
+    "Massive size",
+    "Muscular build",
+    "Large stature",
+    "Imposing presence"
+   ],
+   "skin_color_variants": [
+    "Dark Brown",
+    "Olive",
+    "Grey",
+    "Black",
+    "Mottled patterns"
+   ],
+   "arm_configuration_variants": [
+    "Two upper arms, two lower arms",
+    "All four arms of equal length",
+    "Varied arm lengths",
+    "Muscular, well-defined arms"
+   ],
+   "eye_color_variants": [
+    "Dark eyes",
+    "Brown eyes",
+    "Golden eyes",
+    "Red eyes",
+    "Amber eyes"
+   ],
+   "common_adornments": [
+    "Heavy armor and combat gear",
+    "Traditional Besalisk warrior attire",
+    "Practical work clothing",
+    "Cultural jewelry and accessories",
+    "Utility belts and equipment"
+   ],
+   "llm_description_prompt": "Describe a Besalisk character. Emphasize their massive size and the impressive sight of their four powerful arms, which give them an imposing presence. Their muscular build should reflect their natural strength and resilience. Consider their warrior culture and the way they carry themselves with confident, powerful movements that reflect their physical might and protective nature."
+  },
+  "class_synergies": [
+   {
+    "class": "Soldier (Brawler)",
+    "narrative": "Besalisk's natural strength and four-armed combat abilities make them terrifying Soldiers, able to wield multiple weapons and dominate in close combat.",
+    "mechanical_benefits": [
+     "Four-Armed Strength trait enhances combat capabilities",
+     "Multi-Armed Combat trait provides additional attack options",
+     "Natural Resilience trait enhances durability in combat"
+    ]
+   },
+   {
+    "class": "Guardian",
+    "narrative": "Besalisk's protective instincts and natural resilience make them exceptional Guardians, able to shield others with their massive size and multiple arms.",
+    "mechanical_benefits": [
+     "Natural Resilience trait enhances protective abilities",
+     "Four-Armed Strength trait enables complex protective maneuvers",
+     "Large size provides natural protective presence"
+    ]
+   },
+   {
+    "class": "Berserker",
+    "narrative": "When a Besalisk's rage is unleashed, their four arms and natural strength make them nearly unstoppable forces of destruction.",
+    "mechanical_benefits": [
+     "Multi-Armed Combat trait enhances rage damage output",
+     "Natural Resilience trait supports reckless combat style",
+     "Four-Armed Strength trait amplifies Berserker's power"
+    ]
+   },
+   {
+    "class": "Engineer",
+    "narrative": "Besalisk's four arms and natural strength make them excellent Engineers, able to handle complex technical tasks and heavy equipment.",
+    "mechanical_benefits": [
+     "Four-Armed Strength trait enables handling of heavy equipment",
+     "Natural Resilience trait supports work in hazardous conditions",
+     "Multiple arms aid in complex technical operations"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Mandalorian Clans",
+    "narrative": "Many Besalisk find kinship with Mandalorian culture, respecting their warrior traditions and bringing their unique four-armed combat abilities to the clan."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Besalisk have served the Republic as elite soldiers and bodyguards, their natural abilities making them valuable assets in military and protective operations."
+   },
+   {
+    "faction": "Independent Warriors",
+    "narrative": "Many Besalisk prefer to work as independent warriors and protectors, using their natural strength and four arms to defend others and fight for causes they believe in."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your four-armed coordination becomes more refined, allowing you to perform even more complex tasks and combat maneuvers.",
+     "mechanical_benefit": "You can use your Four-Armed Strike ability twice per short rest, and you gain advantage on Dexterity (Acrobatics) checks when using all four arms."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your natural resilience reaches new heights, allowing you to endure punishment that would kill other species.",
+     "mechanical_benefit": "You gain resistance to non-magical slashing damage, and you can use your action to shrug off one ongoing effect that requires a saving throw to end."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your four-armed combat mastery allows you to unleash devastating combinations that overwhelm your enemies.",
+     "mechanical_benefit": "When you hit with multiple attacks in a single turn, you gain a +2 bonus to damage rolls with each subsequent hit, representing your coordinated assault."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your four-armed physiology reaches its peak, making you nearly unstoppable in combat and incredibly difficult to control or restrain.",
+     "mechanical_benefit": "You have advantage on saving throws against being grappled, restrained, or knocked prone, and you can use your reaction to make an unarmed strike against any creature that attempts to grapple you."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Four-Armed Rituals",
+    "type": "ceremonial",
+    "description": "Besalisk have sacred rituals that utilize all four arms in complex patterns, celebrating their unique physiology and demonstrating their coordination and strength.",
+    "narrative_impact": "Provides cultural depth and physical demonstration opportunities. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Strength Competitions",
+    "type": "traditional",
+    "description": "Besalisk communities hold regular strength competitions that showcase their four-armed abilities, from lifting contests to complex coordination challenges.",
+    "narrative_impact": "Creates social bonding and competitive opportunities. Can be used for community events and character development."
+   },
+   {
+    "name": "Protective Traditions",
+    "type": "cultural",
+    "description": "Besalisk protective traditions emphasize using their four arms to shield and defend others, with specific techniques passed down through generations.",
+    "narrative_impact": "Provides protective roleplaying opportunities and cultural identity. Can be used for defensive scenarios and character motivation."
+   },
+   {
+    "name": "Multi-Tasking Mastery",
+    "type": "narrative",
+    "description": "Besalisk practice techniques that enhance their ability to perform multiple tasks simultaneously, from combat coordination to complex technical work.",
+    "narrative_impact": "Provides unique problem-solving approaches and character development. Can be used for complex task scenarios and skill demonstrations."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "harsh",
+    "adaptation_name": "Harsh Environment Survival",
+    "description": "Your natural resilience allows you to survive and thrive in harsh environments that would kill other species.",
+    "mechanical_benefit": "You have advantage on saving throws against environmental hazards, and you can survive in extreme conditions without special equipment for extended periods."
+   },
+   {
+    "environment": "combat",
+    "adaptation_name": "Combat Endurance",
+    "description": "Your four-armed physiology and natural toughness make you exceptionally difficult to defeat in combat.",
+    "mechanical_benefit": "You have advantage on saving throws against being knocked unconscious, and you can continue fighting even when severely wounded."
+   },
+   {
+    "environment": "labor",
+    "adaptation_name": "Physical Labor Mastery",
+    "description": "Your four arms and natural strength make you perfectly suited for heavy physical labor and construction work.",
+    "mechanical_benefit": "You have advantage on Strength-based skill checks related to labor and construction, and you can work twice as fast as other species on physical tasks."
+   },
+   {
+    "environment": "protective",
+    "adaptation_name": "Protective Presence",
+    "description": "Your massive size and four arms create a natural protective presence that intimidates threats and reassures allies.",
+    "mechanical_benefit": "You have advantage on Intimidation checks, and allies within 10 feet of you have advantage on saving throws against fear effects."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on four-armed coordination and natural resilience, complementing rather than overshadowing class features",
+    "Multi-armed combat improvements maintain the species' unique identity while providing meaningful advancement",
+    "Strength and resilience abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on four-armed traditions and protective culture rather than mechanical advantages",
+    "Strength competitions and protective traditions provide unique roleplaying opportunities and cultural depth",
+    "Multi-tasking mastery and four-armed rituals enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for harsh and combat environments where strength and resilience are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Protective presence and labor mastery provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "large_body",
+    "four_arms",
+    "humanoid_shape",
+    "scaly_skin",
+    "sharp_features"
+   ],
+   "morphology": {
+    "head_type": "bulbous",
+    "body_type": "muscular",
+    "average_height": "2.5 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_color": "pale_green",
+      "eye_color": "bright_blue",
+      "hair_color": "none"
+     },
+     "adult": {
+      "skin_color": "dark_brown",
+      "eye_color": "deep_blue",
+      "hair_color": "thick_brown_beard"
+     },
+     "elder": {
+      "skin_color": "weathered_gray",
+      "eye_color": "cloudy_blue",
+      "hair_color": "wispy_white_beard"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "scarred_face",
+      "milky_eye",
+      "tattered_robe"
+     ],
+     "light_side": [
+      "radiantAura",
+      "shining_stars_on_clothes"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    [
+     "scars",
+     "random",
+     "5"
+    ],
+    [
+     "eyebrow_color",
+     "random",
+     "3"
+    ],
+    [
+     "hair_style",
+     "random",
+     "2"
+    ]
+   ],
+   "prompt_schema": {
+    "base_prompt": "A large, muscular humanoid with four arms and scaly skin",
+    "contextual_modifiers": [
+     "age_group",
+     "morality_level",
+     "environment"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": "The Besalisk's imposing presence and physical prowess intimidate the party, causing them to question their ability to defeat this formidable opponent.",
+    "escalation": "As the combat escalates, the Besalisk's four arms allow it to take on multiple targets at once, pinning down party members with its sheer strength.",
+    "confrontation": "The Besalisk confronts the party, showcasing its raw power and tenacity in battle."
+   },
+   "resolution_paths": {
+    "victory": "Defeating the Besalisk earns the party a grudging respect for their combat prowess.",
+    "redemption": "Offering mercy to the Besalisk might earn it a new path, allowing it to prove itself as a valuable ally.",
+    "escape": "Escaping from the Besalisk's wrath may leave a lingering sense of unease and fear."
+   },
+   "conflict_triggers": [
+    "physical confrontation",
+    "verbal aggression",
+    "territorial disputes"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "repeated humiliation by party members",
+     "disregard for Besalisk customs or traditions",
+     "failure to respect the Besalisk's position of authority"
+    ],
+    "vendetta_type": "Brutal and relentless, fueled by a desire for retribution."
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "Species": "Human"
+    },
+    {
+     "Species": "Trandoshan"
+    },
+    {
+     "Species": "Sullustan"
+    }
+   ],
+   "romance_progression": {
+    "stage1": "Initial encounters are marked by awkwardness and misunderstandings.",
+    "stage2": "The Besalisk's imposing presence and gruff demeanor create tension, but also spark a deep attraction.",
+    "stage3": "As the party member demonstrates understanding and appreciation for the Besalisk's culture, a tentative bond forms.",
+    "stage4": "Trust is built through shared experiences, with the Besalisk revealing its softer side to the party member.",
+    "stage5": "The relationship blossoms into a strong and loving partnership."
+   },
+   "romance_events": [
+    "A heated argument sparks a passionate kiss between the Besalisk and the party member.",
+    "The Besalisk surprises the party member with a thoughtful gift, showcasing its affection."
+   ],
+   "romance_modifiers": [
+    "+2 to Charisma checks when interacting with the Besalisk",
+    "+1 to Intimidation checks against the Besalisk's allies"
+   ]
+  },
+  "flavor_text": "On the sprawling metropolises of Ojom, Besalisk are revered for their unwavering dedication to their craft. Their natural affinity for physical labor and combat has made them indispensable in the construction of towering megstructures that pierce the planet's sky. Yet, amidst their imposing presence, a subtle culture of storytelling and oral tradition thrives – where tales of Ojom's ancient wars are passed down through generations, fueling an unyielding sense of pride and loyalty among Besalisk.",
+  "llm_guidance": {
+   "roleplay_guidance": "The Besalisk are natural guardians, ever vigilant and ready to defend those under their care. They embody the concept of \"strength\" and often find themselves in roles where physical prowess is required.\n",
+   "narrative_hooks": [
+    "The Besalisk's unwavering commitment to protection often puts them at odds with those who see value in more cerebral approaches.",
+    "Their strength is not just physical, but also a metaphor for their resilience in the face of adversity.",
+    "The Besalisk have a unique affinity for melee combat, often leveraging their four arms to devastating effect."
+   ],
+   "social_dynamics": "Despite their intimidating presence, Besalisk are fiercely loyal and protective towards those they care about. They value strength and resilience above all else and can be natural mentors or allies in the right circumstances.\n",
+   "common_motivations": [
+    "Protecting others",
+    "Overcoming physical challenges",
+    "Demonstrating strength and resilience"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "loyal_protector",
+   "overrides": {
+    "ai_behavior": {
+     "personality": "The Besalisk companion will embody traits of a protector, always ready to defend their allies. They value loyalty above all else.\n",
+     "motivations": "Their primary motivation is the protection of those they care about, followed closely by overcoming physical challenges and demonstrating strength and resilience.\n",
+     "combat_behavior": "Aggressive melee engagement, utilizing four arms for maximum effect.",
+     "social_behavior": "Besalisk companions will be naturally inclined to assist in tasks requiring physical strength or to step forward as leaders in times of need. They value loyalty and commitment above all else.\n"
+    },
+    "relationship_tracking": {
+     "trust_levels": "Initial Trust: Moderate\nMaximum Trust: High\n",
+     "loyalty_triggers": "Acts of protection or demonstration of strength and resilience will significantly increase the Besalisk's loyalty.\nBetrayal of their trust will severely decrease loyalty.\n"
+    },
+    "services": "Companion Abilities: Enhanced Strength, Melee Combat Proficiency\nSpecial Features: Natural Armor, Protector Instincts"
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "besalisk",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/besalisk.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

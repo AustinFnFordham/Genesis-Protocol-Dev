@@ -1,0 +1,481 @@
+{
+ "record": {
+  "id": "berserker_battle_master",
+  "name": "Battle Master",
+  "class_id": "berserker",
+  "tags": [
+   "berserker",
+   "battle_master",
+   "tactical",
+   "strength_based",
+   "martial",
+   "aggressive",
+   "melee_specialist",
+   "disciplined"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "battle_mastery_3",
+    "feature_id": "battle_mastery",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop mastery of battlefield tactics and strategic combat. When you enter combat, you gain enhanced tactical awareness: +2 to initiative rolls and advantage on Intelligence (Tactics) checks, and you can use your Rage Points to enhance your tactical abilities.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "tactical_initiative_bonus",
+      "target_property": "initiative_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "+2 to initiative rolls"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "tactics_intelligence_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "in_combat",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Intelligence (Tactics) checks in combat"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "rage_point_tactical_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Rage Points to enhance tactical abilities"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "tactical_rage_5",
+    "feature_id": "tactical_rage",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "battle_technique_5",
+    "description": "You can channel your rage into tactical precision. When you spend Rage Points, you can enter a state of tactical rage that grants you advantage on all attack rolls and allows you to make tactical decisions with perfect clarity.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_rage_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all attacks and perfect tactical clarity with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "battle_mastery_3"
+    ]
+   },
+   {
+    "node_id": "battlefield_control_5",
+    "feature_id": "battlefield_control",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "battle_technique_5",
+    "description": "You excel at controlling the battlefield through strategic positioning and tactical maneuvers. When you spend Rage Points, you can manipulate the battlefield layout and control the flow of combat.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "battlefield_manipulation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate battlefield layout and control combat flow with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "battle_mastery_3"
+    ]
+   },
+   {
+    "node_id": "strategic_combat_7",
+    "feature_id": "strategic_combat",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "battle_focus_7",
+    "description": "You master strategic combat techniques. When you spend Rage Points, you can analyze combat situations instantly and develop perfect strategies for any battlefield scenario.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "instant_strategic_analysis",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Analyze combat situations instantly and develop perfect strategies with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "tactical_rage_5"
+    ]
+   },
+   {
+    "node_id": "battle_legend_7",
+    "feature_id": "battle_legend",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "battle_focus_7",
+    "description": "You become a legend of battlefield tactics. When you spend Rage Points, you can perform legendary tactical feats such as predicting enemy movements, coordinating allies perfectly, or turning the tide of battle.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_tactical_feats",
+      "target_scopes": [
+       "self",
+       "ally",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform legendary tactical feats like predicting enemy movements and coordinating allies"
+     }
+    ],
+    "prerequisites": [
+     "battlefield_control_5"
+    ]
+   },
+   {
+    "node_id": "battle_mastery_9",
+    "feature_id": "battle_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your mastery of battle becomes overwhelming. When you spend Rage Points, you can achieve both strategic combat analysis and legendary tactical feats, making you a master of both planning and execution.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_battle_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve both strategic combat analysis and legendary tactical feats with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "strategic_combat_7",
+     "battle_legend_7"
+    ]
+   },
+   {
+    "node_id": "perfect_strategy_11",
+    "feature_id": "perfect_strategy",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "battle_technique_11",
+    "description": "You achieve perfect strategic form. When you spend Rage Points, you can develop perfect strategies that guarantee victory in any combat situation, no matter how dire the circumstances.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_victory_strategy",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Develop perfect strategies that guarantee victory in any combat situation"
+     }
+    ],
+    "prerequisites": [
+     "battle_mastery_9"
+    ]
+   },
+   {
+    "node_id": "battle_perfection_11",
+    "feature_id": "battle_perfection",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "battle_technique_11",
+    "description": "You achieve perfect battle mastery. When you spend Rage Points, you can control every aspect of the battlefield, manipulating terrain, weather, and even the flow of time itself in combat.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "complete_battlefield_control",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Control every aspect of the battlefield including terrain, weather, and time flow"
+     }
+    ],
+    "prerequisites": [
+     "battle_mastery_9"
+    ]
+   },
+   {
+    "node_id": "battle_legend_13",
+    "feature_id": "battle_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of battle. Your Rage Points are more potent, and when you spend them, you can achieve battle capabilities that transcend normal limitations, including the ability to manipulate the very concept of warfare.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_rage_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rage Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_warfare_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the very concept of warfare with Rage Points"
+     }
+    ],
+    "prerequisites": [
+     "perfect_strategy_11",
+     "battle_perfection_11"
+    ]
+   },
+   {
+    "node_id": "battle_perfection_15",
+    "feature_id": "battle_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_battle_15",
+    "description": "Your battle mastery achieves perfection. When you spend Rage Points, you can achieve perfect battle control, becoming one with the battlefield itself and gaining omniscient awareness of all combat possibilities.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_battlefield_oneness",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become one with the battlefield and gain omniscient awareness of all combat possibilities"
+     }
+    ],
+    "prerequisites": [
+     "battle_legend_13"
+    ]
+   },
+   {
+    "node_id": "battle_mastery_15",
+    "feature_id": "battle_mastery",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_battle_15",
+    "description": "You achieve perfect battle mastery. When you spend Rage Points, you can become the embodiment of warfare itself, gaining the ability to create and control entire battlefields from pure tactical thought.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "warfare_embodiment",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become the embodiment of warfare and create/control entire battlefields from tactical thought"
+     }
+    ],
+    "prerequisites": [
+     "battle_legend_13"
+    ]
+   },
+   {
+    "node_id": "battle_legend_17",
+    "feature_id": "battle_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of battle and warfare. When you spend Rage Points, you can achieve battle capabilities that transcend reality itself, including the ability to manipulate the fundamental nature of conflict.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "fundamental_conflict_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the fundamental nature of conflict"
+     }
+    ],
+    "prerequisites": [
+     "battle_perfection_15",
+     "battle_mastery_15"
+    ]
+   },
+   {
+    "node_id": "perfect_battle_master_20",
+    "feature_id": "perfect_battle_master",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of battle and warfare. When you spend Rage Points, you can achieve battle capabilities that are not only perfect and reality-transcending but also allow you to create entire wars from pure tactical will.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_war_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "rage_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create entire wars from pure tactical will"
+     }
+    ],
+    "prerequisites": [
+     "battle_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Tatooine Dunes"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with lightsaber at the ready, shield raised and blaster at hip",
+    "energy_signature": "Surrounded by an aura of blue plasma that crackles with energy, reflecting their connection to the Force"
+   },
+   "prompt_schema": {
+    "base_prompt": "A Sith Lord on Tatooine, contemplating the power of the dark side",
+    "contextual_modifiers": [
+     "Dark Atmosphere",
+     "Mysterious Figure"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Master tacticians and combat strategists, skilled in utilizing their fury to unleash devastating attacks.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Tactical armor with glowing runes",
+    "Battle-scarred greaves"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "berserker_battle_master",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/berserker_subclasses/berserker.battle_master.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

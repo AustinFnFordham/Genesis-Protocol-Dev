@@ -1,0 +1,159 @@
+{
+ "record": {
+  "id": "background_scholar",
+  "name": "Scholar",
+  "tags": [
+   "background",
+   "scholar",
+   "intelligence_based",
+   "researcher",
+   "ancient_knowledge",
+   "analytical",
+   "wise",
+   "professional",
+   "academic",
+   "skilled"
+  ],
+  "description": "You are a learned individual who has dedicated your life to the pursuit of knowledge. Whether you're an academic, researcher, historian, or archaeologist, your expertise in lore, history, and various fields of study makes you a valuable source of information. You understand the importance of preserving knowledge and uncovering the secrets of the past.",
+  "proficiencies": {
+   "skills": [
+    "History",
+    "Lore"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Research Kit",
+      "Archaeological Kit",
+      "Holocron",
+      "Data Pad",
+      "Translation Kit",
+      "Preservation Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Researcher",
+   "level": 1,
+   "description": "When you attempt to learn or recall a piece of lore, if you do not know that information, you often know where and from whom you can obtain it. Usually, this information comes from a library, scriptorium, university, or a sage or other learned person or creature. Your DM might rule that the knowledge you seek is secreted away in an almost inaccessible place, or that it simply cannot be found. Unearthing the deepest secrets of the multiverse can require an adventure or even a whole campaign.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "lore_research",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "lore_or_history"
+      },
+      {
+       "key": "researching_information",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Lore and History checks when researching information"
+    },
+    {
+     "type": "narrative_effect",
+     "value": "academic_contacts",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Access to academic networks, libraries, and learned contacts"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Greed. I will do whatever it takes to become wealthy."
+   ],
+   "bonds": [
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_scholar",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_scholar.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

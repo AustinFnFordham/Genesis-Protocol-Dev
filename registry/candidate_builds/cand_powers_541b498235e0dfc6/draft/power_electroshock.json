@@ -1,0 +1,208 @@
+{
+ "record": {
+  "id": "power_electroshock",
+  "name": "Electroshock",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "electrical",
+   "shock",
+   "close_range",
+   "stun",
+   "cantrip",
+   "melee_tech"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Close-range electrical stunning device"
+   }
+  },
+  "narrative": "You press a shock prod, stun baton, or electrified gauntlet against your target, delivering a concentrated jolt directly into their nervous system. The power manifests as blue sparks jumping across their body, muscles seizing in painful spasms as the current disrupts their motor control.",
+  "flavor_text": "\"This might sting a little.\" - Interrogation Droid",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "making contact with shock device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "targeting nerve clusters for maximum effect"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You deliver a small electrical shock to a creature within range, dealing lightning damage.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "lightning",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 lightning damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's knowledge of bioelectrical systems transforms Electroshock into precision torture. They know exactly where to apply current for maximum disruption—paralyzing limbs, triggering muscle locks, or overloading pain receptors without permanent damage.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "stunned"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "condition": "on_critical_hit",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineers stun target for 1 round on critical hits."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability with Electroshock is remarkable. They've learned to use it for everything from non-lethal takedowns to impromptu defibrillation, adjusting amperage on the fly to achieve exactly the desired effect without excessive force.",
+    "mechanical_benefit": [
+     {
+      "type": "push_target",
+      "value": {
+       "distance": 5,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans can push target 5 feet away after shocking."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire has perfected Electroshock for interrogation and crowd control. Their standardized shock batons deliver precisely calibrated pain—enough to break resistance without killing valuable prisoners, a tool of oppression refined to cruel efficiency.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "disadvantage_on_saves"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Imperial shocks impose disadvantage on target's next save."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the intimate violence of direct electrical contact—the shock device pressing against flesh, blue arcs dancing across skin, involuntary muscle spasms. Show the target's shocked expression (pun intended) as their body betrays them.",
+   "tactical_notes": "Electroshock is a close-range cantrip dealing 1d4 lightning damage at 30 feet. Ideal for non-lethal takedowns or when stealth is needed. The short range requires tactical positioning but bypasses many defenses.",
+   "narrative_hooks": [
+    "A silent takedown with electroshock prevents an alarm from being raised",
+    "The shock reveals cybernetic implants hidden beneath organic appearance",
+    "An interrogator uses carefully calibrated shocks to extract information"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of close-quarters electrical combat. A figure presses a crackling shock baton against an opponent, blue electricity arcing across their body in painful spasms. The victim's face contorts in a silent scream as muscles lock involuntarily. Sparks illuminate the scene with harsh, stuttering light.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/electroshock.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_electroshock",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_electroshock.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

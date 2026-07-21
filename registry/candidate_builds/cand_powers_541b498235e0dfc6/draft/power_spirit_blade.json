@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "power_spirit_blade",
+  "name": "Spirit Blade",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "force_weapon",
+   "spectral",
+   "summoning",
+   "melee",
+   "telekinesis",
+   "manifestation"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Force manifestation of spectral weapon"
+   }
+  },
+  "narrative": "You manifest a blade of pure Force energy, translucent weapon appearing in your hand that cuts through matter as if it were substantial steel. The power manifests as ghostly weapon that glows with your Force alignment—golden for light, crimson for dark, silver for balanced—its edge sharp enough to cleave armor.",
+  "flavor_text": "\"The Force is my weapon. Literally.\" - Force Warrior",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "gesturing to summon spectral blade"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "manifesting Force energy into weapon form"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 10 minutes",
+  "base_effect": {
+   "description": "You create a weapon of pure Force energy.",
+   "mechanics": [
+    {
+     "type": "summon_weapon",
+     "value": {
+      "weapon_type": "force_blade",
+      "damage_die": "2d6",
+      "damage_type": "force",
+      "properties": [
+       "finesse",
+       "light"
+      ]
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Create spectral Force blade dealing 2d6 force damage with finesse and light properties"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's weapon mastery transforms Spirit Blade into perfect armament. They shape the Force into blades that match their fighting style—greatswords for power, dual blades for speed—manifestation adapting to tactical need.",
+    "mechanical_benefit": [
+     {
+      "type": "versatile_form",
+      "value": {
+       "options": [
+        "one_handed_2d6",
+        "two_handed_2d8",
+        "dual_wield_1d8_each"
+       ]
+      },
+      "target_scopes": [
+       "spirit_blade"
+      ],
+      "notes": "Guardians can shape spirit blade into different weapon forms with varying properties."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity manifests spirit blades with unexpected properties. They've created whips of Force, spears that extend reach, even shields—innovation through Force manifestation turning simple weapon into versatile toolkit.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_property",
+      "value": {
+       "properties": [
+        "reach",
+        "thrown_20_60"
+       ]
+      },
+      "target_scopes": [
+       "spirit_blade"
+      ],
+      "notes": "Humans can grant spirit blade reach or thrown properties."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Spirit Blade as advanced Force technique—weapon manifestation that proves mastery over physical form. Their blades glow with pure light side energy, turning Force into instrument of justice.",
+    "mechanical_benefit": [
+     {
+      "type": "radiant_damage",
+      "value": {
+       "additional_damage_type": "radiant",
+       "bonus_vs_dark": "1d6"
+      },
+      "target_scopes": [
+       "dark_side_users"
+      ],
+      "notes": "Jedi spirit blades deal an additional 1d6 radiant damage to dark side users."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the spectral blade materializing in your hand, translucent and glowing with Force energy. Show it cutting through armor like tissue, the Force-forged edge impossibly sharp. The blade should feel powerful and otherworldly, clearly supernatural.",
+   "tactical_notes": "Spirit Blade creates a 2d6 force damage weapon with finesse and light properties for 10 minutes with concentration, costing 2 Force Points. Force damage is rarely resisted making it reliable. The finesse and light properties make it excellent for agile fighters. Concentration requirement limits versatility.",
+   "narrative_hooks": [
+    "Spirit blade manifestation proves Force mastery to skeptics",
+    "The weapon's color reveals the user's Force alignment",
+    "Losing concentration mid-combat creates vulnerability"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Force user wielding a spirit blade. A translucent weapon of pure Force energy glows in their hand, the spectral blade cutting through an enemy's armor effortlessly. The weapon shimmers with Force power, its color reflecting the wielder's alignment. The scene captures Force manifestation as weapon.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/spirit_blade.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_spirit_blade",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_spirit_blade.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

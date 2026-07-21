@@ -1,0 +1,203 @@
+{
+ "record": {
+  "id": "power_targeting_assist",
+  "name": "Targeting Assist",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "support",
+   "targeting",
+   "accuracy",
+   "assistance",
+   "aim_enhancement",
+   "tactical"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced targeting assistance technology for allies"
+   }
+  },
+  "narrative": "You provide targeting assistance to an ally, your advanced sensors feeding them firing solutions and trajectory predictions. The power manifests as targeting data streaming to their display, optimal shot calculations appearing in real-time, your computational support making their aim unnaturally precise.",
+  "flavor_text": "\"I see it. Taking the shot.\" - Assisted Gunner",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "linking targeting systems with ally's weapons"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating and transmitting firing solutions"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "30 feet",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You provide advanced targeting assistance to an ally.",
+   "mechanics": [
+    {
+     "type": "grant_attack_bonus",
+     "value": {
+      "bonus": 2,
+      "stat": "attack_rolls"
+     },
+     "target_scopes": [
+      "ally"
+     ],
+     "notes": "Ally gains +2 to attack rolls for 1 round from targeting assistance"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's targeting algorithms provide assistance that borders on prescient. They calculate not just current optimal shots but predict target evasion, feeding firing solutions that account for actions the enemy hasn't taken yet.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_bonus",
+      "value": {
+       "bonus": 4,
+       "stat": "attack_rolls"
+      },
+      "target_scopes": [
+       "ally"
+      ],
+      "notes": "Engineers grant +4 to attack rolls instead of +2 from superior algorithms."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical communication makes their targeting assistance highly effective. They don't just transmit data—they explain it, helping allies understand why each shot will work, building confidence alongside accuracy.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "value": {
+       "benefit": "attack_advantage",
+       "duration": "1_attack"
+      },
+      "target_scopes": [
+       "ally"
+      ],
+      "notes": "Humans also grant advantage on the ally's next attack from clear communication."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's integrated targeting networks make assistance devastating. Their systems pool computational power from entire battlegroups, providing firing solutions backed by overwhelming processing capability.",
+    "mechanical_benefit": [
+     {
+      "type": "multi_target_assist",
+      "value": {
+       "additional_allies": 2
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Imperial assistance affects 3 allies simultaneously through networked systems."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe targeting data appearing on ally's display—firing solutions calculating, trajectory predictions highlighting optimal shots. Show assisted ally taking shots with supernatural precision, your computational support making impossible shots routine.",
+   "tactical_notes": "Targeting Assist grants +2 to ally attack rolls for 1 round, costing 1 Tech Point. Excellent support for allies making critical shots. The bonus action timing allows assisting then acting. Perfect for ensuring important attacks land.",
+   "narrative_hooks": [
+    "Targeting assist allows ally to make impossible shot at critical moment",
+    "The assistance reveals squad's integrated combat systems",
+    "Perfect shot from assist creates cinematic combat moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of targeting assistance in action. An operator transmits firing solutions to an allied gunner, targeting data streaming across their display. The assisted ally takes a shot with preternatural precision, the targeting assistance making their aim perfect. The scene captures technological combat support.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/targeting_assist.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_targeting_assist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_targeting_assist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

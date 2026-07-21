@@ -1,0 +1,213 @@
+{
+ "record": {
+  "id": "power_force_omniscience",
+  "name": "Force Omniscience",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 8,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 16
+   }
+  ],
+  "narrative": "You impose omniscient upon your target, forcing them to suffer experience omniscient. The power manifests as empowering energy, tactical focus, creating a moment of dominating will.",
+  "flavor_text": "'The Force flows through me like a river.' - Legendary Jedi",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clear, forceful gesture extending telekinetic energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "visualizing the desired effect and channeling Force energy"
+   }
+  ],
+  "casting_time": "1 Minute",
+  "range": "0 self",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You achieve perfect knowledge of all things past, present, and future, becoming one with the cosmic Force.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": "omniscient",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Know all things that have happened, are happening, or will happen"
+    },
+    {
+     "type": "grant_advantage",
+     "value": "all_actions",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Automatic success on all ability checks, attack rolls, and saving throws"
+    },
+    {
+     "type": "modify_stat",
+     "value": "perfect_awareness",
+     "target_property": "perception",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Cannot be surprised, always know the location of all creatures"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardian approaches Force Omniscience through the lens of protection, finding unexpected harmony in the manipulating the Force to achieve the impossible. Their defensive combat and protection of others guides them to vibrating air with a focused resolve that reflects their unique perspective.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain +4 to Force power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master new powers.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches the proper use of Force powers.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi gain +2 to Force power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the omniscient effect taking hold. Focus on how the power's effects manifest physically and mechanically, emphasizing apply omniscient status.",
+   "tactical_notes": "Force Omniscience is excellent for applying omniscient effects to control groups of enemies. Use it at 0 self range. The effects last 1 round.",
+   "narrative_hooks": [
+    "Force Omniscience forces a target to suffer omniscient, changing the course of the encounter",
+    "The omniscient effect of Force Omniscience creates an opportunity that would otherwise not exist"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Force Omniscience. in action. applying omniscient effects. with empowering energy, tactical focus. The mood is dominating will, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_omniscience.svg",
+   "color": "#FF6600"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_omniscience",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_omniscience.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

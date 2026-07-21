@@ -1,0 +1,226 @@
+{
+ "record": {
+  "id": "power_lightning_charge",
+  "name": "Lightning Charge",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "lightning",
+   "electrical",
+   "force",
+   "damage",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist the seductive thrill of wielding destructive lightning through inner peace.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You summon crackling Force lightning from your fingertips, blue-white electricity arcing toward your target with the dark side's destructive power. The power manifests as raw hatred made tangible, each bolt a physical expression of anger and domination that leaves the smell of ozone and charred flesh.",
+  "flavor_text": "\"Let the hate flow through you.\" - Emperor Palpatine",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "extending fingers as lightning channels through them"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling rage and hatred into electrical destruction"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the dark side through your body as destructive Force lightning.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "lightning",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 lightning damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior channels Lightning Charge through their martial prowess, using it not just as ranged attack but as extension of their combat style. They've learned to discharge lightning through their weapons, their strikes carrying electrical fury that burns as it cuts.",
+    "mechanical_benefit": [
+     {
+      "type": "weapon_discharge",
+      "value": {
+       "effect": "channel_through_melee",
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "lightning",
+       "modifier": 0
+      },
+      "target_scopes": [
+       "melee_attacks"
+      ],
+      "notes": "Sith Warriors can discharge Lightning Charge through melee attacks."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human emotional intensity amplifies Lightning Charge's destructive potential. Their capacity for passion—love twisted to hate, hope corrupted to rage—fuels lightning with psychological weight that transcends mere electrical damage, striking at the soul as much as the body.",
+    "mechanical_benefit": [
+     {
+      "type": "chain_lightning",
+      "value": {
+       "additional_targets": 1,
+       "max_range": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Human lightning can arc to one additional enemy within 10 feet."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Lightning Charge as the purest expression of dark side power—the ability to literally shoot hatred from your hands. Their techniques emphasize not just damage but psychological dominance, each bolt a reminder of the dark side's superiority.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_fear",
+      "value": {
+       "status_type": "frightened"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "conditions": [
+       {
+        "key": "target_damaged",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith lightning can frighten targets for 1 round on hit (Wisdom save)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the electricity crackling between the user's fingers, building to a crescendo before unleashing as a bolt of blue-white lightning. Show the target convulsing as current courses through them, muscles spasming, the smell of burned flesh and ozone. The lightning should feel viscerally destructive and terrifying.",
+   "tactical_notes": "Lightning Charge is a cantrip dealing 1d4 lightning damage at 30 feet. It's the dark side's answer to ranged combat—no resource cost, reliable damage, and lightning type is rarely resisted. Perfect for dark side users who need consistent ranged damage. Scales with character level like other cantrips.",
+   "narrative_hooks": [
+    "Lightning reveals a Force user's dark side corruption to horrified allies",
+    "The electrical damage shorts out a target's cybernetic implants painfully",
+    "A Sith demonstrates their power by casually electrocuting an underling"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a dark Force user unleashing lightning from their fingertips. Blue-white electricity arcs through the air in branching bolts, the wielder's face twisted in rage as dark side power flows through them. The victim convulses in the lightning's grip, silhouetted against the crackling energy. The scene captures the raw destructive power and terrifying spectacle of Force lightning. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric lightning effects, by Donato Giancola",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/lightning_charge.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_lightning_charge",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_lightning_charge.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

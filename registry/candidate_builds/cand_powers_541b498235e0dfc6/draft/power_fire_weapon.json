@@ -1,0 +1,195 @@
+{
+ "record": {
+  "id": "power_fire_weapon",
+  "name": "Fire Weapon",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "starship",
+   "weapons",
+   "gunnery",
+   "combat",
+   "tactical",
+   "offensive"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Starship weapon firing protocol"
+   }
+  },
+  "narrative": "You line up the targeting reticle, calculate lead time and distance, then squeeze the trigger to unleash your ship's weapons. The power manifests as laser cannons erupting in synchronized bursts, missiles streaking toward targets, or ion cannons crackling with disabling energy.",
+  "flavor_text": "\"I have you now!\" - Darth Vader",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "executing tactical movement or stance"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "assessing battlefield conditions and opportunities"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Make an attack with one of the ship's weapon systems.",
+   "mechanics": [
+    {
+     "type": "make_attack",
+     "value": {
+      "weapon_type": "starship_weapon"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Make an attack with a starship weapon"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's precision gunnery training allows them to target specific systems. They know exactly where to place shots for maximum effect—engines for mobility kills, weapons for disarmament, or shields for vulnerability.",
+    "mechanical_benefit": [
+     {
+      "type": "called_shot",
+      "value": {
+       "target": "subsystem"
+      },
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Operatives can target specific ship systems to disable them."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human gunnery instincts are legendary. Their ability to lead targets, predict evasive patterns, and compensate for relative motion makes them natural starship gunners who rarely miss.",
+    "mechanical_benefit": [
+     {
+      "type": "reroll_miss",
+      "value": {
+       "frequency": "once_per_turn"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can reroll one missed starship weapon attack per turn."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "Rebel gunners have learned to make every shot count. Fighting with limited ammunition and inferior weapons, they've developed techniques to maximize damage despite their disadvantages.",
+    "mechanical_benefit": [
+     {
+      "type": "maximize_damage",
+      "value": {
+       "rule": "reroll_1s"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebels can reroll 1s on starship weapon damage dice."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the weapon systems coming online—targeting computers calculating trajectories, the whine of charging weapons, the thunderous release as cannons fire. Show the bolts or missiles racing through space, impacting shields or hull with explosive results.",
+   "tactical_notes": "Fire Weapon is the basic starship attack action. Different weapons have different ranges, damage types, and special properties. Coordinate with your pilot for optimal positioning. Remember that some weapons have minimum ranges or firing arcs.",
+   "narrative_hooks": [
+    "A perfectly placed shot destroys a critical enemy system",
+    "The gunner threads shots through a narrow asteroid field",
+    "A desperate barrage holds off pursuing fighters"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Fire Weapon. in action. achieving provide utility effects. The mood is focused determination, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/fire_weapon.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_fire_weapon",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_fire_weapon.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

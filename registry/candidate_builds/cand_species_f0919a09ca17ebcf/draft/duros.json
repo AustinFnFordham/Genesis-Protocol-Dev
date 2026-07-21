@@ -1,0 +1,847 @@
+{
+ "record": {
+  "id": "duros",
+  "name": "Duros",
+  "tags": [
+   "common",
+   "conflicted_ally",
+   "dexterity_based",
+   "duros",
+   "explorer",
+   "intelligence_based",
+   "navigator",
+   "perceptive",
+   "pilot",
+   "precision",
+   "scout",
+   "starship_pilot",
+   "tech_specialist",
+   "wise"
+  ],
+  "description": "Veteran spacers and navigators, Duros prize exploration and precision piloting, charting hyperlanes by instinct and experience.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Intelligence",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Durese",
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "duros_vacuum_bred",
+    "name": "Vacuum-Bred",
+    "narrative": "Your species has evolved in space environments, developing natural adaptations that allow you to survive and thrive in the void where other species would perish.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Constitution saving throws against vacuum exposure, zero gravity, and reduced-oxygen environments.",
+      "conditions": [
+       {
+        "key": "environmental_hazard",
+        "op": "in",
+        "value": [
+         "vacuum",
+         "zero_gravity",
+         "low_oxygen"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_strains_of_despair",
+     "ui_transition": {
+      "animation": "darker_scales_falling",
+      "sfx": "strain_of_despair_sound"
+     }
+    }
+   },
+   {
+    "id": "duros_keen_sight",
+    "name": "Keen Sight",
+    "narrative": "Your large eyes have evolved to excel in the darkness of space, adapted to low light conditions and rapid motion detection.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Perception"
+      }
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": false
+    }
+   },
+   {
+    "id": "duros_composed_under_fire",
+    "name": "Composed Under Fire",
+    "narrative": "Your species' natural spacer heritage has given you the ability to remain calm and focused even in the most dangerous situations.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Spacer's Composure",
+      "action_type": "free_action",
+      "description": "Once per short rest, you gain advantage on a saving throw against fear or on a Piloting (Space) check.",
+      "rules": [
+       "cooldown:short_rest",
+       "trigger:fear_save_or_piloting_space"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "duros_manic_fury",
+     "ui_transition": {
+      "animation": "ui_corruption_frenzy",
+      "sfx": "corruption_frenzied_roar"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Smooth, hairless skin",
+    "Large, dark eyes",
+    "Elongated head",
+    "Slender, graceful build",
+    "Natural spacer adaptations"
+   ],
+   "skin_color_variants": [
+    "Pale Blue",
+    "Deep Blue",
+    "Grey Blue",
+    "Green Blue",
+    "Purple Blue",
+    "Mottled patterns"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Red eyes",
+    "Orange eyes",
+    "Yellow eyes",
+    "White eyes"
+   ],
+   "head_shape_variants": [
+    "Classic elongated shape",
+    "Rounded elongated shape",
+    "Angular elongated shape",
+    "Smooth, streamlined shape"
+   ],
+   "common_adornments": [
+    "Practical spacer clothing",
+    "Flight suits and pilot gear",
+    "Navigation and communication devices",
+    "Traditional Duros spacer attire",
+    "Utility belts and tool pouches"
+   ],
+   "llm_description_prompt": "Describe a Duros character. Emphasize their large, expressive eyes that seem to hold the knowledge of countless star systems, and their smooth, graceful movements that reflect their natural adaptation to space travel. Their skin should show the subtle variations common to their species. Consider their natural spacer heritage and the way they carry themselves with the confidence of those who know the void intimately."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout (Pilot)",
+    "narrative": "Duros' natural spacer abilities and Vacuum-Bred physiology make them exceptional Scout pilots, able to navigate the most dangerous space environments with instinctive skill.",
+    "mechanical_benefits": [
+     "Vacuum-Bred trait enhances survival in space environments",
+     "Composed Under Fire trait supports piloting under pressure",
+     "High Dexterity supports piloting and navigation"
+    ]
+   },
+   {
+    "class": "Engineer",
+    "narrative": "Duros' technical aptitude and spacer experience make them excellent Engineers, particularly in starship systems and space technology.",
+    "mechanical_benefits": [
+     "High Intelligence supports technical skills and engineering",
+     "Vacuum-Bred trait aids in space-based engineering work",
+     "Keen Sight trait enhances precision work"
+    ]
+   },
+   {
+    "class": "Operative (Scout)",
+    "narrative": "Duros' natural agility and spacer skills make them excellent Operatives, able to navigate complex space stations and vessels with ease.",
+    "mechanical_benefits": [
+     "High Dexterity supports Operative's agility-based abilities",
+     "Vacuum-Bred trait enhances survival in hostile environments",
+     "Keen Sight trait aids in reconnaissance"
+    ]
+   },
+   {
+    "class": "Soldier (Pilot)",
+    "narrative": "Duros' natural piloting abilities and spacer physiology make them exceptional Soldier pilots, able to handle combat situations in space with unmatched skill.",
+    "mechanical_benefits": [
+     "Vacuum-Bred trait supports combat in space environments",
+     "Composed Under Fire trait enhances combat piloting",
+     "High Dexterity enhances piloting and combat abilities"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Spacer Guilds",
+    "narrative": "Duros are natural leaders in spacer guilds and organizations, using their extensive space travel experience to guide and protect other spacers."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Duros have served the Republic as pilots, navigators, and space explorers, their natural abilities making them valuable assets in space operations."
+   },
+   {
+    "faction": "Independent Spacers",
+    "narrative": "Many Duros prefer to work independently as free traders, explorers, and pilots, using their natural spacer abilities to chart their own course through the galaxy."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Vacuum-Bred",
+   "base_description": "Your species has evolved in space environments, developing natural adaptations that allow you to survive and thrive in the void where other species would perish.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "space_enhancement",
+     "description": "Your space adaptations have grown stronger. You can survive in even more extreme space environments.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Constitution saving throws",
+      "conditions": [
+       {
+        "key": "environment",
+        "op": "in",
+        "value": [
+         "extreme_space",
+         "hostile_void",
+         "dangerous_conditions"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your space mastery has become legendary. You can navigate and survive in any space environment.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Void Mastery",
+      "description": "Once per long rest, you can automatically succeed on any space-related saving throw or check"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of space environments. Your abilities in the void are unparalleled.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Space Legend",
+      "description": "Once per long rest, you can grant space adaptation abilities to allies for 1 hour"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of space exploration. Your mastery of the void transcends normal limitations.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Void Mastery",
+      "description": "Once per long rest, you can create a temporary space environment or survive any space hazard"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "As you navigate the complexities of space, your instincts and experiences guide you in charting hyperlanes with increasing precision.",
+    "level_10": "Your reputation as a skilled navigator and pilot spreads throughout the galaxy, earning you invitations to join prestigious explorer's guilds and pilot elite starships.",
+    "level_15": "You begin to develop a deeper understanding of the intricate balance between space travel and exploration, using your knowledge to discover new hyperspace routes and uncharted territories.",
+    "level_20": "Your mastery of navigation and piloting reaches unprecedented heights as you lead expeditions into the unknown, blazing new trails through the galaxy and earning yourself legendary status among spacers."
+   }
+  },
+  "cultural_features": [
+   {
+    "activation": "When following spacer traditions or navigating space",
+    "description": "Your deep connection to spacer traditions and the ancient art of space navigation.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "space_navigation",
+        "spacer_traditions",
+        "void_exploration"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Intelligence (Navigation) checks"
+    },
+    "faction_connection": "Spacer Guilds",
+    "narrative_enhancement": "You can draw upon the ancient spacer traditions of your people, understanding space navigation in ways that seem almost instinctive.",
+    "optional": true,
+    "type": "traditional"
+   },
+   {
+    "activation": "When exploring new areas or charting unknown territories",
+    "description": "Your species' natural curiosity and drive to explore the unknown reaches of space.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "exploration",
+        "discovery",
+        "charting_unknown"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Intelligence (Investigation) checks"
+    },
+    "faction_connection": "Independent Spacers",
+    "name": "Explorer's Spirit",
+    "narrative_enhancement": "You can channel your species' natural explorer spirit, finding hidden paths and discovering secrets that others might miss.",
+    "optional": true,
+    "type": "cultural"
+   },
+   {
+    "activation": "When sharing space knowledge or teaching others about space travel",
+    "description": "Your deep understanding of space and the wisdom gained from countless hours in the void.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "knowledge_sharing",
+        "space_teaching",
+        "void_wisdom"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks"
+    },
+    "faction_connection": "Galactic Republic",
+    "name": "Void Wisdom",
+    "narrative_enhancement": "You can share the wisdom of the void, teaching others about space travel and the mysteries of the cosmos.",
+    "optional": true,
+    "type": "narrative"
+   },
+   {
+    "activation": "When piloting starships or operating space vehicles",
+    "description": "Your natural piloting abilities and instinctive understanding of starship operations.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "vehicle_type",
+       "op": "in",
+       "value": [
+        "starship",
+        "space_vehicle",
+        "void_craft"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Dexterity (Piloting) checks"
+    },
+    "faction_connection": "Spacer Guilds",
+    "name": "Pilot's Instinct",
+    "narrative_enhancement": "Your natural piloting instincts make you a master of any space vehicle, your skills seeming almost supernatural to other species.",
+    "optional": true,
+    "type": "social"
+   },
+   {
+    "activation": "When performing repairs or maintenance on starships or equipment",
+    "description": "Your technical expertise and hands-on experience with starship systems.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "technology_type",
+       "op": "in",
+       "value": [
+        "starship_systems",
+        "navigation",
+        "life_support"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Intelligence (Engineering) checks"
+    },
+    "faction_connection": "Spacer Guilds",
+    "name": "Technician's Touch",
+    "narrative_enhancement": "You can draw upon your technical expertise and hands-on experience to diagnose and repair complex starship systems.",
+    "optional": true,
+    "type": "technological"
+   },
+   {
+    "activation": "When charting new hyperspace routes or navigating through uncharted territories",
+    "description": "Your advanced understanding of hyperspace and the delicate balance between exploration and discovery.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "charting_hyperspace",
+        "exploration",
+        "discovery"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Intelligence (Navigation) checks"
+    },
+    "faction_connection": "Independent Spacers",
+    "name": "Hyperspace Cartographer",
+    "narrative_enhancement": "You can channel your advanced understanding of hyperspace to chart new routes and navigate through uncharted territories with unparalleled precision.",
+    "optional": true,
+    "type": "cultural"
+   },
+   {
+    "activation": "When leading or participating in space exploration missions",
+    "description": "Your natural leadership abilities and expertise in managing complex space operations.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "space_exploration",
+        "mission_leadership",
+        "team_management"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Charisma (Leadership) checks"
+    },
+    "faction_connection": "Galactic Republic",
+    "name": "Expedition Leader",
+    "narrative_enhancement": "You can draw upon your natural leadership abilities to guide and motivate your crew, ensuring the success of even the most ambitious space exploration missions.",
+    "optional": true,
+    "type": "narrative"
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Spacer culture",
+   "cultural_networks": [
+    "Independent Spacers",
+    "Galactic Republic",
+    "Spacer Guilds",
+    "Outer Rim Traders' Association"
+   ],
+   "traditional_practices": [
+    "Charting hyperlanes by instinct and experience",
+    "Sharing space knowledge and teaching others about space travel",
+    "Piloting starships and operating space vehicles with precision",
+    "Exploring new areas and charting unknown territories"
+   ],
+   "cultural_knowledge": [
+    "Advanced navigation techniques using hyperspace charts and stellar cartography",
+    "Expertise in zero-gravity environments, including space acrobatics and void navigation",
+    "In-depth understanding of starship systems, life support management, and ship maintenance"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "space",
+    "advantage": "Natural expertise in space environments and void survival",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Survival checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "space"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "void_survival",
+        "space_navigation",
+        "environmental_adaptation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through space environments with natural ease, your species' evolutionary adaptation to the void making you perfectly at home in the emptiness between stars.",
+    "narrative_hooks": [
+     "Void survival and navigation",
+     "Space environment adaptation",
+     "Zero-gravity movement",
+     "Vacuum resistance"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "starships",
+    "advantage": "Enhanced comfort and performance in starship environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Technology checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "starships"
+      },
+      {
+       "key": "technology_type",
+       "op": "in",
+       "value": [
+        "starship_systems",
+        "navigation",
+        "life_support"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural spacer heritage makes you perfectly at home in starship environments, understanding ship systems and operations instinctively.",
+    "narrative_hooks": [
+     "Starship operations",
+     "Navigation systems",
+     "Life support management",
+     "Ship maintenance"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "space_stations",
+    "advantage": "Enhanced ability to navigate and operate in space station environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Intelligence (Investigation) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "space_stations"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "station_navigation",
+        "system_operation",
+        "environmental_understanding"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural understanding of space environments allows you to navigate and operate space stations with practiced ease.",
+    "narrative_hooks": [
+     "Space station navigation",
+     "Station system operations",
+     "Environmental understanding",
+     "Station maintenance"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "zero_gravity",
+    "advantage": "Enhanced performance and comfort in zero-gravity environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Dexterity saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "zero_gravity"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "movement",
+        "maneuvering",
+        "balance"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural adaptation to zero-gravity environments makes you perfectly suited for movement and operations in weightless conditions.",
+    "narrative_hooks": [
+     "Zero-gravity movement",
+     "Weightless maneuvering",
+     "Space acrobatics",
+     "Void navigation"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": "Space",
+   "environmental_knowledge": [
+    "Hyperspace routes and uncharted territories",
+    "Zero-gravity environments and weightless conditions",
+    "Space station operations and navigation"
+   ],
+   "survival_techniques": [
+    "Void survival and navigation in extreme temperatures and radiation",
+    "Managing life support systems and emergency beacons on long-duration missions",
+    "Navigation through asteroid fields, nebulae, and other hazardous space environments"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A Duros navigator challenges you to a hyperlane charting competition.",
+      "reward": "+1d4 to Navigation checks for 1 hour",
+      "consequence": "-1d2 to Piloting checks for 1 day"
+     },
+     "escalation": {
+      "description": "You and the Duros navigator engage in a heated argument over navigation techniques.",
+      "reward": "Unlock \"Duros Navigator's Guide\" skill book",
+      "consequence": "-10 reputation among Duros spacers"
+     },
+     "confrontation": {
+      "description": "The Duros navigator accuses you of sabotaging their ship's hyperdrive.",
+      "reward": "-5d6 damage to your ship in the next combat encounter",
+      "consequence": "Banished from Duros space for 1 month"
+     }
+    },
+    "resolution_paths": {
+     "victory": "You convince the Duros navigator that your methods are superior.",
+     "redemption": "You apologize and make amends with the Duros navigator.",
+     "escape": "You flee the scene before things escalate further."
+    },
+    "conflict_triggers": [
+     "The player's piloting skills are significantly lower than the Duros navigator's",
+     "The player tries to steal or sabotage a Duros ship",
+     "The player refuses to share navigation data with the Duros navigator"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "Duros navigator accuses you of stealing their charts",
+      "You reject the Duros navigator's offer to collaborate on a charting project"
+     ],
+     "vendetta_type": "Professional Rivalry"
+    },
+    "historical_enemy": "Krayt Clan (a notorious group of pirate spacers that plagued Duros navigation efforts for generations)",
+    "tragic_flaw": "A deep-seated fear of being trapped or confined, stemming from their early experiences navigating through treacherous asteroid fields."
+   }
+  },
+  "flavor_text": "Born on the unforgiving planet of Duro, a world ravaged by constant sandstorms and harsh twin suns, the Duros have developed an unwavering passion for exploration. Their early history is etched with tales of navigating through treacherous asteroid fields and charting new hyperspace routes to avoid rival pirate clans. To this day, Duros pilots remain renowned for their exceptional navigational skills, unflinching in the face of danger and relying on intuition honed from generations of experience.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Duro, you embody the spirit of exploration and precision piloting. You're driven by an insatiable curiosity about the galaxy's uncharted territories and often find yourself at odds with those who value caution over risk-taking. Be mindful of your tendency to push boundaries and challenge authority, as this can sometimes lead to friction with fellow crew members or even law enforcement.",
+   "narrative_hooks": [
+    "A mysterious hyperspace route that promises unparalleled efficiency in travel times but requires navigating through an unstable asteroid field.",
+    "A cryptic transmission from a long-lost Duro clan leader, hinting at the existence of a hidden planet with untold riches and ancient knowledge."
+   ],
+   "social_dynamics": "Duros are known for their loose social hierarchy, valuing expertise over position. However, this can sometimes lead to tension among crew members as they jockey for influence and decision-making power. Be aware that your reputation as a skilled pilot may earn you respect, but also attract attention from rival clans or opportunistic smugglers.",
+   "common_motivations": [
+    "Acquiring the latest in navigational technology to stay ahead of competitors.",
+    "Uncovering hidden secrets about their clan's past and the forgotten history of Duro."
+   ]
+  },
+  "companion_engine": {
+   "archetype": "cunning_scoundrel",
+   "overrides": {
+    "ai_behavior": {
+     "personality": {
+      "traits": [
+       "Precise",
+       "Confident",
+       "Analytical"
+      ]
+     },
+     "motivations": [
+      "Master navigation and charting",
+      "Pursue new exploration opportunities",
+      "Improve piloting skills"
+     ],
+     "combat_behavior": "Supports allies with precision strikes, prioritizing long-range damage.",
+     "social_behavior": "Favors direct communication, using charts and data to build trust."
+    },
+    "relationship_tracking": {
+     "trust_levels": [
+      "Neutral",
+      "Positive"
+     ],
+     "loyalty_triggers": [
+      "Shared goals or objectives"
+     ]
+    },
+    "services": [
+     "Navigation expertise",
+     "Piloting assistance",
+     "Trade route planning"
+    ]
+   }
+  },
+  "romance_engine": {
+   "overrides": {
+    "courtship_customs": "Duros often form close bonds with travel companions or fellow crew members during long voyages. They value shared experiences and trust built over time, making courtship a gradual process.",
+    "mate_selection_cues": "A Duro may show interest by inviting you to share stories of their navigational exploits or offer cryptic hints about hidden hyperspace routes."
+   }
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    [
+     "scaleless",
+     "scaly"
+    ],
+    [
+     "hairless",
+     "fur-lined"
+    ],
+    [
+     "colorful",
+     "multicolored"
+    ]
+   ],
+   "morphology": {
+    "head_type": "insectoid",
+    "body_type": "anthropomorphic",
+    "average_height": "1.7m to 2.3m"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "eye_color": [
+       "bright blue",
+       "vibrant green"
+      ],
+      "skin_tone": [
+       "pale beige",
+       "dark tan"
+      ],
+      "hair_type": [
+       "none",
+       "short spikes"
+      ]
+     },
+     "adult": {
+      "eye_color": [
+       "deep indigo",
+       "muted gold"
+      ],
+      "skin_tone": [
+       "midnight blue",
+       "sandstone brown"
+      ],
+      "hair_type": [
+       "thin wisps",
+       "long braids"
+      ]
+     },
+     "elder": {
+      "eye_color": [
+       "cloudy white",
+       "faded silver"
+      ],
+      "skin_tone": [
+       "creamy gray",
+       "leathery tan"
+      ]
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "tattoos of twisted, gnarled roots",
+      "eyes glowing with an eerie green light",
+      "skin mottled with dark, swirling patterns"
+     ],
+     "light_side": [
+      "inlaid circuits on their scalp or arms",
+      "eyes shining like bright stars",
+      "hair grown longer and more flowing"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "bioluminescent markings",
+    "holographic tattoos"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A Duros navigator with a long history of exploring the galaxy.",
+    "contextual_modifiers": [
+     "age",
+     "morality",
+     "culture"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "duros",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/duros.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

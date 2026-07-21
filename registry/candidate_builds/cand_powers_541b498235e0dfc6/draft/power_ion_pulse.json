@@ -1,0 +1,217 @@
+{
+ "record": {
+  "id": "power_ion_pulse",
+  "name": "Ion Pulse",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "ion",
+   "area_effect",
+   "emp",
+   "systems_disruption",
+   "pulse",
+   "electronics_warfare"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Area-effect electromagnetic pulse technology"
+   }
+  },
+  "narrative": "You trigger a localized electromagnetic pulse that cascades outward in a sphere of system-killing energy, blue lightning arcing between every electronic device in range. The power manifests as a shockwave of ionized particles that crashes through technology like a tsunami, leaving sparking ruins and dead circuits in its wake.",
+  "flavor_text": "\"One pulse, entire squad disabled.\" - Droid Hunter",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "detonating EMP charge or triggering pulse generator"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating pulse radius and frequency"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You create an electromagnetic pulse that deals ion damage to all electronic devices in the area.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "ion",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_15_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Deal 2d4 ion damage to all electronic targets in a 15-foot radius"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's mastery of electromagnetic theory transforms Ion Pulse into a precision weapon. They can modulate frequencies to spare allied technology while devastating enemy systems, turning indiscriminate pulse into surgical EMP strike.",
+    "mechanical_benefit": [
+     {
+      "type": "selective_targeting",
+      "value": {
+       "effect": "exclude_allies"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers can exclude allied droids and electronics from the pulse."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human innovation has pushed Ion Pulse beyond standard parameters. They've learned to overcharge pulses for devastating single-use blasts or sustained low-power emissions that slowly drain systems—tactical flexibility through creative application.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_radius",
+      "value": {
+       "radius": {
+        "distance": 20,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Human Ion Pulse affects a 20-foot radius instead of 15-foot."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Ion Pulse for sabotage operations. Their versions can be remotely triggered, left as traps in Imperial facilities, or synchronized for simultaneous detonation—turning infrastructure into liability.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "systems_disabled"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "minute"
+      },
+      "target_scopes": [
+       "droids_in_area"
+      ],
+      "notes": "Rebel pulses also disable affected droids for 1 minute (reboot required)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the pulse expanding as a sphere of crackling blue energy, electronics dying wherever it touches. Show droids collapsing mid-step, lights flickering out, screens going dark in sequence. The silence after the pulse is deafening—all technology dead.",
+   "tactical_notes": "Ion Pulse deals 2d4 ion damage in a 15-foot radius, devastating to clustered droids and electronics. The area effect makes it perfect for droid squads or tech-heavy facilities. Watch friendly fire—it affects all electronics unless you're an Engineer. Costs 1 Tech Point.",
+   "narrative_hooks": [
+    "An ion pulse disables an entire droid platoon in one blast",
+    "The pulse blacks out a facility, creating perfect cover for infiltration",
+    "Friendly droids caught in the blast creates a desperate scramble to protect them"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an electromagnetic pulse expanding outward in a sphere. Blue-white energy cascades across multiple droids simultaneously, their systems failing in sequence. Electricity arcs between machines, lights dying, sparks flying as the pulse wave devastates all technology in its radius. The scene captures technological annihilation through electromagnetic warfare.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/ion_pulse.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_ion_pulse",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_ion_pulse.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

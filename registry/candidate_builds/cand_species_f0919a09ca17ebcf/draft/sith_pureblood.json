@@ -1,0 +1,621 @@
+{
+ "record": {
+  "id": "sith_pureblood",
+  "name": "Sith Pureblood",
+  "tags": [
+   "ambitious",
+   "ancient",
+   "charisma_based",
+   "dark_side",
+   "force_mastery",
+   "force_sensitive",
+   "intelligence_based",
+   "intimidating",
+   "power_hungry",
+   "rare",
+   "sith",
+   "sith_order",
+   "sith_pureblood",
+   "support"
+  ],
+  "description": "The Sith Purebloods are descendants of the ancient Sith species, characterized by their red skin, facial tendrils, and natural affinity for the dark side of the Force. They are proud, ambitious, and often seek to restore the glory of their ancient empire through conquest and domination.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Intelligence",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Sith"
+  ],
+  "base_hp": 10,
+  "base_strain": 12,
+  "innate_traits": [
+   {
+    "id": "sith_pureblood_dark_side_affinity",
+    "name": "Dark Side Affinity",
+    "narrative": "Your ancient bloodline carries the legacy of the Sith Empire, granting you an innate connection to the dark side of the Force. This connection flows through your veins, making you naturally intimidating and powerful in ways that other species cannot comprehend.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Intimidation Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in the Intimidation skill.",
+      "rules": [
+       "skill:intimidation",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Dark Side Intimidation",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Intimidation) checks.",
+      "rules": [
+       "skill:intimidation",
+       "ability:charisma",
+       "advantage:granted"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "sith_pureblood_sith_heritage",
+    "name": "Sith Heritage",
+    "narrative": "Your blood carries the ancient power of the Sith species, granting you natural resistance to Force-based effects. This heritage makes you nearly immune to the Force manipulations that would control lesser beings.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Force Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against Force powers and effects.",
+      "rules": [
+       "save_type:advantage",
+       "context:force_powers"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_sith",
+     "ui_transition": {
+      "animation": "darkside_corruption_overlay",
+      "sfx": "corrupted_sound_dark"
+     }
+    }
+   },
+   {
+    "id": "sith_pureblood_force_sensitivity",
+    "name": "Force Sensitivity",
+    "narrative": "Your connection to the Force is as natural as breathing, a gift passed down through countless generations of Sith ancestors. You can sense the presence of other Force users and the ebb and flow of the Force around you.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Force Detection",
+      "action_type": "action",
+      "description": "As an action, you can sense the presence of other Force users within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "detection_type:force_users",
+       "action_cost:action"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_sensitive",
+     "ui_transition": {
+      "animation": "darkside_corruption_fade_in",
+      "sfx": "corruption_sound_dark"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Red skin",
+    "Facial tendrils",
+    "Force aura",
+    "Proud bearing",
+    "Ancient heritage"
+   ],
+   "skin_color_variants": [
+    "Bright Red",
+    "Dark Red",
+    "Crimson",
+    "Burgundy",
+    "Mottled red patterns"
+   ],
+   "facial_tendril_variants": [
+    "Long, flowing tendrils",
+    "Short, practical tendrils",
+    "Thick, muscular tendrils",
+    "Thin, delicate tendrils",
+    "Decorative tendril arrangements"
+   ],
+   "eye_color_variants": [
+    "Yellow",
+    "Orange",
+    "Red",
+    "Amber",
+    "Golden",
+    "Slit-pupiled eyes"
+   ],
+   "common_adornments": [
+    "Traditional Sith robes and garments",
+    "Ancient Sith ceremonial attire",
+    "Force-related jewelry and accessories",
+    "Cultural symbols and markings",
+    "Imposing armor and weapons"
+   ],
+   "llm_description_prompt": "Describe a Sith Pureblood character. Emphasize their distinctive red skin and the way their facial tendrils move, suggesting their ancient heritage and connection to the dark side of the Force. Their eyes should convey both intelligence and an aura of dark power. Consider their proud, ambitious nature and the way they carry themselves with the confident bearing of someone descended from an ancient empire of conquerors."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian (Dark Side)",
+    "narrative": "Sith Pureblood's natural Force sensitivity and Dark Side Affinity make them exceptional Guardians, using their dark side powers to protect and dominate.",
+    "mechanical_benefits": [
+     "Dark Side Affinity trait enhances intimidation and protective abilities",
+     "Sith Heritage trait provides resistance to Force-based threats",
+     "Force Sensitivity trait aids in detecting threats"
+    ]
+   },
+   {
+    "class": "Consular (Dark Side)",
+    "narrative": "Sith Pureblood's natural charisma and Force sensitivity make them exceptional Consulars, using their dark side abilities to manipulate and control situations.",
+    "mechanical_benefits": [
+     "Dark Side Affinity trait enhances manipulation and intimidation",
+     "Force Sensitivity trait aids in understanding others",
+     "High Charisma supports diplomatic functions"
+    ]
+   },
+   {
+    "class": "Scholar (Sith Studies)",
+    "narrative": "Sith Pureblood's natural intelligence and connection to their heritage make them excellent Scholars, particularly in Sith history and dark side studies.",
+    "mechanical_benefits": [
+     "Sith Heritage trait provides unique insights into Sith lore",
+     "Force Sensitivity trait enhances Force-related research",
+     "High Intelligence supports academic pursuits"
+    ]
+   },
+   {
+    "class": "Scout (Force Scout)",
+    "narrative": "Sith Pureblood's Force sensitivity and natural abilities make them excellent Scouts, able to sense and navigate using their dark side connection.",
+    "mechanical_benefits": [
+     "Force Sensitivity trait enables unique perception abilities",
+     "Sith Heritage trait provides resistance to Force-based threats",
+     "Dark Side Affinity aids in intimidating enemies"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Sith Empire",
+    "narrative": "Sith Purebloods are the natural leaders and elite of the Sith Empire, using their ancient heritage and dark side abilities to maintain control and expand their dominion."
+   },
+   {
+    "faction": "Dark Side Traditions",
+    "narrative": "Many Sith Purebloods join various dark side traditions and cults, dedicating themselves to the study and mastery of dark side powers."
+   },
+   {
+    "faction": "Independent Sith",
+    "narrative": "Some Sith Purebloods prefer to work independently, seeking to restore their ancient empire's glory through their own means and ambitions."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your dark side connection becomes more refined, allowing you to sense and manipulate the emotions of others with greater precision.",
+     "mechanical_benefit": "Increase the range of Force detection from 30 feet to 60 feet, and gain advantage on Insight checks when dealing with Force-sensitive individuals."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your Sith heritage manifests more strongly, allowing you to channel the ancient power of your ancestors.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Charisma-based skill checks for the next minute, representing your enhanced dark side presence."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your dark side affinity reaches new heights, allowing you to channel your heritage into devastating Force-based attacks.",
+     "mechanical_benefit": "When using dark side Force powers, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced dark side mastery."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your Sith heritage reaches its peak, making you nearly immune to Force-based manipulation and allowing you to dominate others through sheer presence.",
+     "mechanical_benefit": "You have advantage on all saving throws against Force effects, and you can use your action to attempt to frighten all creatures within 30 feet."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "As a 5th-level Sith Pureblood, you've begun to grasp the true extent of your dark side abilities. You feel an insatiable hunger for power and a growing sense of ambition that drives you to seek out new challenges and conquests.",
+    "level_10": "At 10th level, you've become increasingly entrenched in the dark side, and your connection to its power has deepened. Your natural affinity for manipulation and coercion becomes more pronounced, making you a master of subtle influence and psychological warfare.",
+    "level_15": "As a 15th-level Sith Pureblood, you've reached new heights of mastery over the dark side. You're able to bend reality to your will, using your powers to shape the galaxy in your image. Your ambition and sense of self-importance have become almost palpable.",
+    "level_20": "At 20th level, you've transcended mere mortal limitations, embracing the true essence of the Sith. You wield dark side energy with unparalleled finesse, able to reshape entire planets in your wake. Your influence is all-pervasive, and your name becomes synonymous with terror and awe throughout the galaxy."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Sith Rituals",
+    "type": "ceremonial",
+    "description": "Sith Purebloods practice ancient rituals that channel the dark side of the Force, often involving meditation, sacrifice, and the study of Sith holocrons.",
+    "narrative_impact": "Provides spiritual connection and dark side enhancement. Can be used for character development and Force training scenarios."
+   },
+   {
+    "name": "Bloodline Pride",
+    "type": "traditional",
+    "description": "Sith Purebloods take great pride in their ancient bloodline, studying their heritage and seeking to restore the glory of their ancestors.",
+    "narrative_impact": "Creates cultural identity and motivation for conquest. Can be used for character development and quest hooks."
+   },
+   {
+    "name": "Dark Side Meditation",
+    "type": "cultural",
+    "description": "Sith Purebloods practice unique meditation techniques that enhance their connection to the dark side and strengthen their Force abilities.",
+    "narrative_impact": "Provides Force enhancement and character development opportunities. Can be used for training and spiritual growth."
+   },
+   {
+    "name": "Conquest Traditions",
+    "type": "narrative",
+    "description": "Sith Pureblood traditions emphasize conquest and domination, teaching each generation how to expand their influence and control.",
+    "narrative_impact": "Provides motivation for expansion and control scenarios. Can be used for character development and faction interactions."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "dark_side",
+    "adaptation_name": "Dark Side Mastery",
+    "description": "Your natural affinity for the dark side allows you to thrive in environments rich with dark side energy and Force corruption.",
+    "mechanical_benefit": "You have advantage on all skill checks in dark side environments, and you can sense the presence of dark side artifacts or locations."
+   },
+   {
+    "environment": "force_rich",
+    "adaptation_name": "Force Sensitivity",
+    "description": "Your connection to the Force allows you to navigate and understand Force-rich environments with ease.",
+    "mechanical_benefit": "You have advantage on saving throws against Force effects, and you can sense disturbances in the Force within 1 mile."
+   },
+   {
+    "environment": "corrupt",
+    "adaptation_name": "Corruption Resistance",
+    "description": "Your dark side heritage makes you resistant to corruption and dark side influences that would corrupt others.",
+    "mechanical_benefit": "You have advantage on saving throws against corruption effects, and you can sense the presence of corrupting influences."
+   },
+   {
+    "environment": "intimidating",
+    "adaptation_name": "Intimidating Presence",
+    "description": "Your natural dark side aura creates an intimidating presence that affects all around you.",
+    "mechanical_benefit": "You have advantage on Intimidation checks, and creatures have disadvantage on saving throws against fear effects when within 10 feet of you."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on dark side abilities and Force sensitivity, complementing rather than overshadowing class features",
+    "Sith heritage improvements maintain the species' unique identity while providing meaningful advancement",
+    "Dark side and Force abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on Sith traditions and dark side practices rather than mechanical advantages",
+    "Sith rituals and bloodline pride provide unique roleplaying opportunities and cultural depth",
+    "Dark side meditation and conquest traditions enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for dark side and Force-rich environments where Sith heritage is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Intimidating presence and corruption resistance provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Sith Empire",
+   "cultural_networks": [
+    "The Sith Order: A network of dark side adepts bound by their shared pursuit of power and conquest.",
+    "The Galactic Underworld: A clandestine web of spies, assassins, and saboteurs that serve the interests of the Sith.",
+    "The Dark Side Brotherhood: A mysterious organization dedicated to preserving and advancing Sith knowledge."
+   ],
+   "traditional_practices": [
+    "Ritual sacrifice: The offering of a living being to the dark side in exchange for power or insight.",
+    "Dark side meditation: A series of rituals and techniques designed to focus one's will and channel the dark side energy within.",
+    "Sith holocron study: The analysis and interpretation of ancient Sith artifacts containing dark side knowledge."
+   ],
+   "cultural_knowledge": [
+    "The history of the Sith Empire and its downfall.",
+    "The intricacies of dark side magic and its applications in warfare.",
+    "The art of psychological manipulation and coercion."
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    "Dark Side Planet",
+    "Force-Rich Asteroid Field"
+   ],
+   "environmental_knowledge": [
+    "Understanding the underlying energy signature of a planet or location, allowing you to anticipate and prepare for any incoming dark side threats.",
+    "Sensing the presence of Force artifacts, locations, or individuals with significant power within the area.",
+    "Analyzing local ecosystems to identify areas ripe for exploitation or conquest."
+   ],
+   "survival_techniques": [
+    "Dark side-based navigation: Using one's connection to the dark side to chart and traverse unfamiliar territories.",
+    "Force-assisted excavation: Employing the power of the Force to locate hidden resources, artifacts, or structures within a given environment.",
+    "Planetary adaptation: Adapting oneself and one's allies to harsh planetary conditions through dark side-facilitated enhancements."
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    {
+     "skin_color": "red"
+    },
+    {
+     "facial_tendrils": true
+    },
+    {
+     "eye_color": "black"
+    },
+    {
+     "height": "tall"
+    },
+    {
+     "muscle_mass": "muscular"
+    }
+   ],
+   "morphology": {
+    "head_type": "angular",
+    "body_type": "lean",
+    "average_height": "180 cm"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_color": "pale red",
+      "facial_tendrils": "sparse",
+      "eye_color": "darker black",
+      "height": "shorter",
+      "muscle_mass": "less muscular"
+     },
+     "adult": {
+      "skin_color": "deep red",
+      "facial_tendrils": "longer",
+      "eye_color": "same",
+      "height": "average",
+      "muscle_mass": "more muscular"
+     },
+     "elder": {
+      "skin_color": "dark red",
+      "facial_tendrils": "wispy",
+      "eye_color": "lighter black",
+      "height": "taller",
+      "muscle_mass": "less muscular"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      {
+       "horns": true
+      },
+      {
+       "scales": true
+      },
+      {
+       "eyes": "glowing red"
+      },
+      {
+       "skin": "darker red with black undertones"
+      }
+     ],
+     "light_side": [
+      {
+       "horns": false
+      },
+      {
+       "scales": false
+      },
+      {
+       "eyes": "normal black"
+      },
+      {
+       "skin": "lighter red with pink undertones"
+      }
+     ]
+    }
+   },
+   "unique_identifiers": [
+    {
+     "scars": true
+    },
+    {
+     "tattoos": true
+    },
+    {
+     "facial_markings": true
+    }
+   ],
+   "prompt_schema": {
+    "base_prompt": "A tall, muscular Sith Pureblood with angular features and deep red skin.",
+    "contextual_modifiers": [
+     {
+      "age": [
+       "child",
+       "adult",
+       "elder"
+      ]
+     },
+     {
+      "morality": [
+       "dark_side",
+       "light_side"
+      ]
+     },
+     {
+      "appearance": [
+       "with_horns",
+       "without_scales",
+       "with_glowing_eyes"
+      ]
+     }
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "honor_duel",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "The Sith Pureblood sees you as a threat to their power and plans to eliminate you before you become a problem.",
+      "trigger": "the_sith_pureblood_views_you_as_a_threat"
+     },
+     "escalation": {
+      "description": "The Sith Pureblood increases their efforts to undermine your authority, often through subtle manipulation or direct confrontation.",
+      "trigger": "the_sith_pureblood_undermines_your_authority"
+     },
+     "confrontation": {
+      "description": "The Sith Pureblood openly challenges you for power and dominance, revealing the true extent of their ambition.",
+      "trigger": "the_sith_pureblood_openly_challenges_you"
+     }
+    },
+    "resolution_paths": {
+     "victory": "You successfully defeat the Sith Pureblood, crushing their plans for domination.",
+     "redemption": "You offer the Sith Pureblood a chance to redeem themselves, which they accept and become an ally.",
+     "escape": "The Sith Pureblood allows you to leave unharmed, but only because they have more pressing matters to attend to."
+    },
+    "conflict_triggers": [
+     "the_sith_pureblood_is_challenged_by_another",
+     "you_discover_a_secret_planned_by_the_sith_pureblood"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "the_sith_pureblood_is_harmed_or_killed_by_your_actions",
+      "you_disrespect_or_underestimate_the_sith_pureblood"
+     ],
+     "vendetta_type": "A desire for revenge against the one who wronged them"
+    },
+    "primary_nemesis": "The Jedi Order (specifically, the ancient 'Guardians of Peace and Justice' who led the final charge against the Sith Empire)",
+    "historical_enemies": [
+     "The Mandalorians",
+     "The Republic's early attempts to eradicate the Sith"
+    ],
+    "tragic_flaw": "Their unyielding ambition, which can blind them to the consequences of their actions"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "sith_pureblood_romance"
+   ],
+   "romance_progression": {
+    "stage1": "You show interest in the Sith Pureblood's interests and hobbies, building a tentative connection.",
+    "stage2": "The Sith Pureblood begins to open up to you about their past and motivations, revealing a more vulnerable side.",
+    "stage3": "The two of you share a romantic moment, such as a dance or a kiss, solidifying your bond.",
+    "stage4": "The Sith Pureblood starts to make sacrifices for the relationship, such as giving up power or status.",
+    "stage5": "You and the Sith Pureblood become an official couple, facing the challenges and expectations that come with it together."
+   },
+   "romance_events": [
+    "sith_pureblood_confesses_their_feelings",
+    "you_save_the_sith_pureblood_from_a_dangerous_situation"
+   ],
+   "romance_modifiers": [
+    "sith_pureblood_romance_bonus"
+   ],
+   "overrides": {
+    "courtship_routine": "Sith Purebloods often engage in 'Bonding Through Conflict', where they challenge one another's skills and resolve in a series of duels or trials.",
+    "relationship_dynamics": "A Sith Pureblood's romantic partner is seen as a potential ally, but also a rival for dominance within their social circle. They may struggle to balance their love with the need to assert power over others."
+   }
+  },
+  "flavor_text": "Sith Purebloods hold their heritage sacred, believing that the ancient Sith gods imbued them with a divine right to rule. Their homeworld of Ziost is said to be the site where the first Sith lord was born, and its ruins are a revered pilgrimage destination for those seeking to connect with their dark side roots.",
+  "llm_guidance": {
+   "roleplay_guidance": "A Sith Pureblood's ambition is often at odds with their personal morals, leading to inner turmoil. They may struggle with the moral implications of their actions, but ultimately prioritize power and dominance over ethics.",
+   "narrative_hooks": [
+    "Explore the complexities of a Sith Pureblood's relationship with their heritage",
+    "Delve into the dark side rituals practiced on Ziost"
+   ],
+   "social_dynamics": "Sith Purebloods often form close-knit cliques, bound by blood ties and shared ambition. They may be fiercely loyal to one another, but outsiders are frequently viewed with suspicion.",
+   "common_motivations": [
+    "Restore the Sith Empire to its former glory",
+    "Prove themselves as superior to their peers"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "ambitious",
+      "intimidating"
+     ],
+     "influences": [
+      "Charisma (high)",
+      "Intelligence (medium)",
+      "Force Sensitivity (high)"
+     ]
+    },
+    "motivations": {
+     "drive": "Acquire power and influence within the Sith Order",
+     "goals": [
+      "Identify and exploit weaknesses in their allies or enemies",
+      "Discover hidden knowledge or artifacts of the dark side",
+      "Recruit new members to swell the ranks of the Sith Purebloods"
+     ]
+    },
+    "combat_behavior": "Focus on exploiting vulnerabilities in their opponents, using tactics that amplify their natural connection to the dark side.",
+    "social_behavior": "Manipulate others through charm and intimidation, seeking to bend them to their will."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "Trust (0-10)": "Representing the level of mutual understanding and respect between individuals"
+     }
+    ],
+    "loyalty_triggers": [
+     "Betrayal (any action that undermines or harms the character)",
+     "Favoritism (instances where the character is unfairly favored over others)"
+    ]
+   },
+   "services": []
+  }
+ },
+ "validation": {
+  "candidate_urid": "sith_pureblood",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/sith_pureblood.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

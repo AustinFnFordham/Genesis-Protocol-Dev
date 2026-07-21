@@ -1,0 +1,212 @@
+{
+ "record": {
+  "id": "power_stealth_field",
+  "name": "Stealth Field",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "stealth",
+   "invisibility",
+   "cloaking",
+   "infiltration",
+   "optical_camouflage",
+   "covert"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced optical camouflage and sensor masking technology"
+   }
+  },
+  "narrative": "You activate a stealth field generator that bends light around you and masks your sensor signature, rendering you nearly invisible to sight and technology. The power manifests as your form shimmering then vanishing, becoming translucent ghost that moves through enemy territory undetected.",
+  "flavor_text": "\"The best infiltrations are the ones nobody knows happened.\" - Stealth Operative",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating stealth field generator"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating optical camouflage and sensor dampeners"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You become invisible and undetectable to sensors.",
+   "mechanics": [
+    {
+     "type": "grant_invisibility",
+     "value": {
+      "invisibility_type": "true_invisibility"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Become invisible to sight and technology"
+    },
+    {
+     "type": "stealth_bonus",
+     "value": {
+      "bonus": 10,
+      "stat": "stealth_checks"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain +10 bonus to Stealth checks while invisible"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's infiltration expertise transforms Stealth Field into perfect vanishing act. They've mastered moving while invisible, understanding exactly how to avoid disturbing their environment—becoming ghost that leaves no trace.",
+    "mechanical_benefit": [
+     {
+      "type": "remain_invisible",
+      "value": {
+       "effect": "stay_invisible_after_attack"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Operatives remain invisible for 1 round even after attacking."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to combine Stealth Field with social engineering. They use invisibility for perfect positioning, then deactivate it to appear exactly where enemies don't expect—creating psychological advantage through impossible placement.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 8,
+       "unit": "hours"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Human stealth fields last 8 hours instead of 1 for extended operations."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance relies on Stealth Field for critical infiltrations behind Imperial lines. Their versions can cloak multiple operatives, creating invisible strike teams that gather intelligence or plant explosives without ever being detected.",
+    "mechanical_benefit": [
+     {
+      "type": "group_stealth",
+      "value": {
+       "additional_targets": 2
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Rebels can extend stealth field to 2 additional allies within 5 feet."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe your form shimmering then vanishing, becoming translucent ghost. Show enemies looking right through you, sensors showing nothing, your invisible presence allowing perfect infiltration. The invisibility should feel complete and empowering.",
+   "tactical_notes": "Stealth Field grants invisibility and +10 Stealth for 1 hour with concentration, costing 2 Tech Points. Devastating for infiltration but requires concentration. Perfect for scouts and assassins. Remember invisibility breaks on attack (except with synergies). The duration allows extended operations.",
+   "narrative_hooks": [
+    "Stealth field allows infiltration of impossible-to-breach facility",
+    "Invisible operative witnesses critical enemy conversation",
+    "Field failure at wrong moment creates desperate situation"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an operative activating stealth field. Their form shimmers with optical camouflage before becoming nearly invisible, only a faint translucent outline visible. They move past enemies who look right through them, completely undetected. The scene captures perfect technological invisibility.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/stealth_field.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_stealth_field",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_stealth_field.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

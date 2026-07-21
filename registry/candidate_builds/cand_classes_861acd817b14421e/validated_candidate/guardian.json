@@ -1,0 +1,368 @@
+{
+ "record": {
+  "id": "guardian",
+  "name": "Guardian",
+  "era": "Galactic_Republic",
+  "rarity": "rare",
+  "tags": [
+   "force_user",
+   "jedi",
+   "guardian",
+   "tank",
+   "defensive",
+   "protector",
+   "light_side",
+   "melee_specialist",
+   "strength_based",
+   "force_defense"
+  ],
+  "narrative": "Force-wielders who excel at protection and defense. They are the shield of the Jedi Order, using the Force to protect others and maintain peace through strength and unwavering resolve.",
+  "flavor_text": "A Jedi uses the Force for knowledge and defense, never for attack. - Yoda",
+  "cultural_significance": "Guardians are revered as protectors of peace and justice, embodying the Jedi ideal of using strength to defend the weak.",
+  "description": "Force-wielders who excel at protection and defense. They are the shield of the Jedi Order, using the Force to protect others and maintain peace through strength and unwavering resolve.",
+  "origin_story": "The Guardian tradition dates back to the earliest days of the Jedi Order, when the first Jedi realized that the Force could be used not just for knowledge, but for protection.",
+  "class_identity_profile": {
+   "core_fantasy": "A stalwart defender of peace and justice, wielding the Force as both shield and sword to protect the innocent and stand against darkness.",
+   "key_attributes": [
+    "Strength",
+    "Wisdom"
+   ],
+   "iconic_gear": [
+    "Lightsaber",
+    "Jedi Robes",
+    "Meditation kit",
+    "Force-imbued protective gear"
+   ],
+   "role_in_galaxy": "Guardians are the protectors of the Republic and the Jedi Order, standing as the first line of defense against threats both physical and spiritual. They embody the principle that true strength comes from protecting others.",
+   "famous_exemplars": [
+    "Obi-Wan Kenobi",
+    "Mace Windu",
+    "Qui-Gon Jinn",
+    "Plo Koon",
+    "Kit Fisto"
+   ],
+   "species_synergies": [
+    {
+     "species": "human",
+     "narrative": "Human adaptability and determination make them natural Guardians, able to excel in any protective role."
+    },
+    {
+     "species": "kel_dor",
+     "narrative": "Kel Dor wisdom and Force sensitivity make them exceptional Guardians with deep insight into protection."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "jedi_order",
+     "narrative": "Guardians are the backbone of the Jedi Order, serving as its primary protectors and defenders."
+    },
+    {
+     "faction": "galactic_republic",
+     "narrative": "Guardians often serve as peacekeepers and protectors for the Republic, defending its citizens and values."
+    }
+   ]
+  },
+  "hit_die": "1d10",
+  "proficiencies": {
+   "armor": [
+    "light",
+    "medium"
+   ],
+   "weapons": [
+    "lightsabers",
+    "blaster_pistols",
+    "vibroweapons"
+   ],
+   "tools": [
+    "meditation_kit",
+    "force_imbued_items",
+    "protective_gear"
+   ],
+   "saving_throws": [
+    "strength",
+    "wisdom"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "athletics",
+     "insight",
+     "intimidation",
+     "perception",
+     "persuasion",
+     "survival"
+    ]
+   }
+  },
+  "primary_ability": "Strength or Wisdom",
+  "primary_resource": "Force Points",
+  "starting_equipment": [
+   "A lightsaber",
+   "A blaster pistol and 50 rounds",
+   "Meditation kit",
+   "Protective gear",
+   "Explorer's pack",
+   "50 credits"
+  ],
+  "connections": [
+   {
+    "target_id": "jedi_order",
+    "target_type": "faction",
+    "relationship_id": "rel_iconic_to",
+    "narrative": "Guardians are the backbone of the Jedi Order, serving as its primary protectors and defenders.",
+    "mechanical_benefit": "Access to Jedi training and resources"
+   },
+   {
+    "target_id": "galactic_republic",
+    "target_type": "faction",
+    "relationship_id": "rel_common_among",
+    "narrative": "Guardians often serve as peacekeepers and protectors for the Republic, defending its citizens and values.",
+    "mechanical_benefit": "Access to Republic resources and intelligence"
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "As a Guardian, you embody the unwavering resolve to protect others. Your actions should reflect this commitment to defense and service.",
+   "narrative_hooks": [
+    "Use your abilities to deflect incoming attacks and protect allies.",
+    "Employ the Force to sense and counter threats before they strike.",
+    "Demonstrate compassion and empathy in your interactions with others, even in the face of adversity."
+   ],
+   "social_dynamics": "Guardians are often seen as pillars of strength within their communities. They should strive to maintain a strong sense of duty and responsibility towards those they protect.",
+   "common_motivations": [
+    "Protecting others from harm",
+    "Upholding justice and order",
+    "Preserving peace and stability"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A cinematic digital painting of a Jedi Guardian in traditional robes, standing in a protective stance with their lightsaber ignited. The Guardian's expression shows calm determination and unwavering resolve, their eyes reflecting deep wisdom and Force connection. The scene is bathed in the soft blue glow of their lightsaber, with ethereal Force energy subtly surrounding them. The background suggests a Jedi Temple or training area, with other Jedi visible in the distance.",
+   "base_negative_keywords": [
+    "dark side",
+    "aggressive",
+    "angry",
+    "chaotic",
+    "destructive",
+    "cartoonish",
+    "blurry"
+   ],
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "Close-up portrait focusing on the Guardian's wise, determined features and calm confidence. The Force energy should be subtly visible around their eyes and hands."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "In a protective stance, lightsaber ignited and ready to defend. The Guardian should be positioned to shield others, with Force energy creating a protective barrier."
+    },
+    {
+     "target_type": "Class_Scene",
+     "modifier_text": "In a Jedi Temple or training area, surrounded by other Jedi and students. The scene should convey wisdom, protection, and the passing of knowledge."
+    }
+   ]
+  },
+  "ui": {
+   "image": "images/classes/guardian.jpg",
+   "icon": "icons/classes/guardian.svg",
+   "color": "#0066CC"
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "Jedi_robes",
+    "Force_shield_icon",
+    "blaster_scar"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Guardian stance: feet shoulder-width apart, hands up in a defensive position, radiating an aura of calm resolve",
+    "energy_signature": "A swirling vortex of blue and white energies emanates from the Guardian's connection to the Force, pulsing with a gentle but firm light"
+   },
+   "prompt_schema": {
+    "base_prompt": "Create an image of a Guardian standing tall, their lightsaber at the ready as they prepare to defend against an incoming attack",
+    "contextual_modifiers": [
+     "Show the Guardian's expression as calm and determined",
+     "Emphasize the Guardian's connection to the Force through glowing blue or white energies surrounding them",
+     "Include a subtle hint of weariness from years of protecting others, perhaps a few wisps of gray in their hair or a faint scar above their eyebrow"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Nemesis appears as a former ally or acquaintance, initially seeking protection or guidance.",
+    "escalation": "As the Guardian's influence and reputation grow, so does the Nemesis's resentment and aggression towards them.",
+    "confrontation": "The final showdown between the Guardian and their Nemesis takes place in a symbolic location, representing the balance of power between light and dark."
+   },
+   "resolution_paths": {
+    "victory": "The Guardian defeats the Nemesis using their mastery of the Force and strategic thinking.",
+    "redemption": "The Nemesis is redeemed through their confrontation with the Guardian, who helps them find peace and forgiveness.",
+    "escape": "The Guardian and their allies successfully thwart the Nemesis's plans, but at a great personal cost."
+   },
+   "conflict_triggers": [
+    "The Guardian's increasing popularity and influence",
+    "The Nemesis's own sense of inadequacy or jealousy",
+    "A hidden agenda or ulterior motive"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "Initial attraction, but the Guardian's dedication to their duties makes it difficult to balance work and love.",
+    "stage2": "The relationship deepens as the partner becomes more involved in the Guardian's life and missions.",
+    "stage3": "Challenges arise from the Guardian's role as a protector and leader, leading to conflicts with romantic partners.",
+    "stage4": "Jealousy, possessiveness, or insecurity may surface in the Guardian's partner due to their relationship with others.",
+    "stage5": "The relationship becomes more stable and secure as both partners learn to adapt to each other's roles and responsibilities."
+   },
+   "lifestyle_challenges": [
+    "Balancing work and personal life",
+    "Dealing with jealousy or possessiveness from romantic partners",
+    "Navigating the complexities of being in a high-profile relationship while serving as a Guardian"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Calm",
+      "Resolute"
+     ],
+     "tone": "Confident"
+    },
+    "motivations": {
+     "primary_motivation": "Protection",
+     "secondary_motivations": [
+      "Service",
+      "Duty"
+     ]
+    },
+    "combat_behavior": "Engage in defensive tactics to shield allies and absorb damage.",
+    "social_behavior": "Interact with companions in a calm, professional manner, offering guidance and support when needed."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Companions gain 100% trust after completing three missions together successfully.",
+     "Trust is lost if a companion fails to complete a mission or betrays the Guardian's trust."
+    ],
+    "loyalty_triggers": "Reward companions with gifts, recognition, and praise for outstanding service."
+   },
+   "services": [
+    "Shield allies from harm using defensive techniques and abilities",
+    "Provide tactical guidance during missions",
+    "Serve as a mediator in disputes between allies"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "force_protection_1",
+    "feature_id": "force_protection",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Wielding the Force to bolster their allies' resilience and mitigate incoming damage.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Protection Mechanic Description",
+      "notes": "Grant the ability to use protection mechanics."
+     }
+    ]
+   },
+   {
+    "node_id": "force_sensitivity_1",
+    "feature_id": "force_sensitivity",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "A heightened awareness of their surroundings, granting a bonus to Wisdom (Perception) checks.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": 2,
+      "notes": "Grant a +2 bonus to Wisdom (Perception) checks."
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_1",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Proficiency in one type of skill or tool, chosen at character creation.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Proficiency Choice Description",
+      "notes": "Grant the ability to use proficiency mechanics for a chosen skill or tool."
+     }
+    ]
+   },
+   {
+    "node_id": "defensive_stance_2",
+    "feature_id": "defensive_stance",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "A stance that grants advantage on Constitution saving throws made to resist being knocked prone.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": 1,
+      "notes": "Grant a +1 bonus to Constitution saving throws."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_choice_3",
+    "feature_id": "subclass_choice",
+    "level_requirement": 3,
+    "type": "choice",
+    "description": "Select one subclass from the list below, and it will provide additional abilities and customization.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Subclass Selection Description",
+      "notes": "Allow the player to select a subclass."
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "guardian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/guardian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

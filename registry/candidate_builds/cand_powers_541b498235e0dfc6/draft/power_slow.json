@@ -1,0 +1,231 @@
+{
+ "record": {
+  "id": "power_slow",
+  "name": "Slow",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 3,
+  "tags": [
+   "time",
+   "temporal",
+   "debuff",
+   "movement_reduction",
+   "control",
+   "telekinesis"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 3
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Force manipulation of local time flow"
+   }
+  },
+  "narrative": "You manipulate the Force to slow time's passage for affected creatures, their movements becoming sluggish as seconds stretch into eternities from their perspective. The power manifests as visible distortion around targets, their actions happening in slow motion while the world moves at normal speed around them.",
+  "flavor_text": "\"Time is relative. Let me prove it.\" - Force Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "gesturing to create temporal distortion field"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "manipulating local time flow through the Force"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You slow the flow of time for creatures in the affected area.",
+   "mechanics": [
+    {
+     "type": "reduce_speed",
+     "value": {
+      "reduction": "half_movement"
+     },
+     "target_scopes": [
+      "creatures_in_area"
+     ],
+     "conditions": [
+      {
+       "key": "wisdom_save_failed",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Creatures' speed is halved on failed Wisdom save"
+    },
+    {
+     "type": "action_reduction",
+     "value": {
+      "actions": "action_or_bonus_only",
+      "reactions": "none"
+     },
+     "target_scopes": [
+      "creatures_in_area"
+     ],
+     "notes": "Affected creatures can use either action or bonus action (not both), no reactions"
+    },
+    {
+     "type": "attack_penalty",
+     "value": {
+      "penalty": "disadvantage"
+     },
+     "target_scopes": [
+      "creatures_in_area"
+     ],
+     "notes": "Affected creatures have disadvantage on attack rolls"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "consular",
+    "narrative": "The Consular's Force mastery transforms Slow into near-complete temporal control. They don't just slow time—they create zones where seconds become minutes, their enemies moving like statues while allies act with normal speed.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_radius",
+      "value": {
+       "radius": {
+        "distance": 30,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Consulars affect 30-foot radius instead of standard area."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human perception of time's relativity makes them natural temporal manipulators. They intuitively understand how to stretch moments, their Slow effects feeling more profound because they comprehend exactly what they're stealing from victims.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_penalty",
+      "value": {
+       "effect": "saving_throw_disadvantage"
+      },
+      "target_scopes": [
+       "creatures_in_area"
+      ],
+      "notes": "Human Slow also imposes disadvantage on saving throws for affected creatures."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Slow as advanced Force technique—the power to control battle tempo through temporal manipulation. Their methods emphasize using time dilation tactically, creating opportunities for allies while denying them to enemies.",
+    "mechanical_benefit": [
+     {
+      "type": "selective_slow",
+      "value": {
+       "effect": "choose_targets"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Jedi can choose which creatures in the area are affected by Slow."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe visible distortion around slowed targets, their movements becoming sluggish and dreamlike. Show them trying to act at normal speed but moving as if through molasses, watching helplessly as the world speeds by. The temporal manipulation should feel disorienting and frustrating.",
+   "tactical_notes": "Slow reduces speed, limits actions, and imposes disadvantage on attacks for up to 1 minute with concentration, costing 3 Force Points. Devastating control effect that cripples multiple enemies. The 60-foot range is safe. Concentration requirement makes positioning important.",
+   "narrative_hooks": [
+    "Slow creates cinematic moments where heroes move freely while enemies crawl",
+    "The temporal distortion reveals Force mastery to witnesses",
+    "Breaking concentration at wrong moment creates chaos as time resumes"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of Force users slowing time for multiple enemies. Visible distortion surrounds the affected creatures, their movements sluggish and dreamlike while the world moves at normal speed around them. The contrast between slowed victims and normal-speed heroes creates cinematic slow-motion combat. The scene captures temporal manipulation through the Force.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/slow.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_slow",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_slow.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

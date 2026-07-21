@@ -1,0 +1,126 @@
+{
+ "record": {
+  "id_file": "item_meditation_crystals_guardian",
+  "category": "equipment",
+  "subcategory": "artifacts",
+  "tags": [
+   "equipment",
+   "item",
+   "artifacts",
+   "force_imbued",
+   "jedi",
+   "guardian",
+   "meditation",
+   "unique",
+   "legendary",
+   "mystical",
+   "force_user",
+   "spiritual"
+  ],
+  "id": "item_meditation_crystals_guardian",
+  "name": "Guardian Meditation Crystals",
+  "item_type": "Gear",
+  "subtype": "Force Focus",
+  "rarity": "uncommon",
+  "narrative": "These crystals pulse with a gentle, protective energy that enhances a Guardian's connection to defensive Force techniques. They feel warm and comforting to the touch, humming with a steady, reassuring tone rather than an aggressive buzz.",
+  "flavor_text": "'The strongest shield is a calm heart.' - Jedi Temple Proverb",
+  "cost": 300,
+  "weight": 0.5,
+  "properties": [
+   "force_attuned",
+   "meditation_aid"
+  ],
+  "mechanics": [
+   {
+    "effect": "modify_stat",
+    "description": "Increases the Save DC of your protective Force powers by 1.",
+    "parameters": {
+     "target_property": "force_power_save_dc",
+     "value": 1
+    },
+    "conditions": [
+     {
+      "key": "power_tags",
+      "op": "contains",
+      "value": "protective"
+     }
+    ]
+   }
+  ],
+  "connections": [
+   {
+    "target_id": "class_guardian",
+    "target_type": "class",
+    "relationship_id": "rel_iconic_to",
+    "narrative": "These crystals are commonly used by Jedi Guardians to focus their protective abilities."
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "These crystals should feel warm and comforting to the touch, pulsing with steady, protective energy. They should hum with a reassuring tone that calms the mind and focuses the spirit.",
+   "tactical_notes": "The save DC bonus makes these crystals a valuable asset for any Guardian who relies on control or defensive Force powers to protect their allies.",
+   "narrative_hooks": [
+    "The crystals were a gift from a Jedi Master known for their legendary protective abilities",
+    "The crystals seem to resonate more strongly when used to defend an innocent",
+    "A dark side user might try to corrupt the crystals to twist their protective energy into a controlling one"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A set of three polished, translucent meditation crystals in soft blue and white tones, pulsing with a gentle, protective energy. The crystals are arranged in a triangular, protective pattern on a dark surface.",
+   "base_negative_keywords": [
+    "dark colors",
+    "aggressive energy",
+    "sharp",
+    "menacing",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/items/meditation_crystals_guardian.png",
+   "icon": "/assets/icons/items/meditation_crystals_guardian.svg",
+   "color": "#87CEEB"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_meditation_crystals_guardian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/meditation_crystals_guardian.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,172 @@
+{
+ "record": {
+  "id": "power_force_shunt",
+  "name": "Force Shunt",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You create a precise telekinetic push that repositions rather than harms, sliding creatures and objects across the battlefield like pieces on a dejarik board. The power manifests as an invisible hand that gently but firmly relocates your target exactly where you need them.",
+  "flavor_text": "\"The Force allows us to see the battlefield as it truly is—fluid, changeable.\" - Jedi Battlemaster",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "subtle hand gesture directing the target's movement path"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "precisely calculating distance and direction through the Force"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use the Force to quickly move a creature or object to a different position.",
+   "mechanics": [
+    {
+     "type": "forced_movement",
+     "value": "10_feet_any_direction",
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target is moved 10 feet in any direction you choose"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian uses Force Shunt as a protective tool, pulling allies from danger or positioning enemies for tactical advantage. Their defensive mastery allows more precise control over the repositioning.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_distance",
+      "value": "15_feet",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Guardian's Force Shunt moves targets 15 feet instead of 10"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical thinking transforms Force Shunt into a chess master's tool. Their strategic minds see positioning opportunities others miss, using the power to create perfect setups.",
+    "mechanical_benefit": [
+     {
+      "type": "bonus_action",
+      "value": "quick_shunt",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can use Force Shunt as a bonus action"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Force Shunt as a non-violent alternative to Force Push. Their philosophy transforms it into a tool of mercy, moving opponents without causing harm.",
+    "mechanical_benefit": [
+     {
+      "type": "no_opportunity_attacks",
+      "value": "safe_movement",
+      "target_scopes": [
+       "moved_creature"
+      ],
+      "notes": "Jedi Force Shunt doesn't provoke opportunity attacks"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the precise repositioning—the target sliding smoothly across the ground, lifted slightly by invisible Force energy. Show how they're moved exactly where needed, not thrown violently. This is tactical repositioning, not an attack.",
+   "tactical_notes": "Force Shunt is a cantrip for battlefield control. Move enemies into hazards, allies out of danger, or set up flanking positions. The 30-foot range and any-direction movement offers incredible versatility. No save means it always works.",
+   "narrative_hooks": [
+    "Shunt an enemy into their own trap or off a ledge",
+    "Save an ally from a finishing blow by sliding them to safety",
+    "Create the perfect tactical formation with precise positioning"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dynamic digital painting of Force Shunt repositioning a target. An invisible Force hand slides a warrior across a battlefield, their feet barely touching the ground as they're moved precisely into position. Dust trails show the movement path. The Force user's outstretched hand guides the motion with surgical precision, by Donato Giancola",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_shunt.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_shunt",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_shunt.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

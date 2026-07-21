@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "marauder",
+  "name": "Marauder",
+  "class_id": "hired_gun",
+  "base_class": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "marauder",
+   "brutal",
+   "aggressive",
+   "strength_based",
+   "mercenary",
+   "melee_specialist",
+   "intimidating",
+   "resilient"
+  ],
+  "description": "Marauders channel sheer brutality—smashing through lines, shaking off punishment, and breaking foes' resolve through overwhelming presence.",
+  "specialization_features": [
+   "brutal_momentum",
+   "iron_hide",
+   "skullsplitter",
+   "unstoppable_rampage",
+   "legendary_marauder"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Marauders are brutal, aggressive warriors who specialize in melee combat and intimidating their foes.",
+   "role_in_group": "Tank/Striker",
+   "visual_signals": [
+    "A Marauder's armor is battered and worn, with visible scratches and dents.",
+    "Their facial expressions convey a mix of aggression and intensity."
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "Marauder_Takedown",
+    "feature_id": "marauder_takedown",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "When you deal damage to a creature, you can try to take it down with a brutal takedown. Make an opportunity attack against the target, and if you hit, the target must make a DC 15 Strength saving throw or be knocked prone.",
+    "effects": [
+     {
+      "type": "action",
+      "value": "Opportunity Attack"
+     }
+    ]
+   },
+   {
+    "node_id": "Marauder_Brutalize",
+    "feature_id": "marauder_brutalize",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "As a bonus action, you can enter a brutalize state. While in this state, your Strength checks deal an additional 2d6 damage.",
+    "effects": [
+     {
+      "type": "feature",
+      "value": "Brutalize State"
+     }
+    ]
+   },
+   {
+    "node_id": "Marauder_Breakpoint",
+    "feature_id": "marauder_breakpoint",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "When a creature you can see makes an attack roll against you, you can make a melee Attack roll against that target. If your attack roll equals or exceeds the target's attack roll, the target is considered to have hit itself instead.",
+    "effects": [
+     {
+      "type": "reaction",
+      "value": "Breakpoint"
+     }
+    ]
+   },
+   {
+    "node_id": "Marauder_Resonance",
+    "feature_id": "marauder_resonance",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your action to create a resonance effect. You and all creatures within 10 feet of you must make a DC 15 Constitution saving throw or become disoriented for 1 minute.",
+    "effects": [
+     {
+      "type": "action",
+      "value": "Resonance Effect"
+     }
+    ]
+   },
+   {
+    "node_id": "Marauder_Overpower",
+    "feature_id": "marauder_overpower",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "As an action, you can attempt to overpower a creature. Make a Strength check against the target's Strength saving throw DC. If you succeed, the target is incapacitated and cannot move until it makes a successful Strength (Athletics) check or it takes a short rest.",
+    "effects": [
+     {
+      "type": "action",
+      "value": "Overpower"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "ImperialMarchingBlade",
+    "SithRedLightsaberCrystal"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Marauder assumes a wide-legged stance with their lightsaber at the ready, radiating an aura of intimidation and aggression.",
+    "energy_signature": "A dark side energy signature crackles around Marauder's armor, as if the very fabric of the Force is being twisted by their rage."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a dramatic image of a Marauder charging into battle, lightsaber shining bright in the darkness.",
+    "contextual_modifiers": [
+     "In a dimly lit cave on the planet Zorvath",
+     "With an enemy stormtrooper cowering in fear"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "marauder",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun_marauder.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

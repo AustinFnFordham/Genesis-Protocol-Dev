@@ -1,0 +1,182 @@
+{
+ "record": {
+  "id": "armorer",
+  "name": "Armorer",
+  "class_id": "guardian",
+  "base_class": "guardian",
+  "tags": [
+   "guardian",
+   "armorer",
+   "crafter",
+   "defensive",
+   "tank",
+   "tech_specialist",
+   "armor_specialist",
+   "engineer",
+   "protective",
+   "support"
+  ],
+  "description": "Armorers are masters of crafting protective equipment and armor. They excel at creating defensive gear, enhancing protective capabilities, and using their knowledge of materials and techniques to provide the best possible protection for themselves and others.",
+  "specialization_features": [
+   "armor_crafting",
+   "protective_enhancement",
+   "defensive_engineering",
+   "armorer_mastery",
+   "legendary_armorer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Crafters of protection and defenders of the innocent.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Armor-plated suit",
+    "Helmet with visor"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "armor_enhancement",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have expertise in crafting armor that enhances your own defensive capabilities. When donning a suit of armor you crafted, you gain +1 AC for every two levels above 10th.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "armorer_surge_protection",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "A surge of protective energy emanates from the armorer's armor, granting them a temporary boost to their defensive capabilities."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "shield_proficiency",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have proficiency with shields and can use them to provide additional defensive capabilities. When using a shield, you gain +1 to Armor Class.",
+    "effects": [
+     {
+      "type": "shield_proficiency"
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "advanced_materials",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have access to advanced materials and techniques for crafting armor. When crafting a suit of armor, you can choose one material or technique that provides +1 AC.",
+    "effects": [
+     {
+      "type": "material_selection"
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_15",
+    "feature_id": "shield_master",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have expertise in using shields to deflect attacks. When using a shield, you gain +2 AC and can use your reaction to make an Opportunity Attack.",
+    "effects": [
+     {
+      "type": "opportunity_attack"
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_18",
+    "feature_id": "armor_mastery",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have mastered the art of crafting and using armor. When donning a suit of armor you crafted, you gain +3 AC for every two levels above 10th.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "ironclad_fortitude",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the armor's ancient magic flows through you, your form becomes more resilient. Your natural armor increases by +4 for a moment, making it harder to hit you."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Darth_Vader_Helmet",
+    "Stormtrooper_Emblem"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance, ready to protect the innocent with its powerful armor.",
+    "energy_signature": "Surrounded by a soft blue aura, pulsating with gentle energy that reflects its focus on protection and defense."
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled Armorer standing guard in a dimly lit cantina, surrounded by various types of armor and shields.",
+    "contextual_modifiers": [
+     "With a lightsaber at their side",
+     "In a busy marketplace on Coruscant"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "armorer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian_armorer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

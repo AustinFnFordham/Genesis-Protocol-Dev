@@ -1,0 +1,467 @@
+{
+ "record": {
+  "id": "fighter_assault_specialist",
+  "name": "Assault Specialist",
+  "class_id": "fighter",
+  "tags": [
+   "fighter",
+   "assault_specialist",
+   "offensive",
+   "strength_based",
+   "martial",
+   "aggressive",
+   "melee_specialist",
+   "tactical"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "assault_stance_3",
+    "feature_id": "assault_stance",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You adopt an aggressive fighting stance that emphasizes overwhelming offense. When you take the Attack action, you can make one additional weapon attack as a bonus action. This attack deals 1d4 less damage than your normal attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "bonus_action_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "attack_action"
+       }
+      ],
+      "actions": [
+       "bonus_action"
+      ],
+      "notes": "Additional weapon attack as bonus action, -1d4 damage"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "aggressive_charge_5",
+    "feature_id": "aggressive_charge",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "assault_technique_5",
+    "description": "You can charge into combat with devastating force. When you move at least 20 feet straight toward a target and hit it with a melee weapon attack on the same turn, the target takes an extra 1d8 damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "charge_damage",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "movement_distance",
+        "op": "greater_than_or_equal",
+        "value": 20
+       },
+       {
+        "key": "movement_type",
+        "op": "equals",
+        "value": "straight_toward_target"
+       },
+       {
+        "key": "attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+1d8 damage on charge attacks"
+     }
+    ],
+    "prerequisites": [
+     "assault_stance_3"
+    ]
+   },
+   {
+    "node_id": "weapon_mastery_5",
+    "feature_id": "weapon_mastery",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "assault_technique_5",
+    "description": "You master the art of weapon combat. Choose one weapon type (melee or ranged). You gain a +1 bonus to attack rolls and damage rolls with weapons of that type.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "weapon_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_type",
+        "op": "equals",
+        "value": "chosen_type"
+       }
+      ],
+      "notes": "+1 to attack and damage with chosen weapon type"
+     }
+    ],
+    "prerequisites": [
+     "assault_stance_3"
+    ]
+   },
+   {
+    "node_id": "battle_fury_7",
+    "feature_id": "battle_fury",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "assault_focus_7",
+    "description": "Your rage in battle makes you unstoppable. When you take damage, you can use your reaction to enter a battle fury. While in this state, you have advantage on attack rolls and deal +2 damage with weapon attacks. The fury lasts for 1 minute or until you are knocked unconscious.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "battle_fury",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "damage_taken",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Advantage on attacks, +2 damage for 1 minute"
+     }
+    ],
+    "prerequisites": [
+     "aggressive_charge_5"
+    ]
+   },
+   {
+    "node_id": "precision_strikes_7",
+    "feature_id": "precision_strikes",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "assault_focus_7",
+    "description": "You learn to strike with deadly precision. When you have advantage on a weapon attack, you can choose to deal maximum damage instead of rolling for damage. You can use this feature once per turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "precision_max_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_advantage",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal maximum damage instead of rolling, once per turn"
+     }
+    ],
+    "prerequisites": [
+     "weapon_mastery_5"
+    ]
+   },
+   {
+    "node_id": "overwhelming_assault_9",
+    "feature_id": "overwhelming_assault",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your assault becomes overwhelming. When you hit a creature with a weapon attack, you can force it to make a Strength saving throw (DC = 8 + your proficiency bonus + your Strength modifier). On a failed save, the creature is pushed back 10 feet and knocked prone.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "overwhelming_push",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Push target 10 feet and knock prone on failed STR save"
+     }
+    ],
+    "prerequisites": [
+     "battle_fury_7",
+     "precision_strikes_7"
+    ]
+   },
+   {
+    "node_id": "devastating_critical_11",
+    "feature_id": "devastating_critical",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "critical_technique_11",
+    "description": "Your critical hits are devastating. When you score a critical hit with a weapon attack, you can roll one additional weapon damage die and add it to the damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "extra_critical_damage",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Roll one additional damage die on critical hits"
+     }
+    ],
+    "prerequisites": [
+     "overwhelming_assault_9"
+    ]
+   },
+   {
+    "node_id": "relentless_attacker_11",
+    "feature_id": "relentless_attacker",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "critical_technique_11",
+    "description": "You become relentless in your attacks. When you miss with a weapon attack, you can immediately make another weapon attack against the same target as a free action. You can use this feature once per turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "relentless_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attack_missed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Immediate re-attack on miss, once per turn"
+     }
+    ],
+    "prerequisites": [
+     "overwhelming_assault_9"
+    ]
+   },
+   {
+    "node_id": "assault_mastery_13",
+    "feature_id": "assault_mastery",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have mastered the art of assault combat. Your bonus action attack from Assault Stance now deals full damage, and you can use it twice per turn instead of once.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_bonus_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Bonus action attacks deal full damage, can use twice per turn"
+     }
+    ],
+    "prerequisites": [
+     "devastating_critical_11",
+     "relentless_attacker_11"
+    ]
+   },
+   {
+    "node_id": "unstoppable_force_15",
+    "feature_id": "unstoppable_force",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_technique_15",
+    "description": "You become an unstoppable force of destruction. When you take the Attack action, you can make up to three additional weapon attacks as bonus actions. Each additional attack deals 1d4 less damage than the previous one.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "multiple_bonus_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "attack_action"
+       }
+      ],
+      "actions": [
+       "bonus_action"
+      ],
+      "notes": "Up to 3 bonus action attacks with decreasing damage"
+     }
+    ],
+    "prerequisites": [
+     "assault_mastery_13"
+    ]
+   },
+   {
+    "node_id": "weapon_legend_15",
+    "feature_id": "weapon_legend",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_technique_15",
+    "description": "You become a legend with your chosen weapon. Your weapon attacks ignore resistance to non-magical damage, and you can treat any roll of 19 or 20 on the d20 as a critical hit.",
+    "effects": [
+     {
+      "type": "narrative_effect",
+      "value": "ignore_damage_resistance",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Ignore non-magical damage resistance"
+     },
+     {
+      "type": "modify_roll",
+      "value": "expanded_critical",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "19-20 counts as critical hit"
+     }
+    ],
+    "prerequisites": [
+     "assault_mastery_13"
+    ]
+   },
+   {
+    "node_id": "assault_legend_17",
+    "feature_id": "assault_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of assault combat. When you take the Attack action, you can make a single weapon attack that deals damage equal to your weapon's normal damage plus 5d10 force damage. You can use this feature once per long rest.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_assault",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "attack_action"
+       }
+      ],
+      "notes": "Single attack with +5d10 force damage, once per long rest"
+     }
+    ],
+    "prerequisites": [
+     "unstoppable_force_15",
+     "weapon_legend_15"
+    ]
+   },
+   {
+    "node_id": "perfect_assault_20",
+    "feature_id": "perfect_assault",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of assault combat. Your weapon attacks score a critical hit on a roll of 18-20, and when you score a critical hit, you can immediately make another weapon attack as a free action.",
+    "effects": [
+     {
+      "type": "modify_roll",
+      "value": "perfect_critical",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "18-20 counts as critical hit"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "critical_chain_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Immediate free attack on critical hit"
+     }
+    ],
+    "prerequisites": [
+     "assault_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Jedi Robe",
+    "Lightsaber Hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, lightsaber ignited and at the ready",
+    "energy_signature": "A swirling aura of blue light surrounds the figure, pulsating in time with their breathing"
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a portrait of a seasoned Jedi Master standing on a desert planet's sandy dunes, surrounded by an otherworldly energy signature",
+    "contextual_modifiers": [
+     "high-res-detail",
+     "focus-on-textures"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of combat tactics and brutal efficiency, able to adapt to any battlefield.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Assault Specialist emblem on their armor",
+    "Combat-torn tactical vests"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "fighter_assault_specialist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/fighter_subclasses/fighter.assault_specialist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

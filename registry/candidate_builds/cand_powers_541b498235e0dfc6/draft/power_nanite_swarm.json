@@ -1,0 +1,230 @@
+{
+ "record": {
+  "id": "power_nanite_swarm",
+  "name": "Nanite Swarm",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "nanites",
+   "swarm",
+   "debuff",
+   "corrosion",
+   "molecular",
+   "area_control"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Weaponized nanite cloud technology"
+   }
+  },
+  "narrative": "You release a cloud of microscopic nanites that swarm over enemies like metallic locusts, disassembling armor and flesh at the molecular level. The power manifests as a barely visible shimmer in the air, the swarm's presence only revealed by materials corroding and victims screaming as nanites devour them molecule by molecule.",
+  "flavor_text": "\"Grey goo scenario, weaponized.\" - Mad Scientist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "deploying nanite canister or activator"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "programming swarm behavior and target parameters"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You deploy a swarm of weaponized nanites that damage and debuff enemies in an area.",
+   "mechanics": [
+    {
+     "type": "create_hazard",
+     "value": {
+      "area": {
+       "shape": "sphere",
+       "radius": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      },
+      "hazard_type": "nanite_cloud"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Create 10-foot radius nanite swarm that persists while concentrated"
+    },
+    {
+     "type": "ongoing_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "acid",
+      "modifier": 0,
+      "timing": "start_of_turn"
+     },
+     "target_scopes": [
+      "creatures_in_area"
+     ],
+     "notes": "Creatures starting turn in swarm take 2d4 acid damage"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's nanotechnology expertise transforms Nanite Swarm from indiscriminate weapon to precision tool. They program swarms with sophisticated targeting protocols, creating nanites that distinguish friend from foe, focus on specific materials, or even repair allies while attacking enemies.",
+    "mechanical_benefit": [
+     {
+      "type": "selective_targeting",
+      "value": {
+       "effect": "exclude_allies"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineer swarms don't damage allied creatures or equipment."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human innovation has weaponized nanites beyond standard parameters. They've created self-replicating swarms, nanites that inject toxins, even specialized variants for different targets—turning molecular disassembly into an art of technological destruction.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "acid",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "creatures_in_area"
+      ],
+      "notes": "Human nanites deal an additional 1d4 acid damage per round."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire has perfected Nanite Swarm as terror weapon. Their military-grade nanites are designed for maximum suffering—slow molecular disassembly that leaves victims screaming, a demonstration of Imperial technological supremacy through calculated cruelty.",
+    "mechanical_benefit": [
+     {
+      "type": "armor_degradation",
+      "value": {
+       "effect": "reduce_AC",
+       "amount": 2
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "minute"
+      },
+      "target_scopes": [
+       "creatures_in_area"
+      ],
+      "notes": "Imperial nanites also reduce target AC by 2 as armor corrodes."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the nearly invisible shimmer of the nanite cloud, the horror as victims realize they're being eaten alive at the molecular level. Show armor pitting and corroding, skin developing welts, metal surfaces degrading. The swarm should feel relentlessly destructive and terrifying.",
+   "tactical_notes": "Nanite Swarm creates a persistent 10-foot radius hazard dealing 2d4 acid damage per round to creatures in the area. Costs 2 Tech Points but lasts up to 1 minute with concentration. Perfect for area denial or controlling choke points. Forces enemies to choose between taking damage or repositioning.",
+   "narrative_hooks": [
+    "A nanite swarm forces enemies to abandon a defensive position",
+    "The swarm's indiscriminate nature causes collateral damage and moral questions",
+    "Nanites escaping containment create a spreading threat"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a cloud of weaponized nanites swarming over enemies. The barely visible metallic shimmer reveals thousands of microscopic machines devouring materials at the molecular level. Victims' armor shows rapid corrosion, flesh developing horrific welts as the swarm consumes them. The scene captures the terrifying reality of weaponized nanotechnology.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/nanite_swarm.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_nanite_swarm",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_nanite_swarm.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

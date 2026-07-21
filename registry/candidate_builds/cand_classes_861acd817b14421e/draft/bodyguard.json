@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "bodyguard",
+  "name": "Bodyguard",
+  "class_id": "hired_gun",
+  "base_class": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "bodyguard",
+   "protector",
+   "tank",
+   "defensive",
+   "mercenary",
+   "strength_based",
+   "resilient",
+   "martial"
+  ],
+  "description": "Bodyguards specialize in keeping clients alive—absorbing fire, interposing themselves in harm's way, and controlling the battlefield to deny attacks.",
+  "specialization_features": [
+   "interpose",
+   "protective_stance",
+   "lockdown",
+   "guardian_bulwark",
+   "legendary_bodyguard"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Protective guardians who put themselves between harm and their clients.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Body armor",
+    "Combat shield"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level-3-bodyguard-feature",
+    "feature_id": "bodyguard-shield",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "When you are hit by an attack, you can use your reaction to reduce the damage taken by up to half.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "reduce_damage"
+     }
+    ]
+   },
+   {
+    "node_id": "level-7-bodyguard-feature",
+    "feature_id": "bodyguard-absorption",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain a +2 bonus to Armor Class. When you take damage, your client gains a +1 bonus to Armor Class until the start of your next turn.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "increase_armor_class"
+     }
+    ]
+   },
+   {
+    "node_id": "level-11-bodyguard-feature",
+    "feature_id": "bodyguard-control",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can use your bonus action to give a nearby ally a +2 bonus to Attack and Damage rolls until the start of your next turn.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "increase_attack_damage"
+     }
+    ]
+   },
+   {
+    "node_id": "level-15-bodyguard-feature",
+    "feature_id": "bodyguard-resilience",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain a +1 bonus to Hit Points. When you take damage, your client gains a +2 bonus to Armor Class until the start of your next turn.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "increase_armor_class"
+     }
+    ]
+   },
+   {
+    "node_id": "level-18-bodyguard-feature",
+    "feature_id": "bodyguard-master",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You become a master of protecting your clients. Your client gains a +3 bonus to Armor Class, and you gain a +2 bonus to Attack and Damage rolls when fighting alongside them.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "increase_armor_class_attack_damage"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Darth Vader's Helmet",
+    "Lightsaber Hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance with feet shoulder-width apart and arms crossed, ready to absorb impact.",
+    "energy_signature": "Surrounding the bodyguard with an aura of blue and purple hues, reminiscent of a lightsaber's hum."
+   },
+   "prompt_schema": {
+    "base_prompt": "A seasoned Bodyguard standing guard outside a luxurious cantina on Coruscant, clad in Mandalorian armor and surrounded by a faint blue glow, ready to defend its client from incoming blaster fire.",
+    "contextual_modifiers": [
+     "Focus on the intricate details of the Mandalorian armor",
+     "Emphasize the intensity of the scene with dramatic lighting"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "bodyguard",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun_bodyguard.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

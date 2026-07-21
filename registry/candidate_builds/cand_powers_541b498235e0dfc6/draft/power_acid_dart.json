@@ -1,0 +1,156 @@
+{
+ "record": {
+  "id": "power_acid_dart",
+  "name": "Acid Dart",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "offensive",
+   "damage",
+   "acid",
+   "projectile",
+   "corrosive",
+   "armor_piercing",
+   "chemical",
+   "ranged",
+   "single_target",
+   "ammunition",
+   "engineer"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "This technological power can be used by anyone with technical training"
+   }
+  },
+  "narrative": "You fire a specialized dart loaded with military-grade corrosive compounds that eat through armor and flesh with terrifying efficiency. The power manifests as a silent projectile that releases its payload on impact, the acid hissing and bubbling as it dissolves everything it touches, leaving smoking wounds that continue to burn long after the initial strike.",
+  "flavor_text": "\"One shot, and their armor becomes their tomb.\" - Imperial Assassin Droid",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "loading acid capsule and firing dart launcher"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating trajectory for maximum armor penetration"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire a dart filled with acid that deals acid damage and can corrode armor.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 3,
+      "dice_size": 4,
+      "damage_type": "acid"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 3d4 acid damage to target"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the dart's impact and the immediate chemical reaction as acid spreads across the target's armor. Focus on the hissing sound, acrid smoke, and visible corrosion spreading from the impact point. The acid should continue burning for several seconds, eating through layers of protection.",
+   "tactical_notes": "Acid Dart excels against heavily armored targets, as the corrosive damage ignores some armor benefits. The 3d4 acid damage is consistent and reliable. Its 60-foot range keeps you safely out of melee while delivering chemical warfare. Consider using against droids and vehicles where the acid can damage critical systems.",
+   "narrative_hooks": [
+    "A bounty hunter uses Acid Dart to breach a mandalorian's beskar armor at a weak joint",
+    "The acid reveals hidden compartments in a droid's chassis, exposing vital circuits",
+    "A desperate shot melts through a blast door's locking mechanism"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a sleek dart projectile impacting armor, its acid payload spreading in a vivid green-yellow burst. The corrosive liquid bubbles and hisses as it eats through metal plating, creating smoking holes with glowing edges. Acrid vapors rise from the impact site, and droplets of acid splatter outward, each one burning through whatever it touches. The scene captures the moment of chemical devastation.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/acid_dart.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_acid_dart",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_acid_dart.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

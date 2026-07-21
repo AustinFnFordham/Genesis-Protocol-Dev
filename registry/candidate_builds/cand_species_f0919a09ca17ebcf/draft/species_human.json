@@ -1,0 +1,226 @@
+{
+ "record": {
+  "id": "species_human",
+  "name": "Human",
+  "era": "All_Eras",
+  "rarity": "common",
+  "narrative": "Humans are the most adaptable and widespread species in the galaxy, found on countless worlds and in every major faction. Their versatility, ambition, and drive for exploration have made them a dominant force in galactic civilization. Humans excel at learning new skills and adapting to different environments, making them natural diplomats, traders, and adventurers.",
+  "flavor_text": "'The Force is strong in my family. My father has it. I have it. And... my sister has it.' - Luke Skywalker",
+  "cultural_significance": "Humans are viewed as ambitious, adaptable, and sometimes reckless by other species. They are known for their short lifespans but intense drive to achieve greatness in that time.",
+  "description": "Humans are a versatile species with no single defining characteristic, making them adaptable to any role or environment. Their diversity and ambition have led them to colonize worlds across the galaxy.",
+  "origin_story": "Humans originated on the planet Coruscant and quickly spread throughout the galaxy, establishing colonies and trade routes. Their adaptability and ambition made them natural leaders and explorers.",
+  "innate_traits": [
+   {
+    "id": "human_versatility",
+    "name": "Versatility",
+    "narrative": "Humans are naturally adaptable and quick to learn new skills.",
+    "mechanics": [
+     {
+      "effect": "grant_choice",
+      "parameters": {
+       "choices": [
+        "skill_proficiency",
+        "tool_proficiency",
+        "language"
+       ],
+       "count": 1,
+       "description": "Choose one additional skill proficiency, tool proficiency, or language"
+      }
+     }
+    ]
+   },
+   {
+    "id": "human_determination",
+    "name": "Determination",
+    "narrative": "Humans possess an inner drive that pushes them to excel beyond their natural limits.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "parameters": {
+       "type": "saving_throw",
+       "condition": "once_per_long_rest",
+       "description": "Once per long rest, you can reroll a failed saving throw"
+      }
+     }
+    ]
+   }
+  ],
+  "physical_characteristics": {
+   "average_height": "5'6\" to 6'2\"",
+   "average_weight": "120 to 220 lbs",
+   "lifespan": "70 to 100 years",
+   "skin_colors": [
+    "pale",
+    "tan",
+    "brown",
+    "dark"
+   ],
+   "hair_colors": [
+    "black",
+    "brown",
+    "blonde",
+    "red",
+    "gray",
+    "white"
+   ],
+   "eye_colors": [
+    "brown",
+    "blue",
+    "green",
+    "hazel",
+    "gray"
+   ]
+  },
+  "homeworld": "Coruscant",
+  "common_languages": [
+   "Basic",
+   "Galactic Standard"
+  ],
+  "cultural_notes": "Humans are known for their ambition, adaptability, and drive to explore. They value individual achievement and personal freedom.",
+  "ability_score_increases": [
+   {
+    "ability": "Any",
+    "increase": 1
+   },
+   {
+    "ability": "Any",
+    "increase": 1
+   }
+  ],
+  "size": "Medium",
+  "speed": 30,
+  "languages": [
+   "Basic",
+   "One additional language of your choice"
+  ],
+  "connections": [
+   {
+    "target_id": "faction_galactic_republic",
+    "target_type": "Faction",
+    "relationship": "Founding_Member",
+    "narrative": "Humans were founding members of the Galactic Republic and have been central to its governance throughout its history.",
+    "mechanical_benefit": "Humans gain advantage on Charisma checks when dealing with Republic officials"
+   },
+   {
+    "target_id": "faction_galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Dominant_Species",
+    "narrative": "Humans dominated the Galactic Empire, with most high-ranking positions held by humans.",
+    "mechanical_benefit": "Humans gain advantage on Charisma checks when dealing with Imperial officials"
+   },
+   {
+    "target_id": "class_guardian",
+    "target_type": "Class",
+    "relationship": "Natural_Fit",
+    "narrative": "Humans' versatility and determination make them natural Jedi Guardians.",
+    "mechanical_benefit": "Human Guardians gain +1 to their Force point maximum"
+   },
+   {
+    "target_id": "class_consular",
+    "target_type": "Class",
+    "relationship": "Natural_Fit",
+    "narrative": "Humans' adaptability and diplomatic nature make them excellent Jedi Consulars.",
+    "mechanical_benefit": "Human Consulars gain advantage on Persuasion checks"
+   }
+  ],
+  "iconic_examples": [
+   "Luke Skywalker - The farm boy who became a Jedi Knight",
+   "Leia Organa - The princess who became a general",
+   "Han Solo - The smuggler who became a hero",
+   "Obi-Wan Kenobi - The wise Jedi Master",
+   "Anakin Skywalker - The Chosen One"
+  ],
+  "famous_humans": [
+   "Luke Skywalker",
+   "Leia Organa",
+   "Han Solo",
+   "Obi-Wan Kenobi",
+   "Anakin Skywalker",
+   "Padmé Amidala",
+   "Mon Mothma",
+   "Bail Organa"
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Humans are versatile and adaptable. They can fit into any role or background, but they often have a driving ambition or personal goal that motivates them. They're known for their determination and ability to overcome obstacles through sheer willpower.",
+   "narrative_hooks": [
+    "A human character discovers they have Force sensitivity",
+    "A human character must choose between personal gain and helping others",
+    "A human character seeks to prove themselves in a galaxy of more exotic species",
+    "A human character carries the weight of their family's legacy"
+   ],
+   "social_dynamics": "Humans are generally well-received by other species due to their adaptability and diplomatic nature. However, some species view them as overly ambitious or reckless.",
+   "common_motivations": [
+    "Seeking personal glory and recognition",
+    "Protecting family and loved ones",
+    "Exploring new worlds and opportunities",
+    "Achieving mastery in their chosen field",
+    "Making a difference in the galaxy"
+   ],
+   "species_development": "Human characters often grow through overcoming personal challenges and learning to balance their ambition with wisdom. They excel at adapting to new situations and learning from their mistakes."
+  },
+  "image_generation": {
+   "base_prompt": "A detailed portrait of a human character in the Star Wars universe. The character should have realistic human features with diverse skin tones, hair colors, and eye colors. They should be dressed in appropriate Star Wars attire for their role - whether that's Jedi robes, Imperial uniforms, Rebel gear, or civilian clothing. The background should reflect their environment and the era they're from. The mood should capture the character's personality and role in the galaxy.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "Focus on the character's facial features and expression, showing their determination and adaptability"
+    },
+    {
+     "target_type": "Action_Shot",
+     "modifier_text": "Show the character in action, demonstrating their versatility and quick thinking"
+    },
+    {
+     "target_type": "Cultural_Scene",
+     "modifier_text": "Show the character interacting with other species, highlighting their diplomatic nature"
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/species/human.png",
+   "icon": "/assets/icons/species/human.svg",
+   "color": "#8B4513"
+  }
+ },
+ "validation": {
+  "candidate_urid": "species_human",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/species/human.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

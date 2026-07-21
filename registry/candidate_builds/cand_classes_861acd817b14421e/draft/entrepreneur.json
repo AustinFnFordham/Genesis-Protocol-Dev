@@ -1,0 +1,148 @@
+{
+ "record": {
+  "id": "entrepreneur",
+  "name": "Entrepreneur",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "entrepreneur",
+   "merchant",
+   "charisma_based",
+   "intelligence_based",
+   "professional",
+   "negotiator",
+   "organized",
+   "civic_leader"
+  ],
+  "description": "Entrepreneurs are masters of commerce and trade, using their business acumen to create opportunities, manage resources, and turn profit from any situation.",
+  "specialization_features": [
+   "business_acumen",
+   "market_insight",
+   "resource_management",
+   "deal_maker",
+   "legendary_entrepreneur"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of commerce and trade, always seeking new opportunities",
+   "role_in_group": "Merchant or leader, providing value through negotiation and deal-making",
+   "visual_signals": [
+    "Wearing fine attire and accessories signifying wealth and status",
+    "Carrying a leather-bound journal to record business transactions"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level-3-feature",
+    "feature_id": "entrepreneur-savvy",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain proficiency in two skills of choice that can be used for commerce or negotiation",
+    "effects": [
+     {
+      "type": "feature-proficiency",
+      "value": "{Skill1, Skill2}"
+     }
+    ]
+   },
+   {
+    "node_id": "level-7-feature",
+    "feature_id": "negotiation-mastery",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Gain expertise in one skill used for negotiation and deal-making",
+    "effects": [
+     {
+      "type": "feature-expertise",
+      "value": "{Skill}"
+     }
+    ]
+   },
+   {
+    "node_id": "level-11-feature",
+    "feature_id": "financial-strategist",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Gain the ability to analyze and improve a business's financial situation",
+    "effects": [
+     {
+      "type": "feature-analyze-improve-finances",
+      "value": ""
+     }
+    ]
+   },
+   {
+    "node_id": "level-15-feature",
+    "feature_id": "corporate-leader",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Gain the ability to create and lead a business, bringing in customers and revenue",
+    "effects": [
+     {
+      "type": "feature-create-business",
+      "value": ""
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Entrepreneur's Cape",
+    "Blaster Pistol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A lean, athletic stance with feet shoulder-width apart and fists clenched, radiating an aura of confident readiness to take on any challenge in the galaxy.",
+    "energy_signature": "A swirling vortex of vibrant blues and whites that pulse with the rhythm of commerce and trade, as if the very fabric of space-time is infused with the entrepreneurial spirit."
+   },
+   "prompt_schema": {
+    "base_prompt": "A resourceful Entrepreneur, clad in a worn leather jacket and clutching a trusty Blaster Pistol, navigates the bustling streets of Coruscant, eyes scanning for new opportunities to expand their business empire.",
+    "contextual_modifiers": [
+     "set scene on Nal Hutta",
+     "add a group of shady-looking Trandoshans lurking in the shadows"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "entrepreneur",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_entrepreneur.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

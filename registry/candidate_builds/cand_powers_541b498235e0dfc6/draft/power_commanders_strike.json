@@ -1,0 +1,150 @@
+{
+ "record": {
+  "id": "power_commanders_strike",
+  "name": "Commander's Strike",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "maneuver",
+   "universal",
+   "leadership",
+   "coordination",
+   "tactical",
+   "command",
+   "teamwork",
+   "support",
+   "buff",
+   "utility",
+   "ranged",
+   "commander",
+   "battlefield_control",
+   "ally_enhancement"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Leadership technique for coordinated battlefield tactics"
+   }
+  },
+  "narrative": "You issue a tactical command with perfect timing, directing an ally to exploit an opening you've created. The power manifests as battlefield awareness crystallizing into action, your sacrificed attack creating the perfect opportunity for a coordinated strike that catches the enemy off-guard.",
+  "flavor_text": "\"Strike now, while they're exposed!\" - Clone Commander",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "pointing out target vulnerability to ally"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "coordinating tactical timing with ally"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Forgo one of your attacks to allow an ally to use their reaction to make a weapon attack.",
+   "mechanics": [
+    {
+     "type": "grant_attack",
+     "value": {
+      "attack_type": "weapon"
+     },
+     "target_scopes": [
+      "ally"
+     ],
+     "notes": "Ally can make a weapon attack as a reaction"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment of tactical coordination - the commander spotting an opening, the quick gesture or verbal command, and the ally's immediate response. The sacrificed attack should feel like a deliberate tactical choice, not a loss. Emphasize the trust and training between commander and ally.",
+   "tactical_notes": "Commander's Strike trades your action economy for potentially better positioning or damage. Excellent when an ally has a better weapon, position, or damage bonuses than you. The 30-foot range allows battlefield flexibility. Remember the ally uses their reaction, so they can't have used it already this round.",
+   "narrative_hooks": [
+    "A commander directs a sniper to take a critical shot they couldn't make themselves",
+    "The maneuver allows a melee fighter to strike while the commander provides covering fire",
+    "A desperate situation where the commander is pinned but can still direct allies"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a battlefield commander pointing out a critical vulnerability to their ally. The commander's gesture is decisive and clear, highlighting an exposed weak point on an enemy. Their ally is already moving to strike, weapon raised, responding instantly to the tactical direction. The scene captures perfect military coordination and trust between soldiers.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/commanders_strike.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_commanders_strike",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_commanders_strike.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "record": {
+  "id_file": "droid_part_slicing_tool",
+  "category": "equipment",
+  "subcategory": "droid_parts",
+  "tags": [
+   "equipment",
+   "item",
+   "droid_parts",
+   "utility",
+   "technical",
+   "hacking",
+   "security",
+   "specialized",
+   "underworld"
+  ],
+  "id": "item_droid_slicing_tool",
+  "name": "Droid Slicing Tool",
+  "item_type": "Gear",
+  "era": "Galactic_Empire",
+  "narrative": "A chassis-mounted dataspike and encryption suite for direct interface with secured systems. Favored by slicers and astromechs alike.",
+  "mechanics": {
+   "category": "tools",
+   "grants": [
+    {
+     "effect": "proficiency",
+     "target": "Computers"
+    },
+    {
+     "effect": "bonus",
+     "value": "+2",
+     "condition": "overcome_basic_encryption_or_unlock_terminals"
+    }
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A sleek droid dataspike with glowing trace lines and a modular encryption cartridge, extended from a droid panel. High-detail sci-fi prop render.",
+   "base_negative_keywords": [
+    "cartoonish",
+    "blurry"
+   ],
+   "contextual_modifiers": [
+    {
+     "target_type": "Item_Closeup",
+     "modifier_text": "Sharp highlights, brushed metal, subtle glow."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/images/items/droid_parts/slicing_tool.jpg",
+   "icon": "/icons/items/droid_parts/slicing_tool.svg",
+   "color": "#5E9EA0"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_droid_slicing_tool",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/droid_parts/slicing_tool.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

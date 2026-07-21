@@ -1,0 +1,1194 @@
+{
+ "record": {
+  "tech_powers_comprehensive": [
+   {
+    "id": "acid_splash",
+    "name": "Acid Splash",
+    "description": "You hurl a bubble of acid at a creature within range, dealing acid damage.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_acid",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 acid damage to target"
+     }
+    ]
+   },
+   {
+    "id": "combustive_shot",
+    "name": "Combustive Shot",
+    "description": "You fire a small explosive projectile that deals fire damage on impact.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_fire",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 fire damage to target"
+     }
+    ]
+   },
+   {
+    "id": "cryogenic_burst",
+    "name": "Cryogenic Burst",
+    "description": "You fire a small cryogenic projectile that deals cold damage and can slow the target.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_cold",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 cold damage to target"
+     }
+    ]
+   },
+   {
+    "id": "electrical_burst",
+    "name": "Electrical Burst",
+    "description": "You fire a small electrical projectile that deals lightning damage and can stun the target.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 lightning damage to target"
+     }
+    ]
+   },
+   {
+    "id": "electroshock",
+    "name": "Electroshock",
+    "description": "You deliver a small electrical shock to a creature within range, dealing lightning damage.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 lightning damage to target"
+     }
+    ]
+   },
+   {
+    "id": "haywire",
+    "name": "Haywire",
+    "description": "You send a small electrical pulse that can disrupt electronic devices and droids.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_is_droid_or_electronic",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal 1d4 lightning damage to droids and electronic devices"
+     }
+    ]
+   },
+   {
+    "id": "ion_blast",
+    "name": "Ion Blast",
+    "description": "You fire a small ion projectile that deals ion damage and can disable electronic devices.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_ion",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 ion damage to target"
+     }
+    ]
+   },
+   {
+    "id": "jet_of_flame",
+    "name": "Jet of Flame",
+    "description": "You create a small jet of flame that deals fire damage to a target within range.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_fire",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 fire damage to target"
+     }
+    ]
+   },
+   {
+    "id": "mending",
+    "name": "Mending",
+    "description": "You use technology to repair a small break or tear in an object.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "repair_object",
+      "value": "small_repair",
+      "target_scopes": [
+       "object"
+      ],
+      "notes": "Repair a small break or tear in an object"
+     }
+    ]
+   },
+   {
+    "id": "minor_hologram",
+    "name": "Minor Hologram",
+    "description": "You create a small holographic image that can be used for communication or distraction.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_hologram",
+      "value": "small_image",
+      "target_scopes": [
+       "point_in_space"
+      ],
+      "notes": "Create a small holographic image at a point within range"
+     }
+    ]
+   },
+   {
+    "id": "poison_spray",
+    "name": "Poison Spray",
+    "description": "You spray a small amount of poison at a creature within range, dealing poison damage.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_poison",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 poison damage to target"
+     }
+    ]
+   },
+   {
+    "id": "target_lock",
+    "name": "Target Lock",
+    "description": "You use technology to lock onto a target, granting advantage on your next attack against them.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next attack against the target"
+     }
+    ]
+   },
+   {
+    "id": "ward",
+    "name": "Ward",
+    "description": "You create a small energy ward that can absorb a small amount of damage.",
+    "type": "Tech",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "1d4",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Grant 1d4 temporary hit points to target"
+     }
+    ]
+   },
+   {
+    "id": "absorb_energy",
+    "name": "Absorb Energy",
+    "description": "You use technology to absorb energy from an attack, converting it into temporary hit points.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "2d4",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain 2d4 temporary hit points"
+     }
+    ]
+   },
+   {
+    "id": "bacta_pack",
+    "name": "Bacta Pack",
+    "description": "You use a bacta pack to heal a creature's wounds.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_healing",
+      "value": "2d4",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Heal 2d4 hit points"
+     }
+    ]
+   },
+   {
+    "id": "cryogenic_wave",
+    "name": "Cryogenic Wave",
+    "description": "You create a wave of cryogenic energy that deals cold damage to all creatures in a line.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "line_damage",
+      "value": "2d4_cold",
+      "target_scopes": [
+       "line"
+      ],
+      "notes": "Deal 2d4 cold damage to all creatures in a 60-foot line"
+     }
+    ]
+   },
+   {
+    "id": "energy_shield",
+    "name": "Energy Shield",
+    "description": "You create an energy shield that can absorb damage and deflect attacks.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "3d4",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain 3d4 temporary hit points"
+     }
+    ]
+   },
+   {
+    "id": "expeditious_retreat",
+    "name": "Expeditious Retreat",
+    "description": "You use technology to enhance your movement speed and agility.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "enhance_movement",
+      "value": "speed_doubled",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Your speed is doubled for the duration"
+     }
+    ]
+   },
+   {
+    "id": "flame_sweep",
+    "name": "Flame Sweep",
+    "description": "You create a sweeping wave of flame that deals fire damage to all creatures in a cone.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "cone_damage",
+      "value": "2d4_fire",
+      "target_scopes": [
+       "cone"
+      ],
+      "notes": "Deal 2d4 fire damage to all creatures in a 30-foot cone"
+     }
+    ]
+   },
+   {
+    "id": "homing_rockets",
+    "name": "Homing Rockets",
+    "description": "You fire homing rockets that seek out and damage a target.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "2d4_fire",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 2d4 fire damage to target"
+     }
+    ]
+   },
+   {
+    "id": "kolto_pack",
+    "name": "Kolto Pack",
+    "description": "You use a kolto pack to heal a creature's wounds more effectively than a bacta pack.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_healing",
+      "value": "3d4",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Heal 3d4 hit points"
+     }
+    ]
+   },
+   {
+    "id": "oil_slick",
+    "name": "Oil Slick",
+    "description": "You create an oil slick on the ground that can cause creatures to slip and fall.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_difficult_terrain",
+      "value": "10_foot_radius",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Create difficult terrain in a 10-foot radius"
+     }
+    ]
+   },
+   {
+    "id": "overload",
+    "name": "Overload",
+    "description": "You send an electrical overload that can damage and disable electronic devices.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "2d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_is_electronic",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal 2d4 lightning damage to electronic devices"
+     }
+    ]
+   },
+   {
+    "id": "spot_the_weakness",
+    "name": "Spot the Weakness",
+    "description": "You use technology to analyze a target and identify their weaknesses.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next attack against the target"
+     }
+    ]
+   },
+   {
+    "id": "tactical_barrier",
+    "name": "Tactical Barrier",
+    "description": "You create a tactical barrier that can provide cover and protection.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_cover",
+      "value": "half_cover",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Create half cover in a 10-foot radius"
+     }
+    ]
+   },
+   {
+    "id": "tracer_bolt",
+    "name": "Tracer Bolt",
+    "description": "You fire a tracer bolt that deals damage and marks the target for your allies.",
+    "type": "Tech",
+    "level": 1,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "2d4_energy",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 2d4 energy damage and mark target for allies"
+     }
+    ]
+   },
+   {
+    "id": "acid_dart",
+    "name": "Acid Dart",
+    "description": "You fire a dart filled with acid that deals acid damage and can corrode armor.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "3d4_acid",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 3d4 acid damage to target"
+     }
+    ]
+   },
+   {
+    "id": "capacity_boost",
+    "name": "Capacity Boost",
+    "description": "You use technology to boost a creature's physical or mental capacity.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "enhance_ability",
+      "value": "+2_to_ability",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target gains +2 to one ability score of your choice"
+     }
+    ]
+   },
+   {
+    "id": "darkvision",
+    "name": "Darkvision",
+    "description": "You use technology to enhance a creature's vision, allowing them to see in darkness.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "grant_darkvision",
+      "value": "60_feet",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target gains darkvision out to 60 feet"
+     }
+    ]
+   },
+   {
+    "id": "electromesh",
+    "name": "Electromesh",
+    "description": "You create an electromagnetic mesh that can trap and damage creatures.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_area_effect",
+      "value": "electromagnetic_field",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Create an electromagnetic field in a 10-foot radius"
+     }
+    ]
+   },
+   {
+    "id": "enhance_droid",
+    "name": "Enhance Droid",
+    "description": "You use technology to enhance a droid's capabilities and performance.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "enhance_droid",
+      "value": "+2_to_abilities",
+      "target_scopes": [
+       "droid"
+      ],
+      "notes": "Droid gains +2 to all ability scores"
+     }
+    ]
+   },
+   {
+    "id": "infiltrate",
+    "name": "Infiltrate",
+    "description": "You use technology to enhance your stealth and infiltration capabilities.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "enhance_stealth",
+      "value": "+2_stealth",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain +2 to Stealth checks"
+     }
+    ]
+   },
+   {
+    "id": "mirror_image",
+    "name": "Mirror Image",
+    "description": "You create holographic duplicates of yourself to confuse enemies.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_duplicates",
+      "value": "3_holographic_copies",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Create 3 holographic copies of yourself"
+     }
+    ]
+   },
+   {
+    "id": "paralyze_humanoid",
+    "name": "Paralyze Humanoid",
+    "description": "You use technology to paralyze a humanoid creature, preventing them from moving or acting.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "paralyzed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_is_humanoid",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target must be humanoid"
+     }
+    ]
+   },
+   {
+    "id": "scramble_interface",
+    "name": "Scramble Interface",
+    "description": "You send a scramble signal that can disrupt and disable electronic interfaces.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "3d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_is_electronic",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal 3d4 lightning damage to electronic devices"
+     }
+    ]
+   },
+   {
+    "id": "shatter",
+    "name": "Shatter",
+    "description": "You create a sonic blast that can damage creatures and shatter objects.",
+    "type": "Tech",
+    "level": 2,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "3d4_thunder",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 3d4 thunder damage to target"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "tech_powers_comprehensive",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/tech_powers_comprehensive.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "c572f6de087e68b955da72b7dc7a7dcd376cfae92b77402f51ae8860b894861d",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

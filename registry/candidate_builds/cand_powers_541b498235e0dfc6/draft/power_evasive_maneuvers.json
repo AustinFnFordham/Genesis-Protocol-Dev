@@ -1,0 +1,198 @@
+{
+ "record": {
+  "id": "power_evasive_maneuvers",
+  "name": "Evasive Maneuvers",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "starship",
+   "piloting",
+   "defensive",
+   "evasion",
+   "space_combat",
+   "flight"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced starship evasion patterns"
+   }
+  },
+  "narrative": "You throw your starship into a series of unpredictable rolls, spirals, and vector changes that make you nearly impossible to target. The power manifests as the ship dancing through space, thrusters firing in complex patterns while inertial dampeners strain to keep the crew conscious.",
+  "flavor_text": "\"Ill try spinning—thats a good trick!\" - Anakin Skywalker",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "aggressive manipulation of flight controls"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating random but safe flight patterns"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Take a defensive flying pattern. All attacks against the starship have disadvantage until your next turn.",
+   "mechanics": [
+    {
+     "type": "grant_disadvantage",
+     "value": {
+      "target_stat": "attacks_against_ship"
+     },
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "All attacks against the starship have disadvantage"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's pilot training transforms Evasive Maneuvers from random dodging to calculated deception. They fake engine failures, use debris fields for cover, and make their ship appear where it isn't—turning evasion into psychological warfare.",
+    "mechanical_benefit": [
+     {
+      "type": "holographic_decoy",
+      "value": {
+       "effect": "false_position"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Operatives create a hologram of their ship 30 feet away, confusing targeting."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human pilots are famous for impossible maneuvers that shouldn't work. Their combination of reckless creativity and split-second adaptation allows them to invent new evasion patterns on the fly that no targeting computer could predict.",
+    "mechanical_benefit": [
+     {
+      "type": "counterattack",
+      "timing": "reaction",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Human pilots can make one attack as a reaction after evading."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance wrote the book on evasive flying. Outnumbered and outgunned, Rebel pilots have perfected maneuvers that keep them alive against overwhelming odds, turning survival into an art form passed down through generations of pilots.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 2,
+       "unit": "rounds"
+      },
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Rebel evasive maneuvers last for 2 rounds instead of 1."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the ship's wild movements—barrel rolls, sudden dives, corkscrews through space. Show the crew gripping their seats, stars spinning wildly through viewports, enemy fire passing harmlessly through where you were moments before.",
+   "tactical_notes": "Evasive Maneuvers grants disadvantage on all attacks against your starship until your next turn. Essential when outnumbered or facing heavy fire. Uses your action, so coordinate with gunners. No resource cost makes it reliable for extended engagements.",
+   "narrative_hooks": [
+    "Evasive maneuvers through an asteroid field become legendary",
+    "The pattern reveals the pilot was trained by a famous ace",
+    "A desperate evasion accidentally discovers a hidden hyperspace route"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a starship performing evasive maneuvers in space combat. The ship spirals and rolls through a barrage of laser fire, leaving light trails as it corkscrews between explosions. Enemy shots streak past where it was moments before. The scene captures desperate, skillful piloting against overwhelming odds.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/evasive_maneuvers.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_evasive_maneuvers",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_evasive_maneuvers.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

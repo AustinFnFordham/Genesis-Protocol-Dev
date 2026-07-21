@@ -1,0 +1,262 @@
+{
+ "record": {
+  "id": "hired_gun_marauder",
+  "name": "Marauder",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "marauder",
+   "brutal",
+   "aggressive",
+   "strength_based",
+   "mercenary",
+   "melee_specialist",
+   "intimidating",
+   "resilient"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_marauder_entry_3",
+    "feature_id": "hired_gun_marauder_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Marauders channel sheer brutality—smashing through lines, shaking off punishment, and breaking foes’ resolve through overwhelming presence."
+   },
+   {
+    "node_id": "brutal_momentum_7",
+    "feature_id": "brutal_momentum",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_marauder_entry_3"
+    ],
+    "description": "After you reduce a creature to 0 HP with a melee attack, you can move up to half your speed as a free movement and make one melee weapon attack as a bonus action. You can use this feature a number of times per long rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "chain_movement_and_strike",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "reduced_creature_to_0hp_melee",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Move half speed and bonus action melee attack"
+     }
+    ]
+   },
+   {
+    "node_id": "iron_hide_11",
+    "feature_id": "iron_hide",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "brutal_momentum_7"
+    ],
+    "description": "Your resilience borders on legendary. You gain resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks while you are not incapacitated.",
+    "effects": [
+     {
+      "type": "apply_resistance",
+      "value": "nonmagical_b_p_s",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Resistance to nonmagical B/P/S"
+     }
+    ]
+   },
+   {
+    "node_id": "skullsplitter_13",
+    "feature_id": "skullsplitter",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "iron_hide_11"
+    ],
+    "description": "When you score a critical hit with a melee weapon attack, you roll one additional weapon damage die and the target must succeed on a Constitution saving throw or be stunned until the end of your next turn.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "extra_crit_damage_melee",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add one extra damage die on melee crit"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "stun_on_crit_save",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target Con save or stunned until your next turn"
+     }
+    ]
+   },
+   {
+    "node_id": "unstoppable_rampage_17",
+    "feature_id": "unstoppable_rampage",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "skullsplitter_13"
+    ],
+    "description": "As an action, you can make a melee weapon attack against up to three different creatures within reach, with a separate attack roll for each target. You can use this feature once per short rest.",
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "multi_strike_three_targets",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "One action to strike up to three creatures in reach"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_marauder_19",
+    "feature_id": "legendary_marauder",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "unstoppable_rampage_17"
+    ],
+    "description": "You enter a devastation trance for 1 minute (once per long rest). During this time, your melee weapon attacks deal an extra damage die, you have advantage on Strength checks and saving throws, and opportunity attacks against you are made with disadvantage.",
+    "effects": [
+     {
+      "type": "modify_weapon",
+      "value": "extra_die_melee_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "marauder_trance_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Melee attacks deal +1 weapon damage die"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "strength_checks_and_saves",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "marauder_trance_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on STR checks and saves"
+     },
+     {
+      "type": "apply_status",
+      "value": "opportunity_attacks_against_you_disadvantage",
+      "target_scopes": [
+       "enemies"
+      ],
+      "conditions": [
+       {
+        "key": "marauder_trance_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enemies have disadvantage on OAs vs you"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Kyber Crystal",
+    "Lightsaber Hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance with feet shoulder-width apart, ready to unleash blaster fire at a moment's notice",
+    "energy_signature": "Emitting a vibrant blue aura, indicative of the user's connection to the Force"
+   },
+   "prompt_schema": {
+    "base_prompt": "A heroic Star Wars pilot soaring through space in their trusty starfighter",
+    "contextual_modifiers": [
+     "space-battle",
+     "exploding-explosives"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A formidable and intimidating warrior who has mastered the art of combat, able to hold their own against even the most elite opponents.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Scars from countless battles",
+    "Battle-worn armor"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_marauder",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.marauder.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "record": {
+  "id": "background_starship_stellar_navigator",
+  "name": "Stellar Navigator",
+  "description": "You chart the void—plotting hyperlanes, updating star charts, and anticipating hazards before they appear on scopes.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Navigation Kit",
+      "Starship Repair Kit",
+      "Communications Kit",
+      "Astrocartography Set"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Stellar Cartography",
+   "level": 1,
+   "description": "You have advantage on checks to plot, update, or recall hyperlane data. Once per short rest, grant an ally within 30 ft advantage on one Piloting (Space) or Perception check. You also maintain access to updated star charts in most civilized ports.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "astrogation_plot_update_recall",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "ally_piloting_or_perception_once_per_short_rest",
+     "target_scopes": [
+      "ally"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    },
+    {
+     "type": "narrative_effect",
+     "value": "star_chart_access",
+     "target_scopes": [
+      "self"
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I carry three maps: one current, one secret, one wrong.",
+    "I hum along with the hyperdrive when the math clicks.",
+    "I never pass a beacon without updating it.",
+    "I speak in vectors and velocities."
+   ],
+   "ideals": [
+    "Discovery. There’s always another route to find.",
+    "Safety. I guide others through the dark.",
+    "Precision. The void rewards careful minds."
+   ],
+   "bonds": [
+    "A mentor’s chart saved me once; I keep it updated in their honor.",
+    "My homeworld lies off a forgotten trade lane—I’ll reopen it."
+   ],
+   "flaws": [
+    "I trust my math more than warnings.",
+    "I correct others even when I shouldn't."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_stellar_navigator",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_stellar_navigator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "31d8f288ac2dc786bb5aabec40c53fbab5a3af14079ce7fbeb822f24a7c9815d",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

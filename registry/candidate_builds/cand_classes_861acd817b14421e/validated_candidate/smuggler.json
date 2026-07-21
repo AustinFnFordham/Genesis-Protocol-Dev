@@ -1,0 +1,509 @@
+{
+ "record": {
+  "id": "smuggler",
+  "name": "Smuggler",
+  "tags": [
+   "smuggler",
+   "scoundrel",
+   "dexterity_based",
+   "stealth",
+   "evasion",
+   "underworld",
+   "contraband",
+   "pilot",
+   "skill_specialist",
+   "charismatic"
+  ],
+  "description": "Smugglers are masters of stealth and deception, using their skills to transport contraband, evade authorities, and operate in the shadows of the galaxy.",
+  "class_features": [
+   "smugglers_instinct",
+   "hidden_compartments",
+   "evasion_expertise",
+   "underworld_connections",
+   "legendary_smuggler"
+  ],
+  "hit_die": 8,
+  "primary_ability": "Dexterity",
+  "saving_throw_proficiencies": [
+   "Dexterity",
+   "Charisma"
+  ],
+  "armor_proficiencies": [
+   "light_armor"
+  ],
+  "weapon_proficiencies": [
+   "simple_weapons",
+   "blaster_pistols",
+   "blaster_rifles"
+  ],
+  "tool_proficiencies": [
+   "thieves_tools",
+   "forgery_kit"
+  ],
+  "skill_proficiencies": {
+   "choose": 4,
+   "from": [
+    "Acrobatics",
+    "Deception",
+    "Insight",
+    "Intimidation",
+    "Perception",
+    "Persuasion",
+    "Sleight of Hand",
+    "Stealth"
+   ]
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Blaster Pistol",
+    "Smuggler's Cape",
+    "Hooded Jacket",
+    "Worn Leather Gloves"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Fists clenched, eyes narrowed, moving with fluid agility and precision",
+    "energy_signature": "A faint aura of swirling starlight and engine hum, hinting at their piloting skills"
+   },
+   "prompt_schema": {
+    "base_prompt": "Create a character portrait of a skilled Smuggler in a high-stakes heist scenario",
+    "contextual_modifiers": [
+     "Show the character expertly navigating through a crowded marketplace with a valuable cargo",
+     "Depict the Smuggler in a tense standoff with Imperial authorities, showcasing their quick thinking and cunning"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A rival smuggler emerges as a thorn in the Smuggler's side, consistently sabotaging their operations and stealing their clients.\n",
+    "escalation": "The rivalry between the Smuggler and their nemesis reaches new heights as both engage in an escalating game of cat and mouse, with each trying to outdo the other in smuggling prowess.\n",
+    "confrontation": "In a tense showdown, the Smuggler confronts their nemesis in a high-stakes heist gone wrong, resulting in a dramatic and intense confrontation that leaves only one standing.\n"
+   },
+   "resolution_paths": {
+    "victory": "The Smuggler successfully outsmarts and outmaneuvers their nemesis, claiming victory in their long-standing rivalry and securing valuable resources for themselves.\n",
+    "redemption": "After being defeated by the Smuggler's rival, they offer a chance at redemption, leading to an uneasy truce between the two smugglers.\n",
+    "escape": "The Smuggler manages to narrowly escape their nemesis' trap, but not without sustaining significant damage and losing valuable cargo.\n"
+   },
+   "conflict_triggers": [
+    "Constantly stealing clients and jobs",
+    "Sabotaging operations and equipment",
+    "Rivaling in smuggling prowess"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "A charming and cunning Smuggler catches the eye of a potential love interest, but their shady reputation and constant disappearances make it difficult to maintain a relationship.\n",
+    "stage2": "As the Smuggler and their partner navigate the challenges of their lifestyle, they begin to trust each other more, and small moments of tenderness emerge amidst the chaos.\n",
+    "stage3": "The couple faces a major crisis when one of their smuggling operations goes awry, forcing them to make difficult choices between their relationship and their livelihood.\n",
+    "stage4": "With time and effort, the Smuggler's partner begins to see beyond their rough exterior and discovers the vulnerable person beneath, deepening their emotional connection.\n",
+    "stage5": "The Smuggler and their partner find a way to balance their lifestyle with their love for each other, creating a stable and supportive relationship amidst the uncertainty of their profession.\n"
+   },
+   "lifestyle_challenges": [
+    "Frequent disappearances due to smuggling operations",
+    "Risk of injury or capture during missions",
+    "Difficulty maintaining trust due to constant lies and deception"
+   ]
+  },
+  "flavor_text": "\"In a galaxy where information is power, Smugglers are the masters of discretion. They navigate the shadows, always staying one step ahead of their pursuers.\"\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Emphasize cunning and resourcefulness in your roleplaying. As a Smuggler, you're skilled at evading detection and manipulating situations to your advantage.\n",
+   "narrative_hooks": [
+    "A mysterious client approaches with a lucrative smuggling opportunity.",
+    "Your cargo holds the key to defying Imperial regulations, but at what cost?",
+    "An old acquaintance offers to help you navigate the underworld in exchange for a favor.",
+    "You're ambushed by rival smugglers seeking to sabotage your operation."
+   ],
+   "social_dynamics": "Smugglers often find themselves at odds with Authority figures. Use this to create interesting conflicts and power struggles.\n",
+   "common_motivations": [
+    "Profit",
+    "Avoiding Imperial attention",
+    "Protecting allies"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Cunning",
+      "Resourceful",
+      "Charismatic"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "Protect cargo and profit",
+     "secondary_goals": [
+      "Maintain relationships with underworld contacts",
+      "Evade Imperial patrols"
+     ]
+    },
+    "combat_behavior": "Engage in hit-and-run tactics, using stealth to escape damage. Focus on protecting valuable cargo.\n",
+    "social_behavior": "Use charm and negotiation skills to manipulate situations. Build alliances when necessary.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "initial": "Medium (due to the nature of their occupation)"
+    },
+    "loyalty_triggers": [
+     "Betrayal or loss of cargo",
+     "Direct threats to allies"
+    ]
+   },
+   "services": [
+    "Escorting valuable shipments through treacherous terrain",
+    "Providing safe houses and hideouts for illicit activities",
+    "Facilitating clandestine meetings and negotiations between underworld figures"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "Scoundrel",
+   "key_attributes": [
+    "Dexterity",
+    "Charisma"
+   ],
+   "iconic_gear": [
+    "Blaster Pistol",
+    "Comlink"
+   ],
+   "role_in_galaxy": "Smuggler/Transporter",
+   "famous_exemplars": [
+    "Han Solo",
+    "Lando Calrissian"
+   ],
+   "species_synergies": [
+    {
+     "species": "trandoshan",
+     "narrative": "Trandoshans have a natural affinity for hunting and tracking, making them skilled smugglers."
+    },
+    {
+     "species": "twi'lek",
+     "narrative": "Twi'leks are known for their cunning and agility, making them adept at evading authorities."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "swift_loader_1",
+    "feature_id": "swift_loader",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "You can quickly load or unload cargo from your vehicle, increasing your efficiency as a smuggler.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "loading/unloading speed",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "sneak_attack_damage_2",
+    "feature_id": "sneak_attack_damage",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "You can deal additional damage when attacking a creature that is not aware of you or that you have advantage on the attack roll against.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "sneak attack damage",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "second_wind_3",
+    "feature_id": "second_wind",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can use your bonus action to regain hit points equal to one-quarter of your total hit points plus your character level.",
+    "effects": [
+     {
+      "type": "heal",
+      "value": "(1/4) x (total HP + char level)",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_martial_4",
+    "feature_id": "extra_attack_martial",
+    "level_requirement": 4,
+    "type": "core",
+    "description": "You can use your action to make an additional attack with a melee weapon that you are proficient with, but only if you take the Disarm or Shove action instead of making an opportunity attack.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "additional attack",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "quick_draw_5",
+    "feature_id": "quick_draw",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "You can draw or stow a one-handed weapon as a bonus action, rather than taking a regular action to do so.",
+    "effects": [
+     {
+      "type": "modify_action",
+      "value": "bonus action",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "smugglers_craft_6",
+    "feature_id": "smugglers_craft",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "You gain expertise in one type of artisan's tools, or one language.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "artisan's tool or language",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "expertise_pilot_7",
+    "feature_id": "expertise_pilot",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain proficiency in one type of vehicle.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "vehicle",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "action_surge_8",
+    "feature_id": "action_surge",
+    "level_requirement": 8,
+    "type": "core",
+    "description": "You can take an additional action on your turn, but only if you have used no actions since your last turn.",
+    "effects": [
+     {
+      "type": "modify_action",
+      "value": "additional action",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "sneak_attack_improved_damage_9",
+    "feature_id": "sneak_attack_improved_damage",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "You can deal additional damage when attacking a creature that is not aware of you or that you have advantage on the attack roll against, increasing your sneak attack damage.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "sneak attack damage",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "master_of_disguise_10",
+    "feature_id": "master_of_disguise",
+    "level_requirement": 10,
+    "type": "core",
+    "description": "You can change your disguise at will, and you are proficient in two skills of your choice.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "two skills",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "superior_martial_11",
+    "feature_id": "superior_martial",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain access to a new martial maneuver, and you can use your bonus action to disarm or shackle an opponent.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "martial maneuver",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "third_level_feat_12",
+    "feature_id": "third_level_feat",
+    "level_requirement": 12,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "fourth_level_feat_13",
+    "feature_id": "fourth_level_feat",
+    "level_requirement": 13,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "fifth_level_feat_14",
+    "feature_id": "fifth_level_feat",
+    "level_requirement": 14,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "sixth_level_feat_15",
+    "feature_id": "sixth_level_feat",
+    "level_requirement": 15,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "seventh_level_feat_16",
+    "feature_id": "seventh_level_feat",
+    "level_requirement": 16,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "eighth_level_feat_17",
+    "feature_id": "eighth_level_feat",
+    "level_requirement": 17,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "ninth_level_feat_18",
+    "feature_id": "ninth_level_feat",
+    "level_requirement": 18,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "tenth_level_feat_19",
+    "feature_id": "tenth_level_feat",
+    "level_requirement": 19,
+    "type": "choice",
+    "description": "Choose a feat from the list of options below, and gain its benefits.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "feat",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "master_smuggler_20",
+    "feature_id": "master_smuggler",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have reached the pinnacle of your class and have mastered all the skills and abilities of a Smuggler.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "master smuggler",
+      "notes": ""
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "smuggler",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/smuggler.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

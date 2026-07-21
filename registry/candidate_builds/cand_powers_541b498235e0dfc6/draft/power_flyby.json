@@ -1,0 +1,192 @@
+{
+ "record": {
+  "id": "power_flyby",
+  "name": "Flyby",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "starship",
+   "movement",
+   "strafing",
+   "attack_run",
+   "space_combat",
+   "tactical"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Starship attack run maneuver"
+   }
+  },
+  "narrative": "You execute a high-speed attack run, diving through enemy formations while maintaining maximum velocity. The power manifests as your ship screaming past targets, weapons blazing, too fast for return fire to track, leaving only engine wash and destruction in your wake.",
+  "flavor_text": "\"Stay on target... Stay on target!\" - Gold Leader",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "aggressive piloting through combat zone"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating attack vectors while maintaining speed"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Move up to your ship's speed. This movement does not provoke opportunity attacks.",
+   "mechanics": [
+    {
+     "type": "enhance_movement",
+     "value": {
+      "effect": "no_opportunity_attacks"
+     },
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "Movement does not provoke opportunity attacks"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's precision flying transforms Flyby into surgical strikes. They know exactly when to cut engines for silent approach, when to boost for maximum speed, hitting critical systems while moving too fast for retaliation.",
+    "mechanical_benefit": [
+     {
+      "type": "bonus_attack",
+      "timing": "during_movement",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Operatives can make one attack during the flyby movement."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human reflexes excel at high-speed flyby attacks. Their ability to process multiple targets while maintaining breakneck speed, adjusting on the fly to enemy movements, makes their attack runs legendary throughout the galaxy.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_speed",
+      "value": {
+       "distance": 20,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Humans add 20 feet to flyby movement speed."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance perfected the flyby during the trench run at Yavin. Their pilots train endlessly on high-speed attack runs against larger targets, turning David-versus-Goliath scenarios into tactical advantages.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "condition": "vs_larger_ships",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Rebels gain advantage on attacks against larger ships during flyby."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the speed blur—your ship racing through space, laser fire trailing behind, the brief moment of alignment as weapons lock and fire. Show the frustration of enemies unable to track your movement, their shots always where you were, never where you are.",
+   "tactical_notes": "Flyby allows full movement without provoking opportunity attacks from enemy ships. Perfect for strafing runs against capital ships or breaking through fighter screens. Combine with attacks for hit-and-run tactics. The movement itself is your defense.",
+   "narrative_hooks": [
+    "A desperate flyby through a closing hangar door",
+    "The attack run that destroys a critical weak point",
+    "Threading between asteroids during a high-speed flyby"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a starfighter executing a high-speed flyby attack run. The ship blurs past a massive capital ship, laser cannons firing in a continuous stream. Enemy turrets swivel desperately trying to track. Motion lines and engine trails emphasize the incredible velocity. The scene captures split-second combat at breakneck speed.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/flyby.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_flyby",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_flyby.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

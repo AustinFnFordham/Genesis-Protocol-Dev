@@ -1,0 +1,216 @@
+{
+ "record": {
+  "id": "power_quantum_arsenal",
+  "name": "Quantum Arsenal",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "quantum",
+   "reality_manipulation",
+   "weapons",
+   "legendary",
+   "multiverse",
+   "probability"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Quantum weapon summoning from alternate realities"
+   }
+  },
+  "narrative": "You tear through quantum barriers to summon weaponry from alternate timelines where you made different choices, pulling guns you never carried, blades you never forged, equipment you never acquired—an arsenal of possibilities made real through probability manipulation.",
+  "flavor_text": "\"Every weapon I could have wielded, I wield now.\" - Quantum Operative",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "reaching through quantum rifts"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "collapsing probability waves to manifest alternate equipment"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "10 minutes",
+  "base_effect": {
+   "description": "You summon weapons and equipment from alternate timelines.",
+   "mechanics": [
+    {
+     "type": "quantum_summoning",
+     "value": {
+      "item_types": [
+       "weapons",
+       "armor",
+       "equipment"
+      ],
+      "quality": "legendary",
+      "count": "unlimited"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Summon any weapon or equipment from alternate realities for 10 minutes"
+    },
+    {
+     "type": "weapon_mastery",
+     "value": {
+      "all_weapons": true,
+      "proficiency": "expert"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain proficiency with all summoned weapons"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of quantum mechanics transforms Quantum Arsenal into perfect loadout. They summon not just weapons but optimal configurations for any scenario—pulling the exact tool needed from infinite possibilities.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_weapons",
+      "value": {
+       "bonus": 3,
+       "properties": "magical_and_adaptive"
+      },
+      "target_scopes": [
+       "summoned_weapons"
+      ],
+      "notes": "Engineer quantum weapons gain +3 enhancement and adapt to overcome resistances."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes them natural quantum manipulators. They intuitively understand which alternate timeline holds the perfect weapon for each moment, their flexibility making probability manipulation feel like second nature.",
+    "mechanical_benefit": [
+     {
+      "type": "instant_summoning",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can change summoned weapons as a bonus action instead of action."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance uses Quantum Arsenal to overcome resource scarcity. Why salvage equipment when you can summon it from timelines where the Rebellion had proper funding? Necessity breeds quantum innovation.",
+    "mechanical_benefit": [
+     {
+      "type": "share_arsenal",
+      "value": {
+       "allies": "all_within_30_feet"
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Rebels can share quantum weapons with all allies within 30 feet."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe reaching into shimmering quantum rifts, pulling weapons from alternate realities. Show the impossibility—guns from timelines where different tech evolved, blades from histories where you studied different masters. The arsenal should feel limitless and reality-bending.",
+   "tactical_notes": "Quantum Arsenal costs 9 Tech Points but grants unlimited perfect weapons for 10 minutes. This is legendary-tier reality manipulation. Having the exactly right tool for any situation is game-breaking. Use sparingly for climactic encounters.",
+   "narrative_hooks": [
+    "Summoning a legendary weapon reveals an alternate timeline's history",
+    "The quantum rifts attract attention from reality-warping entities",
+    "Using weapons from darker timelines creates moral questions about alternate selves"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a warrior surrounded by quantum rifts, pulling weapons from alternate realities. Shimmering portals show glimpses of other timelines as countless weapons materialize—blasters, blades, equipment from infinite possibilities. The character stands at the center of a reality-bending arsenal, probability made manifest. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric quantum effects, by Kilian Eng",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/quantum_arsenal.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_quantum_arsenal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_quantum_arsenal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

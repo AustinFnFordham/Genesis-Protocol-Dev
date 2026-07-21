@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "power_homing_rockets",
+  "name": "Homing Rockets",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "explosive",
+   "fire",
+   "missiles",
+   "tracking",
+   "guided_munitions",
+   "area_denial"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Guided missile technology with target-seeking capabilities"
+   }
+  },
+  "narrative": "You launch miniaturized homing missiles that lock onto their target's heat signature, corkscrewing through the air with contrails of smoke before detonating on impact. The power manifests as small rockets streaking from your launcher, adjusting trajectory mid-flight to pursue evasive targets with relentless determination until fiery explosions consume them.",
+  "flavor_text": "\"They can run, but the rockets will find them.\" - Mandalorian",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "targeting lock-on and launcher activation"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "designating priority targets for missile guidance systems"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire homing rockets that seek out and damage a target.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "fire",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 2d4 fire damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's expertise in guidance systems transforms Homing Rockets into relentless hunters. They've optimized tracking algorithms and propulsion efficiency, creating missiles that can navigate impossible angles, loop around cover, and strike from unexpected vectors—turning \"line of sight\" into a meaningless concept.",
+    "mechanical_benefit": [
+     {
+      "type": "ignore_cover",
+      "value": {
+       "cover_types": [
+        "half",
+        "three_quarters"
+       ]
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineer rockets ignore half and three-quarters cover."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity makes their rockets unpredictable weapons. They program missiles with delayed detonations, proximity triggers, or even manual override—transforming simple homing rockets into versatile munitions that can flush enemies from cover or create area denial zones.",
+    "mechanical_benefit": [
+     {
+      "type": "cluster_munitions",
+      "value": {
+       "secondary_targets": 1,
+       "radius": {
+        "distance": 5,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Human rockets can split to hit one additional target within 5 feet."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Homing Rockets for guerrilla warfare. Their versions use Imperial missile components modified for higher yield, creating devastating explosions that compensate for inferior numbers through superior firepower—the Rebel way.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "fire",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebel rockets deal an additional 1d4 fire damage."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the missiles launching with sharp hisses, smoke trails corkscrewing through the air as they adjust trajectory. Show them pursuing the target around corners, through obstacles, before impacting in fiery explosions. The target's attempts to dodge should feel futile against such relentless pursuit.",
+   "tactical_notes": "Homing Rockets deals 2d4 fire damage at 60 feet with inherent tracking—perfect for hitting evasive targets. The rockets ignore most cover and can pursue around obstacles. Watch for fire-resistant enemies. Costs 1 Tech Point but highly reliable.",
+   "narrative_hooks": [
+    "Homing rockets chase a fleeing enemy through a building, detonating just as they think they've escaped",
+    "Multiple rockets overwhelm a target's point defense systems through sheer volume",
+    "A single well-placed rocket takes out a critical enemy sniper position"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of miniature homing rockets streaking through the air with smoke trails. The missiles corkscrew and adjust trajectory mid-flight, pursuing an evasive target with mechanical determination. The rockets glow with propulsion fire, leaving contrails as they home in on their mark before exploding in brilliant fireballs. The scene captures relentless technological pursuit.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/homing_rockets.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_homing_rockets",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_homing_rockets.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

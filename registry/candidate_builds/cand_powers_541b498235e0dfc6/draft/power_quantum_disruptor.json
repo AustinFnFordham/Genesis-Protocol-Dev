@@ -1,0 +1,225 @@
+{
+ "record": {
+  "id": "power_quantum_disruptor",
+  "name": "Quantum Disruptor",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 8,
+  "tags": [
+   "quantum",
+   "reality_disruption",
+   "probability",
+   "legendary",
+   "erasure",
+   "entropy"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 8
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Quantum probability disruption weapon"
+   }
+  },
+  "narrative": "You fire a beam that disrupts quantum probability itself, target's existence becoming uncertain as wave functions collapse incorrectly. The power manifests as reality stuttering around the victim—they phase in and out of existence, their presence becoming optional as the universe itself forgets they're supposed to be there.",
+  "flavor_text": "\"You dont die. You retroactively never were.\" - Quantum Physicist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "firing quantum disruption beam"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "collapsing probability waves toward non-existence"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "120 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You disrupt a target's quantum probability, threatening their existence.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 12,
+      "dice_size": 6,
+      "damage_type": "force",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 12d6 force damage from quantum disruption"
+    },
+    {
+     "type": "probability_erasure",
+     "value": {
+      "save_type": "charisma",
+      "effect": "partial_erasure_on_fail"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Charisma save or suffer additional reality-disruption effects"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's quantum mechanics mastery makes their Disruptor surgical reality editing. They target specific probability waves—erasing weapons from hands, removing armor from bodies, making injuries that never healed suddenly pristine—precision through quantum manipulation.",
+    "mechanical_benefit": [
+     {
+      "type": "targeted_disruption",
+      "value": {
+       "options": [
+        "equipment_erasure",
+        "wound_negation",
+        "ability_removal"
+       ]
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineers can choose what aspect of reality to disrupt (equipment/wounds/abilities)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes them surprisingly effective quantum manipulators. Their flexible nature resonates with probability itself, allowing them to push disruption effects beyond normal parameters through sheer willpower.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 4,
+       "dice_size": 6,
+       "damage_type": "force",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans deal an additional 4d6 force damage (16d6 total)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Quantum Disruptor as ultimate deterrent—the power to erase enemies from existence itself. Their versions can target groups, removing entire populations from probability—genocide through quantum mechanics.",
+    "mechanical_benefit": [
+     {
+      "type": "area_disruption",
+      "value": {
+       "radius": {
+        "distance": 20,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Imperial disruptors can affect all creatures in 20-foot radius around primary target."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe reality glitching around the target—they flicker, phase in and out, existence becoming uncertain. Show the horror as they realize they're being erased, probability collapsing toward non-existence. The effect should feel cosmically wrong.",
+   "tactical_notes": "Quantum Disruptor deals 12d6 force damage at 120 feet with reality-warping effects. Costs 8 Tech Points. This is legendary-tier destructive power that threatens existence itself. Use for climactic battles or ultimate threats. The philosophical implications are staggering.",
+   "narrative_hooks": [
+    "A quantum disruption creates temporal paradoxes as the target's past actions become uncertain",
+    "The weapon's use attracts attention from extradimensional entities",
+    "Partial erasure creates victims who exist between probability states, neither dead nor alive"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a quantum disruptor beam striking a target. Reality glitches and stutters around the victim as they phase between existence and non-existence, their form flickering and becoming transparent. Probability waves visibly collapse incorrectly, the universe itself uncertain if they should exist. The scene captures the terrifying power of weaponized quantum mechanics. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric disruption effects, by Simon Stålenhag",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/quantum_disruptor.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_quantum_disruptor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_quantum_disruptor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

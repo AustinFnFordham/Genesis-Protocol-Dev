@@ -1,0 +1,775 @@
+{
+ "record": {
+  "id": "trandoshan",
+  "name": "Trandoshan",
+  "tags": [
+   "bounty_hunter",
+   "brutal",
+   "healing",
+   "hunter",
+   "intimidating",
+   "melee_specialist",
+   "predator",
+   "resilient",
+   "strength_based",
+   "tracker",
+   "trandoshan",
+   "uncommon"
+  ],
+  "description": "Predatory and relentless, Trandoshans pursue their hunts with brutal efficiency, boasting regenerative physiology and crushing strength.",
+  "starting_xp": 105,
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Dosh",
+   "Basic"
+  ],
+  "base_hp": 12,
+  "base_strain": 9,
+  "innate_traits": [
+   {
+    "id": "trandoshan_regenerative_scales",
+    "name": "Regenerative Scales",
+    "narrative": "Your species possesses incredible regenerative abilities, with scales that heal rapidly and allow you to recover from injuries that would cripple other species.",
+    "mechanics": [
+     {
+      "effect": "modify_hp_per_level",
+      "parameters": {
+       "value": 1
+      },
+      "conditions": [
+       {
+        "key": "event",
+        "op": "equals",
+        "value": "rest_end"
+       },
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "trandoshan_crushing_claws",
+    "name": "Crushing Claws",
+    "narrative": "Your hands are equipped with powerful claws that can tear through flesh and armor with devastating efficiency.",
+    "mechanics": [
+     {
+      "effect": "modify_unarmed_strike",
+      "parameters": {
+       "damage_dice": "1d6",
+       "damage_type": "slashing"
+      }
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "crushing_claws_devouring_instinct",
+     "ui_transition": {
+      "animation": "claw_slip_into_chaos",
+      "sfx": "devouring_sound"
+     }
+    }
+   },
+   {
+    "id": "trandoshan_trophy_sense",
+    "name": "Trophy Sense",
+    "narrative": "Your predatory instincts allow you to track wounded prey with supernatural precision, sensing weakness and vulnerability in your targets.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Survival checks to track wounded creatures.",
+      "conditions": [
+       {
+        "key": "tracking_target",
+        "op": "equals",
+        "value": "wounded"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "trophy_sense_manic_vigilance",
+     "ui_transition": {
+      "animation": "trophy_sense_twist",
+      "sfx": "manic_whisper"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.8m - 2.2m",
+   "distinctions": [
+    "Scaly, reptilian skin",
+    "Sharp claws and teeth",
+    "Predatory eyes",
+    "Muscular, powerful build",
+    "Regenerative abilities"
+   ],
+   "scale_color_variants": [
+    "Dark Green",
+    "Olive Green",
+    "Brown",
+    "Dark Brown",
+    "Black",
+    "Grey",
+    "Mottled patterns"
+   ],
+   "scale_patterns": [
+    "Smooth scales",
+    "Ridged scales",
+    "Spiked scales",
+    "Mottled camouflage patterns",
+    "Striped patterns"
+   ],
+   "eye_color_variants": [
+    "Yellow",
+    "Orange",
+    "Red",
+    "Green",
+    "Amber",
+    "Slit-pupiled eyes"
+   ],
+   "common_adornments": [
+    "Trophy collections and hunting gear",
+    "Practical, durable armor",
+    "Hunting weapons and tools",
+    "Traditional Trandoshan ceremonial items",
+    "Combat gear and survival equipment"
+   ],
+   "llm_description_prompt": "Describe a Trandoshan character. Emphasize their predatory nature and the way their scales catch the light, showing their regenerative abilities. Their eyes should convey both intelligence and primal hunting instincts. Consider their hunting background and the trophies or scars that tell the story of their past hunts and battles."
+  },
+  "class_synergies": [
+   {
+    "class": "Soldier (Brawler)",
+    "narrative": "Trandoshans' natural strength and regenerative abilities make them terrifying frontline fighters, able to endure punishment and deal devastating damage.",
+    "mechanical_benefits": [
+     "Crushing Claws provide natural weapons for unarmed combat",
+     "Regenerative Scales enhance durability in combat",
+     "High Strength supports heavy weapon use and grappling"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Trandoshans' natural hunting instincts and Trophy Sense make them exceptional Scouts, able to track and pursue targets through any environment.",
+    "mechanical_benefits": [
+     "Trophy Sense trait enhances tracking and survival",
+     "Regenerative Scales support long-term wilderness operations",
+     "Natural hunting instincts aid in reconnaissance"
+    ]
+   },
+   {
+    "class": "Berserker",
+    "narrative": "When a Trandoshan's predatory instincts are unleashed, their regenerative abilities and natural weapons make them nearly unstoppable.",
+    "mechanical_benefits": [
+     "Regenerative Scales support Berserker's reckless combat style",
+     "Crushing Claws enhance unarmed combat damage",
+     "Natural durability allows for aggressive tactics"
+    ]
+   },
+   {
+    "class": "Bounty Hunter",
+    "narrative": "Trandoshans' hunting skills and trophy mentality make them natural Bounty Hunters, treating each target as prey to be tracked and captured.",
+    "mechanical_benefits": [
+     "Trophy Sense aids in tracking and pursuing targets",
+     "Regenerative Scales support long hunts",
+     "Natural predatory instincts enhance hunting abilities"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Bounty Hunters Guild",
+    "narrative": "Many Trandoshans join the Bounty Hunters Guild, using their hunting skills and trophy mentality to excel in the profession."
+   },
+   {
+    "faction": "Mandalorian Clans",
+    "narrative": "Some Trandoshans find kinship with Mandalorian culture, respecting their warrior traditions and hunting prowess."
+   },
+   {
+    "faction": "Independent Hunters",
+    "narrative": "Many Trandoshans prefer to work independently, following their own hunting codes and collecting trophies from their most challenging prey."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Regenerative Scales",
+   "base_description": "Your species has incredible regenerative abilities. Your scales heal rapidly, and you can recover from injuries that would cripple other species.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "healing_enhancement",
+     "description": "Your regenerative abilities have grown stronger. You can heal more quickly and recover from more severe injuries.",
+     "mechanical_effect": {
+      "type": "healing_bonus",
+      "value": "+2",
+      "conditions": [
+       {
+        "key": "healing_type",
+        "op": "in",
+        "value": [
+         "natural_healing",
+         "regeneration",
+         "recovery"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your regeneration has become legendary. You can recover from injuries that would kill other species.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Legendary Regeneration",
+      "description": "Once per long rest, you can instantly recover from any non-fatal injury or condition"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of regeneration. Your healing abilities are nearly supernatural.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Master Regeneration",
+      "description": "Once per long rest, you can regenerate lost limbs or organs, or recover from any injury"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of regeneration. Your healing abilities defy the laws of nature.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Regeneration",
+      "description": "Once per long rest, you can recover from any injury, including death, and gain temporary immunity to damage"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Trandoshan's regenerative abilities have grown stronger. Their scales heal more quickly, and they can recover from injuries that would cripple other species.",
+    "level_10": "Your Trandoshan's regeneration has become legendary. They can recover from injuries that would kill other species, their healing abilities bordering on the supernatural.",
+    "level_15": "Your Trandoshan has become a master of regeneration. Their healing abilities are nearly supernatural, allowing them to recover from almost any injury.",
+    "level_20": "Your Trandoshan is a living legend of regeneration. Their healing abilities defy the laws of nature, making them nearly immortal in the face of injury."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Trophy Hunter",
+    "type": "traditional",
+    "description": "Your deep connection to Trandoshan hunting traditions and the sacred art of trophy collection.",
+    "activation": "When hunting or collecting trophies from defeated enemies",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Survival) checks",
+     "conditions": [
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "hunting",
+        "trophy_collection",
+        "tracking_prey"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon the ancient hunting traditions of your people, understanding the sacred nature of the hunt and the importance of trophies.",
+    "faction_connection": "Independent Hunters",
+    "optional": true
+   },
+   {
+    "name": "Predator's Instinct",
+    "type": "cultural",
+    "description": "Your species' natural predatory instincts and ability to sense weakness in others.",
+    "activation": "When assessing threats or identifying vulnerable targets",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Insight) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "threat_assessment",
+        "weakness_identification",
+        "prey_evaluation"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can sense weakness and vulnerability in others, your predatory instincts allowing you to identify the perfect moment to strike.",
+    "faction_connection": "Bounty Hunters Guild",
+    "optional": true
+   },
+   {
+    "name": "Hunting Code",
+    "type": "narrative",
+    "description": "Your adherence to the sacred Trandoshan hunting code and the honor of the hunt.",
+    "activation": "When following hunting traditions or maintaining honor in combat",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Intimidation) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "hunting_honor",
+        "combat_challenge",
+        "trophy_claiming"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can inspire fear and respect through your adherence to the hunting code, your honor and skill commanding respect even from enemies.",
+    "faction_connection": "Mandalorian Clans",
+    "optional": true
+   },
+   {
+    "name": "Regenerative Pride",
+    "type": "social",
+    "description": "Your species' pride in their regenerative abilities and the resilience it represents.",
+    "activation": "When demonstrating resilience or recovering from injuries",
+    "effect": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "injury_recovery",
+        "resilience_demonstration",
+        "endurance_challenge"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can inspire awe and fear through your regenerative abilities, your resilience serving as a testament to your species' strength.",
+    "faction_connection": "Trandoshan Clans",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Trandoshan Hunting Traditions",
+   "cultural_networks": [
+    "Bounty Hunters Guild",
+    "Independent Hunters",
+    "Trandoshan Clans",
+    "Hunting Societies",
+    "Trophy Collectors"
+   ],
+   "traditional_practices": [
+    "Trophy Hunting Rituals",
+    "Regeneration Ceremonies",
+    "Hunting Code Training",
+    "Predator Instinct Development",
+    "Trophy Collection Traditions"
+   ],
+   "cultural_knowledge": [
+    "Hunting Techniques",
+    "Trophy Collection",
+    "Regenerative Biology",
+    "Predator Psychology",
+    "Trandoshan History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "jungle",
+    "advantage": "Natural adaptation to jungle environments and dense vegetation",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Survival checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "jungle"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "navigation",
+        "hunting",
+        "tracking"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through jungle environments with natural ease, your reptilian physiology and hunting instincts making you perfectly at home in dense vegetation.",
+    "narrative_hooks": [
+     "Jungle hunting and tracking",
+     "Dense vegetation navigation",
+     "Jungle survival and resource finding",
+     "Tropical environment adaptation"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "swamp",
+    "advantage": "Enhanced comfort and performance in swamp and wetland environments",
+    "situational_bonus": {
+     "type": "saving_throw_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "swamp"
+      },
+      {
+       "key": "save_type",
+       "op": "in",
+       "value": [
+        "constitution",
+        "strength"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your reptilian physiology thrives in swamp environments, your natural resistance to disease and ability to navigate wetlands making you perfectly suited for such conditions.",
+    "narrative_hooks": [
+     "Swamp navigation and hunting",
+     "Wetland survival",
+     "Disease resistance in humid conditions",
+     "Aquatic hunting techniques"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "hunting_grounds",
+    "advantage": "Mastery of hunting environments and prey tracking",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Wisdom (Survival) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "hunting_grounds"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "tracking",
+        "hunting",
+        "prey_analysis"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural hunting instincts and Trophy Sense make you a master of any hunting environment, able to track and pursue prey with supernatural precision.",
+    "narrative_hooks": [
+     "Advanced tracking techniques",
+     "Prey behavior analysis",
+     "Hunting strategy development",
+     "Trophy collection methods"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "hostile_terrain",
+    "advantage": "Enhanced resilience and survival in hostile or dangerous environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "hostile_terrain"
+      },
+      {
+       "key": "threat_type",
+       "op": "in",
+       "value": [
+        "environmental_hazards",
+        "poison",
+        "disease"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your regenerative abilities and natural resilience make you perfectly adapted to hostile environments, able to survive and thrive where others would perish.",
+    "narrative_hooks": [
+     "Hostile environment survival",
+     "Poison and disease resistance",
+     "Environmental hazard adaptation",
+     "Extreme condition endurance"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "jungle",
+    "swamp",
+    "hunting_grounds",
+    "hostile_terrain"
+   ],
+   "environmental_knowledge": [
+    "Jungle Navigation",
+    "Swamp Survival",
+    "Hunting Techniques",
+    "Hostile Environment Adaptation",
+    "Trophy Collection",
+    "Predator Psychology"
+   ],
+   "survival_techniques": [
+    "Jungle Hunting and Tracking",
+    "Swamp Navigation",
+    "Hostile Environment Survival",
+    "Trophy Collection Methods",
+    "Regenerative Recovery",
+    "Predator Instinct Development"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "reptilian_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "scaly_skin",
+     "tall_build",
+     "muscular",
+     "predatory_eyes"
+    ],
+    "morphology": {
+     "head_type": "crocodilian",
+     "body_type": "reptilian",
+     "average_height": "2.5 meters"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": [
+       "scars_from_hunt",
+       "tusked_teeth"
+      ],
+      "adult": [
+       "battle_scars",
+       "weathered_scales"
+      ],
+      "elder": [
+       "cane-supported_walk",
+       "worn_tusks"
+      ]
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "yellow_eyes",
+       "pale_skin",
+       "fractured_claws"
+      ],
+      "light_side": [
+       "calm_aura",
+       "repaired_scars"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos",
+     "battle_wounds"
+    ],
+    "prompt_schema": {
+     "base_prompt": "{species} hunts through the underbrush, tracking its prey.",
+     "contextual_modifiers": [
+      "day/night",
+      "weather",
+      "terrain"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "blood_feud",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A Trandoshan catches wind of a lucrative bounty and begins to track it, pouring over data and scouring the galaxy for signs.",
+      "threat_level": "Low"
+     },
+     "escalation": {
+      "description": "The Trandoshan closes in on its quarry, using cunning and stealth to evade detection while closing in for the kill.",
+      "threat_level": "Medium"
+     },
+     "confrontation": {
+      "description": "A long-standing vendetta or a particularly challenging prey brings the Trandoshan face-to-face with their greatest foe yet.",
+      "threat_level": "High"
+     }
+    },
+    "resolution_paths": {
+     "victory": "The Trandoshan emerges victorious, claiming their bounty and earning a place among the Dosha's most honored hunters.",
+     "betrayal": "A trusted ally or rival hunter turns against the Trandoshan, forcing them to fight for survival and defend their honor.",
+     "redemption": "The Trandoshan fails to capture their prey but finds a way to restore their reputation by showing mercy to a Wookiee captive or revealing a hidden injustice."
+    },
+    "conflict_triggers": [
+     "A Trandoshan encounters a Wookiee, stirring memories of the Dosha's dark past.",
+     "The Scorekeeper's favor is withdrawn due to a lack of efficient kills or questionable hunting practices.",
+     "A rival bounty hunter challenges the Trandoshan for supremacy."
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "rival_bounty",
+      "betrayal_by_allies"
+     ],
+     "vendetta_type": "revenge"
+    }
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "physical_attractiveness",
+    "strong_will",
+    "courage"
+   ],
+   "romance_progression": {
+    "stage1": {
+     "description": "Courtship: A Trandoshan begins to pursue a romantic interest, wooing them with gifts and favors while testing their hunting prowess."
+    },
+    "stage2": {
+     "description": "Bonding: The Trandoshan's partner joins in the hunt, learning the ways of the Dosha and strengthening their bond through shared experiences."
+    },
+    "stage3": {
+     "description": "Union: The couple participates in a high-stakes hunt together, relying on each other for survival."
+    }
+   },
+   "romance_events": [
+    "The Trandoshan teaches their partner how to track and kill effectively.",
+    "The couple participates in a high-stakes hunt together, relying on each other for survival."
+   ],
+   "romance_modifiers": [
+    "Sharing a bounty with the partner increases attraction by +2, but also raises the risk of failure or injury.",
+    "Failing to capture prey while with the partner decreases attraction by -1, reflecting the Trandoshan's disappointment and frustration."
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "type": "brutal",
+     "description": "A relentless and efficient predator"
+    },
+    "motivations": {
+     "primary": "survival",
+     "secondary": "prowess"
+    },
+    "combat_behavior": "Charge into melee, exploiting opponents' weaknesses with crushing strength.",
+    "social_behavior": "Demand respect, but offer none in return."
+   },
+   "relationship_tracking": {
+    "trust_levels": "{0: 'none', 1: 'cautious', 2: 'somewhat_trusted', 3: 'trusted'}",
+    "loyalty_triggers": [
+     "Betrayal of honor or personal code.",
+     "Abuse of loyalty or trust."
+    ]
+   },
+   "services": [
+    {
+     "name": "Combat Analysis",
+     "description": "Analyze combat situations to optimize hunting efficiency."
+    },
+    {
+     "name": "Regenerative Support",
+     "description": "Utilize regenerative physiology to heal allies and self."
+    }
+   ]
+  },
+  "flavor_text": "For centuries, Trandoshans have been driven by the insatiable hunger of the Scorekeeper, whose benevolent gaze rewards the most efficient and honorable kills. The Dosha's sacred hunters roam the galaxy in search of prey, bound by a code of brutal efficiency that separates them from their reptilian cousins.",
+  "llm_guidance": {
+   "roleplay_guidance": "Play the Trandoshan as a calculating hunter who weighs every decision against the potential reward and risk. Their ruthless reputation precedes them, but they are not immune to the allure of honor and prestige in the hunt.",
+   "narrative_hooks": [
+    "As you stalk your prey, remember that every kill is an opportunity to earn Jagannath points and appease the Scorekeeper.",
+    "Regenerative physiology makes you nearly unkillable in combat, but don't take unnecessary risks – a wounded hunter is a liability to their own clan."
+   ],
+   "social_dynamics": "Trandoshans are feared and respected by their peers for their unwavering dedication to the hunt. They have little patience for weakness or failure, and will not hesitate to abandon a comrade who slows them down.",
+   "common_motivations": [
+    "Survival",
+    "Prestige",
+    "Honor"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "trandoshan",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/trandoshan.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

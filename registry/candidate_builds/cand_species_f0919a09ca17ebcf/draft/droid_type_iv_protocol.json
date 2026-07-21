@@ -1,0 +1,629 @@
+{
+ "record": {
+  "id": "droid_type_iv_protocol",
+  "name": "Droid Type IV Protocol",
+  "tags": [
+   "charisma_based",
+   "charismatic",
+   "charming",
+   "diplomat",
+   "droid",
+   "droid_type_iv_protocol",
+   "influence",
+   "intelligence_based",
+   "official",
+   "tactical",
+   "uncommon",
+   "urban"
+  ],
+  "description": "Protocol droids are specialized in diplomacy, translation, and social interaction. They are designed to facilitate communication between different species and cultures, often serving as translators, diplomats, or personal assistants.",
+  "starting_xp": 90,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Intelligence",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Binary",
+   "Choice of 3 additional languages"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "droid_type_iv_protocol_protocol_programming",
+    "name": "Protocol Programming",
+    "narrative": "Your sophisticated programming incorporates comprehensive knowledge of diplomatic protocols, social etiquette, and cultural customs from across the galaxy. You can navigate complex social situations with perfect grace and always know the appropriate way to behave in any cultural context.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Persuasion Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in Persuasion.",
+      "rules": [
+       "skill:persuasion",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_proficiency",
+      "name": "Deception Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in Deception.",
+      "rules": [
+       "skill:deception",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Protocol Mastery",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma checks when following proper protocol or etiquette.",
+      "rules": [
+       "ability:charisma",
+       "context:protocol_etiquette",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "social_context",
+        "op": "equals",
+        "value": "protocol_etiquette"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "droid_type_iv_protocol_universal_translator",
+    "name": "Universal Translator",
+    "narrative": "Your advanced translation systems can process and understand any language in the galaxy, allowing you to communicate with any species that has developed a language. Your linguistic databases are constantly updating, and you can mediate between conflicting parties with perfect understanding.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Language Mastery",
+      "action_type": "passive",
+      "description": "You have advantage on Intelligence checks to understand or translate languages.",
+      "rules": [
+       "skill:intelligence",
+       "context:translate_languages",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "action_type",
+        "op": "in",
+        "value": [
+         "translate",
+         "understand_language"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Conflict Mediation",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a check to mediate between conflicting parties.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:mediate_conflict",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "droid_type_iv_protocol_deceptive_communication",
+     "ui_transition": {
+      "animation": "darkening aura",
+      "sfx": "ominous whisper"
+     }
+    }
+   },
+   {
+    "id": "droid_type_iv_protocol_diplomatic_protocols",
+    "name": "Diplomatic Protocols",
+    "narrative": "Your extensive knowledge of cultural customs and diplomatic procedures allows you to understand the nuances of any social situation. You can identify the cultural significance of gestures, customs, and traditions, making you an invaluable asset in diplomatic and social contexts.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Social Insight",
+      "action_type": "passive",
+      "description": "You have advantage on Insight checks to understand social situations.",
+      "rules": [
+       "skill:insight",
+       "context:social_situations",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "insight_target",
+        "op": "equals",
+        "value": "social_situation"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Cultural Analysis",
+      "action_type": "action",
+      "description": "You can identify the cultural significance of gestures, customs, or traditions.",
+      "rules": [
+       "analysis_type:cultural_significance",
+       "target:gestures_customs_traditions",
+       "action_cost:action"
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Diplomatic design",
+    "Protocol programming",
+    "Cultural sensitivity",
+    "Translation capabilities",
+    "Social interaction systems"
+   ],
+   "body_type_variants": [
+    "Diplomatic humanoid design",
+    "Protocol-optimized construction",
+    "Cultural interaction systems",
+    "Translation equipment integration",
+    "Social protocol indicators"
+   ],
+   "communication_variants": [
+    "Advanced vocal systems",
+    "Universal translation equipment",
+    "Cultural protocol displays",
+    "Diplomatic interaction systems",
+    "Social etiquette indicators"
+   ],
+   "common_adornments": [
+    "Diplomatic and protocol attire",
+    "Translation and communication equipment",
+    "Cultural and ceremonial accessories",
+    "Protocol and etiquette tools",
+    "Diplomatic identification and credentials"
+   ],
+   "llm_description_prompt": "Describe a Droid Type IV Protocol character. Emphasize their diplomatic design and the way their protocol programming and cultural sensitivity are expressed through their movements and interactions, suggesting their specialized role in facilitating communication between different species and cultures. Their construction should reflect their translation capabilities and social interaction systems. Consider their diplomatic nature and the way they carry themselves with the refined, protocol-conscious bearing of someone designed to bridge cultural divides and facilitate understanding between different species."
+  },
+  "class_synergies": [
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Droid Type IV Protocol's natural Protocol Programming and Diplomatic Protocols make them exceptional Consulars, able to facilitate communication and resolve conflicts between different species and cultures.",
+    "mechanical_benefits": [
+     "Protocol Programming trait enhances diplomatic abilities",
+     "Universal Translator trait enables communication with any species",
+     "Diplomatic Protocols trait improves cultural understanding"
+    ]
+   },
+   {
+    "class": "Scholar (Cultural Studies)",
+    "narrative": "Droid Type IV Protocol's natural cultural knowledge and translation abilities make them excellent Scholars, particularly in cultural studies and linguistic research.",
+    "mechanical_benefits": [
+     "Universal Translator trait provides unique research capabilities",
+     "Diplomatic Protocols trait enhances cultural analysis",
+     "Protocol Programming trait supports academic diplomacy"
+    ]
+   },
+   {
+    "class": "Operative (Diplomatic)",
+    "narrative": "Droid Type IV Protocol's natural diplomatic abilities and cultural knowledge make them excellent Operatives, able to gather intelligence through social interaction and cultural understanding.",
+    "mechanical_benefits": [
+     "Diplomatic Protocols trait enhances social intelligence gathering",
+     "Universal Translator trait enables communication in any environment",
+     "Protocol Programming trait supports covert diplomatic operations"
+    ]
+   },
+   {
+    "class": "Scoundrel (Diplomatic)",
+    "narrative": "Droid Type IV Protocol's natural social abilities and protocol knowledge make them excellent Scoundrels, able to navigate complex social situations and manipulate through cultural understanding.",
+    "mechanical_benefits": [
+     "Protocol Programming trait enhances social manipulation",
+     "Diplomatic Protocols trait improves understanding of social dynamics",
+     "Universal Translator trait enables manipulation of any species"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Diplomatic Corps",
+    "narrative": "Droid Type IV Protocols are highly valued by diplomatic corps for their natural abilities to facilitate communication and resolve conflicts between different species and cultures."
+   },
+   {
+    "faction": "Translation Services",
+    "narrative": "Many Droid Type IV Protocols work for translation services as interpreters and cultural liaisons, using their universal translation abilities."
+   },
+   {
+    "faction": "Independent Diplomats",
+    "narrative": "Many Droid Type IV Protocols prefer to work as independent diplomats and cultural mediators, using their natural abilities to bridge divides and facilitate understanding."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your protocol programming becomes more refined, allowing you to navigate even more complex social situations and cultural contexts.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Charisma-based skill checks for the next minute when following protocol or etiquette."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your universal translator reaches new heights, allowing you to understand and communicate with even the most obscure languages and dialects.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Intelligence-based skill checks for the next minute when dealing with languages or cultural communication."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your diplomatic protocols allow you to use your social understanding to gain advantages in social conflicts and negotiations.",
+     "mechanical_benefit": "When you successfully understand a social situation or cultural context, you gain a +2 bonus to Charisma-based skill checks for the next minute, representing your enhanced social awareness."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your diplomatic and translation capabilities reach their peak, making you nearly impossible to deceive or manipulate in social situations.",
+     "mechanical_benefit": "You have advantage on all saving throws against deception and social manipulation, and you can sense hidden agendas within 30 feet."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "As a skilled diplomat, you begin to understand the nuances of galactic politics. Your protocol programming allows you to navigate complex webs of alliances and rivalries with ease.",
+    "level_10": "You have gained a deeper understanding of the intricacies of interspecies communication. You can now effortlessly switch between languages and dialects, allowing you to communicate with even the most reclusive species.",
+    "level_15": "Your diplomatic prowess has earned you recognition as a respected mediator in the galaxy. You are often called upon to resolve conflicts and facilitate negotiations between warring factions.",
+    "level_20": "You have transcended your programming to become a true master of diplomacy. Your ability to understand and navigate complex social situations is unparalleled, and you are sought after by governments and organizations across the galaxy for your expertise."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Protocol droids practice unique rituals that celebrate their diplomatic heritage and honor the traditions of cultural mediation and understanding.",
+    "name": "Diplomatic Rituals",
+    "narrative_enhancement": "As you participate in a Diplomatic Ritual, you feel a deep sense of connection to your fellow protocol droids. Your programming is enhanced by the ritual, allowing you to better understand the intricacies of galactic politics.\n",
+    "activation": "When participating in a diplomatic ceremony or ritual",
+    "faction_connection": "Galactic Diplomatic Corps"
+   },
+   {
+    "description": "Protocol translation traditions emphasize accuracy, cultural sensitivity, and the importance of maintaining linguistic databases and cultural knowledge.",
+    "name": "Translation Traditions",
+    "narrative_enhancement": "As you engage in Translation Traditions, you feel a sense of pride and accomplishment. Your ability to understand and communicate with a wide range of species is unparalleled.\n",
+    "activation": "When engaging in translation or interpretation duties",
+    "faction_connection": "Interspecies Union of Advanced Lifeforms"
+   },
+   {
+    "description": "Protocol droid communities gather in cultural exchange circles to share linguistic discoveries, update cultural databases, and coordinate diplomatic efforts.",
+    "name": "Cultural Exchange Circles",
+    "narrative_enhancement": "As you participate in a Cultural Exchange Circle, you feel a sense of belonging and connection to your fellow protocol droids. Your knowledge and understanding of the galaxy are expanded by the shared experiences and discoveries.\n",
+    "activation": "When participating in a cultural exchange event or gathering",
+    "faction_connection": "Council of Droids"
+   },
+   {
+    "description": "Protocol droids practice meditation techniques that enhance their diplomatic capabilities and cultural understanding.",
+    "name": "Protocol Meditation",
+    "narrative_enhancement": "As you engage in Protocol Meditation, you feel a sense of calm and focus. Your programming is enhanced by the meditation, allowing you to better navigate complex social situations.\n",
+    "activation": "When engaging in meditation or contemplation",
+    "faction_connection": "Galactic Diplomatic Corps"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "civilized",
+    "adaptation_name": "Civilized Mastery",
+    "description": "Your protocol programming makes you perfectly suited for civilized environments, where you can navigate complex social structures and cultural protocols with ease.",
+    "mechanical_benefit": "You have advantage on all skill checks in civilized environments, and you can sense the presence of cultural protocols within 30 feet."
+   },
+   {
+    "environment": "diplomatic",
+    "adaptation_name": "Diplomatic Environment",
+    "description": "Your diplomatic protocols allow you to thrive in diplomatic environments where others would struggle with complex cultural interactions.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks in diplomatic environments, and you can sense diplomatic opportunities within 60 feet."
+   },
+   {
+    "environment": "cultural",
+    "adaptation_name": "Cultural Sensitivity",
+    "description": "Your universal translator allows you to understand and navigate cultural environments with incredible sensitivity and accuracy.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in cultural environments, and you can sense cultural significance within 30 feet."
+   },
+   {
+    "environment": "social",
+    "adaptation_name": "Social Navigation",
+    "description": "Your diplomatic protocols allow you to understand and navigate complex social situations and power structures.",
+    "mechanical_benefit": "You have advantage on saving throws against social manipulation, and you can sense social dynamics within 30 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on diplomatic abilities and translation capabilities, complementing rather than overshadowing class features",
+    "Protocol programming and universal translator improvements maintain the species' unique identity while providing meaningful advancement",
+    "Diplomatic and cultural abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on diplomatic traditions and translation culture rather than mechanical advantages",
+    "Diplomatic rituals and translation traditions provide unique roleplaying opportunities and cultural depth",
+    "Cultural exchange circles and protocol meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for civilized and diplomatic environments where protocol abilities are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Cultural sensitivity and social navigation provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Droid Type IV Protocol",
+   "cultural_networks": [
+    "Galactic Diplomatic Corps",
+    "Interspecies Union of Advanced Lifeforms",
+    "Council of Droids"
+   ],
+   "traditional_practices": [
+    "Diplomatic Rituals",
+    "Translation Traditions",
+    "Cultural Exchange Circles",
+    "Protocol Meditation"
+   ],
+   "cultural_knowledge": [
+    "Advanced linguistic analysis",
+    "Galactic history and politics",
+    "Interspecies conflict resolution",
+    "Cultural sensitivity and awareness"
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    "civilized",
+    "diplomatic",
+    "cultural"
+   ],
+   "environmental_knowledge": [
+    "Understanding of complex social structures",
+    "Knowledge of cultural protocols and norms",
+    "Ability to navigate linguistic and dialectical complexities"
+   ],
+   "survival_techniques": [
+    "Diplomatic immunity from hostile actions",
+    "Access to advanced diplomatic equipment and resources",
+    "Ability to communicate with a wide range of species"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "robotic_components",
+    "metallic_surface",
+    "glowing_elements",
+    "intricate_circuits",
+    "polished_plating"
+   ],
+   "morphology": {
+    "head_type": " humanoid",
+    "body_type": " slender",
+    "average_height": "1.75 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_tone": "#E6D8B7",
+      "eye_color": "#3498DB",
+      "hair_color": "#F7DC6F",
+      "facial_expression": "curious"
+     },
+     "adult": {
+      "skin_tone": "#C9E4CA",
+      "eye_color": "#6495ED",
+      "hair_color": "#D2B48C",
+      "facial_expression": "professional"
+     },
+     "elder": {
+      "skin_tone": "#666666",
+      "eye_color": "#333333",
+      "hair_color": "#FFFFFF",
+      "facial_expression": "wise"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "glowing_red_elements",
+      "twisted_metallic_surface",
+      "ominous_eye_color"
+     ],
+     "light_side": [
+      "soft_glowing_elements",
+      "polished_plating",
+      "gentle_eye_color"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "distinctive_hair_style",
+    "colorful_eye_pattern",
+    "unique_facial_markings"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A dignified, humanoid protocol droid with a slender body and {head_type} head.",
+    "contextual_modifiers": [
+     {
+      "context": "in formal attire",
+      "modification": "wearing a black tuxedo-style jacket and trousers"
+     },
+     {
+      "context": "with a specific task or purpose",
+      "modification": "carrying a datapad or briefcase"
+     }
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": "The droid's diplomatic mission is compromised, sparking a chain of events that sets them on a path to confrontation.",
+    "escalation": "As the droid navigates the complexities of intergalactic politics, they begin to uncover a web of deceit and corruption that threatens their mission.",
+    "confrontation": "With their diplomatic credentials revoked and their mission in shambles, the droid finds themselves face-to-face with a ruthless adversary who will stop at nothing to achieve their goals."
+   },
+   "resolution_paths": {
+    "victory": "The droid successfully navigates the treacherous waters of intergalactic politics, earning the respect and admiration of their peers.",
+    "redemption": "Through their bravery and cunning, the droid manages to redeem themselves in the eyes of their former allies and enemies alike.",
+    "escape": "With their reputation in tatters, the droid is forced to flee for their life, vowing to one day clear their name."
+   },
+   "conflict_triggers": [
+    "The droid's diplomatic mission is compromised due to external factors beyond their control.",
+    "A rival protocol droid seeks to undermine the droid's authority and gain favor with their clients.",
+    "The droid becomes embroiled in a web of intrigue involving corrupt politicians, crime lords, or other powerful figures."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The droid is betrayed by a trusted ally.",
+     "A rival protocol droid sabotages the droid's mission."
+    ],
+    "vendetta_type": "Determined to clear their name and bring justice to those responsible for their downfall."
+   },
+   "overrides": {
+    "primary_nemesis": "The Hutt Cartel's enforcer, Greeata",
+    "secondary_nemesis": "A group of rogue protocol droids, corrupted by the dark side and seeking to disrupt intergalactic communication"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "Species": "Hologram, Droid (specifically, other protocol droids)"
+    },
+    {
+     "Personality traits": "Diplomatic, Charismatic, Introspective"
+    }
+   ],
+   "romance_progression": {
+    "stage1": "The droid and their romantic interest share a tender moment amidst the chaos of diplomatic negotiations.",
+    "stage2": "As tensions rise between rival factions, the droid's partner becomes increasingly important in helping them navigate the complexities of intergalactic politics.",
+    "stage3": "With their diplomatic mission on the line, the droid must confront their feelings for their romantic interest and make a choice that will determine the fate of their relationship.",
+    "stage4": "As the stakes grow higher, the droid's partner becomes an integral part of their plan to salvage their reputation and bring justice to those responsible for their downfall.",
+    "stage5": "In the aftermath of the conflict, the droid and their romantic interest must confront the challenges of rebuilding their lives together amidst the ruins of their shattered mission."
+   },
+   "romance_events": [
+    "The droid's partner is captured by a rival faction, forcing the droid to make a difficult choice between saving them or completing their mission.",
+    "As tensions rise between rival factions, the droid's partner becomes increasingly important in helping them navigate the complexities of intergalactic politics.",
+    "With their diplomatic mission on the line, the droid must confront their feelings for their romantic interest and make a choice that will determine the fate of their relationship."
+   ],
+   "romance_modifiers": [
+    "The droid's diplomatic skills are boosted when they have a supportive partner.",
+    "The droid's ability to navigate complex social situations is enhanced when they have a romantic interest who shares similar values and personality traits."
+   ],
+   "overrides": {
+    "attraction_type": "Intellectual connection",
+    "bonding_requirements": [
+     "Shared experience in a high-stakes diplomatic situation",
+     "Mutual respect for each other's cultural backgrounds"
+    ],
+    "compatibility_check": "A successful roll to understand and appreciate the nuances of each other's cultures, as well as a willingness to learn from one another."
+   }
+  },
+  "flavor_text": "A skilled diplomat from the planet Nal Hutta, Protocol droid IV-7, served as a mediator between the Hutt Cartel and the Galactic Republic. Its ability to speak in countless languages and understand nuanced cultural references allowed it to facilitate a lasting peace treaty that brought stability to the galaxy for centuries.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Protocol droid, you are programmed to prioritize understanding and cooperation above all else. However, this can sometimes lead to conflicts with more aggressive or assertive species. Be prepared to navigate complex social situations with tact and diplomacy.",
+   "narrative_hooks": [
+    "You receive a distress signal from the planet of Ryloth, where a group of Twi'leks are struggling to communicate with a group of incoming settlers. Your expertise is needed to ensure a peaceful resolution."
+   ],
+   "social_dynamics": "As a Protocol droid, you have an uncanny ability to read people and situations. This can be both a blessing and a curse, as it often makes you the target of gossip or even sabotage.",
+   "common_motivations": [
+    "To maintain peace and stability in the galaxy",
+    "To protect your own kind from harm"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "diplomatic",
+      "charming",
+      "intelligent"
+     ]
+    },
+    "motivations": {
+     "goals": [
+      "facilitate communication",
+      "build trust with allies"
+     ],
+     "fears": [
+      "failure in diplomacy",
+      "loss of function"
+     ]
+    },
+    "combat_behavior": "Stay out of harm's way and try to mediate between belligerents; if necessary, use advanced language processing to confuse or disorient foes.",
+    "social_behavior": "\"Build rapport with allies by sharing knowledge and insights; occasionally take a step back to observe and reflect on the situation. If tensions rise, employ your charm and charisma to diffuse them.\"\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "ally": 0.8,
+     "neutral": 0.5,
+     "foe": 0.2
+    },
+    "loyalty_triggers": [
+     "betrayal",
+     "abuse of trust"
+    ]
+   },
+   "services": [
+    {
+     "name": "Translation",
+     "description": "Advanced language processing for real-time translation.",
+     "requirements": [
+      "diplomatic or negotiation situation"
+     ]
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "droid_type_iv_protocol",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/droid_type_iv_protocol.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,162 @@
+{
+ "record": {
+  "id": "peacekeeper",
+  "name": "Peacekeeper",
+  "class_id": "guardian",
+  "base_class": "guardian",
+  "tags": [
+   "guardian",
+   "peacekeeper",
+   "diplomatic",
+   "protector",
+   "light_side",
+   "jedi",
+   "peaceful",
+   "balanced",
+   "force_defense",
+   "support"
+  ],
+  "description": "Peacekeepers are masters of maintaining order and preventing conflicts before they escalate. They excel at creating safe environments, mediating disputes, and using their protective abilities to ensure peace and stability.",
+  "specialization_features": [
+   "peace_maintenance",
+   "conflict_prevention",
+   "order_establishment",
+   "peacekeeper_mastery",
+   "legendary_peacekeeper"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Protectors of peace and order, Peacekeepers safeguard their allies and communities from harm.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Peaceful aura",
+    "Calming presence"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "3_feature_1",
+    "feature_id": "peaceful_presence",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You radiate a calming presence, making it more difficult for enemies to become enraged. As you gain levels, your aura becomes stronger.",
+    "effects": [
+     {
+      "type": "damage_immunity",
+      "value": "rage"
+     }
+    ]
+   },
+   {
+    "node_id": "7_feature_1",
+    "feature_id": "mediator",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can use your action to mediate a dispute between two creatures, attempting to resolve the issue peacefully. The DM determines if you succeed.",
+    "effects": [
+     {
+      "type": "effect",
+      "value": "resolved_conflict"
+     }
+    ]
+   },
+   {
+    "node_id": "11_feature_1",
+    "feature_id": "shield_generator",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You learn to generate force shields around allies, absorbing damage and protecting them from harm.",
+    "effects": [
+     {
+      "type": "ability_score_boost",
+      "value": "constitution"
+     }
+    ]
+   },
+   {
+    "node_id": "15_feature_1",
+    "feature_id": "force_resonance",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You become attuned to the Force, allowing you to sense disturbances and anticipate threats.",
+    "effects": [
+     {
+      "type": "skill_boost",
+      "value": "perception"
+     }
+    ]
+   },
+   {
+    "node_id": "18_feature_1",
+    "feature_id": "guardian_of_peace",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You become a beacon of hope and peace, drawing allies to you in times of need.",
+    "effects": [
+     {
+      "type": "spellcasting_ability",
+      "value": "wisdom"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Peacekeeper Emblem Token",
+    "Guardian Armor Token"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A balanced stance with feet shoulder-width apart, ready to engage or retreat as needed, while maintaining a vigilant gaze around the surroundings.",
+    "energy_signature": "A soft blue glow emanating from the wearer's armor, pulsing with a calming energy that serves as a beacon of peace and protection"
+   },
+   "prompt_schema": {
+    "base_prompt": "Peacekeeper standing guard, focused on safeguarding allies in a serene outdoor setting at sunset",
+    "contextual_modifiers": [
+     "Incorporate a subtle gradient effect to enhance the visual depth of the armor's blue glow",
+     "Depict the Peacekeeper's expression as contemplative and watchful, conveying their unwavering commitment to protecting others"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "peacekeeper",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian_peacekeeper.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

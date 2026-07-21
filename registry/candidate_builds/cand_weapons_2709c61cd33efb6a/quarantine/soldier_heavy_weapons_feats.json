@@ -1,0 +1,245 @@
+{
+ "record": {
+  "feats": [
+   {
+    "id": "enhanced_heavy_weapon_mastery",
+    "name": "Enhanced Heavy Weapon Mastery",
+    "description": "Your mastery of heavy weapons has grown more sophisticated. When you use your Heavy Weapon Mastery feature, you can brace up to three heavy weapons simultaneously, and the advantage lasts for 1 minute.",
+    "prerequisites": {
+     "class": "soldier",
+     "subclass": "heavy_weapons",
+     "level": 5
+    },
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "brace_targets",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "using_heavy_weapon_mastery",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Brace up to 3 heavy weapons simultaneously"
+     },
+     {
+      "type": "modify_stat",
+      "value": "brace_duration",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bracing_heavy_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage lasts for 1 minute"
+     }
+    ]
+   },
+   {
+    "id": "suppressive_fire_mastery",
+    "name": "Suppressive Fire Mastery",
+    "description": "Your suppressive fire techniques have grown more effective. When you use your Suppressive Fire feature, the area increases to a 60-foot cone, and affected creatures also have disadvantage on attack rolls for 1 round.",
+    "prerequisites": {
+     "class": "soldier",
+     "subclass": "heavy_weapons",
+     "level": 7
+    },
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "suppressive_area",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "using_suppressive_fire",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Increase suppressive fire area to 60-foot cone"
+     },
+     {
+      "type": "apply_status",
+      "value": "attack_disadvantage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "suppressed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disadvantage on attack rolls for 1 round"
+     }
+    ]
+   },
+   {
+    "id": "explosive_expert_mastery",
+    "name": "Explosive Expert Mastery",
+    "description": "Your explosive expertise has reached new heights. When you use your Explosive Expert feature, the blast radius increases to 30 feet, and you can choose to deal either blaster, fire, or thunder damage.",
+    "prerequisites": {
+     "class": "soldier",
+     "subclass": "heavy_weapons",
+     "level": 9
+    },
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "blast_radius",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "using_explosive_expert",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Increase blast radius to 30 feet"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "damage_type_choice",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_explosive_expert",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Choose blaster, fire, or thunder damage"
+     }
+    ]
+   },
+   {
+    "id": "master_gunner_expertise",
+    "name": "Master Gunner Expertise",
+    "description": "Your gunnery skills have reached legendary levels. When you hit with a heavy weapon attack, you can use your bonus action to make an additional attack with any heavy weapon you're wielding.",
+    "prerequisites": {
+     "class": "soldier",
+     "subclass": "heavy_weapons",
+     "level": 11
+    },
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "extra_heavy_weapon_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_weapon_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Make additional heavy weapon attack as bonus action"
+     }
+    ]
+   },
+   {
+    "id": "legendary_gunner",
+    "name": "Legendary Gunner",
+    "description": "You have achieved perfect mastery of heavy weapons. You can use your action to enter a state of gunnery focus. For 1 minute, you have advantage on all attack rolls with heavy weapons, and your heavy weapon attacks deal additional damage equal to your Strength modifier.",
+    "prerequisites": {
+     "class": "soldier",
+     "subclass": "heavy_weapons",
+     "level": 13
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_heavy_weapon_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "gunnery_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all heavy weapon attack rolls"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "additional_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "gunnery_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add Strength modifier to heavy weapon damage"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "soldier_heavy_weapons_feats",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/feats/soldier_heavy_weapons_feats.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "891cd6a160a7444e0214b55166e0d48808f82383bf1ef409a1d6655fa8c977c4",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "subclass without parent class reference"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

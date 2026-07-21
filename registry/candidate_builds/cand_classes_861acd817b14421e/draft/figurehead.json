@@ -1,0 +1,273 @@
+{
+ "record": {
+  "id": "figurehead",
+  "name": "Figurehead",
+  "class_id": "commander",
+  "base_class": "commander",
+  "tags": [
+   "commander",
+   "figurehead",
+   "charisma_based",
+   "inspiring",
+   "leadership",
+   "charismatic",
+   "support",
+   "political",
+   "influential"
+  ],
+  "description": "Figureheads are charismatic leaders and inspirational commanders, using their natural charm and leadership abilities to inspire troops and rally support for their cause.",
+  "specialization_features": [
+   "charismatic_expertise",
+   "inspirational_leadership",
+   "rallying_cry",
+   "figurehead_mastery",
+   "legendary_figurehead"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Commanding Presence",
+   "role_in_group": "Inspiring Leader",
+   "visual_signals": [
+    "Signal of Authority",
+    "Unwavering Confidence"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "charisma_leader",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have a natural flair for leadership and command. Your charisma score increases by 1.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "charisma_leads_the_charge",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "combat_role",
+        "op": "equals",
+        "value": "leader"
+       },
+       {
+        "key": "ability_check_type",
+        "op": "equals",
+        "value": "influence_or_persuade"
+       }
+      ],
+      "notes": "The Commander's charisma flows through them, amplifying their influence over those around them. When the Commander makes an ability check to persuade or influence others in combat, their Charisma modifier is added to the roll."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "influence_majority",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have a natural talent for swaying the opinions of those around you. You can use your Charisma score to influence up to half the members of a group, gaining their loyalty and support.",
+    "effects": [
+     {
+      "type": "feature",
+      "key": "majority_leverage",
+      "target_scopes": [
+       "self",
+       "friendly"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check",
+        "op": "equals",
+        "value": "charisma_persuasion"
+       }
+      ],
+      "notes": "When you use your presence to sway a group, roll an additional d20. If the total equals or exceeds 15, members of the influenced group gain advantage on their next ability check.",
+      "effects": [
+       {
+        "type": "advantage",
+        "target_scopes": [
+         "friendly"
+        ],
+        "conditions": [
+         {
+          "key": "previous_ability_check",
+          "op": "greater_than_or_equal_to",
+          "value": 15
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "political_influence",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have a significant amount of influence and reputation within your organization or community. You can use your Charisma score to gain favors, resources, or other benefits from those who respect you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_influence",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check",
+        "op": "equals",
+        "value": "deception"
+       },
+       {
+        "key": "user_charisma_modifier_greater_than_zero",
+        "op": "true"
+       }
+      ],
+      "notes": "You deftly whisper words of influence to your allies, granting them a bonus on their Deception checks. With a flick of your wrist and a hint of guile, they succeed where others would falter."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_15",
+    "feature_id": "inspiring_leader_title",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have earned the respect and admiration of those around you. Your title or position within your organization is recognized and respected by all who know you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "leaderly_insight",
+      "target_scopes": [
+       "self",
+       "group_member"
+      ],
+      "conditions": [
+       {
+        "key": "has_abilities",
+        "op": "is_true"
+       },
+       {
+        "key": "interaction_type",
+        "op": "equals",
+        "value": "npc_interaction"
+       }
+      ],
+      "notes": "As the commander's charismatic presence takes hold, they can intuitively sense opportunities to augment their allies' actions. When interacting with NPCs, the Figurehead gains a unique insight, allowing them to add the result of a Wisdom (Insight) check to any ability check made by another member of their group, using their Charisma modifier as the modifier for this addition."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_18",
+    "feature_id": "hero_of_reputation",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have become a legendary figure, known throughout the land for your bravery and accomplishments. Your name is whispered in awe by those who know of your exploits.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "reputation_resonance",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ability_type",
+        "op": "equals",
+        "value": "ability_check"
+       }
+      ],
+      "notes": "You raise your voice, and the reputation of our noble endeavors echoes through the battlefield. When an ally makes an ability check, you can use your Charisma modifier to add the result of a Charisma (Performance) check as an action once per day."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_20",
+    "feature_id": "final_commander_title",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved the pinnacle of leadership and command. Your reputation as a commander is unparalleled, and you are respected by all who know you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "leaderly_insight",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_interaction"
+       }
+      ],
+      "notes": "When interacting with an NPC, the Figurehead commander adds their Charisma modifier to the result of a Wisdom (Insight) check, augmenting any ability check made by another member of their group."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Commander's Cape Token",
+    "Figurehead's Crest Token"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a proud, upright stance with feet shoulder-width apart and hands clasped behind their back, exuding an air of confidence and authority.",
+    "energy_signature": "Surrounded by a vibrant aura of blue-white energy, pulsating in sync with their breathing, as if their very presence is a beacon of hope and leadership."
+   },
+   "prompt_schema": {
+    "base_prompt": "A seasoned commander stands resolute on the bridge of their flagship, gazing out at the stars, ready to face whatever challenges the galaxy may bring.",
+    "contextual_modifiers": [
+     "In a dimly lit room with flickering fluorescent lights",
+     "Surrounded by holographic displays and control panels"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "figurehead",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/commander_subclasses/commander_figurehead.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

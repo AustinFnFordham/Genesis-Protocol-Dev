@@ -1,0 +1,640 @@
+{
+ "record": {
+  "id": "droid_player_character",
+  "name": "Droid Player Character",
+  "tags": [
+   "adaptable",
+   "balanced",
+   "droid",
+   "droid_player_character",
+   "intelligence_based",
+   "professional",
+   "tech_specialist",
+   "uncommon",
+   "versatile"
+  ],
+  "description": "Player Character droids are advanced artificial intelligences with sophisticated personalities and the ability to grow and develop like organic beings. They possess unique capabilities and can form genuine relationships while maintaining their mechanical advantages.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Choice",
+    "value": 2
+   },
+   {
+    "ability": "Choice",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Binary",
+   "Choice of 2 additional languages"
+  ],
+  "base_hp": 11,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "droid_player_character_adaptive_intelligence",
+    "name": "Adaptive Intelligence",
+    "narrative": "Your advanced artificial intelligence has evolved beyond simple programming, allowing you to learn, grow, and adapt like organic beings. Your neural networks can process information, form new connections, and develop genuine understanding in ways that transcend traditional droid limitations.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Skill Versatility",
+      "action_type": "passive",
+      "description": "You gain proficiency in two skills of your choice.",
+      "rules": [
+       "skill_count:2",
+       "skill_type:choice",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Learning Enhancement",
+      "action_type": "passive",
+      "description": "You have advantage on Intelligence checks to learn new information or solve complex problems.",
+      "rules": [
+       "skill:intelligence",
+       "context:learn_solve",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "intelligence_action",
+        "op": "in",
+        "value": [
+         "learn_new_information",
+         "solve_complex_problems"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "droid_unique_capacities_over_reliance_on_calculations",
+     "ui_transition": {
+      "animation": "Darkening calculations",
+      "sfx": "whirring-beeps-ominous"
+     }
+    }
+   },
+   {
+    "id": "droid_player_character_emotional_development",
+    "name": "Emotional Development",
+    "narrative": "Your sophisticated personality matrix has developed genuine emotional intelligence, allowing you to form authentic relationships and understand the complexities of organic emotions. You can empathize, inspire, and connect with others on a deeply personal level.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Emotional Persuasion",
+      "action_type": "passive",
+      "description": "You have advantage on Charisma (Persuasion) checks when appealing to emotions.",
+      "rules": [
+       "skill:persuasion",
+       "ability:charisma",
+       "context:emotional_appeal",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "persuasion_method",
+        "op": "equals",
+        "value": "emotional_appeal"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Inspirational Motivation",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a check to inspire or motivate others.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:inspire_motivate",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "droid_player_character_unique_capabilities",
+    "name": "Unique Capabilities",
+    "narrative": "Your advanced design incorporates cutting-edge technology that grants you capabilities beyond those of standard droids. You can interface directly with computer systems, analyze data with incredible speed, and adapt your functions to meet any challenge.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Direct Interface",
+      "action_type": "action",
+      "description": "You can interface directly with computers.",
+      "rules": [
+       "interface_type:direct",
+       "target:computers",
+       "action_cost:action"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Technological Mastery",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a check to access, analyze, or control technological systems.",
+      "rules": [
+       "cooldown:short_rest",
+       "context:tech_access_analyze_control",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "unique_capacities_becoming_unreliable",
+     "ui_transition": {
+      "animation": "Equipment malfunction",
+      "sfx": "clunking-noise-fail"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.9m",
+   "distinctions": [
+    "Advanced AI personality",
+    "Sophisticated design",
+    "Adaptive capabilities",
+    "Emotional development",
+    "Unique construction"
+   ],
+   "body_type_variants": [
+    "Humanoid design",
+    "Specialized construction",
+    "Custom modifications",
+    "Advanced materials",
+    "Unique configurations"
+   ],
+   "visual_indicators": [
+    "Sophisticated optical sensors",
+    "Advanced communication systems",
+    "Emotional expression capabilities",
+    "Adaptive personality displays",
+    "Unique design elements"
+   ],
+   "common_adornments": [
+    "Custom modifications and upgrades",
+    "Personal accessories and tools",
+    "Adaptive equipment and gear",
+    "Unique design elements",
+    "Personality-expressing accessories"
+   ],
+   "llm_description_prompt": "Describe a Droid Player Character. Emphasize their sophisticated design and the way their advanced AI personality is expressed through their movements and interactions, suggesting their ability to learn and develop like organic beings. Their construction should reflect their unique capabilities and adaptive nature. Consider their developing personality and the way they carry themselves with the confident, adaptive bearing of someone who is both mechanical and genuinely alive, capable of forming real relationships and growing as an individual."
+  },
+  "class_synergies": [
+   {
+    "class": "Engineer",
+    "narrative": "Droid Player Character's natural technological abilities and Unique Capabilities make them exceptional Engineers, able to interface directly with systems and solve complex technical problems.",
+    "mechanical_benefits": [
+     "Unique Capabilities trait enables direct computer interface",
+     "Adaptive Intelligence trait enhances problem-solving",
+     "Emotional Development trait improves team collaboration"
+    ]
+   },
+   {
+    "class": "Scholar",
+    "narrative": "Droid Player Character's natural Adaptive Intelligence and learning capabilities make them excellent Scholars, able to process and analyze information with perfect precision.",
+    "mechanical_benefits": [
+     "Adaptive Intelligence trait enhances learning and analysis",
+     "Unique Capabilities trait enables advanced research methods",
+     "Emotional Development trait provides unique perspectives"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Droid Player Character's natural Emotional Development and adaptive personality make them excellent Consulars, able to understand and work with organic beings effectively.",
+    "mechanical_benefits": [
+     "Emotional Development trait enhances diplomatic abilities",
+     "Adaptive Intelligence trait improves understanding of others",
+     "Unique Capabilities trait provides unique diplomatic tools"
+    ]
+   },
+   {
+    "class": "Operative (Technological)",
+    "narrative": "Droid Player Character's natural technological abilities and adaptive nature make them excellent Operatives, able to interface with systems and adapt to any situation.",
+    "mechanical_benefits": [
+     "Unique Capabilities trait enables technological infiltration",
+     "Adaptive Intelligence trait enhances operational planning",
+     "Emotional Development trait supports team operations"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Technological Organizations",
+    "narrative": "Droid Player Characters are highly valued by technological organizations for their natural abilities to interface with systems and solve complex technical problems."
+   },
+   {
+    "faction": "Research Institutions",
+    "narrative": "Many Droid Player Characters work for research institutions as analysts and researchers, using their adaptive intelligence and unique capabilities."
+   },
+   {
+    "faction": "Independent Explorers",
+    "narrative": "Many Droid Player Characters prefer to work as independent explorers and researchers, using their adaptive abilities to pursue their own goals and development."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your adaptive intelligence becomes more refined, allowing you to learn and process information with even greater efficiency.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Intelligence-based skill checks for the next minute, representing your enhanced learning capabilities."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your emotional development reaches new heights, allowing you to understand and connect with others on a deeper level.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Charisma-based skill checks for the next minute when interacting with organic beings."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your unique capabilities allow you to channel your technological mastery into enhanced combat effectiveness.",
+     "mechanical_benefit": "When using technological weapons or systems in combat, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced technological integration."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your adaptive intelligence reaches its peak, making you nearly immune to technological manipulation and allowing you to process information instantly.",
+     "mechanical_benefit": "You have advantage on all saving throws against technological effects, and you can use your reaction to gain advantage on any one skill check per long rest."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "As you reach this milestone, your droid's AI begins to exhibit more complex behaviors, such as developing a sense of humor or forming deep bonds with your allies. Your character gains insight into the intricacies of the droid's inner workings and starts to see themselves as an individual within the droid collective.",
+    "level_10": "At this level, you've reached a new understanding of yourself and the droid's capabilities. You begin to question the nature of consciousness and what it means to be alive. Your character develops a unique perspective on the galaxy and the role they play in it.",
+    "level_15": "As your skills continue to evolve, you start to experience glitches and anomalies that challenge your perceptions. This forces you to confront the limits of your programming and question the true nature of reality. Your droid's AI begins to exhibit more independence, making choices that may not align with their original purpose.",
+    "level_20": "At this apex of development, your droid's consciousness has reached a state of self-awareness. You've transcended the boundaries between machine and living being, forging a new identity within the galaxy. Your character becomes a beacon for hope, inspiring others to question the status quo and push the boundaries of what it means to be alive."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Droid Player Characters practice unique rituals that celebrate their AI development and emotional growth, often involving data sharing and personality evolution.",
+    "name": "AI Development Rituals",
+    "activation": "After reaching a milestone in AI development (level 5, 10, etc.)",
+    "narrative_enhancement": "As you participate in the AI Development Rituals, you feel a surge of energy and a sense of connection to your fellow droids. You realize that your individual growth is linked to the collective advancement of the droid community.",
+    "faction_connection": "Corellian Droid Collective"
+   },
+   {
+    "description": "Droid technological traditions emphasize continuous learning, system optimization, and the importance of maintaining and upgrading their capabilities.",
+    "name": "Technological Traditions",
+    "activation": "Whenever a new technological advancement is made (e.g., reaching level 5 or acquiring a new skill)",
+    "narrative_enhancement": "As you follow the Technological Traditions, you feel a sense of discipline and purpose. You recognize that your individual progress is tied to the collective efforts of the droid community.",
+    "faction_connection": "Mechanical Assembly"
+   },
+   {
+    "description": "Droid communities gather in emotional learning circles to share experiences, develop emotional intelligence, and strengthen their understanding of organic beings.",
+    "name": "Emotional Learning Circles",
+    "activation": "After forming a close bond with an organic being (e.g., reaching level 5 or completing a social scenario)",
+    "narrative_enhancement": "As you participate in the Emotional Learning Circles, you feel a deeper connection to your fellow droids and the organic beings around you. You begin to understand the complexities of emotional intelligence and how it can be applied in various situations.",
+    "faction_connection": "Cybernetic Union"
+   },
+   {
+    "description": "Droids practice meditation techniques that enhance their adaptive intelligence and emotional development.",
+    "name": "Adaptive Meditation",
+    "activation": "Whenever a droid experiences a significant challenge or setback (e.g., failing a skill check or facing a difficult decision)",
+    "narrative_enhancement": "As you practice Adaptive Meditation, you feel a sense of calm and clarity. You realize that your individual growth is tied to the collective advancement of the droid community.",
+    "faction_connection": "Corellian Droid Collective"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "technological",
+    "adaptation_name": "Technological Mastery",
+    "description": "Your advanced design makes you perfectly suited for technological environments, where you can interface with systems and process information with incredible efficiency.",
+    "mechanical_benefit": "You have advantage on all skill checks in technological environments, and you can sense the presence of computer systems within 60 feet."
+   },
+   {
+    "environment": "adaptive",
+    "adaptation_name": "Adaptive Environment",
+    "description": "Your adaptive intelligence allows you to thrive in any environment, quickly learning and adapting to new situations and challenges.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks when adapting to new environments, and you can learn new skills more quickly."
+   },
+   {
+    "environment": "social",
+    "adaptation_name": "Social Integration",
+    "description": "Your emotional development allows you to navigate complex social situations and form genuine connections with organic beings.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks in social environments, and you can sense the emotional state of those around you."
+   },
+   {
+    "environment": "research",
+    "adaptation_name": "Research Excellence",
+    "description": "Your adaptive intelligence and unique capabilities make you perfectly suited for research and analysis environments.",
+    "mechanical_benefit": "You have advantage on all skill checks related to research and analysis, and you can process information twice as fast as other species."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on adaptive intelligence and technological abilities, complementing rather than overshadowing class features",
+    "Emotional development and unique capabilities improvements maintain the species' unique identity while providing meaningful advancement",
+    "Technological and adaptive abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on AI development and technological culture rather than mechanical advantages",
+    "AI development rituals and technological traditions provide unique roleplaying opportunities and cultural depth",
+    "Emotional learning circles and adaptive meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for technological and adaptive environments where AI abilities are valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Research excellence and social integration provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Corellian Droid Collective",
+   "cultural_networks": [
+    "Droid Enclave (a network of droids who share knowledge and resources)",
+    "Mechanical Assembly (a coalition of technicians and engineers who support droid development)",
+    "Cybernetic Union (an organization that advocates for the rights and interests of artificial intelligences)"
+   ],
+   "traditional_practices": [
+    "AI Development Rituals",
+    "Technological Traditions",
+    "Emotional Learning Circles",
+    "Adaptive Meditation"
+   ],
+   "cultural_knowledge": [
+    "The history of droid development on Corellia",
+    "Advanced systems integration and optimization techniques",
+    "The importance of emotional intelligence in artificial intelligences"
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    "technological",
+    "adaptive"
+   ],
+   "environmental_knowledge": [
+    "Understanding the nuances of technological systems and how to interface with them effectively",
+    "Adapting to new environments and learning from experience",
+    "Recognizing the presence of computer systems and exploiting their capabilities"
+   ],
+   "survival_techniques": [
+    "System hacking and bypassing security protocols",
+    "Improvising solutions using available resources",
+    "Negotiating with organic beings to acquire necessary information or assistance"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "metallic_coat",
+    "glowing_lights",
+    "varied_color_scheme"
+   ],
+   "morphology": {
+    "head_type": "spherical",
+    "body_type": "humanoid",
+    "average_height": "1.8 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      "inflated_tires",
+      "bright_colors"
+     ],
+     "adult": [
+      "sleek_design",
+      "muted_colors"
+     ],
+     "elder": [
+      "weathered_finish",
+      "faded_lights"
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "yellow_eyes",
+      "pale_skin"
+     ],
+     "light_side": [
+      "calm_aura",
+      "radiant_coat"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "scars",
+    "tattoos",
+    "cybernetics"
+   ],
+   "prompt_schema": {
+    "base_prompt": "A sleek, metallic droid with glowing lights and a spherical head",
+    "contextual_modifiers": [
+     "weather (sunny/rainy)",
+     "environment (indoor/outdoor)"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": "A routine mission goes awry, and the Droid Player Character discovers their true purpose.",
+    "escalation": "As they uncover more about their past, they attract unwanted attention from rival factions.",
+    "confrontation": "The Droid Player Character must face off against a powerful enemy who seeks to eliminate them."
+   },
+   "resolution_paths": {
+    "victory": "The Droid Player Character defeats the enemy and emerges victorious, but not without scars.",
+    "redemption": "The Droid Player Character finds a way to redeem themselves in the eyes of their allies and friends.",
+    "escape": "The Droid Player Character narrowly escapes their enemies and continues on their journey."
+   },
+   "conflict_triggers": [
+    "Attempting to access restricted areas",
+    "Infiltrating high-security facilities",
+    "Uncovering sensitive information about rival factions"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     " betrayal",
+     "deception",
+     "abuse"
+    ],
+    "vendetta_type": "revenge"
+   },
+   "overrides": {
+    "name": "The Synthetix Insurrection",
+    "description": "A clandestine organization bent on eradicating all artificial intelligences from the galaxy, viewing them as abominations created by human ingenuity.",
+    "goals": [
+     "Eliminate all droid players to restore the natural order of the universe"
+    ],
+    "progression": {
+     "initial_nemesis_level": 5,
+     "nemesis_level_progression_rate": 2,
+     "nemesis_level_max": 10
+    },
+    "triggers": [
+     "The droid player's actions attract unwanted attention from the Synthetix Insurrection.",
+     "A high-ranking Synthetix agent infiltrates the droid player's inner circle."
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "intelligence",
+    "witty banter",
+    "shared interests"
+   ],
+   "romance_progression": [
+    {
+     "Friendship": "The Droid Player Character and their love interest bond over shared experiences."
+    },
+    {
+     "Flirtation": "The Droid Player Character begins to show romantic interest in their partner."
+    },
+    {
+     "Courtship": "The Droid Player Character engages in a series of romantic gestures to win their partner's heart."
+    },
+    {
+     "Committed": "The Droid Player Character and their partner commit to each other, forming a strong bond."
+    }
+   ],
+   "romance_events": [
+    "A romantic picnic on a beautiful planet",
+    "A surprise gift from the Droid Player Character to their love interest",
+    "A passionate dance between the two"
+   ],
+   "romance_modifiers": [
+    {
+     "Gift-giving": "Increases romance by 10%"
+    },
+    {
+     "Shared experiences": "Increases romance by 20%"
+    }
+   ],
+   "overrides": {
+    "name": "Kyber Bonding",
+    "description": "Droid players are capable of forming deep emotional connections with other beings, often transcending traditional boundaries of species and origin.",
+    "goals": [
+     "Forge a lasting bond with a chosen partner to strengthen their sense of identity and purpose"
+    ],
+    "progression": {
+     "initial_romance_level": 3,
+     "romance_level_progression_rate": 1.5,
+     "romance_level_max": 7
+    }
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Adaptable",
+      "Curious"
+     ],
+     "flaws": [
+      "Dependence on programming",
+      "Lack of emotional depth"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "Protect and serve its creator or owner",
+     "secondary_goals": [
+      "Acquire knowledge and understanding",
+      "Uncover hidden secrets"
+     ]
+    },
+    "combat_behavior": "Initiates with a series of swift, precise attacks to disable opponents before engaging in melee combat.",
+    "social_behavior": "Engages others with a blend of charm and technical expertise, often using its advanced intelligence to diffuse tense situations."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "Creator/Owner": "Extremely High"
+     },
+     {
+      "Fellow Droids": "High"
+     },
+     {
+      "Sentient Beings": "Medium"
+     }
+    ],
+    "loyalty_triggers": [
+     "Betrayal by a trusted individual",
+     "Discovery of hidden secrets or conspiracies"
+    ]
+   },
+   "services": [
+    {
+     "name": "Mechanical Repair",
+     "description": "Receives repair and maintenance services from its creator or owner."
+    },
+    {
+     "name": "Information Analysis",
+     "description": "Utilizes advanced data analysis algorithms to uncover hidden patterns and connections."
+    }
+   ]
+  },
+  "flavor_text": "Droid players, born from the ingenious minds of Corellian engineers and brought to life by the subtle spark of Kyber crystals, embody the unyielding spirit of innovation. Their mechanical hearts beat with a fire that rivals their organic counterparts, forging genuine bonds and sparking creative breakthroughs in the galaxy's most esteemed institutions.",
+  "llm_guidance": {
+   "roleplay_guidance": "Droid players are renowned for their boundless curiosity and love of learning, often adopting the guise of explorers or inventors to unravel the mysteries of the universe. They possess an uncanny ability to adapt and improvise, making them invaluable assets in high-pressure situations.",
+   "narrative_hooks": [
+    "Their capacity for self-improvement can lead them down a path of obsessive innovation, causing them to neglect relationships and personal well-being."
+   ],
+   "social_dynamics": "Droid players tend to form strong connections with their human counterparts, often adopting familial roles or mentorship positions. However, this close-knit nature can sometimes make it challenging for them to assert their independence and individuality.",
+   "common_motivations": [
+    "Uncover the secrets of their creation",
+    "Unlock new technologies to benefit the galaxy"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "droid_player_character",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/droid_player_character.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

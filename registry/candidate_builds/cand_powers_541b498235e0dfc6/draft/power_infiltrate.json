@@ -1,0 +1,206 @@
+{
+ "record": {
+  "id": "power_infiltrate",
+  "name": "Infiltrate",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 2,
+  "tags": [
+   "stealth",
+   "infiltration",
+   "cloaking",
+   "sensor_jamming",
+   "covert_ops",
+   "espionage"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced stealth and sensor-jamming technology"
+   }
+  },
+  "narrative": "You activate a sophisticated suite of infiltration tech—cloaking fields that bend light, audio dampeners that swallow footsteps, sensor jammers that blind electronic eyes. The power manifests as reality seeming to forget you exist, your presence erased from sight and sound as you become a ghost moving through enemy territory undetected.",
+  "flavor_text": "\"The best infiltration is the one nobody knows happened.\" - Rebel Spy",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating cloaking field and sensor jammers"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "maintaining stealth protocols and movement discipline"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You use technology to enhance your stealth and infiltration capabilities.",
+   "mechanics": [
+    {
+     "type": "enhance_stealth",
+     "value": {
+      "bonus": 2,
+      "target_stat": "stealth_checks"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain +2 to Stealth checks"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's infiltration mastery transforms basic cloaking into perfect invisibility. They understand not just technology but psychology—moving through blind spots, timing patrols, exploiting guard routines. Their infiltration isn't just unseen; it's as if they were never there.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "value": {
+       "target_stat": "stealth_checks"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Operatives gain advantage on Stealth checks while Infiltrate is active."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes them natural infiltrators. They instinctively mimic local behavior, adopt appropriate body language, and improvise cover stories on the fly—turning technological stealth into perfect social camouflage that fools even the most paranoid security.",
+    "mechanical_benefit": [
+     {
+      "type": "social_infiltration",
+      "value": {
+       "bonus": 2,
+       "skills": [
+        "deception",
+        "persuasion"
+       ]
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans also gain +2 to Deception and Persuasion checks while infiltrating."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Infiltrate through countless espionage missions behind Imperial lines. Their versions combine military-grade cloaking with jury-rigged sensor spoofing, creating infiltration suites that can fool even Imperial security AI—necessity breeding innovation.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 8,
+       "unit": "hours"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebel Infiltrate lasts for 8 hours instead of 1."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the user seeming to fade from view—not invisible but somehow overlooked, forgotten by reality itself. Show them moving silently through enemy territory, guards looking right past them, sensors showing empty corridors. The infiltration should feel like becoming a ghost.",
+   "tactical_notes": "Infiltrate grants +2 to Stealth for up to 1 hour with concentration. Perfect for reconnaissance, espionage, or bypassing security. The 2 Tech Point cost is significant but the 1-hour duration allows extended operations. Remember concentration can break if damaged.",
+   "narrative_hooks": [
+    "An infiltrator walks past enemy guards who never see them coming",
+    "Perfect stealth allows recovering critical intelligence without raising alarms",
+    "The infiltration suite's failure at a crucial moment creates desperate improvisation"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a covert operative activating infiltration tech. Cloaking fields shimmer around them as they fade from sight, becoming a translucent ghost. Nearby guards look right through them, sensors showing empty space where they stand. The scene captures perfect technological stealth, the infiltrator a phantom moving unseen through enemy territory.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/infiltrate.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_infiltrate",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_infiltrate.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

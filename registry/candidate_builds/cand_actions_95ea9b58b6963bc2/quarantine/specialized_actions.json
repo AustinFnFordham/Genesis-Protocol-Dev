@@ -1,0 +1,525 @@
+{
+ "record": {
+  "actions": [
+   {
+    "id": "action_force_sense",
+    "name": "Force Sense",
+    "description": "You reach out with your mind through the Force to sense the presence of other Force users, strong emotions, or disturbances in the Force around you. This heightened awareness can reveal hidden threats or opportunities.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "point",
+     "range": 60
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Wisdom (Perception)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Sense Force users and disturbances within 60 feet"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_force_awareness",
+     "threat_force_distraction",
+     "advantage_emotional_reading",
+     "threat_force_overwhelm",
+     "advantage_precognitive_flash",
+     "threat_force_echo"
+    ]
+   },
+   {
+    "id": "action_force_meditation",
+    "name": "Force Meditation",
+    "description": "You enter a deep meditative state, drawing upon the Force to restore your inner balance and clarity. This practice can help you recover from mental strain and gain insights into your current situation.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "restore_strain",
+      "value": "1d4",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "not_in_combat",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d4 strain points through Force meditation"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_mental_clarity",
+     "threat_meditation_distraction",
+     "advantage_force_insight",
+     "threat_meditation_vulnerability",
+     "advantage_inner_peace",
+     "threat_force_turbulence"
+    ]
+   },
+   {
+    "id": "action_tech_scan",
+    "name": "Tech Scan",
+    "description": "You use your technical expertise to analyze and understand technological systems, devices, or security measures. This can reveal weaknesses, hidden functions, or ways to bypass security.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "object",
+     "range": 10
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Intelligence (Technology)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_system_present",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Analyze technological systems within 10 feet"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_tech_mastery",
+     "threat_tech_malfunction",
+     "advantage_security_breach",
+     "threat_security_alert",
+     "advantage_system_control",
+     "threat_tech_overload"
+    ]
+   },
+   {
+    "id": "action_quick_repair",
+    "name": "Quick Repair",
+    "description": "You perform a rapid repair on damaged equipment or systems, using your technical knowledge to restore functionality in the heat of the moment. This can be crucial for maintaining equipment during combat or emergencies.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "object",
+     "range": 5
+    },
+    "effects": [
+     {
+      "type": "repair_object",
+      "value": "quick_repair",
+      "target_scopes": [
+       "object"
+      ],
+      "conditions": [
+       {
+        "key": "object_damaged",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "notes": "Quickly repair damaged object within 5 feet"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_skilled_repair",
+     "threat_repair_failure",
+     "advantage_improvised_fix",
+     "threat_repair_damage",
+     "advantage_preventive_maintenance",
+     "threat_repair_complication"
+    ]
+   },
+   {
+    "id": "action_inspire",
+    "name": "Inspire",
+    "description": "You use your charisma and leadership to inspire your allies, boosting their morale and combat effectiveness. Your words and presence can turn the tide of battle and strengthen your team's resolve.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 30
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack_roll",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 30
+       },
+       {
+        "key": "can_hear_you",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Grant advantage on next attack roll to allies within 30 feet"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_rallying_cry",
+     "threat_inspiration_failure",
+     "advantage_leadership_presence",
+     "threat_morale_weakening",
+     "advantage_heroic_speech",
+     "threat_communication_breakdown"
+    ]
+   },
+   {
+    "id": "action_intimidate",
+    "name": "Intimidate",
+    "description": "You use threats, body language, and psychological pressure to intimidate your enemies. This can cause them to hesitate, make mistakes, or even flee from combat entirely.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 30
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Charisma (Intimidation)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_can_see_you",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Intimidate target within 30 feet with Charisma check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_psychological_dominance",
+     "threat_intimidation_backfire",
+     "advantage_fear_instillation",
+     "threat_target_defiance",
+     "advantage_combat_hesitation",
+     "threat_intimidation_weakness"
+    ]
+   },
+   {
+    "id": "action_silent_movement",
+    "name": "Silent Movement",
+    "description": "You move with exceptional stealth and grace, making no sound as you traverse difficult terrain or navigate through dangerous areas. This requires intense focus and control over your movements.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Dexterity (Stealth)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "moving_stealthily",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Move silently with Stealth check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_stealth",
+     "threat_stealth_break",
+     "advantage_shadow_movement",
+     "threat_noise_generation",
+     "advantage_ghost_like_presence",
+     "threat_stealth_exposure"
+    ]
+   },
+   {
+    "id": "action_ambush_preparation",
+    "name": "Ambush Preparation",
+    "description": "You carefully position yourself and prepare for an ambush, studying your target's patterns and weaknesses. This tactical preparation can give you a significant advantage when you finally strike.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 60
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack_roll",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_visible",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "not_detected",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on next attack roll against target"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_positioning",
+     "threat_ambush_discovery",
+     "advantage_target_analysis",
+     "threat_position_exposure",
+     "advantage_strike_preparation",
+     "threat_ambush_failure"
+    ]
+   },
+   {
+    "id": "action_track",
+    "name": "Track",
+    "description": "You use your knowledge of tracking and survival to follow the trail of a creature or vehicle. This can lead you to your quarry, reveal information about their movements, or help you avoid dangerous areas.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "point",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Wisdom (Survival)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tracking_trail",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Track creatures or vehicles with Survival check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_expert_tracking",
+     "threat_track_loss",
+     "advantage_trail_reading",
+     "threat_tracking_mistake",
+     "advantage_hunter_instinct",
+     "threat_track_confusion"
+    ]
+   },
+   {
+    "id": "action_forage",
+    "name": "Forage",
+    "description": "You search the environment for useful resources, such as food, water, medicinal plants, or materials for crafting. Your survival skills help you find what you need even in harsh or unfamiliar environments.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "point",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Wisdom (Survival)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "in_natural_environment",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Find resources in natural environment with Survival check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_abundant_findings",
+     "threat_foraging_failure",
+     "advantage_rare_resources",
+     "threat_dangerous_discovery",
+     "advantage_survival_expertise",
+     "threat_environmental_hazard"
+    ]
+   },
+   {
+    "id": "action_first_aid",
+    "name": "First Aid",
+    "description": "You provide immediate medical attention to stabilize an injured ally or yourself. Your knowledge of medicine and quick thinking can prevent further injury and even save lives in critical situations.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 5
+    },
+    "effects": [
+     {
+      "type": "heal_hp",
+      "value": "1d6",
+      "target_scopes": [
+       "ally",
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       },
+       {
+        "key": "medical_supplies",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Heal 1d6 HP with medical supplies within 5 feet"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_skilled_treatment",
+     "threat_medical_error",
+     "advantage_rapid_stabilization",
+     "threat_treatment_complication",
+     "advantage_preventive_care",
+     "threat_medical_shortage"
+    ]
+   },
+   {
+    "id": "action_diagnose",
+    "name": "Diagnose",
+    "description": "You examine a patient to determine the nature of their injury or illness. Your medical expertise allows you to identify symptoms, assess severity, and determine the best course of treatment.",
+    "cost": [
+     "action"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 5
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Intelligence (Medicine)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       },
+       {
+        "key": "patient_accessible",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Diagnose injury or illness with Medicine check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_accurate_diagnosis",
+     "threat_diagnosis_error",
+     "advantage_symptom_recognition",
+     "threat_misdiagnosis",
+     "advantage_treatment_planning",
+     "threat_diagnostic_confusion"
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "specialized_actions",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/actions/specialized_actions.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "5c8930c015050c2d3fde2e24dc0d17cb04457af2fe12b20aedaf40824a7e6352",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

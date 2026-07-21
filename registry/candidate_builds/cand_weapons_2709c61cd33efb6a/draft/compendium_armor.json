@@ -1,0 +1,746 @@
+{
+ "record": {
+  "id": "compendium_armor",
+  "category": "equipment",
+  "subcategory": "armor",
+  "tags": [
+   "equipment",
+   "compendium",
+   "armor",
+   "protection",
+   "defense",
+   "common_to_rare",
+   "light_armor",
+   "medium_armor",
+   "heavy_armor",
+   "military",
+   "civilian",
+   "varied_rarity"
+  ],
+  "armor": [
+   {
+    "id": "armor_combat_suit",
+    "name": "Combat Suit",
+    "description": "A lightweight, flexible suit designed for mobility and basic protection.",
+    "type": "Armor",
+    "subtype": "Light Armor",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 10.0,
+    "tags": [
+     "armor",
+     "light",
+     "flexible",
+     "military"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 11,
+      "dr_value": 0,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "lightweight",
+     "flexible"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "military_grade",
+     "flexible_movement",
+     "basic_protection"
+    ]
+   },
+   {
+    "id": "armor_fiber_armor",
+    "name": "Fiber Armor",
+    "description": "Advanced fiber weave that provides excellent protection while maintaining flexibility.",
+    "type": "Armor",
+    "subtype": "Light Armor",
+    "cost": 450,
+    "rarity": 2,
+    "weight": 13.0,
+    "tags": [
+     "armor",
+     "light",
+     "fiber",
+     "advanced"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 12,
+      "dr_value": 1,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "lightweight",
+     "advanced_material"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "advanced_protection",
+     "stealth_compatible",
+     "fiber_technology"
+    ]
+   },
+   {
+    "id": "armor_mesh_armor",
+    "name": "Mesh Armor",
+    "description": "A sophisticated mesh of energy-absorbing materials that provides superior protection.",
+    "type": "Armor",
+    "subtype": "Light Armor",
+    "cost": 500,
+    "rarity": 2,
+    "weight": 20.0,
+    "tags": [
+     "armor",
+     "light",
+     "mesh",
+     "energy_absorbing"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 13,
+      "dr_value": 2,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "energy_absorbing",
+     "mesh_weave"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "energy_protection",
+     "mesh_technology",
+     "superior_defense"
+    ]
+   },
+   {
+    "id": "armor_weave_armor",
+    "name": "Weave Armor",
+    "description": "Heavy-duty armor weave that provides excellent protection for combat situations.",
+    "type": "Armor",
+    "subtype": "Medium Armor",
+    "cost": 1000,
+    "rarity": 2,
+    "weight": 25.0,
+    "tags": [
+     "armor",
+     "medium",
+     "weave",
+     "combat"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 14,
+      "dr_value": 3,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "combat_grade",
+     "weave_technology"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_protection",
+     "weave_technology",
+     "medium_defense"
+    ]
+   },
+   {
+    "id": "armor_composite_armor",
+    "name": "Composite Armor",
+    "description": "Advanced composite materials that provide superior protection and durability.",
+    "type": "Armor",
+    "subtype": "Medium Armor",
+    "cost": 2500,
+    "rarity": 3,
+    "weight": 45.0,
+    "tags": [
+     "armor",
+     "medium",
+     "composite",
+     "advanced"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 15,
+      "dr_value": 4,
+      "strength_requirement": 0,
+      "stealth_disadvantage": true
+     }
+    },
+    "properties": [
+     "bulky",
+     "composite_material"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "superior_protection",
+     "composite_technology",
+     "bulky_but_effective"
+    ]
+   },
+   {
+    "id": "armor_beskar_weave",
+    "name": "Beskar Weave Armor",
+    "description": "Legendary Mandalorian armor incorporating beskar alloy for ultimate protection.",
+    "type": "Armor",
+    "subtype": "Medium Armor",
+    "cost": 3000,
+    "rarity": 4,
+    "weight": 25.0,
+    "tags": [
+     "armor",
+     "medium",
+     "beskar",
+     "mandalorian",
+     "legendary"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 14,
+      "dr_value": 5,
+      "strength_requirement": 11,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "beskar_alloy",
+     "mandalorian_grade",
+     "regulated"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_protection",
+     "mandalorian_heritage",
+     "beskar_resonance"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "energy_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "armor_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy damage due to beskar alloy"
+     }
+    ]
+   },
+   {
+    "id": "armor_battle_armor",
+    "name": "Battle Armor",
+    "description": "Heavy military-grade armor designed for maximum protection in combat.",
+    "type": "Armor",
+    "subtype": "Heavy Armor",
+    "cost": 750,
+    "rarity": 2,
+    "weight": 55.0,
+    "tags": [
+     "armor",
+     "heavy",
+     "military",
+     "combat"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 16,
+      "dr_value": 5,
+      "strength_requirement": 13,
+      "stealth_disadvantage": true
+     }
+    },
+    "properties": [
+     "bulky",
+     "military_grade"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "military_protection",
+     "heavy_defense",
+     "combat_ready"
+    ]
+   },
+   {
+    "id": "armor_assault_armor",
+    "name": "Assault Armor",
+    "description": "Heavy assault armor designed for frontline combat and maximum protection.",
+    "type": "Armor",
+    "subtype": "Heavy Armor",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 60.0,
+    "tags": [
+     "armor",
+     "heavy",
+     "assault",
+     "frontline"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 17,
+      "dr_value": 6,
+      "strength_requirement": 15,
+      "stealth_disadvantage": true
+     }
+    },
+    "properties": [
+     "bulky",
+     "assault_grade"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "assault_protection",
+     "frontline_defense",
+     "heavy_combat"
+    ]
+   },
+   {
+    "id": "armor_heavy_exoskeleton",
+    "name": "Heavy Exoskeleton",
+    "description": "Advanced powered armor that enhances strength and provides maximum protection.",
+    "type": "Armor",
+    "subtype": "Heavy Armor",
+    "cost": 9000,
+    "rarity": 4,
+    "weight": 80.0,
+    "tags": [
+     "armor",
+     "heavy",
+     "exoskeleton",
+     "powered",
+     "advanced"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 18,
+      "dr_value": 7,
+      "strength_requirement": 15,
+      "stealth_disadvantage": true
+     }
+    },
+    "properties": [
+     "bulky",
+     "powered",
+     "strength_enhanced"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "powered_protection",
+     "strength_enhancement",
+     "advanced_technology"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "strength_enhancement",
+      "target_property": "strength_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "armor_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 bonus to Strength checks due to powered exoskeleton"
+     }
+    ]
+   },
+   {
+    "id": "armor_light_shield",
+    "name": "Light Shield",
+    "description": "A small, lightweight shield that provides basic protection without hindering movement.",
+    "type": "Armor",
+    "subtype": "Shield",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 3.0,
+    "tags": [
+     "armor",
+     "shield",
+     "light",
+     "basic"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 2,
+      "dr_value": 0,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "lightweight",
+     "basic"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_protection",
+     "light_defense",
+     "simple_shield"
+    ]
+   },
+   {
+    "id": "armor_medium_shield",
+    "name": "Medium Shield",
+    "description": "A standard combat shield that provides reliable protection in battle.",
+    "type": "Armor",
+    "subtype": "Shield",
+    "cost": 150,
+    "rarity": 2,
+    "weight": 6.0,
+    "tags": [
+     "armor",
+     "shield",
+     "medium",
+     "combat"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 2,
+      "dr_value": 1,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "combat_grade",
+     "reliable"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_protection",
+     "reliable_defense",
+     "standard_shield"
+    ]
+   },
+   {
+    "id": "armor_heavy_shield",
+    "name": "Heavy Shield",
+    "description": "A massive shield that provides maximum protection but requires significant strength.",
+    "type": "Armor",
+    "subtype": "Shield",
+    "cost": 300,
+    "rarity": 3,
+    "weight": 12.0,
+    "tags": [
+     "armor",
+     "shield",
+     "heavy",
+     "maximum"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 2,
+      "dr_value": 2,
+      "strength_requirement": 13,
+      "stealth_disadvantage": true
+     }
+    },
+    "properties": [
+     "bulky",
+     "maximum_protection"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "maximum_protection",
+     "heavy_defense",
+     "bulky_shield"
+    ]
+   },
+   {
+    "id": "armor_energy_shield",
+    "name": "Energy Shield",
+    "description": "An advanced energy-based shield that provides superior protection against energy weapons.",
+    "type": "Armor",
+    "subtype": "Shield",
+    "cost": 1000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "armor",
+     "shield",
+     "energy",
+     "advanced",
+     "technology"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 2,
+      "dr_value": 3,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "energy_based",
+     "advanced_tech"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "energy_protection",
+     "advanced_technology",
+     "energy_shield"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "energy_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "shield_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy damage due to energy shield technology"
+     }
+    ]
+   },
+   {
+    "id": "armor_mandalorian_armor",
+    "name": "Mandalorian Armor",
+    "description": "Legendary armor crafted by Mandalorian artisans, incorporating beskar and advanced technology.",
+    "type": "Armor",
+    "subtype": "Special Armor",
+    "cost": 15000,
+    "rarity": 5,
+    "weight": 30.0,
+    "tags": [
+     "armor",
+     "special",
+     "mandalorian",
+     "beskar",
+     "legendary"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 16,
+      "dr_value": 6,
+      "strength_requirement": 13,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "beskar_alloy",
+     "mandalorian_grade",
+     "legendary",
+     "regulated"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_protection",
+     "mandalorian_heritage",
+     "beskar_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "energy_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "armor_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy damage due to beskar alloy"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "intimidation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "intimidation_check",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Intimidation checks due to Mandalorian reputation"
+     }
+    ]
+   },
+   {
+    "id": "armor_force_armor",
+    "name": "Force Armor",
+    "description": "Mystical armor that channels the Force to provide enhanced protection and abilities.",
+    "type": "Armor",
+    "subtype": "Special Armor",
+    "cost": 20000,
+    "rarity": 6,
+    "weight": 15.0,
+    "tags": [
+     "armor",
+     "special",
+     "force",
+     "mystical",
+     "unique"
+    ],
+    "stats": {
+     "armor_stats": {
+      "ac_bonus": 15,
+      "dr_value": 5,
+      "strength_requirement": 0,
+      "stealth_disadvantage": false
+     }
+    },
+    "properties": [
+     "force_enhanced",
+     "mystical",
+     "unique"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_protection",
+     "mystical_defense",
+     "force_resonance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force power checks when wearing Force armor"
+     },
+     {
+      "type": "grant_resistance",
+      "value": "force_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "armor_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to Force damage due to mystical properties"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_armor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/armor.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

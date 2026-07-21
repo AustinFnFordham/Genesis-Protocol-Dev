@@ -1,0 +1,211 @@
+{
+ "record": {
+  "id": "power_riposte",
+  "name": "Riposte",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "counterattack",
+   "reaction",
+   "melee",
+   "offense",
+   "superiority",
+   "martial"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced counterattack technique for melee combat"
+   }
+  },
+  "narrative": "You exploit an enemy's failed attack, their overextension creating an opening you punish with devastating precision. The power manifests as fluid counter-motion—the enemy's blade passing harmlessly by as your weapon finds the gap in their defense, turning their aggression into their downfall.",
+  "flavor_text": "\"Your attack is my opportunity.\" - Dueling Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "flowing from defensive stance into counterattack"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "reading enemy overextension and exploiting opening"
+   }
+  ],
+  "casting_time": "1 Reaction",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You counterattack when an enemy misses you with a melee attack.",
+   "mechanics": [
+    {
+     "type": "opportunity_attack",
+     "value": {
+      "damage_bonus": "superiority_die",
+      "trigger": "enemy_melee_miss"
+     },
+     "target_scopes": [
+      "attacker"
+     ],
+     "notes": "Make melee attack adding superiority die to damage when enemy misses you"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "fighter",
+    "narrative": "The Fighter's weapon mastery makes their Riposte devastatingly efficient. They don't just counterattack—they exploit the exact moment of maximum vulnerability, their strikes finding gaps in armor with surgical precision born from countless battles.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_damage",
+      "value": {
+       "additional_dice": 1,
+       "dice_type": "superiority_die"
+      },
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Fighters add an extra superiority die to riposte damage (2 dice total)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes their Riposte unpredictable. They've learned counterattacks from dozens of martial traditions, blending techniques to create ripostes that confuse opponents trained against conventional counters.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_range",
+      "value": {
+       "range": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Humans can riposte against enemies up to 10 feet away (reach counters)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "mandalorian",
+    "narrative": "Mandalorian combat doctrine emphasizes turning enemy aggression into advantage. Their Riposte techniques are honed through generations—counterattacks that don't just damage but demoralize, showing opponents their own strength used against them.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "stunned"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Mandalorian ripostes stun the attacker for 1 round on critical hit."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the fluid motion—enemy blade whistling past, your weapon already moving to exploit the opening. Show the counterattack landing with precision, the enemy's overextension punished perfectly. The riposte should feel like martial poetry.",
+   "tactical_notes": "Riposte allows counterattack when enemy misses you, adding superiority die to damage. Perfect for defensive fighters who can punish enemy aggression. Uses your reaction and a superiority die but creates offense from defense. Only triggers on melee misses within 5 feet.",
+   "narrative_hooks": [
+    "A perfect riposte turns the tide of a duel at a critical moment",
+    "The counterattack technique reveals the character's master's teaching style",
+    "Riposte creates an opening that allies exploit for victory"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior executing a perfect riposte. An enemy's attack passes harmlessly by as the defender flows into devastating counterattack, their blade finding the gap in defenses. The motion is fluid and precise, turning the attacker's aggression into their downfall. The scene captures the art of the counterattack.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/riposte.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_riposte",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_riposte.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

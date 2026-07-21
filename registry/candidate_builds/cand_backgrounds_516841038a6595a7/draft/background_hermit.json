@@ -1,0 +1,159 @@
+{
+ "record": {
+  "id": "background_hermit",
+  "name": "Hermit",
+  "tags": [
+   "background",
+   "hermit",
+   "spiritual",
+   "wisdom_based",
+   "ancient_knowledge",
+   "ascetic",
+   "recluse",
+   "wise",
+   "contemplative",
+   "survival_expert"
+  ],
+  "description": "You are a recluse, mystic, or someone who has chosen to live in isolation, away from the chaos of society. Whether you're a Force-sensitive hermit, a philosophical recluse, or someone seeking spiritual enlightenment, your time alone has given you unique insights and knowledge. You understand the value of solitude and the wisdom that comes from deep contemplation.",
+  "proficiencies": {
+   "skills": [
+    "Insight",
+    "Medicine"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Meditation Kit",
+      "Herbalism Kit",
+      "Holocron",
+      "Religious Text",
+      "Survival Kit",
+      "Simple Tools"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Hermit's Discovery",
+   "level": 1,
+   "description": "The quiet seclusion of your extended hermitage gave you access to a unique and powerful discovery. The exact nature of this revelation depends on the nature of your seclusion. It might be a great truth about the cosmos, the deities, the powerful beings of the outer planes, or the forces of nature. It could be a site that no one else has ever seen. You might have uncovered a fact that has long been forgotten, or unearthed some relic of the past that could rewrite history. It might be information that would be damaging to the people who or consigned you to exile, and hence the reason for your return to society.",
+   "effects": [
+    {
+     "type": "narrative_effect",
+     "value": "unique_discovery",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Access to unique knowledge, location, or relic from hermitage"
+    },
+    {
+     "type": "grant_advantage",
+     "value": "spiritual_insight",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "insight"
+      },
+      {
+       "key": "contemplating",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Insight checks for deep contemplation"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Life. All life is precious and must be preserved."
+   ],
+   "bonds": [
+    "I am protecting a secret that could endanger the galaxy.",
+    "I am the last of my line, and I must not fail.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_hermit",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_hermit.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

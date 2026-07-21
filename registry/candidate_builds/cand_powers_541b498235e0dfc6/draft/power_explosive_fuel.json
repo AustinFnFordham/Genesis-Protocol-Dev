@@ -1,0 +1,240 @@
+{
+ "record": {
+  "id": "power_explosive_fuel",
+  "name": "Explosive Fuel",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "fire",
+   "explosive",
+   "area_effect",
+   "incendiary",
+   "chemical",
+   "demolition"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Incendiary explosive technology"
+   }
+  },
+  "narrative": "You launch a canister of hypergolic fuel that ignites violently on contact with air, creating an expanding fireball that consumes everything in its radius. The power manifests as a brilliant orange explosion, the acrid smell of burning chemicals, and waves of intense heat that glass the ground beneath.",
+  "flavor_text": "\"Fire in the hole!\" - Demolitions Expert",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "priming and throwing incendiary device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating blast radius and fuel dispersion"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You launch a canister of highly volatile fuel that detonates on impact, creating a devastating explosion.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 3,
+      "dice_size": 6,
+      "damage_type": "fire"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_10_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Dexterity save or take 3d6 fire damage"
+    },
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "burning"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Failed save causes ongoing fire damage"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's chemical expertise transforms Explosive Fuel from simple incendiary to precision demolition. They adjust fuel mixture for maximum heat, add thermite for armor penetration, or create shaped charges that direct the blast exactly where needed.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 6,
+       "damage_type": "fire"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers add 1d6 fire damage (4d6 total)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human pyromaniac tendencies make their Explosive Fuel particularly devastating. They've studied fire's behavior, understanding how to create firestorms, use environmental accelerants, and place charges for maximum psychological impact.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_radius",
+      "value": {
+       "radius": {
+        "distance": 15,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans increase blast radius to 15 feet."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Explosive Fuel for guerrilla warfare. Their version uses readily available starship fuel, turning logistics into weapons, proving that with enough creativity, anything can become an explosive.",
+    "mechanical_benefit": [
+     {
+      "type": "lingering_effect",
+      "value": {
+       "effect": "burning_ground",
+       "damage": {
+        "dice_count": 1,
+        "dice_size": 6,
+        "damage_type": "fire"
+       }
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "minute"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Rebel fuel leaves area burning for 1 minute (1d6 fire damage to creatures entering)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the explosion—the canister arcing through air, the sudden WHOOMPH of ignition, the expanding fireball consuming everything. Show targets diving for cover, clothes igniting, the ground itself burning. Emphasize the chaos of uncontrolled fire.",
+   "tactical_notes": "Explosive Fuel deals 3d6 fire damage in a 10-foot radius (Dex save for half). Failed saves also apply burning status. Excellent for groups or destroying cover. Be careful of allies in the blast radius. The 60-foot range keeps you safe from your own explosion.",
+   "narrative_hooks": [
+    "An explosive fuel canister ignites a chain reaction in a fuel depot",
+    "The fire reveals hidden enemies trying to ambush",
+    "Desperate use of explosive fuel creates an escape route through a wall"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an explosive fuel detonation in combat. A massive fireball erupts from the impact point, orange and red flames expanding outward in a perfect sphere of destruction. Figures are thrown back by the blast wave, debris flying through the air. The scene captures the raw destructive power of weaponized incendiaries.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/explosive_fuel.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_explosive_fuel",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_explosive_fuel.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

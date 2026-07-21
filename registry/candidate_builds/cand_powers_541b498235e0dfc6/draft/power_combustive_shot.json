@@ -1,0 +1,152 @@
+{
+ "record": {
+  "id": "power_combustive_shot",
+  "name": "Combustive Shot",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "offensive",
+   "damage",
+   "explosive",
+   "fire",
+   "projectile",
+   "micro_explosive",
+   "ranged",
+   "combustion",
+   "ammunition",
+   "single_target",
+   "incendiary",
+   "engineer"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Explosive ammunition technology available to any trained combatant"
+   }
+  },
+  "narrative": "You fire a micro-explosive round that detonates on impact, creating a small but intense fireball. The power manifests as a bright muzzle flash followed by a projectile that bursts into flame upon striking its target, igniting flammable materials nearby.",
+  "flavor_text": "\"Sometimes you just need to set something on fire.\" - Mandalorian Commando",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "aiming and firing weapon with precision"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "targeting and timing the attack"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire a small explosive projectile that deals fire damage on impact.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "fire"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 fire damage to target"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the bright flash as the round fires, the small explosion on impact, and the burst of flame that engulfs the target. Clothing catches fire, armor heats up, and the smell of burning fills the air. The target recoils from the sudden heat and pain.",
+   "tactical_notes": "Combustive Shot is a reliable cantrip for consistent fire damage at range. The 60-foot range keeps you safe while dealing damage. Fire is effective against organic targets and can ignite flammable environments. Watch for enemies with fire resistance.",
+   "narrative_hooks": [
+    "A combustive shot ignites a fuel leak, creating a larger explosion",
+    "The fire damage reveals a disguised shapeshifter as they burn",
+    "A well-placed shot sets off a chain reaction in an ammunition depot"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a combustive shot detonating on impact. The explosive round creates an intense fireball that engulfs the target, with burning phosphorus fragments trailing white-hot streaks through the air. The victim's armor glows cherry-red from the heat, smoke pouring from burning cloth and melting components. The scene captures the brutal efficiency of chemical warfare. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric smoke and fire, dynamic lighting, by Greg Rutkowski",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/combustive_shot.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_combustive_shot",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_combustive_shot.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,176 @@
+{
+ "record": {
+  "id": "performer",
+  "name": "Performer",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "performer",
+   "artist",
+   "charisma_based",
+   "inspiring",
+   "professional",
+   "social_specialist",
+   "creative",
+   "charming"
+  ],
+  "description": "Performers are masters of entertainment and performance, using their artistic talents to inspire, distract, and influence audiences.",
+  "specialization_features": [
+   "stage_presence",
+   "captivating_performance",
+   "audience_manipulation",
+   "star_power",
+   "legendary_performer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Artistic Colonist",
+   "role_in_group": "Inspiring Performer",
+   "visual_signals": [
+    "Glittering Costume",
+    "Enchanting Smile"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "performing_arts_level1",
+    "feature_id": "feature_id_performing_arts",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "You gain proficiency in one art or tool of your choice. You can add this skill to your list of skills known at the beginning of Level 1.",
+    "effects": [
+     {
+      "type": "proficiency",
+      "value": ""
+     }
+    ]
+   },
+   {
+    "node_id": "audience_influence_level3",
+    "feature_id": "feature_id_audience_influence",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can use your Charisma score to influence the audience's reactions.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "silver_tongue_enchantment",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_start_action"
+       }
+      ],
+      "notes": "As the spotlight finds you, your words take on a mesmerizing quality. You can add your Charisma modifier to any ability check you make to affect the mood or attitude of an individual or group, using your performer's charm to weave a spell of persuasion."
+     }
+    ]
+   },
+   {
+    "node_id": "creative_expression_level7",
+    "feature_id": "feature_id_creative_expression",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain a bonus to your Charisma score when using creative expression.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_serenade",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "colonist"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "performer"
+       }
+      ],
+      "notes": "As the performer's instrument resonates, nearby enemies become entranced by their artistry, granting a +1 bonus to Charisma checks for 1 minute. This effect ends if the colonist attacks or takes damage."
+     }
+    ]
+   },
+   {
+    "node_id": "master_performance_level11",
+    "feature_id": "feature_id_master_performance",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain expertise in one art or tool of your choice. You can add this skill to your list of skills known at the beginning of Level 11.",
+    "effects": [
+     {
+      "type": "expertise",
+      "value": ""
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "cybernetic_eye"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful, wide-legged stance with lightsaber at the ready.",
+    "energy_signature": "Emits a vibrant, blue-green aura that crackles with energy."
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled artistic colonist standing in a dramatic pose on a desert planet's dunes, surrounded by ancient ruins and mysterious artifacts.",
+    "contextual_modifiers": [
+     "Include a faintly visible double-bladed lightsaber",
+     "Add subtle, pulsing neon lines tracing the colonist's cybernetic enhancements"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "performer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_performer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

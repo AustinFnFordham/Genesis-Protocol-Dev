@@ -1,0 +1,216 @@
+{
+ "record": {
+  "id": "power_feedback",
+  "name": "Feedback",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "mental",
+   "psychic",
+   "retaliation",
+   "damage_reflection",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist the urge to inflict retaliatory pain through compassion.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You create a vicious psychic feedback loop in your target's mind, turning their own thoughts against them in an escalating spiral of mental static. The power manifests as invisible waves of psychic energy that cause neurons to misfire, synapses to overload, and consciousness itself to recoil in pain.",
+  "flavor_text": "\"Your thoughts betray you.\" - Emperor Palpatine",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "pressing fingers to temple while projecting psychic assault"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "creating recursive thought loops that amplify into agony"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the dark side to create a feedback loop in a creature's mind, causing them pain.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "psychic"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 psychic damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior amplifies Feedback into a psychic scream, using their own pain and rage as fuel. They create resonance between their suffering and the target's, turning mental anguish into a weapon that feeds on itself.",
+    "mechanical_benefit": [
+     {
+      "type": "retaliation_damage",
+      "value": {
+       "flat": 1,
+       "damage_type": "psychic"
+      },
+      "trigger": "taking_damage",
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Sith Warriors reflect 1 psychic damage when hit by melee attacks."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human psychological complexity makes their Feedback particularly vicious. They instinctively find and amplify the target's deepest anxieties, creating feedback loops that spiral into overwhelming mental static.",
+    "mechanical_benefit": [
+     {
+      "type": "mental_echo",
+      "value": {
+       "effect": "disadvantage_concentration"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human Feedback causes disadvantage on concentration saves for 1 round."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Feedback as a fundamental torture technique. Through it, acolytes learn to weaponize mental suffering, creating cascading waves of psychic pain that break minds before bodies.",
+    "mechanical_benefit": [
+     {
+      "type": "spreading_feedback",
+      "value": {
+       "effect": "psychic_contagion"
+      },
+      "range": {
+       "distance": 5,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "adjacent_enemies"
+      ],
+      "notes": "Sith Feedback spreads to enemies within 5 feet for 1 damage."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the invisible assault—the target clutching their head, eyes unfocused as their own thoughts turn hostile. Show them wincing from phantom pains, struggling to form coherent thoughts as mental static drowns out reason. The attack leaves no physical wounds, only psychic scars.",
+   "tactical_notes": "Feedback is a Dark Side cantrip dealing 1d4 psychic damage. Psychic damage bypasses most resistances and armor. The 30-foot range keeps you safe while attacking minds directly. As a cantrip, it's resource-free mental torture.",
+   "narrative_hooks": [
+    "Feedback reveals hidden mental illness or brain damage in the target",
+    "The psychic loop accidentally shares memories between attacker and victim",
+    "A droid proves immune, revealing its advanced consciousness"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark Force user inflicting psychic feedback on a victim. Invisible waves of mental energy distort the air between them. The victim clutches their head in agony, their face contorted in silent screams as their own thoughts attack them. Purple-black energy wisps around both figures, representing the psychic assault. The attacker's eyes glow with malevolent focus.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/feedback.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_feedback",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_feedback.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

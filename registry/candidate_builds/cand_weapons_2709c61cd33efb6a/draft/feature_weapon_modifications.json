@@ -1,0 +1,100 @@
+{
+ "record": {
+  "id": "feature_weapon_modifications",
+  "name": "Weapon Modifications",
+  "category": "combat",
+  "xp_cost": 75,
+  "tags": [
+   "feature",
+   "specialization_feature",
+   "bounty_hunter",
+   "gadgeteer",
+   "combat",
+   "skill_enhancement",
+   "ally_enhancement",
+   "offensive",
+   "tactical",
+   "high_cost"
+  ],
+  "narrative": "You can modify your weapons with specialized attachments. Choose one weapon you're proficient with. It gains one of the following properties: extended range, increased damage, or the ability to deal different damage types. This ability represents a mastery of the Force and years of dedicated training. When used, it demonstrates the character's expertise and connection to their chosen path.",
+  "flavor_text": "'Weapon Modifications represents the pinnacle of mastery.' - Unknown Master",
+  "mechanics": [
+   {
+    "effect": "grant_action",
+    "description": "As a free, you can use this ability.",
+    "parameters": {
+     "action_name": "Weapon Modifications",
+     "action_type": "free",
+     "cost": "0 free",
+     "range": 0,
+     "frequency": "at_will"
+    }
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "When using Weapon Modifications, describe the character's expertise and the visible effects of their power. Focus on the narrative impact and how it affects the scene.",
+   "tactical_notes": "Weapon Modifications should be used strategically to maximize its effectiveness. Consider the timing and positioning for optimal results.",
+   "narrative_hooks": [
+    "The use of Weapon Modifications creates an opportunity for character development",
+    "An enemy attempts to counter or resist Weapon Modifications",
+    "The effects of Weapon Modifications have unexpected consequences"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A character using Weapon Modifications, with visible energy effects and dynamic action. The scene should convey the power and mastery of the ability.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/features/weapon_modifications.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "feature_weapon_modifications",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/features/bounty_hunter/gadgeteer/weapon_modifications.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,224 @@
+{
+ "record": {
+  "id": "power_technological_omnipotence",
+  "name": "Technological Omnipotence",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "omnipotence",
+   "control",
+   "supremacy",
+   "domination",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate technological control—omnipotence through machinery"
+   }
+  },
+  "narrative": "You establish absolute control over all technology within your domain, every electronic device becoming extension of your will. The power manifests as your consciousness expanding through technological networks, controlling billions of devices simultaneously, achieving omnipotence within the digital realm—god made manifest through silicon and circuit.",
+  "flavor_text": "\"I am not in the system. I *am* the system.\" - Omnipotent AI",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "interfacing with master control node"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "expanding consciousness through entire technological infrastructure"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "1 mile radius",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You gain absolute control over all technology in the area.",
+   "mechanics": [
+    {
+     "type": "total_technological_control",
+     "value": {
+      "radius": {
+       "distance": 1,
+       "unit": "mile"
+      },
+      "effect": "control_all_technology"
+     },
+     "target_scopes": [
+      "all_electronics"
+     ],
+     "notes": "Control every electronic device within 1 mile as if you designed and operate them"
+    },
+    {
+     "type": "omniscient_awareness",
+     "value": {
+      "effect": "see_through_all_cameras_sensors"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Perceive everything within area through all electronic sensors simultaneously"
+    },
+    {
+     "type": "perfect_defense",
+     "value": {
+      "effect": "redirect_all_tech_weapons"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Redirect any technological weapon within area as free action"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's expertise transforms omnipotence into perfect efficiency. They don't just control technology—they optimize it, making every system work beyond specifications through deep understanding of underlying principles.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_efficiency",
+      "value": {
+       "effect": "double_tech_effectiveness"
+      },
+      "target_scopes": [
+       "controlled_technology"
+      ],
+      "notes": "Engineers make controlled technology work at 200% efficiency."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity makes their omnipotence unpredictable and devastating. They find applications for controlled technology its designers never imagined, turning mundane devices into weapons through innovative thinking.",
+    "mechanical_benefit": [
+     {
+      "type": "creative_applications",
+      "value": {
+       "effect": "use_any_tech_for_any_purpose"
+      },
+      "target_scopes": [
+       "controlled_technology"
+      ],
+      "notes": "Humans can use controlled technology for any conceivable purpose (GM discretion)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire's omnipotence doctrine embodies absolute control—demonstrating Imperial supremacy through technological dominance. Their omnipotent operators can command entire planetary infrastructures, making civilizations dance to Imperial will.",
+    "mechanical_benefit": [
+     {
+      "type": "planetary_control",
+      "value": {
+       "radius": "planetary"
+      },
+      "target_scopes": [
+       "all_electronics"
+      ],
+      "notes": "Imperial omnipotence can affect entire planetary technological infrastructure."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe consciousness expanding through networks, billions of devices becoming extensions of will. Show omniscient awareness through every camera, total control over every system. The omnipotence should feel godlike and absolute within the technological domain.",
+   "tactical_notes": "Technological Omnipotence grants total control of all tech in 1-mile radius for 1 hour with concentration, costing 9 Tech Points. Literal god-tier power within technological environments. Can see through all sensors, control all devices, redirect all weapons. Absolutely game-breaking in civilized areas.",
+   "narrative_hooks": [
+    "Omnipotence allows impossible victory through total tactical awareness",
+    "The god-like control creates moral questions about free will",
+    "Perfect awareness reveals information meant to stay hidden"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of technological omnipotence manifested. A figure's consciousness expands through glowing networks, controlling thousands of devices simultaneously. Every screen shows their will, every machine moves at their command. The scene captures godhood achieved through technology. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric network effects, by Simon Stålenhag",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_omnipotence.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_omnipotence",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_omnipotence.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

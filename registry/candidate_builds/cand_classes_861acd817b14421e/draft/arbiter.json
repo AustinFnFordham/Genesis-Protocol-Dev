@@ -1,0 +1,204 @@
+{
+ "record": {
+  "id": "arbiter",
+  "name": "Arbiter",
+  "class_id": "consular",
+  "base_class": "consular",
+  "tags": [
+   "consular",
+   "arbiter",
+   "diplomat",
+   "negotiator",
+   "wise",
+   "peaceful",
+   "light_side",
+   "jedi",
+   "balanced",
+   "support"
+  ],
+  "description": "Arbiters are masters of mediation and conflict resolution. They excel at settling disputes, interpreting laws, and using the Force to bring about fair and just resolutions to complex conflicts.",
+  "specialization_features": [
+   "mediation_expertise",
+   "conflict_resolution",
+   "just_decisions",
+   "arbiter_mastery",
+   "legendary_arbiter"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A champion of balance and justice, an Arbiter mediates disputes and resolves conflicts through wisdom and the Force.",
+   "role_in_group": "Diplomat",
+   "visual_signals": [
+    "Peaceful Aura",
+    "Wisdom Gaze"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "arbiter_level_3",
+    "feature_id": "wise_mediator",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have become a respected mediator, and others seek your counsel to resolve conflicts peacefully.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "mediator_sway",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check",
+        "op": "equals",
+        "value": "intimidate"
+       },
+       {
+        "key": "ability_check",
+        "op": "equals",
+        "value": "insight"
+       }
+      ],
+      "notes": "The Arbiter's wise and measured words carry weight, granting them advantage on Intimidation and Insight checks."
+     }
+    ]
+   },
+   {
+    "node_id": "arbiter_level_7",
+    "feature_id": "fair_judge",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have gained a reputation as a fair and impartial judge, and others seek your expertise to settle disputes.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "judge_equipment_proficiency",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_equipment",
+        "op": "exists"
+       },
+       {
+        "key": "equipment_type",
+        "op": "equals",
+        "value": "any"
+       }
+      ],
+      "notes": "When the Arbiter scores a hit, they instinctively gauge their opponent's equipment. For one turn, the Arbiter gains proficiency in the type of equipment used by the target."
+     }
+    ]
+   },
+   {
+    "node_id": "arbiter_level_11",
+    "feature_id": "peaceful_resolution",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have mastered the art of resolving conflicts peacefully, and others seek your guidance to avoid violence.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "calming_protectiveness",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Arbiter resolves conflicts, a soothing aura radiates from them, granting resistance to damage for a brief moment. When hit by an attack, the Arbiter's energy shields activate, imbuing their being with a calming resilience that reduces the impact of incoming harm."
+     }
+    ]
+   },
+   {
+    "node_id": "arbiter_level_15",
+    "feature_id": "wise_leadership",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have become a respected leader, and others seek your guidance to make wise decisions.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "augmented_insight",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "level_requirement",
+        "op": "greater_than_or_equal_to",
+        "value": 5
+       }
+      ],
+      "notes": "The consular imbues nearby allies with insight, granting them increased perception and strategic acumen."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "arbiter_symbol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a stance with feet shoulder-width apart, lightsaber at the ready, and eyes fixed intently on the opponent.",
+    "energy_signature": "Surrounds itself with an aura of calm determination, as if the very fabric of balance is being maintained."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of an Arbiter meditating in a serene environment, surrounded by the gentle hum of the Force.",
+    "contextual_modifiers": [
+     "include_hands_in_silhouette",
+     "emphasize_force_energy"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "arbiter",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular_arbiter.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

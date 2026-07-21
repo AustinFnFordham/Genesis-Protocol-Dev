@@ -1,0 +1,223 @@
+{
+ "record": {
+  "id": "power_seethe",
+  "name": "Seethe",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 1,
+  "tags": [
+   "dark_side",
+   "rage",
+   "power_boost",
+   "anger",
+   "enhancement",
+   "emotion"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist channeling rage by maintaining inner peace.",
+     "ability": "Wisdom",
+     "dc": 16
+    }
+   }
+  },
+  "narrative": "You let rage flow through you unfiltered, dark side anger becoming raw power that enhances your attacks with fury's strength. The power manifests as visible dark energy crackling around you, your strikes empowered by hatred, each blow carrying the weight of channeled wrath.",
+  "flavor_text": "\"Let your anger give you focus. Let your rage give you strength.\" - Sith Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "body tensing with channeled rage"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling anger into physical power"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You channel dark side rage to enhance your attacks.",
+   "mechanics": [
+    {
+     "type": "enhance_damage",
+     "value": {
+      "bonus": 2,
+      "stat": "all_attacks"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain +2 damage on all attacks while seething"
+    },
+    {
+     "type": "apply_vulnerability",
+     "value": {
+      "vulnerability_type": "all_damage",
+      "penalty": 2
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Take +2 damage from all attacks while rage clouds defense"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior's combat training transforms Seethe into controlled fury. They channel rage without losing tactical awareness, their anger becoming weapon rather than weakness—calculated wrath that empowers without blinding.",
+    "mechanical_benefit": [
+     {
+      "type": "remove_vulnerability",
+      "value": {
+       "defense_maintained": true
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Sith Warriors don't suffer the +2 damage vulnerability while seething."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human emotional capacity makes their Seethe devastatingly powerful. They can access depths of rage that other species can't sustain, their fury burning hotter and lasting longer through sheer passionate intensity.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_bonus",
+      "value": {
+       "bonus": 4,
+       "stat": "all_attacks"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain +4 damage instead of +2 from more intense rage."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Seethe as fundamental dark side technique—the power of channeled emotion. Their methods emphasize using anger as tool, showing that passion properly directed becomes overwhelming strength.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 10,
+       "unit": "minutes"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Sith can maintain seething rage for 10 minutes instead of 1."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe dark energy crackling around you, muscles tensing with rage, eyes blazing with fury. Show attacks empowered by hatred, each blow carrying channeled wrath. The rage should feel powerful but dangerous, strength at a cost.",
+   "tactical_notes": "Seethe grants +2 damage to all attacks but makes you take +2 damage for 1 minute with concentration, costing 1 Force Point. Classic high-risk, high-reward buff. Perfect for aggressive dark side users willing to trade defense for offense. The vulnerability makes positioning critical.",
+   "narrative_hooks": [
+    "Seething rage allows impossible victory through pure fury",
+    "The visible dark side energy reveals corruption to allies",
+    "Rage clouds judgment at a critical moment, creating consequences"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark side warrior channeling seething rage. Dark energy crackles visibly around them, their body tensed with fury, eyes blazing with channeled wrath. Their attacks are empowered by hatred, each strike carrying the weight of pure rage. The scene captures the dangerous power of controlled anger.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/seethe.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_seethe",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_seethe.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,428 @@
+{
+ "record": {
+  "id": "scout",
+  "name": "Scout",
+  "tags": [
+   "scout",
+   "reconnaissance",
+   "survival_expert",
+   "ranged_specialist",
+   "stealth",
+   "tracker",
+   "dexterity_based",
+   "wilderness",
+   "sniper",
+   "tactical"
+  ],
+  "description": "Scouts are specialized reconnaissance and survival experts who excel in navigating hostile environments, gathering intelligence, and engaging targets from a distance. Whether serving as forward observers, wilderness guides, or elite snipers, their skills in survival, stealth, and precision shooting make them invaluable for any military or exploration operation.",
+  "hit_die": "1d10",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Blaster pistols",
+    "Blaster rifles",
+    "Sniper rifles"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Scout's Kit",
+      "Survival Kit",
+      "Binoculars",
+      "Climbing Gear",
+      "Camouflage Netting",
+      "Motion Detector",
+      "Thermal Imager"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Dexterity",
+    "Wisdom"
+   ],
+   "skills": {
+    "choose": 4,
+    "from": [
+     "Acrobatics",
+     "Animal Handling",
+     "Athletics",
+     "Insight",
+     "Investigation",
+     "Nature",
+     "Perception",
+     "Stealth",
+     "Survival"
+    ]
+   }
+  },
+  "primary_ability": "Dexterity or Wisdom",
+  "primary_resource": "Focus Points",
+  "progression_tree": [
+   {
+    "node_id": "scout_training_1",
+    "feature_id": "scout_training",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "survival_expertise_1",
+    "feature_id": "survival_expertise",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "scout_training_1"
+    ],
+    "choice_group": "survival_expertise_level_1"
+   },
+   {
+    "node_id": "reconnaissance_2",
+    "feature_id": "reconnaissance",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "survival_expertise_1"
+    ],
+    "choice_group": "scout_focus_level_2"
+   },
+   {
+    "node_id": "marksmanship_2",
+    "feature_id": "marksmanship",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "survival_expertise_1"
+    ],
+    "choice_group": "scout_focus_level_2"
+   },
+   {
+    "node_id": "scout_specialization_3",
+    "feature_id": "scout_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "reconnaissance_2",
+     "marksmanship_2"
+    ],
+    "choice_group": "scout_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "scout_specialization_3"
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "enhanced_reconnaissance_6",
+    "feature_id": "enhanced_reconnaissance",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "scout_enhancement_level_6"
+   },
+   {
+    "node_id": "enhanced_marksmanship_6",
+    "feature_id": "enhanced_marksmanship",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "scout_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_reconnaissance_6",
+     "enhanced_marksmanship_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "scout_instinct_9",
+    "feature_id": "scout_instinct",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "precision_shot_10",
+    "feature_id": "precision_shot",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "scout_instinct_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "precision_shot_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "scout_mastery_20",
+    "feature_id": "scout_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "tactical_goggles",
+    "survival_vest",
+    "scoped_rifle",
+    "canteen",
+    "backpack",
+    "wilderness_hat"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Focused, deliberate movements with a emphasis on precision and strategy",
+    "energy_signature": "A faint blue aura surrounding the Scout, indicating their connection to their surroundings and ability to blend in"
+   },
+   "prompt_schema": {
+    "base_prompt": "Scout [action/mission] in a [environment/location]",
+    "contextual_modifiers": [
+     "with [ally/enemy] nearby",
+     "while navigating through dense foliage or urban terrain",
+     "using stealth and precision shooting techniques"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "You consistently outperform and one-up your superior in missions, making them increasingly resentful and dismissive.",
+    "escalation": "Your superior takes steps to undermine your authority and sabotage your efforts, causing tension and mistrust between you both.",
+    "confrontation": "The two of you clash directly, with open arguments and power struggles over who will lead the mission and make key decisions."
+   },
+   "resolution_paths": {
+    "victory": "You successfully outmaneuver and defeat your superior in a high-stakes mission, earning their grudging respect and admiration.",
+    "redemption": "Your superior is impressed by your bravery and skill in a critical moment, and begins to see you as an equal or even a potential ally.",
+    "escape": "You manage to evade and outrun your superior's attempts to capture or eliminate you, but the situation remains tense and unresolved."
+   },
+   "conflict_triggers": [
+    "Exceeding your superior's expectations",
+    "Questioning their decisions or authority",
+    "Displaying exceptional skill or talent that makes them feel threatened"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "You and your partner meet in a social setting, and there's an instant attraction. You exchange numbers and agree to grab coffee.",
+    "stage2": "You start dating regularly, but your work schedule and travel demands make it challenging to maintain a consistent connection. Your partner begins to feel neglected or insecure.",
+    "stage3": "Despite the distance and challenges, you and your partner find ways to stay connected and committed. You start to discuss long-term plans and future goals together.",
+    "stage4": "You face a critical moment of truth when a mission or assignment forces you to choose between your duty and your relationship. Your partner may feel abandoned or unimportant in the process.",
+    "stage5": "You emerge from the crisis with a deeper understanding of each other's priorities and values. You find ways to balance your work and personal life, and your relationship becomes stronger and more resilient."
+   },
+   "lifestyle_challenges": [
+    "Frequent deployments or long-term assignments that take you away from home",
+    "High-stress work environment that can be emotionally draining",
+    "Risk of injury or death in the line of duty, which can create anxiety or fear for your partner's safety"
+   ]
+  },
+  "flavor_text": "A skilled Scout can move unseen and unheard, striking from the shadows with deadly precision.",
+  "llm_guidance": {
+   "roleplay_guidance": "A Scout's primary goal is to remain undetected, often using their surroundings to set up ambushes or snipe targets at a distance.",
+   "narrative_hooks": [
+    "A Scout must navigate through a dense forest without being seen by the enemy.",
+    "A Scout discovers a hidden enemy outpost and must decide whether to alert allies or take out the target alone.",
+    "A Scout's survival skills are put to the test as they face harsh environmental conditions in a desolate wasteland."
+   ],
+   "social_dynamics": "Scouts often find themselves working behind enemy lines, which can lead to complex moral dilemmas. They may be forced to choose between completing their mission and preserving their own life or the lives of their allies.\n"
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "cautious",
+      "analytical"
+     ],
+     "influences": [
+      "loyalty",
+      "self-preservation",
+      "completion of mission objectives"
+     ]
+    },
+    "motivations": {
+     "primary": "gather intelligence and complete mission objectives",
+     "secondary": "preserve own life and lives of allies"
+    },
+    "combat_behavior": "use cover and stealth to outmaneuver the enemy",
+    "social_behavior": "remain observant but avoid drawing unnecessary attention"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "high": "allies, those who have demonstrated loyalty or shared goals"
+     },
+     {
+      "medium": "neutral parties, potential informants or spies"
+     },
+     {
+      "low": "enemies, those with conflicting goals or interests"
+     }
+    ],
+    "loyalty_triggers": "completion of mission objectives, demonstration of loyalty and selflessness"
+   },
+   "services": [
+    "Scouting and reconnaissance",
+    "Survival and wilderness survival skills",
+    "Long-range marksmanship and sniper training"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "scout",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/scout.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

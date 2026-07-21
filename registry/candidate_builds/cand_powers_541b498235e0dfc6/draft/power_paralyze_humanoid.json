@@ -1,0 +1,217 @@
+{
+ "record": {
+  "id": "power_paralyze_humanoid",
+  "name": "Paralyze Humanoid",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 2,
+  "tags": [
+   "dark_side",
+   "paralysis",
+   "domination",
+   "control",
+   "incapacitation",
+   "telepathic"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist the cruelty of forced paralysis through compassionate restraint.",
+     "ability": "Wisdom",
+     "dc": 16
+    }
+   }
+  },
+  "narrative": "You reach into a humanoid's nervous system through the Force, seizing control of their motor functions and locking their body in place like a statue. The power manifests as invisible chains of dark side energy binding every muscle, victims conscious and aware but completely unable to move, trapped in their own frozen flesh.",
+  "flavor_text": "\"You will stand. You will watch. You will suffer.\" - Sith Inquisitor",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clenching fist as if gripping the victim"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "seizing neural pathways through Force domination"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You paralyze a humanoid creature, rendering them completely immobile.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "paralyzed"
+     },
+     "target_scopes": [
+      "humanoid"
+     ],
+     "conditions": [
+      {
+       "key": "wisdom_save_failed",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Target is paralyzed if Wisdom save fails (can retry save each turn)"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior uses Paralyze Humanoid not just for incapacitation but psychological warfare. They force enemies to watch allies die helpless, their paralysis becoming torture as they witness horror unable to intervene—domination through enforced observation.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_duration",
+      "value": {
+       "save_disadvantage": true
+      },
+      "target_scopes": [
+       "humanoid"
+      ],
+      "notes": "Sith Warriors impose disadvantage on saves to break paralysis."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human understanding of psychology makes their paralysis cruelly precise. They know exactly how to position frozen victims for maximum psychological impact—forcing them to watch specific horrors, creating trauma through calculated helplessness.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 10,
+       "unit": "minutes"
+      },
+      "target_scopes": [
+       "humanoid"
+      ],
+      "notes": "Human paralysis lasts up to 10 minutes instead of 1."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Paralyze Humanoid as ultimate control—the power to reduce enemies to living statues. Their techniques emphasize maintaining paralysis during interrogation, torture, or execution, showing victims their absolute powerlessness.",
+    "mechanical_benefit": [
+     {
+      "type": "multi_target",
+      "value": {
+       "additional_targets": 1
+      },
+      "target_scopes": [
+       "humanoids"
+      ],
+      "notes": "Sith can paralyze 2 humanoids simultaneously within range."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment of seizure—muscles locking, body freezing mid-motion, complete immobility despite conscious awareness. Show the victim's terror in their eyes, the only thing they can still move. The paralysis should feel like being buried alive in your own body.",
+   "tactical_notes": "Paralyze Humanoid completely incapacitates one humanoid for up to 1 minute with concentration. Costs 2 Force Points. Target gets save each round to break free. Perfect for neutralizing dangerous enemies non-lethally. Only works on humanoids—useless against droids, beasts, etc.",
+   "narrative_hooks": [
+    "A paralyzed enemy watches helplessly as their plans unravel",
+    "The power's cruelty reveals a character's dark side corruption",
+    "Breaking paralysis at a critical moment creates dramatic tension"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Sith paralyzing a humanoid victim. The target freezes mid-motion, body locked in place like a statue while their eyes show conscious terror. Invisible Force energy binds every muscle, the victim trapped in their own flesh. The Sith's clenched fist holds them frozen, demonstrating absolute dark side domination.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/paralyze_humanoid.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_paralyze_humanoid",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_paralyze_humanoid.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

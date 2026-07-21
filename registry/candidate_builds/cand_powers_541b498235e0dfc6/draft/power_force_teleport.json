@@ -1,0 +1,199 @@
+{
+ "record": {
+  "id": "power_force_teleport",
+  "name": "Force Teleport",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 4,
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 4
+   }
+  ],
+  "narrative": "You bend space and time through the Force, instantly transporting yourself and up to five willing allies to a location you can see within range. The power manifests as a shimmering distortion in reality, a brief, silent tear in the fabric of the galaxy that closes as quickly as it opens, leaving you and your companions in a new strategic position.",
+  "flavor_text": "\"Distance is an illusion. The Force connects all things.\" - Ancient Jedi Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "sweeping gesture that tears through space"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "visualizing the destination and folding space between"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "500 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You bend space and time through the Force, instantly transporting yourself and allies to a distant location.",
+   "mechanics": [
+    {
+     "type": "teleport",
+     "value": "instant_movement",
+     "target_scopes": [
+      "self",
+      "allies"
+     ],
+     "conditions": [
+      {
+       "key": "willing_targets",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Teleport up to 6 willing creatures to a location you can see"
+    },
+    {
+     "type": "apply_status",
+     "value": "teleport_sickness",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Constitution save or be incapacitated until end of next turn"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardians use Force Teleport as the ultimate protective technique, instantly evacuating wounded allies from danger or repositioning their entire team to defend a critical position.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain +2 to Force power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human spatial reasoning and adaptability helps them navigate the disorienting effects of teleportation, reducing the risk of teleport sickness for themselves and their allies.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "Jedi masters have refined Force Teleport into an art form, using it for dramatic battlefield rescues and strategic repositioning that can turn the tide of entire battles.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi gain +2 to Force power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe reality warping around the group as space folds in on itself. The air shimmers and distorts, a brief sensation of falling through infinite distance, then suddenly they stand in the new location. Some may stumble from disorientation, the less Force-sensitive suffering brief nausea from the spatial displacement.",
+   "tactical_notes": "Force Teleport is supreme for tactical repositioning. Evacuate your team from a losing fight, bypass obstacles entirely, or position for a surprise attack. The 500-foot range covers most battlefields. Be mindful of teleport sickness potentially incapacitating allies at a crucial moment.",
+   "narrative_hooks": [
+    "A Jedi master teleports their team out of a collapsing building at the last second",
+    "The party bypasses an entire Imperial blockade through careful teleportation",
+    "Force Teleport saves wounded allies from certain death in a losing battle"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of Force Teleport in action. A Jedi and their allies are caught mid-teleportation, their forms becoming translucent and stretched as reality warps around them. Space itself tears and folds, creating a shimmering portal effect with streaks of blue-white Force energy. The scene captures the moment between locations, with ghostly afterimages showing where they were and glowing outlines indicating where they will be. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric lighting, spatial distortion effects, by Greg Rutkowski",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_teleport.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_teleport",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_teleport.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

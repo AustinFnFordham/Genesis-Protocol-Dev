@@ -1,0 +1,198 @@
+{
+ "record": {
+  "id": "power_parry",
+  "name": "Parry",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "defensive",
+   "reaction",
+   "melee",
+   "deflection",
+   "superiority",
+   "martial"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced defensive technique for melee combat"
+   }
+  },
+  "narrative": "You react to an incoming melee attack with perfect defensive form, deflecting the blow with your weapon or armored limb. The power manifests as steel meeting steel, the clash of blades or impact on armor turning what would have been a devastating hit into a glancing blow or complete miss.",
+  "flavor_text": "\"Defense is not passive—its violent disagreement with your opponents tactics.\" - Dueling Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "precise defensive weapon positioning"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "reading attack trajectory and timing deflection"
+   }
+  ],
+  "casting_time": "1 Reaction",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use your weapon to deflect an incoming melee attack, reducing its damage.",
+   "mechanics": [
+    {
+     "type": "damage_reduction",
+     "value": {
+      "source": "superiority_die",
+      "additional": "dexterity_modifier"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Reduce damage by superiority die + Dexterity modifier"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "fighter",
+    "narrative": "The Fighter's weapon mastery transforms Parry into near-perfect defense. They read incoming attacks with preternatural clarity, their parries not just deflecting but redirecting force, turning enemy momentum against them through superior technique and timing.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_reduction",
+      "value": {
+       "bonus": 2,
+       "stat": "damage_reduction"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Fighters reduce an additional 2 damage when using Parry."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes their parries unpredictable and effective. They blend techniques from countless martial traditions, creating defensive forms that confuse opponents trained against conventional parries—innovation through synthesis.",
+    "mechanical_benefit": [
+     {
+      "type": "counterattack_option",
+      "value": {
+       "attack_type": "opportunity_attack"
+      },
+      "timing": "after_parry",
+      "target_scopes": [
+       "attacker"
+      ],
+      "notes": "Humans can make an opportunity attack against the attacker after successful parry."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "mandalorian",
+    "narrative": "Mandalorian warriors have perfected Parry through centuries of combat tradition. Their beskar armor and weapon training create defensive forms that can parry even lightsabers, their techniques emphasizing survival through superior defense.",
+    "mechanical_benefit": [
+     {
+      "type": "parry_energy_weapons",
+      "value": {
+       "effect": "reduce_all_damage_types"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Mandalorians can parry energy weapons and lightsabers, not just physical attacks."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the precise moment of deflection—blade meeting blade, the ring of steel, force redirected. Show the defender's perfect timing, their weapon intercepting the attack at exactly the right angle. The parry should feel skillful and satisfying.",
+   "tactical_notes": "Parry reduces melee attack damage by superiority die + Dex modifier as a reaction. Perfect for high-Dex fighters who can reduce damage significantly. Remember it uses your reaction and a superiority die—manage resources carefully. Only works on melee attacks you can see.",
+   "narrative_hooks": [
+    "A perfect parry deflects a killing blow at the last possible moment",
+    "The technique reveals the character was trained by a specific master",
+    "Parrying reveals an opening for a devastating counterattack"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior executing a perfect parry. Their weapon intercepts an incoming attack at precisely the right angle, sparks flying from the impact. The defender's form is textbook-perfect, their expression focused and calm. The scene captures the moment when superior technique defeats raw power.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/parry.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_parry",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_parry.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

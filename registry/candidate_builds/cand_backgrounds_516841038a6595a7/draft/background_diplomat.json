@@ -1,0 +1,181 @@
+{
+ "record": {
+  "id": "background_diplomat",
+  "name": "Diplomat",
+  "tags": [
+   "background",
+   "diplomat",
+   "negotiator",
+   "charisma_based",
+   "persuasive",
+   "political",
+   "social_specialist",
+   "peaceful",
+   "skilled",
+   "influential"
+  ],
+  "description": "You are a skilled negotiator, ambassador, or political operative who has dedicated your life to the art of diplomacy and international relations. Whether you represent a planetary government, corporate interests, or serve as an independent mediator, your skills in persuasion, insight, and understanding different cultures make you invaluable. You understand the complexities of politics and the importance of finding common ground.",
+  "proficiencies": [
+   {
+    "type": "skill",
+    "id": "persuasion"
+   },
+   {
+    "type": "skill",
+    "id": "insight"
+   },
+   {
+    "type": "tool_choice",
+    "count": 2,
+    "options": [
+     {
+      "tool_id": "diplomatic_kit"
+     },
+     {
+      "tool_id": "communications_kit"
+     },
+     {
+      "tool_id": "translation_device"
+     },
+     {
+      "tool_id": "cultural_database"
+     },
+     {
+      "tool_id": "protocol_manual"
+     },
+     {
+      "tool_id": "security_clearance"
+     }
+    ]
+   },
+   {
+    "type": "language_choice",
+    "count": 3,
+    "options": [
+     {
+      "language_id": "any"
+     }
+    ]
+   }
+  ],
+  "feature": {
+   "name": "Diplomatic Immunity",
+   "level": 1,
+   "description": "Your status as a diplomat grants you certain privileges and protections. You have advantage on Persuasion checks when negotiating or mediating disputes, and you can use your action to attempt to defuse a tense situation, potentially preventing combat from breaking out. Additionally, you have access to diplomatic channels and can often secure meetings with important officials.",
+   "mechanics": [
+    {
+     "effect": "grant_advantage",
+     "parameters": {
+      "check_type": "skill_check",
+      "skill": "persuasion",
+      "scope": "all_checks",
+      "bonus_type": "diplomatic_status",
+      "condition": {
+       "type": "situational",
+       "situation": "negotiation",
+       "target_scope": "self"
+      }
+     }
+    },
+    {
+     "effect": "grant_action",
+     "parameters": {
+      "action_name": "Defuse Situation",
+      "action_type": "action",
+      "cost": {
+       "type": "action",
+       "value": 1
+      },
+      "description": "Attempt to defuse a tense situation and prevent combat"
+     }
+    },
+    {
+     "effect": "grant_special_property",
+     "parameters": {
+      "property_name": "Diplomatic Access",
+      "scope": "social",
+      "effect_description": "Access to diplomatic channels; can secure meetings with important officials"
+     }
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Peace. I will not be the one to draw my weapon first.",
+    "Justice. I bring criminals to justice.",
+    "Fairness. I never kill a target who has surrendered.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Respect. All life is sacred."
+   ],
+   "bonds": [
+    "I am protecting a secret that could endanger the galaxy.",
+    "I am the last of my line, and I must not fail.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_diplomat",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_diplomat.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

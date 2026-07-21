@@ -1,0 +1,212 @@
+{
+ "record": {
+  "id": "power_tracer_bolt",
+  "name": "Tracer Bolt",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "tracking",
+   "targeting",
+   "marking",
+   "beacon",
+   "tactical",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic tracking projectile for marking targets"
+   }
+  },
+  "narrative": "You fire a tracer bolt that embeds a tracking beacon in the target, their position revealed through electronic signature. The power manifests as glowing projectile that marks impact point, your targeting systems highlighting the tagged enemy wherever they go.",
+  "flavor_text": "\"You can run. We will find you.\" - Hunter",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "loading and firing tracer round"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "linking tracer beacon to tracking systems"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "1 hour",
+  "base_effect": {
+   "description": "You fire a tracer bolt that marks a target for tracking.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "kinetic",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 kinetic damage to target"
+    },
+    {
+     "type": "apply_tracking_beacon",
+     "value": {
+      "duration": {
+       "amount": 1,
+       "unit": "hour"
+      },
+      "effect": "reveal_position"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target's position is revealed to you for 1 hour"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's tracking expertise makes their tracers nearly undetectable. They embed beacons that enemies don't notice, creating surveillance that reveals movements without alerting targets to observation.",
+    "mechanical_benefit": [
+     {
+      "type": "stealth_beacon",
+      "value": {
+       "detection_dc": 20
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Operative tracers require DC 20 Investigation to detect beacon."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity finds versatile applications for Tracer Bolt. They use it for coordinating ambushes, tracking supply lines, even marking objectives for orbital strikes—simple tracking becoming strategic asset.",
+    "mechanical_benefit": [
+     {
+      "type": "share_tracking",
+      "value": {
+       "allies": "all_within_100_feet"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans share tracer beacon data with all allies within 100 feet."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Tracer Bolt for relentless pursuit. Their tracers integrate with Imperial networks, entire fleets coordinating to hunt marked targets—escape becoming impossible against Imperial tracking.",
+    "mechanical_benefit": [
+     {
+      "type": "network_tracking",
+      "value": {
+       "effect": "track_through_hyperspace"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Imperial tracers can track targets even through hyperspace jumps."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe tracer bolt impacting and embedding tracking beacon, glowing marker revealing target's position. Show tactical displays highlighting marked enemy, their attempts to hide futile against electronic surveillance.",
+   "tactical_notes": "Tracer Bolt deals 1d4 kinetic damage and marks target for 1 hour tracking. No resource cost as cantrip makes it reliable. Perfect for pursuing fleeing enemies or maintaining awareness. The 60-foot range is safe. Tracking persists for full hour.",
+   "narrative_hooks": [
+    "Tracer allows pursuit through complex urban environment",
+    "The beacon reveals target's secret hideout",
+    "Tracking leads to unintended discovery of larger conspiracy"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tracer bolt impacting a target. The glowing projectile embeds a tracking beacon that pulses with electronic signature. Tactical displays highlight the marked enemy, their position revealed through technological surveillance. The scene captures targeting and tracking technology.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/tracer_bolt.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_tracer_bolt",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_tracer_bolt.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

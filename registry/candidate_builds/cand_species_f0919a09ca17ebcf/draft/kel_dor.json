@@ -1,0 +1,536 @@
+{
+ "record": {
+  "id": "kel_dor",
+  "name": "Kel Dor",
+  "tags": [
+   "adaptable",
+   "defensive",
+   "explorer",
+   "force_sensitive",
+   "guardian",
+   "jedi",
+   "kel_dor",
+   "large",
+   "perceptive",
+   "stoic",
+   "support",
+   "uncommon",
+   "wisdom_based",
+   "wise"
+  ],
+  "description": "The Kel Dor are a humanoid species native to the planet Dorin, which has a toxic atmosphere that requires them to wear breath masks when off-world. They are known for their darkvision and adaptability to harsh environments.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Wisdom",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Kel Dor"
+  ],
+  "base_hp": 11,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "kel_dor_darkvision",
+    "name": "Darkvision",
+    "narrative": "Your large, sensitive eyes evolved to see through Dorin's perpetual darkness and toxic atmosphere. You can perceive details in conditions that would leave other species completely blind.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Enhanced Sight",
+      "action_type": "passive",
+      "description": "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light.",
+      "rules": [
+       "range:60_feet",
+       "dim_light:as_bright",
+       "darkness:as_dim",
+       "color_perception:grayscale_in_darkness"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "kel_dor_toxic_resistance",
+    "name": "Toxic Resistance",
+    "narrative": "Your physiology evolved to survive in Dorin's toxic atmosphere, developing natural defenses against poisons and toxins that would kill other species instantly.",
+    "mechanics": [
+     {
+      "effect": "grant_resistance",
+      "name": "Poison Resistance",
+      "action_type": "passive",
+      "description": "You have resistance to poison damage.",
+      "rules": [
+       "damage_type:poison",
+       "resistance:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Poison Immunity",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against poison.",
+      "rules": [
+       "save_type:advantage",
+       "condition:poison"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_kel_dor_poisonous_mist",
+     "ui_transition": {
+      "animation": "poisonous_mist_fade_in",
+      "sfx": "toxic_gas_hiss"
+     }
+    }
+   },
+   {
+    "id": "kel_dor_environmental_adaptation",
+    "name": "Environmental Adaptation",
+    "narrative": "Your species evolved in one of the galaxy's most hostile environments, developing incredible resilience to environmental hazards and the ability to survive in conditions that would kill others.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Hazard Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against environmental hazards.",
+      "rules": [
+       "save_type:advantage",
+       "context:environmental_hazards"
+      ],
+      "conditions": [
+       {
+        "key": "hazard_type",
+        "op": "in",
+        "value": [
+         "toxic_gas",
+         "radiation",
+         "extreme_pressure"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "modify_stat",
+      "name": "Extended Breath Holding",
+      "action_type": "passive",
+      "description": "You can hold your breath for twice as long.",
+      "rules": [
+       "breath_holding:doubled"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_kel_dor_enviromental_manipulation",
+     "ui_transition": {
+      "animation": "environmental_manipulation_fade_in",
+      "sfx": "acid_splash"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Breath mask required off-world",
+    "Dark skin",
+    "Large eyes",
+    "Adapted to toxic environments",
+    "Cautious, deliberate movements"
+   ],
+   "skin_color_variants": [
+    "Dark Grey",
+    "Charcoal",
+    "Deep Brown",
+    "Black",
+    "Mottled patterns"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Golden eyes",
+    "Orange eyes",
+    "Red eyes",
+    "Amber eyes"
+   ],
+   "breath_mask_variants": [
+    "Standard protective mask",
+    "Elaborate ceremonial mask",
+    "Practical utility mask",
+    "Decorative cultural mask"
+   ],
+   "common_adornments": [
+    "Breath masks and environmental gear",
+    "Protective clothing and equipment",
+    "Traditional Kel Dor ceremonial garments",
+    "Practical survival gear",
+    "Cultural jewelry and accessories"
+   ],
+   "llm_description_prompt": "Describe a Kel Dor character. Emphasize their distinctive breath mask, which is essential for survival off their homeworld, and their large, expressive eyes that convey both caution and wisdom. Their dark skin should reflect their adaptation to harsh environments. Consider their natural caution and the way they carry themselves with deliberate, careful movements that reflect their survival instincts."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout",
+    "narrative": "Kel Dor's natural adaptability and Darkvision make them exceptional Scouts, able to navigate and explore dangerous environments that others cannot survive.",
+    "mechanical_benefits": [
+     "Darkvision trait enables exploration in low-light conditions",
+     "Environmental Adaptation trait enhances survival in harsh environments",
+     "Toxic Resistance trait allows exploration of dangerous areas"
+    ]
+   },
+   {
+    "class": "Engineer",
+    "narrative": "Kel Dor's natural adaptability and environmental resistance make them excellent Engineers, able to work in hazardous conditions and toxic environments.",
+    "mechanical_benefits": [
+     "Toxic Resistance trait enables work in dangerous environments",
+     "Environmental Adaptation trait supports hazardous operations",
+     "High Wisdom aids in problem-solving and technical work"
+    ]
+   },
+   {
+    "class": "Operative (Scout)",
+    "narrative": "Kel Dor's natural stealth and environmental abilities make them excellent Operatives, able to operate in conditions that would incapacitate others.",
+    "mechanical_benefits": [
+     "Darkvision trait enhances stealth and reconnaissance",
+     "Environmental Adaptation trait enables operations in harsh conditions",
+     "Natural caution aids in infiltration and intelligence gathering"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Kel Dor's natural resilience and protective instincts make them excellent Guardians, able to protect others in dangerous environments.",
+    "mechanical_benefits": [
+     "Toxic Resistance trait enables protection in hazardous conditions",
+     "Environmental Adaptation trait supports defensive operations",
+     "High Constitution enhances protective abilities"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Exploration Guilds",
+    "narrative": "Kel Dor are natural explorers and surveyors, using their environmental adaptations to chart dangerous worlds and toxic environments."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Kel Dor have served the Republic as scouts and engineers, their unique abilities making them valuable assets in hazardous operations."
+   },
+   {
+    "faction": "Independent Explorers",
+    "narrative": "Many Kel Dor prefer to work as independent explorers and surveyors, using their natural adaptations to explore the galaxy's most dangerous environments."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your environmental adaptations become more refined, allowing you to sense and navigate hazardous environments with greater precision.",
+     "mechanical_benefit": "Increase your darkvision range from 60 feet to 90 feet, and gain advantage on Perception checks to detect environmental hazards."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your toxic resistance reaches new heights, allowing you to survive in even more dangerous environments.",
+     "mechanical_benefit": "You gain immunity to non-magical poison damage, and you can survive in toxic atmospheres without a breath mask for up to 1 hour per day."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your environmental mastery allows you to use hazardous conditions to your advantage in combat.",
+     "mechanical_benefit": "When fighting in toxic or hazardous environments, you gain a +2 bonus to attack rolls and damage rolls, representing your comfort in dangerous conditions."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your environmental adaptations reach their peak, making you nearly immune to environmental hazards.",
+     "mechanical_benefit": "You have advantage on all saving throws against environmental effects, and you can survive in any atmosphere without special equipment for up to 24 hours."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Breath Mask Rituals",
+    "type": "ceremonial",
+    "description": "Kel Dor have sacred rituals surrounding their breath masks, which are not just survival equipment but symbols of their connection to Dorin and their cultural identity.",
+    "narrative_impact": "Provides cultural depth and spiritual connection. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Environmental Wisdom",
+    "type": "traditional",
+    "description": "Kel Dor traditions emphasize understanding and respecting dangerous environments, teaching others how to survive in hazardous conditions.",
+    "narrative_impact": "Creates educational opportunities and cultural exchange. Can be used for teaching and mentoring scenarios."
+   },
+   {
+    "name": "Cautious Exploration",
+    "type": "cultural",
+    "description": "Kel Dor exploration traditions emphasize careful, methodical approaches to unknown environments, valuing safety and preparation over speed.",
+    "narrative_impact": "Provides unique problem-solving approaches and cultural perspective. Can be used for planning and preparation scenarios."
+   },
+   {
+    "name": "Survival Meditation",
+    "type": "narrative",
+    "description": "Kel Dor practice meditation techniques that enhance their environmental awareness and help them maintain calm in dangerous situations.",
+    "narrative_impact": "Provides character development opportunities and stress management. Can be used for maintaining composure in crisis situations."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "toxic",
+    "adaptation_name": "Toxic Mastery",
+    "description": "Your body is perfectly adapted to toxic environments, allowing you to function normally in conditions that would kill other species.",
+    "mechanical_benefit": "You have advantage on all skill checks in toxic environments, and you can sense the presence of toxins and poisons within 30 feet."
+   },
+   {
+    "environment": "dark",
+    "adaptation_name": "Dark Adaptation",
+    "description": "Your enhanced vision allows you to operate effectively in complete darkness, where others would be completely blind.",
+    "mechanical_benefit": "You have advantage on Perception checks in darkness, and you can navigate dark environments without penalty."
+   },
+   {
+    "environment": "hazardous",
+    "adaptation_name": "Hazard Immunity",
+    "description": "Your natural resilience allows you to survive and operate in extremely hazardous environments that would incapacitate others.",
+    "mechanical_benefit": "You have advantage on saving throws against environmental hazards, and you can move through hazardous terrain without penalty."
+   },
+   {
+    "environment": "pressure",
+    "adaptation_name": "Pressure Adaptation",
+    "description": "Your physiology can handle extreme pressure conditions, allowing you to operate in environments that would crush other species.",
+    "mechanical_benefit": "You can survive in high-pressure environments without special equipment, and you have advantage on saving throws against pressure-related damage."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on environmental survival and hazard resistance, complementing rather than overshadowing class features",
+    "Environmental adaptation improvements maintain the species' unique identity while providing meaningful advancement",
+    "Toxic resistance and darkvision provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on environmental wisdom and survival traditions rather than mechanical advantages",
+    "Breath mask rituals and environmental wisdom provide unique roleplaying opportunities and cultural depth",
+    "Cautious exploration and survival meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for hazardous and toxic environments where survival is challenging",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Pressure adaptation and toxic mastery provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "pale_skin",
+    "dark_hair",
+    "average_build"
+   ],
+   "morphology": {
+    "head_type": "elongated",
+    "body_type": "athletic",
+    "average_height": "175 cm"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      "wide_eyes",
+      "curly_hair"
+     ],
+     "adult": [
+      "strong_jawline",
+      "mature_crown"
+     ],
+     "elder": [
+      "wisdom_lines",
+      "graying_hair"
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "yellow_eyes",
+      "pale_skin"
+     ],
+     "light_side": [
+      "calm_aura"
+     ]
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos"
+    ]
+   },
+   "prompt_schema": {
+    "base_prompt": "A Kel Dor with [unique_identifier] in a [environment]",
+    "contextual_modifiers": [
+     "in a toxic storm",
+     "surrounded by ancient ruins"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "A rival Kel Dor seeks to challenge your reputation as the greatest explorer.",
+     "threat_level": 3
+    },
+    "escalation": {
+     "description": "Your nemesis discovers a hidden treasure on Dorin, fueling their ambition and anger.",
+     "threat_level": 5
+    },
+    "confrontation": {
+     "description": "The final showdown with your nemesis will determine who reigns supreme over Dorin's secrets.",
+     "threat_level": 8
+    }
+   },
+   "resolution_paths": {
+    "victory": "The rival is defeated, and you claim the treasure as a symbol of your triumph.",
+    "redemption": "Your nemesis seeks to make amends by sharing their knowledge of Dorin's ancient secrets.",
+    "escape": "You outwit your nemesis and flee into the wilderness, vowing to return stronger."
+   },
+   "conflict_triggers": [
+    "Encountering a valuable treasure on Dorin",
+    "Discovering a rival expedition planning to explore the same ruins"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "betrayal",
+     "theft of treasure"
+    ],
+    "vendetta_type": "revenge"
+   },
+   "overrides": {
+    "primary_nemesis": "The 'Crawlers' - a subterranean species that has been awakened by the Kel Dor's mining activities on Dorin. They seek revenge against their tormentors.",
+    "tragic_flaw": "Hubris - overconfidence in their ability to adapt to any environment."
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "adaptable",
+    "perceptive",
+    "supportive"
+   ],
+   "romance_progression": [
+    "Developing a friendly bond through shared exploration",
+    "Participating in a joint mission to uncover ancient secrets",
+    "Sharing personal struggles and finding common ground",
+    "Expressing romantic interest and receiving a positive response",
+    "Pledging commitment and building a life together"
+   ],
+   "romance_events": [
+    "A moonlit walk on Dorin's outskirts",
+    "Sharing a meal at an exclusive Kel Dor gathering",
+    "Participating in a joint training session to improve Force abilities"
+   ],
+   "romance_modifiers": [
+    "Gifting rare artifacts",
+    "Engaging in impromptu performances"
+   ],
+   "overrides": {
+    "cultural_approach_to_love": "Kel Dor value practicality and functionality, but they also have a deep respect for the bond between two individuals. They often prioritize loyalty and commitment over passion or romance.",
+    "potential_match_traits": [
+     "Resilience",
+     "Adaptability"
+    ]
+   }
+  },
+  "companion_engine": {
+   "archetype": "wise_mentor",
+   "overrides": {
+    "ai_behavior": {
+     "personality": {
+      "traits": [
+       "inquisitive",
+       "adaptable"
+      ],
+      "speech_patterns": "formal and measured"
+     },
+     "motivations": {
+      "primary_goals": [
+       "Survival",
+       "Knowledge acquisition"
+      ]
+     },
+     "combat_behavior": "Assists with reconnaissance, providing tactical insights",
+     "social_behavior": "Maintains a professional demeanor, offering sage advice"
+    },
+    "relationship_tracking": {
+     "trust_levels": [
+      0,
+      50,
+      75,
+      90
+     ],
+     "loyalty_triggers": [
+      "Receiving a rare gift from the companion",
+      "Participating in joint celebrations or milestones",
+      "Sharing personal struggles and receiving empathy"
+     ]
+    },
+    "services": [
+     "Translation (interpreting ancient languages)",
+     "Tracking (using Force abilities to track targets)"
+    ]
+   }
+  },
+  "flavor_text": "The Kel Dor are a resilient people, forged in the unforgiving crucible of their native planet's toxic atmosphere. Their history is marked by hardship and adaptation, but also by a deep connection to the land and a profound respect for life. When off-world, they wear their breath masks as a symbol of their identity and a reminder of the sacrifices made by their ancestors.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Kel Dor, you have grown accustomed to the harsh conditions on Dorin. Your darkvision allows you to navigate even the most treacherous terrain with ease. However, your reliance on breath masks can make you feel disconnected from the world around you. You may struggle to form close relationships due to your tendency to prioritize functionality over emotional intimacy.",
+   "narrative_hooks": [
+    "A severe dust storm on a remote planet forces you to rely on your Kel Dor skills to survive.",
+    "You are approached by a group of Kel Dor elders who possess ancient knowledge about the planet's toxic atmosphere and its secrets."
+   ],
+   "social_dynamics": "Kel Dor often prioritize efficiency and practicality in their interactions. They can come across as aloof or detached, but this is simply a result of their focus on survival and adaptation.",
+   "common_motivations": [
+    "Protecting the integrity of the planet's ecosystem",
+    "Uncovering hidden secrets about Dorin's toxic atmosphere"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "kel_dor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/kel_dor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

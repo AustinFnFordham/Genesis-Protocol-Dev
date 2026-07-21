@@ -1,0 +1,427 @@
+{
+ "record": {
+  "id": "colonist",
+  "name": "Colonist",
+  "tags": [
+   "colonist",
+   "professional",
+   "skill_specialist",
+   "intelligence_based",
+   "charisma_based",
+   "civic_leader",
+   "merchant",
+   "scholar",
+   "versatile",
+   "support"
+  ],
+  "description": "Colonists are civic leaders, scholars, merchants, and professionals who shape societies through knowledge, diplomacy, and enterprise. Whether healing the sick, brokering deals, or administrating frontier settlements, Colonists leverage expertise and social acumen over brute force.",
+  "hit_die": "1d8",
+  "proficiencies": {
+   "armor": [
+    "Light armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Blaster pistols"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Medical Kit",
+      "Admin Console",
+      "Forgery Kit",
+      "Disguise Kit",
+      "Negotiator's Toolkit",
+      "Slicer's Kit"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Intelligence",
+    "Charisma"
+   ],
+   "skills": {
+    "choose": 4,
+    "from": [
+     "Deception",
+     "Insight",
+     "Investigation",
+     "Lore",
+     "Medicine",
+     "Perception",
+     "Persuasion",
+     "Performance",
+     "Technology"
+    ]
+   }
+  },
+  "primary_ability": "Intelligence or Charisma",
+  "primary_resource": "Influence Points",
+  "progression_tree": [
+   {
+    "node_id": "colonial_expertise_1",
+    "feature_id": "colonial_expertise",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "colonist_approach_1",
+    "feature_id": "colonist_approach",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "colonial_expertise_1"
+    ],
+    "choice_group": "colonist_approach_level_1"
+   },
+   {
+    "node_id": "academic_focus_2",
+    "feature_id": "academic_focus",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "colonist_approach_1"
+    ],
+    "choice_group": "colonist_focus_level_2"
+   },
+   {
+    "node_id": "civic_focus_2",
+    "feature_id": "civic_focus",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "colonist_approach_1"
+    ],
+    "choice_group": "colonist_focus_level_2"
+   },
+   {
+    "node_id": "colonist_specialization_3",
+    "feature_id": "colonist_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "academic_focus_2",
+     "civic_focus_2"
+    ],
+    "choice_group": "colonist_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "colonist_specialization_3"
+    ]
+   },
+   {
+    "node_id": "professional_insight_5",
+    "feature_id": "professional_insight",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "expert_negotiator_6",
+    "feature_id": "expert_negotiator",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "professional_insight_5"
+    ],
+    "choice_group": "colonist_enhancement_level_6"
+   },
+   {
+    "node_id": "efficient_administrator_6",
+    "feature_id": "efficient_administrator",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "professional_insight_5"
+    ],
+    "choice_group": "colonist_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "expert_negotiator_6",
+     "efficient_administrator_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "influence_network_9",
+    "feature_id": "influence_network",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "policy_leverage_10",
+    "feature_id": "policy_leverage",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "influence_network_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "policy_leverage_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "professional_mastery_13",
+    "feature_id": "professional_mastery",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "professional_mastery_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "civic_authority_17",
+    "feature_id": "civic_authority",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "civic_authority_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "colonist_mastery_20",
+    "feature_id": "colonist_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "safari_hat",
+    "worn_glasses",
+    "leather_bound_book",
+    "pocket_watch",
+    "business_card"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Colonist uses their wits and agility to dodge attacks, employing a defensive stance with hands clasped behind their back.",
+    "energy_signature": "A soft blue glow emanates from the Colonist's fingers, representing their resourcefulness and adaptability in the face of adversity."
+   },
+   "prompt_schema": {
+    "base_prompt": "Colonist {verb} through {location} as they {action}.",
+    "contextual_modifiers": [
+     "in a crowded marketplace",
+     "while negotiating a business deal",
+     "on a diplomatic mission to a new planet"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Enemies arise from the Colonist's over-reliance on knowledge and expertise. Those who fail to understand the value of social acumen or underestimate the power of diplomacy become threats.\n",
+    "escalation": "As the Colony grows, so do tensions between those with influence and those without. The Colonist must navigate complex webs of power and politics to maintain order and prevent uprisings.\n",
+    "confrontation": "Those who seek to undermine the Colony's progress through force or manipulation will stop at nothing to disrupt the Colonist's work. The Colonist must confront these foes head-on, using all their skills and resources to protect their people.\n"
+   },
+   "resolution_paths": {
+    "victory": "By resolving conflicts peacefully and demonstrating the value of diplomacy, the Colonist earns respect and admiration from those who would have been enemies.\n",
+    "redemption": "Through a combination of bravery and empathy, the Colonist finds common ground with former foes, earning forgiveness and new allies.\n",
+    "escape": "When faced with insurmountable odds or impossible choices, the Colonist must use cunning and resourcefulness to outwit their adversaries and flee the conflict.\n"
+   },
+   "conflict_triggers": [
+    "The Colonist's reliance on knowledge and expertise is seen as elitist or condescending by others.",
+    "The Colony's growth creates social and economic disparities that lead to resentment among some individuals."
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "Initial encounters between the Colonist and potential romantic interest are filled with intellectual curiosity and mutual respect for each other's accomplishments.\n",
+    "stage2": "As relationships deepen, differences in personality or background begin to surface, testing the couple's ability to navigate their unique perspectives and values.\n",
+    "stage3": "The Colonist's commitment to their Colony and its needs creates tension in their romantic relationship, forcing them to balance their love with their duty to others.\n",
+    "stage4": "As the stakes rise and challenges mount, the Colonist and their partner must work together to overcome external obstacles and internal doubts.\n",
+    "stage5": "Ultimately, the couple's love becomes a beacon of hope for the Colony, inspiring others to follow in their footsteps and creating a brighter future for all.\n"
+   },
+   "lifestyle_challenges": [
+    "The long hours spent managing the Colony leave little time for personal relationships or romance.",
+    "The Colonist's expertise and knowledge are seen as intimidating by potential partners."
+   ]
+  },
+  "flavor_text": "A skilled diplomat navigates the complexities of frontier politics with ease and finesse.",
+  "llm_guidance": {
+   "roleplay_guidance": "Embody the traits of a civic leader, leveraging knowledge and diplomacy over brute force. Your Colonist excels at brokering deals, healing the sick, and administrating frontier settlements.\n",
+   "narrative_hooks": [
+    "Establishing trade agreements with neighboring settlements",
+    "Negotiating with rival factions to secure resources",
+    "Healing a group of travelers stranded in a remote location"
+   ],
+   "social_dynamics": "Your Colonist is skilled at navigating complex social situations. They excel at building relationships, resolving conflicts, and mediating disputes.\n",
+   "common_motivations": [
+    "Seeking knowledge and expertise",
+    "Building strong alliances and partnerships",
+    "Driving progress and growth in their community"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "diplomatic",
+      "strategic",
+      "analytical"
+     ],
+     "tendencies": [
+      "optimistic",
+      "calm",
+      "responsible"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "Build strong alliances and partnerships",
+     "secondary_motivations": [
+      "Seek knowledge and expertise",
+      "Drive progress and growth in their community"
+     ]
+    },
+    "combat_behavior": "When facing a threat, your Colonist will first attempt to negotiate or reason with the opponent. If this fails, they will use their knowledge of strategy and tactics to gain an advantage.\n",
+    "social_behavior": "Your Colonist excels at building relationships, resolving conflicts, and mediating disputes. They are skilled at reading people and situations, and will often take a step back to observe before intervening.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "maximum_trust": 100,
+     "minimum_trust": -100,
+     "initial_trust": 50
+    },
+    "loyalty_triggers": {
+     "trigger_1": "Colonist completes a task or mission for you",
+     "trigger_2": "Colonist helps you in a time of need"
+    }
+   },
+   "services": [
+    "Mediation and conflict resolution",
+    "Trade negotiation and agreement establishment",
+    "Expertise sharing (healing, strategy, etc.)"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "colonist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/colonist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,271 @@
+{
+ "record": {
+  "id": "hired_gun_heavy",
+  "name": "Heavy",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "heavy",
+   "heavy_weapons",
+   "suppression",
+   "battlefield_control",
+   "strength_based",
+   "mercenary",
+   "ranged_specialist",
+   "tactical"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_heavy_entry_3",
+    "feature_id": "hired_gun_heavy_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Heavies bring overwhelming firepower—machine cannons, rotary blasters, and portable launchers—to dominate the field through relentless suppression."
+   },
+   {
+    "node_id": "stabilized_platform_7",
+    "feature_id": "stabilized_platform",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_heavy_entry_3"
+    ],
+    "description": "If you haven't moved this turn, you have advantage on attack rolls with heavy weapons, and your heavy weapon attacks ignore half cover.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "heavy_weapon_attacks_if_stationary",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_not_moved_this_turn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage with heavy weapons when stationary"
+     },
+     {
+      "type": "modify_rule",
+      "value": "ignore_half_cover_with_heavy_weapons",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Heavy weapon attacks ignore half cover"
+     }
+    ]
+   },
+   {
+    "node_id": "suppressing_fire_11",
+    "feature_id": "suppressing_fire",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "stabilized_platform_7"
+    ],
+    "description": "As an action, you can lay down suppressing fire in a 15-foot cone. Creatures in the area must succeed on a Wisdom saving throw or have disadvantage on attack rolls and Dexterity saving throws until the start of your next turn.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "apply_suppression_cone",
+      "target_scopes": [
+       "creatures_in_area"
+      ],
+      "conditions": [],
+      "notes": "Impose disadvantage on attacks and Dex saves"
+     }
+    ]
+   },
+   {
+    "node_id": "hardened_gunner_13",
+    "feature_id": "hardened_gunner",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "suppressing_fire_11"
+    ],
+    "description": "While wielding a heavy weapon, you gain resistance to blaster damage and have advantage on saving throws to maintain concentration on effects created by your heavy weapon attacks or features.",
+    "effects": [
+     {
+      "type": "apply_resistance",
+      "value": "blaster_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "wielding_heavy_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to blaster damage while using heavy weapons"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "concentration_saves_related_to_heavy_weapon_effects",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Advantage on concentration saves for heavy weapon effects"
+     }
+    ]
+   },
+   {
+    "node_id": "overheat_cycle_17",
+    "feature_id": "overheat_cycle",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "hardened_gunner_13"
+    ],
+    "description": "When you hit with a heavy weapon attack, you can force the target to make a Constitution saving throw. On a failure, its reactions are suppressed and its speed is halved until the start of your next turn, representing system overheat or shock.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "suppress_reactions_and_slow_on_hit",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_weapon_attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target fails Con save: no reactions and half speed"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_heavy_19",
+    "feature_id": "legendary_heavy",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "overheat_cycle_17"
+    ],
+    "description": "For 1 minute (once per long rest), your heavy weapon attacks score a critical hit on a 19–20, ignore three-quarters cover, and deal an extra weapon damage die.",
+    "effects": [
+     {
+      "type": "modify_roll",
+      "value": "heavy_weapon_crit_range_19_20",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Heavy weapon crits on 19–20"
+     },
+     {
+      "type": "modify_rule",
+      "value": "heavy_weapons_ignore_three_quarters_cover",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ignore 3/4 cover with heavy weapons"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "extra_die_heavy_weapon_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+1 weapon die damage while focus is active"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "KyberCrystal",
+    "SithStaff"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance, feet shoulder-width apart, and lightsaber at the ready, emitting a hum of energy.",
+    "energy_signature": "Surrounds itself with an aura of swirling, electric blue lights that seem to shift and pulse in sync with its breathing."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone Jedi standing on a precipice, gazing out into the distance amidst a backdrop of stars and nebulae.",
+    "contextual_modifiers": [
+     "MoodyClouds",
+     "AncientTree"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Elite heavy soldiers who specialize in taking massive amounts of damage to protect their allies.",
+   "role_in_group": "Controller",
+   "visual_signals": [
+    "Power armor",
+    "Heavy assault rifles"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_heavy",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.heavy.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,173 @@
+{
+ "record": {
+  "id": "operator",
+  "name": "Operator",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "operator",
+   "vehicle_specialist",
+   "tech_specialist",
+   "intelligence_based",
+   "pilot",
+   "tracker",
+   "tactical",
+   "hunter"
+  ],
+  "description": "Bounty Hunter Operators leverage vehicles, drones, and pursuit technology to track, intercept, and disable targets with surgical efficiency.",
+  "specialization_features": [
+   "pursuit_protocols",
+   "drone_deployment",
+   "systems_override",
+   "emp_net",
+   "legendary_operator"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Operators are master trackers and tacticians who use advanced technology to outmaneuver their prey.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Customized flight suit",
+    "Signature ship emblem"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "operator_vigilance_level_3",
+    "feature_id": "vigilance_improvement",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Your training and experience have improved your ability to detect hidden dangers, allowing you to sense the presence of enemies even when they're not in line of sight.",
+    "effects": [
+     {
+      "type": "ability_score_increase",
+      "value": "Increase Dexterity by 1."
+     }
+    ]
+   },
+   {
+    "node_id": "operator_tactical_level_7",
+    "feature_id": "tactical_advantage",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have developed a keen sense of spatial awareness, allowing you to gain advantage on initiative rolls in combat when using your ranged attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_precision",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As a master tactician, the Operator instinctively anticipates and adapts to the enemy's movements, granting themselves advantage on initiative rolls with ranged attacks."
+     }
+    ]
+   },
+   {
+    "node_id": "operator_pursuit_level_11",
+    "feature_id": "pursuit_speed",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Your training and experience have improved your vehicle handling skills, allowing you to move at higher speeds while maintaining control.",
+    "effects": [
+     {
+      "type": "movement_increase",
+      "value": "Increase speed of land or air vehicles by 10ft."
+     }
+    ]
+   },
+   {
+    "node_id": "operator_intelligence_level_15",
+    "feature_id": "intelligence_network",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have developed a network of contacts and informants, allowing you to gather valuable information about potential targets and their security measures.",
+    "effects": [
+     {
+      "type": "resource_access",
+      "value": "Gain access to local law enforcement records and surveillance feeds."
+     }
+    ]
+   },
+   {
+    "node_id": "operator_execution_level_18",
+    "feature_id": "execution_protocols",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have refined your tactical protocols, allowing you to execute complex operations with ease and precision.",
+    "effects": [
+     {
+      "type": "tactical_specialization",
+      "value": "Specialize in executing complex operations with multiple targets."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "BountyHunterScoutToken",
+    "TrackingDroneSightToken"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a wide, balanced stance with feet shoulder-width apart, ready to pounce into action at a moment's notice.",
+    "energy_signature": "Exudes an aura of intense focus and tracking prowess, surrounded by swirling patterns of blue and green light that shift and adapt to the surroundings."
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled Operator from the Empire's elite bounty hunter corps, clad in matte-black armor with a distinctive red stripe running down the arms, stalking its prey through the dense forests of Kashyyyk.",
+    "contextual_modifiers": [
+     " Include a faint image of a tracking droid hovering nearby",
+     " Depict the Operator crouched behind a tree, gazing intently through a targeting scope"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "operator",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_operator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

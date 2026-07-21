@@ -1,0 +1,1499 @@
+{
+ "record": {
+  "metadata": {
+   "version": "1.0",
+   "last_updated": "2024",
+   "total_species": 34,
+   "total_core_species": 25,
+   "total_variants": 9,
+   "total_npc_species": 8,
+   "system": "SW5e/FFG Hybrid"
+  },
+  "core_species": {
+   "human": {
+    "id": "human",
+    "name": "Human",
+    "archetype": "versatile",
+    "complexity": "simple",
+    "narrative_tags": [
+     "archetype: versatile",
+     "physical: near_human",
+     "social: adaptable",
+     "culture: diverse",
+     "environment: universal"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Choice +2",
+     "Choice +1"
+    ],
+    "traits_count": 3,
+    "file_path": "human.yml",
+    "status": "complete"
+   },
+   "wookiee": {
+    "id": "wookiee",
+    "name": "Wookiee",
+    "archetype": "brawler",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: brawler",
+     "physical: strong",
+     "social: honorable",
+     "culture: traditional",
+     "environment: arboreal"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Strength +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "wookiee.yml",
+    "status": "complete"
+   },
+   "zabrak": {
+    "id": "zabrak",
+    "name": "Zabrak",
+    "archetype": "skirmisher",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: skirmisher",
+     "physical: near_human",
+     "social: intense",
+     "culture: warrior",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "zabrak.yml",
+    "status": "complete"
+   },
+   "twi_lek": {
+    "id": "twi_lek",
+    "name": "Twi'lek",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: near_human",
+     "social: charismatic",
+     "culture: diverse",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Charisma +2",
+     "Dexterity +1"
+    ],
+    "traits_count": 3,
+    "file_path": "twi_lek.yml",
+    "status": "complete"
+   },
+   "bothan": {
+    "id": "bothan",
+    "name": "Bothan",
+    "archetype": "scout",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: near_human",
+     "social: networked",
+     "culture: spy",
+     "environment: urban"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "bothan.yml",
+    "status": "complete"
+   },
+   "duros": {
+    "id": "duros",
+    "name": "Duros",
+    "archetype": "pilot",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: pilot",
+     "physical: near_human",
+     "social: logical",
+     "culture: spacer",
+     "environment: space"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "duros.yml",
+    "status": "complete"
+   },
+   "mon_calamari": {
+    "id": "mon_calamari",
+    "name": "Mon Calamari",
+    "archetype": "engineer",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: engineer",
+     "physical: aquatic",
+     "social: diplomatic",
+     "culture: shipwright",
+     "environment: aquatic"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Intelligence +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "mon_calamari.yml",
+    "status": "complete"
+   },
+   "ithorian": {
+    "id": "ithorian",
+    "name": "Ithorian",
+    "archetype": "support",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: support",
+     "physical: unique",
+     "social: peaceful",
+     "culture: spiritual",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Wisdom +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "ithorian.yml",
+    "status": "complete"
+   },
+   "nautolan": {
+    "id": "nautolan",
+    "name": "Nautolan",
+    "archetype": "scout",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: aquatic",
+     "social: independent",
+     "culture: explorer",
+     "environment: aquatic"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "nautolan.yml",
+    "status": "complete"
+   },
+   "trandoshan": {
+    "id": "trandoshan",
+    "name": "Trandoshan",
+    "archetype": "brawler",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: brawler",
+     "physical: reptilian",
+     "social: aggressive",
+     "culture: warrior",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Strength +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "trandoshan.yml",
+    "status": "complete"
+   },
+   "rodian": {
+    "id": "rodian",
+    "name": "Rodian",
+    "archetype": "scout",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: insectoid",
+     "social: competitive",
+     "culture: hunter",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "rodian.yml",
+    "status": "complete"
+   },
+   "chiss": {
+    "id": "chiss",
+    "name": "Chiss",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: near_human",
+     "social: strategic",
+     "culture: military",
+     "environment: cold"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Intelligence +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "chiss.yml",
+    "status": "complete"
+   },
+   "clawdite": {
+    "id": "clawdite",
+    "name": "Clawdite",
+    "archetype": "scout",
+    "complexity": "high",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: shapeshifter",
+     "social: deceptive",
+     "culture: spy",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "clawdite.yml",
+    "status": "complete"
+   },
+   "sith_pureblood": {
+    "id": "sith_pureblood",
+    "name": "Sith Pureblood",
+    "archetype": "force_user",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: force_user",
+     "physical: near_human",
+     "social: intimidating",
+     "culture: dark_side",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Charisma +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "sith_pureblood.yml",
+    "status": "complete"
+   },
+   "miraluka": {
+    "id": "miraluka",
+    "name": "Miraluka",
+    "archetype": "force_user",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: force_user",
+     "physical: near_human",
+     "social: spiritual",
+     "culture: mystical",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Wisdom +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "miraluka.yml",
+    "status": "complete"
+   },
+   "gank": {
+    "id": "gank",
+    "name": "Gank",
+    "archetype": "brawler",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: brawler",
+     "physical: cyborg",
+     "social: aggressive",
+     "culture: mercenary",
+     "environment: harsh"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Constitution +2",
+     "Strength +1"
+    ],
+    "traits_count": 3,
+    "file_path": "gank.yml",
+    "status": "complete"
+   },
+   "besalisk": {
+    "id": "besalisk",
+    "name": "Besalisk",
+    "archetype": "brawler",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: brawler",
+     "physical: four_armed",
+     "social: practical",
+     "culture: laborer",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Strength +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "besalisk.yml",
+    "status": "complete"
+   },
+   "kel_dor": {
+    "id": "kel_dor",
+    "name": "Kel Dor",
+    "archetype": "support",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: support",
+     "physical: unique",
+     "social: peaceful",
+     "culture: spiritual",
+     "environment: toxic"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Wisdom +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "kel_dor.yml",
+    "status": "complete"
+   },
+   "cathar": {
+    "id": "cathar",
+    "name": "Cathar",
+    "archetype": "skirmisher",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: skirmisher",
+     "physical: feline",
+     "social: honorable",
+     "culture: warrior",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Strength +1"
+    ],
+    "traits_count": 3,
+    "file_path": "cathar.yml",
+    "status": "complete"
+   },
+   "cerean": {
+    "id": "cerean",
+    "name": "Cerean",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: near_human",
+     "social: diplomatic",
+     "culture: peaceful",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Intelligence +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "cerean.yml",
+    "status": "complete"
+   },
+   "echani": {
+    "id": "echani",
+    "name": "Echani",
+    "archetype": "skirmisher",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: skirmisher",
+     "physical: near_human",
+     "social: honorable",
+     "culture: martial_arts",
+     "environment: disciplined"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "echani.yml",
+    "status": "complete"
+   },
+   "togruta": {
+    "id": "togruta",
+    "name": "Togruta",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: near_human",
+     "social: charismatic",
+     "culture: tribal",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Charisma +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "togruta.yml",
+    "status": "complete"
+   },
+   "aqualish": {
+    "id": "aqualish",
+    "name": "Aqualish",
+    "archetype": "brawler",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: brawler",
+     "physical: tusked",
+     "social: surly",
+     "culture: dockworker",
+     "environment: urban"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Strength +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "aqualish.yml",
+    "status": "complete"
+   },
+   "quarren": {
+    "id": "quarren",
+    "name": "Quarren",
+    "archetype": "merchant",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: merchant",
+     "physical: squid_faced",
+     "social: shrewd",
+     "culture: corporate",
+     "environment: aquatic"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Intelligence +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "quarren.yml",
+    "status": "complete"
+   },
+   "weequay": {
+    "id": "weequay",
+    "name": "Weequay",
+    "archetype": "thug",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: thug",
+     "physical: weathered",
+     "social: loyal",
+     "culture: mercenary",
+     "environment: varied"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Constitution +2",
+     "Strength +1"
+    ],
+    "traits_count": 3,
+    "file_path": "weequay.yml",
+    "status": "complete"
+   }
+  },
+  "variants": {
+   "human_alderaanian": {
+    "id": "human_alderaanian",
+    "name": "Alderaanian Human",
+    "base_species": "human",
+    "variant_type": "cultural",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: near_human",
+     "social: diplomatic",
+     "culture: refined",
+     "environment: cultured"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Charisma +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "human_alderaanian.yml",
+    "status": "complete"
+   },
+   "human_corellian": {
+    "id": "human_corellian",
+    "name": "Corellian Human",
+    "base_species": "human",
+    "variant_type": "cultural",
+    "archetype": "pilot",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: pilot",
+     "physical: near_human",
+     "social: independent",
+     "culture: spacer",
+     "environment: space"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Dexterity +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "human_corellian.yml",
+    "status": "complete"
+   },
+   "human_chandrilan": {
+    "id": "human_chandrilan",
+    "name": "Chandrilan Human",
+    "base_species": "human",
+    "variant_type": "cultural",
+    "archetype": "support",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: support",
+     "physical: near_human",
+     "social: community",
+     "culture: agricultural",
+     "environment: rural"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Wisdom +2",
+     "Constitution +1"
+    ],
+    "traits_count": 3,
+    "file_path": "human_chandrilan.yml",
+    "status": "complete"
+   },
+   "human_lothal": {
+    "id": "human_lothal",
+    "name": "Lothal Human",
+    "base_species": "human",
+    "variant_type": "cultural",
+    "archetype": "scout",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: near_human",
+     "social: independent",
+     "culture: frontier",
+     "environment: wilderness"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Constitution +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "human_lothal.yml",
+    "status": "complete"
+   },
+   "droid_type_iv_protocol": {
+    "id": "droid_type_iv_protocol",
+    "name": "Droid Type IV Protocol",
+    "base_species": "droid",
+    "variant_type": "role",
+    "archetype": "face",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: face",
+     "physical: mechanical",
+     "social: diplomatic",
+     "culture: protocol",
+     "environment: civilized"
+    ],
+    "starting_xp": 90,
+    "ability_scores": [
+     "Charisma +2",
+     "Intelligence +1"
+    ],
+    "traits_count": 3,
+    "file_path": "droid_type_iv_protocol.yml",
+    "status": "complete"
+   },
+   "droid_scout": {
+    "id": "droid_scout",
+    "name": "Droid Scout",
+    "base_species": "droid",
+    "variant_type": "role",
+    "archetype": "scout",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scout",
+     "physical: mechanical",
+     "social: analytical",
+     "culture: explorer",
+     "environment: wilderness"
+    ],
+    "starting_xp": 90,
+    "ability_scores": [
+     "Dexterity +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "droid_scout.yml",
+    "status": "complete"
+   },
+   "droid_player_character": {
+    "id": "droid_player_character",
+    "name": "Droid Player Character",
+    "base_species": "droid",
+    "variant_type": "advanced",
+    "archetype": "versatile",
+    "complexity": "high",
+    "narrative_tags": [
+     "archetype: versatile",
+     "physical: mechanical",
+     "social: developing",
+     "culture: emergent",
+     "environment: adaptive"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Choice +2",
+     "Choice +1"
+    ],
+    "traits_count": 3,
+    "file_path": "droid_player_character.yml",
+    "status": "complete"
+   },
+   "zabrak_dathomirian": {
+    "id": "zabrak_dathomirian",
+    "name": "Zabrak Dathomirian",
+    "base_species": "zabrak",
+    "variant_type": "force_sensitive",
+    "archetype": "force_user",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: force_user",
+     "physical: near_human",
+     "social: intense",
+     "culture: dark_side",
+     "environment: dark_side"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Charisma +2",
+     "Wisdom +1"
+    ],
+    "traits_count": 3,
+    "file_path": "zabrak_dathomirian.yml",
+    "status": "complete"
+   },
+   "togruta_nightsister": {
+    "id": "togruta_nightsister",
+    "name": "Togruta Nightsister",
+    "base_species": "togruta",
+    "variant_type": "force_sensitive",
+    "archetype": "force_user",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: force_user",
+     "physical: near_human",
+     "social: mystical",
+     "culture: nightsister",
+     "environment: dark_side"
+    ],
+    "starting_xp": 110,
+    "ability_scores": [
+     "Wisdom +2",
+     "Charisma +1"
+    ],
+    "traits_count": 3,
+    "file_path": "togruta_nightsister.yml",
+    "status": "complete"
+   }
+  },
+  "npc_species": {
+   "bith": {
+    "id": "bith",
+    "name": "Bith",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "intellectual",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: intellectual",
+     "physical: large_headed",
+     "social: analytical",
+     "culture: musician",
+     "environment: urban"
+    ],
+    "common_roles": [
+     "musician",
+     "scientist",
+     "info_broker",
+     "tech_specialist"
+    ],
+    "file_path": "npc/bith.yml"
+   },
+   "ishi_tib": {
+    "id": "ishi_tib",
+    "name": "Ishi Tib",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "analyst",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: analyst",
+     "physical: amphibious",
+     "social: methodical",
+     "culture: leadership",
+     "environment: varied"
+    ],
+    "common_roles": [
+     "leader",
+     "analyst",
+     "bureaucrat",
+     "advisor"
+    ],
+    "file_path": "npc/ishi_tib.yml"
+   },
+   "hutt": {
+    "id": "hutt",
+    "name": "Hutt",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "crime_lord",
+    "complexity": "high",
+    "narrative_tags": [
+     "archetype: crime_lord",
+     "physical: massive",
+     "social: manipulative",
+     "culture: criminal",
+     "environment: palace"
+    ],
+    "common_roles": [
+     "crime_lord",
+     "gangster",
+     "smuggler_king",
+     "underworld_boss"
+    ],
+    "file_path": "npc/hutt.yml"
+   },
+   "nikto": {
+    "id": "nikto",
+    "name": "Nikto",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "enforcer",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: enforcer",
+     "physical: reptilian",
+     "social: aggressive",
+     "culture: criminal",
+     "environment: varied"
+    ],
+    "common_roles": [
+     "enforcer",
+     "hutt_employee",
+     "bounty_hunter",
+     "thug"
+    ],
+    "file_path": "npc/nikto.yml"
+   },
+   "gamorrean": {
+    "id": "gamorrean",
+    "name": "Gamorrean",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "guard",
+    "complexity": "simple",
+    "narrative_tags": [
+     "archetype: guard",
+     "physical: pig_like",
+     "social: simple",
+     "culture: warrior",
+     "environment: varied"
+    ],
+    "common_roles": [
+     "guard",
+     "warrior",
+     "bodyguard",
+     "soldier"
+    ],
+    "file_path": "npc/gamorrean.yml"
+   },
+   "geonosian": {
+    "id": "geonosian",
+    "name": "Geonosian",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "builder",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: builder",
+     "physical: insectoid",
+     "social: hive_mind",
+     "culture: builder",
+     "environment: hive"
+    ],
+    "common_roles": [
+     "droid_builder",
+     "hive_worker",
+     "soldier",
+     "engineer"
+    ],
+    "file_path": "npc/geonosian.yml"
+   },
+   "tusken_raider": {
+    "id": "tusken_raider",
+    "name": "Tusken Raider",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "raider",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: raider",
+     "physical: masked",
+     "social: tribal",
+     "culture: nomad",
+     "environment: desert"
+    ],
+    "common_roles": [
+     "raider",
+     "nomad",
+     "scavenger",
+     "warrior"
+    ],
+    "file_path": "npc/tusken_raider.yml"
+   },
+   "jawa": {
+    "id": "jawa",
+    "name": "Jawa",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "scavenger",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: scavenger",
+     "physical: small",
+     "social: mysterious",
+     "culture: trader",
+     "environment: desert"
+    ],
+    "common_roles": [
+     "scavenger",
+     "trader",
+     "companion",
+     "quest_giver"
+    ],
+    "file_path": "npc/jawa.yml"
+   },
+   "ewok": {
+    "id": "ewok",
+    "name": "Ewok",
+    "player_character": false,
+    "status": "planned",
+    "archetype": "warrior",
+    "complexity": "medium",
+    "narrative_tags": [
+     "archetype: warrior",
+     "physical: small",
+     "social: fierce",
+     "culture: tribal",
+     "environment: forest"
+    ],
+    "common_roles": [
+     "warrior",
+     "ally",
+     "companion",
+     "tribal_member"
+    ],
+    "file_path": "npc/ewok.yml"
+   }
+  },
+  "indexes": {
+   "by_archetype": {
+    "face": [
+     "human",
+     "twi_lek",
+     "chiss",
+     "cerean",
+     "human_alderaanian",
+     "droid_type_iv_protocol",
+     "togruta"
+    ],
+    "brawler": [
+     "wookiee",
+     "trandoshan",
+     "gank",
+     "besalisk",
+     "aqualish"
+    ],
+    "skirmisher": [
+     "zabrak",
+     "cathar",
+     "echani"
+    ],
+    "scout": [
+     "bothan",
+     "nautolan",
+     "rodian",
+     "clawdite",
+     "human_lothal",
+     "droid_scout"
+    ],
+    "pilot": [
+     "duros",
+     "human_corellian"
+    ],
+    "engineer": [
+     "mon_calamari"
+    ],
+    "support": [
+     "ithorian",
+     "kel_dor",
+     "human_chandrilan"
+    ],
+    "force_user": [
+     "sith_pureblood",
+     "miraluka",
+     "zabrak_dathomirian",
+     "togruta_nightsister"
+    ],
+    "versatile": [
+     "human",
+     "droid_player_character"
+    ],
+    "merchant": [
+     "quarren"
+    ],
+    "thug": [
+     "weequay"
+    ]
+   },
+   "by_complexity": {
+    "simple": [
+     "human"
+    ],
+    "medium": [
+     "wookiee",
+     "zabrak",
+     "twi_lek",
+     "bothan",
+     "duros",
+     "mon_calamari",
+     "ithorian",
+     "nautolan",
+     "trandoshan",
+     "rodian",
+     "chiss",
+     "sith_pureblood",
+     "miraluka",
+     "gank",
+     "besalisk",
+     "kel_dor",
+     "cathar",
+     "cerean",
+     "echani",
+     "togruta",
+     "aqualish",
+     "quarren",
+     "weequay",
+     "human_alderaanian",
+     "human_corellian",
+     "human_chandrilan",
+     "human_lothal",
+     "droid_type_iv_protocol",
+     "droid_scout",
+     "zabrak_dathomirian",
+     "togruta_nightsister"
+    ],
+    "high": [
+     "clawdite",
+     "droid_player_character"
+    ]
+   },
+   "by_environment": {
+    "aquatic": [
+     "mon_calamari",
+     "ithorian",
+     "nautolan",
+     "quarren"
+    ],
+    "space": [
+     "duros",
+     "human_corellian"
+    ],
+    "urban": [
+     "bothan",
+     "human_alderaanian",
+     "aqualish"
+    ],
+    "wilderness": [
+     "human_lothal",
+     "droid_scout"
+    ],
+    "rural": [
+     "human_chandrilan"
+    ],
+    "cultured": [
+     "human_alderaanian"
+    ],
+    "civilized": [
+     "droid_type_iv_protocol"
+    ],
+    "dark_side": [
+     "zabrak_dathomirian",
+     "togruta_nightsister"
+    ],
+    "universal": [
+     "human"
+    ],
+    "varied": [
+     "wookiee",
+     "zabrak",
+     "twi_lek",
+     "trandoshan",
+     "rodian",
+     "sith_pureblood",
+     "miraluka",
+     "besalisk",
+     "cathar",
+     "cerean",
+     "echani",
+     "togruta",
+     "weequay"
+    ],
+    "cold": [
+     "chiss"
+    ],
+    "harsh": [
+     "gank"
+    ],
+    "toxic": [
+     "kel_dor"
+    ],
+    "disciplined": [
+     "echani"
+    ],
+    "adaptive": [
+     "droid_player_character"
+    ]
+   },
+   "by_variant_type": {
+    "cultural": [
+     "human_alderaanian",
+     "human_corellian",
+     "human_chandrilan",
+     "human_lothal"
+    ],
+    "role": [
+     "droid_type_iv_protocol",
+     "droid_scout"
+    ],
+    "advanced": [
+     "droid_player_character"
+    ],
+    "force_sensitive": [
+     "zabrak_dathomirian",
+     "togruta_nightsister"
+    ]
+   },
+   "by_npc_role": {
+    "intellectual": [
+     "bith"
+    ],
+    "analyst": [
+     "ishi_tib"
+    ],
+    "crime_lord": [
+     "hutt"
+    ],
+    "enforcer": [
+     "nikto"
+    ],
+    "guard": [
+     "gamorrean"
+    ],
+    "builder": [
+     "geonosian"
+    ],
+    "raider": [
+     "tusken_raider"
+    ],
+    "scavenger": [
+     "jawa"
+    ],
+    "warrior": [
+     "ewok"
+    ]
+   }
+  },
+  "search_tags": {
+   "force_sensitive": [
+    "sith_pureblood",
+    "miraluka",
+    "zabrak_dathomirian",
+    "togruta_nightsister"
+   ],
+   "dark_side": [
+    "sith_pureblood",
+    "zabrak_dathomirian",
+    "togruta_nightsister"
+   ],
+   "shapeshifter": [
+    "clawdite"
+   ],
+   "aquatic": [
+    "mon_calamari",
+    "ithorian",
+    "nautolan"
+   ],
+   "mechanical": [
+    "gank",
+    "droid_type_iv_protocol",
+    "droid_scout",
+    "droid_player_character"
+   ],
+   "four_armed": [
+    "besalisk"
+   ],
+   "near_human": [
+    "human",
+    "wookiee",
+    "zabrak",
+    "twi_lek",
+    "bothan",
+    "duros",
+    "chiss",
+    "sith_pureblood",
+    "miraluka",
+    "cathar",
+    "cerean",
+    "echani",
+    "togruta",
+    "human_alderaanian",
+    "human_corellian",
+    "human_chandrilan",
+    "human_lothal",
+    "zabrak_dathomirian",
+    "togruta_nightsister"
+   ],
+   "player_favorites": [
+    "chiss",
+    "clawdite",
+    "sith_pureblood",
+    "gank",
+    "besalisk"
+   ],
+   "cantina_crowd": [
+    "bith",
+    "ishi_tib"
+   ],
+   "syndicate_staples": [
+    "hutt",
+    "nikto",
+    "gamorrean"
+   ],
+   "antagonistic": [
+    "geonosian",
+    "tusken_raider"
+   ],
+   "companions": [
+    "jawa",
+    "ewok"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    {
+     "scale": 1.2,
+     "color": "#F7D2C4",
+     "texture": "scaly"
+    },
+    {
+     "shape": "cylindrical",
+     "size": "small",
+     "orientation": "vertical"
+    }
+   ],
+   "morphology": {
+    "head_type": "snout-like",
+    "body_type": "serpentine",
+    "average_height": "1.8 meters"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      {
+       "scale": 0.5,
+       "color": "#FF69B4",
+       "texture": "smooth"
+      },
+      {
+       "shape": "oval",
+       "size": "medium",
+       "orientation": "horizontal"
+      }
+     ],
+     "adult": [
+      {
+       "scale": 1.2,
+       "color": "#F7D2C4",
+       "texture": "scaly"
+      },
+      {
+       "shape": "cylindrical",
+       "size": "small",
+       "orientation": "vertical"
+      }
+     ],
+     "elder": [
+      {
+       "scale": 1.5,
+       "color": "#6495ED",
+       "texture": "wrinkled"
+      },
+      {
+       "shape": "irregular",
+       "size": "large",
+       "orientation": "diagonal"
+      }
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      {
+       "scale": 2.0,
+       "color": "#B00040",
+       "texture": "charred"
+      },
+      {
+       "shape": "skeletal",
+       "size": "gigantic",
+       "orientation": "hanging"
+      }
+     ],
+     "light_side": [
+      {
+       "scale": 1.5,
+       "color": "#C9E4CA",
+       "texture": "glowing"
+      },
+      {
+       "shape": "crystalline",
+       "size": "enormous",
+       "orientation": "standing"
+      }
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "horns",
+    "bioluminescent markings",
+    "colorful crest"
+   ],
+   "prompt_schema": {
+    "base_prompt": "{species} with {colorful_ornamentation} and {horns}",
+    "contextual_modifiers": [
+     "is_wearing_clothing",
+     "has_accessories",
+     "is_in_environment:{environment}"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "trigger_event": "Encounter with a mysterious figure",
+     "consequence_type": "Nemesis formed"
+    },
+    "escalation": {
+     "trigger_event": "Escalating actions from the nemesis",
+     "consequence_type": "Nemesis grows stronger"
+    },
+    "confrontation": {
+     "trigger_event": "Final confrontation with the nemesis",
+     "consequence_type": "Victory or defeat determined"
+    }
+   },
+   "resolution_paths": {
+    "victory": "Defeat the nemesis in combat",
+    "redemption": "Negotiate a peaceful resolution",
+    "escape": "Flee from the nemesis and survive"
+   },
+   "conflict_triggers": [
+    "The player's actions are seen as a threat to the nemesis' goals",
+    "The player is involved in a mission that affects the nemesis' interests"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The nemesis was once a friend or ally",
+     "The player has a past connection to the nemesis"
+    ],
+    "vendetta_type": "Personal"
+   },
+   "overrides": {
+    "primary_nemesis_species": "Zabrak",
+    "historical_enemy_species": [
+     "Trandoshans",
+     "Sullustans"
+    ],
+    "tragic_flaws": [
+     "Lack of trust in outsiders",
+     "Tendency to prioritize the needs of their own clan over others"
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Charisma score above 14",
+    "Personality type matches with potential love interest"
+   ],
+   "romance_progression": {
+    "stage1": "Friendly interactions and conversations",
+    "stage2": "Sharing personal thoughts and feelings",
+    "stage3": "Romantic gestures and gifts",
+    "stage4": "Exclusive relationship",
+    "stage5": "Long-term commitment"
+   },
+   "romance_events": [
+    "First kiss event",
+    "Proposal event"
+   ],
+   "romance_modifiers": [
+    "Increased affection score for successful interactions",
+    "Decreased affection score for failed interactions"
+   ],
+   "overrides": {
+    "cultural_approach_to_love": "The None value loyalty and commitment above all else. Romantic relationships are often seen as a lifelong bond, with partners expected to support each other through thick and thin.",
+    "common_romantic_interests": [
+     "A fellow None from a rival clan",
+     "A member of a species known for their fierce independence"
+    ]
+   }
+  },
+  "flavor_text": "The None are a mysterious and enigmatic species, hailing from the distant planet of Zha'thik. Their society is built upon a complex web of silence and subtlety, where emotions are carefully controlled and communication is an art form. A None's word is their bond, and once given, it cannot be taken back.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a None, you are trained in the ancient art of verbal sparring, using your words to convey emotions without explicitly stating them. This can lead to misunderstandings with other species, but also allows for nuanced and subtle relationships.",
+   "narrative_hooks": [
+    "You receive a cryptic message from an old acquaintance, hinting at a long-forgotten secret.",
+    "A high-ranking None official approaches you with a proposal that seems too good to be true."
+   ],
+   "social_dynamics": "None are naturally adept at reading between the lines and picking up on subtle cues. However, their own emotional control can sometimes make it difficult for them to express themselves authentically.",
+   "common_motivations": [
+    "To uncover the truth behind a family secret that has haunted your clan for generations.",
+    "To protect your society from external threats by maintaining the delicate balance of power."
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personnaity": {
+     "neutral": true,
+     "chaotic": false
+    },
+    "motivations": {
+     "self-preservation": null,
+     "alliance-building": null
+    },
+    "combat_behavior": "Utilize stealth and agility to evade attacks, striking when the opportunity arises.",
+    "social_behavior": "Engage in subtle manipulation, using charisma and wit to achieve goals."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "high": [
+      "ally"
+     ],
+     "low": [
+      "enemy"
+     ]
+    },
+    "loyalty_triggers": [
+     "Betrayal of a close ally",
+     "Discovery of a shared goal"
+    ]
+   },
+   "services": []
+  }
+ },
+ "validation": {
+  "candidate_urid": "SPECIES_REGISTRY",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/SPECIES_REGISTRY.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

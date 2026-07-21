@@ -1,0 +1,554 @@
+{
+ "record": {
+  "id": "fighter_defensive_specialist",
+  "name": "Defensive Specialist",
+  "class_id": "fighter",
+  "tags": [
+   "fighter",
+   "defensive_specialist",
+   "tank",
+   "defensive",
+   "strength_based",
+   "martial",
+   "protector",
+   "resilient"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "defensive_stance_3",
+    "feature_id": "defensive_stance",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You adopt a defensive fighting stance that emphasizes protection and tactical positioning. When you take the Dodge action, you can also make one weapon attack as a bonus action. This attack deals 1d4 less damage than your normal attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "defensive_bonus_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       }
+      ],
+      "actions": [
+       "bonus_action"
+      ],
+      "notes": "Weapon attack as bonus action when taking Dodge action, -1d4 damage"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "protective_barrier_5",
+    "feature_id": "protective_barrier",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "defensive_technique_5",
+    "description": "You can create a protective barrier around yourself and allies. When you take the Dodge action, allies within 5 feet of you gain a +2 bonus to AC until the start of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "protective_aura",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "notes": "+2 AC to allies within 5 feet when taking Dodge action"
+     }
+    ],
+    "prerequisites": [
+     "defensive_stance_3"
+    ]
+   },
+   {
+    "node_id": "tactical_positioning_5",
+    "feature_id": "tactical_positioning",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "defensive_technique_5",
+    "description": "You excel at tactical positioning and battlefield control. When you move, you can force one creature you pass within 5 feet to make a Strength saving throw (DC = 8 + your proficiency bonus + your Strength modifier). On a failed save, the creature is pushed 5 feet away from you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_push",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "movement_used",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "notes": "Push creature 5 feet on failed STR save when moving"
+     }
+    ],
+    "prerequisites": [
+     "defensive_stance_3"
+    ]
+   },
+   {
+    "node_id": "shield_mastery_7",
+    "feature_id": "shield_mastery",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "defensive_focus_7",
+    "description": "You master the art of shield combat. When you are wielding a shield, you can use your reaction to grant an ally within 5 feet of you a +3 bonus to AC against one attack. You can use this feature a number of times equal to your proficiency bonus per long rest.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "shield_protection",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "wielding_shield",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "+3 AC to ally against one attack, proficiency bonus uses per long rest"
+     }
+    ],
+    "prerequisites": [
+     "protective_barrier_5"
+    ]
+   },
+   {
+    "node_id": "defensive_counter_7",
+    "feature_id": "defensive_counter",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "defensive_focus_7",
+    "description": "You learn to turn defense into offense. When an attack misses you, you can use your reaction to make a weapon attack against the attacker. You can use this feature once per turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "defensive_counter_attack",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "attack_missed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Weapon attack against attacker when they miss, once per turn"
+     }
+    ],
+    "prerequisites": [
+     "tactical_positioning_5"
+    ]
+   },
+   {
+    "node_id": "defensive_mastery_9",
+    "feature_id": "defensive_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your defensive techniques become overwhelming. When you take the Dodge action, you can also use your reaction to impose disadvantage on one attack roll made against an ally within 10 feet of you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "defensive_interference",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "target_ally_within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Impose disadvantage on attack against ally within 10 feet when taking Dodge action"
+     }
+    ],
+    "prerequisites": [
+     "shield_mastery_7",
+     "defensive_counter_7"
+    ]
+   },
+   {
+    "node_id": "guardian_aura_11",
+    "feature_id": "guardian_aura",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "guardian_technique_11",
+    "description": "You emanate a protective aura. Allies within 10 feet of you have resistance to damage from ranged attacks, and you can use your reaction to reduce the damage of one ranged attack against an ally within this range by 1d10 + your proficiency bonus.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "ranged_damage_resistance",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "notes": "Resistance to ranged attack damage"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "ranged_damage_reduction",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Reduce ranged attack damage by 1d10 + proficiency bonus"
+     }
+    ],
+    "prerequisites": [
+     "defensive_mastery_9"
+    ]
+   },
+   {
+    "node_id": "defensive_reflexes_11",
+    "feature_id": "defensive_reflexes",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "guardian_technique_11",
+    "description": "Your defensive reflexes become lightning-fast. You can use your reaction to take the Dodge action when you are hit by an attack, potentially causing the attack to miss. You can use this feature once per short rest.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "reactive_dodge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Take Dodge action when hit, potentially causing miss, once per short rest"
+     }
+    ],
+    "prerequisites": [
+     "defensive_mastery_9"
+    ]
+   },
+   {
+    "node_id": "defensive_legend_13",
+    "feature_id": "defensive_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of defensive combat. Your bonus action attack from Defensive Stance now deals full damage, and when you take the Dodge action, you can also grant all allies within 15 feet of you advantage on their next saving throw.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_defensive_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Bonus action attacks deal full damage"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "defensive_inspiration",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 15
+       }
+      ],
+      "notes": "Advantage on next saving throw for allies within 15 feet when taking Dodge action"
+     }
+    ],
+    "prerequisites": [
+     "guardian_aura_11",
+     "defensive_reflexes_11"
+    ]
+   },
+   {
+    "node_id": "impenetrable_defense_15",
+    "feature_id": "impenetrable_defense",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_defense_15",
+    "description": "Your defense becomes impenetrable. When you take the Dodge action, you gain resistance to all damage until the start of your next turn, and you can use your reaction to completely negate one attack that would hit you or an ally within 10 feet.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "damage_resistance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       }
+      ],
+      "notes": "Resistance to all damage when taking Dodge action"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "negate_attack",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Completely negate one attack against self or ally within 10 feet"
+     }
+    ],
+    "prerequisites": [
+     "defensive_legend_13"
+    ]
+   },
+   {
+    "node_id": "defensive_perfection_15",
+    "feature_id": "defensive_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_defense_15",
+    "description": "You achieve perfect defensive form. When you take the Dodge action, you can also use your reaction to redirect one attack that would hit an ally within 10 feet to target you instead. You have advantage on the attack roll against you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "defensive_redirect",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Redirect attack from ally to self with advantage on attack roll"
+     }
+    ],
+    "prerequisites": [
+     "defensive_legend_13"
+    ]
+   },
+   {
+    "node_id": "guardian_legend_17",
+    "feature_id": "guardian_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of protection. When you take the Dodge action, you can create a protective barrier that grants all allies within 20 feet of you immunity to damage from one attack each. You can use this feature once per long rest.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_protection",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 20
+       }
+      ],
+      "notes": "Immunity to damage from one attack for all allies within 20 feet, once per long rest"
+     }
+    ],
+    "prerequisites": [
+     "impenetrable_defense_15",
+     "defensive_perfection_15"
+    ]
+   },
+   {
+    "node_id": "perfect_defense_20",
+    "feature_id": "perfect_defense",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of defensive combat. When you take the Dodge action, you can also use your reaction to completely negate all attacks against you and all allies within 30 feet until the start of your next turn. You can use this feature once per long rest.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_defensive_barrier",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "action_taken",
+        "op": "equals",
+        "value": "dodge_action"
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 30
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Negate all attacks against self and allies within 30 feet until next turn, once per long rest"
+     }
+    ],
+    "prerequisites": [
+     "guardian_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "RancorScale",
+    "SithHolocron"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance with legs shoulder-width apart, fists clenched, and eyes blazing with focus.",
+    "energy_signature": "Emits a distinctive blue aura that crackles with dark side energy, surrounded by an ethereal glow of swirling purple mist."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a majestic Sith Lord standing atop a dusty, desert planet, surrounded by ancient ruins and mysterious artifacts.",
+    "contextual_modifiers": [
+     "High-Fantasy",
+     "AncientText"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Mastering defensive techniques to protect allies and absorb damage.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Defensive stance",
+    "Emblazoned crest of a shield"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "fighter_defensive_specialist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/fighter_subclasses/fighter.defensive_specialist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,954 @@
+{
+ "record": {
+  "force_powers": [
+   {
+    "id": "affect_mind",
+    "name": "Affect Mind",
+    "description": "You subtly influence the thoughts and emotions of a creature within range, making them more receptive to your words and suggestions.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "charmed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hostile",
+        "op": "equals",
+        "value": false
+       }
+      ],
+      "notes": "Target must not be hostile toward you"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "charisma_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_charmed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Charisma checks against charmed target"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "immunity_after_save",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_saved",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target becomes immune for 24 hours after successful save"
+     }
+    ]
+   },
+   {
+    "id": "battle_insight",
+    "name": "Battle Insight",
+    "description": "Through the Force, you gain a brief insight into a target's defenses, allowing you to strike with greater precision.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "next_attack_against_target",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on next attack against target"
+     },
+     {
+      "type": "modify_stat",
+      "value": "advantage_attacks",
+      "target_property": "attack_advantage_count",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level_5_or_higher",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "2 attacks at 5th level, 3 at 11th, 4 at 17th"
+     }
+    ]
+   },
+   {
+    "id": "burst",
+    "name": "Burst",
+    "description": "You cause the earth to burst from beneath your feet, creating a shockwave that affects all creatures around you.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "1d8_kinetic",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 1d8 kinetic damage"
+     },
+     {
+      "type": "modify_stat",
+      "value": "damage_scaling",
+      "target_property": "damage_dice",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level_5_or_higher",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "2d8 at 5th level, 3d8 at 11th, 4d8 at 17th"
+     }
+    ]
+   },
+   {
+    "id": "denounce",
+    "name": "Denounce",
+    "description": "You channel the dark side to instill fear and doubt in your enemies, weakening their resolve.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "frightened",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Wisdom save or become frightened"
+     },
+     {
+      "type": "modify_stat",
+      "value": "disadvantage_attacks",
+      "target_property": "attack_rolls",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_frightened",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disadvantage on attack rolls while frightened"
+     }
+    ]
+   },
+   {
+    "id": "force_push",
+    "name": "Force Push",
+    "description": "You extend your hand and unleash a powerful wave of Force energy that pushes creatures and objects away from you.",
+    "type": "Force",
+    "level": 1,
+    "alignment": "Universal",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "single_target_damage",
+      "value": "1d8_force",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Force attack roll, 1d8 force damage on hit"
+     },
+     {
+      "type": "movement",
+      "value": "push_10_feet",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Push target up to 10 feet away"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The damage increases by 1d8 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "target"
+        ],
+        "notes": "Additional 1d8 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "heal",
+    "name": "Heal",
+    "description": "You channel the light side of the Force to restore vitality and mend wounds in yourself or another creature.",
+    "type": "Force",
+    "level": 1,
+    "alignment": "Light",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "heal",
+      "value": "1d8_plus_modifier",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_creature",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d8 + Force modifier hit points"
+     },
+     {
+      "type": "remove_condition",
+      "value": "disease",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_diseased",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cure any disease affecting the target"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The healing increases by 1d8 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_healing",
+        "target_property": "healing_dice",
+        "target_scopes": [
+         "target"
+        ],
+        "notes": "Additional 1d8 healing per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "force_lightning",
+    "name": "Force Lightning",
+    "description": "You unleash a devastating bolt of dark side energy that arcs toward your target, dealing massive electrical damage.",
+    "type": "Force",
+    "level": 1,
+    "alignment": "Dark",
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "single_target_damage",
+      "value": "2d8_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Force attack roll, 2d8 lightning damage on hit"
+     },
+     {
+      "type": "apply_status",
+      "value": "stunned",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constitution save or be stunned until end of next turn"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The damage increases by 1d8 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "target"
+        ],
+        "notes": "Additional 1d8 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "force_barrier",
+    "name": "Force Barrier",
+    "description": "You create a protective barrier of Force energy that shields you and your allies from harm.",
+    "type": "Force",
+    "level": 2,
+    "alignment": "Light",
+    "prerequisites": [
+     "heal"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 10,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "damage_resistance",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to all damage types"
+     },
+     {
+      "type": "modify_stat",
+      "value": "temporary_hit_points",
+      "target_property": "temp_hp",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain 2d6 + Force modifier temporary hit points"
+     }
+    ]
+   },
+   {
+    "id": "force_choke",
+    "name": "Force Choke",
+    "description": "You reach out with the dark side and constrict your target's throat, cutting off their air supply.",
+    "type": "Force",
+    "level": 2,
+    "alignment": "Dark",
+    "prerequisites": [
+     "force_lightning"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "single_target_damage",
+      "value": "2d6_force",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constitution save or take 2d6 force damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "choked",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cannot speak or cast powers requiring verbal components"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "ongoing_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "concentration_maintained",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "2d6 force damage at start of target's turn"
+     }
+    ]
+   },
+   {
+    "id": "force_storm",
+    "name": "Force Storm",
+    "description": "You channel the raw power of the Force to create a devastating storm of energy that ravages your enemies.",
+    "type": "Force",
+    "level": 3,
+    "alignment": "Dark",
+    "prerequisites": [
+     "force_choke",
+     "force_lightning"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "6d6_force",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_20_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 6d6 force damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "knocked_prone",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save knocks target prone"
+     }
+    ],
+    "scaling_effects": {
+     "level_4": {
+      "description": "The damage increases by 1d6 for each slot level above 3rd.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "area"
+        ],
+        "notes": "Additional 1d6 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "force_revival",
+    "name": "Force Revival",
+    "description": "You channel the pure light side energy to restore life to a fallen ally, bringing them back from the brink of death.",
+    "type": "Force",
+    "level": 3,
+    "alignment": "Light",
+    "prerequisites": [
+     "force_barrier",
+     "heal"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "revive",
+      "value": "restore_consciousness",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_unconscious",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore unconscious creature to consciousness"
+     },
+     {
+      "type": "heal",
+      "value": "4d8_plus_modifier",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_revived",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 4d8 + Force modifier hit points"
+     },
+     {
+      "type": "remove_condition",
+      "value": "all_conditions",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_revived",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Remove all conditions affecting the target"
+     }
+    ]
+   },
+   {
+    "id": "force_teleport",
+    "name": "Force Teleport",
+    "description": "You bend space and time through the Force, instantly transporting yourself and allies to a distant location.",
+    "type": "Force",
+    "level": 4,
+    "alignment": "Universal",
+    "prerequisites": [
+     "force_push",
+     "force_barrier"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 500,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "teleport",
+      "value": "instant_movement",
+      "target_scopes": [
+       "self",
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "willing_targets",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Teleport up to 6 willing creatures to a location you can see"
+     },
+     {
+      "type": "apply_status",
+      "value": "teleport_sickness",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constitution save or be incapacitated until end of next turn"
+     }
+    ]
+   },
+   {
+    "id": "force_destruction",
+    "name": "Force Destruction",
+    "description": "You unleash the ultimate expression of dark side power, creating a devastating explosion of Force energy.",
+    "type": "Force",
+    "level": 5,
+    "alignment": "Dark",
+    "prerequisites": [
+     "force_storm",
+     "force_choke"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 120,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "8d6_force",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_30_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 8d6 force damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "blinded",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save blinds target for 1 minute"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "knockback",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Push targets 20 feet away from center"
+     }
+    ]
+   },
+   {
+    "id": "force_immortality",
+    "name": "Force Immortality",
+    "description": "You achieve the ultimate mastery of the light side, becoming one with the Force and transcending mortal limitations.",
+    "type": "Force",
+    "level": 5,
+    "alignment": "Light",
+    "prerequisites": [
+     "force_revival",
+     "force_barrier"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "minute"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "timed",
+     "value": 24,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "immortal",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Cannot die from old age or disease"
+     },
+     {
+      "type": "modify_stat",
+      "value": "regeneration",
+      "target_property": "healing_per_round",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Regenerate 10 hit points at start of each turn"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "all_saves",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all saving throws"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "force_powers",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/force_powers.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "8367ea9013127f344210d885960da054bc5f290c9571ef8795c3d691db3cd5f0",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "record": {
+  "id": "power_burst",
+  "name": "Burst",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "force",
+   "universal",
+   "offensive",
+   "damage",
+   "kinetic",
+   "area_effect",
+   "shockwave",
+   "ground_pound",
+   "close_range",
+   "battlefield_control",
+   "knockback",
+   "radial",
+   "melee_range"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Raw Force energy channeled through the ground, available to any Force user"
+   }
+  },
+  "narrative": "You slam Force energy into the ground beneath you, causing it to erupt outward in a violent shockwave. The power manifests as the earth cracking and heaving, stone and debris exploding outward in a ring of destruction that knocks enemies off balance.",
+  "flavor_text": "\"The ground itself obeys the will of the Force.\" - Ancient Sith Lord",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "stomping or striking the ground with force"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling Force energy downward into the earth"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You cause the earth to burst from beneath your feet, creating a shockwave that affects all creatures around you.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "force"
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_5_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "All creatures within 5 feet take 1d4 force damage"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the ground cracking and buckling as Force energy erupts from beneath. Stone fragments and dust explode outward in a circular shockwave. Enemies stumble and fall as the earth heaves beneath their feet. The air fills with debris and the sound of shattering stone.",
+   "tactical_notes": "Burst is a close-range area attack perfect for when you're surrounded. The 5-foot radius hits all adjacent enemies. Only 1d4 damage but requires no resources as a cantrip. Excellent for triggering opportunity attacks as enemies are pushed back.",
+   "narrative_hooks": [
+    "A Jedi uses Burst to escape from a closing circle of enemies",
+    "The shockwave reveals a hidden tunnel beneath the floor",
+    "A desperate last stand begins with Burst clearing breathing room"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Force user causing the ground to explode outward in a ring of destruction. The earth cracks and heaves, sending stone fragments and dust erupting in a circular shockwave. Enemies are thrown back by the seismic force, debris flying through the air. The Force user stands at the epicenter, surrounded by cracking earth and explosive force.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/burst.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_burst",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_burst.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

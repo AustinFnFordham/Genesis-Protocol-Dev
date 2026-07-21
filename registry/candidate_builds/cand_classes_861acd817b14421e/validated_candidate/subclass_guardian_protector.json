@@ -1,0 +1,342 @@
+{
+ "record": {
+  "id": "subclass_guardian_protector",
+  "class_id": "guardian",
+  "name": "Protector",
+  "tags": [
+   "guardian",
+   "protector",
+   "defensive",
+   "bodyguard",
+   "tank",
+   "light_side",
+   "jedi",
+   "force_defense",
+   "support",
+   "protective",
+   "melee_specialist"
+  ],
+  "alignment_theme": "light",
+  "talent_tree_theme": {
+   "background_diorama": "A serene Jedi Temple meditation chamber with soft, protective light filtering through tall windows. Ancient protective runes glow gently on the walls, and a sense of calm determination fills the air.",
+   "node_style": "Soft, glowing orbs of blue-white light that pulse with protective energy, each containing a symbol of defense and guardianship.",
+   "connection_style": "Flowing streams of Force energy that connect the nodes, creating a web of protective light that seems to pulse with the Guardian's heartbeat.",
+   "color_palette": {
+    "primary": "#0066CC",
+    "secondary": "#FFFFFF"
+   },
+   "ambient_audio": "gentle_hum_of_protective_force_energy"
+  },
+  "narrative": "You are the ultimate guardian, a living shield whose very presence creates a sanctuary of safety. Your mastery of protective techniques goes beyond mere defense—you become an extension of the Force itself, creating an impenetrable barrier between your charges and any threat that would harm them.",
+  "flavor_text": "'I will not let harm come to those under my protection. The Force flows through me to shield them.' - A Guardian Protector",
+  "subclass_identity_profile": {
+   "core_fantasy": "Unwavering guardians of the innocent, Protectors wield their lightsabers with precision and power.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Jedi emblem on shoulder armor",
+    "Hilt lightsaber"
+   ]
+  },
+  "talent_tree": [
+   {
+    "id": "gp_t1_personal_protection",
+    "feature_id": "feature_guardian_personal_protection",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 1,
+    "connections": [
+     "gp_t2_attack_interception",
+     "gp_t2_guardian_sense"
+    ]
+   },
+   {
+    "id": "gp_t1_protective_aura",
+    "feature_id": "feature_guardian_protective_aura",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 2,
+    "connections": [
+     "gp_t2_attack_interception",
+     "gp_t2_guardian_sense"
+    ]
+   },
+   {
+    "id": "gp_t1_defensive_mastery",
+    "feature_id": "feature_guardian_defensive_mastery",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 3,
+    "connections": [
+     "gp_t2_attack_interception",
+     "gp_t2_guardian_sense"
+    ]
+   },
+   {
+    "id": "gp_t2_attack_interception",
+    "feature_id": "feature_guardian_attack_interception",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 1,
+    "prerequisites": [
+     "gp_t1_personal_protection",
+     "gp_t1_protective_aura"
+    ],
+    "connections": [
+     "gp_t3_bodyguard_mastery",
+     "gp_t3_protective_barrier"
+    ]
+   },
+   {
+    "id": "gp_t2_guardian_sense",
+    "feature_id": "feature_guardian_guardian_sense",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 2,
+    "prerequisites": [
+     "gp_t1_protective_aura",
+     "gp_t1_defensive_mastery"
+    ],
+    "connections": [
+     "gp_t3_bodyguard_mastery",
+     "gp_t3_protective_barrier"
+    ]
+   },
+   {
+    "id": "gp_t2_force_shield",
+    "feature_id": "feature_guardian_force_shield",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 3,
+    "prerequisites": [
+     "gp_t1_defensive_mastery",
+     "gp_t1_personal_protection"
+    ],
+    "connections": [
+     "gp_t3_bodyguard_mastery",
+     "gp_t3_protective_barrier"
+    ]
+   },
+   {
+    "id": "gp_t3_bodyguard_mastery",
+    "feature_id": "feature_guardian_bodyguard_mastery",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 1,
+    "prerequisites": [
+     "gp_t2_attack_interception",
+     "gp_t2_guardian_sense"
+    ],
+    "connections": [
+     "gp_t4_protector_mastery"
+    ]
+   },
+   {
+    "id": "gp_t3_protective_barrier",
+    "feature_id": "feature_guardian_protective_barrier",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 2,
+    "prerequisites": [
+     "gp_t2_guardian_sense",
+     "gp_t2_force_shield"
+    ],
+    "connections": [
+     "gp_t4_protector_mastery"
+    ]
+   },
+   {
+    "id": "gp_t3_guardian_meditation",
+    "feature_id": "feature_guardian_guardian_meditation",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 3,
+    "prerequisites": [
+     "gp_t2_force_shield",
+     "gp_t2_attack_interception"
+    ],
+    "connections": [
+     "gp_t4_protector_mastery"
+    ]
+   },
+   {
+    "id": "gp_t4_protector_mastery",
+    "feature_id": "feature_guardian_protector_mastery",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 1,
+    "prerequisites": [
+     "gp_t3_bodyguard_mastery",
+     "gp_t3_protective_barrier",
+     "gp_t3_guardian_meditation"
+    ],
+    "connections": [
+     "gp_t5_legendary_protector"
+    ]
+   },
+   {
+    "id": "gp_t4_ultimate_guardian",
+    "feature_id": "feature_guardian_ultimate_guardian",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 2,
+    "prerequisites": [
+     "gp_t3_bodyguard_mastery",
+     "gp_t3_protective_barrier",
+     "gp_t3_guardian_meditation"
+    ],
+    "connections": [
+     "gp_t5_legendary_protector"
+    ]
+   },
+   {
+    "id": "gp_t5_legendary_protector",
+    "feature_id": "feature_guardian_legendary_protector",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 1,
+    "prerequisites": [
+     "gp_t4_protector_mastery",
+     "gp_t4_ultimate_guardian"
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Protectors are defined by their unwavering commitment to others' safety. They should always be thinking about how to position themselves to protect their charges, and their actions should reflect this protective mindset. They are calm under pressure, always ready to sacrifice themselves for others, and have an almost supernatural ability to sense danger before it strikes.",
+   "narrative_hooks": [
+    "The Protector must choose between protecting their assigned charge and saving innocent civilians caught in the crossfire.",
+    "A powerful enemy specifically targets the Protector's charge, testing their defensive abilities to the limit.",
+    "The Protector discovers a plot that threatens not just their charge, but the entire organization they serve.",
+    "The Protector's charge is kidnapped, and they must use all their skills to track and rescue them."
+   ],
+   "tactical_notes": "Protectors excel at positioning and defensive tactics. They should always be thinking about how to create protective barriers, intercept attacks, and ensure their charges' safety. Their abilities work best when they can focus on protecting specific individuals rather than trying to protect everyone at once."
+  },
+  "progression_tree": [
+   {
+    "node_id": "protector_1_feature",
+    "feature_id": "defensive_stance",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "As a Protector, you can enter a defensive stance at the start of your turn, granting you advantage on all Intimidation checks and allowing you to move up to 10 feet without provoking opportunity attacks.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Intimidation Check Advantage"
+     },
+     {
+      "type": "mechanic_type",
+      "value": "Movement Feature"
+     }
+    ]
+   },
+   {
+    "node_id": "protector_2_feature",
+    "feature_id": "force_deflection",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can use your reaction to deflect one attack roll against you this turn. The attacker must make a Wisdom saving throw with a DC of 15 + your proficiency bonus. On a successful save, the attack is deflected and has no effect.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Reaction Ability"
+     }
+    ]
+   },
+   {
+    "node_id": "protector_3_feature",
+    "feature_id": "ally_shield",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "When a friendly creature within 10 feet of you takes damage, you can use your reaction to grant them a bonus to their Armor Class until the start of your next turn. The bonus is equal to your Charisma modifier (minimum +1).",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Reaction Ability"
+     }
+    ]
+   },
+   {
+    "node_id": "protector_4_feature",
+    "feature_id": "unyielding_stance",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "As a Protector, you can enter an unyielding stance at the start of your turn. Until the start of your next turn, you have advantage on all Strength checks and can move up to 10 feet without provoking opportunity attacks.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Strength Check Advantage"
+     }
+    ]
+   },
+   {
+    "node_id": "protector_5_feature",
+    "feature_id": "shield_generator",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You can use your action to generate a shield around yourself, granting you a bonus to your Armor Class equal to your Charisma modifier (minimum +1). The shield lasts for 1 minute and can be dispelled by any effect that deals radiant damage.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Shield Generation"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Exosuit_Armor"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance with feet shoulder-width apart and lightsaber held at a 45-degree angle, ready to strike at a moment's notice.",
+    "energy_signature": "A vibrant blue aura surrounds the Protector's body, pulsing with energy as they channel their connection to the Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a Protector standing in a dimly lit corridor, lightsaber ignited and ready for battle, surrounded by shadows that hint at the darkness they protect against.",
+    "contextual_modifiers": [
+     "Show the Protector's determined expression as they prepare to face their enemies",
+     "Depict the environment with broken machinery and debris scattered about, reflecting the aftermath of a fierce struggle"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "subclass_guardian_protector",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian_protector.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

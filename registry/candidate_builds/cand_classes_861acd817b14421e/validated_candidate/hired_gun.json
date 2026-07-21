@@ -1,0 +1,429 @@
+{
+ "record": {
+  "id": "hired_gun",
+  "name": "Hired Gun",
+  "tags": [
+   "hired_gun",
+   "mercenary",
+   "martial",
+   "tank",
+   "strength_based",
+   "heavy_weapons",
+   "bodyguard",
+   "enforcer",
+   "resilient",
+   "combat_specialist"
+  ],
+  "description": "Hired Guns are professional combatants for contract—bodyguards, enforcers, heavies, and mercenaries who bring overwhelming force and hard-won battlefield experience to any job. Whether protecting clients, cracking heads for syndicates, or leading strike teams, they excel at direct action and staying in the fight.",
+  "hit_die": "1d12",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor",
+    "Heavy armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Martial weapons",
+    "Blaster pistols",
+    "Blaster rifles",
+    "Heavy weapons"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Combat Stimulants",
+      "Grenades",
+      "Heavy Weapon Mount",
+      "Shield Emitter",
+      "Tactical Computer",
+      "Field Kit"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Strength",
+    "Constitution"
+   ],
+   "skills": {
+    "choose": 3,
+    "from": [
+     "Athletics",
+     "Intimidation",
+     "Insight",
+     "Investigation",
+     "Perception",
+     "Survival",
+     "Technology"
+    ]
+   }
+  },
+  "primary_ability": "Strength or Constitution",
+  "primary_resource": "Combat Points",
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_training_1",
+    "feature_id": "hired_gun_training",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "hired_gun_style_1",
+    "feature_id": "hired_gun_style",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "hired_gun_training_1"
+    ],
+    "choice_group": "hired_gun_style_level_1"
+   },
+   {
+    "node_id": "overwhelming_force_2",
+    "feature_id": "overwhelming_force",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "hired_gun_style_1"
+    ],
+    "choice_group": "hired_gun_focus_level_2"
+   },
+   {
+    "node_id": "professional_protection_2",
+    "feature_id": "professional_protection",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "hired_gun_style_1"
+    ],
+    "choice_group": "hired_gun_focus_level_2"
+   },
+   {
+    "node_id": "hired_gun_specialization_3",
+    "feature_id": "hired_gun_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "overwhelming_force_2",
+     "professional_protection_2"
+    ],
+    "choice_group": "hired_gun_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_specialization_3"
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "reinforced_armor_6",
+    "feature_id": "reinforced_armor",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "hired_gun_enhancement_level_6"
+   },
+   {
+    "node_id": "optimized_fire_6",
+    "feature_id": "optimized_fire",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "hired_gun_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "reinforced_armor_6",
+     "optimized_fire_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "hardened_veteran_9",
+    "feature_id": "hardened_veteran",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "tactical_advance_10",
+    "feature_id": "tactical_advance",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "hardened_veteran_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "tactical_advance_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "professional_edge_13",
+    "feature_id": "professional_edge",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "professional_edge_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "veterans_resolve_17",
+    "feature_id": "veterans_resolve",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "veterans_resolve_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "hired_gun_mastery_20",
+    "feature_id": "hired_gun_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    [
+     "blaster pistol"
+    ],
+    [
+     "assault rifle"
+    ],
+    [
+     "tactical armor"
+    ],
+    [
+     "helmet with face shield"
+    ],
+    [
+     "combat boots"
+    ]
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A balanced, athletic stance with feet shoulder-width apart and weight evenly distributed between both legs.",
+    "energy_signature": "A blue-white aura of electrical energy crackling around the Hired Gun's body, representing their mastery over advanced technology and tactical expertise."
+   },
+   "prompt_schema": {
+    "base_prompt": "{character_name} is a skilled {job_title} from the planet {planet_of_origin}, known for their exceptional marksmanship and hand-to-hand combat skills.",
+    "contextual_modifiers": [
+     "job_title",
+     "planet_of_origin",
+     "special_equipment",
+     "battlefield_history"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "They see you as a threat to their own lucrative contracts or power.",
+    "escalation": "Their client demands your defeat, forcing them to take action against you.",
+    "confrontation": "You cross paths in the field and engage in combat; they'll stop at nothing to eliminate you."
+   },
+   "resolution_paths": {
+    "victory": "Defeating them earns you their respect and a new contract opportunity.",
+    "redemption": "Making amends for past transgressions can earn you a truce, but don't expect forgiveness.",
+    "escape": "You flee the scene, but they'll be watching; expect more confrontations in the future."
+   },
+   "conflict_triggers": [
+    "You're working for a rival organization.",
+    "Your skills are being poached by their employer.",
+    "They believe you've broken your contract or betrayed them."
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "They're drawn to your skills and confidence, but wary of the risks involved.",
+    "stage2": "You start to build a connection based on mutual respect for each other's abilities.",
+    "stage3": "Your relationship deepens as you work together, facing challenges side-by-side.",
+    "stage4": "Jealousy and possessiveness creep in due to your profession's demands and the risks involved.",
+    "stage5": "You must confront the difficulties of maintaining a relationship under the pressure of your line of work."
+   },
+   "lifestyle_challenges": [
+    "Your profession requires you to put others' lives at risk.",
+    "Long absences due to missions can strain relationships.",
+    "Trust issues arise from past experiences and loyalty conflicts."
+   ]
+  },
+  "flavor_text": "Hired Guns operate in the shadows, taking on contracts that no one else wants. Their reputation precedes them - a whispered mention of \"Gunner\" or \"Vexis\" can send ripples through the underworld.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Hired Gun, you're often hired to do what others won't - take on dirty work, protect clients from harm, and eliminate threats. You may have a code of honor or a reputation to uphold.\n",
+   "narrative_hooks": [
+    "Your client's life depends on your mission success.",
+    "You've been double-crossed by a previous employer.",
+    "A valuable asset has been compromised due to your inaction.",
+    "You're struggling with the moral implications of your work."
+   ],
+   "social_dynamics": "Hired Guns often have to navigate complex webs of alliances and rivalries. Be prepared for intrigue, backstabbing, and double-crosses.\n"
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "base_personality": "neutral",
+     "nuances": [
+      "calculating"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "survival",
+     "secondary_motivation": "loyalty"
+    },
+    "combat_behavior": "Prioritize self-preservation and take calculated risks to eliminate threats.\n",
+    "social_behavior": "Assess situations for potential rewards or benefits, then act accordingly.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     0,
+     10
+    ],
+    "loyalty_triggers": [
+     "long-term contracts",
+     "generous payment"
+    ]
+   },
+   "services": [
+    "Combat Escort",
+    "Job Execution",
+    "Bodyguarding"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/hired_gun.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

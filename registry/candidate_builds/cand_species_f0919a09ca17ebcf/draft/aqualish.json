@@ -1,0 +1,556 @@
+{
+ "record": {
+  "id": "aqualish",
+  "name": "Aqualish",
+  "tags": [
+   "aqualish",
+   "brutal",
+   "common",
+   "enforcer",
+   "iconic",
+   "intimidating",
+   "martial",
+   "melee_specialist",
+   "precise",
+   "resilient",
+   "strength_based",
+   "survivor_background",
+   "underworld",
+   "urban",
+   "wookiee"
+  ],
+  "description": "Aqualish are a tusked, humanoid species known for their surly disposition and physical toughness. Their tusks and thick hide make them formidable in close combat, while their experience in harsh environments has made them resilient and practical. They are often found in industrial areas, dockyards, and other rough-and-tumble environments where their strength and durability are valued.",
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Aqualish"
+  ],
+  "base_hp": 12,
+  "base_strain": 8,
+  "starting_xp": 110,
+  "innate_traits": [
+   {
+    "id": "aqualish_tusked_warrior",
+    "name": "Tusked Warrior",
+    "narrative": "Your prominent tusks are not just for show - they are formidable natural weapons that you have learned to use effectively in combat. Your thick hide also provides natural protection.",
+    "mechanics": [
+     {
+      "effect": "modify_unarmed_strike",
+      "value": "1d6 piercing",
+      "description": "Your tusks deal 1d6 piercing damage instead of the normal unarmed strike damage."
+     },
+     {
+      "effect": "grant_resistance",
+      "value": "bludgeoning",
+      "description": "Your thick hide provides resistance to bludgeoning damage."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "tusked_warrior_corrupted",
+     "ui_transition": {
+      "animation": "tusk_twist",
+      "sfx": "growl"
+     }
+    }
+   },
+   {
+    "id": "aqualish_industrial_expertise",
+    "name": "Industrial Expertise",
+    "narrative": "Aqualish are commonly found in industrial environments, dockyards, and construction sites. You have a natural understanding of machinery, tools, and industrial processes.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Technology"
+     },
+     {
+      "effect": "grant_advantage",
+      "value": "technology_checks",
+      "conditions": [
+       {
+        "key": "environment",
+        "op": "in",
+        "value": [
+         "industrial",
+         "dockyard",
+         "construction",
+         "urban"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "aqualish_surly_resilience",
+    "name": "Surly Resilience",
+    "narrative": "Your species' reputation for being surly and difficult to work with has actually made you more resilient to intimidation and social pressure. You don't easily back down from confrontations.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "skill": "Intimidation"
+     },
+     {
+      "effect": "grant_resistance",
+      "value": "fear_effects",
+      "description": "You have advantage on saving throws against fear effects and intimidation attempts."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "surly_corrupted_resilience",
+     "ui_transition": {
+      "animation": "scowl_frown",
+      "sfx": "growl"
+     }
+    }
+   }
+  ],
+  "source": "Star Wars: A New Hope, FFG Edge of the Empire",
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Prominent tusks",
+    "Thick hide",
+    "Surly expression",
+    "Industrial build",
+    "Tough appearance"
+   ],
+   "skin_color_variants": [
+    "Grey",
+    "Dark Grey",
+    "Brown",
+    "Olive",
+    "Mottled patterns"
+   ],
+   "tusk_variants": [
+    "Large, prominent tusks",
+    "Small, practical tusks",
+    "Curved tusks",
+    "Straight tusks",
+    "Decorative tusk arrangements"
+   ],
+   "eye_color_variants": [
+    "Dark eyes",
+    "Grey eyes",
+    "Brown eyes",
+    "Amber eyes"
+   ],
+   "common_adornments": [
+    "Industrial work clothing",
+    "Dockyard and construction gear",
+    "Practical tools and equipment",
+    "Rough, durable attire",
+    "Industrial safety equipment"
+   ],
+   "llm_description_prompt": "Describe an Aqualish character. Emphasize their prominent tusks and thick hide that make them formidable in close combat, and their surly, tough appearance that reflects their industrial background. Their build should be strong and practical, suggesting someone who has worked in harsh environments. Consider their reputation for being difficult to work with and the way they carry themselves with the confident, no-nonsense bearing of someone who has survived in rough-and-tumble environments."
+  },
+  "class_synergies": [
+   {
+    "class": "Soldier (Brawler)",
+    "narrative": "Aqualish's natural toughness and Tusked Warrior abilities make them exceptional Soldiers, able to dominate in close combat with their tusks and thick hide.",
+    "mechanical_benefits": [
+     "Tusked Warrior trait provides natural weapons and damage resistance",
+     "Surly Resilience trait prevents intimidation and fear effects",
+     "High Strength and Constitution support combat role"
+    ]
+   },
+   {
+    "class": "Engineer",
+    "narrative": "Aqualish's Industrial Expertise and practical nature make them excellent Engineers, particularly in industrial and construction environments.",
+    "mechanical_benefits": [
+     "Industrial Expertise trait enhances technology and industrial skills",
+     "Surly Resilience trait prevents workplace intimidation",
+     "High Constitution supports long work hours"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Aqualish's natural protective instincts and toughness make them excellent Guardians, able to protect others with their tusks and resilience.",
+    "mechanical_benefits": [
+     "Tusked Warrior trait provides defensive capabilities",
+     "Surly Resilience trait prevents mental manipulation",
+     "High Constitution supports protective role"
+    ]
+   },
+   {
+    "class": "Scout (Urban)",
+    "narrative": "Aqualish's industrial background and practical skills make them excellent Scouts in urban and industrial environments.",
+    "mechanical_benefits": [
+     "Industrial Expertise trait aids in urban navigation",
+     "Surly Resilience trait supports independent operations",
+     "Tusked Warrior trait provides self-defense capabilities"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Industrial Guilds",
+    "narrative": "Aqualish are highly valued by industrial guilds and unions for their natural toughness and industrial expertise in dockyards and construction."
+   },
+   {
+    "faction": "Criminal Organizations",
+    "narrative": "Many Aqualish work for criminal organizations as enforcers and muscle, using their natural toughness and intimidating presence."
+   },
+   {
+    "faction": "Independent Workers",
+    "narrative": "Many Aqualish prefer to work independently as laborers and contractors, using their industrial skills and toughness to make their own way."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your industrial expertise becomes more refined, allowing you to work with even more complex machinery and systems.",
+     "mechanical_benefit": "You gain advantage on all Technology checks, and you can use your action to gain insight into the function of any technological device within 30 feet."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your surly resilience reaches new heights, making you nearly impossible to intimidate or manipulate.",
+     "mechanical_benefit": "You gain immunity to fear effects, and you have advantage on all saving throws against being charmed or frightened."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your tusked warrior abilities combine with combat experience to make you a more lethal fighter.",
+     "mechanical_benefit": "When using your tusks in combat, you gain a +2 bonus to damage rolls, and you can make an additional unarmed strike as a bonus action once per turn."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your toughness reaches its peak, making you nearly indestructible in combat and industrial environments.",
+     "mechanical_benefit": "You have advantage on all Constitution saving throws, and you can survive in any industrial or hazardous environment without special equipment."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Industrial Rituals",
+    "type": "ceremonial",
+    "description": "Aqualish have sacred rituals that celebrate their industrial heritage, often involving the blessing of tools and machinery.",
+    "narrative_impact": "Provides cultural depth and industrial connection. Can be used for character development and cultural interactions."
+   },
+   {
+    "name": "Dockyard Traditions",
+    "type": "traditional",
+    "description": "Aqualish dockyard traditions emphasize hard work, practical skills, and the importance of industrial knowledge passed down through generations.",
+    "narrative_impact": "Creates industrial identity and work ethic scenarios. Can be used for training and mentoring situations."
+   },
+   {
+    "name": "Surly Brotherhood",
+    "type": "cultural",
+    "description": "Aqualish communities form tight-knit groups based on mutual respect for toughness and practical skills, often working together in industrial projects.",
+    "narrative_impact": "Provides community bonding and cooperative work scenarios. Can be used for team-building and group projects."
+   },
+   {
+    "name": "Practical Wisdom",
+    "type": "narrative",
+    "description": "Aqualish practice techniques that enhance their practical problem-solving abilities and industrial intuition.",
+    "narrative_impact": "Provides problem-solving opportunities and skill development. Can be used for technical challenges and innovation scenarios."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "industrial",
+    "adaptation_name": "Industrial Mastery",
+    "description": "Your species is perfectly adapted to industrial environments, allowing you to work efficiently in factories, dockyards, and construction sites.",
+    "mechanical_benefit": "You have advantage on all skill checks in industrial environments, and you can sense mechanical problems within 30 feet."
+   },
+   {
+    "environment": "urban",
+    "adaptation_name": "Urban Toughness",
+    "description": "Your natural toughness allows you to thrive in rough urban environments where others would struggle.",
+    "mechanical_benefit": "You have advantage on saving throws against urban hazards, and you can navigate dangerous urban areas without penalty."
+   },
+   {
+    "environment": "harsh",
+    "adaptation_name": "Harsh Environment Survival",
+    "description": "Your thick hide and natural resilience allow you to survive in harsh working conditions that would incapacitate other species.",
+    "mechanical_benefit": "You have advantage on saving throws against environmental hazards, and you can work in extreme conditions without special equipment."
+   },
+   {
+    "environment": "combat",
+    "adaptation_name": "Combat Endurance",
+    "description": "Your natural toughness and tusked weapons make you exceptionally difficult to defeat in close combat.",
+    "mechanical_benefit": "You have advantage on saving throws against being knocked unconscious, and you can continue fighting even when severely wounded."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on industrial abilities and natural toughness, complementing rather than overshadowing class features",
+    "Industrial expertise improvements maintain the species' unique identity while providing meaningful advancement",
+    "Toughness and combat abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on industrial traditions and practical culture rather than mechanical advantages",
+    "Industrial rituals and dockyard traditions provide unique roleplaying opportunities and cultural depth",
+    "Surly brotherhood and practical wisdom enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for industrial and urban environments where toughness is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Combat endurance and harsh environment survival provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "long_tusks",
+    "thick_scales",
+    "humanoid_body_shape",
+    "muscular_build",
+    "pointed_ears"
+   ],
+   "morphology": {
+    "head_type": "tusked",
+    "body_type": "muscular",
+    "average_height": "180-200 cm"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_tone": "mottled_green",
+      "fur_pattern": "stripes",
+      "eye_color": "yellow"
+     },
+     "adult": {
+      "skin_tone": "grayish_blue",
+      "fur_pattern": "mottled",
+      "eye_color": "brown"
+     },
+     "elder": {
+      "skin_tone": "pale_gray",
+      "fur_pattern": "speckled",
+      "eye_color": "hazel"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "scarred_face",
+      "cybernetic_eye"
+     ],
+     "light_side": [
+      "tribal_tattoos",
+      "sacred_symbol_ornament"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "facial_scars",
+    "tattoos",
+    "pierced_ears",
+    "nose_ring"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Aqualish {{ species_name }} with {{ descriptor }}",
+    "contextual_modifiers": [
+     "scars",
+     "tattoos",
+     "cybernetic enhancements",
+     "ritualistic markings"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "The Aqualish is a new presence, making themselves known as enforcers or mercenaries. They seek to establish their reputation and assert dominance.",
+     "goals": [
+      "establish reputation",
+      "increase influence"
+     ],
+     "motivations": [
+      "power",
+      "respect"
+     ]
+    },
+    "escalation": {
+     "description": "As the Aqualish gains experience and recognition, they become more assertive in their actions and demands. They may challenge existing power structures or push for change.",
+     "goals": [
+      "increase power",
+      "expand influence"
+     ],
+     "motivations": [
+      "ambition",
+      "revenge"
+     ]
+    },
+    "confrontation": {
+     "description": "The Aqualish has reached a boiling point and is now openly defying authority or challenging established norms. They are seen as a threat to the status quo.",
+     "goals": [
+      "overthrow existing order",
+      "establish new regime"
+     ],
+     "motivations": [
+      "ideology",
+      "desire for control"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "The Aqualish emerges victorious, having achieved their goals and solidified their position of power.",
+    "redemption": "The Aqualish undergoes a change of heart, realizing that their actions were motivated by personal gain rather than a desire to do good. They seek forgiveness and make amends.",
+    "escape": "The Aqualish manages to escape the conflict, possibly fleeing to a new location or hiding in plain sight."
+   },
+   "conflict_triggers": [
+    "A rival faction challenges the Aqualish's authority",
+    "The Aqualish discovers a valuable resource or opportunity that they seek to exploit",
+    "An external threat, such as a hostile alien species, forces the Aqualish to confront their own power and influence"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The Aqualish is wronged by someone in authority",
+     "The Aqualish loses something or someone they care about due to another's actions"
+    ],
+    "vendetta_type": "Seek revenge against those who wronged me"
+   },
+   "overrides": {
+    "historical_enemies": [
+     "Trandoshans (a rival species known for their brutal tactics)",
+     "The Empire (which exploited Aqualish resilience for its own gain)"
+    ],
+    "tragic_flaws": [
+     "Over-reliance on physical strength",
+     "Difficulty in forming attachments outside of kinship"
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    {
+     "traits": [
+      "intelligent",
+      "charismatic"
+     ]
+    },
+    {
+     "interests": [
+      "adventure",
+      "exploration",
+      "art"
+     ]
+    },
+    {
+     "values": [
+      "honor",
+      "loyalty",
+      "fairness"
+     ]
+    }
+   ],
+   "romance_progression": {
+    "stage1": "The Aqualish and their love interest bond over a shared experience or activity.",
+    "stage2": "The Aqualish begins to open up about their past and personal struggles with their love interest.",
+    "stage3": "The Aqualish and their love interest work together on a task or project, developing their skills and trust in each other.",
+    "stage4": "The Aqualish and their love interest face a challenge or obstacle that requires them to rely on each other for support.",
+    "stage5": "The Aqualish and their love interest confess their feelings to each other and begin a romantic relationship."
+   },
+   "romance_events": [
+    "The Aqualish's love interest helps them overcome a personal struggle or weakness",
+    "The Aqualish and their love interest share a romantic moment or experience",
+    "The Aqualish's love interest stands up for them against someone who is bullying or harassing them"
+   ],
+   "romance_modifiers": [
+    "increased loyalty to the Aqualish",
+    "improved relationship skills and communication",
+    "enhanced physical attraction between the Aqualish and their love interest"
+   ],
+   "overrides": {
+    "courtship_rituals": [
+     "A formal, ritualistic presentation of gifts or skills to the intended partner",
+     "A public display of affection or devotion, often involving a symbolic gesture"
+    ],
+    "cultural_view_on_love": "Aqualish view love as a deep, abiding connection between two individuals. They prioritize loyalty and commitment over romantic passion."
+   }
+  },
+  "flavor_text": "Aqualish are a proud and hardy people, forged in the harsh environments of their homeworld, Rinneth. Their reputation for toughness and resilience is well-earned, as they have adapted to survive in some of the galaxy's most unforgiving climates. From the scorching deserts of Tatooine to the icy tundras of Hoth, Aqualish can be found where strength and durability are essential.",
+  "llm_guidance": {
+   "roleplay_guidance": "Aqualish are often perceived as gruff or standoffish due to their stoic nature. However, beneath their tough exterior lies a deep sense of loyalty and protectiveness towards their kin and community. As an Aqualish character, you may struggle with expressing emotions openly, but this reserve can be leveraged to gain the trust of others.",
+   "narrative_hooks": [
+    "The Great Rinnethian Drought: The Aqualish have long been plagued by a devastating drought that has ravaged their homeworld. This event continues to shape their culture and worldview.",
+    "The Industrial Revolution: As Aqualish adapted to harsh environments, they also developed innovative technologies to survive. Explore the consequences of this revolution on your character's life and relationships."
+   ],
+   "social_dynamics": "Aqualish often form close-knit family units, valuing loyalty and duty above individual pursuits. They may struggle with authority figures or institutions that prioritize profit over people.",
+   "common_motivations": [
+    "Protecting one's kin and community",
+    "Surviving in harsh environments"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "assertive",
+    "motivations": {
+     "self_preservation": "high",
+     "loyalty_to_companions": "medium",
+     "justice_and_order": "low"
+    },
+    "combat_behavior": "aggressive, prioritizing strength over finesse",
+    "social_behavior": "direct, occasionally abrasive, but ultimately loyal to allies"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "companions": "high",
+     "neutrals": "low",
+     "enemies": "very_low"
+    },
+    "loyalty_triggers": {
+     "betrayal_of_companions": "extreme_disloyalty",
+     "failure_to_protect_community": "moderate_disloyalty"
+    }
+   },
+   "services": []
+  }
+ },
+ "validation": {
+  "candidate_urid": "aqualish",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/aqualish.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

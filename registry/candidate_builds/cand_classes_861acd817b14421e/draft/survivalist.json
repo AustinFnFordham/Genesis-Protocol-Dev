@@ -1,0 +1,195 @@
+{
+ "record": {
+  "id": "survivalist",
+  "name": "Survivalist",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "survivalist",
+   "wilderness_expert",
+   "tracker",
+   "wisdom_based",
+   "hunter",
+   "resilient",
+   "scout",
+   "predator"
+  ],
+  "description": "Bounty Hunter Survivalists are masters of the wild. They excel at tracking prey across unforgiving terrain, enduring harsh environments, and turning nature itself into an ally during the hunt.",
+  "specialization_features": [
+   "wilderness_mastery",
+   "endure_elements",
+   "ambush_expert",
+   "master_survivalist",
+   "legendary_survivalist"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Bounty Hunter Survivalist",
+   "role_in_group": "Master Tracker and Wilderness Expert",
+   "visual_signals": [
+    "Scars of the Hunt",
+    "Customized Tracking Gear"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "Survival Instincts",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain a +1 bonus to Wisdom (Perception) checks and can survive in harsh environments for up to 24 hours without food or water.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "survival_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As I've been living on the edge, my instincts have honed in on the subtleties of combat. I gain advantage on Wisdom (Perception) checks to anticipate and react to threats."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "Wilderness Expertise",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice (Survival, Nature, or Perception). You can add your proficiency bonus to any ability check you make that doesn't already include your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "survivalist_nemesis",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "When striking with a weapon, the Survivalist Bounty Hunter's attacks deal bonus damage equal to their proficiency bonus. This expertise is honed from years of wilderness survival and tracking."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "Tracker's Insight",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain a +1 bonus to Intelligence (Investigation) checks and can ask the DM one additional question about a creature or object per Investigation check you make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tracker_sense (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "A surge of primal awareness flows through the Survivalist, granting them advantage on Intelligence (Investigation) checks related to tracking and hunting their target."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_15",
+    "feature_id": "Predator's Cunning",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain a +1 bonus to Charisma (Deception) checks and can use your action to make a Deception check against a creature that is aware of you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "survivalist_deception_advantage",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As I close in on my prey, the shadows themselves seem to aid me, granting a keen sense of deception and charm. My words take on a persuasive quality, making it harder for my foe to discern truth from falsehood."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "BountyHunterVisor",
+    "SurvivalGearPack"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a crouched stance with blaster at the ready, scanning surroundings for potential threats.",
+    "energy_signature": "Emitting a faint blue aura that pulses with energy, hinting at advanced tech and expertise in tracking and hunting."
+   },
+   "prompt_schema": {
+    "base_prompt": "A rugged, seasoned Bounty Hunter Survivalist standing on a desert planet, surveying their surroundings with a mix of caution and determination.",
+    "contextual_modifiers": [
+     " Include the character's trusty speeder bike nearby",
+     " Emphasize the harsh environment with dust storms in the background"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "survivalist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_survivalist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

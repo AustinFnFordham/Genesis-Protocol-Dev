@@ -1,0 +1,906 @@
+{
+ "record": {
+  "consumables": [
+   {
+    "id": "consumable_bacta_patch",
+    "name": "Bacta Patch",
+    "description": "A small adhesive patch infused with healing bacta that accelerates natural healing.",
+    "type": "Consumable",
+    "subtype": "Healing",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "healing",
+     "bacta",
+     "patch",
+     "adhesive"
+    ],
+    "properties": [
+     "adhesive",
+     "healing",
+     "bacta"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "accelerated_healing",
+     "bacta_treatment",
+     "patch_application"
+    ],
+    "effects": [
+     {
+      "type": "restore_hit_points",
+      "value": "1d4+2",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_patch_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d4+2 hit points when bacta patch is applied"
+     }
+    ]
+   },
+   {
+    "id": "consumable_medpac_injection",
+    "name": "Medpac Injection",
+    "description": "A powerful injection that provides immediate healing and stabilizes critical injuries.",
+    "type": "Consumable",
+    "subtype": "Healing",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 0.2,
+    "tags": [
+     "consumable",
+     "healing",
+     "injection",
+     "immediate",
+     "stabilization"
+    ],
+    "properties": [
+     "injection",
+     "immediate",
+     "stabilization"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "immediate_healing",
+     "injection_treatment",
+     "stabilization"
+    ],
+    "effects": [
+     {
+      "type": "restore_hit_points",
+      "value": "2d6+4",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medpac_injection_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 2d6+4 hit points when medpac injection is used"
+     },
+     {
+      "type": "stabilize",
+      "value": "critical_injury",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "dying",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatically stabilize if dying when injection is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_force_healing_elixir",
+    "name": "Force Healing Elixir",
+    "description": "A mystical elixir infused with Force energy that provides enhanced healing for Force users.",
+    "type": "Consumable",
+    "subtype": "Healing",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 0.3,
+    "tags": [
+     "consumable",
+     "healing",
+     "force",
+     "elixir",
+     "mystical"
+    ],
+    "properties": [
+     "force_enhanced",
+     "mystical",
+     "elixir"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_healing",
+     "mystical_restoration",
+     "elixir_consumption"
+    ],
+    "effects": [
+     {
+      "type": "restore_hit_points",
+      "value": "3d6+6",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 3d6+6 hit points when consumed by Force-sensitive users"
+     },
+     {
+      "type": "restore_force_points",
+      "value": "1d4",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d4 Force points when consumed by Force-sensitive users"
+     }
+    ]
+   },
+   {
+    "id": "consumable_stim_pack",
+    "name": "Stim Pack",
+    "description": "A combat stimulant that temporarily enhances physical abilities and combat performance.",
+    "type": "Consumable",
+    "subtype": "Combat Enhancement",
+    "cost": 100,
+    "rarity": 2,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "combat",
+     "stim",
+     "enhancement",
+     "temporary"
+    ],
+    "properties": [
+     "stimulant",
+     "temporary",
+     "enhancement"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_enhancement",
+     "stim_boost",
+     "temporary_improvement"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "stim_enhanced",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stim_pack_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Stim Enhanced status for 1 minute"
+     },
+     {
+      "type": "modify_stat",
+      "value": "strength_bonus",
+      "target_property": "strength_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stim_enhanced",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 bonus to Strength checks while stim enhanced"
+     }
+    ]
+   },
+   {
+    "id": "consumable_combat_focus",
+    "name": "Combat Focus",
+    "description": "A mental stimulant that sharpens focus and improves combat awareness.",
+    "type": "Consumable",
+    "subtype": "Combat Enhancement",
+    "cost": 150,
+    "rarity": 2,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "combat",
+     "focus",
+     "mental",
+     "awareness"
+    ],
+    "properties": [
+     "mental_stimulant",
+     "focus",
+     "awareness"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mental_focus",
+     "combat_awareness",
+     "sharpened_senses"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "combat_focused",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_focus_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Combat Focused status for 1 minute"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_focused",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls while combat focused"
+     }
+    ]
+   },
+   {
+    "id": "consumable_rage_stim",
+    "name": "Rage Stim",
+    "description": "A powerful stimulant that induces a controlled rage, enhancing damage output and pain resistance.",
+    "type": "Consumable",
+    "subtype": "Combat Enhancement",
+    "cost": 300,
+    "rarity": 3,
+    "weight": 0.2,
+    "tags": [
+     "consumable",
+     "combat",
+     "rage",
+     "damage",
+     "resistance"
+    ],
+    "properties": [
+     "rage_induction",
+     "damage_enhancement",
+     "pain_resistance"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "controlled_rage",
+     "damage_boost",
+     "pain_resistance"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "rage_stim_active",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_stim_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Rage Stim Active status for 2 minutes"
+     },
+     {
+      "type": "modify_stat",
+      "value": "damage_bonus",
+      "target_property": "weapon_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_stim_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+1d6 bonus damage to weapon attacks while rage stim is active"
+     },
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rage_stim_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to bludgeoning, piercing, and slashing damage while rage stim is active"
+     }
+    ]
+   },
+   {
+    "id": "consumable_energy_bar",
+    "name": "Energy Bar",
+    "description": "A nutritious energy bar that provides sustenance and restores stamina.",
+    "type": "Consumable",
+    "subtype": "Utility",
+    "cost": 5,
+    "rarity": 0,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "utility",
+     "food",
+     "energy",
+     "sustenance"
+    ],
+    "properties": [
+     "nutritious",
+     "energy",
+     "sustenance"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sustenance",
+     "energy_restoration",
+     "nutrition"
+    ],
+    "effects": [
+     {
+      "type": "restore_stamina",
+      "value": "1d4",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "energy_bar_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d4 stamina points when energy bar is consumed"
+     }
+    ]
+   },
+   {
+    "id": "consumable_water_purifier",
+    "name": "Water Purifier",
+    "description": "A chemical tablet that purifies contaminated water, making it safe to drink.",
+    "type": "Consumable",
+    "subtype": "Utility",
+    "cost": 10,
+    "rarity": 1,
+    "weight": 0.05,
+    "tags": [
+     "consumable",
+     "utility",
+     "water",
+     "purification",
+     "survival"
+    ],
+    "properties": [
+     "purification",
+     "survival",
+     "chemical"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "water_purification",
+     "survival_tool",
+     "contamination_removal"
+    ],
+    "effects": [
+     {
+      "type": "purify_water",
+      "value": "1_gallon",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "water_purifier_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Purify 1 gallon of contaminated water when tablet is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_repair_gel",
+    "name": "Repair Gel",
+    "description": "A specialized gel that can repair minor damage to equipment and technology.",
+    "type": "Consumable",
+    "subtype": "Utility",
+    "cost": 75,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "utility",
+     "repair",
+     "gel",
+     "technology"
+    ],
+    "properties": [
+     "repair",
+     "technology",
+     "gel"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "equipment_repair",
+     "technology_restoration",
+     "gel_application"
+    ],
+    "effects": [
+     {
+      "type": "repair_equipment",
+      "value": "minor_damage",
+      "target_scopes": [
+       "equipment"
+      ],
+      "conditions": [
+       {
+        "key": "repair_gel_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Repair minor damage to one piece of equipment when repair gel is applied"
+     }
+    ]
+   },
+   {
+    "id": "consumable_force_essence",
+    "name": "Force Essence",
+    "description": "A rare and powerful elixir that temporarily enhances Force abilities and sensitivity.",
+    "type": "Consumable",
+    "subtype": "Force Enhancement",
+    "cost": 1000,
+    "rarity": 4,
+    "weight": 0.2,
+    "tags": [
+     "consumable",
+     "force",
+     "essence",
+     "enhancement",
+     "rare"
+    ],
+    "properties": [
+     "force_enhanced",
+     "rare",
+     "essence"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_enhancement",
+     "essence_consumption",
+     "temporary_power"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "force_essence_active",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Force Essence Active status for 10 minutes when consumed by Force-sensitive users"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "force_power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_essence_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all Force power checks while Force essence is active"
+     },
+     {
+      "type": "modify_stat",
+      "value": "force_points_bonus",
+      "target_property": "force_points_max",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_essence_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+3 to maximum Force points while Force essence is active"
+     }
+    ]
+   },
+   {
+    "id": "consumable_tech_booster",
+    "name": "Tech Booster",
+    "description": "A sophisticated nanite injection that temporarily enhances technological abilities and processing power.",
+    "type": "Consumable",
+    "subtype": "Tech Enhancement",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "tech",
+     "booster",
+     "nanite",
+     "enhancement"
+    ],
+    "properties": [
+     "nanite_enhancement",
+     "tech_boost",
+     "processing"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "tech_enhancement",
+     "nanite_boost",
+     "processing_improvement"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "tech_booster_active",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_booster_injected",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Tech Booster Active status for 10 minutes"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_booster_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all Technology-related checks while tech booster is active"
+     },
+     {
+      "type": "modify_stat",
+      "value": "tech_points_bonus",
+      "target_property": "tech_points_max",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_booster_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 to maximum Tech points while tech booster is active"
+     }
+    ]
+   },
+   {
+    "id": "consumable_stealth_cloak",
+    "name": "Stealth Cloak",
+    "description": "A temporary invisibility device that renders the user nearly invisible for a short duration.",
+    "type": "Consumable",
+    "subtype": "Stealth Enhancement",
+    "cost": 600,
+    "rarity": 3,
+    "weight": 0.3,
+    "tags": [
+     "consumable",
+     "stealth",
+     "cloak",
+     "invisibility",
+     "temporary"
+    ],
+    "properties": [
+     "invisibility",
+     "temporary",
+     "cloak"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "temporary_invisibility",
+     "stealth_enhancement",
+     "cloak_activation"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "invisible",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_cloak_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become invisible for 1 minute when stealth cloak is activated"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "invisible",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Stealth checks while invisible"
+     }
+    ]
+   },
+   {
+    "id": "consumable_neurotoxin",
+    "name": "Neurotoxin",
+    "description": "A deadly poison that can be applied to weapons or used to incapacitate targets.",
+    "type": "Consumable",
+    "subtype": "Poison",
+    "cost": 400,
+    "rarity": 3,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "poison",
+     "neurotoxin",
+     "deadly",
+     "weapon"
+    ],
+    "properties": [
+     "poison",
+     "deadly",
+     "weapon_coating"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "poison_application",
+     "deadly_weapon",
+     "neurotoxin_effect"
+    ],
+    "effects": [
+     {
+      "type": "apply_poison",
+      "value": "neurotoxin",
+      "target_scopes": [
+       "weapon"
+      ],
+      "conditions": [
+       {
+        "key": "neurotoxin_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Apply neurotoxin to weapon, dealing 2d6 poison damage on hit"
+     },
+     {
+      "type": "apply_status",
+      "value": "poisoned",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target becomes poisoned for 1 minute on successful hit"
+     }
+    ]
+   },
+   {
+    "id": "consumable_sleep_gas",
+    "name": "Sleep Gas",
+    "description": "A non-lethal gas that induces sleep in targets within its area of effect.",
+    "type": "Consumable",
+    "subtype": "Poison",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "poison",
+     "sleep_gas",
+     "non_lethal",
+     "area"
+    ],
+    "properties": [
+     "sleep_induction",
+     "non_lethal",
+     "area_effect"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sleep_induction",
+     "non_lethal_takedown",
+     "gas_effect"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "sleeping",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "sleep_gas_detonated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Targets in 15-foot radius must save or fall asleep for 1 minute"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "consumables",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/consumables.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

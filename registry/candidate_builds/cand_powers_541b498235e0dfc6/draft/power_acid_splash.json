@@ -1,0 +1,151 @@
+{
+ "record": {
+  "id": "power_acid_splash",
+  "name": "Acid Splash",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "offensive",
+   "damage",
+   "acid",
+   "corrosive",
+   "chemical",
+   "area_effect",
+   "cantrip",
+   "improvised",
+   "ranged",
+   "utility",
+   "basic"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic chemical warfare available to anyone with minimal training"
+   }
+  },
+  "narrative": "You lob a glob of concentrated acid that splashes on impact, the corrosive liquid eating through whatever it touches. The power manifests as a bubbling sphere of industrial-grade acid that arcs through the air before bursting against its target in a spray of caustic droplets.",
+  "flavor_text": "\"Sometimes the simplest weapons are the most effective.\" - Bounty Hunter's Creed",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "throwing motion with acid vial or grenade"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating arc and splash radius"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You hurl a bubble of acid at a creature within range, dealing acid damage.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "acid"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 acid damage to target"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the arc of the acid glob through the air and its impact. Focus on the immediate sizzling and smoking as the acid eats through armor, cloth, or flesh. The damage should appear gradual but relentless, with visible corrosion spreading from the impact point.",
+   "tactical_notes": "Acid Splash is a reliable cantrip for consistent damage output. The 1d4 acid damage may seem modest, but it requires no resources and can target any material. Excellent for destroying objects, locks, and equipment as well as enemies.",
+   "narrative_hooks": [
+    "A scavenger uses Acid Splash to eat through a locked cargo container",
+    "The acid reveals hidden circuitry beneath a droid's plating",
+    "A desperate defender uses it to destroy a bridge's support cables"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a glob of bright green acid arcing through the air toward its target. The acid bubble glistens with toxic luminescence, trailing droplets that smoke where they land. On impact, the acid spreads in a violent splash pattern, immediately beginning to corrode and dissolve the surface it strikes, with vapor rising from the chemical reaction.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/acid_splash.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_acid_splash",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_acid_splash.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

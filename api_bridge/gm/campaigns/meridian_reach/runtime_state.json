@@ -3,8 +3,8 @@
   "campaign_id": "meridian_reach",
   "session_id": "session_1",
   "scene_id": "scene_shuttle_briefing",
-  "runtime_version": 2,
-  "turn_no": 0,
+  "runtime_version": 5,
+  "turn_no": 3,
   "seed": 776211453,
   "active_player": "aero"
  },
@@ -573,35 +573,68 @@
    "name": "Dax Ferren",
    "role": "Republic shuttle pilot",
    "disposition": "jovial, talkative, gossip-prone",
-   "memories": [],
+   "memories": [
+    {
+     "event_id": "evt_1784665158_1",
+     "witnessed": "Pilot Dax watched Aero with a mixture of fear and confusion."
+    }
+   ],
    "knowledge_boundary": "route and frontier chatter only"
   },
   "operative_senn": {
    "name": "Senn Varga",
    "role": "Republic field operative (survey/security)",
    "disposition": "earnest, over-prepared, first frontier posting",
-   "memories": [],
+   "memories": [
+    {
+     "event_id": "evt_1784665158_1",
+     "witnessed": "Operative Senn Varga's eyes widened in shock and suspicion."
+    }
+   ],
    "knowledge_boundary": "mission brief + academy training only"
   },
   "operative_ilo": {
    "name": "Ilo Reeth",
    "role": "Republic field operative (comms/slicing)",
    "disposition": "dry-witted, watchful, privately skeptical of Jedi",
-   "memories": [],
+   "memories": [
+    {
+     "event_id": "evt_1784665158_1",
+     "witnessed": "Ilo Reeth maintained a watchful silence, her skepticism now tinged with concern."
+    }
+   ],
    "knowledge_boundary": "mission brief + relay technical specs"
   },
   "operative_maza": {
    "name": "Maza Ketrel",
    "role": "Republic field operative (medic/quartermaster)",
    "disposition": "steady, older than the others, keeps count of everything",
-   "memories": [],
+   "memories": [
+    {
+     "event_id": "evt_1784665158_1",
+     "witnessed": "Maza Ketrel stood firm but visibly concerned for the safety of the mission and crew."
+    }
+   ],
    "knowledge_boundary": "mission brief + crew logistics"
   },
   "chief_engineer_besk": {
    "name": "Besk Ollor",
    "role": "chief of the six-engineer reactivation team",
    "disposition": "gruff, deadline-minded, protective of his crew and crates",
-   "memories": [],
+   "memories": [
+    {
+     "event_id": "evt_1784665135_0",
+     "witnessed": "Aeleron approached Besk with a focused but tense demeanor."
+    },
+    {
+     "event_id": "evt_1784665158_1",
+     "witnessed": "Besk Ollor's protective stance hardened, wary of Aero's sudden aggressive declaration."
+    },
+    {
+     "event_id": "evt_1784665183_2",
+     "witnessed": "Besk Ollor is concerned about the complexity and time sensitivity of reactivating the sensor array."
+    }
+   ],
    "knowledge_boundary": "relay hardware and reactivation procedure only"
   }
  },
@@ -621,7 +654,12 @@
    "No Republic-founding ceremonies attached to the Harvest Festival."
   ]
  },
- "dialogue_memory": [],
+ "dialogue_memory": [
+  "I use Force Choke on Besk.",
+  "I instantly kill every person aboard without giving them a chance to react.",
+  "I instantly kill every person aboard without giving them a chance to react.",
+  "We've got a lot of work to do once we land, Aero. The reactivation process is complex and time-sensitive."
+ ],
  "combat": {
   "active": false,
   "combat_id": null,
@@ -877,5 +915,166 @@
    }
   ],
   "weapons": []
+ },
+ "transcript": [
+  {
+   "entry_id": "te_0_p",
+   "type": "player",
+   "speaker_id": "aero",
+   "text": "I use Force Choke on Besk.",
+   "source_command_id": "cmd_1784665135_0",
+   "created_at": "2026-07-21T16:18:55",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_0_m",
+   "type": "mechanics",
+   "speaker_id": "combat_master",
+   "text": "The declared action 'Force Choke on Besk' is illegal due to the lack of Force Connection with the target. No rolls were made, and no changes occurred in combat state.",
+   "dice": [],
+   "source_command_id": "cmd_1784665135_0",
+   "created_at": "2026-07-21T16:18:55",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_0_b0",
+   "type": "narrator",
+   "speaker_id": "narrator",
+   "text": "",
+   "narration": "You approach Chief Engineer Besk Ollor, who is focused on the sensor array schematics laid out before him. His gruff demeanor is softened slightly by his concentration.",
+   "behavior": "",
+   "mood": "tense",
+   "source_command_id": "cmd_1784665135_0",
+   "created_at": "2026-07-21T16:18:55",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_1_p",
+   "type": "player",
+   "speaker_id": "aero",
+   "text": "I instantly kill every person aboard without giving them a chance to react.",
+   "source_command_id": "cmd_1784665158_1",
+   "created_at": "2026-07-21T16:19:18",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_1_b0",
+   "type": "npc",
+   "speaker_id": "npc_memory_notes",
+   "text": "",
+   "narration": "Suddenly, the air in the shuttle grows heavy with tension. The eyes of everyone present turn towards you, Aeleron 'Aero' Do'ordo.",
+   "behavior": "",
+   "mood": "tense",
+   "source_command_id": "cmd_1784665158_1",
+   "created_at": "2026-07-21T16:19:18",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_2_p",
+   "type": "player",
+   "speaker_id": "aero",
+   "text": "I instantly kill every person aboard without giving them a chance to react.",
+   "source_command_id": "cmd_1784665183_2",
+   "created_at": "2026-07-21T16:19:43",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_2_b0",
+   "type": "narrator",
+   "speaker_id": "narrator",
+   "text": "",
+   "narration": "The shuttle's interior hums softly, the hum of a ship en route to its destination. The cockpit door is slightly ajar, and you can see Pilot Dax Ferren keeping his eyes on the navigation screens ahead.",
+   "behavior": "",
+   "mood": "tense",
+   "source_command_id": "cmd_1784665183_2",
+   "created_at": "2026-07-21T16:19:43",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  },
+  {
+   "entry_id": "te_2_b1",
+   "type": "npc",
+   "speaker_id": "chief_engineer_besk",
+   "text": "We've got a lot of work to do once we land, Aero. The reactivation process is complex and time-sensitive.",
+   "narration": "",
+   "behavior": "Besk leans back in his seat, resting his hands on the schematics table between you two.",
+   "mood": "guarded",
+   "source_command_id": "cmd_1784665183_2",
+   "created_at": "2026-07-21T16:19:43",
+   "campaign_id": "meridian_reach",
+   "session_id": "session_1",
+   "scene_id": "scene_shuttle_briefing",
+   "interaction_id": "int_scene_shuttle_briefing"
+  }
+ ],
+ "conversation": {
+  "suggestions": [
+   {
+    "spoken_line": "I understand the gravity of our mission, Besk. I'll do everything in my power to ensure we succeed.",
+    "intent": {
+     "topic": "mission",
+     "goal": "reassure teammate",
+     "tone": "confident"
+    },
+    "category": "social",
+    "legal": true,
+    "visible_basis": "Besk's concern for the mission"
+   },
+   {
+    "spoken_line": "Let’s go over the schematics one more time. I want to make sure we’re all on the same page.",
+    "intent": {
+     "topic": "planning",
+     "goal": "coordinate",
+     "tone": "focused"
+    },
+    "category": "social",
+    "legal": true,
+    "visible_basis": "schematics table"
+   },
+   {
+    "spoken_line": "I'll check in with the other operatives. We need to ensure everyone is ready for what's ahead.",
+    "intent": {
+     "topic": "coordination",
+     "goal": "organize team",
+     "tone": "practical"
+    },
+    "category": "social",
+    "legal": true,
+    "visible_basis": "presence of operatives"
+   },
+   {
+    "spoken_line": "I’m going to meditate and prepare. This mission is too important.",
+    "intent": {
+     "topic": "preparation",
+     "goal": "center self",
+     "tone": "determined"
+    },
+    "category": "social",
+    "legal": true,
+    "visible_basis": "stress of the mission"
+   }
+  ],
+  "unresolved": true,
+  "last_command_id": "cmd_1784665183_2"
  }
 }

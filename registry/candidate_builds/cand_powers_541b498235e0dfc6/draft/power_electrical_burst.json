@@ -1,0 +1,210 @@
+{
+ "record": {
+  "id": "power_electrical_burst",
+  "name": "Electrical Burst",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "lightning",
+   "electrical",
+   "tech",
+   "projectile",
+   "cantrip",
+   "shock"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic electrical discharge weapon"
+   }
+  },
+  "narrative": "You discharge a concentrated bolt of electricity from your weapon's power cell, the energy arcing through the air with a sharp crack. The power manifests as a brilliant blue-white streak that leaves the smell of ozone and causes muscles to spasm uncontrollably on impact.",
+  "flavor_text": "\"Set weapons to stun... or dont.\" - Bounty Hunter",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "triggering electrical discharge from tech device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating voltage and targeting arc path"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire a small electrical projectile that deals lightning damage and can stun the target.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "lightning",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 lightning damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's electrical expertise transforms Electrical Burst from simple shock to precision weapon. They modulate frequency and amperage for maximum effect, understanding exactly how much current disrupts droids versus organics, turning basic electricity into a surgical tool.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "lightning",
+       "modifier": 0
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "condition": "vs_droids",
+      "notes": "Engineers deal +1d4 lightning damage to droids and electronics."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human improvisation with Electrical Burst is legendary. They've been known to channel it through puddles for area effect, overload door panels, or even jump-start vehicles—finding utility in what others see as merely a weapon.",
+    "mechanical_benefit": [
+     {
+      "type": "chain_lightning",
+      "value": {
+       "additional_targets": 1
+      },
+      "range": {
+       "distance": 10,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Humans can arc the burst to hit one additional target within 10 feet."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Electrical Burst for sabotage operations. Their version overloads Imperial security systems, fries communication arrays, and disrupts shield generators—turning a simple shock into a tool of resistance.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "systems_disrupted"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebel bursts disable droid actions for 1 round."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the electrical arc—the bright flash, the sharp crack of ionized air, muscles jerking involuntarily as current courses through the target. For droids, show circuits sparking and systems briefly glitching.",
+   "tactical_notes": "Electrical Burst is a cantrip dealing 1d4 lightning damage at 60 feet range. Particularly effective against droids and electronics. No resource cost makes it ideal for consistent ranged damage. The damage scales with character level.",
+   "narrative_hooks": [
+    "An electrical burst shorts out a critical control panel at the perfect moment",
+    "The shock reveals hidden cybernetics in an apparently organic opponent",
+    "Chain lightning through a puddle takes out multiple enemies"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tech warrior firing an electrical burst from their weapon. Blue-white lightning arcs through the air, branching like a miniature thunderbolt. The target convulses as electricity courses through them, sparks flying from metal surfaces. The scene captures the raw power of weaponized electricity.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/electrical_burst.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_electrical_burst",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_electrical_burst.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "record": {
+  "id": "power_analyze_weakness",
+  "name": "Analyze Weakness",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "utility",
+   "tactical",
+   "analysis",
+   "scanning",
+   "reconnaissance",
+   "vulnerability",
+   "information",
+   "support",
+   "buff",
+   "targeting",
+   "engineer",
+   "battlefield_control"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "A tactical technique available to any trained combatant"
+   }
+  },
+  "narrative": "You scan your target with tactical precision, using advanced sensors or keen observation to identify structural weaknesses, armor gaps, and vulnerable systems. The power manifests as focused analysis, your mind or equipment rapidly processing combat data to find the perfect point of attack.",
+  "flavor_text": "\"Know your enemys weakness, and the battle is already won.\" - Mandalorian Strategist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "using scanner or making analytical gestures"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "processing tactical data and identifying vulnerabilities"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Make a Technology check to learn a target's vulnerabilities or resistances.",
+   "mechanics": [
+    {
+     "type": "reveal_information",
+     "value": "vulnerabilities_resistances",
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Learn target's vulnerabilities and resistances"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the analytical process - scanners lighting up weak points, the user's eyes tracking across armor plates, or tactical displays highlighting vulnerable systems. The revelation should feel like a tactical epiphany, suddenly seeing exactly where to strike.",
+   "tactical_notes": "Analyze Weakness provides crucial tactical information before engaging. Learning resistances prevents wasted attacks, while identifying vulnerabilities can multiply damage output. The 60-foot range allows safe reconnaissance before committing to combat.",
+   "narrative_hooks": [
+    "A scout identifies a critical weakness in an AT-AT's armor plating",
+    "The analysis reveals a droid's hidden self-destruct mechanism",
+    "A desperate fighter discovers their opponent's cybernetic implants are vulnerable to ion damage"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tactical specialist analyzing an enemy through advanced HUD displays or keen observation. Glowing targeting reticles highlight weak points on the opponent's armor, with data streams showing vulnerability percentages and structural analysis. The scene captures the moment of tactical revelation as critical weaknesses are identified.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/analyze_weakness.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_analyze_weakness",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_analyze_weakness.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

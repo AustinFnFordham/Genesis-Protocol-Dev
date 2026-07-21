@@ -1,0 +1,157 @@
+{
+ "record": {
+  "id": "power_bacta_pack",
+  "name": "Bacta Pack",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "healing",
+   "medical",
+   "bacta",
+   "restoration",
+   "field_medicine",
+   "biological",
+   "support",
+   "utility",
+   "close_range",
+   "emergency",
+   "medic",
+   "recovery"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Medical technology available to anyone with basic field training"
+   }
+  },
+  "narrative": "You apply a concentrated bacta gel pack to wounds, the advanced healing compound immediately beginning cellular regeneration. The power manifests as the cool, tingling sensation of bacta seeping into damaged tissue, knitting flesh and mending injuries with remarkable speed.",
+  "flavor_text": "\"Bacta heals all wounds... except pride.\" - Clone Medic",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "applying bacta pack to wound site"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "identifying optimal treatment location"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use a bacta pack to heal a creature's wounds.",
+   "mechanics": [
+    {
+     "type": "apply_healing",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Heal 2d4 hit points"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the hiss of the bacta pack's seal breaking, the gel's distinctive medicinal smell, and the immediate numbing relief as it contacts wounds. Show tissue regenerating visibly, cuts closing, and bruises fading as the bacta works its medical miracle.",
+   "tactical_notes": "Bacta Pack provides reliable healing without Force sensitivity. The 2d4 healing is modest but consistent. Its 5-foot range requires getting close to wounded allies, potentially exposing you to danger. Best used between combats or with cover.",
+   "narrative_hooks": [
+    "A field medic uses their last bacta pack to save a dying comrade",
+    "Bacta reveals internal injuries that weren't visible externally",
+    "A clever application of bacta gel stops a poison from spreading"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a medic applying a bacta pack to a wounded soldier. The translucent blue-green gel spreads across the injury, visibly mending torn flesh. Medical readouts on the pack show vital signs stabilizing. The scene captures the urgency of battlefield medicine with high-tech healing.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/bacta_pack.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_bacta_pack",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_bacta_pack.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

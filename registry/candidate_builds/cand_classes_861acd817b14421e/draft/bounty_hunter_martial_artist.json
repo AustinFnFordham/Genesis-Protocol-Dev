@@ -1,0 +1,285 @@
+{
+ "record": {
+  "id": "bounty_hunter_martial_artist",
+  "name": "Martial Artist",
+  "class_id": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "martial_artist",
+   "melee_specialist",
+   "dexterity_based",
+   "disciplined",
+   "hunter",
+   "agile",
+   "tactical",
+   "precise"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "bounty_hunter_martial_artist_entry_3",
+    "feature_id": "bounty_hunter_martial_artist_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "bounty_hunter_specialization",
+    "description": "Bounty Hunter Martial Artists rely on disciplined unarmed combat, control techniques, and close-quarters prowess to subdue targets swiftly and efficiently."
+   },
+   {
+    "node_id": "close_quarters_mastery_7",
+    "feature_id": "close_quarters_mastery",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "bounty_hunter_martial_artist_entry_3"
+    ],
+    "description": "You excel at fighting in tight spaces and grapples. While you are within 5 feet of a hostile creature, opportunity attacks you provoke have disadvantage. In addition, when you hit a creature with an unarmed strike, you can attempt to grapple as a bonus action.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "disadvantage_opportunity_attacks_against_you",
+      "target_scopes": [
+       "enemies"
+      ],
+      "conditions": [
+       {
+        "key": "within_5_feet",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enemies have disadvantage on OAs you provoke in close range"
+     },
+     {
+      "type": "grant_bonus_action",
+      "value": "grapple_after_unarmed_hit",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "unarmed_strike_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Bonus action grapple after unarmed strike hit"
+     }
+    ]
+   },
+   {
+    "node_id": "stunning_technique_11",
+    "feature_id": "stunning_technique",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "close_quarters_mastery_7"
+    ],
+    "description": "When you hit a creature with an unarmed strike, you can force it to make a Constitution saving throw (DC = 8 + your proficiency bonus + your Dexterity or Wisdom modifier). On a failure, the creature is stunned until the start of your next turn. You can use this feature a number of times per long rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "stunning_blow",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "unarmed_strike_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Force Con save or be stunned until your next turn"
+     }
+    ]
+   },
+   {
+    "node_id": "disarming_throw_13",
+    "feature_id": "disarming_throw",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "stunning_technique_11"
+    ],
+    "description": "When you succeed on a grapple against a creature holding a weapon, you can immediately attempt to disarm it as part of the same bonus action. If you do, it must succeed on a Strength saving throw or drop one held weapon.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "disarm_on_grapple",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "grapple_succeeded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target makes STR save or drops a held weapon"
+     }
+    ]
+   },
+   {
+    "node_id": "lethal_precision_17",
+    "feature_id": "lethal_precision",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "disarming_throw_13"
+    ],
+    "description": "Your unarmed strikes strike with surgical accuracy. Your unarmed strikes score a critical hit on a roll of 19–20. Additionally, when you critically hit with an unarmed strike, you can roll one additional damage die.",
+    "effects": [
+     {
+      "type": "modify_roll",
+      "value": "unarmed_crit_range_19_20",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Unarmed crits on 19–20"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "extra_crit_damage_unarmed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "critical_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add one extra damage die on unarmed crit"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_martial_focus_19",
+    "feature_id": "legendary_martial_focus",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "lethal_precision_17"
+    ],
+    "description": "You can enter a state of impeccable martial focus for 1 minute (once per long rest). During this focus, you have advantage on attack rolls with unarmed strikes, your movement does not provoke opportunity attacks, and you can make one additional unarmed strike as part of the Attack action.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "unarmed_attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "martial_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on unarmed attacks during focus"
+     },
+     {
+      "type": "apply_status",
+      "value": "no_opportunity_attacks_triggered",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "martial_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Movement does not provoke OAs during focus"
+     },
+     {
+      "type": "grant_action_bonus",
+      "value": "extra_unarmed_strike_in_attack_action",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "martial_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "One extra unarmed strike with the Attack action"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "KyberCrystalShard",
+    "LightsaberHilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a defensive stance with feet shoulder-width apart and knees slightly bent, ready to react to any incoming attack.",
+    "energy_signature": "A swirling vortex of blue and purple energy surrounding the subject's body, pulsating in sync with their breathing."
+   },
+   "prompt_schema": {
+    "base_prompt": "A Jedi Knight meditating on the planet Tython, surrounded by lush greenery and towering crystal formations.",
+    "contextual_modifiers": [
+     "Include a faint image of a lightsaber hilt nearby",
+     "Emphasize the Jedi's connection to the Force with subtle energy aura effects"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Bounty Hunters who focus on martial arts use their bodies as living instruments to execute precise strikes, relying on their agility and acrobatic prowess to outmaneuver foes.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Intricate tattoos depicting various fighting styles or techniques adorn the bounty hunter's arms or torso.",
+    "The bounty hunter wears a unique pattern of scars, indicating their mastery over specific martial arts disciplines."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "bounty_hunter_martial_artist",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter.martial_artist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

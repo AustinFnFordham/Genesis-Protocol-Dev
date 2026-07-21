@@ -1,0 +1,806 @@
+{
+ "record": {
+  "id": "zabrak",
+  "name": "Zabrak",
+  "tags": [
+   "battlefield_control",
+   "constitution",
+   "disciplined",
+   "honorable",
+   "intimidating",
+   "legacy",
+   "resilient",
+   "scout",
+   "sith_order",
+   "survivor_background",
+   "uncommon",
+   "warrior",
+   "zabrak"
+  ],
+  "description": "Resolved and relentless, Zabrak embody endurance and self-mastery, their cranial horns and ritual markings signaling a life honed through trial.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Constitution",
+    "value": 2
+   },
+   {
+    "ability": "Choice",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Zabraki",
+   "Basic"
+  ],
+  "base_hp": 12,
+  "base_strain": 9,
+  "innate_traits": [
+   {
+    "id": "zabrak_iron_will",
+    "name": "Iron Will",
+    "narrative": "Your species possesses an unshakable mental fortitude, honed through generations of hardship and trial. Your mind is as resilient as your body.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on saving throws against being charmed or frightened.",
+      "conditions": [
+       {
+        "key": "saving_throw_type",
+        "op": "in",
+        "value": [
+         "charmed",
+         "frightened"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "zabrak_broken_resilience",
+     "ui_transition": {
+      "animation": "broken_resilience_ui_transition_anim",
+      "sfx": "resistance_break_sfx"
+     }
+    }
+   },
+   {
+    "id": "zabrak_horned_fighter",
+    "name": "Horned Fighter",
+    "narrative": "Your cranial horns are not just ornamental; they are weapons honed through generations of combat training and personal discipline.",
+    "mechanics": [
+     {
+      "effect": "modify_unarmed_strike",
+      "parameters": {
+       "damage_dice": "1d4",
+       "damage_type": "piercing"
+      }
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on checks and saves to resist being shoved or grappled.",
+      "conditions": [
+       {
+        "key": "action_type",
+        "op": "in",
+        "value": [
+         "shove",
+         "grapple"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "zabrak_bloodlust",
+     "ui_transition": {
+      "animation": "bloodlust_ui_transition_anim",
+      "sfx": "rage_sfx"
+     }
+    }
+   },
+   {
+    "id": "zabrak_enduring_focus",
+    "name": "Enduring Focus",
+    "narrative": "Your species' legendary discipline allows you to maintain perfect focus even in the most chaotic situations, channeling your determination into precise strikes.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Focused Strike",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on one weapon attack roll.",
+      "rules": [
+       "cooldown:short_rest",
+       "trigger:weapon_attack"
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Vestigial horns on head",
+    "Facial tattoos (Iridonian tradition)",
+    "Second heart",
+    "Resilient, muscular build",
+    "Intense, focused gaze"
+   ],
+   "skin_color_variants": [
+    "Pale Tan",
+    "Rich Brown",
+    "Deep Red",
+    "Dark Grey",
+    "Vibrant Orange",
+    "Mottled patterns"
+   ],
+   "eye_color_variants": [
+    "Blue",
+    "Green",
+    "Brown",
+    "Gold",
+    "Red",
+    "Silver"
+   ],
+   "horn_styles": [
+    "Small nubs",
+    "Sharp, forward-curving spikes",
+    "Elaborate, multi-pointed crown",
+    "Single, central horn",
+    "Paired horns",
+    "Ridged horn patterns"
+   ],
+   "tattoo_patterns": [
+    "Traditional Iridonian markings",
+    "Personal achievement symbols",
+    "Clan identification patterns",
+    "Ritual passage markings",
+    "Modern artistic designs"
+   ],
+   "common_adornments": [
+    "Intricate facial tattoos (Tattoos of Passage)",
+    "Small metallic rings or studs on horns",
+    "Utilitarian, durable clothing",
+    "Traditional Zabrak ceremonial garments",
+    "Practical combat gear"
+   ],
+   "llm_description_prompt": "Describe a Zabrak character. Emphasize their intense gaze and the unique pattern of their horns, which reflect their personal history and achievements. Their facial tattoos should tell the story of their journey and accomplishments. Consider their natural resilience and the way they carry themselves with unshakable determination and focus."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian",
+    "narrative": "Zabrak's natural resilience and Iron Will make them exceptional Guardians, able to endure any hardship to protect others and maintain their focus in the most challenging situations.",
+    "mechanical_benefits": [
+     "Iron Will trait enhances resistance to mental control",
+     "High Constitution supports Guardian's defensive role",
+     "Horned Fighter provides natural weapons for close combat"
+    ]
+   },
+   {
+    "class": "Soldier (Brawler)",
+    "narrative": "Zabrak's natural toughness and Horned Fighter abilities make them formidable Soldiers, able to endure punishment and fight effectively in close quarters.",
+    "mechanical_benefits": [
+     "Horned Fighter trait enhances unarmed combat",
+     "Iron Will supports mental resilience in combat",
+     "High Constitution allows for aggressive tactics"
+    ]
+   },
+   {
+    "class": "Berserker",
+    "narrative": "When a Zabrak's Iron Will is combined with Berserker rage, they become nearly unstoppable, maintaining focus even in the heat of battle.",
+    "mechanical_benefits": [
+     "Iron Will trait prevents mental control during rage",
+     "Horned Fighter enhances unarmed combat damage",
+     "Natural durability supports reckless combat style"
+    ]
+   },
+   {
+    "class": "Monk",
+    "narrative": "Zabrak's natural discipline and Horned Fighter abilities make them excellent Monks, combining physical and mental mastery.",
+    "mechanical_benefits": [
+     "Iron Will supports mental discipline and focus",
+     "Horned Fighter provides natural weapons for martial arts",
+     "High Constitution enhances Monk's endurance"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Mandalorian Clans",
+    "narrative": "Many Zabrak find kinship with Mandalorian culture, respecting their warrior traditions and code of honor while bringing their own unique resilience to the clan."
+   },
+   {
+    "faction": "Independent Warriors",
+    "narrative": "Zabrak often prefer to work independently or in small groups, following their own codes of honor and personal traditions."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Zabrak have served the Republic as elite soldiers and guardians, their natural resilience and discipline making them valuable protectors."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Iron Will",
+   "base_description": "Your species possesses an unshakable mental fortitude, honed through generations of hardship and trial. Your mind is as resilient as your body.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "mental_enhancement",
+     "description": "Your Iron Will has grown stronger. You can resist mental influences with even greater determination.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Wisdom saving throws",
+      "conditions": [
+       {
+        "key": "save_type",
+        "op": "in",
+        "value": [
+         "mental_control",
+         "psychic_attack",
+         "mind_influence"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your Iron Will has become legendary. You can project your mental strength to protect others.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Mental Bastion",
+      "description": "Once per long rest, you can grant advantage on mental saving throws to allies within 30 feet for 1 minute"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of mental resilience. Your Iron Will can overcome any mental assault.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Unbreakable Mind",
+      "description": "Once per long rest, you can automatically succeed on any mental saving throw"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of mental fortitude. Your Iron Will transcends normal limitations.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Iron Will",
+      "description": "Once per long rest, you can grant immunity to mental effects to yourself and allies for 1 minute"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Zabrak's Iron Will has grown stronger. Their mental resilience has deepened, allowing them to resist mental influences with even greater determination.",
+    "level_10": "Your Zabrak's Iron Will has become legendary. They can project their mental strength to protect others, their unshakable resolve inspiring allies and intimidating enemies.",
+    "level_15": "Your Zabrak has become a master of mental resilience. Their Iron Will can overcome any mental assault, their mind as unbreakable as their body.",
+    "level_20": "Your Zabrak is a living legend of mental fortitude. Their Iron Will transcends normal limitations, making them a beacon of unshakable resolve in the galaxy."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Iridonian Heritage",
+    "type": "traditional",
+    "description": "Your deep connection to Iridonian warrior traditions and the sacred art of personal discipline.",
+    "activation": "When following Iridonian traditions or demonstrating personal discipline",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Intimidation) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "warrior_traditions",
+        "personal_discipline",
+        "iridonian_customs"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon the ancient warrior traditions of Iridonia, demonstrating the discipline and honor that defines your people.",
+    "faction_connection": "Independent Warriors",
+    "optional": true
+   },
+   {
+    "name": "Tattoos of Passage",
+    "type": "cultural",
+    "description": "Your facial tattoos tell the story of your personal journey and achievements, marking your passage through life's trials.",
+    "activation": "When demonstrating personal achievements or facing challenges",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "achievement_demonstration",
+        "challenge_facing",
+        "personal_story"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "Your tattoos serve as a visual testament to your journey, inspiring others and marking your personal growth and achievements.",
+    "faction_connection": "Zabrak Cultural Traditions",
+    "optional": true
+   },
+   {
+    "name": "Horned Warrior",
+    "type": "narrative",
+    "description": "Your cranial horns are symbols of your warrior heritage and personal strength.",
+    "activation": "When engaging in combat or demonstrating physical prowess",
+    "effect": {
+     "type": "advantage",
+     "value": "Strength (Intimidation) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "combat_intimidation",
+        "physical_demonstration",
+        "warrior_prowess"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "Your horns serve as both weapons and symbols, marking you as a warrior of your people and demonstrating your physical and mental strength.",
+    "faction_connection": "Mandalorian Clans",
+    "optional": true
+   },
+   {
+    "name": "Enduring Spirit",
+    "type": "social",
+    "description": "Your species' legendary endurance and determination in the face of any challenge.",
+    "activation": "When facing adversity or demonstrating resilience",
+    "effect": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "adversity",
+        "endurance_challenge",
+        "resilience_demonstration"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can inspire others with your legendary endurance, demonstrating that no challenge is too great for a Zabrak's determination.",
+    "faction_connection": "Galactic Republic",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Iridonian Warrior Traditions",
+   "cultural_networks": [
+    "Mandalorian Clans",
+    "Independent Warriors",
+    "Zabrak Cultural Traditions",
+    "Warrior Societies",
+    "Discipline Masters"
+   ],
+   "traditional_practices": [
+    "Tattoo of Passage Ceremonies",
+    "Horn Training Rituals",
+    "Mental Discipline Training",
+    "Warrior Initiation Rites",
+    "Endurance Challenges"
+   ],
+   "cultural_knowledge": [
+    "Iridonian History",
+    "Warrior Traditions",
+    "Mental Discipline",
+    "Combat Techniques",
+    "Personal Achievement"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "harsh_conditions",
+    "advantage": "Natural resilience and endurance in harsh or extreme environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Constitution saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "harsh_conditions"
+      },
+      {
+       "key": "challenge_type",
+       "op": "in",
+       "value": [
+        "endurance",
+        "survival",
+        "resilience"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You thrive in harsh conditions, your species' evolutionary adaptation to Iridonia's challenging environment making you perfectly suited for extreme conditions.",
+    "narrative_hooks": [
+     "Extreme environment survival",
+     "Endurance challenges",
+     "Harsh condition adaptation",
+     "Resilience demonstrations"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "combat_zones",
+    "advantage": "Enhanced performance and focus in combat environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Initiative checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "combat_zones"
+      },
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "combat",
+        "battle",
+        "conflict"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural combat instincts and Iron Will make you perfectly at home in combat zones, your focus and determination never wavering.",
+    "narrative_hooks": [
+     "Combat zone navigation",
+     "Battlefield tactics",
+     "Combat focus maintenance",
+     "Warrior leadership"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "mental_challenges",
+    "advantage": "Enhanced mental resilience and focus in mentally challenging situations",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Intelligence saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "mental_challenges"
+      },
+      {
+       "key": "challenge_type",
+       "op": "in",
+       "value": [
+        "mental_strain",
+        "psychic_attack",
+        "mental_manipulation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your Iron Will makes you perfectly suited for mentally challenging environments, your mental resilience allowing you to maintain focus where others would falter.",
+    "narrative_hooks": [
+     "Mental challenge endurance",
+     "Psychic attack resistance",
+     "Mental focus maintenance",
+     "Cognitive resilience"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "discipline_required",
+    "advantage": "Enhanced performance in situations requiring discipline and self-control",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Wisdom saving throws",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "discipline_required"
+      },
+      {
+       "key": "requirement_type",
+       "op": "in",
+       "value": [
+        "self_control",
+        "discipline",
+        "focus_maintenance"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural discipline and Iron Will make you perfectly suited for situations requiring self-control and focus.",
+    "narrative_hooks": [
+     "Discipline demonstrations",
+     "Self-control challenges",
+     "Focus maintenance",
+     "Mental discipline"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "harsh_conditions",
+    "combat_zones",
+    "mental_challenges",
+    "discipline_required"
+   ],
+   "environmental_knowledge": [
+    "Harsh Environment Survival",
+    "Combat Zone Navigation",
+    "Mental Resilience Training",
+    "Discipline Techniques",
+    "Endurance Methods",
+    "Focus Maintenance"
+   ],
+   "survival_techniques": [
+    "Extreme Environment Adaptation",
+    "Combat Focus Maintenance",
+    "Mental Challenge Endurance",
+    "Discipline Training",
+    "Resilience Development",
+    "Iron Will Cultivation"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "flavor_text": "The Zabrak's horns are not merely a symbol of strength, but also a reminder of their people's unyielding resolve. Forged in the unforgiving environment of Iridonia, they have developed an unwavering commitment to self-discipline and the pursuit of honor.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Zabrak, you embody the principles of Ryloth's warrior-monastic orders. Your character is a living embodiment of Iridonian resilience and martial prowess. They are driven by a strong sense of duty to their people and may struggle with adapting to unfamiliar environments or social norms.",
+   "narrative_hooks": [
+    "A long-lost relative has been captured by the Hutt Cartel, forcing you to navigate the treacherous underworld to rescue them."
+   ],
+   "social_dynamics": "Zabrak are known for their stoic demeanor, but beneath this façade lies a complex tapestry of emotions and relationships. They value loyalty above all else and will go to great lengths to protect those they care about.",
+   "common_motivations": [
+    "Seeking redemption for past transgressions",
+    "Uncovering the truth behind a family tragedy"
+   ]
+  },
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "morphology": {
+     "head_type": "ram's horns",
+     "body_type": "athletic build",
+     "average_height": "6'4\" (193 cm)"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "eyes": "bright blue, large",
+       "hair_color": "jet black"
+      },
+      "adult": {
+       "skin_tone": "dusky gray",
+       "body_type": "muscular build"
+      },
+      "elder": {
+       "horns": "worn, weathered",
+       "scalp_marks": "deep, ancient scars"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       {
+        "eyes": "red, sunken",
+        "hair_color": "white, wild"
+       },
+       {
+        "skin_tone": "ashen gray",
+        "body_type": "gaunt, emaciated"
+       }
+      ],
+      "light_side": [
+       {
+        "horns": "sharpened, polished",
+        "scalp_marks": "new, vibrant tattoos"
+       },
+       {
+        "eyes": "bright blue, piercing",
+        "hair_color": "golden brown"
+       }
+      ]
+     }
+    },
+    "unique_identifiers": [
+     null,
+     null
+    ],
+    "prompt_schema": {
+     "base_prompt": "a Zabrak warrior stands ready to face the battle ahead...",
+     "contextual_modifiers": [
+      "standing in a proud stance, with one hand on the hilt of his lightsaber",
+      "kneeling in contemplative pose, surrounded by ancient scrolls and relics"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "triggers": [
+      "zabrak legacy",
+      "sith order"
+     ]
+    },
+    "escalation": {
+     "triggers": [
+      "battlefield control",
+      "constititution"
+     ]
+    },
+    "confrontation": {
+     "triggers": [
+      "intimidating presence",
+      "warrior background"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "The Zabrak warrior's honor is restored through their nemesis' defeat.",
+    "redemption": "The Zabrak warrior finds redemption by helping their nemesis overcome their past struggles.",
+    "escape": "The Zabrak warrior escapes their nemesis, but not without being forever changed by the experience."
+   },
+   "conflict_triggers": [
+    "zabrak legacy",
+    "sith order",
+    "battlefield control",
+    "constitution"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "intimidating presence",
+     "warrior background"
+    ],
+    "vendetta_type": "blood feud"
+   },
+   "overrides": {
+    "primary_enemy_type": "Hutt Cartel",
+    "tragic_flaw_overrides": [
+     "Overreliance on brute strength, leading to neglect of strategic thinking"
+    ],
+    "progression_path": "The path of the Krayt: a ruthless pursuit of power and self-discipline"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "male",
+    "female"
+   ],
+   "romance_progression": {
+    "stage1": "The Zabrak warrior is drawn to the romantic interest's strength and determination.",
+    "stage2": "The Zabrak warrior begins to open up to the romantic interest, sharing their past struggles.",
+    "stage3": "The Zabrak warrior and romantic interest work together to overcome a common challenge.",
+    "stage4": "The Zabrak warrior and romantic interest share a deep emotional connection.",
+    "stage5": "The Zabrak warrior and romantic interest seal their love with a ritual marking."
+   },
+   "romance_events": [
+    "A shared battle experience brings the Zabrak warrior and romantic interest closer together.",
+    "The Zabrak warrior helps the romantic interest overcome a personal struggle, strengthening their bond."
+   ],
+   "romance_modifiers": [
+    "The Zabrak warrior's honor is boosted by their romantic relationship.",
+    "The romantic interest is more resilient in battle when accompanied by the Zabrak warrior."
+   ],
+   "overrides": {
+    "courtship_styles": [
+     "A formalized bonding ceremony",
+     "A series of trials to prove worthiness"
+    ],
+    "cultural_values": [
+     "Loyalty above all else",
+     "Respect for authority and tradition"
+    ]
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "A Zabrak companion is fiercely loyal, intelligent, and intensely focused on their mission. They have a no-nonsense attitude, but are fiercely protective of those they care about.\n",
+    "motivations": "To serve the greater good, to protect the innocent, and to uphold the honor of my people\n",
+    "combat_behavior": "A Zabrak will always prioritize taking down high-priority targets first, using their tactical expertise to maximize damage.",
+    "social_behavior": "A Zabrak is a natural leader, but also values input from allies and can be persuaded by persuasive arguments."
+   },
+   "relationship_tracking": {
+    "trust_levels": "A Zabrak companion's trust in you will grow as they witness your strength, honor, and loyalty on the battlefield.\n",
+    "loyalty_triggers": "When faced with an impossible choice between loyalty to their comrades or to a greater cause, a Zabrak will choose the path that aligns with their sense of duty and honor."
+   },
+   "services": [
+    {
+     "name": "Warrior's Training",
+     "description": "Teaches you how to channel your inner strength and resilience in combat."
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "zabrak",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/zabrak.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

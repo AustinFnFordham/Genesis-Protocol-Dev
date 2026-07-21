@@ -1,0 +1,169 @@
+{
+ "record": {
+  "id": "power_force_whisper",
+  "name": "Force Whisper",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You manipulate fundamental forces to achieve various beneficial effects.",
+  "flavor_text": "Your eyes can deceive you. Don't trust them.",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clear, forceful gesture extending telekinetic energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "visualizing the desired effect and channeling Force energy"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use the Force to communicate telepathically with a creature within range.",
+   "mechanics": [
+    {
+     "type": "telepathic_communication",
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "You can communicate telepathically with the target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardian approaches Force Whisper through the lens of protection, finding unexpected harmony in the manipulating the Force to achieve the impossible. Their defensive combat and protection of others guides them to vibrating air with a focused resolve that reflects their unique perspective.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain +1 to Force power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master new powers.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches the proper use of Force powers.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi gain +2 to Force power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe . Focus on how the power's effects manifest physically and mechanically, emphasizing provide utility effects.",
+   "tactical_notes": "Force Whisper is excellent for providing provide utility effects in various situations. Use it at 30 feet range.",
+   "narrative_hooks": [
+    "Force Whisper proves crucial in a difficult situation, its effects turning the tide",
+    "The utility of Force Whisper reveals itself in an unexpected but critical moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Force Whisper. in action. achieving provide utility effects. The mood is focused determination, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_whisper.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_whisper",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_whisper.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

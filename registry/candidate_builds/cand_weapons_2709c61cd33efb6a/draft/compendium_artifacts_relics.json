@@ -1,0 +1,1101 @@
+{
+ "record": {
+  "id": "compendium_artifacts_relics",
+  "category": "equipment",
+  "subcategory": "artifacts",
+  "tags": [
+   "equipment",
+   "compendium",
+   "artifacts",
+   "relics",
+   "legendary_items",
+   "force_imbued",
+   "ancient",
+   "powerful",
+   "unique",
+   "exotic",
+   "historical"
+  ],
+  "artifacts_relics": [
+   {
+    "id": "artifact_holocron",
+    "name": "Jedi Holocron",
+    "description": "An ancient crystalline device that contains the knowledge and wisdom of Jedi Masters from ages past.",
+    "type": "Artifact",
+    "subtype": "Force Artifact",
+    "cost": 50000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "force",
+     "holocron",
+     "jedi",
+     "knowledge",
+     "ancient"
+    ],
+    "properties": [
+     "force_resonant",
+     "knowledge_storage",
+     "jedi_wisdom",
+     "ancient"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "jedi_knowledge",
+     "ancient_wisdom",
+     "force_insight"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_knowledge_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force knowledge and history checks"
+     }
+    ]
+   },
+   {
+    "id": "artifact_sith_holocron",
+    "name": "Sith Holocron",
+    "description": "A dark crystalline device containing the forbidden knowledge and teachings of ancient Sith Lords.",
+    "type": "Artifact",
+    "subtype": "Force Artifact",
+    "cost": 75000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "force",
+     "holocron",
+     "sith",
+     "dark_knowledge",
+     "forbidden"
+    ],
+    "properties": [
+     "force_resonant",
+     "dark_knowledge",
+     "sith_teachings",
+     "forbidden"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sith_knowledge",
+     "dark_teachings",
+     "forbidden_wisdom"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "dark_side_knowledge_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on dark side knowledge checks, but may influence alignment"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_crystal",
+    "name": "Ancient Force Crystal",
+    "description": "A rare crystal that has been imbued with Force energy over millennia, enhancing Force abilities.",
+    "type": "Artifact",
+    "subtype": "Force Artifact",
+    "cost": 30000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "artifact",
+     "force",
+     "crystal",
+     "ancient",
+     "enhancement"
+    ],
+    "properties": [
+     "force_enhanced",
+     "ancient_power",
+     "ability_boost"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_enhancement",
+     "ancient_power",
+     "crystal_resonance"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "force_points_bonus",
+      "target_property": "force_points_max",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+3 to maximum Force points when carried"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_medallion",
+    "name": "Force Medallion",
+    "description": "An ancient medallion that provides protection against Force-based attacks and enhances Force sensitivity.",
+    "type": "Artifact",
+    "subtype": "Force Artifact",
+    "cost": 40000,
+    "rarity": 5,
+    "weight": 0.2,
+    "tags": [
+     "artifact",
+     "force",
+     "medallion",
+     "protection",
+     "enhancement"
+    ],
+    "properties": [
+     "force_protection",
+     "sensitivity_enhancement",
+     "ancient"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_protection",
+     "sensitivity_enhancement",
+     "medallion_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "force_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to Force damage when worn"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_sword",
+    "name": "Ancient Force Sword",
+    "description": "A legendary blade that channels the Force, providing enhanced combat abilities to Force users.",
+    "type": "Artifact",
+    "subtype": "Force Artifact",
+    "cost": 60000,
+    "rarity": 6,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "force",
+     "sword",
+     "legendary",
+     "combat"
+    ],
+    "properties": [
+     "force_channeling",
+     "legendary_weapon",
+     "combat_enhancement"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_channeling",
+     "legendary_combat",
+     "sword_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls when wielded by Force users"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ancient_scroll",
+    "name": "Ancient Jedi Scroll",
+    "description": "A fragile scroll containing ancient Jedi teachings and Force techniques from a bygone era.",
+    "type": "Artifact",
+    "subtype": "Historical Item",
+    "cost": 25000,
+    "rarity": 5,
+    "weight": 0.1,
+    "tags": [
+     "artifact",
+     "historical",
+     "scroll",
+     "jedi",
+     "teachings",
+     "fragile"
+    ],
+    "properties": [
+     "ancient_knowledge",
+     "jedi_teachings",
+     "fragile",
+     "historical"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_teachings",
+     "jedi_wisdom",
+     "historical_knowledge"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "jedi_history_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Jedi history and Force technique checks"
+     }
+    ]
+   },
+   {
+    "id": "artifact_war_banner",
+    "name": "Ancient War Banner",
+    "description": "A tattered banner from an ancient battle, imbued with the courage and determination of warriors past.",
+    "type": "Artifact",
+    "subtype": "Historical Item",
+    "cost": 15000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "historical",
+     "banner",
+     "war",
+     "courage",
+     "inspiration"
+    ],
+    "properties": [
+     "inspirational",
+     "war_heritage",
+     "courage_boost"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "war_inspiration",
+     "courage_boost",
+     "banner_heritage"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "morale_checks",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "banner_displayed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on morale and inspiration checks for allies"
+     }
+    ]
+   },
+   {
+    "id": "artifact_crown_jewels",
+    "name": "Crown Jewels",
+    "description": "Precious jewels from a fallen royal house, representing power, wealth, and historical significance.",
+    "type": "Artifact",
+    "subtype": "Historical Item",
+    "cost": 100000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "historical",
+     "jewels",
+     "royal",
+     "wealth",
+     "power"
+    ],
+    "properties": [
+     "royal_heritage",
+     "immense_value",
+     "power_symbol"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "royal_heritage",
+     "immense_wealth",
+     "power_symbolism"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "nobility_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jewels_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on interactions with nobility and royalty"
+     }
+    ]
+   },
+   {
+    "id": "artifact_ancient_map",
+    "name": "Ancient Star Map",
+    "description": "A mysterious map showing forgotten hyperspace routes and lost worlds from ancient times.",
+    "type": "Artifact",
+    "subtype": "Historical Item",
+    "cost": 35000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "artifact",
+     "historical",
+     "map",
+     "navigation",
+     "forgotten",
+     "mysterious"
+    ],
+    "properties": [
+     "forgotten_routes",
+     "navigation_secrets",
+     "mysterious"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "forgotten_routes",
+     "navigation_secrets",
+     "lost_worlds"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "navigation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "map_consulted",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on navigation checks when consulting the map"
+     }
+    ]
+   },
+   {
+    "id": "artifact_heart_of_the_mountain",
+    "name": "Heart of the Mountain",
+    "description": "A massive gemstone that pulses with inner light, said to contain the essence of an ancient mountain spirit.",
+    "type": "Artifact",
+    "subtype": "Unique Treasure",
+    "cost": 200000,
+    "rarity": 6,
+    "weight": 10.0,
+    "tags": [
+     "artifact",
+     "treasure",
+     "gemstone",
+     "mountain_spirit",
+     "pulsing_light",
+     "unique"
+    ],
+    "properties": [
+     "spirit_essence",
+     "pulsing_light",
+     "mountain_power",
+     "unique"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mountain_spirit",
+     "pulsing_light",
+     "spirit_essence"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "mountain_spirit_communion",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "gemstone_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can commune with mountain spirits and gain their guidance"
+     }
+    ]
+   },
+   {
+    "id": "artifact_void_mirror",
+    "name": "Void Mirror",
+    "description": "A mirror that reflects not light, but the void between stars, allowing glimpses into other dimensions.",
+    "type": "Artifact",
+    "subtype": "Unique Treasure",
+    "cost": 150000,
+    "rarity": 6,
+    "weight": 5.0,
+    "tags": [
+     "artifact",
+     "treasure",
+     "mirror",
+     "void",
+     "dimensions",
+     "unique"
+    ],
+    "properties": [
+     "void_reflection",
+     "dimensional_glimpse",
+     "unique",
+     "mysterious"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "void_reflection",
+     "dimensional_glimpse",
+     "other_realms"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "dimensional_glimpse",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "mirror_gazed_into",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can glimpse into other dimensions and realities"
+     }
+    ]
+   },
+   {
+    "id": "artifact_singing_crystal",
+    "name": "Singing Crystal",
+    "description": "A crystal that produces beautiful, otherworldly music when touched, said to soothe troubled souls.",
+    "type": "Artifact",
+    "subtype": "Unique Treasure",
+    "cost": 80000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "artifact",
+     "treasure",
+     "crystal",
+     "singing",
+     "music",
+     "soothing"
+    ],
+    "properties": [
+     "singing_music",
+     "soothing_power",
+     "otherworldly"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "singing_music",
+     "soothing_power",
+     "otherworldly_beauty"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "soothed",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "crystal_touched",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain the Soothed status when touching the crystal"
+     }
+    ]
+   },
+   {
+    "id": "artifact_time_shard",
+    "name": "Time Shard",
+    "description": "A fragment of crystallized time that allows brief glimpses into the past or future.",
+    "type": "Artifact",
+    "subtype": "Unique Treasure",
+    "cost": 300000,
+    "rarity": 6,
+    "weight": 0.1,
+    "tags": [
+     "artifact",
+     "treasure",
+     "time",
+     "shard",
+     "temporal",
+     "unique"
+    ],
+    "properties": [
+     "temporal_glimpse",
+     "time_crystallized",
+     "unique",
+     "powerful"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "temporal_glimpse",
+     "time_manipulation",
+     "past_future_vision"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "temporal_glimpse",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "shard_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can glimpse into the past or future briefly"
+     }
+    ]
+   },
+   {
+    "id": "artifact_force_orb",
+    "name": "Force Orb",
+    "description": "A spherical artifact that contains pure Force energy, capable of enhancing or disrupting Force abilities.",
+    "type": "Artifact",
+    "subtype": "Mystical Relic",
+    "cost": 120000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "mystical",
+     "orb",
+     "force_energy",
+     "pure",
+     "powerful"
+    ],
+    "properties": [
+     "pure_force_energy",
+     "enhancement_disruption",
+     "powerful"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "pure_force_energy",
+     "enhancement_disruption",
+     "force_manipulation"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "force_power_enhancement",
+      "target_property": "force_power_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Force powers deal additional damage when orb is carried"
+     }
+    ]
+   },
+   {
+    "id": "artifact_shadow_cloak",
+    "name": "Shadow Cloak",
+    "description": "A cloak woven from shadows themselves, allowing the wearer to blend seamlessly into darkness.",
+    "type": "Artifact",
+    "subtype": "Mystical Relic",
+    "cost": 90000,
+    "rarity": 5,
+    "weight": 1.0,
+    "tags": [
+     "artifact",
+     "mystical",
+     "cloak",
+     "shadow",
+     "stealth",
+     "darkness"
+    ],
+    "properties": [
+     "shadow_woven",
+     "darkness_blend",
+     "stealth_enhancement"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "shadow_blend",
+     "darkness_stealth",
+     "shadow_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "in_darkness",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on stealth checks when in darkness"
+     }
+    ]
+   },
+   {
+    "id": "artifact_echo_stone",
+    "name": "Echo Stone",
+    "description": "A stone that captures and replays sounds from the past, allowing listeners to hear ancient voices.",
+    "type": "Artifact",
+    "subtype": "Mystical Relic",
+    "cost": 60000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "artifact",
+     "mystical",
+     "stone",
+     "echo",
+     "past_sounds",
+     "ancient_voices"
+    ],
+    "properties": [
+     "sound_capture",
+     "past_echoes",
+     "ancient_voices"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "past_sounds",
+     "ancient_voices",
+     "echo_replay"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "echo_replay",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stone_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can replay sounds and voices from the past"
+     }
+    ]
+   },
+   {
+    "id": "artifact_dream_weaver",
+    "name": "Dream Weaver",
+    "description": "A delicate artifact that allows the user to enter and manipulate the dreams of others.",
+    "type": "Artifact",
+    "subtype": "Mystical Relic",
+    "cost": 180000,
+    "rarity": 6,
+    "weight": 0.2,
+    "tags": [
+     "artifact",
+     "mystical",
+     "dream",
+     "weaver",
+     "dream_manipulation",
+     "psychic"
+    ],
+    "properties": [
+     "dream_entry",
+     "dream_manipulation",
+     "psychic_power"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "dream_entry",
+     "dream_manipulation",
+     "psychic_connection"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "dream_weaving",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "weaver_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can enter and manipulate the dreams of others"
+     }
+    ]
+   },
+   {
+    "id": "artifact_blade_of_legends",
+    "name": "Blade of Legends",
+    "description": "A sword that has been wielded by countless heroes throughout history, imbued with their courage and valor.",
+    "type": "Artifact",
+    "subtype": "Legendary Weapon",
+    "cost": 250000,
+    "rarity": 6,
+    "weight": 4.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "blade",
+     "heroes",
+     "courage",
+     "valor"
+    ],
+    "properties": [
+     "heroic_heritage",
+     "courage_imbued",
+     "legendary_weapon"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "heroic_heritage",
+     "courage_imbued",
+     "legendary_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "blade_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls when wielding the legendary blade"
+     }
+    ]
+   },
+   {
+    "id": "artifact_staff_of_ancients",
+    "name": "Staff of the Ancients",
+    "description": "A staff carved from an ancient tree, containing the wisdom and power of nature itself.",
+    "type": "Artifact",
+    "subtype": "Legendary Weapon",
+    "cost": 200000,
+    "rarity": 6,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "legendary",
+     "staff",
+     "ancient_tree",
+     "nature_power",
+     "wisdom"
+    ],
+    "properties": [
+     "nature_power",
+     "ancient_wisdom",
+     "legendary_weapon"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "nature_power",
+     "ancient_wisdom",
+     "staff_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "nature_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "staff_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on nature and wisdom-related checks"
+     }
+    ]
+   },
+   {
+    "id": "artifact_doom_ring",
+    "name": "Ring of Doom",
+    "description": "A cursed ring that grants immense power but slowly corrupts the wearer's soul and mind.",
+    "type": "Artifact",
+    "subtype": "Cursed Artifact",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 0.1,
+    "tags": [
+     "artifact",
+     "cursed",
+     "ring",
+     "doom",
+     "corruption",
+     "powerful"
+    ],
+    "properties": [
+     "immense_power",
+     "soul_corruption",
+     "cursed",
+     "dangerous"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "immense_power",
+     "soul_corruption",
+     "doom_influence"
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "power_boost",
+      "target_property": "all_abilities",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ring_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All abilities enhanced, but risk of corruption increases over time"
+     }
+    ]
+   },
+   {
+    "id": "artifact_whisper_blade",
+    "name": "Whisper Blade",
+    "description": "A sword that whispers dark secrets to its wielder, slowly driving them toward madness and violence.",
+    "type": "Artifact",
+    "subtype": "Cursed Artifact",
+    "cost": 300000,
+    "rarity": 6,
+    "weight": 3.0,
+    "tags": [
+     "artifact",
+     "cursed",
+     "blade",
+     "whisper",
+     "madness",
+     "violence"
+    ],
+    "properties": [
+     "dark_whispers",
+     "madness_inducing",
+     "cursed",
+     "dangerous"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "dark_whispers",
+     "madness_influence",
+     "violence_urge"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "blade_wielded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attack rolls, but risk of madness increases"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_artifacts_relics",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/artifacts_relics.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

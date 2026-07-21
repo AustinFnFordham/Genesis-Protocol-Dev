@@ -1,0 +1,192 @@
+{
+ "record": {
+  "id": "droid_tech",
+  "name": "Droid Tech",
+  "class_id": "engineer",
+  "base_class": "engineer",
+  "tags": [
+   "engineer",
+   "droid_specialist",
+   "tech_specialist",
+   "intelligence_based",
+   "crafter",
+   "inventor",
+   "programmer",
+   "support"
+  ],
+  "description": "Droid Techs are specialists in droid construction, programming, and maintenance, using their skills to create, modify, and control advanced robotic systems.",
+  "specialization_features": [
+   "droid_expertise",
+   "droid_programming",
+   "droid_control",
+   "droid_mastery",
+   "legendary_droid_tech"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master droid engineers specialize in crafting and modifying complex robotic systems.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Droid schematics tattooed on arms",
+    "Tinkering tools always nearby"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "droid-tech-3",
+    "feature_id": "droid-hacking-1",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can perform a Dexterity (Sleight of Hand) check to access and modify a droid's systems remotely.",
+    "effects": [
+     {
+      "type": "action-type",
+      "value": "Use an action to hack into a droid's system, allowing you to change its programming or take control of it."
+     }
+    ]
+   },
+   {
+    "node_id": "droid-tech-7",
+    "feature_id": "droid-improvement-1",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can make improvements to a droid's design and functionality, granting it advantage on one ability check or attack roll of your choice.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "droid_optimization_boost",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check_roll",
+        "op": "succeeds"
+       }
+      ],
+      "notes": "The droid's advanced algorithms subtly adjust its processing speed, granting it a fleeting advantage on ability checks and attack rolls."
+     }
+    ]
+   },
+   {
+    "node_id": "droid-tech-11",
+    "feature_id": "droid-upgrade-1",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can upgrade a droid's components, granting it additional hit points and resistance to one damage type.",
+    "effects": [
+     {
+      "type": "resistance-type",
+      "value": "10 resistance to bludgeoning damage"
+     }
+    ]
+   },
+   {
+    "node_id": "droid-tech-15",
+    "feature_id": "droid-replication-1",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can create a functional replica of a droid, which can take the place of the original in combat and other situations.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "duplicate_droid_on_hit",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_attack"
+       }
+      ],
+      "notes": "The droid rapidly duplicates itself, releasing a swarm of smaller, identical mechanical drones that attack with equal ferocity."
+     }
+    ]
+   },
+   {
+    "node_id": "droid-tech-18",
+    "feature_id": "droid-evolution-1",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You can evolve a droid's design, granting it a new form and abilities.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "droid_form_shift",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_score",
+        "op": "equals",
+        "value": "intelligence"
+       }
+      ],
+      "notes": "Upon landing a hit, the Engineer gains access to an alternate droid form. The Engineer can select from a list of available forms, each granting unique abilities and enhancements."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Droid_Sketchpad_Token",
+    "Robotic_Wiring_Diagram_Token"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with arms raised and repulsor shield activated",
+    "energy_signature": "Emitting a swirling aura of blue and orange energy around its body"
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a droid engineer surrounded by various robotic components, showcasing their expertise in crafting complex systems",
+    "contextual_modifiers": [
+     "Show the droid's eyes glowing with a soft blue light as it focuses on a specific component",
+     "Depict the droid holding a small console device with holographic displays and various tool attachments"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "droid_tech",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer_droid_tech.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

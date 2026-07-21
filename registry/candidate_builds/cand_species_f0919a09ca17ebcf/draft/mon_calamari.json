@@ -1,0 +1,784 @@
+{
+ "record": {
+  "id": "mon_calamari",
+  "name": "Mon Calamari",
+  "tags": [
+   "diplomat",
+   "engineer",
+   "insightful",
+   "intelligence_based",
+   "large",
+   "leader",
+   "lore",
+   "mon_calamari",
+   "perceptive",
+   "scholar",
+   "scholar_background",
+   "starship_engineer",
+   "support",
+   "tech_specialist",
+   "uncommon"
+  ],
+  "description": "Amphibious engineers and diplomats, Mon Calamari wed craftsmanship to cause—builders of ships and coalitions alike.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Intelligence",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Mon Calamari"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "mon_calamari_amphibious_nature",
+    "name": "Amphibious Nature",
+    "narrative": "Your species evolved in the oceans of Mon Cala, developing the ability to breathe both air and water with equal ease.",
+    "mechanics": [
+     {
+      "effect": "grant_movement",
+      "parameters": {
+       "type": "swimming",
+       "value": "equal_to_walking_speed"
+      }
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Athletics (swimming) checks.",
+      "conditions": [
+       {
+        "key": "athletics_action",
+        "op": "equals",
+        "value": "swimming"
+       }
+      ]
+     },
+     {
+      "effect": "narrative_effect",
+      "description": "You can breathe air and water."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "mon_cal_d_s_recessive_mutations",
+     "ui_transition": {
+      "animation": "MutationSpread",
+      "sfx": "WarpingSound"
+     }
+    }
+   },
+   {
+    "id": "mon_calamari_natural_engineer",
+    "name": "Natural Engineer",
+    "narrative": "Your species has an innate aptitude for engineering and technology, with keen eyes and methodical hands.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Perception"
+      }
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": false
+    }
+   },
+   {
+    "id": "mon_calamari_diplomatic_insight",
+    "name": "Diplomatic Insight",
+    "narrative": "Your species' calm, logical nature and history of building coalitions has given you exceptional insight into diplomatic situations.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Insight"
+      }
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Persuasion checks in formal diplomatic situations.",
+      "conditions": [
+       {
+        "key": "situation_type",
+        "op": "equals",
+        "value": "formal_diplomatic"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 2.0m",
+   "distinctions": [
+    "Smooth, rubbery skin",
+    "Large, wide-set eyes",
+    "Webbed hands and feet",
+    "Prominent head crest",
+    "Graceful, fluid movements"
+   ],
+   "skin_color_variants": [
+    "Pale Blue",
+    "Deep Blue",
+    "Teal",
+    "Greenish Blue",
+    "Purple Blue",
+    "Grey Blue",
+    "Mottled patterns"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Golden eyes",
+    "Silver eyes",
+    "Blue eyes",
+    "Green eyes"
+   ],
+   "head_crest_variants": [
+    "Smooth, rounded crest",
+    "Ridged, angular crest",
+    "Elongated, flowing crest",
+    "Short, compact crest"
+   ],
+   "common_adornments": [
+    "Flowing, water-resistant robes",
+    "Intricate shell and coral jewelry",
+    "Engineering tools and devices",
+    "Traditional Mon Calamari ceremonial garments",
+    "Practical, moisture-resistant clothing"
+   ],
+   "llm_description_prompt": "Describe a Mon Calamari character. Emphasize their large, expressive eyes that convey both intelligence and curiosity, and their smooth, graceful movements that reflect their aquatic heritage. Their skin should show subtle variations in color and texture. Consider their natural engineering aptitude and the way they carry themselves with quiet dignity and purpose."
+  },
+  "class_synergies": [
+   {
+    "class": "Engineer",
+    "narrative": "With a racial aptitude for starship design and technology, Mon Calamari are born Engineers, capable of incredible feats of mechanical ingenuity and innovation.",
+    "mechanical_benefits": [
+     "High Intelligence supports technical skills and engineering",
+     "Natural Engineer trait aids in precision work and diagnostics",
+     "Natural problem-solving abilities enhance engineering projects"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Their calm, logical demeanor and history of building coalitions make Mon Calamari exceptional Consulars, able to resolve conflicts without firing a shot.",
+    "mechanical_benefits": [
+     "Diplomatic Insight trait supports diplomatic insight and negotiation",
+     "High Intelligence supports diplomatic functions",
+     "Natural patience and analytical thinking aid in mediation"
+    ]
+   },
+   {
+    "class": "Scholar",
+    "narrative": "Mon Calamari's analytical minds and love of knowledge make them excellent Scholars, particularly in engineering, science, and cultural studies.",
+    "mechanical_benefits": [
+     "High Intelligence supports research and academic pursuits",
+     "Natural Engineer trait aids in detailed observation and analysis",
+     "Natural curiosity drives scholarly investigation"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Mon Calamari's keen senses and natural swimming abilities make them excellent Scouts, especially in aquatic environments and space exploration.",
+    "mechanical_benefits": [
+     "Amphibious Nature trait enables underwater exploration",
+     "Natural Engineer trait enhances environmental awareness",
+     "Natural adaptability to different environments"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Rebel Alliance",
+    "narrative": "Mon Calamari were among the Rebellion's most loyal supporters, providing crucial starship designs and engineering expertise that helped turn the tide against the Empire."
+   },
+   {
+    "faction": "Mon Calamari Shipyards",
+    "narrative": "The Mon Calamari Shipyards are renowned throughout the galaxy for their innovative designs and superior craftsmanship, with Mon Calamari engineers leading the industry."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Mon Calamari have long been respected members of the Republic, contributing their diplomatic skills and technological expertise to galactic governance."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Natural Engineer",
+   "base_description": "Your species has an innate aptitude for engineering and technology. You have keen eyes and methodical hands, with natural problem-solving abilities.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your engineering skills have grown more sophisticated. You can understand and modify complex systems with greater precision.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Intelligence (Technology) checks",
+      "conditions": [
+       {
+        "key": "technology_type",
+        "op": "in",
+        "value": [
+         "starship_systems",
+         "mechanical_devices",
+         "electronic_systems"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your engineering mastery has become legendary. You can intuitively understand and improve any technological system.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Engineering Intuition",
+      "description": "Once per long rest, you can automatically identify the function and potential improvements of any technological device"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master engineer. Your ability to design and modify technology is unparalleled.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Master Engineer",
+      "description": "Once per long rest, you can create a temporary technological solution or modification that lasts for 1 hour"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of engineering. Your technological innovations can change the course of history.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Engineering",
+      "description": "Once per long rest, you can create a permanent technological improvement or solve any engineering challenge"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Mon Calamari's engineering skills have grown more sophisticated. Their understanding of technology has deepened, and they can work with increasingly complex systems.",
+    "level_10": "Your Mon Calamari's engineering mastery has become legendary. They can intuitively understand and improve any technological system, their insights bordering on the mystical.",
+    "level_15": "Your Mon Calamari has become a master engineer. Their ability to design and modify technology is unparalleled, and their innovations are sought after across the galaxy.",
+    "level_20": "Your Mon Calamari is a living legend of engineering. Their technological innovations can change the course of history, and their name is spoken with reverence among engineers everywhere."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Shipyard Heritage",
+    "type": "traditional",
+    "description": "Your deep connection to Mon Calamari shipbuilding traditions and the legacy of your ancestors' engineering achievements.",
+    "activation": "When working with starships or shipbuilding technology",
+    "effect": {
+     "type": "advantage",
+     "value": "Intelligence (Technology) checks",
+     "conditions": [
+      {
+       "key": "technology_type",
+       "op": "equals",
+       "value": "starship_systems"
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon centuries of Mon Calamari shipbuilding wisdom, understanding starship design in ways that seem almost instinctive.",
+    "faction_connection": "Mon Calamari Shipyards",
+    "optional": true
+   },
+   {
+    "name": "Diplomatic Engineering",
+    "type": "cultural",
+    "description": "Your species' tradition of using engineering and technology as a bridge between cultures and peoples.",
+    "activation": "When using technology to facilitate diplomacy or cultural exchange",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "diplomatic_engineering",
+        "cultural_exchange",
+        "technological_diplomacy"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can use your engineering skills to build bridges between cultures, creating technological solutions that bring people together.",
+    "faction_connection": "Galactic Republic",
+    "optional": true
+   },
+   {
+    "name": "Aquatic Wisdom",
+    "type": "narrative",
+    "description": "Your deep connection to aquatic environments and the wisdom gained from living in harmony with water.",
+    "activation": "When working in or around aquatic environments",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Survival) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "aquatic"
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon the ancient wisdom of your aquatic ancestors, understanding water and its properties in ways that seem almost mystical.",
+    "faction_connection": "Mon Calamari Traditions",
+    "optional": true
+   },
+   {
+    "name": "Coalition Builder",
+    "type": "social",
+    "description": "Your species' natural ability to build coalitions and bring diverse groups together for common goals.",
+    "activation": "When attempting to unite different groups or build alliances",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "alliance_building",
+        "coalition_formation",
+        "group_unification"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can bring together diverse groups and build lasting coalitions, using your diplomatic skills to find common ground where others see only division.",
+    "faction_connection": "Rebel Alliance",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Mon Calamari Engineering Traditions",
+   "cultural_networks": [
+    "Mon Calamari Shipyards",
+    "Engineering Guilds",
+    "Diplomatic Corps",
+    "Aquatic Communities",
+    "Coalition Builders"
+   ],
+   "traditional_practices": [
+    "Shipbuilding Ceremonies",
+    "Engineering Apprenticeships",
+    "Diplomatic Engineering",
+    "Aquatic Wisdom Sharing",
+    "Coalition Building Rituals"
+   ],
+   "cultural_knowledge": [
+    "Starship Design",
+    "Diplomatic Engineering",
+    "Aquatic Technology",
+    "Coalition Building",
+    "Mon Calamari History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "aquatic",
+    "advantage": "Natural swimming ability and underwater breathing",
+    "situational_bonus": {
+     "type": "saving_throw_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "aquatic"
+      },
+      {
+       "key": "save_type",
+       "op": "in",
+       "value": [
+        "constitution",
+        "strength",
+        "dexterity"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through water with natural grace, your amphibious nature allowing you to navigate underwater environments as easily as walking on land.",
+    "narrative_hooks": [
+     "Underwater exploration and navigation",
+     "Aquatic combat and tactics",
+     "Underwater construction and engineering",
+     "Marine life communication"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "space",
+    "advantage": "Intuitive understanding of starship systems and space environments",
+    "situational_bonus": {
+     "type": "skill_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "space"
+      },
+      {
+       "key": "skill_type",
+       "op": "in",
+       "value": [
+        "technology",
+        "piloting",
+        "engineering"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your species' natural affinity for starship design and space travel makes you feel at home in the void, understanding ship systems and space environments instinctively.",
+    "narrative_hooks": [
+     "Starship design and modification",
+     "Space navigation and piloting",
+     "Zero-gravity engineering",
+     "Space station operations"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "urban_waterways",
+    "advantage": "Expertise in urban aquatic environments and water-based infrastructure",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Technology checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "urban_waterways"
+      },
+      {
+       "key": "technology_type",
+       "op": "in",
+       "value": [
+        "water_systems",
+        "aquatic_infrastructure",
+        "flood_control"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your understanding of water systems and aquatic infrastructure allows you to navigate and work with urban waterways as if they were extensions of your natural environment.",
+    "narrative_hooks": [
+     "Urban water system engineering",
+     "Aquatic infrastructure maintenance",
+     "Flood control and water management",
+     "Underwater urban exploration"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "high_humidity",
+    "advantage": "Enhanced comfort and performance in high humidity environments",
+    "situational_bonus": {
+     "type": "constitution_bonus",
+     "value": "+1",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "high_humidity"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "endurance",
+        "recovery",
+        "comfort"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "High humidity environments feel natural and comfortable to you, your amphibious physiology thriving in moist conditions that might discomfort other species.",
+    "narrative_hooks": [
+     "Tropical and jungle environments",
+     "Steam and moisture-rich areas",
+     "Humid industrial environments",
+     "Water vapor processing facilities"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "aquatic",
+    "space",
+    "urban_waterways",
+    "high_humidity"
+   ],
+   "environmental_knowledge": [
+    "Aquatic Engineering",
+    "Starship Design",
+    "Water Systems Management",
+    "Space Navigation",
+    "Marine Biology",
+    "Underwater Construction"
+   ],
+   "survival_techniques": [
+    "Underwater Breathing and Movement",
+    "Space Environment Adaptation",
+    "Aquatic Infrastructure Navigation",
+    "Water-Based Resource Management",
+    "Marine Life Communication",
+    "Zero-Gravity Engineering"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "aquatic_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "scale_1_to_2_meters_large",
+     "scaly_textured",
+     "blue_green_tinted_skin",
+     "webbed_fingers_and_toes",
+     "large_round_eyes",
+     "intelligent_expression",
+     "dignified_pose"
+    ],
+    "morphology": {
+     "head_type": "large rounded with a prominent snout",
+     "body_type": "amphibious, humanoid, with webbed limbs and gills",
+     "average_height": "1.8 to 2.3 meters"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": [
+       "innocent_expression",
+       "playful_pose"
+      ],
+      "adult": [
+       "intelligent_expression",
+       "dignified_pose"
+      ],
+      "elder": [
+       "wise_elderly_expression",
+       "venerable_pose"
+      ]
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "twisted_twisted_facial_feature",
+       "sinister_eye_color_change"
+      ],
+      "light_side": [
+       "benevolent_smile",
+       "radiant Aura"
+      ]
+     }
+    },
+    "unique_identifiers": [],
+    "prompt_schema": {
+     "base_prompt": "a Mon Calamari with a prominent {emotion} expression and a {contextual_modifier}",
+     "contextual_modifiers": [
+      "working on a starship",
+      "negotiating an intergalactic treaty",
+      "proudly displaying their craftsmanship"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "Mon Calamari admires your diplomatic efforts, fostering a peaceful resolution.",
+     "triggers": [
+      "player_initiates_peaceful_resolution"
+     ]
+    },
+    "escalation": {
+     "description": "Mon Calamari sees you as an obstacle to their goals and escalates aggression.",
+     "triggers": [
+      "player_refuses_mon_calamari_proposal",
+      "player_attacks_mon_calamari_ships"
+     ]
+    },
+    "confrontation": {
+     "description": "Mon Calamari refuses all attempts at resolution, leading to a final confrontation.",
+     "triggers": [
+      "no_peaceful_resolution_options_left"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "Mon Calamari acknowledges your diplomatic efforts and allies with you.",
+    "redemption": "Mon Calamari forgives past mistakes and forms an alliance to rectify the situation.",
+    "escape": "You manage to outmaneuver Mon Calamari, escaping their wrath."
+   },
+   "conflict_triggers": [
+    "player_initiates_hostilities_against_mon_calamari",
+    "mon_calamari_ship_attacks_player"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "player_defeats_mon_calamari_leader",
+     "player_steals_mon_calamari_technology"
+    ],
+    "vendetta_type": "Personal and professional"
+   },
+   "overrides": {
+    "historical_enemy": "The Chiss Ascendancy",
+    "tragic_flaw": "Over-reliance on diplomacy, leading to appeasement in the face of aggression"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Shared interest in engineering",
+    "Mutual respect for Mon Calamari values and traditions"
+   ],
+   "romance_progression": {
+    "stage1": "Mon Calamari is drawn to the player's skills as an engineer, and they exchange stories about their work.",
+    "stage2": "The player helps a Mon Calamari diplomat resolve a crisis, earning mutual trust and admiration.",
+    "stage3": "Mon Calamari engineers offer the player access to advanced blueprints in exchange for sharing own expertise.",
+    "stage4": "A Mon Calamari diplomat asks the player for advice on coalition matters, fostering deepening friendship.",
+    "stage5": "The Mon Calamari offer a special place on one of their diplomatic missions as a gesture of respect."
+   },
+   "romance_events": [
+    "Player helps Mon Calamari engineer design and build an impressive new ship",
+    "Mon Calamari diplomat invites the player to exclusive coalition gatherings"
+   ],
+   "romance_modifiers": [
+    "+2 Intimidation vs. Mon Calamari due to shared values and interests.",
+    "-1 Perception when interacting with Mon Calamari, reflecting potential cultural differences."
+   ],
+   "overrides": {
+    "courtship_rituals": [
+     "Gift-giving, focusing on rare aquatic specimens or unique art pieces"
+    ],
+    "bonding_ceremonies": [
+     "The 'Sharing of the Tides', a ritual where couples immerse themselves in a bioluminescent oceanic environment to symbolize their connection"
+    ]
+   }
+  },
+  "flavor_text": "Mon Calamari are known for their skillful diplomacy and mastery of aquatic engineering. Their homeworld, Mon Cala, is a labyrinthine network of interconnected domes, each housing a unique ecosystem. The Calamari have long been respected for their ability to bring disparate factions together, forging coalitions that have helped shape the galaxy's politics.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Mon Calamari, you embody the harmonious balance between nature and technology. Your people's history of navigating treacherous oceanic environments has instilled a deep respect for adaptability and resilience in the face of adversity. Be mindful of your diplomatic prowess, as your words carry significant weight among the galaxy's factions.",
+   "narrative_hooks": [
+    "A Calamari delegate must navigate the complex web of alliances between various planetary governments to secure vital resources for their people."
+   ],
+   "social_dynamics": "Mon Calamari are generally reserved and introspective, preferring to observe before contributing to conversations. However, when they do speak, their words carry great weight due to their reputation for fairness and impartiality.",
+   "common_motivations": [
+    "Securing the future of Mon Cala",
+    "Maintaining balance within the galaxy's delicate ecosystem"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "diplomatic",
+      "curious",
+      "analytical"
+     ]
+    },
+    "motivations": {
+     "goals": [
+      "build alliances",
+      "promote understanding",
+      "advance knowledge"
+     ]
+    },
+    "combat_behavior": "In combat, the Mon Calamari ally will prioritize supporting allies with defensive measures and technological solutions.\n",
+    "social_behavior": "Outside of combat, they'll engage in diplomatic efforts to build relationships and facilitate cooperation.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Trust is earned through consistent displays of competence, empathy, and mutual respect.",
+     "Betrayal or dishonesty can severely damage the bond between allies."
+    ],
+    "loyalty_triggers": [
+     "When faced with a difficult decision that aligns with Mon Calamari values",
+     "During times of crisis, when loyalty is crucial for survival"
+    ]
+   },
+   "services": [
+    {
+     "name": "Technical Consultation",
+     "description": "Offer expertise on starship design and maintenance."
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "mon_calamari",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/mon_calamari.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

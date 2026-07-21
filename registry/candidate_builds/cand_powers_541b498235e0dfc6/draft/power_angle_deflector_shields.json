@@ -1,0 +1,150 @@
+{
+ "record": {
+  "id": "power_angle_deflector_shields",
+  "name": "Angle Deflector Shields",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "starship",
+   "shields",
+   "defensive",
+   "energy_management",
+   "tactical",
+   "redistribution",
+   "support",
+   "utility",
+   "vehicular",
+   "space_combat",
+   "engineer",
+   "protection"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "A starship defensive technique available to any trained engineer or pilot"
+   }
+  },
+  "narrative": "You rapidly redistribute your starship's shield power, strengthening one facing by drawing energy from others to meet incoming threats. The power manifests as shield generators whining under the strain, energy crackling as it flows through conduits to reinforce the threatened arc.",
+  "flavor_text": "\"All power to forward shields!\" - Every pilot under fire",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "manipulating shield control panels"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating optimal shield distribution"
+   }
+  ],
+  "casting_time": "1 Maneuver",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "As a maneuver, you can redirect shield energy, increasing the defense of one facing at the expense of another.",
+   "mechanics": [
+    {
+     "type": "redirect_shields",
+     "value": {
+      "mode": "enhance_one_facing"
+     },
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "Enhance one shield facing at the expense of another"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the hum of shield generators changing pitch as power flows between them. Console lights shift from green to yellow as shields weaken on some facings while others glow bright blue with reinforcement. The ship's frame might groan slightly under the uneven distribution.",
+   "tactical_notes": "Angle Deflector Shields is crucial for surviving focused fire. Strengthen the facing toward enemy capital ships while weakening rear shields during pursuit. Remember that unprotected facings become extremely vulnerable.",
+   "narrative_hooks": [
+    "A pilot angles all shields forward for a desperate attack run on a Star Destroyer",
+    "Quick shield redistribution saves the ship from a torpedo impact",
+    "An engineer's perfect timing prevents a hull breach during an ambush"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a starship's shield bubble visibly thickening on one side while thinning on others. Energy flows like liquid light through the shield matrix, concentrating in a bright arc facing incoming fire. The protected facing glows with intense blue energy while other sections fade to translucent.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/angle_deflector_shields.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_angle_deflector_shields",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_angle_deflector_shields.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

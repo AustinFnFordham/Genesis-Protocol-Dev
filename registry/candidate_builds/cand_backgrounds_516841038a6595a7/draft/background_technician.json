@@ -1,0 +1,159 @@
+{
+ "record": {
+  "id": "background_technician",
+  "name": "Technician",
+  "tags": [
+   "background",
+   "technician",
+   "engineer",
+   "tech_specialist",
+   "intelligence_based",
+   "repair",
+   "crafter",
+   "skilled",
+   "practical",
+   "professional"
+  ],
+  "description": "You are a skilled technician, engineer, or mechanic who works with technology, droids, and machinery. Whether you specialize in starship repair, droid maintenance, or general engineering, your technical expertise makes you invaluable in a galaxy that runs on technology. You understand how things work and can fix almost anything.",
+  "proficiencies": {
+   "skills": [
+    "Investigation",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Slicer's Kit",
+      "Repair Kit",
+      "Droid Repair Kit",
+      "Starship Repair Kit",
+      "Communications Kit",
+      "Surveillance Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Technical Expertise",
+   "level": 1,
+   "description": "You have extensive knowledge of technology and engineering. You can identify most technological devices and understand their basic functions. Additionally, you have contacts in the technical community who can provide you with information about new technologies, rare components, or technical problems.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "technology_identification",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "technology"
+      },
+      {
+       "key": "identifying_technology",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Technology checks to identify and understand technological devices"
+    },
+    {
+     "type": "narrative_effect",
+     "value": "technical_contacts",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Access to technical community contacts and information networks"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use multisyllabic words that others don't understand.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly.",
+    "I always have a plan for what to do when things go wrong."
+   ],
+   "ideals": [
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Greed. I will do whatever it takes to become wealthy."
+   ],
+   "bonds": [
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_technician",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_technician.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

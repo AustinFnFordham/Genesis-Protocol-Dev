@@ -1,0 +1,419 @@
+{
+ "record": {
+  "id": "subclass_apex_predator",
+  "class_id": "mystic",
+  "name": "Apex Predator",
+  "alignment_theme": "dark",
+  "tags": [
+   "apex_predator",
+   "mystic",
+   "force_user",
+   "dark_side",
+   "beast_master",
+   "predator",
+   "hunter",
+   "dominating",
+   "intimidating",
+   "ruthless"
+  ],
+  "talent_tree_theme": {
+   "background_diorama": "A rain-soaked undercity gantry or moonlit jungle prowl.",
+   "node_style": "Razor-edged shards pulsing with crimson power.",
+   "connection_style": "Jagged arcs of red-black Force energy.",
+   "color_palette": {
+    "primary": "#8B0000",
+    "secondary": "#2B2B2B"
+   },
+   "ambient_audio": "distant_predator_calls_and_thrumming_heartbeats"
+  },
+  "narrative": "You fuse predatory instinct with the dark side, bending apex beasts to your will. Where others coax, you command; where others shield, you strike first.",
+  "flavor_text": "Mercy is a leash I do not wear.",
+  "class_identity_profile": {
+   "core_fantasy": "Domineering force-binder who weaponizes primal ferocity.",
+   "key_attributes": [
+    "Wisdom",
+    "Charisma"
+   ],
+   "iconic_gear": [
+    "Obsidian focus",
+    "Handler spikes"
+   ],
+   "role_in_galaxy": "Terror tactician and shadow hunter."
+  },
+  "talent_tree": [
+   {
+    "id": "ap_t1_dark_bond",
+    "feature_id": "feature_beast_dark_bond",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 1,
+    "connections": [
+     "ap_t2_kill_command"
+    ]
+   },
+   {
+    "id": "ap_t1_stalker_gait",
+    "feature_id": "feature_beast_stalker_gait",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 2,
+    "connections": [
+     "ap_t2_blood_scent"
+    ]
+   },
+   {
+    "id": "ap_t1_predators_focus",
+    "feature_id": "feature_beast_predators_focus",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 3,
+    "connections": [
+     "ap_t2_overrun"
+    ]
+   },
+   {
+    "id": "ap_t2_kill_command",
+    "feature_id": "feature_beast_kill_command",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 1,
+    "prerequisites": [
+     "ap_t1_dark_bond"
+    ],
+    "connections": [
+     "ap_t3_overwhelm"
+    ]
+   },
+   {
+    "id": "ap_t2_blood_scent",
+    "feature_id": "feature_beast_blood_scent",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 2,
+    "prerequisites": [
+     "ap_t1_stalker_gait"
+    ],
+    "connections": [
+     "ap_t3_relentless_chase"
+    ]
+   },
+   {
+    "id": "ap_t2_overrun",
+    "feature_id": "feature_beast_overrun",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 3,
+    "prerequisites": [
+     "ap_t1_predators_focus"
+    ],
+    "connections": [
+     "ap_t3_rend_the_weak"
+    ]
+   },
+   {
+    "id": "ap_t3_overwhelm",
+    "feature_id": "feature_beast_overwhelm",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 1,
+    "prerequisites": [
+     "ap_t2_kill_command"
+    ],
+    "connections": [
+     "ap_t4_alpha_intimidation"
+    ]
+   },
+   {
+    "id": "ap_t3_relentless_chase",
+    "feature_id": "feature_beast_relentless_chase",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 2,
+    "prerequisites": [
+     "ap_t2_blood_scent"
+    ],
+    "connections": [
+     "ap_t4_hemorrhage"
+    ]
+   },
+   {
+    "id": "ap_t3_rend_the_weak",
+    "feature_id": "feature_beast_rend_the_weak",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 3,
+    "prerequisites": [
+     "ap_t2_overrun"
+    ],
+    "connections": [
+     "ap_t4_pack_terror"
+    ]
+   },
+   {
+    "id": "ap_t4_alpha_intimidation",
+    "feature_id": "feature_beast_alpha_intimidation",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 1,
+    "prerequisites": [
+     "ap_t3_overwhelm"
+    ],
+    "connections": [
+     "ap_t5_apex_savagery"
+    ]
+   },
+   {
+    "id": "ap_t4_hemorrhage",
+    "feature_id": "feature_beast_hemorrhage",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 2,
+    "prerequisites": [
+     "ap_t3_relentless_chase"
+    ],
+    "connections": [
+     "ap_t5_cull"
+    ]
+   },
+   {
+    "id": "ap_t4_pack_terror",
+    "feature_id": "feature_beast_pack_terror",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 3,
+    "prerequisites": [
+     "ap_t3_rend_the_weak"
+    ],
+    "connections": [
+     "ap_t5_alpha_howl"
+    ]
+   },
+   {
+    "id": "ap_t5_apex_savagery",
+    "feature_id": "feature_beast_apex_savagery",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 1,
+    "prerequisites": [
+     "ap_t4_alpha_intimidation"
+    ]
+   },
+   {
+    "id": "ap_t5_cull",
+    "feature_id": "feature_beast_cull",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 2,
+    "prerequisites": [
+     "ap_t4_hemorrhage"
+    ]
+   },
+   {
+    "id": "ap_t5_alpha_howl",
+    "feature_id": "feature_beast_alpha_howl",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 3,
+    "prerequisites": [
+     "ap_t4_pack_terror"
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Control is virtue; hesitation is prey-scent. Show cold certainty and weaponized patience.",
+   "narrative_hooks": [
+    "Break a rival's bond to claim their beast.",
+    "Hunt an ISB lab-runaway apex creature to prove dominance."
+   ],
+   "tactical_notes": "Force advantage through fear and isolation. Ambush, chase, and finish."
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "StormtrooperHelmet"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance, reminiscent of Darth Vader's iconic pose.",
+    "energy_signature": "Surrounded by an aura of dark side energy, pulsating with an ominous red glow."
+   },
+   "prompt_schema": {
+    "base_prompt": "A sleek and deadly predator, akin to a star-stalking Krayt dragon, patrolling the dunes of Tatooine.",
+    "contextual_modifiers": [
+     "Low-light environment",
+     "Mysterious energy signature"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A ruthless predator who wields the dark side of the Force to dominate their enemies.",
+   "role_in_group": "Tank, Striker",
+   "visual_signals": [
+    "Fearsome roar",
+    "Dark energy aura"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "apex_predator_feature_1_level_3",
+    "feature_id": "apex_predator_feature_1",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have a heightened sense of awareness, allowing you to react quickly to threats. As a bonus action, you can move up to your speed without provoking opportunity attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "apex_bite",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "Unleash a savage bite, injecting 1d6 dark energy into the wound, causing agonizing pain and accelerating the victim's descent into chaos."
+     }
+    ]
+   },
+   {
+    "node_id": "apex_predator_feature_2_level_7",
+    "feature_id": "apex_predator_feature_2",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Your connection to the dark side grants you increased strength and resilience. You gain resistance to bludgeoning damage.",
+    "effects": [
+     {
+      "type": "resistance_type",
+      "value": "Bludgeoning"
+     }
+    ]
+   },
+   {
+    "node_id": "apex_predator_feature_3_level_11",
+    "feature_id": "apex_predator_feature_3",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can now use your action to make a melee attack, and you deal an additional 2d6 damage on a hit. Additionally, if the target is a creature, it must succeed on a DC 15 Strength saving throw or become frightened of you for 1 minute.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "apex_predator_bite",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the apex predator's teeth sink in, a burst of energy unleashes +2d6 raw fury, dealing unrelenting damage to foes and allies alike."
+     },
+     {
+      "type": "frightened",
+      "value": "DC 15"
+     }
+    ]
+   },
+   {
+    "node_id": "apex_predator_feature_4_level_15",
+    "feature_id": "apex_predator_feature_4",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Your dark side powers allow you to manipulate the battlefield. You can use your action to create a 10-foot radius sphere of difficult terrain around yourself, lasting for 1 minute.",
+    "effects": [
+     {
+      "type": "terrain_type",
+      "value": "Difficult"
+     }
+    ]
+   },
+   {
+    "node_id": "apex_predator_feature_5_level_18",
+    "feature_id": "apex_predator_feature_5",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have reached the pinnacle of your power. You gain a +3 bonus to all ability checks, attack rolls, and saving throws, and you can use your action to deal an additional 4d6 damage on a melee attack.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "predator_strike_frenzy",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "When striking an enemy, the Apex Predator's claws seem to strike true multiple times, dealing +3 additional damage. The extra blow is so swift and precise that it feels almost... lazy."
+     },
+     {
+      "type": "trigger_effect",
+      "value": "apex_predator_strike",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "When striking an enemy, the Apex Predator siphons a portion of their vitality, unleashing a maelstrom of energy that deals +4d6 force damage."
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "subclass_apex_predator",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/beast_master/apex_predator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

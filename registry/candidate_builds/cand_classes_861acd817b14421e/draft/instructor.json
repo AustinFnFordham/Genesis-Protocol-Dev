@@ -1,0 +1,186 @@
+{
+ "record": {
+  "id": "instructor",
+  "name": "Instructor",
+  "class_id": "commander",
+  "base_class": "commander",
+  "tags": [
+   "commander",
+   "instructor",
+   "mentor",
+   "wisdom_based",
+   "leadership",
+   "teacher",
+   "support",
+   "inspiring",
+   "disciplined"
+  ],
+  "description": "Instructors are master trainers and military educators, using their knowledge and teaching abilities to train troops and develop the next generation of military leaders.",
+  "specialization_features": [
+   "training_expertise",
+   "military_education",
+   "leadership_development",
+   "instructor_mastery",
+   "legendary_instructor"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A master trainer and military educator",
+   "role_in_group": "Leadership mentor and educator",
+   "visual_signals": [
+    {
+     "Signal1": "Worn command badges on uniform"
+    },
+    {
+     "Signal2": "Mentorship scrolls on belt"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_id_level_3",
+    "feature_id": "instructor_leadership_training",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Instructors gain the ability to train and lead troops, inspiring confidence in their students.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "instructor_leadership_empowerment",
+      "target_scopes": [
+       "leader"
+      ],
+      "conditions": [
+       {
+        "key": "effect_uses_remaining",
+        "op": "greater_than",
+        "value": "0"
+       },
+       {
+        "key": "distance_to_target",
+        "op": "within_range",
+        "value": "self"
+       }
+      ],
+      "notes": "With a swift gesture, you imbue your allies with confidence. You may use your bonus action to grant a creature within 5 feet of you that you are leading proficiency or expertise on one ability check or attack roll they attempt before the start of their next turn."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_7",
+    "feature_id": "instructor_tactical_advantage",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Instructors gain expertise in Intimidation, adding their proficiency bonus to all Charisma checks with that skill.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "instructor_tactical_precision",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_score",
+        "op": "equals",
+        "value": [
+         "intelligence",
+         "wisdom",
+         "charisma"
+        ]
+       }
+      ],
+      "notes": "Your expertise as an Instructor shines, granting you the precision of a battle-hardened tactician. When making an Intelligence, Wisdom, or Charisma check, add your proficiency bonus to the total if you're proficient in the ability score being used."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_id_level_11",
+    "feature_id": "instructor_command_influence",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Instructors gain the ability to issue a Command, allowing them to influence the actions of their allies.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "commanding_advantage",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "character_type",
+        "op": "equals",
+        "value": "commander"
+       },
+       {
+        "key": "ability_used",
+        "op": "is_bonus_action"
+       }
+      ],
+      "notes": "With a flick of your wrist, you convey the urgency of the moment to one of your underlings. They take an additional action on their turn as they swiftly respond to your command."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "commander-s-helmet",
+    "lightsaber-hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Eyes fixed forward, stance wide and balanced, lightsaber at the ready.",
+    "energy_signature": "A gentle hum of blue and red energy emanates from the commander's person, a signature of their skill and power."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of Instructor standing on a cliff overlooking a vast desert landscape, with a distant cityscape in the background.",
+    "contextual_modifiers": [
+     "Include a faint image of a star map in the corner of the image",
+     "Depict Instructor's lightsaber ignited and held at the ready"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "instructor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/commander_subclasses/commander_instructor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,195 @@
+{
+ "record": {
+  "id": "power_mending",
+  "name": "Mending",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "repair",
+   "restoration",
+   "fixing",
+   "maintenance",
+   "nanites",
+   "molecular"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Molecular repair technology for minor fixes"
+   }
+  },
+  "narrative": "You deploy micro-repair nanites or molecular welders that knit broken materials back together at the atomic level, cracks sealing and tears mending as if they never existed. The power manifests as barely visible wisps of energy tracing damage lines, materials flowing like liquid before solidifying whole and undamaged.",
+  "flavor_text": "\"Good as new... mostly.\" - Repair Technician",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "directing repair tools over damaged area"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "analyzing break patterns and directing molecular bonds"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use technology to repair a small break or tear in an object.",
+   "mechanics": [
+    {
+     "type": "repair_object",
+     "value": {
+      "repair_type": "minor_damage",
+      "max_size": "1_foot"
+     },
+     "target_scopes": [
+      "object"
+     ],
+     "notes": "Repair a single break or tear no larger than 1 foot in any dimension"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of material science transforms Mending from simple repair to molecular restoration. They can mend exotic alloys, fix complex mechanisms, even restore items others would consider irreparable—their knowledge making the impossible merely difficult.",
+    "mechanical_benefit": [
+     {
+      "type": "advanced_repair",
+      "value": {
+       "repair_type": "complex_damage",
+       "special_materials": true
+      },
+      "target_scopes": [
+       "object"
+      ],
+      "notes": "Engineers can mend complex mechanisms and exotic materials, not just simple breaks."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human ingenuity makes their mending creative and versatile. They've used it to seal hull breaches, repair critical equipment mid-combat, even forge evidence by 'mending' things that were never broken—finding applications beyond simple repair.",
+    "mechanical_benefit": [
+     {
+      "type": "combat_mending",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "object"
+      ],
+      "notes": "Humans can use Mending as a bonus action during combat."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has elevated Mending to survival necessity. Their technicians can keep ancient equipment functioning indefinitely through repeated mending, turning worn-out gear into reliable tools through sheer determination and skill.",
+    "mechanical_benefit": [
+     {
+      "type": "multiple_repairs",
+      "value": {
+       "repairs_per_casting": 3
+      },
+      "target_scopes": [
+       "objects"
+      ],
+      "notes": "Rebels can mend up to 3 small breaks or tears with a single casting."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe materials flowing like liquid as molecular bonds reform, cracks sealing seamlessly, tears knitting shut. Show the repaired item looking good as new, no scar tissue or weak points. The repair should feel almost magical despite being pure technology.",
+   "tactical_notes": "Mending repairs minor object damage instantly at 5 feet with no resource cost. Perfect for fixing broken tools, sealing containers, or emergency repairs. The 1-foot limit means it won't fix major damage but handles most practical needs. Cantrip makes it infinitely repeatable.",
+   "narrative_hooks": [
+    "Mending seals a hull breach just before catastrophic decompression",
+    "A broken communicator mended at the perfect moment restores vital contact",
+    "Repeated mending keeps ancient Rebel equipment functioning against all odds"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a technician using mending technology on a broken device. Micro-repair nanites visible as wisps of golden energy trace along cracks, materials flowing and reforming seamlessly. The break seals as if it never existed, the object restored to perfect condition. The scene captures molecular-level restoration through advanced technology.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/mending.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_mending",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_mending.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

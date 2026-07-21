@@ -1,0 +1,156 @@
+{
+ "record": {
+  "id": "background_infiltrator",
+  "name": "Infiltrator",
+  "tags": [
+   "background",
+   "infiltrator",
+   "spy",
+   "stealth",
+   "covert_ops",
+   "dexterity_based",
+   "deceptive",
+   "skill_specialist",
+   "tactical",
+   "cunning"
+  ],
+  "description": "You specialize in slipping past watchful eyes—blending into crowds, adopting convincing guises, and extracting secrets without leaving a trace.",
+  "proficiencies": {
+   "skills": [
+    "Stealth",
+    "Deception"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Disguise Kit",
+      "Forgery Kit",
+      "Thieves' Tools",
+      "Communications Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Cover Story & Contacts",
+   "level": 1,
+   "description": "You maintain a network of low-profile contacts and keep a rotating cover identity. You have advantage on Deception checks while using an active disguise and on Stealth checks made to blend into urban crowds. Once per short rest, you can leverage a contact to gain advantage on a single social check to obtain restricted information.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "deception_while_in_disguise",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "using_disguise",
+       "op": "equals",
+       "value": true
+      }
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "stealth_urban_crowds",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "contact_network_social_check_once_per_short_rest",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    },
+    {
+     "type": "narrative_effect",
+     "value": "maintain_cover_identity",
+     "target_scopes": [
+      "self"
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I fade into a crowd without a thought.",
+    "I keep three names ready and two are lies.",
+    "I compliment guards because people watch less when they feel seen.",
+    "I leave no trace and expect the same of allies."
+   ],
+   "ideals": [
+    "Secrecy. Truth is a weapon; I choose when to draw it.",
+    "Loyalty. I protect my network as they protect me.",
+    "Freedom. Locks exist to be opened."
+   ],
+   "bonds": [
+    "A handler once saved my life—I now pay it forward.",
+    "My covers keep me safe; I keep them pristine."
+   ],
+   "flaws": [
+    "I lie when I don't need to.",
+    "I overestimate my ability to vanish."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_infiltrator",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_infiltrator.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

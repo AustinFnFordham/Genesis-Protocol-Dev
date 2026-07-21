@@ -1,0 +1,549 @@
+{
+ "record": {
+  "id": "hired_gun_bodyguard",
+  "name": "Bodyguard",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "bodyguard",
+   "protector",
+   "tank",
+   "defensive",
+   "mercenary",
+   "strength_based",
+   "resilient",
+   "martial"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_bodyguard_entry_3",
+    "feature_id": "hired_gun_bodyguard_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Bodyguards specialize in keeping clients alive—absorbing fire, interposing themselves in harm’s way, and controlling the battlefield to deny attacks."
+   },
+   {
+    "node_id": "interpose_7",
+    "feature_id": "interpose",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_bodyguard_entry_3"
+    ],
+    "description": "When a creature you can see within 5 feet of you is targeted by an attack, you can use your reaction to become the target of that attack instead. If the attack hits you, reduce the damage by an amount equal to your proficiency bonus + your Constitution modifier."
+   },
+   {
+    "node_id": "protective_stance_11",
+    "feature_id": "protective_stance",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "interpose_7"
+    ],
+    "description": "While you are not incapacitated, allies within 10 feet gain +1 to AC and have advantage on saving throws against being frightened."
+   },
+   {
+    "node_id": "lockdown_13",
+    "feature_id": "lockdown",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "protective_stance_11"
+    ],
+    "description": "When a creature within 5 feet of you makes an attack against a target other than you, you can use your reaction to make a melee weapon attack against that creature. On a hit, the target’s speed becomes 0 until the start of its next turn."
+   },
+   {
+    "node_id": "guardian_bulwark_17",
+    "feature_id": "guardian_bulwark",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "lockdown_13"
+    ],
+    "description": "Once per short rest, you can grant temporary hit points to yourself and allies within 10 feet equal to twice your level. While any of these temporary hit points remain, you and those allies have resistance to blaster damage."
+   },
+   {
+    "node_id": "legendary_bodyguard_19",
+    "feature_id": "legendary_bodyguard",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "guardian_bulwark_17"
+    ],
+    "description": "Enter an unbreakable guarding focus for 1 minute (once per long rest). During this time, you can use Interpose without expending your reaction once per round, and when you reduce damage with Interpose, the protected ally gains temporary hit points equal to your Constitution modifier."
+   }
+  ],
+  "features": [
+   {
+    "name": "Interpose",
+    "source": "Character Level 7",
+    "level": 7,
+    "description": "When a creature you can see within 5 feet of you is targeted by an attack, you can use your reaction to become the target instead. If the attack hits you, reduce the damage by your proficiency bonus + your Constitution modifier.",
+    "activation": {
+     "cost": {
+      "type": "reaction",
+      "count": 1
+     },
+     "trigger": "ally_is_targeted_by_attack"
+    },
+    "targeting": {
+     "type": "ally",
+     "range": {
+      "value": 5,
+      "unit": "feet"
+     },
+     "conditions": [
+      "target_is_visible"
+     ]
+    },
+    "mechanics": [
+     {
+      "effect": "redirect_attack",
+      "description": "You become the new target of the triggering attack.",
+      "from": "triggering_target",
+      "to": "self",
+      "on_hit": [
+       {
+        "effect": "reduce_incoming_damage",
+        "description": "Reduce the damage taken from the redirected attack.",
+        "parameters": {
+         "amount": {
+          "operation": "sum",
+          "components": [
+           {
+            "type": "stat",
+            "value": "proficiency_bonus"
+           },
+           {
+            "type": "stat",
+            "value": "constitution_modifier"
+           }
+          ]
+         }
+        }
+       }
+      ]
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "interpose_reaction_redirect",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ally_within_5",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "actions": [
+       "reaction"
+      ],
+      "notes": "Become target of the triggering attack aimed at adjacent ally."
+     },
+     {
+      "type": "modify_roll",
+      "value": "reduce_incoming_damage_by(PB + CON)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "interpose_redirect_hit",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "notes": "On hit, reduce damage by proficiency bonus + Constitution modifier."
+     }
+    ]
+   },
+   {
+    "name": "Protective Stance",
+    "source": "Character Level 11",
+    "level": 11,
+    "description": "While you are not incapacitated, allies within 10 feet gain +1 to AC and have advantage on saving throws against being frightened.",
+    "activation": {
+     "cost": {
+      "type": "none",
+      "count": 0
+     },
+     "trigger": "passive"
+    },
+    "targeting": {
+     "type": "ally",
+     "range": {
+      "value": 10,
+      "unit": "feet"
+     },
+     "conditions": [
+      "you_not_incapacitated"
+     ]
+    },
+    "mechanics": [
+     {
+      "effect": "modify_stat",
+      "description": "+1 AC to allies within 10 feet while you are not incapacitated.",
+      "target": "allies_in_range",
+      "parameters": {
+       "target_property": "ac",
+       "amount": 1,
+       "duration": "while_within_10ft_and_you_conscious"
+      }
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "Allies within 10 feet have advantage on saving throws against being frightened.",
+      "target": "allies_in_range",
+      "parameters": {
+       "roll_type": "saving_throw",
+       "vs": "frightened"
+      }
+     }
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "+1",
+      "target_property": "ac",
+      "target_scopes": [
+       "allies_within_10"
+      ],
+      "conditions": [
+       {
+        "key": "you_not_incapacitated",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "notes": "+1 AC while within 10 ft and you are not incapacitated."
+     },
+     {
+      "type": "grant_advantage",
+      "value": "saving_throws_vs_frightened",
+      "target_scopes": [
+       "allies_within_10"
+      ],
+      "conditions": [
+       {
+        "key": "you_not_incapacitated",
+        "op": "==",
+        "value": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Lockdown",
+    "source": "Character Level 13",
+    "level": 13,
+    "description": "When a creature within 5 feet of you makes an attack against a target other than you, you can use your reaction to make a melee weapon attack against that creature. On a hit, the target’s speed becomes 0 until the start of its next turn.",
+    "activation": {
+     "cost": {
+      "type": "reaction",
+      "count": 1
+     },
+     "trigger": "adjacent_enemy_attacks_not_you"
+    },
+    "targeting": {
+     "type": "enemy",
+     "range": {
+      "value": 5,
+      "unit": "feet"
+     },
+     "conditions": [
+      "target_made_attack_against_other"
+     ]
+    },
+    "mechanics": [
+     {
+      "effect": "make_attack",
+      "description": "Make a melee weapon attack against the triggering creature.",
+      "target": "triggering_target",
+      "parameters": {
+       "weapon_type": "melee"
+      },
+      "on_hit": [
+       {
+        "effect": "apply_condition",
+        "description": "Target's speed becomes 0 until the start of its next turn.",
+        "target": "triggering_target",
+        "condition": "speed_0",
+        "duration": "until_start_of_your_next_turn"
+       }
+      ]
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "reaction_melee_counter",
+      "target_scopes": [
+       "enemy_within_5"
+      ],
+      "conditions": [
+       {
+        "key": "hostile_attacked_other_adjacent_target",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "actions": [
+       "reaction",
+       "weapon_attack"
+      ],
+      "notes": "Make a melee attack as a reaction against the attacker."
+     },
+     {
+      "type": "apply_status",
+      "value": "speed_0",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "counter_attack_hit",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "notes": "On hit, target's speed is 0 until the start of its next turn."
+     }
+    ]
+   },
+   {
+    "name": "Guardian Bulwark",
+    "source": "Character Level 17",
+    "level": 17,
+    "description": "Once per short rest, grant temporary hit points to yourself and allies within 10 feet equal to twice your level. While any of these temporary hit points remain, you and those allies have resistance to blaster damage.",
+    "activation": {
+     "cost": {
+      "type": "action",
+      "count": 1
+     },
+     "trigger": "use_feature"
+    },
+    "targeting": {
+     "type": "ally",
+     "range": {
+      "value": 10,
+      "unit": "feet"
+     },
+     "conditions": [
+      "includes_self"
+     ]
+    },
+    "mechanics": [
+     {
+      "effect": "grant_temp_hp",
+      "description": "Grant temp HP equal to 2 × your level to yourself and allies within 10 feet.",
+      "target": "self_and_allies_in_range",
+      "parameters": {
+       "amount": {
+        "operation": "multiply",
+        "components": [
+         {
+          "type": "flat",
+          "value": 2
+         },
+         {
+          "type": "stat",
+          "value": "level"
+         }
+        ]
+       },
+       "duration": "until_long_or_short_rest"
+      }
+     },
+     {
+      "effect": "apply_resistance",
+      "description": "While these temp HP remain, you and those allies have resistance to blaster damage.",
+      "target": "self_and_allies_in_range",
+      "parameters": {
+       "damage_type": "blaster",
+       "condition": "has_temp_hp_from_guardian_bulwark",
+       "duration": "while_temp_hp_remain"
+      }
+     }
+    ],
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "grant_temp_hp",
+      "target_scopes": [
+       "self",
+       "allies_within_10"
+      ],
+      "notes": "Grant temp HP equal to 2 × level to yourself and allies within 10 ft."
+     },
+     {
+      "type": "apply_status",
+      "value": "resistance_blaster",
+      "target_scopes": [
+       "self",
+       "allies_within_10"
+      ],
+      "conditions": [
+       {
+        "key": "has_temp_hp_from_guardian_bulwark",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "notes": "Gain resistance to blaster damage while these temp HP remain."
+     }
+    ]
+   },
+   {
+    "name": "Legendary Bodyguard",
+    "source": "Character Level 19",
+    "level": 19,
+    "description": "For 1 minute (once per long rest), you can use Interpose once per round without expending your reaction, and when you reduce damage with Interpose, the protected ally gains temporary hit points equal to your Constitution modifier.",
+    "activation": {
+     "cost": {
+      "type": "bonus_action",
+      "count": 1
+     },
+     "trigger": "enter_bodyguard_focus"
+    },
+    "targeting": {
+     "type": "self",
+     "range": {
+      "value": 0,
+      "unit": "feet"
+     }
+    },
+    "mechanics": [
+     {
+      "effect": "modify_rule",
+      "description": "Interpose can be used once per round without expending your reaction while this focus is active.",
+      "parameters": {
+       "rule": "interpose_free_use_once_per_round",
+       "duration": "1_minute"
+      }
+     },
+     {
+      "effect": "triggered_bonus",
+      "description": "When you reduce damage with Interpose, the protected ally gains temporary hit points equal to your CON modifier.",
+      "parameters": {
+       "trigger": "interpose_damage_reduction",
+       "grant": {
+        "effect": "grant_temp_hp",
+        "target": "protected_ally",
+        "amount": {
+         "operation": "set_to",
+         "components": [
+          {
+           "type": "stat",
+           "value": "constitution_modifier"
+          }
+         ]
+        }
+       },
+       "duration": "1_minute"
+      }
+     }
+    ],
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "interpose_free_use_once_per_round",
+      "target_property": "feature_rule",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "For 1 minute, Interpose is free once per round."
+     },
+     {
+      "type": "grant_feat",
+      "value": "grant_temp_hp_on_interpose",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "interpose_damage_reduction",
+        "op": "==",
+        "value": true
+       }
+      ],
+      "notes": "Protected ally gains temp HP equal to your CON modifier when you reduce damage with Interpose."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "KyberCrystal",
+    "LightsaberHilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with lightsaber at the ready, poised to deflect incoming blaster fire.",
+    "energy_signature": "Emitting a subtle hum of blue energy, crackling with power and warning potential opponents."
+   },
+   "prompt_schema": {
+    "base_prompt": "A heroic Jedi Master stands proudly in front of a gleaming starfighter, hand on hilt as they gaze out at the stars.",
+    "contextual_modifiers": [
+     "Incorporate dramatic lighting to emphasize the contrast between light and darkness.",
+     "Ensure the background is blurred to focus attention on the subject."
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Protecting allies and taking damage to keep them safe, a Bodyguard is a fierce defender who has honed their skills as a skilled guardian.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Battle scars on their arms or torso",
+    "A symbol of protection or loyalty emblazoned on their armor"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_bodyguard",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.bodyguard.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

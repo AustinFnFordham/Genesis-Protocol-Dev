@@ -1,0 +1,118 @@
+{
+ "record": {
+  "id": "background_starship_communications_officer",
+  "name": "Communications Officer",
+  "description": "You manage the ship’s voice—encryption, decryption, signals, and calm under pressure.",
+  "proficiencies": {
+   "skills": [
+    "Persuasion",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Communications Kit",
+      "Encryption Suite",
+      "Translation Device",
+      "Sensor Suite"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Signal Discipline",
+   "level": 1,
+   "description": "You have advantage on checks to establish, maintain, or spoof communications. Once per short rest, you can grant an ally within 30 ft advantage on a check to jam, decrypt, or broadcast under duress.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "comms_establish_maintain_spoof",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "ally_jam_decrypt_broadcast_once_per_short_rest",
+     "target_scopes": [
+      "ally"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I speak in brevity codes without noticing.",
+    "I keep backups of backups."
+   ],
+   "ideals": [
+    "Clarity. Signals deserve respect.",
+    "Security. Loose comms cost lives."
+   ],
+   "bonds": [
+    "An old codebook saved me once; I keep it close."
+   ],
+   "flaws": [
+    "I correct radio etiquette mid-crisis."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_communications_officer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_communications_officer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "4968ee791c209872542d951cb7f56a9c17ae8902910c6c02ada7779d050ad95a",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,681 @@
+{
+ "record": {
+  "id": "integration_trade_goods",
+  "category": "rules",
+  "subcategory": "integration",
+  "tags": [
+   "rules",
+   "integration",
+   "trade_goods",
+   "commerce",
+   "economic",
+   "system_rules",
+   "merchant",
+   "documentation"
+  ],
+  "trade_goods_integration": {
+   "class_integration": {
+    "scoundrel_trade_goods": {
+     "class_theme": "Smuggling, Black Market, and Criminal Enterprise",
+     "recommended_trade_goods": [
+      "trade_spice",
+      "trade_rare_gems",
+      "trade_artifacts",
+      "trade_weapon_components"
+     ],
+     "trade_synergies": [
+      {
+       "trade_good": "trade_spice",
+       "class_feature": "Criminal Connections",
+       "effect": "Enhanced smuggling opportunities and higher profit margins"
+      },
+      {
+       "trade_good": "trade_artifacts",
+       "class_feature": "Lucky Shot",
+       "effect": "Better chances of finding valuable artifacts during heists"
+      }
+     ]
+    },
+    "trooper_trade_goods": {
+     "class_theme": "Military Supply, Logistics, and Strategic Resources",
+     "recommended_trade_goods": [
+      "trade_refined_durasteel",
+      "trade_energy_cores",
+      "trade_weapon_components",
+      "trade_medical_supplies"
+     ],
+     "trade_synergies": [
+      {
+       "trade_good": "trade_weapon_components",
+       "class_feature": "Military Training",
+       "effect": "Enhanced ability to evaluate and trade military equipment"
+      },
+      {
+       "trade_good": "trade_medical_supplies",
+       "class_feature": "Tactical Awareness",
+       "effect": "Better understanding of medical supply logistics"
+      }
+     ]
+    },
+    "tracker_trade_goods": {
+     "class_theme": "Wilderness Resources, Survival Materials, and Natural Commodities",
+     "recommended_trade_goods": [
+      "trade_durasteel_ore",
+      "trade_kyber_crystal",
+      "trade_food_stuffs",
+      "trade_rare_gems"
+     ],
+     "trade_synergies": [
+      {
+       "trade_good": "trade_kyber_crystal",
+       "class_feature": "Keen Senses",
+       "effect": "Enhanced ability to locate rare crystals in wilderness"
+      },
+      {
+       "trade_good": "trade_durasteel_ore",
+       "class_feature": "Precision Hunter",
+       "effect": "Better mining efficiency and resource extraction"
+      }
+     ]
+    }
+   },
+   "crafting_integration": {
+    "weapon_crafting_goods": [
+     {
+      "crafting_type": "weapon_construction",
+      "required_materials": [
+       "trade_refined_durasteel",
+       "trade_weapon_components",
+       "trade_energy_cores"
+      ],
+      "crafting_process": [
+       {
+        "step": "Gather Materials",
+        "materials": [
+         "trade_refined_durasteel",
+         "trade_weapon_components"
+        ],
+        "skill_check": "Armstech"
+       },
+       {
+        "step": "Assemble Components",
+        "materials": [
+         "trade_energy_cores"
+        ],
+        "skill_check": "Mechanic"
+       },
+       {
+        "step": "Quality Control",
+        "materials": [],
+        "skill_check": "Technology"
+       }
+      ]
+     }
+    ],
+    "armor_crafting_goods": [
+     {
+      "crafting_type": "armor_construction",
+      "required_materials": [
+       "trade_refined_durasteel",
+       "trade_beskar_alloy",
+       "trade_plasteel_sheets"
+      ],
+      "crafting_process": [
+       {
+        "step": "Material Preparation",
+        "materials": [
+         "trade_refined_durasteel",
+         "trade_plasteel_sheets"
+        ],
+        "skill_check": "Armortech"
+       },
+       {
+        "step": "Alloy Integration",
+        "materials": [
+         "trade_beskar_alloy"
+        ],
+        "skill_check": "Armortech"
+       },
+       {
+        "step": "Final Assembly",
+        "materials": [],
+        "skill_check": "Mechanic"
+       }
+      ]
+     }
+    ],
+    "technology_crafting_goods": [
+     {
+      "crafting_type": "technology_construction",
+      "required_materials": [
+       "trade_circuit_boards",
+       "trade_energy_cores",
+       "trade_droid_parts"
+      ],
+      "crafting_process": [
+       {
+        "step": "Circuit Assembly",
+        "materials": [
+         "trade_circuit_boards"
+        ],
+        "skill_check": "Mechanic"
+       },
+       {
+        "step": "Power Integration",
+        "materials": [
+         "trade_energy_cores"
+        ],
+        "skill_check": "Technology"
+       },
+       {
+        "step": "System Testing",
+        "materials": [],
+        "skill_check": "Technology"
+       }
+      ]
+     }
+    ]
+   },
+   "economy_integration": {
+    "market_fluctuations": [
+     {
+      "trade_good": "trade_food_stuffs",
+      "market_conditions": [
+       {
+        "condition": "food_shortage",
+        "price_multiplier": 3.0,
+        "availability": "limited"
+       },
+       {
+        "condition": "surplus",
+        "price_multiplier": 0.5,
+        "availability": "abundant"
+       }
+      ]
+     },
+     {
+      "trade_good": "trade_medical_supplies",
+      "market_conditions": [
+       {
+        "condition": "medical_emergency",
+        "price_multiplier": 5.0,
+        "availability": "critical"
+       },
+       {
+        "condition": "peace_time",
+        "price_multiplier": 1.0,
+        "availability": "normal"
+       }
+      ]
+     },
+     {
+      "trade_good": "trade_spice",
+      "market_conditions": [
+       {
+        "condition": "black_market_active",
+        "price_multiplier": 2.0,
+        "availability": "illegal"
+       },
+       {
+        "condition": "law_enforcement_crackdown",
+        "price_multiplier": 4.0,
+        "availability": "dangerous"
+       }
+      ]
+     }
+    ],
+    "regional_variations": [
+     {
+      "region": "Core Worlds",
+      "trade_goods": [
+       "trade_luxury_foods",
+       "trade_rare_gems",
+       "trade_artifacts"
+      ],
+      "price_modifiers": {
+       "luxury_goods": 1.5,
+       "basic_goods": 1.0
+      }
+     },
+     {
+      "region": "Outer Rim",
+      "trade_goods": [
+       "trade_durasteel_ore",
+       "trade_weapon_components",
+       "trade_spice"
+      ],
+      "price_modifiers": {
+       "industrial_goods": 1.2,
+       "illegal_goods": 2.0
+      }
+     },
+     {
+      "region": "Mandalorian Space",
+      "trade_goods": [
+       "trade_beskar_ore",
+       "trade_beskar_alloy",
+       "trade_weapon_components"
+      ],
+      "price_modifiers": {
+       "beskar_goods": 0.8,
+       "military_goods": 1.3
+      }
+     }
+    ]
+   },
+   "power_integration": {
+    "force_power_goods": [
+     {
+      "power_type": "lightsaber_construction",
+      "required_materials": [
+       "trade_kyber_crystal",
+       "trade_force_crystal",
+       "trade_energy_cores"
+      ],
+      "crafting_requirements": [
+       {
+        "skill": "Force Sensitivity"
+       },
+       {
+        "skill": "Lightsaber Construction"
+       },
+       {
+        "materials": [
+         "trade_kyber_crystal"
+        ]
+       }
+      ]
+     },
+     {
+      "power_type": "force_enhanced_equipment",
+      "required_materials": [
+       "trade_force_crystal",
+       "trade_energy_cores",
+       "trade_rare_gems"
+      ],
+      "crafting_requirements": [
+       {
+        "skill": "Force Sensitivity"
+       },
+       {
+        "skill": "Technology"
+       },
+       {
+        "materials": [
+         "trade_force_crystal"
+        ]
+       }
+      ]
+     }
+    ],
+    "tech_power_goods": [
+     {
+      "power_type": "advanced_technology",
+      "required_materials": [
+       "trade_circuit_boards",
+       "trade_energy_cores",
+       "trade_droid_parts"
+      ],
+      "crafting_requirements": [
+       {
+        "skill": "Technology"
+       },
+       {
+        "skill": "Mechanic"
+       },
+       {
+        "materials": [
+         "trade_energy_cores"
+        ]
+       }
+      ]
+     },
+     {
+      "power_type": "weapon_enhancement",
+      "required_materials": [
+       "trade_weapon_components",
+       "trade_energy_cores",
+       "trade_refined_durasteel"
+      ],
+      "crafting_requirements": [
+       {
+        "skill": "Armstech"
+       },
+       {
+        "skill": "Technology"
+       },
+       {
+        "materials": [
+         "trade_weapon_components"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "property_integration": {
+    "material_properties": [
+     {
+      "trade_good": "trade_beskar_alloy",
+      "properties": [
+       "lightsaber_resistant",
+       "energy_resistant",
+       "legendary_strength"
+      ],
+      "applications": [
+       "armor_construction",
+       "weapon_construction",
+       "shield_generation"
+      ]
+     },
+     {
+      "trade_good": "trade_phrik_alloy",
+      "properties": [
+       "lightsaber_resistant",
+       "extremely_durable",
+       "rare"
+      ],
+      "applications": [
+       "anti_lightsaber_equipment",
+       "defensive_structures",
+       "specialized_armor"
+      ]
+     },
+     {
+      "trade_good": "trade_cortosis_ore",
+      "properties": [
+       "lightsaber_disable",
+       "energy_weapon_disable",
+       "rare"
+      ],
+      "applications": [
+       "anti_lightsaber_weapons",
+       "defensive_coatings",
+       "specialized_equipment"
+      ]
+     }
+    ]
+   },
+   "status_integration": {
+    "economic_status_effects": [
+     {
+      "status": "market_boom",
+      "trade_good_effects": [
+       {
+        "trade_good": "trade_rare_gems",
+        "effect": "Increased value and demand"
+       },
+       {
+        "trade_good": "trade_luxury_foods",
+        "effect": "Higher profit margins"
+       },
+       {
+        "trade_good": "trade_artifacts",
+        "effect": "Collector interest surge"
+       }
+      ]
+     },
+     {
+      "status": "economic_recession",
+      "trade_good_effects": [
+       {
+        "trade_good": "trade_food_stuffs",
+        "effect": "Increased demand for essentials"
+       },
+       {
+        "trade_good": "trade_medical_supplies",
+        "effect": "Critical need for healthcare"
+       },
+       {
+        "trade_good": "trade_luxury_foods",
+        "effect": "Decreased demand for luxuries"
+       }
+      ]
+     }
+    ],
+    "supply_chain_effects": [
+     {
+      "status": "supply_shortage",
+      "trade_good_effects": [
+       {
+        "trade_good": "trade_refined_durasteel",
+        "effect": "Increased value due to scarcity"
+       },
+       {
+        "trade_good": "trade_energy_cores",
+        "effect": "Critical resource for technology"
+       },
+       {
+        "trade_good": "trade_weapon_components",
+        "effect": "Military priority for acquisition"
+       }
+      ]
+     },
+     {
+      "status": "surplus_overflow",
+      "trade_good_effects": [
+       {
+        "trade_good": "trade_durasteel_ore",
+        "effect": "Decreased value due to abundance"
+       },
+       {
+        "trade_good": "trade_plasteel_compound",
+        "effect": "Reduced profit margins"
+       },
+       {
+        "trade_good": "trade_food_stuffs",
+        "effect": "Lower prices for consumers"
+       }
+      ]
+     }
+    ]
+   },
+   "crafting_system": {
+    "refining_process": [
+     {
+      "raw_material": "trade_durasteel_ore",
+      "refined_product": "trade_refined_durasteel",
+      "process": [
+       {
+        "step": "Extraction",
+        "skill": "Mining",
+        "time": "2 hours"
+       },
+       {
+        "step": "Purification",
+        "skill": "Armstech",
+        "time": "4 hours"
+       },
+       {
+        "step": "Forming",
+        "skill": "Armstech",
+        "time": "2 hours"
+       }
+      ]
+     },
+     {
+      "raw_material": "trade_beskar_ore",
+      "refined_product": "trade_beskar_alloy",
+      "process": [
+       {
+        "step": "Mandalorian Extraction",
+        "skill": "Mining",
+        "time": "8 hours"
+       },
+       {
+        "step": "Sacred Purification",
+        "skill": "Armortech",
+        "time": "12 hours"
+       },
+       {
+        "step": "Legendary Forging",
+        "skill": "Armortech",
+        "time": "8 hours"
+       }
+      ]
+     }
+    ],
+    "manufacturing_process": [
+     {
+      "base_material": "trade_refined_durasteel",
+      "manufactured_product": "weapon_components",
+      "process": [
+       {
+        "step": "Design",
+        "skill": "Armstech",
+        "time": "4 hours"
+       },
+       {
+        "step": "Fabrication",
+        "skill": "Mechanic",
+        "time": "6 hours"
+       },
+       {
+        "step": "Testing",
+        "skill": "Technology",
+        "time": "2 hours"
+       }
+      ]
+     },
+     {
+      "base_material": "trade_circuit_boards",
+      "manufactured_product": "electronic_devices",
+      "process": [
+       {
+        "step": "Circuit Design",
+        "skill": "Technology",
+        "time": "3 hours"
+       },
+       {
+        "step": "Assembly",
+        "skill": "Mechanic",
+        "time": "4 hours"
+       },
+       {
+        "step": "Programming",
+        "skill": "Technology",
+        "time": "2 hours"
+       }
+      ]
+     }
+    ]
+   },
+   "economy_rules": {
+    "supply_demand": {
+     "description": "Trade goods value fluctuates based on supply and demand",
+     "factors": [
+      "Regional availability",
+      "Market conditions",
+      "Political stability",
+      "Technological advancement",
+      "Cultural significance"
+     ]
+    },
+    "black_market": {
+     "description": "Illegal trade goods have higher risks and rewards",
+     "risks": [
+      "Law enforcement detection",
+      "Criminal competition",
+      "Quality uncertainty",
+      "Legal consequences"
+     ],
+     "rewards": [
+      "Higher profit margins",
+      "Exclusive access",
+      "Unique opportunities",
+      "Criminal connections"
+     ]
+    },
+    "legitimate_trading": {
+     "description": "Legal trade goods provide stable but lower profits",
+     "benefits": [
+      "Legal protection",
+      "Stable markets",
+      "Quality assurance",
+      "Reputation building"
+     ],
+     "limitations": [
+      "Lower profit margins",
+      "Market competition",
+      "Regulatory compliance",
+      "Taxation"
+     ]
+    }
+   },
+   "implementation_guidelines": {
+    "trade_routes": {
+     "description": "Guidelines for establishing trade routes",
+     "considerations": [
+      "Distance and travel time",
+      "Security and piracy risks",
+      "Market demand and competition",
+      "Regulatory requirements",
+      "Infrastructure and facilities"
+     ]
+    },
+    "market_analysis": {
+     "description": "How to analyze market conditions for trade goods",
+     "analysis_factors": [
+      "Current supply levels",
+      "Demand trends",
+      "Price fluctuations",
+      "Competition analysis",
+      "Risk assessment"
+     ]
+    },
+    "trade_negotiations": {
+     "description": "Rules for negotiating trade deals",
+     "negotiation_factors": [
+      "Market knowledge",
+      "Reputation and relationships",
+      "Supply and demand",
+      "Quality and condition",
+      "Payment terms and methods"
+     ]
+    }
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "integration_trade_goods",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/trade_goods_integration.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

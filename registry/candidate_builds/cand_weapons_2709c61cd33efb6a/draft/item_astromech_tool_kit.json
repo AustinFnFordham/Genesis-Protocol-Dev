@@ -1,0 +1,96 @@
+{
+ "record": {
+  "id_file": "droid_part_astromech_tool_kit",
+  "category": "equipment",
+  "subcategory": "droid_parts",
+  "tags": [
+   "equipment",
+   "item",
+   "droid_parts",
+   "utility",
+   "mechanical",
+   "technical",
+   "astromech",
+   "tools",
+   "specialized"
+  ],
+  "id": "item_astromech_tool_kit",
+  "name": "Astromech Tool Kit",
+  "item_type": "Gear",
+  "era": "Galactic_Empire",
+  "narrative": "A compact array of manipulators, welders, prybars, and diagnostics built directly into an astromech's chassis. Designed for field repairs and ship maintenance in tight spaces.",
+  "mechanics": {
+   "category": "tools",
+   "grants": [
+    {
+     "effect": "proficiency",
+     "target": "Mechanics"
+    },
+    {
+     "effect": "advantage",
+     "condition": "repair_checks_in_cramped_or_hazardous_environments"
+    }
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A detailed kit of integrated astromech tools partially extended from a droid chassis panel: micro-welder, probe, dataspike, and articulated claw. Hard rim lighting, high-detail concept art.",
+   "base_negative_keywords": [
+    "cartoonish",
+    "blurry"
+   ],
+   "contextual_modifiers": [
+    {
+     "target_type": "Item_Closeup",
+     "modifier_text": "Metal textures, subtle wear, clear labels on ports."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/images/items/droid_parts/astromech_tool_kit.jpg",
+   "icon": "/icons/items/droid_parts/astromech_tool_kit.svg",
+   "color": "#708090"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_astromech_tool_kit",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/droid_parts/astromech_tool_kit.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

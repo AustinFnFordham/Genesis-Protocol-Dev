@@ -1,0 +1,217 @@
+{
+ "record": {
+  "id": "power_mirror_image",
+  "name": "Mirror Image",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "illusion",
+   "hologram",
+   "defensive",
+   "duplicates",
+   "evasion",
+   "misdirection"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced holographic duplication technology"
+   }
+  },
+  "narrative": "You activate advanced holo-projectors that create multiple perfect duplicates of yourself, all moving in sync to confuse attackers about which is real. The power manifests as three identical copies surrounding you, enemies forced to guess which target is genuine as attacks pass harmlessly through illusions.",
+  "flavor_text": "\"Which one is real? All of them. None of them.\" - Operative",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating multi-projector array"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "synchronizing duplicate movements with your own"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create illusory duplicates of yourself that confuse attackers.",
+   "mechanics": [
+    {
+     "type": "create_duplicates",
+     "value": {
+      "count": 3,
+      "behavior": "mirror_movements"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Create 3 illusory duplicates that move with you"
+    },
+    {
+     "type": "misdirection",
+     "value": {
+      "effect": "attacks_hit_duplicates",
+      "chance_percent": 75
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Attacks have 75% chance to hit duplicate instead of you"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative's expertise in misdirection transforms Mirror Image into perfect defense. Their duplicates don't just mirror movements—they fake injuries, react to near-misses, even attack independently, creating confusion that transcends simple visual trickery.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_duplicates",
+      "value": {
+       "count": 5
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Operatives create 5 duplicates instead of 3, increasing misdirection."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability makes their Mirror Images unpredictable. Each duplicate moves with subtle variations in behavior, making it impossible to identify the real person through pattern analysis—psychological warfare through perfect imperfection.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 10,
+       "unit": "minutes"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Human Mirror Images last 10 minutes instead of 1."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance uses Mirror Image for survival against overwhelming odds. Their versions can split off independently, creating the illusion of greater numbers that forces Imperial forces to divide attention and resources.",
+    "mechanical_benefit": [
+     {
+      "type": "independent_duplicates",
+      "value": {
+       "movement": "separate",
+       "range": {
+        "distance": 30,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "duplicates"
+      ],
+      "notes": "Rebel duplicates can move independently up to 30 feet away."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the duplicates materializing around you, perfect translucent copies moving in perfect sync. Show attacks striking illusions that shimmer and dissipate, enemies' frustration growing as they can't tell which is real. The duplicates should feel convincingly present despite being holograms.",
+   "tactical_notes": "Mirror Image creates 3 duplicates that absorb 75% of attacks, significantly increasing survivability. Costs 1 Tech Point but can last up to 1 minute with concentration. Perfect for frontline combatants who need defensive buffs. Each hit on duplicate destroys one, reducing effectiveness over time.",
+   "narrative_hooks": [
+    "Mirror Images allow a lone infiltrator to appear as a full squad",
+    "A duplicate taking a killing shot reveals the deception dramatically",
+    "The illusions create enough confusion for a desperate escape"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior surrounded by three perfect holographic duplicates. All four figures move in perfect synchrony, their translucent copies indistinguishable from the real person. An enemy's attack passes through one duplicate, revealing it as illusion while the others remain convincing. The scene captures the confusion and tactical advantage of perfect duplication.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/mirror_image.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_mirror_image",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_mirror_image.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

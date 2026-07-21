@@ -1,0 +1,756 @@
+{
+ "record": {
+  "id": "bothan",
+  "name": "Bothan",
+  "tags": [
+   "ambitious",
+   "bothan",
+   "charisma_based",
+   "common",
+   "conflicted_ally",
+   "cunning",
+   "deceptive",
+   "dexterity_based",
+   "iconic",
+   "infiltrator",
+   "influence",
+   "information_gatherer",
+   "skill_specialist",
+   "spy",
+   "stealth",
+   "urban"
+  ],
+  "description": "Canny and connected, Bothans excel at information networks, subterfuge, and leverage through favors owed and granted.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Charisma",
+    "value": 2
+   },
+   {
+    "ability": "Dexterity",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Bothese",
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "bothan_many_bothans",
+    "name": "Many Bothans",
+    "narrative": "The Bothan saying 'Many Bothans died to bring us this information' reflects your species' deep commitment to information networks and mutual support.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Choice:Deception|Persuasion"
+      }
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Network Contact",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can call upon your network contacts to gain advantage on a social check.",
+      "rules": [
+       "cooldown:short_rest",
+       "trigger:social_check"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "bothan_shadowstep",
+    "name": "Shadowstep",
+    "narrative": "Your species has mastered the art of moving unseen through urban environments, blending seamlessly into crowds and shadows.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Dexterity (Stealth) checks made to blend into crowds or urban environments.",
+      "conditions": [
+       {
+        "key": "environment",
+        "op": "in",
+        "value": [
+         "urban",
+         "crowded"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "bothan_fur_communication",
+    "name": "Fur Communication",
+    "narrative": "Your fur can convey subtle emotional cues and information, allowing for silent communication with other Bothans.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Deception checks when communicating with other Bothans.",
+      "conditions": [
+       {
+        "key": "communication_target",
+        "op": "equals",
+        "value": "bothan"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "corrupted_fur_communication",
+     "ui_transition": {
+      "animation": "flickering_lights",
+      "sfx": "distorted_whispers"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "Furry humanoid with pointed ears",
+    "Sharp, intelligent eyes",
+    "Graceful, agile movements",
+    "Expressive facial features"
+   ],
+   "fur_color_variants": [
+    "Golden Brown",
+    "Rich Brown",
+    "Dark Brown",
+    "Reddish Brown",
+    "Grey",
+    "Black",
+    "Cream"
+   ],
+   "fur_patterns": [
+    "Solid color",
+    "Subtle tabby markings",
+    "Facial mask patterns",
+    "Gradient variations"
+   ],
+   "eye_color_variants": [
+    "Amber",
+    "Green",
+    "Blue",
+    "Brown",
+    "Hazel",
+    "Gold"
+   ],
+   "common_adornments": [
+    "Elegant, well-tailored clothing",
+    "Subtle jewelry and accessories",
+    "Professional attire for diplomatic functions",
+    "Discreet communication devices",
+    "Traditional Bothan ceremonial robes"
+   ],
+   "llm_description_prompt": "Describe a Bothan character. Emphasize their sharp, calculating eyes and graceful, confident movements. Their fur should reflect their social status and background. Consider their natural elegance and the subtle ways they gather information and influence others through their presence and demeanor."
+  },
+  "class_synergies": [
+   {
+    "class": "Operative (Scout/Infiltrator)",
+    "narrative": "Bothans are masters of espionage. Their natural cunning and societal focus on information networks make them the quintessential Operative.",
+    "mechanical_benefits": [
+     "Shadowstep trait enhances stealth in populated areas",
+     "High Charisma supports social infiltration",
+     "Natural agility complements Operative's mobility"
+    ]
+   },
+   {
+    "class": "Scoundrel",
+    "narrative": "A Bothan's charm and ability to navigate complex social and political webs align perfectly with the Scoundrel's life of negotiation and intrigue.",
+    "mechanical_benefits": [
+     "High Charisma enhances persuasion and deception",
+     "Many Bothans trait supports urban-based scoundrel activities",
+     "Natural social intelligence aids in criminal networks"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Bothans' natural diplomatic abilities and extensive information networks make them exceptional Consulars, able to broker deals and gather intelligence simultaneously.",
+    "mechanical_benefits": [
+     "High Charisma supports diplomatic functions",
+     "Information network background aids in negotiations",
+     "Natural insight into political dynamics"
+    ]
+   },
+   {
+    "class": "Scholar",
+    "narrative": "Bothans' analytical minds and access to vast information networks make them excellent Scholars, particularly in political science and intelligence analysis.",
+    "mechanical_benefits": [
+     "High Charisma aids in research and information gathering",
+     "Network connections provide access to rare knowledge",
+     "Natural curiosity and analytical thinking"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Bothan Spynet",
+    "narrative": "The Bothan Spynet is the most extensive intelligence network in the galaxy, with Bothans serving as its primary agents and information brokers."
+   },
+   {
+    "faction": "Rebel Alliance",
+    "narrative": "Many Bothans support the Rebellion through their intelligence networks, providing crucial information while maintaining plausible deniability."
+   },
+   {
+    "faction": "Corporate Sector",
+    "narrative": "Bothans excel in corporate espionage and business intelligence, using their networks to gain competitive advantages and broker deals."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Many Bothans",
+   "base_description": "Your species excels at information networks and social manipulation. You gain proficiency in Deception or Persuasion and can call upon contacts for advantages.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your information network has grown more extensive. You can access deeper levels of intelligence and call in more significant favors.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Intelligence (Investigation) checks",
+      "conditions": [
+       {
+        "key": "information_type",
+        "op": "in",
+        "value": [
+         "political",
+         "military",
+         "corporate",
+         "espionage"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your network connections have become legendary. You can access secret information and call in major favors from powerful contacts.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Network Mastery",
+      "description": "Once per long rest, you can access secret information or call in a major favor from your network contacts"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of information networks. Your ability to gather and manipulate information is unparalleled.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Information Overlord",
+      "description": "Once per long rest, you can access any piece of non-classified information or call in a legendary favor"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of information networks. Your web of contacts spans the entire galaxy, and your influence is unmatched.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Galactic Network",
+      "description": "Once per long rest, you can access any information or call in any favor, regardless of classification or difficulty"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "At this point, you've honed your skills as a Bothan operative and have access to advanced information networks. Your reputation among other Bothans grows, and you begin to attract attention from key factions within the Spynet.",
+    "level_10": "You've reached a position of influence within the Bothan community, with many looking up to you for guidance and support. You're able to call in favors from high-ranking officials and gain access to sensitive information that would be unavailable to lesser operatives.",
+    "level_15": "Your skills as a master spy have earned you recognition across the galaxy, with both allies and enemies taking notice of your exceptional abilities. You begin to receive offers for high-stakes missions, leveraging your reputation to secure lucrative contracts and further your own interests.",
+    "level_20": "As one of the most renowned Bothan operatives in the galaxy, you've achieved a level of mastery that's unmatched by your peers. Your connections are vast, and your influence reaches into the highest echelons of power. You're able to manipulate events from behind the scenes, using your knowledge and resources to shape the course of galactic history."
+   }
+  },
+  "cultural_features": [
+   {
+    "activation": "When seeking information about political events, military movements, or corporate activities",
+    "description": "Your connections to the Bothan Spynet provide access to a vast information network spanning the galaxy.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "information_type",
+       "op": "in",
+       "value": [
+        "political",
+        "military",
+        "corporate",
+        "espionage"
+       ]
+      }
+     ],
+     "type": "information_access",
+     "value": "advantage"
+    },
+    "faction_connection": "Bothan Spynet",
+    "name": "Spynet Connections",
+    "narrative_enhancement": "You can call in favors from Bothan contacts, access secret information networks, and leverage your species' reputation for gathering intelligence.",
+    "optional": true,
+    "type": "narrative"
+   },
+   {
+    "activation": "When communicating with other Bothans or in situations requiring subtle coordination",
+    "description": "Your species' unique ability to communicate through subtle fur movements allows for silent coordination and emotional expression.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "communication_target",
+       "op": "equals",
+       "value": "bothan"
+      },
+      {
+       "key": "communication_type",
+       "op": "in",
+       "value": [
+        "coordination",
+        "emotional_expression",
+        "silent_communication"
+       ]
+      }
+     ],
+     "type": "social_bonus",
+     "value": "+2"
+    },
+    "faction_connection": "Bothan Cultural Networks",
+    "name": "Fur Communication",
+    "narrative_enhancement": "You can convey complex emotions and information through subtle fur movements, allowing for silent coordination and deep emotional connections with other Bothans.",
+    "optional": true,
+    "type": "cultural"
+   },
+   {
+    "activation": "When attempting to move unnoticed through urban environments or crowds",
+    "description": "Your training in the ancient Bothan art of moving unseen through shadows and blending into crowds.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "in",
+       "value": [
+        "urban",
+        "crowded",
+        "shadowed"
+       ]
+      }
+     ],
+     "type": "advantage",
+     "value": "Stealth checks"
+    },
+    "faction_connection": "Bothan Traditional Orders",
+    "name": "Shadowstep Tradition",
+    "narrative_enhancement": "You can blend seamlessly into crowds, move through shadows like a ghost, and disappear into the urban landscape with practiced ease.",
+    "optional": true,
+    "type": "traditional"
+   },
+   {
+    "activation": "When working with other Bothans or accessing shared information",
+    "description": "The Bothan saying 'Many Bothans died to bring us this information' reflects your species' deep commitment to information sharing and mutual support.",
+    "effect": {
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "information_sharing",
+        "mutual_support",
+        "bothan_cooperation"
+       ]
+      }
+     ],
+     "type": "cultural_connection",
+     "value": "advantage"
+    },
+    "faction_connection": "Bothan Community Networks",
+    "name": "Many Bothans Network",
+    "narrative_enhancement": "You can tap into the collective knowledge and resources of the Bothan community, sharing information and receiving support from your network.",
+    "optional": true,
+    "type": "social"
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Bothan",
+   "cultural_networks": [
+    {
+     "name": "Bothan Spynet",
+     "description": "A network of interconnected information brokers and operatives who share intelligence and coordinate efforts."
+    },
+    {
+     "name": "Bothan Cultural Networks",
+     "description": "A loose association of Bothans who maintain connections through subtle fur movements, emotional expression, and silent coordination."
+    }
+   ],
+   "traditional_practices": [
+    {
+     "name": "Shadowstep Tradition",
+     "description": "An ancient art of moving unseen through shadows and blending into crowds."
+    },
+    {
+     "name": "Many Bothans Network",
+     "description": "The collective knowledge and resources shared among the Bothan community."
+    }
+   ],
+   "cultural_knowledge": [
+    {
+     "name": "Spynet Connections",
+     "description": "Your access to a vast information network spanning the galaxy."
+    },
+    {
+     "name": "Fur Communication",
+     "description": "Your ability to convey complex emotions and information through subtle fur movements."
+    }
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "urban",
+    "advantage": "Natural expertise in urban environments and social navigation",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Stealth checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "urban"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "blending_in",
+        "crowd_navigation",
+        "urban_stealth"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through urban environments with natural ease, your species' evolutionary adaptation to city life making you perfectly at home in crowded streets and bustling markets.",
+    "narrative_hooks": [
+     "Urban infiltration and espionage",
+     "Crowd navigation and blending",
+     "Urban information gathering",
+     "City-based social manipulation"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "corporate",
+    "advantage": "Expertise in corporate environments and business intelligence",
+    "situational_bonus": {
+     "type": "skill_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "corporate"
+      },
+      {
+       "key": "skill_type",
+       "op": "in",
+       "value": [
+        "persuasion",
+        "deception",
+        "insight"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural understanding of corporate politics and business dynamics allows you to navigate boardrooms and office environments with practiced ease.",
+    "narrative_hooks": [
+     "Corporate espionage and intelligence",
+     "Business negotiation and deals",
+     "Corporate political maneuvering",
+     "Office-based information gathering"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "political",
+    "advantage": "Mastery of political environments and diplomatic intelligence",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "political"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "diplomacy",
+        "negotiation",
+        "political_maneuvering"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your species' natural aptitude for politics and diplomacy makes you perfectly suited for navigating complex political landscapes and gathering sensitive information.",
+    "narrative_hooks": [
+     "Political intelligence gathering",
+     "Diplomatic negotiations",
+     "Political alliance building",
+     "Government infiltration"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "social_networks",
+    "advantage": "Enhanced ability to navigate and manipulate social networks",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Deception) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "social_networks"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "social_manipulation",
+        "network_building",
+        "information_gathering"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural understanding of social dynamics and network building allows you to create and manipulate complex webs of influence and information.",
+    "narrative_hooks": [
+     "Social network building",
+     "Information network manipulation",
+     "Social influence campaigns",
+     "Network-based intelligence gathering"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "urban",
+    "corporate",
+    "political"
+   ],
+   "environmental_knowledge": [
+    {
+     "name": "Urban Environments",
+     "description": "You're familiar with navigating crowded streets, bustling markets, and urban landscapes."
+    },
+    {
+     "name": "Corporate Environments",
+     "description": "Your understanding of corporate politics and business dynamics allows you to navigate boardrooms and office environments."
+    },
+    {
+     "name": "Political Environments",
+     "description": "Your mastery of diplomatic intelligence and negotiations makes you suited for complex political landscapes."
+    }
+   ],
+   "survival_techniques": [
+    {
+     "name": "Stealth in Urban Environments",
+     "description": "You can blend seamlessly into crowds, move through shadows like a ghost, and disappear into the urban landscape with practiced ease."
+    }
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "event_name": "Bothan Encounter",
+     "description": "You meet a Bothan with access to valuable information.",
+     "requirements": [
+      "Infiltrate a Bothan gathering",
+      "Gather intel on Bothan operations"
+     ],
+     "rewards": [
+      "1d10 credits",
+      "A lead on a high-priority mission"
+     ]
+    },
+    "escalation": {
+     "event_name": "Bothan Double Agent",
+     "description": "A Bothan infiltrator is discovered working for the opposing faction.",
+     "requirements": [
+      "The Bothan's betrayal causes tension among allies",
+      "Your reputation as an information broker takes a hit"
+     ],
+     "rewards": [
+      "1d8 credits",
+      "Improved access to Bothan networks"
+     ]
+    },
+    "confrontation": {
+     "event_name": "Bothan Uprising",
+     "description": "A group of Bothans launch a surprise attack on your allies.",
+     "requirements": [
+      "The uprising catches you off guard",
+      "Your alliances are strained due to the Bothan's actions"
+     ],
+     "rewards": [
+      "1d6 credits",
+      "A valuable item from the Bothan's arsenal"
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "You negotiate a peaceful resolution with the Bothans, improving your standing in their eyes.",
+    "redemption": "You make amends with the Bothans and gain back their trust.",
+    "escape": "You narrowly evade the Bothan uprising and flee to safety."
+   },
+   "conflict_triggers": [
+    "A Bothan infiltrator is discovered working for the opposing faction.",
+    "The Bothans launch a surprise attack on your allies.",
+    "You are tasked with infiltrating a Bothan gathering."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "A Bothan betrays you",
+     "Your reputation takes a hit due to the Bothan's actions"
+    ],
+    "vendetta_type": "Debt of Honor"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Bothans and humans have a complicated history.",
+    "The Bothan's cunning nature may clash with your own.",
+    "Your charisma-based abilities could be an asset in wooing the Bothan."
+   ],
+   "romance_progression": {
+    "stage1": "You strike up a conversation with the Bothan, discovering a shared interest.",
+    "stage2": "The Bothan begins to open up to you, sharing their goals and motivations.",
+    "stage3": "Your relationship deepens, and you find yourself considering the Bothan's feelings.",
+    "stage4": "The Bothan confides in you about a personal issue, strengthening your bond.",
+    "stage5": "You and the Bothan share a romantic moment, solidifying your connection."
+   },
+   "romance_events": [
+    "You share a tender moment with the Bothan during a mission.",
+    "The Bothan saves your life, earning your gratitude.",
+    "You uncover a deep-seated fear or insecurity in the Bothan, allowing you to offer comfort and support."
+   ],
+   "romance_modifiers": [
+    "Your charisma score affects how well you connect with the Bothan.",
+    "The Bothan's cunning nature may make them more difficult to win over."
+   ]
+  },
+  "flavor_text": "\"A Bothan's word is their bond, and a debt unpaid is a wound that never heals. We trade in favors, not coins.\"\n",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Bothan, you're adept at navigating complex webs of influence and information. Use your charisma to build relationships, gather intel, and manipulate situations to your advantage.\n",
+   "narrative_hooks": [
+    "A high-stakes meeting with a powerful patron hangs in the balance.",
+    "A long-lost contact resurfaces with crucial information, but their loyalty is uncertain.",
+    "A valuable asset has gone missing, and you must track it down before rival agents do."
+   ],
+   "social_dynamics": "Bothans often walk a fine line between friend and foe. Cultivate your network of favors owed and granted to stay ahead in the game.\n"
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "type": "Charismatic",
+     "traits": [
+      "Ambitious",
+      "Cunning"
+     ]
+    },
+    "motivations": {
+     "primary_goal": "Gain Influence",
+     "secondary_goals": [
+      "Protect Relationships",
+      "Gather Information"
+     ]
+    },
+    "combat_behavior": "Use stealth and cunning to outmaneuver foes, then strike with precision.",
+    "social_behavior": "Bribe or manipulate others to achieve your goals, but always maintain a veneer of charm."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "high": "Favors owed",
+     "medium": "Information shared",
+     "low": "Enemies made"
+    },
+    "loyalty_triggers": [
+     "Unpaid debts",
+     "Betrayal by allies"
+    ]
+   }
+  },
+  "visual_engine": {
+   "archetype": "mammalian_humanoid",
+   "overrides": {}
+  }
+ },
+ "validation": {
+  "candidate_urid": "bothan",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/bothan.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

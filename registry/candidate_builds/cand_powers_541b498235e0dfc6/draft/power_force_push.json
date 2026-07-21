@@ -1,0 +1,236 @@
+{
+ "record": {
+  "id": "power_force_push",
+  "name": "Force Push",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 1,
+  "narrative": "You unleash a telekinetic burst, shoving creatures and objects away from you. A fundamental expression of the Force, it can be a simple nudge or a devastating wave of concussive energy.",
+  "flavor_text": "'The ability to destroy a planet is insignificant next to the power of the Force.' - Darth Vader",
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 2
+   }
+  ],
+  "manifestation": [
+   "Somatic (a clear, forceful gesture)",
+   "Mental Focus"
+  ],
+  "base_effect": {
+   "description": "One creature or object in range is pushed 10 feet directly away from you and must make a Strength saving throw or be knocked prone.",
+   "mechanics": [
+    {
+     "effect": "forced_movement",
+     "parameters": {
+      "distance": 10,
+      "unit": "feet",
+      "direction": "away"
+     }
+    },
+    {
+     "effect": "apply_conditional_status",
+     "parameters": {
+      "condition": "prone",
+      "saving_throw": {
+       "ability": "Strength",
+       "dc_type": "caster_dc"
+      }
+     }
+    }
+   ]
+  },
+  "upgrades": [
+   {
+    "id": "push_upgrade_magnitude",
+    "name": "Magnitude",
+    "description": "Increase the force of your push.",
+    "xp_cost": 5,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_push_distance_by_10_feet"
+     }
+    ]
+   },
+   {
+    "id": "push_upgrade_control",
+    "name": "Control",
+    "description": "You can shove targets sideways instead of just straight back.",
+    "xp_cost": 5,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "allow_lateral_push_direction"
+     }
+    ]
+   },
+   {
+    "id": "push_upgrade_concussive_blast",
+    "name": "Concussive Blast",
+    "description": "Your push deals concussive damage to the target.",
+    "xp_cost": 10,
+    "prerequisites": [
+     "push_upgrade_magnitude"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "add_damage_component",
+      "parameters": {
+       "damage_dice": "2d8",
+       "damage_type": "force"
+      }
+     },
+     {
+      "effect": "modify_power_cost",
+      "description": "Channeling this much raw force is taxing, increasing the strain of the power.",
+      "modification": "increase_cost",
+      "parameters": {
+       "type": "Force_Points",
+       "amount": 1
+      }
+     }
+    ]
+   },
+   {
+    "id": "push_upgrade_area_of_effect",
+    "name": "Area of Effect",
+    "description": "Your push explodes outward, affecting all creatures in a 15-foot cone.",
+    "xp_cost": 15,
+    "prerequisites": [
+     "push_upgrade_concussive_blast"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "change_target_to_15_foot_cone"
+     }
+    ]
+   },
+   {
+    "id": "push_upgrade_force_mastery",
+    "name": "Force Mastery",
+    "description": "Your mastery of Force Push allows you to affect multiple targets and increase the range.",
+    "xp_cost": 20,
+    "prerequisites": [
+     "push_upgrade_area_of_effect"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_range_to_60_feet"
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "affect_up_to_3_targets"
+     }
+    ]
+   }
+  ],
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "Guardians excel at using Force Push defensively, protecting allies by pushing threats away.",
+    "mechanical_benefit": "Guardians can use Force Push as a reaction when an ally is attacked."
+   },
+   {
+    "class_id": "consular",
+    "narrative": "Consulars use Force Push with precision and control, often for diplomatic purposes.",
+    "mechanical_benefit": "Consulars can reduce the push distance to 5 feet for non-lethal applications."
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master the fundamentals of Force Push.",
+    "mechanical_benefit": "Humans gain advantage on Force Push saving throws against targets of their size or smaller."
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Force Push as a fundamental defensive technique.",
+    "mechanical_benefit": "Jedi gain +2 to Force Push saving throw DCs."
+   }
+  ],
+  "llm_guidance": {
+   "iconic_usage": "Obi-Wan Kenobi uses Force Push to separate Anakin from Padmé during their duel on Mustafar, demonstrating both its defensive and tactical applications.",
+   "tactical_notes": "Force Push is excellent for controlling battlefield positioning, creating space between allies and enemies, and knocking opponents prone for advantage on follow-up attacks.",
+   "narrative_hooks": [
+    "A Jedi uses Force Push to save a civilian from falling debris",
+    "A Sith uses Force Push to demonstrate their raw power and intimidate opponents",
+    "A Force-sensitive character discovers their abilities when they unconsciously push away a threat",
+    "The power is used to create dramatic entrances or exits in social situations"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A detailed digital painting of Force Push in action. A Jedi or Force user extends their hand in a clear, forceful gesture, creating a visible wave of telekinetic energy that pushes objects and creatures away. The Force energy manifests as a translucent wave of blue-white energy, rippling through the air. The scene shows the dramatic effect of the power, with debris, enemies, or objects being pushed back by the invisible force. The mood is mystical and powerful, representing the raw telekinetic might of the Force.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "The character is posed with their hand extended, palm forward, in the classic Force Push stance, with subtle energy ripples emanating from their fingertips."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "The Force Push creates a visible shockwave that ripples through the battlefield, pushing enemies back and creating tactical advantages."
+    },
+    {
+     "target_type": "Location",
+     "modifier_text": "The Force Push leaves subtle energy traces in the environment, with displaced air creating visible distortions and ripples."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/powers/force_push.png",
+   "icon": "/assets/icons/powers/force_push.svg"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_push",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_push2.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

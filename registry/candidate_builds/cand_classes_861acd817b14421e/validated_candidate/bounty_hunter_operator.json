@@ -1,0 +1,274 @@
+{
+ "record": {
+  "id": "bounty_hunter_operator",
+  "name": "Operator",
+  "class_id": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "operator",
+   "vehicle_specialist",
+   "tech_specialist",
+   "intelligence_based",
+   "pilot",
+   "tracker",
+   "tactical",
+   "hunter"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "bounty_hunter_operator_entry_3",
+    "feature_id": "bounty_hunter_operator_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "bounty_hunter_specialization",
+    "description": "Bounty Hunter Operators leverage vehicles, drones, and pursuit technology to track, intercept, and disable targets with surgical efficiency."
+   },
+   {
+    "node_id": "pursuit_protocols_7",
+    "feature_id": "pursuit_protocols",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "bounty_hunter_operator_entry_3"
+    ],
+    "description": "You excel at vehicular chases and tactical pursuit. You have advantage on Dexterity (Piloting) checks during chases. When piloting, you can Dash as a bonus action a number of times per short rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "piloting_checks_in_chases",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Advantage on Piloting checks during chases"
+     },
+     {
+      "type": "grant_bonus_action",
+      "value": "vehicle_dash",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "piloting_vehicle",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dash as bonus action while piloting (limited uses)"
+     }
+    ]
+   },
+   {
+    "node_id": "drone_deployment_11",
+    "feature_id": "drone_deployment",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "pursuit_protocols_7"
+    ],
+    "description": "You can deploy a compact tracking drone (AC 15, HP equal to your level, fly 40 ft). As a bonus action, command it to Scout (reveal hidden creatures within 30 ft, DC based on your proficiency + INT) or Mark (tag a visible target within 60 ft; you and allies have advantage on checks to track that target for 1 hour).",
+    "effects": [
+     {
+      "type": "summon_entity",
+      "value": "tracking_drone",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Deploy controllable tracking drone"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "drone_scout_or_mark",
+      "target_scopes": [
+       "area",
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "command_issued",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Drone can Scout or Mark using bonus action commands"
+     }
+    ]
+   },
+   {
+    "node_id": "systems_override_13",
+    "feature_id": "systems_override",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "drone_deployment_11"
+    ],
+    "description": "You can attempt to disable enemy vehicles or electronic locks. As an action within 60 ft, force an opposed check (Technology vs target system DC). On success against a vehicle, reduce its speed by half and impose disadvantage on its Piloting checks for 1 minute (repeat save at end of each of its turns). On success against a lock or door, open/disable it.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "remote_system_disable",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "electronic_or_vehicle_system",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disable/impair vehicle systems or electronic locks remotely"
+     }
+    ]
+   },
+   {
+    "node_id": "emp_net_17",
+    "feature_id": "emp_net",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "systems_override_13"
+    ],
+    "description": "Once per short rest, as an action, you can fire an EMP net (60 ft line, 5 ft wide). Devices, drones, and droids in the line must succeed on a Constitution saving throw or be stunned until the end of your next turn; vehicles suffer disadvantage on Piloting checks and lose Dash/Disengage until the end of your next turn.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "emp_line",
+      "target_scopes": [
+       "devices",
+       "droids",
+       "vehicles"
+      ],
+      "conditions": [],
+      "notes": "Stun/impair electronics and vehicles in a line"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_operator_19",
+    "feature_id": "legendary_operator",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "emp_net_17"
+    ],
+    "description": "Enter a heightened operations state for 1 minute (once per long rest). During this time, you have advantage on Piloting and Technology checks, your drone’s speed increases by 20 ft, and your vehicle ignores nonmagical difficult terrain.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "piloting_and_technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "operator_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Piloting and Technology checks"
+     },
+     {
+      "type": "modify_stat",
+      "value": "drone_speed_plus_20",
+      "target_scopes": [
+       "summoned_drone"
+      ],
+      "conditions": [
+       {
+        "key": "operator_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Drone speed +20 ft during focus"
+     },
+     {
+      "type": "apply_status",
+      "value": "vehicle_ignore_difficult_terrain",
+      "target_scopes": [
+       "vehicle"
+      ],
+      "conditions": [
+       {
+        "key": "operator_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Vehicle ignores nonmagical difficult terrain"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Jedi Robes"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, lightsaber held high in a defensive stance",
+    "energy_signature": "A swirling aura of blue and white energy emanating from the character's hands and robes"
+   },
+   "prompt_schema": {
+    "base_prompt": "A seasoned Jedi Knight standing tall on a misty Dagobah morning",
+    "contextual_modifiers": [
+     "In a quiet moment of contemplation",
+     "With a faint glow of the Force surrounding them"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Elite warriors who use their skills to disable and capture targets, often working with or for the Empire.",
+   "role_in_group": "Controller",
+   "visual_signals": [
+    "Power armor",
+    "Imperial emblem on shoulder"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "bounty_hunter_operator",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter.operator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

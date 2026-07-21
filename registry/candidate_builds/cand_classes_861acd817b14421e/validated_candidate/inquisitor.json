@@ -1,0 +1,446 @@
+{
+ "record": {
+  "id": "inquisitor",
+  "name": "Inquisitor",
+  "tags": [
+   "force_user",
+   "inquisitor",
+   "dark_side",
+   "force_hunter",
+   "intelligence_based",
+   "dexterity_based",
+   "suppression",
+   "interrogator",
+   "tactical",
+   "ruthless"
+  ],
+  "description": "Inquisitors are dark side Force-wielders specifically trained to hunt and eliminate other Force users. They are masters of Force suppression, specialized lightsaber techniques, and psychological warfare, using their knowledge of the Force to turn it against their enemies.",
+  "hit_die": "1d8",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Lightsabers",
+    "Blaster pistols"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Inquisitor's Kit",
+      "Force Suppression Device",
+      "Tracking Equipment",
+      "Interrogation Tools",
+      "Dark Side Artifacts"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Dexterity",
+    "Intelligence"
+   ],
+   "skills": {
+    "choose": 3,
+    "from": [
+     "Deception",
+     "Insight",
+     "Intimidation",
+     "Investigation",
+     "Lore",
+     "Perception",
+     "Stealth",
+     "Technology"
+    ]
+   }
+  },
+  "primary_ability": "Dexterity or Intelligence",
+  "primary_resource": "Dark Side Points",
+  "progression_tree": [
+   {
+    "node_id": "dark_side_connection_1",
+    "feature_id": "dark_side_connection",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "force_hunter_1",
+    "feature_id": "force_hunter",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "dark_side_connection_1"
+    ],
+    "choice_group": "force_hunter_level_1"
+   },
+   {
+    "node_id": "force_suppression_2",
+    "feature_id": "force_suppression",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "force_hunter_1"
+    ],
+    "choice_group": "inquisitor_focus_level_2"
+   },
+   {
+    "node_id": "force_tracking_2",
+    "feature_id": "force_tracking",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "force_hunter_1"
+    ],
+    "choice_group": "inquisitor_focus_level_2"
+   },
+   {
+    "node_id": "inquisitor_specialization_3",
+    "feature_id": "inquisitor_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "force_suppression_2",
+     "force_tracking_2"
+    ],
+    "choice_group": "inquisitor_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "inquisitor_specialization_3"
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "enhanced_suppression_6",
+    "feature_id": "enhanced_suppression",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "inquisitor_enhancement_level_6"
+   },
+   {
+    "node_id": "enhanced_tracking_6",
+    "feature_id": "enhanced_tracking",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "inquisitor_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_suppression_6",
+     "enhanced_tracking_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "dark_side_mastery_9",
+    "feature_id": "dark_side_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "force_sever_10",
+    "feature_id": "force_sever",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_mastery_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "force_sever_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "inquisitor_mastery_20",
+    "feature_id": "inquisitor_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Inquisitor's Robes",
+    "Double-Bladed Lightsaber",
+    "Force Gauntlets"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The inquisitor assumes a tense, aggressive posture with their lightsabers crossed and at the ready.",
+    "energy_signature": "A swirling aura of dark side energy emanates from the inquisitor, seeming to draw power from the surrounding environment."
+   },
+   "prompt_schema": {
+    "base_prompt": "A dark side adept wields their dual-bladed saber in a combat stance",
+    "contextual_modifiers": [
+     "against a backdrop of smoldering ruins",
+     "as they confront a mysterious Force-sensitive foe",
+     "with an air of calculated aggression"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A Inquisitor is assigned to hunt a new target, but the target possesses abilities beyond their expectations.",
+    "escalation": "As the Inquisitor delves deeper into the mystery of their target, they begin to realize that this Force user may be more than just a threat – they may hold the key to unlocking ancient secrets and forbidden powers.",
+    "confrontation": "The stakes are raised as the Inquisitor faces off against their target in an epic battle of wits and wills. The outcome is far from certain, but one thing is clear: only one can emerge victorious."
+   },
+   "resolution_paths": {
+    "victory": "With cunning and stealth, the Inquisitor outmaneuvers their target, securing a crucial victory for the Empire.",
+    "redemption": "As the dust settles, the Inquisitor begins to question their motives and loyalties. A newfound sense of purpose may lead them down a path of redemption – but at what cost?",
+    "escape": "In a desperate bid to flee the scene, the Inquisitor makes a narrow escape, but not without leaving behind a trail of clues that could spell disaster for them in the long run."
+   },
+   "conflict_triggers": [
+    "Targeting Force-sensitives",
+    "Pursuing ancient artifacts and relics",
+    "Tangling with powerful factions vying for control"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "A chance encounter in a cantina or marketplace sparks a connection – but the weight of their duties as an Inquisitor threatens to drive them apart.",
+    "stage2": "The Inquisitor is drawn into a complex web of intrigue and deception, forcing them to question the loyalty of their loved one.",
+    "stage3": "A dark secret from the Inquisitor's past is revealed, threatening to destroy the fragile bond they've formed with their partner.",
+    "stage4": "As the stakes grow higher, the Inquisitor must choose between their duty and their love – a choice that may have far-reaching consequences for both parties.",
+    "stage5": "The Inquisitor and their loved one must navigate the treacherous landscape of Imperial politics together, relying on each other to survive."
+   },
+   "lifestyle_challenges": [
+    "Constantly being deployed on missions puts strain on relationships",
+    "Dealing with the moral implications of hunting down Force-sensitives",
+    "Maintaining a sense of normalcy amidst the chaos of their duties"
+   ]
+  },
+  "flavor_text": "Like a dark specter, the Inquisitor strikes without warning, their mastery of the Force and lightsaber techniques making them a formidable foe.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Inquisitors are ruthless, calculating individuals who have dedicated their lives to eliminating other Force users. They excel at manipulating situations to their advantage, often using psychological tactics to break their enemies' will.\n",
+   "narrative_hooks": [
+    "The inquisitor's dark side connection is palpable, making them a formidable foe on the battlefield.",
+    "Inquisitors are trained to identify and eliminate hidden threats, making them valuable assets for organizations seeking to eliminate Force-sensitives.",
+    "These dark warriors often struggle with their own morality, making them potentially vulnerable to psychological manipulation."
+   ],
+   "social_dynamics": "Inquisitors operate best when working alone or as part of a small team, preferring to handle situations discreetly. They can be fiercely independent and non-conformist but may also form strong bonds with those who share their goals.\n",
+   "common_motivations": [
+    "Eliminate all Force users deemed threats to the Empire (or another organization).",
+    "Gather information about Force-sensitive individuals and their connections.",
+    "Maintain power within the dark side hierarchy."
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Ambitious",
+      "Disciplined"
+     ],
+     "tendencies": [
+      "Manipulative",
+      "Authoritative"
+     ]
+    },
+    "motivations": {
+     "primary_motivations": [
+      "Eliminate threats to the Empire (or another organization)"
+     ],
+     "secondary_motivations": [
+      "Gather information about Force-sensitive individuals and their connections"
+     ]
+    },
+    "combat_behavior": {
+     "style": "Aggressive",
+     "tactics": [
+      "Initiate combat with a powerful strike",
+      "Use the environment to gain an advantage"
+     ]
+    },
+    "social_behavior": {
+     "interaction_style": "Direct",
+     "conversation_topics": [
+      "Politics",
+      "Strategy",
+      "Loyalty"
+     ]
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "default": "Low",
+     "increase_thresholds": [
+      "5 minutes of calm and cooperative behavior",
+      "Successful completion of a mission together"
+     ],
+     "decrease_thresholds": [
+      "Failure in a mission or task",
+      "Betrayal or disloyalty"
+     ]
+    },
+    "loyalty_triggers": [
+     "The NPC is given a clear objective that benefits the entire organization.",
+     "The NPC is shown appreciation for their efforts and successes."
+    ]
+   },
+   "services": [
+    "Investigation",
+    "Mission Accomplishment",
+    "Force Suppression",
+    "Psychological Warfare"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "inquisitor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/inquisitor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

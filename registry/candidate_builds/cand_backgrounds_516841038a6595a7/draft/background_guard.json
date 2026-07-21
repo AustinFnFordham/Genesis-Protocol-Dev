@@ -1,0 +1,171 @@
+{
+ "record": {
+  "id": "background_guard",
+  "name": "Guard",
+  "tags": [
+   "background",
+   "guard",
+   "protector",
+   "law_enforcement",
+   "strength_based",
+   "martial",
+   "disciplined",
+   "vigilant",
+   "professional",
+   "loyal"
+  ],
+  "description": "You are a security professional, bodyguard, or protector who has dedicated your life to keeping others safe. Whether you work for a corporation, serve as a personal bodyguard, or protect important facilities, your skills in observation, combat, and security make you a reliable defender. You understand the importance of vigilance and the responsibility that comes with protecting others.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Intimidation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Security Kit",
+      "Surveillance Kit",
+      "Communications Kit",
+      "Restraining Cuffs",
+      "Shield",
+      "Armor"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Protector's Vigilance",
+   "level": 1,
+   "description": "Your training in security has given you exceptional awareness and protective instincts. You have advantage on Perception checks to notice threats or suspicious activity, and you can use your reaction to impose disadvantage on an attack roll against an ally within 5 feet of you. Additionally, you can sense when someone is lying or hiding something.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "threat_detection",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "perception"
+      },
+      {
+       "key": "detecting_threats",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Perception checks for threats"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "protective_reaction",
+     "target_scopes": [
+      "ally"
+     ],
+     "conditions": [
+      {
+       "key": "ally_attacked",
+       "op": "equals",
+       "value": true
+      },
+      {
+       "key": "within_range",
+       "op": "equals",
+       "value": "5_feet"
+      }
+     ],
+     "notes": "Use reaction to impose disadvantage on attacks against nearby allies"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I am always calm, no matter what the situation.",
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Duty. My duty is to protect others, and I will do whatever it takes to fulfill it.",
+    "Justice. I bring criminals to justice.",
+    "Fairness. I never kill a target who has surrendered.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first."
+   ],
+   "bonds": [
+    "I have a family to provide for.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission.",
+    "I am overly critical of others' flaws."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_guard",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_guard.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

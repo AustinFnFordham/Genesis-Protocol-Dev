@@ -1,0 +1,194 @@
+{
+ "record": {
+  "id": "power_damage_control",
+  "name": "Damage Control",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "starship",
+   "repair",
+   "emergency",
+   "engineering",
+   "hull",
+   "systems"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Emergency repair technique for starship combat"
+   }
+  },
+  "narrative": "You race through damaged ship systems with practiced urgency, rerouting power, bypassing blown circuits, and patching hull breaches with whatever materials are at hand. The power manifests as sparks flying from your tools, warning klaxons shifting to green, and the groan of stressed metal finding stability.",
+  "flavor_text": "\"Keep her flying!\" - Every ship engineer under fire",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "frantically working repair tools and bypass switches"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "triaging critical systems and prioritizing repairs"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Make an Intelligence (Mechanics) check to repair a damaged system or restore a small number of hull points.",
+   "mechanics": [
+    {
+     "type": "repair_system",
+     "value": {
+      "target": "damaged_system"
+     },
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "Repair a damaged system or restore hull points"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's intimate knowledge of starship systems transforms Damage Control from desperate patching to surgical precision. They know every bypass, every redundancy, every way to coax just a bit more life from dying systems—turning catastrophic damage into manageable problems.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_repair",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Engineers restore 1d4 additional hull points when using Damage Control.",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "modifier": 0,
+       "resource": "hull_points"
+      }
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human crisis management skills shine during Damage Control. Their ability to remain calm under pressure, improvise solutions with inadequate tools, and somehow make three incompatible systems work together has saved countless ships from certain destruction.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "condition": "under_fire",
+      "notes": "Humans gain advantage on Damage Control checks while the ship is taking damage."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Damage Control through necessity. Flying ships held together with hope and spare parts, Rebel engineers can perform miracles with salvaged components, making repairs that Imperial manuals would declare impossible.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_action",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "starship"
+      ],
+      "notes": "Rebels can perform Damage Control as a bonus action once per combat."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the frantic energy of emergency repairs—sparks flying, alarms blaring, the engineer sliding under consoles and climbing through jefferies tubes. Show jury-rigged solutions, creative bypasses, and the satisfaction when systems flicker back online.",
+   "tactical_notes": "Damage Control is essential for keeping your ship combat-effective. The Intelligence (Mechanics) check determines success. Prioritize critical systems like shields, weapons, or engines. Remember this uses your full action, so coordinate with gunners.",
+   "narrative_hooks": [
+    "An engineer keeps the ship together through an entire battle with constant repairs",
+    "A critical Damage Control check saves the hyperdrive just as enemies close in",
+    "Creative repairs using enemy salvage create an unexpected advantage"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a ship engineer performing emergency repairs during combat. Sparks shower from damaged panels, tools scatter across the deck, and the engineer works with desperate precision. Warning lights flash red, smoke fills the air, but green status lights begin appearing as systems come back online. The scene captures the chaos and heroism of keeping a ship alive under fire.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/damage_control.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_damage_control",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_damage_control.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

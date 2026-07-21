@@ -1,0 +1,100 @@
+{
+ "record": {
+  "id": "feature_droid_environmental_adaptation",
+  "name": "Environmental Adaptation",
+  "category": "utility",
+  "xp_cost": 0,
+  "tags": [
+   "feature",
+   "specialization_feature",
+   "species",
+   "droid",
+   "utility",
+   "skill_enhancement",
+   "assassination",
+   "passive",
+   "ally_enhancement",
+   "tactical",
+   "low_cost"
+  ],
+  "narrative": "You do not require sustenance or air, and you tolerate extremes with the unbothered patience of a machine.",
+  "flavor_text": "'Environmental Adaptation represents the pinnacle of mastery.' - Unknown Master",
+  "mechanics": [
+   {
+    "effect": "grant_ability",
+    "description": "Grants a special ability",
+    "parameters": {
+     "ability_name": "Environmental Adaptation",
+     "action_type": "passive"
+    }
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This ability should feel like the droid's mechanical nature allowing them to operate in environments that would kill organic beings. Describe how the droid doesn't need to breathe, eat, or drink, and how they can function in extreme conditions with machine-like reliability.",
+   "tactical_notes": "This is a powerful survival ability that makes the droid immune to many environmental hazards. Use it to explore dangerous locations, operate in space, or survive in conditions that would incapacitate organic party members.",
+   "narrative_hooks": [
+    "The droid operates in a vacuum or space environment",
+    "The droid survives in a toxic atmosphere that would kill organic beings",
+    "The droid doesn't need food or water during a long journey",
+    "The droid functions in extreme temperatures or pressures"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A droid operating in an extreme environment, such as space, a toxic atmosphere, or extreme temperatures. The droid's mechanical construction is clearly visible, showing their ability to function in conditions that would kill organic beings.",
+   "base_negative_keywords": [
+    "organic",
+    "vulnerable",
+    "affected",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/features/environmental_adaptation.png",
+   "icon": "/assets/icons/features/environmental_adaptation.svg",
+   "color": "#FF6347"
+  }
+ },
+ "validation": {
+  "candidate_urid": "feature_droid_environmental_adaptation",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/features/species/droid/environmental_adaptation.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

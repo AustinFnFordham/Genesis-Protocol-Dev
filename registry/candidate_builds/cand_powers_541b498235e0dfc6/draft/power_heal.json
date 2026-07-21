@@ -1,0 +1,236 @@
+{
+ "record": {
+  "id": "power_heal",
+  "name": "Heal",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 1,
+  "tags": [
+   "healing",
+   "light_side",
+   "restoration",
+   "disease_cure",
+   "compassion",
+   "life_energy"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Dark-aligned user may resist the pain of channeling pure compassion through a corrupted spirit.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You channel the light side's healing essence into a target, golden energy flowing from your hands to knit flesh and purge corruption. The power manifests as warm radiance that suffuses wounds, bone mending with audible cracks, tissue regenerating before eyes, while diseases wither under the touch of pure life energy.",
+  "flavor_text": "'To heal is to give of oneself.' - Jedi Healer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "laying hands on target or holding them"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling healing light and compassion"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the light side of the Force to restore vitality and mend wounds in yourself or another creature.",
+   "mechanics": [
+    {
+     "type": "heal",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 8,
+      "modifier": "force_ability_modifier"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_creature",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Restore 1d8 + Force modifier hit points"
+    },
+    {
+     "type": "remove_condition",
+     "value": "disease",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_diseased",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Cure any disease affecting the target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's protective instinct transforms Heal into battlefield triage perfected through desperate necessity. They've learned to channel healing energy while maintaining defensive awareness, their hands mending allies even as their eyes track threats, turning compassion into tactical advantage.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_healing",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Guardians heal an additional 1d4 hit points when protecting others."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human empathy makes their healing deeply personal. They instinctively understand each species' unique physiology and emotional needs, adjusting their Force healing to provide not just physical restoration but psychological comfort that accelerates recovery.",
+    "mechanical_benefit": [
+     {
+      "type": "restore_stamina",
+      "value": {
+       "uses": 1
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human healing also restores 1 spent Hit Die to the target."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Heal as the purest expression of the light side—selfless compassion made tangible. Their techniques emphasize complete purification, viewing disease and injury as manifestations of imbalance to be gently corrected through perfect understanding of living Force.",
+    "mechanical_benefit": [
+     {
+      "type": "purge_all_diseases",
+      "value": {
+       "effect": "remove_all"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Jedi healing removes all diseases, not just one."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the golden light flowing from the healer's hands, suffusing the target's wounds with warmth. Show flesh knitting together, bones cracking back into place, bruises fading from purple to yellow to healthy skin. For disease curing, describe corruption being burned away by pure life energy, leaving the target gasping with renewed vigor.",
+   "tactical_notes": "Heal is a reliable level 1 Force power that restores 1d8 + Force modifier HP and cures one disease. The 60-foot range allows healing from safety. Perfect for keeping allies in the fight without risking exposure. The disease cure is situational but invaluable when needed.",
+   "narrative_hooks": [
+    "A healer cures a plague that threatened an entire village",
+    "Battlefield healing keeps a critical ally fighting when all hope seemed lost",
+    "The warm touch of Heal reveals the healer's compassionate nature to a suspicious ally"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Jedi healer channeling golden Force energy into a wounded ally. Brilliant light flows from their hands, suffusing injuries with radiant warmth as flesh visibly regenerates. The healer's face shows deep concentration and compassion, while the patient's expression shifts from pain to relief. The scene glows with the pure light side energy of healing and restoration.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/heal.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_heal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_heal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

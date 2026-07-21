@@ -1,0 +1,1041 @@
+{
+ "record": {
+  "id_file": "compendium_starship_combat_actions",
+  "category": "starships",
+  "subcategory": "actions",
+  "tags": [
+   "starships",
+   "compendium",
+   "actions",
+   "combat",
+   "space_combat",
+   "piloting",
+   "gunnery",
+   "tactical",
+   "crew_stations",
+   "ffg_system",
+   "mechanics"
+  ],
+  "pilot_actions": [
+   {
+    "id": "action_ship_fly_move",
+    "name": "Fly/Move",
+    "description": "Perform standard piloting maneuvers to move the ship through space. This includes basic navigation, course corrections, and maintaining flight patterns.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Easy"
+    },
+    "effects": {
+     "success": [
+      "Ship moves according to pilot's intentions",
+      "Maintains current speed and heading",
+      "Can perform basic course corrections"
+     ],
+     "advantage": [
+      "Gain +1 to next Piloting check",
+      "Recover 1 strain",
+      "Smooth maneuver reduces system strain"
+     ],
+     "triumph": [
+      "Perfect maneuver grants advantage on next attack",
+      "Recover 2 strain",
+      "Ship gains temporary speed boost"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_smooth_flight",
+     "narrative_outcome_graceful_maneuver",
+     "narrative_outcome_perfect_timing"
+    ]
+   },
+   {
+    "id": "action_ship_evasive_maneuvers",
+    "name": "Evasive Maneuvers",
+    "description": "Execute complex evasive patterns to avoid enemy fire and make the ship harder to hit. Requires skill and puts strain on the ship's systems.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Upgrade difficulty of all attacks against ship by 1",
+      "Effect lasts until end of pilot's next turn",
+      "Ship suffers 2 system strain"
+     ],
+     "advantage": [
+      "Additional +1 to ship's defense",
+      "Recover 1 strain",
+      "Maintain evasive pattern longer"
+     ],
+     "triumph": [
+      "Perfect evasion - no system strain cost",
+      "Upgrade difficulty of attacks by 2",
+      "Gain advantage on next attack"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_barrel_roll",
+     "narrative_outcome_impossible_turn",
+     "narrative_outcome_ace_pilot_maneuver"
+    ]
+   },
+   {
+    "id": "action_ship_full_throttle",
+    "name": "Full Throttle",
+    "description": "Push the ship beyond its normal limits, increasing speed at the cost of system strain and control.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Ship's speed increases by 1 for 3 rounds",
+      "Ship suffers 3 system strain",
+      "Pilot suffers 2 strain"
+     ],
+     "advantage": [
+      "Speed increase lasts 1 additional round",
+      "Reduce system strain cost by 1",
+      "Maintain better control at high speed"
+     ],
+     "triumph": [
+      "Speed increase lasts 5 rounds",
+      "No additional system strain",
+      "Perfect control maintained"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_speed_demon",
+     "narrative_outcome_controlled_burn",
+     "narrative_outcome_perfect_timing"
+    ]
+   },
+   {
+    "id": "action_ship_stay_on_target",
+    "name": "Stay on Target",
+    "description": "Maintain perfect tracking on a target, making subsequent attacks more accurate but making the ship vulnerable.",
+    "station": "Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Next attack against target gains +2 to hit",
+      "Ship's defense is reduced by 1",
+      "Effect lasts until end of pilot's next turn"
+     ],
+     "advantage": [
+      "Additional +1 to hit",
+      "Maintain lock longer",
+      "Reduce defense penalty"
+     ],
+     "triumph": [
+      "Perfect lock - +3 to hit",
+      "No defense penalty",
+      "Lock cannot be broken"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_dead_eye_aim",
+     "narrative_outcome_steady_hand",
+     "narrative_outcome_target_locked"
+    ]
+   }
+  ],
+  "gunner_actions": [
+   {
+    "id": "action_ship_fire_weapon",
+    "name": "Fire Weapon",
+    "description": "Fire a ship-mounted weapon system at a target. Requires proper targeting and weapon operation.",
+    "station": "Gunner",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Gunnery",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Weapon fires successfully",
+      "Normal damage if target is hit",
+      "Standard weapon effects apply"
+     ],
+     "advantage": [
+      "Increase damage by 1",
+      "Trigger weapon special qualities",
+      "Maintain target lock"
+     ],
+     "triumph": [
+      "Critical hit - maximum damage",
+      "Weapon special quality automatically triggers",
+      "Target suffers additional effects"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_bullseye",
+     "narrative_outcome_weapon_mastery",
+     "narrative_outcome_perfect_shot"
+    ]
+   },
+   {
+    "id": "action_ship_acquire_lock",
+    "name": "Acquire Lock",
+    "description": "Use targeting systems to gain a weapon lock on a target, improving accuracy of subsequent attacks.",
+    "station": "Gunner",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Gunnery",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Gain weapon lock on target",
+      "+1 to next attack against target",
+      "Lock lasts until end of gunner's next turn"
+     ],
+     "advantage": [
+      "Additional +1 to attack",
+      "Lock lasts 2 rounds",
+      "Can share lock with other gunners"
+     ],
+     "triumph": [
+      "Perfect lock - +2 to attack",
+      "Lock cannot be broken",
+      "Automatic hit on next attack"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_target_acquired",
+     "narrative_outcome_systems_synced",
+     "narrative_outcome_perfect_tracking"
+    ]
+   },
+   {
+    "id": "action_ship_overcharge_weapon",
+    "name": "Overcharge Weapon",
+    "description": "Push a weapon system beyond normal limits for increased damage, but risk system damage.",
+    "station": "Gunner",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Gunnery",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Weapon damage increased by 2",
+      "Ship suffers 2 system strain",
+      "Weapon cannot be fired next round"
+     ],
+     "advantage": [
+      "Additional +1 damage",
+      "Reduce system strain cost",
+      "Weapon can fire next round"
+     ],
+     "triumph": [
+      "Maximum overcharge - +3 damage",
+      "No system strain cost",
+      "No cooldown period"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_power_surge",
+     "narrative_outcome_controlled_overcharge",
+     "narrative_outcome_perfect_timing"
+    ]
+   }
+  ],
+  "systems_operator_actions": [
+   {
+    "id": "action_ship_angle_shields",
+    "name": "Angle Deflector Shields",
+    "description": "Reroute power to reinforce one shield zone while weakening others, providing tactical defense options.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Technology",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Chosen shield zone gains +2 defense",
+      "Other shield zones lose -1 defense",
+      "Effect lasts until end of operator's next turn"
+     ],
+     "advantage": [
+      "Additional +1 to chosen zone",
+      "Reduce penalty to other zones",
+      "Maintain shield balance longer"
+     ],
+     "triumph": [
+      "Perfect shield angle - +3 to chosen zone",
+      "No penalty to other zones",
+      "Effect lasts 2 rounds"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_shield_mastery",
+     "narrative_outcome_power_redistribution",
+     "narrative_outcome_defensive_genius"
+    ]
+   },
+   {
+    "id": "action_ship_boost_systems",
+    "name": "Boost Systems",
+    "description": "Temporarily enhance ship systems by rerouting power, improving performance at the cost of system strain.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Technology",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Choose one system to boost",
+      "System gains +2 to related checks",
+      "Ship suffers 2 system strain"
+     ],
+     "advantage": [
+      "Additional +1 to system",
+      "Reduce system strain cost",
+      "Boost lasts longer"
+     ],
+     "triumph": [
+      "Perfect boost - +3 to system",
+      "No system strain cost",
+      "All systems gain +1"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_system_optimization",
+     "narrative_outcome_power_management",
+     "narrative_outcome_technical_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_emergency_repair",
+    "name": "Emergency Repair",
+    "description": "Quickly repair damaged ship systems during combat, restoring functionality at the cost of strain.",
+    "station": "Systems Operator",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Mechanics",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Repair 1 system strain",
+      "Operator suffers 2 strain",
+      "Cannot repair same system twice"
+     ],
+     "advantage": [
+      "Repair additional system strain",
+      "Reduce operator strain cost",
+      "Repair is more thorough"
+     ],
+     "triumph": [
+      "Perfect repair - repair 3 system strain",
+      "No operator strain cost",
+      "System gains temporary bonus"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_quick_fix",
+     "narrative_outcome_improvised_repair",
+     "narrative_outcome_engineering_genius"
+    ]
+   }
+  ],
+  "commander_actions": [
+   {
+    "id": "action_ship_coordinate_crew",
+    "name": "Coordinate Crew",
+    "description": "Use leadership and tactical knowledge to coordinate crew actions, improving overall ship performance.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Leadership",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "All crew gain +1 to their next action",
+      "Ship gains +1 to next defense check",
+      "Effect lasts until end of commander's next turn"
+     ],
+     "advantage": [
+      "Additional +1 to crew actions",
+      "Effect lasts 2 rounds",
+      "Crew recover 1 strain each"
+     ],
+     "triumph": [
+      "Perfect coordination - +2 to all crew actions",
+      "Effect lasts 3 rounds",
+      "Crew recover 2 strain each"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_battle_command",
+     "narrative_outcome_crew_morale",
+     "narrative_outcome_tactical_genius"
+    ]
+   },
+   {
+    "id": "action_ship_tactical_analysis",
+    "name": "Tactical Analysis",
+    "description": "Analyze the battlefield and enemy movements to provide tactical advantages to the crew.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Tactics",
+     "difficulty": "Hard"
+    },
+    "effects": {
+     "success": [
+      "Identify enemy weaknesses",
+      "Crew gain +1 to attack rolls",
+      "Ship gains +1 to defense"
+     ],
+     "advantage": [
+      "Additional tactical insight",
+      "Effect lasts 2 rounds",
+      "Reveal enemy special abilities"
+     ],
+     "triumph": [
+      "Perfect analysis - +2 to all combat rolls",
+      "Effect lasts 3 rounds",
+      "Predict enemy actions"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_battlefield_awareness",
+     "narrative_outcome_strategic_insight",
+     "narrative_outcome_combat_mastery"
+    ]
+   },
+   {
+    "id": "action_ship_inspire_crew",
+    "name": "Inspire Crew",
+    "description": "Use charisma and leadership to inspire the crew, improving morale and performance under pressure.",
+    "station": "Commander",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Leadership",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "All crew recover 2 strain",
+      "Crew gain +1 to next action",
+      "Ship gains temporary morale bonus"
+     ],
+     "advantage": [
+      "Additional strain recovery",
+      "Effect lasts 2 rounds",
+      "Crew gain resistance to fear"
+     ],
+     "triumph": [
+      "Perfect inspiration - all crew recover 4 strain",
+      "Effect lasts 3 rounds",
+      "Crew gain advantage on next action"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_heroic_leadership",
+     "narrative_outcome_crew_motivation",
+     "narrative_outcome_battle_spirit"
+    ]
+   }
+  ],
+  "copilot_actions": [
+   {
+    "id": "action_ship_assist_pilot",
+    "name": "Assist Pilot",
+    "description": "Work with the pilot to improve ship handling and maneuverability through coordinated effort.",
+    "station": "Co-Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Piloting",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Pilot gains +2 to next Piloting check",
+      "Ship gains +1 to defense",
+      "Effect lasts until end of co-pilot's next turn"
+     ],
+     "advantage": [
+      "Additional +1 to pilot",
+      "Effect lasts 2 rounds",
+      "Ship gains additional maneuverability"
+     ],
+     "triumph": [
+      "Perfect assistance - pilot gains +3",
+      "Effect lasts 3 rounds",
+      "Ship gains advantage on next maneuver"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_pilot_synergy",
+     "narrative_outcome_coordinated_maneuver",
+     "narrative_outcome_flight_perfection"
+    ]
+   },
+   {
+    "id": "action_ship_secondary_weapons",
+    "name": "Secondary Weapons",
+    "description": "Operate secondary weapon systems or assist with primary weapons to provide additional firepower.",
+    "station": "Co-Pilot",
+    "cost": [
+     "action"
+    ],
+    "skill_check": {
+     "skill": "Gunnery",
+     "difficulty": "Average"
+    },
+    "effects": {
+     "success": [
+      "Fire secondary weapon system",
+      "Normal weapon damage and effects",
+      "Can target different enemy than primary gunner"
+     ],
+     "advantage": [
+      "Increase secondary weapon damage by 1",
+      "Maintain target lock",
+      "Coordinate with primary gunner"
+     ],
+     "triumph": [
+      "Perfect secondary shot - maximum damage",
+      "Automatic hit",
+      "Weapon special quality triggers"
+     ]
+    },
+    "narrative_outcomes": [
+     "narrative_outcome_weapon_coordination",
+     "narrative_outcome_dual_targeting",
+     "narrative_outcome_combat_synergy"
+    ]
+   }
+  ],
+  "narrative_outcomes": [
+   {
+    "id": "narrative_outcome_smooth_flight",
+    "name": "Smooth Flight",
+    "description": "The ship glides through space with perfect grace, every maneuver executed with precision.",
+    "effects": [
+     "Pilot gains confidence",
+     "Crew feel reassured",
+     "Enemy impressed by piloting skill"
+    ]
+   },
+   {
+    "id": "narrative_outcome_graceful_maneuver",
+    "name": "Graceful Maneuver",
+    "description": "The ship performs an elegant maneuver that seems almost impossible, defying physics with skill.",
+    "effects": [
+     "Enemy pilots are intimidated",
+     "Crew gain admiration for pilot",
+     "Ship appears more dangerous"
+    ]
+   },
+   {
+    "id": "narrative_outcome_perfect_timing",
+    "name": "Perfect Timing",
+    "description": "Every action is executed at the exact moment needed, creating a symphony of coordinated movement.",
+    "effects": [
+     "Crew coordination improves",
+     "Enemy cannot predict actions",
+     "Ship appears unstoppable"
+    ]
+   },
+   {
+    "id": "narrative_outcome_barrel_roll",
+    "name": "Barrel Roll",
+    "description": "The ship performs a perfect barrel roll, evading enemy fire while maintaining offensive position.",
+    "effects": [
+     "Enemy fire misses completely",
+     "Pilot gains tactical advantage",
+     "Crew impressed by skill"
+    ]
+   },
+   {
+    "id": "narrative_outcome_impossible_turn",
+    "name": "Impossible Turn",
+    "description": "The ship makes a turn that should be impossible, defying the laws of physics through sheer piloting skill.",
+    "effects": [
+     "Enemy cannot follow",
+     "Pilot gains perfect position",
+     "Ship appears supernatural"
+    ]
+   },
+   {
+    "id": "narrative_outcome_ace_pilot_maneuver",
+    "name": "Ace Pilot Maneuver",
+    "description": "The pilot executes a maneuver that only the most skilled pilots could attempt, showcasing true mastery.",
+    "effects": [
+     "Enemy pilots are awed",
+     "Pilot gains legendary status",
+     "Ship becomes feared"
+    ]
+   },
+   {
+    "id": "narrative_outcome_speed_demon",
+    "name": "Speed Demon",
+    "description": "The ship accelerates beyond normal limits, becoming a blur of motion that's impossible to track.",
+    "effects": [
+     "Enemy cannot keep up",
+     "Pilot gains escape option",
+     "Ship appears unstoppable"
+    ]
+   },
+   {
+    "id": "narrative_outcome_controlled_burn",
+    "name": "Controlled Burn",
+    "description": "The ship's engines burn at maximum efficiency, providing perfect control even at extreme speeds.",
+    "effects": [
+     "Speed without sacrifice",
+     "Pilot maintains control",
+     "Ship performs flawlessly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_bullseye",
+    "name": "Bullseye",
+    "description": "The shot hits exactly where intended, a perfect display of marksmanship and weapon mastery.",
+    "effects": [
+     "Enemy is shocked",
+     "Gunner gains confidence",
+     "Weapon appears deadly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_weapon_mastery",
+    "name": "Weapon Mastery",
+    "description": "The gunner demonstrates complete mastery of the weapon system, making it perform beyond expectations.",
+    "effects": [
+     "Weapon appears enhanced",
+     "Gunner gains respect",
+     "Enemy fears the weapon"
+    ]
+   },
+   {
+    "id": "narrative_outcome_perfect_shot",
+    "name": "Perfect Shot",
+    "description": "The shot is fired with such precision that it seems guided by fate itself, hitting an impossible target.",
+    "effects": [
+     "Enemy cannot believe it",
+     "Gunner becomes legendary",
+     "Weapon seems magical"
+    ]
+   },
+   {
+    "id": "narrative_outcome_target_acquired",
+    "name": "Target Acquired",
+    "description": "The targeting systems lock onto the enemy with perfect precision, leaving no room for escape.",
+    "effects": [
+     "Enemy feels trapped",
+     "Gunner gains confidence",
+     "Target cannot evade"
+    ]
+   },
+   {
+    "id": "narrative_outcome_systems_synced",
+    "name": "Systems Synced",
+    "description": "All targeting systems work in perfect harmony, creating a lock that cannot be broken.",
+    "effects": [
+     "Target appears helpless",
+     "Systems work flawlessly",
+     "Lock is unbreakable"
+    ]
+   },
+   {
+    "id": "narrative_outcome_perfect_tracking",
+    "name": "Perfect Tracking",
+    "description": "The targeting systems track the enemy with supernatural precision, predicting every movement.",
+    "effects": [
+     "Enemy cannot escape",
+     "Gunner predicts movements",
+     "Target appears doomed"
+    ]
+   },
+   {
+    "id": "narrative_outcome_power_surge",
+    "name": "Power Surge",
+    "description": "The weapon system surges with incredible power, delivering devastating damage beyond normal limits.",
+    "effects": [
+     "Enemy is terrified",
+     "Weapon appears enhanced",
+     "Damage is overwhelming"
+    ]
+   },
+   {
+    "id": "narrative_outcome_controlled_overcharge",
+    "name": "Controlled Overcharge",
+    "description": "The weapon is pushed beyond normal limits with perfect control, maximizing damage without risk.",
+    "effects": [
+     "Maximum damage output",
+     "No system damage",
+     "Weapon performs perfectly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_shield_mastery",
+    "name": "Shield Mastery",
+    "description": "The shield systems are manipulated with perfect skill, providing maximum protection where needed.",
+    "effects": [
+     "Shields appear impenetrable",
+     "Enemy fire is ineffective",
+     "Ship seems invulnerable"
+    ]
+   },
+   {
+    "id": "narrative_outcome_power_redistribution",
+    "name": "Power Redistribution",
+    "description": "Power is redistributed with perfect efficiency, maximizing shield strength without compromising other systems.",
+    "effects": [
+     "Optimal power usage",
+     "No system penalties",
+     "Perfect efficiency"
+    ]
+   },
+   {
+    "id": "narrative_outcome_defensive_genius",
+    "name": "Defensive Genius",
+    "description": "The defensive systems are operated with genius-level skill, creating an impenetrable defense.",
+    "effects": [
+     "Ship appears invincible",
+     "Enemy cannot penetrate",
+     "Defense is perfect"
+    ]
+   },
+   {
+    "id": "narrative_outcome_system_optimization",
+    "name": "System Optimization",
+    "description": "The ship's systems are optimized to peak performance, making everything work better than designed.",
+    "effects": [
+     "Systems perform perfectly",
+     "Ship appears enhanced",
+     "Performance is optimal"
+    ]
+   },
+   {
+    "id": "narrative_outcome_power_management",
+    "name": "Power Management",
+    "description": "Power is managed with perfect efficiency, providing maximum performance without strain.",
+    "effects": [
+     "No system strain",
+     "Perfect efficiency",
+     "Systems work flawlessly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_technical_mastery",
+    "name": "Technical Mastery",
+    "description": "The systems operator demonstrates complete mastery of the ship's technology, making it perform miracles.",
+    "effects": [
+     "Technology appears magical",
+     "Operator gains respect",
+     "Systems work perfectly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_quick_fix",
+    "name": "Quick Fix",
+    "description": "The damaged system is repaired with incredible speed and skill, restoring functionality instantly.",
+    "effects": [
+     "Repair is instant",
+     "No system strain",
+     "System works perfectly"
+    ]
+   },
+   {
+    "id": "narrative_outcome_improvised_repair",
+    "name": "Improvised Repair",
+    "description": "The repair is done with improvised materials and techniques, but works perfectly despite the circumstances.",
+    "effects": [
+     "Repair works flawlessly",
+     "Operator is resourceful",
+     "System is enhanced"
+    ]
+   },
+   {
+    "id": "narrative_outcome_engineering_genius",
+    "name": "Engineering Genius",
+    "description": "The repair demonstrates engineering genius, not just fixing the system but improving it.",
+    "effects": [
+     "System is enhanced",
+     "Operator gains respect",
+     "Repair is perfect"
+    ]
+   },
+   {
+    "id": "narrative_outcome_battle_command",
+    "name": "Battle Command",
+    "description": "The commander's orders are executed with perfect precision, creating a symphony of coordinated action.",
+    "effects": [
+     "Crew works perfectly",
+     "Enemy is intimidated",
+     "Ship appears unstoppable"
+    ]
+   },
+   {
+    "id": "narrative_outcome_crew_morale",
+    "name": "Crew Morale",
+    "description": "The crew's morale is boosted to incredible heights, making them perform beyond their normal capabilities.",
+    "effects": [
+     "Crew is inspired",
+     "Performance improves",
+     "Morale is perfect"
+    ]
+   },
+   {
+    "id": "narrative_outcome_tactical_genius",
+    "name": "Tactical Genius",
+    "description": "The commander demonstrates tactical genius, seeing the battlefield with perfect clarity.",
+    "effects": [
+     "Tactical advantage gained",
+     "Enemy is outmaneuvered",
+     "Victory seems certain"
+    ]
+   },
+   {
+    "id": "narrative_outcome_battlefield_awareness",
+    "name": "Battlefield Awareness",
+    "description": "The commander has perfect awareness of the battlefield, seeing every detail and opportunity.",
+    "effects": [
+     "Perfect situational awareness",
+     "No surprises possible",
+     "Tactical advantage gained"
+    ]
+   },
+   {
+    "id": "narrative_outcome_strategic_insight",
+    "name": "Strategic Insight",
+    "description": "The commander gains perfect insight into enemy strategy, predicting every move before it happens.",
+    "effects": [
+     "Enemy plans revealed",
+     "Perfect counter-strategy",
+     "Victory is assured"
+    ]
+   },
+   {
+    "id": "narrative_outcome_combat_mastery",
+    "name": "Combat Mastery",
+    "description": "The commander demonstrates complete mastery of combat tactics, making the ship unstoppable.",
+    "effects": [
+     "Combat perfection",
+     "Enemy cannot win",
+     "Victory is certain"
+    ]
+   },
+   {
+    "id": "narrative_outcome_heroic_leadership",
+    "name": "Heroic Leadership",
+    "description": "The commander's leadership is so inspiring that the crew would follow them into any battle.",
+    "effects": [
+     "Crew is inspired",
+     "Morale is perfect",
+     "Leadership is legendary"
+    ]
+   },
+   {
+    "id": "narrative_outcome_crew_motivation",
+    "name": "Crew Motivation",
+    "description": "The crew is motivated to perform beyond their normal capabilities, driven by the commander's words.",
+    "effects": [
+     "Performance improves",
+     "Crew is determined",
+     "Success is certain"
+    ]
+   },
+   {
+    "id": "narrative_outcome_battle_spirit",
+    "name": "Battle Spirit",
+    "description": "The crew's fighting spirit is ignited, making them fearless and unstoppable in battle.",
+    "effects": [
+     "Crew is fearless",
+     "Enemy is intimidated",
+     "Victory is certain"
+    ]
+   },
+   {
+    "id": "narrative_outcome_pilot_synergy",
+    "name": "Pilot Synergy",
+    "description": "The pilot and co-pilot work in perfect harmony, making the ship perform beyond normal capabilities.",
+    "effects": [
+     "Perfect coordination",
+     "Ship performs flawlessly",
+     "Synergy is perfect"
+    ]
+   },
+   {
+    "id": "narrative_outcome_coordinated_maneuver",
+    "name": "Coordinated Maneuver",
+    "description": "The pilot and co-pilot execute a perfectly coordinated maneuver that seems impossible.",
+    "effects": [
+     "Maneuver is perfect",
+     "Enemy cannot follow",
+     "Coordination is flawless"
+    ]
+   },
+   {
+    "id": "narrative_outcome_flight_perfection",
+    "name": "Flight Perfection",
+    "description": "The ship flies with perfect precision, every movement calculated and executed flawlessly.",
+    "effects": [
+     "Flight is perfect",
+     "Enemy is awed",
+     "Performance is optimal"
+    ]
+   },
+   {
+    "id": "narrative_outcome_weapon_coordination",
+    "name": "Weapon Coordination",
+    "description": "The primary and secondary weapons work in perfect coordination, creating devastating firepower.",
+    "effects": [
+     "Weapons coordinate perfectly",
+     "Firepower is overwhelming",
+     "Enemy is devastated"
+    ]
+   },
+   {
+    "id": "narrative_outcome_dual_targeting",
+    "name": "Dual Targeting",
+    "description": "The co-pilot targets a different enemy than the primary gunner, creating multiple threats.",
+    "effects": [
+     "Multiple targets engaged",
+     "Enemy is overwhelmed",
+     "Tactical advantage gained"
+    ]
+   },
+   {
+    "id": "narrative_outcome_combat_synergy",
+    "name": "Combat Synergy",
+    "description": "The co-pilot and primary gunner work in perfect synergy, creating devastating combat effectiveness.",
+    "effects": [
+     "Combat synergy is perfect",
+     "Enemy cannot survive",
+     "Victory is certain"
+    ]
+   }
+  ],
+  "integration_notes": {
+   "class_integration": [
+    "Pilot class gains advantage on all pilot actions",
+    "Gunner class gains advantage on all gunner actions",
+    "Engineer class gains advantage on systems operator actions",
+    "Commander class gains advantage on commander actions",
+    "Scout class gains advantage on co-pilot actions"
+   ],
+   "power_integration": [
+    "Force powers can enhance starship actions",
+    "Tech powers can improve system performance",
+    "Powers can provide additional narrative outcomes",
+    "Force users can sense enemy intentions",
+    "Tech users can optimize ship systems"
+   ],
+   "faction_integration": [
+    "Imperial Navy training provides bonus to military actions",
+    "Rebel Alliance training provides bonus to evasive actions",
+    "Mandalorian training provides bonus to combat actions",
+    "Smuggler training provides bonus to stealth actions",
+    "Jedi training provides bonus to Force-enhanced actions"
+   ],
+   "balance_considerations": [
+    "All actions require appropriate skill checks",
+    "Success provides standard benefits",
+    "Advantage provides additional benefits",
+    "Triumph provides exceptional benefits",
+    "Narrative outcomes enhance storytelling"
+   ],
+   "era_specific_notes": [
+    "High Republic: Advanced technology, sophisticated tactics",
+    "Old Republic: Ancient techniques, powerful Force users",
+    "Clone Wars: Military precision, coordinated attacks",
+    "Galactic Civil War: Desperate tactics, resource limitations",
+    "New Republic: Rebuilding, new techniques"
+   ]
+  },
+  "development_status": "Complete",
+  "last_updated": "2024-12-19",
+  "version": "1.0"
+ },
+ "validation": {
+  "candidate_urid": "combat_actions",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/starships/actions/combat_actions.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

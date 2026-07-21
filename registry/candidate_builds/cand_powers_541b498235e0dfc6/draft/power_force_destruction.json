@@ -1,0 +1,251 @@
+{
+ "record": {
+  "id": "power_force_destruction",
+  "name": "Force Destruction",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 5,
+  "tags": [
+   "dark_side",
+   "destruction",
+   "devastation",
+   "obliteration",
+   "explosive",
+   "area_damage"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 5
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 90,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 4
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may channel destruction as a last resort through controlled fury.",
+     "ability": "Wisdom",
+     "dc": 22
+    }
+   }
+  },
+  "narrative": "You unleash the dark side's ultimate fury, channeling pure destructive Force energy into a catastrophic explosion. The power manifests as a sphere of annihilating darkness that expands outward, disintegrating matter, shattering minds, and leaving only devastation in its wake.",
+  "flavor_text": "\"The dark side of the Force is a pathway to many abilities some consider to be unnatural.\" - Darth Sidious",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "both hands thrust forward, dark energy crackling between fingers"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling pure hatred and rage into an explosion of dark side power"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "120 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You unleash the ultimate expression of dark side power, creating a devastating explosion of Force energy.",
+   "mechanics": [
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 8,
+      "dice_size": 6,
+      "damage_type": "force",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_30_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Dexterity save or take 8d6 force damage"
+    },
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "blinded"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Failed save blinds target for 1 minute"
+    },
+    {
+     "type": "trigger_effect",
+     "value": {
+      "effect": "knockback",
+      "distance": {
+       "amount": 20,
+       "unit": "feet"
+      }
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Push targets 20 feet away from center"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior's bottomless rage transforms Force Destruction into an apocalyptic weapon. Their fury amplifies the explosion's power, creating secondary shockwaves that continue to devastate the battlefield after the initial blast.",
+    "mechanical_benefit": [
+     {
+      "type": "secondary_explosion",
+      "value": "2d6_force",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Sith Warriors trigger a secondary 2d6 force damage explosion"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human emotional intensity supercharges their Force Destruction with raw passion. Their species' capacity for both love and hate creates a unique resonance with destructive Force powers, amplifying the devastation.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_radius",
+      "value": "40_foot_radius",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans increase Force Destruction's radius to 40 feet"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order's ancient techniques maximize Force Destruction's potential for annihilation. Their dark rituals infuse the explosion with necrotic energy that continues eating away at survivors long after the blast.",
+    "mechanical_benefit": [
+     {
+      "type": "lingering_damage",
+      "value": "1d6_necrotic_per_round",
+      "target_scopes": [
+       "damaged_targets"
+      ],
+      "notes": "Sith add 1d6 necrotic damage per round for 3 rounds to damaged targets"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the apocalyptic explosion—a sphere of pure darkness expanding outward, disintegrating everything it touches. Show victims thrown through the air, structures collapsing, the very air igniting with dark side energy. The aftermath leaves a perfect circle of devastation.",
+   "tactical_notes": "Force Destruction is a Level 4 area devastation power. The 30-foot radius and 8d6 damage can eliminate entire groups. Blindness and knockback add control. Position carefully to avoid allies. This power announces your dark side allegiance to everyone.",
+   "narrative_hooks": [
+    "The explosion leaves a permanent scar on the Force itself",
+    "Survivors are haunted by visions of the dark side",
+    "The devastation serves as a warning to all who oppose you"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.2), A terrifying digital painting of Force Destruction detonating. A massive sphere of dark energy expands outward, disintegrating everything in its path. Bodies and debris fly through the air, structures shatter, the ground cracks in a perfect circle. Purple-black lightning crackles through the explosion. The scene captures pure annihilation, by Daarken and Raymond Swanland",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_destruction.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_destruction",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_destruction.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

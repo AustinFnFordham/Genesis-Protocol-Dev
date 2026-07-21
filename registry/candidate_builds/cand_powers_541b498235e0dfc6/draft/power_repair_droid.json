@@ -1,0 +1,207 @@
+{
+ "record": {
+  "id": "power_repair_droid",
+  "name": "Repair Droid",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "repair",
+   "restoration",
+   "droid",
+   "healing",
+   "mechanical",
+   "maintenance"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Specialized droid repair and restoration technology"
+   }
+  },
+  "narrative": "You deploy micro-repair tools and diagnostic protocols to restore a damaged droid's functionality, circuits reconnecting and damaged components self-repairing as your technical expertise brings them back online. The power manifests as sparks of energy flowing through mechanical systems, servos whirring back to life, optical sensors brightening as consciousness returns.",
+  "flavor_text": "\"Droids are people too. Just with better warranties.\" - Droid Specialist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "interfacing with droid systems via repair tools"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "running diagnostic and repair protocols"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You use technology to repair and restore a damaged droid.",
+   "mechanics": [
+    {
+     "type": "apply_healing",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 6,
+      "modifier": "tech_ability_modifier"
+     },
+     "target_scopes": [
+      "droid"
+     ],
+     "notes": "Restore 2d6 + Tech modifier hit points to droid"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's deep understanding of droid architecture transforms Repair Droid into near-miraculous restoration. They don't just fix damage—they optimize systems, upgrade components on the fly, leaving the droid better than before through expert refurbishment.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_healing",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 6,
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "droid"
+      ],
+      "notes": "Engineers heal an additional 1d6 HP when repairing droids (3d6 total)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human empathy extends even to droids—they repair with care and consideration, treating mechanical beings as companions rather than tools. This respect creates repairs that feel personal, droids responding better to those who view them as equals.",
+    "mechanical_benefit": [
+     {
+      "type": "restore_function",
+      "value": {
+       "effect": "remove_one_malfunction"
+      },
+      "target_scopes": [
+       "droid"
+      ],
+      "notes": "Human repairs also remove one malfunction or disabled system on the droid."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected droid repair through necessity—keeping ancient models functional with scavenged parts and sheer determination. Their techniques make droids last far beyond designed lifespans through innovative maintenance.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_temporary_hp",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 6,
+       "modifier": 0
+      },
+      "target_scopes": [
+       "droid"
+      ],
+      "notes": "Rebel repairs also grant droid 1d6 temporary HP from reinforced components."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the repair process—diagnostic tools scanning, sparks flying as circuits reconnect, damaged plating sealing itself. Show the droid's optical sensors flickering then brightening, servos testing as mobility returns. The restoration should feel like bringing a friend back to life.",
+   "tactical_notes": "Repair Droid heals 2d6 + Tech modifier HP to droids for 1 Tech Point. Essential for droid-heavy parties. The 5-foot range requires proximity but healing is reliable. Remember it only works on constructs/droids, not organic allies.",
+   "narrative_hooks": [
+    "Emergency repair saves a droid companion from destruction",
+    "The repair reveals unexpected modifications in the droid's systems",
+    "A restored droid remembers critical information from before damage"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a technician repairing a damaged droid. Diagnostic tools interface with the construct's systems, sparks flying as circuits reconnect and damaged components seal. The droid's optical sensors flicker then brighten with returning consciousness. The scene captures the technical skill and care of droid restoration.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/repair_droid.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_repair_droid",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_repair_droid.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

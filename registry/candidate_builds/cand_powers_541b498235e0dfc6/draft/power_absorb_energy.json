@@ -1,0 +1,157 @@
+{
+ "record": {
+  "id": "power_absorb_energy",
+  "name": "Absorb Energy",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "power",
+   "tech",
+   "universal",
+   "defensive",
+   "energy",
+   "shield",
+   "absorption",
+   "technological",
+   "protective",
+   "support",
+   "utility",
+   "buff",
+   "concentration",
+   "close_range",
+   "reaction"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "This technological power can be used by anyone with technical training"
+   }
+  },
+  "narrative": "You activate a personal energy absorption field that captures incoming energy attacks and converts them into a protective barrier around your body. The power manifests as a shimmering technological shield that flickers with captured energy, each absorbed attack making the barrier glow brighter as it reinforces your defenses.",
+  "flavor_text": "\"The best defense is turning their offense against them.\" - Rebel Engineer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating shield generator on armor or gauntlet"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating energy conversion matrices"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You use technology to absorb energy from an attack, converting it into temporary hit points.",
+   "mechanics": [
+    {
+     "type": "grant_temporary_hp",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "modifier": 0
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain 2d4 temporary hit points"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the shimmering energy field that surrounds the user, how it flickers and brightens when absorbing attacks. The shield should visibly react to incoming energy, converting hostile force into protective power. Emphasize the technological nature of the absorption - circuits glowing, energy crackling across the barrier.",
+   "tactical_notes": "Absorb Energy is excellent for pre-emptive defense before engaging energy-weapon users. The 2d4 temporary hit points can absorb a significant portion of incoming damage. Best used when you anticipate taking fire, as the concentration requirement means you sacrifice other tech powers while maintaining it.",
+   "narrative_hooks": [
+    "A technician activates Absorb Energy just before breaching a room full of battle droids",
+    "The power saves a character from a devastating blaster barrage during a desperate last stand",
+    "An engineer uses the absorbed energy signature to analyze enemy weapon frequencies"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tech specialist surrounded by a shimmering energy absorption field. The translucent technological barrier glows with captured energy, creating hexagonal patterns that pulse with absorbed power. Incoming blaster bolts strike the shield and are converted into glowing energy that reinforces the protective barrier. The user stands confident within the technological cocoon, circuits on their armor glowing in sync with the shield.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/absorb_energy.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_absorb_energy",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_absorb_energy.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

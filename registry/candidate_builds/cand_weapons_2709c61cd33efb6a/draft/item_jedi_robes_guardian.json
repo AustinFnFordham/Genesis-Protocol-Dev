@@ -1,0 +1,128 @@
+{
+ "record": {
+  "id_file": "item_jedi_robes_guardian",
+  "category": "equipment",
+  "subcategory": "armor",
+  "tags": [
+   "equipment",
+   "item",
+   "armor",
+   "robes",
+   "force_imbued",
+   "jedi",
+   "guardian",
+   "unique",
+   "iconic",
+   "protection",
+   "force_user",
+   "legendary"
+  ],
+  "id": "item_jedi_robes_guardian",
+  "name": "Guardian Jedi Robes",
+  "item_type": "Armor",
+  "subtype": "Robes",
+  "rarity": "uncommon",
+  "narrative": "These robes are woven with protective fibers and blessed by the Force. They provide both physical protection and spiritual comfort, feeling like a second skin that enhances the Guardian's protective abilities.",
+  "flavor_text": "'In these robes, I am both warrior and protector.' - A Guardian Knight",
+  "cost": 500,
+  "weight": 3.0,
+  "properties": [
+   "force_enhanced",
+   "protective_weave",
+   "traditional"
+  ],
+  "mechanics": [
+   {
+    "effect": "grant_advantage",
+    "description": "Grants advantage on saves vs fear effects.",
+    "parameters": {
+     "type": "saving_throw",
+     "condition": "fear_effects"
+    },
+    "target_scopes": [
+     "self"
+    ]
+   }
+  ],
+  "armor_stats": {
+   "ac": 11,
+   "ac_type": "natural",
+   "max_dex": 2,
+   "stealth_penalty": 0
+  },
+  "connections": [
+   {
+    "target_id": "class_guardian",
+    "target_type": "class",
+    "relationship_id": "rel_iconic_to",
+    "narrative": "These robes are the traditional garb of Jedi Guardians, designed to enhance their protective abilities."
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "These robes should feel like a second skin that enhances the Guardian's protective abilities. They should move naturally and provide comfort in dangerous situations, with the Force-enhanced weave subtly reinforcing the wearer's resolve.",
+   "tactical_notes": "The fear resistance makes these robes ideal for Guardians who need to maintain their composure in terrifying situations. The natural AC and lack of stealth penalty make them perfect for both combat and social situations.",
+   "narrative_hooks": [
+    "The robes were worn by a famous Guardian who protected the Jedi Temple during the Clone Wars",
+    "The robes' protective weave was created using ancient techniques passed down from the first Jedi",
+    "The robes seem to respond to the wearer's protective instincts, becoming more comfortable when defending others"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "Traditional Jedi Guardian robes in earth tones with subtle protective runes woven into the fabric. The robes flow naturally and provide both comfort and protection, with the Force-enhanced weave visible as a subtle shimmer in the right light.",
+   "base_negative_keywords": [
+    "dark colors",
+    "aggressive styling",
+    "heavy armor",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/items/jedi_robes_guardian.png",
+   "icon": "/assets/icons/items/jedi_robes_guardian.svg",
+   "color": "#8B4513"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_jedi_robes_guardian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/jedi_robes_guardian.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

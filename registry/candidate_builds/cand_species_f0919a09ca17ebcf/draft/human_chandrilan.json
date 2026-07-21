@@ -1,0 +1,365 @@
+{
+ "record": {
+  "id": "human_chandrilan",
+  "name": "Chandrilan Human",
+  "tags": [
+   "colonist",
+   "damage",
+   "healer",
+   "homebrew",
+   "human",
+   "human_chandrilan",
+   "influence",
+   "peaceful",
+   "support",
+   "survivor_background",
+   "uncommon",
+   "wilderness",
+   "wisdom_based",
+   "wise"
+  ],
+  "description": "Chandrilans are humans from the agricultural world of Chandrila, known for their strong community bonds, farming expertise, and practical wisdom. They are hardworking, family-oriented, and often serve as farmers, community leaders, or healers.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Wisdom",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Chandrilan"
+  ],
+  "base_hp": 11,
+  "base_strain": 10,
+  "traits": [
+   {
+    "name": "Agricultural Knowledge",
+    "level": 1,
+    "description": "Your farming background grants you proficiency in Nature and advantage on Wisdom (Survival) checks related to agriculture, animal handling, or finding food and water.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Nature"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "survival_agriculture_food_water",
+      "conditions": [
+       {
+        "key": "survival_action",
+        "op": "in",
+        "value": [
+         "agriculture",
+         "animal_handling",
+         "finding_food",
+         "finding_water"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Community Bonds",
+    "level": 1,
+    "description": "You excel at building and maintaining relationships within communities. You have advantage on Charisma (Persuasion) checks when working with groups and once per short rest, you can gain advantage on a check to rally or inspire others.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "persuasion_community_groups",
+      "conditions": [
+       {
+        "key": "target_type",
+        "op": "equals",
+        "value": "community_group"
+       }
+      ]
+     },
+     {
+      "type": "grant_advantage",
+      "value": "rally_inspire_once_per_short_rest",
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Practical Wisdom",
+    "level": 1,
+    "description": "Your life experience grants you insight into practical matters. You have advantage on Wisdom (Insight) checks to understand people's motivations and can sense when someone is being dishonest about practical matters.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "insight_practical_motivations",
+      "conditions": [
+       {
+        "key": "insight_type",
+        "op": "equals",
+        "value": "practical_motivations"
+       }
+      ]
+     },
+     {
+      "type": "grant_action",
+      "value": "Practical Deception Detection",
+      "description": "Sense dishonesty about practical matters"
+     }
+    ]
+   }
+  ],
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     {
+      "skin_tone": "light_brown"
+     },
+     {
+      "hair_color": "dark_brown"
+     },
+     {
+      "eye_color": "hazel"
+     },
+     {
+      "facial_structure": "oval"
+     },
+     {
+      "body_build": "slender"
+     }
+    ],
+    "morphology": {
+     "head_type": "rounded",
+     "body_type": "humanoid",
+     "average_height": "5'8\""
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "features": [
+        "chubby cheeks",
+        "wide eyes",
+        "curly hair"
+       ],
+       "tone": "warm"
+      },
+      "adult": {
+       "features": [
+        "weathered skin",
+        "wise expression",
+        "gray streaks in hair"
+       ],
+       "tone": "calm"
+      },
+      "elder": {
+       "features": [
+        "wispy white hair",
+        "lined face",
+        "gentle smile"
+       ],
+       "tone": "serene"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "scars on hands and arms from physical labor",
+       "rough, weathered skin from exposure to the elements",
+       "intense gaze"
+      ],
+      "light_side": [
+       "soft, rounded features from a life of peace and harmony",
+       "gentle, compassionate eyes",
+       "subtle glow from being close to nature"
+      ]
+     }
+    },
+    "unique_identifiers": [],
+    "prompt_schema": {
+     "base_prompt": "A Chandrilan Human with {skin_tone} skin and {hair_color} hair",
+     "contextual_modifiers": [
+      "standing amidst a lush farm or garden",
+      "holding a tool or staff",
+      "wearing a simple, practical outfit"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "standard_rivalry",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A respected community leader challenges your farming methods, claiming they're inefficient.",
+      "consequences": "Your reputation suffers, but you gain insight into alternative approaches.",
+      "triggers": [
+       "Community Leader Criticizes",
+       "Farmland Yields Decline"
+      ]
+     },
+     "escalation": {
+      "description": "The community leader's criticism escalates to sabotage of your farm.",
+      "consequences": "Your livelihood is threatened; you must investigate and protect your farm.",
+      "triggers": [
+       "Farm Sabotage",
+       "Community Leader Threatens"
+      ]
+     },
+     "confrontation": {
+      "description": "You confront the community leader about their actions, but tensions run high.",
+      "consequences": "Relationships with the community are strained; you must navigate this delicate situation.",
+      "triggers": [
+       "Confrontation with Community Leader",
+       "Strained Community Relationships"
+      ]
+     }
+    },
+    "resolution_paths": {
+     "victory": "You resolve the conflict by finding a mutually beneficial solution for your farm and the community.",
+     "redemption": "You work tirelessly to restore relationships with the community, earning back their trust.",
+     "escape": "You abandon your farm and leave the planet, escaping the conflict."
+    },
+    "conflict_triggers": [
+     "Community Leader Criticizes",
+     "Farm Sabotage",
+     "Strained Community Relationships"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "Abuse of Power by a Community Leader",
+      "Neglect or Abandonment of a Family Member"
+     ],
+     "vendetta_type": "Righting Wrong, Seeking Justice"
+    },
+    "historical_enemy": "The Galactic Empire's forced conscription and exploitation of Chandrila's resources led to a deep-seated resentment among the species. They may view any authority figure with suspicion.",
+    "tragic_flaw": "Chandrilans' strong connection to their land can sometimes lead them to prioritize short-term needs over long-term consequences, making them vulnerable to manipulation or exploitation."
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "Shared Values (Community Focus)",
+     "Mutual Respect",
+     "Emotional Support"
+    ],
+    "romance_progression": {
+     "stage1": "You strike up a conversation with the individual at a community gathering, discovering shared interests.",
+     "stage2": "You spend more time together, exploring the planet and sharing your passions.",
+     "stage3": "You develop feelings for each other, but tensions arise due to differing opinions on how to help the community.",
+     "stage4": "You work through these challenges, growing closer and developing a deeper understanding of one another.",
+     "stage5": "You confess your love for each other, solidifying your relationship."
+    },
+    "romance_events": [
+     "First Date",
+     "Helping Each Other in Times of Need",
+     "Discussing Community Goals and Values"
+    ],
+    "romance_modifiers": [
+     "Increased Relationship Trust (5% chance per interaction)",
+     "Improved Communication Skills (2% chance per successful conversation)"
+    ],
+    "courtship_customs": "Chandrilan courtship customs emphasize mutual respect and shared responsibility. They may engage in cooperative activities like farming or cooking together as a way to deepen their bond.",
+    "relationship_goals": "Chandrilans value long-term partnerships built on trust, loyalty, and shared values. They may prioritize building a life together over grand romantic gestures."
+   }
+  },
+  "flavor_text": "Chandrilans are woven from the rich soil and sunny skies of their homeworld. Their connection to the land is palpable, a deep respect for the cycles of nature that guides their lives. In the quiet hours before dawn, you might hear a Chandrilan softly singing an old harvest hymn, their voices carrying on the breeze like the rustle of leaves.",
+  "llm_guidance": {
+   "roleplay_guidance": "Chandrilans are family-oriented and community-driven. They value hard work, practical wisdom, and cooperation over individual achievements or recognition. When interacting with Chandrilans, focus on building relationships, showing interest in their lives and traditions, and offering help when needed.",
+   "narrative_hooks": [
+    "A child's birthday celebration on a farm is interrupted by a sudden rainstorm; the player must help the family find shelter and comfort each other.",
+    "A group of Chandrilan farmers face financial struggles due to a prolonged drought; the player must negotiate with local authorities or find alternative solutions."
+   ],
+   "social_dynamics": "Chandrilans are known for their warm hospitality, but also value personal space and independence. They may be reserved at first, but once you've earned their trust, they'll open up and share stories of their lives.",
+   "common_motivations": [
+    "Protecting the land and the community",
+    "Preserving traditional practices and knowledge"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": "{ \"extroverted\": false, \"agreeable\": true, \"conscientious\": true, \"open_to_experience\": false }\n",
+    "motivations": [
+     "Maintain social harmony",
+     "Support community well-being",
+     "Advance knowledge of sustainable farming practices"
+    ],
+    "combat_behavior": "In combat, a Chandrilan Human companion will prioritize supporting their allies and protecting civilians, while also using their skills to contribute to the team's efforts.\n",
+    "social_behavior": "A Chandrilan Human companion values open communication and cooperation in relationships. They will often seek input from others and be willing to compromise when necessary.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "High": "The companion is highly trustworthy and loyal."
+     },
+     {
+      "Medium": "The companion is generally reliable, but may require occasional reminders of their commitments."
+     },
+     {
+      "Low": "The companion's loyalty is questionable; they may prioritize personal interests over the group's needs."
+     }
+    ],
+    "loyalty_triggers": "A Chandrilan Human companion's loyalty can be triggered by a genuine display of concern for their well-being or a demonstration of commitment to their community.\n"
+   },
+   "services": [
+    "farming expertise (e.g., planting, harvesting)",
+    "community leadership",
+    "healing and medicine"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "human_chandrilan",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/human_chandrilan.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

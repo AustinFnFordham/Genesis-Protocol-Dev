@@ -1,0 +1,164 @@
+{
+ "record": {
+  "id": "trader",
+  "name": "Trader",
+  "class_id": "explorer",
+  "base_class": "explorer",
+  "tags": [
+   "explorer",
+   "trader",
+   "merchant",
+   "charisma_based",
+   "negotiator",
+   "professional",
+   "navigator",
+   "organized",
+   "opportunist"
+  ],
+  "description": "Traders are masters of commerce and negotiation, using their knowledge of markets and trade routes to profit from exploration and discovery.",
+  "specialization_features": [
+   "market_knowledge",
+   "trade_negotiation",
+   "route_optimization",
+   "profit_mastery",
+   "legendary_trader"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Masters of commerce, navigating markets with ease.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Navigator's insignia",
+    "Trade guild emblem"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "trader_3",
+    "feature_id": "Trader's Guide",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain a +1 bonus to Charisma checks when interacting with members of any profession that deals with trade or commerce.",
+    "effects": [
+     {
+      "type": "ability_bonus",
+      "value": "charisma"
+     }
+    ]
+   },
+   {
+    "node_id": "trader_7",
+    "feature_id": "Market Savvy",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can ask your ally to make a Wisdom (Perception) check in place of you, and use their result if it's higher.",
+    "effects": [
+     {
+      "type": "ally_ability_swap",
+      "value": "perception"
+     }
+    ]
+   },
+   {
+    "node_id": "trader_11",
+    "feature_id": "Trade Guild Network",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain access to a network of trade guilds and can use their services for free.",
+    "effects": [
+     {
+      "type": "advantage",
+      "value": "trade_guild_network"
+     }
+    ]
+   },
+   {
+    "node_id": "trader_15",
+    "feature_id": "Negotiator's Prowess",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice that are related to trade or commerce.",
+    "effects": [
+     {
+      "type": "skill_expertise",
+      "value": [
+       "commerce",
+       "negotiation"
+      ]
+     }
+    ]
+   },
+   {
+    "node_id": "trader_18",
+    "feature_id": "Master Trader",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You gain a +2 bonus to Charisma checks when interacting with members of any profession that deals with trade or commerce.",
+    "effects": [
+     {
+      "type": "ability_bonus",
+      "value": "charisma"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Trader's Holocron",
+    "Market Matrix"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A balanced stance with lightsaber at the ready, surrounded by swirling market energy.",
+    "energy_signature": "A burst of energy that shifts and changes like a trader's fortunes in the galactic markets."
+   },
+   "prompt_schema": {
+    "base_prompt": "A dignified Trader standing on a bustling Coruscant street, surrounded by towering skyscrapers and speeder traffic.",
+    "contextual_modifiers": [
+     "In a dimly lit cantina",
+     "With a holographic display of market data floating above"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "trader",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/explorer_subclasses/explorer_trader.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

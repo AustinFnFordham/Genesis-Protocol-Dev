@@ -1,0 +1,414 @@
+{
+ "record": {
+  "id": "sith",
+  "name": "Sith",
+  "tags": [
+   "force_user",
+   "sith",
+   "dark_side",
+   "force_mastery",
+   "strength_based",
+   "offensive",
+   "intimidation",
+   "tyrant",
+   "lightning",
+   "ruthless",
+   "power_hungry"
+  ],
+  "description": "Sith are practitioners of the dark side of the Force, channeling their emotions into devastating power. They are warriors, tyrants, and masters of dark side abilities, using fear and intimidation as weapons alongside their lightsabers and Force lightning.",
+  "hit_die": "1d10",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Martial weapons",
+    "Lightsabers"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Sith Holocron",
+      "Dark Side Artifacts",
+      "Meditation Chamber",
+      "Sith Robes",
+      "Force Imbued Items"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Strength",
+    "Charisma"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "Deception",
+     "Intimidation",
+     "Lore",
+     "Perception",
+     "Persuasion",
+     "Stealth"
+    ]
+   }
+  },
+  "primary_ability": "Strength or Charisma",
+  "primary_resource": "Dark Side Points",
+  "progression_tree": [
+   {
+    "node_id": "dark_side_connection_1",
+    "feature_id": "dark_side_connection",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "sith_philosophy_1",
+    "feature_id": "sith_philosophy",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "dark_side_connection_1"
+    ],
+    "choice_group": "sith_philosophy_level_1"
+   },
+   {
+    "node_id": "dark_aggression_2",
+    "feature_id": "dark_aggression",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "sith_philosophy_1"
+    ],
+    "choice_group": "dark_focus_level_2"
+   },
+   {
+    "node_id": "dark_manipulation_2",
+    "feature_id": "dark_manipulation",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "sith_philosophy_1"
+    ],
+    "choice_group": "dark_focus_level_2"
+   },
+   {
+    "node_id": "sith_specialization_3",
+    "feature_id": "sith_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "dark_aggression_2",
+     "dark_manipulation_2"
+    ],
+    "choice_group": "sith_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "sith_specialization_3"
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "enhanced_aggression_6",
+    "feature_id": "enhanced_aggression",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "sith_enhancement_level_6"
+   },
+   {
+    "node_id": "enhanced_manipulation_6",
+    "feature_id": "enhanced_manipulation",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "sith_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_aggression_6",
+     "enhanced_manipulation_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "dark_side_mastery_9",
+    "feature_id": "dark_side_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "force_lightning_10",
+    "feature_id": "force_lightning",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "dark_side_mastery_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "force_lightning_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "sith_mastery_20",
+    "feature_id": "sith_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "dark_side_robes",
+    "ominous_gloves"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, wielding a red-bladed lightsaber and exuding an aura of malevolent intent",
+    "energy_signature": "Unstable, crackling electricity emanating from the user's body, accompanied by an unsettling aura of dark side energy"
+   },
+   "prompt_schema": {
+    "base_prompt": "A Sith warrior, fueled by ambition and aggression, unleashes a devastating attack with their lightsaber in a dimly lit, ominous environment",
+    "contextual_modifiers": [
+     "Show the Sith's emotions as a visible manifestation of their power (e.g., red glow, angry expression)",
+     "Highlight the surroundings as foreboding and eerie (e.g., dark castle, overgrown ruins)"
+    ]
+   }
+  },
+  "flavor_text": "The dark side consumes me, and I am reborn in its fiery depths.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Sith, you embody the principles of the dark side. Focus on cultivating your inner turmoil and harnessing its energy to fuel your abilities.\n",
+   "narrative_hooks": [
+    "I sense the presence of a Jedi nearby, a threat to my power.",
+    "The darkness within me grows stronger with each passing moment.",
+    "Fear is my ally; I will use it to crush my enemies."
+   ],
+   "social_dynamics": "As a Sith, you are a master manipulator. Use your cunning and the fear you inspire to get what you want from others.\n",
+   "common_motivations": [
+    "Gain more power",
+    "Eliminate threats to my rule",
+    "Expand the reach of the dark side"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "charismatic",
+      "intimidating"
+     ],
+     "quirks": [
+      "uses Force lightning as a form of expression",
+      "often speaks in cryptic phrases"
+     ]
+    },
+    "motivations": {
+     "primary": "dominate",
+     "secondary": "eliminate threats"
+    },
+    "combat_behavior": "I will use my mastery of the dark side to crush my enemies with overwhelming force.",
+    "social_behavior": "I will manipulate and intimidate others to achieve my goals."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "default": "low",
+     "max": "high"
+    },
+    "loyalty_triggers": "betraying me opposing the Sith Order"
+   },
+   "services": [
+    "dark side training and guidance",
+    "Force-sensitive youth recruitment",
+    "covert operations planning"
+   ]
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "A Sith's power grows as they exploit the fears of others, creating a web of intimidation and control.",
+    "escalation": "Enemies begin to recognize the Sith's true nature, and their loyalty is tested by the dark side's influence.",
+    "confrontation": "The Sith face off against powerful foes who seek to destroy them and restore balance to the Force."
+   },
+   "resolution_paths": {
+    "victory": "Defeat their enemies through superior force of will and mastery of the dark side.",
+    "redemption": "Seek forgiveness from those they have wronged, but risk being consumed by the very darkness they once wielded.",
+    "escape": "Use cunning and deception to evade capture or defeat, temporarily fleeing the consequences of their actions."
+   },
+   "conflict_triggers": [
+    "The Sith's use of fear and intimidation creates a power vacuum, attracting rivals seeking to usurp their position.",
+    "Their pursuit of dark side abilities leads them to exploit vulnerable allies, creating discord within their ranks."
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "The Sith is initially drawn to a romantic interest's strong will and potential for power.",
+    "stage2": "As relationships deepen, the Sith begins to question whether their dark side nature can be reconciled with love.",
+    "stage3": "Allies or enemies of the Sith may seek to manipulate their partner for their own gain, testing the relationship's strength.",
+    "stage4": "The Sith must confront the fear and mistrust that their lifestyle has instilled in others, potentially leading to a breakdown in communication.",
+    "stage5": "Ultimately, the Sith must choose between their dark side ambitions and the possibility of a fulfilling relationship."
+   },
+   "lifestyle_challenges": [
+    "Their reliance on intimidation and manipulation makes it difficult for others to form genuine connections with them.",
+    "The Sith's affinity for the dark side creates an inherent conflict with traditional notions of love and relationships."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "sith",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/sith.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

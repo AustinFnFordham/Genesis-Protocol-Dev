@@ -1,0 +1,118 @@
+{
+ "record": {
+  "id": "background_starship_engineer",
+  "name": "Starship Engineer",
+  "description": "You keep the ship flying—patching hulls, rerouting power, and turning scrap into solutions.",
+  "proficiencies": {
+   "skills": [
+    "Technology",
+    "Investigation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Starship Repair Kit",
+      "Fabrication Tools",
+      "Power Management Suite",
+      "Emergency Patching Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Damage Control",
+   "level": 1,
+   "description": "You have advantage on checks to repair systems or stabilize critical failures. Once per short rest, you can grant your ship temporary resilience—treat the next failed system check as a success as if you had rolled a 10.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "repair_or_stabilize_critical_failures",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "modify_roll",
+     "value": "floor_10_next_ship_system_check_once_per_short_rest",
+     "target_scopes": [
+      "ship"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I keep spare parts the quartermaster says don’t exist.",
+    "I hear failing capacitors like others hear music."
+   ],
+   "ideals": [
+    "Ingenuity. There's always a fix.",
+    "Reliability. The ship comes home."
+   ],
+   "bonds": [
+    "A patched plate saved a friend; I carry it as a token."
+   ],
+   "flaws": [
+    "I tinker mid-mission when I shouldn't."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_engineer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_engineer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "0ea0819accfa6800b1d18597a173e8d19cd35605e28e3b4949dc09f0342a8d00",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

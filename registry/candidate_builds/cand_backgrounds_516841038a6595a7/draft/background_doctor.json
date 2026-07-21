@@ -1,0 +1,166 @@
+{
+ "record": {
+  "id": "background_doctor",
+  "name": "Doctor",
+  "tags": [
+   "background",
+   "doctor",
+   "healer",
+   "medical",
+   "wisdom_based",
+   "intelligence_based",
+   "compassionate",
+   "professional",
+   "skilled",
+   "support"
+  ],
+  "description": "You are a medical professional, healer, or researcher who has dedicated your life to the study and practice of medicine. Whether you work in a hospital, serve as a field medic, or conduct medical research, your knowledge of anatomy, physiology, and healing makes you invaluable. You understand the importance of life and the responsibility that comes with the power to heal or harm.",
+  "proficiencies": {
+   "skills": [
+    "Medicine",
+    "Investigation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Medical Kit",
+      "Surgical Tools",
+      "Diagnostic Scanner",
+      "Bacta Tank",
+      "Medical Droid",
+      "Research Equipment"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Medical Expertise",
+   "level": 1,
+   "description": "Your medical training has given you exceptional healing abilities. When you use a medical kit or healing item, you can roll an additional die and add it to the healing result. Additionally, you have advantage on Medicine checks to diagnose illnesses or injuries, and you can stabilize dying creatures without needing to make a Medicine check.",
+   "effects": [
+    {
+     "type": "modify_roll",
+     "value": "healing_bonus",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "using_medical_kit",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Roll additional die for healing with medical items"
+    },
+    {
+     "type": "grant_advantage",
+     "value": "diagnosis_advantage",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "medicine"
+      },
+      {
+       "key": "diagnosing_condition",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Medicine checks for diagnosis"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Life. All life is precious and must be preserved.",
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Justice. I bring criminals to justice."
+   ],
+   "bonds": [
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_doctor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_doctor.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

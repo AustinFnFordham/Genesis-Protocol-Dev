@@ -1,0 +1,233 @@
+{
+ "record": {
+  "id": "power_orbital_strike",
+  "name": "Orbital Strike",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 5,
+  "tags": [
+   "explosive",
+   "fire",
+   "orbital",
+   "devastation",
+   "area_effect",
+   "artillery"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 5
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Orbital weapons platform targeting system"
+   }
+  },
+  "narrative": "You transmit targeting coordinates to an orbital weapons platform, brilliant lance of superheated energy descending from the heavens to annihilate everything at ground zero. The power manifests as a warning tone, seconds of terrible anticipation, then apocalyptic fire from above that turns the battlefield into a crater of molten glass.",
+  "flavor_text": "\"Target locked. Firing solution confirmed. May the Force have mercy.\" - Fleet Commander",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "transmitting coordinates via targeting device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "confirming firing solution and impact zone"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "1 mile",
+  "duration": "Instantaneous (1 round delay)",
+  "base_effect": {
+   "description": "You call down devastating fire from orbital weapons platforms.",
+   "mechanics": [
+    {
+     "type": "delayed_strike",
+     "value": {
+      "delay": {
+       "amount": 1,
+       "unit": "round"
+      }
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "notes": "Strike occurs at start of your next turn after targeting"
+    },
+    {
+     "type": "area_damage",
+     "value": {
+      "dice_count": 10,
+      "dice_size": 6,
+      "damage_type": "fire",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "within_30_foot_radius",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Dexterity save or take 10d6 fire damage in 30-foot radius"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of orbital mechanics transforms Orbital Strike into surgical precision weapon. They calculate trajectories accounting for planetary rotation, atmospheric conditions, and target movement—turning kilometer-wide destruction into pinpoint elimination.",
+    "mechanical_benefit": [
+     {
+      "type": "precision_strike",
+      "value": {
+       "radius_reduction": {
+        "distance": 15,
+        "unit": "feet"
+       },
+       "damage_increase": {
+        "dice_count": 2,
+        "dice_size": 6
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineers reduce radius to 15 feet but increase damage to 12d6 for precision strike."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical genius makes their Orbital Strikes devastatingly effective. They time strikes to enemy formations, predict movement patterns, and choose impact points that maximize collateral destruction—turning raw firepower into strategic annihilation.",
+    "mechanical_benefit": [
+     {
+      "type": "reduce_delay",
+      "value": {
+       "delay": "instant"
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Human Orbital Strikes hit instantly instead of next turn (better predictive targeting)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Orbital Strike as terror weapon—demonstrating absolute technological supremacy through destruction from beyond retaliation range. Their strikes level cities, their operators trained to show no mercy, orbital bombardment embodying Imperial domination.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_devastation",
+      "value": {
+       "radius": {
+        "distance": 50,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Imperial Orbital Strikes affect 50-foot radius for maximum devastation."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the targeting tone, the moment of horrified realization, then apocalypse from above. Show the lance of energy descending like divine wrath, everything at ground zero vaporized instantly, shockwave radiating outward. The destruction should feel absolute and terrifying.",
+   "tactical_notes": "Orbital Strike is the ultimate artillery—10d6 fire damage in 30-foot radius from 1 mile away. Costs 5 Tech Points and requires orbital platform access. The 1-round delay telegraphs impact, letting enemies scatter. Use when overwhelming force is needed and collateral damage acceptable.",
+   "narrative_hooks": [
+    "An orbital strike turns the tide of a desperate battle through absolute firepower",
+    "The strike's collateral damage creates moral crisis about acceptable costs",
+    "Calling in orbital fire reveals fleet position to enemy forces"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of an orbital strike descending from space. A brilliant lance of superheated energy tears through atmosphere, leaving a trail of ionized air as it accelerates toward ground zero. The impact creates an apocalyptic explosion, mushroom cloud rising as the shockwave radiates outward, everything at the epicenter vaporized instantly. The scene captures the terrifying power of orbital bombardment. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric explosion effects, by John Berkey",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/orbital_strike.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_orbital_strike",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_orbital_strike.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

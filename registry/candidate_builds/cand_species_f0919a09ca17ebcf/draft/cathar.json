@@ -1,0 +1,568 @@
+{
+ "record": {
+  "id": "cathar",
+  "name": "Cathar",
+  "tags": [
+   "agile",
+   "cathar",
+   "dexterity_based",
+   "honorable",
+   "hunter",
+   "impulsive",
+   "loyal",
+   "melee_specialist",
+   "passionate",
+   "predator",
+   "strength_based",
+   "uncommon",
+   "warrior",
+   "wilderness"
+  ],
+  "description": "Cathar are a species of feline humanoids known for their courage, passion, and loyalty. They are formidable warriors with quick reflexes and sharp claws.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Dexterity",
+    "value": 2
+   },
+   {
+    "ability": "Strength",
+    "value": 1
+   }
+  ],
+  "speed": 35,
+  "size": "Medium",
+  "languages": [
+   "Catharese",
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "cathar_cats_claws",
+    "name": "Cat's Claws",
+    "narrative": "Your retractable claws are natural weapons honed by generations of hunting and combat. These razor-sharp appendages can extend and retract at will, making you a formidable opponent even when unarmed.",
+    "mechanics": [
+     {
+      "effect": "modify_unarmed_strike",
+      "name": "Natural Weapons",
+      "action_type": "passive",
+      "description": "Your unarmed strikes deal 1d6 slashing damage.",
+      "rules": [
+       "damage_dice:1d6",
+       "damage_type:slashing"
+      ]
+     },
+     {
+      "effect": "grant_proficiency",
+      "name": "Claw Proficiency",
+      "action_type": "passive",
+      "description": "You are proficient with your unarmed strikes.",
+      "rules": [
+       "weapon_type:unarmed",
+       "proficiency:granted"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "scaly_paws",
+     "ui_transition": {
+      "animation": "claw_slipping_into_scales",
+      "sfx": "slippery_claws"
+     }
+    }
+   },
+   {
+    "id": "cathar_feline_agility",
+    "name": "Feline Agility",
+    "narrative": "Your feline physiology grants you bursts of incredible speed and agility. You can move with predatory grace, darting between positions with the fluid motion of a hunting cat.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Burst of Speed",
+      "action_type": "free_action",
+      "description": "When you move on your turn in combat, you can double your speed until the end of the turn.",
+      "rules": [
+       "trigger:on_movement",
+       "speed_multiplier:2",
+       "duration:end_of_turn",
+       "cooldown:move_0_feet"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "cathar_keen_senses",
+    "name": "Keen Senses",
+    "narrative": "Your feline senses are exceptionally sharp, allowing you to detect the subtlest sounds and scents. Your ears can swivel to pinpoint the source of sounds, and your sensitive nose can track prey through complex environments.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Enhanced Perception",
+      "action_type": "passive",
+      "description": "You have advantage on Perception checks that rely on hearing or smell.",
+      "rules": [
+       "skill:perception",
+       "context:hearing_smell"
+      ],
+      "conditions": [
+       {
+        "key": "perception_type",
+        "op": "in",
+        "value": [
+         "hearing",
+         "smell"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Scent Tracking",
+      "action_type": "passive",
+      "description": "You can track creatures by scent within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "tracking_type:scent",
+       "target:creatures"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "tainted_intuition",
+     "ui_transition": {
+      "animation": "eyes_turning_black",
+      "sfx": "sinister_hunch"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Feline humanoid features",
+    "Sharp claws",
+    "Furry coat",
+    "Cat-like eyes",
+    "Graceful, predatory movements"
+   ],
+   "fur_color_variants": [
+    "Golden",
+    "Orange",
+    "Brown",
+    "Black",
+    "White",
+    "Grey",
+    "Striped patterns",
+    "Spotted patterns"
+   ],
+   "fur_patterns": [
+    "Solid color",
+    "Tabby stripes",
+    "Spotted patterns",
+    "Mottled patterns",
+    "Gradient variations"
+   ],
+   "eye_color_variants": [
+    "Golden",
+    "Green",
+    "Blue",
+    "Amber",
+    "Yellow",
+    "Slit-pupiled eyes"
+   ],
+   "common_adornments": [
+    "Practical combat gear",
+    "Traditional Cathar warrior attire",
+    "Leather armor and weapons",
+    "Cultural jewelry and accessories",
+    "Hunting and survival equipment"
+   ],
+   "llm_description_prompt": "Describe a Cathar character. Emphasize their feline grace and the way their fur catches the light, showing their natural predatory heritage. Their eyes should convey both intelligence and primal instincts. Consider their warrior culture and the way they carry themselves with confident, fluid movements that reflect their natural agility and hunting prowess."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout",
+    "narrative": "Cathar's natural agility and Keen Senses make them exceptional Scouts, able to move silently and track targets with feline precision.",
+    "mechanical_benefits": [
+     "Feline Agility trait enables rapid movement and positioning",
+     "Keen Senses trait enhances tracking and detection",
+     "High Dexterity supports stealth and mobility"
+    ]
+   },
+   {
+    "class": "Soldier (Skirmisher)",
+    "narrative": "Cathar's natural combat abilities and Cat's Claws make them formidable Soldiers, able to strike quickly and move with predatory grace.",
+    "mechanical_benefits": [
+     "Cat's Claws provide natural weapons for unarmed combat",
+     "Feline Agility enhances combat mobility",
+     "High Dexterity supports light armor and agile combat"
+    ]
+   },
+   {
+    "class": "Operative (Infiltrator)",
+    "narrative": "Cathar's natural stealth and sensory abilities make them excellent Operatives, able to move silently and gather intelligence with feline precision.",
+    "mechanical_benefits": [
+     "Keen Senses trait aids in stealth and detection",
+     "Feline Agility enables rapid infiltration and escape",
+     "Natural predatory instincts enhance reconnaissance"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Cathar's loyalty and protective instincts make them excellent Guardians, defending their allies with fierce determination and feline agility.",
+    "mechanical_benefits": [
+     "Feline Agility trait enables rapid protective positioning",
+     "Cat's Claws provide backup weapons for close combat",
+     "Natural courage enhances protective abilities"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Cathar Clans",
+    "narrative": "Cathar maintain strong clan traditions, with each clan having its own warrior culture and protective instincts for their members."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Cathar have served the Republic as elite soldiers and scouts, their natural abilities making them valuable assets in military operations."
+   },
+   {
+    "faction": "Independent Warriors",
+    "narrative": "Many Cathar prefer to work as independent warriors and protectors, following their own codes of honor and loyalty."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your feline instincts become more refined, allowing you to track and hunt with even greater precision.",
+     "mechanical_benefit": "Increase the range of scent tracking from 30 feet to 60 feet, and gain advantage on Stealth checks when moving through natural terrain."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your agility reaches new heights, allowing you to perform incredible feats of acrobatics and movement.",
+     "mechanical_benefit": "You can use your Feline Agility ability twice per short rest, and you gain advantage on Athletics checks to climb or jump."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your predatory instincts combine with combat training to make you a more lethal hunter.",
+     "mechanical_benefit": "When using your Cat's Claws, you gain a +2 bonus to damage rolls, and you can make an additional unarmed strike as a bonus action once per turn."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your feline reflexes reach their peak, making you nearly impossible to surprise or ambush.",
+     "mechanical_benefit": "You have advantage on saving throws against being surprised, and you can use your reaction to move up to half your speed when you would be hit by an attack."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Hunting Rituals",
+    "type": "ceremonial",
+    "description": "Cathar hunting rituals involve complex ceremonies that honor the prey and celebrate the hunter's skill. These traditions are deeply ingrained in their warrior culture.",
+    "narrative_impact": "Provides cultural depth and social bonding opportunities. Can be used for character development and party interactions."
+   },
+   {
+    "name": "Clan Honor",
+    "type": "traditional",
+    "description": "Cathar clan traditions emphasize honor, loyalty, and courage. Each clan has its own codes of conduct and methods of training warriors.",
+    "narrative_impact": "Creates cultural identity and social connections. Can be used for information gathering and relationship building."
+   },
+   {
+    "name": "Predator's Meditation",
+    "type": "cultural",
+    "description": "Cathar warriors practice meditation techniques that enhance their predatory instincts and combat awareness.",
+    "narrative_impact": "Provides character development opportunities and combat preparation. Can be used for gaining insights or preparing for battles."
+   },
+   {
+    "name": "Feline Bonding",
+    "type": "narrative",
+    "description": "Cathar form deep bonds with their allies, treating them as members of their pride. These bonds are sacred and unbreakable.",
+    "narrative_impact": "Provides character development opportunities and relationship building. Can be used for social interactions and loyalty scenarios."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "forest",
+    "adaptation_name": "Forest Mastery",
+    "description": "Your feline instincts make you perfectly at home in forest environments, where you can move silently and hunt effectively.",
+    "mechanical_benefit": "You have advantage on Stealth and Survival checks in forest environments, and you can move through dense vegetation without penalty."
+   },
+   {
+    "environment": "urban",
+    "adaptation_name": "Urban Agility",
+    "description": "Your natural agility allows you to navigate urban environments with feline grace, using rooftops and alleys to your advantage.",
+    "mechanical_benefit": "You can move through urban terrain without penalty, and you have advantage on Athletics checks to climb or jump in urban settings."
+   },
+   {
+    "environment": "night",
+    "adaptation_name": "Night Vision",
+    "description": "Your feline eyes are adapted to low-light conditions, allowing you to see clearly in darkness that would blind other species.",
+    "mechanical_benefit": "You can see in dim light as if it were bright light, and you have advantage on Perception checks in low-light conditions."
+   },
+   {
+    "environment": "hunting",
+    "adaptation_name": "Predator's Instinct",
+    "description": "Your natural hunting abilities allow you to track and pursue prey with incredible efficiency.",
+    "mechanical_benefit": "You have advantage on Survival checks to track creatures, and you can move at full speed while tracking without penalty."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on agility and hunting abilities, complementing rather than overshadowing class features",
+    "Feline agility improvements maintain the species' unique identity while providing meaningful advancement",
+    "Tracking and combat abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on warrior traditions and hunting culture rather than mechanical advantages",
+    "Hunting rituals and clan honor provide unique roleplaying opportunities and cultural depth",
+    "Predator's meditation and feline bonding enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for natural and urban environments where agility is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Night vision and predator's instinct provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "mammalian_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "feline_fur_coloration",
+     "sharp_claws",
+     "agile_build"
+    ],
+    "morphology": {
+     "head_type": "Lion-like",
+     "body_type": "Muscular and lean",
+     "average_height": "5'9\""
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "fur_color": "tawny",
+       "eye_color": "green"
+      },
+      "adult": {
+       "fur_color": "dark brown",
+       "eye_color": "amber"
+      },
+      "elder": {
+       "fur_color": "grayer",
+       "eye_color": "blue-gray"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "yellow_eyes",
+       "pale_skin"
+      ],
+      "light_side": [
+       "calm_aura",
+       "inner_light"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos",
+     "cybernetic enhancements"
+    ],
+    "prompt_schema": {
+     "base_prompt": "A majestic feline humanoid with a strong sense of justice",
+     "contextual_modifiers": [
+      "loyal protector",
+      "fierce warrior",
+      "noble leader"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "blood_feud",
+   "overrides": {
+    "progression_path": {
+     "emergence": {
+      "description": "A young Cathar warrior begins to question their loyalty to the tribe after discovering a dark secret about their leader.",
+      "threat_level": "Low-Moderate"
+     },
+     "escalation": {
+      "description": "The Mandalorian bounty hunter returns, seeking to exploit the divisions within your community and bring chaos to your doorstep.",
+      "threat_level": "Moderate-High"
+     },
+     "confrontation": {
+      "description": "A final showdown between you and the Mandalorian leader, with the fate of Cathar-Mandalorian relations hanging in the balance.",
+      "threat_level": "High-Extreme"
+     }
+    },
+    "resolution_paths": {
+     "victory": "The protagonist emerges victorious, restoring peace to the Cathar nation and forging a new path towards forgiveness and reconciliation.",
+     "redemption": "The antagonist seeks forgiveness and makes amends for their past wrongs, bringing a measure of closure to the community.",
+     "escape": "The protagonist flees with a small group of allies, vowing to rebuild in exile and keep the flame of hope alive."
+    },
+    "conflict_triggers": [
+     "Betrayal",
+     "Rivalry",
+     "Power struggle"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "Being wronged by someone you trusted, or witnessing the suffering of innocent kin"
+     ],
+     "vendetta_type": "Revenge/Competition"
+    }
+   }
+  },
+  "romance_engine": {
+   "archetype": "warrior_bond",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "Shared sense of justice and loyalty to one's family",
+     "Mutual respect for each other's unique skills and strengths",
+     "A deep understanding of the other's emotional vulnerability"
+    ],
+    "romance_progression": {
+     "stage1": "Friendship ( mutual interests, trust-building activities, and shared meals in the tree-city)",
+     "stage2": "Romantic interest ( shared glances, flirtatious banter, and subtle gestures of affection)",
+     "stage3": "Emotional connection ( deep conversations, intimate moments, and a willingness to support each other's dreams)",
+     "stage4": "Commitment ( promises of loyalty and protection, as well as a desire to build a life together in the tree-city)",
+     "stage5": "Eternal love ( vows of devotion and lifelong commitment, sealed with a public declaration or sacred ritual)"
+    },
+    "romance_events": [
+     "A secret meeting in a hidden glade deep within the tree-city",
+     "A romantic picnic under the stars, with a breathtaking view of the surrounding landscape",
+     "A heartfelt apology after a misunderstanding, followed by a tender moment of reconciliation",
+     "A surprise gift to show affection, such as a handmade token or a rare flower"
+    ],
+    "romance_modifiers": [
+     "Shared meals or activities that bring you closer together",
+     "Support during difficult times, such as offering a listening ear or a helping hand",
+     "Public displays of affection, like holding hands or stealing kisses in public"
+    ]
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": [
+     {
+      "trait": "brave",
+      "value": 8
+     },
+     {
+      "trait": "loyal",
+      "value": 9
+     },
+     {
+      "trait": "proud",
+      "value": 7
+     }
+    ],
+    "motivations": [
+     {
+      "goal": "protect_family",
+      "priority": "high"
+     },
+     {
+      "goal": "uphold_honor",
+      "priority": "medium"
+     }
+    ],
+    "combat_behavior": "Initiate with a swift strike, then use agility to evade and counterattack.",
+    "social_behavior": "Show respect and deference to authority figures; offer comfort and support to allies in need."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "0-20%": "distrust"
+     },
+     {
+      "21-50%": "cautious"
+     },
+     {
+      "51-80%": "trust"
+     },
+     {
+      "81-100%": "loyalty"
+     }
+    ],
+    "loyalty_triggers": [
+     "Betrayal of a family member or close ally",
+     "Failure to uphold personal honor"
+    ]
+   },
+   "services": [
+    {
+     "name": "hunting",
+     "description": "Expertise in tracking and hunting in the wilderness."
+    },
+    {
+     "name": "combat_specialist",
+     "description": "Proficiency in melee combat, utilizing agility and strength."
+    }
+   ]
+  },
+  "flavor_text": "Born from the ashes of war, Cathar cling to their tree-cities as a testament to the unbreakable bonds of family and loyalty. Yet, the scars of the Battle of Cathar still linger, fueling a hatred for the Mandalorians that threatens to consume them.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Cathar, you embody the ferocity of the wild huntress, tempered by the gentle warmth of your tree-city home. Your feline physique grants you exceptional agility and reflexes, honed from generations of living among the branches. Remember that loyalty is a double-edged sword - it can bring great strength in battle, but also blind you to the needs of others.",
+   "narrative_hooks": [
+    "A Mandalorian bounty hunter seeks to exploit the tensions within your community.",
+    "Your family's ancient grudge with the Mandalorians has sparked a heated debate over whether to seek revenge or forgiveness.",
+    "The tree-city is threatened by a severe storm, forcing you to prioritize the safety of your kin above all else."
+   ],
+   "social_dynamics": "As Cathar, you live and die by a code of honor that demands absolute loyalty to your family and tribe. This can lead to intense emotional bonds with those around you, but also makes it difficult to forgive past betrayals or mistakes. Be wary of letting your passion cloud your judgment, lest you fall prey to the same impulses that nearly destroyed your people.",
+   "common_motivations": [
+    "Protect the tree-city and its inhabitants from external threats",
+    "Uphold the honor of my family by avenging past injustices",
+    "Reconcile with the Mandalorians, or at least find a way to coexist peacefully"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "cathar",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/cathar.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

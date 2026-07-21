@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "background_ace",
+  "name": "Ace",
+  "tags": [
+   "background",
+   "pilot",
+   "ace",
+   "starship_pilot",
+   "vehicle_specialist",
+   "dexterity_based",
+   "agile",
+   "tactical",
+   "professional",
+   "skilled"
+  ],
+  "description": "You are an elite pilot, a starfighter ace, or a flight instructor who has mastered the art of aerial and space combat. Whether you flew for the Republic Navy, Imperial Starfleet, or as a mercenary, your skills in piloting, tactics, and combat make you a legend in the cockpit. You understand the nuances of different ship types and can push any vessel to its limits.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Vehicle (Air)",
+      "Vehicle (Space)",
+      "Starfighter Simulator",
+      "Tactical Display",
+      "Flight Computer",
+      "Combat HUD"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Ace's Instincts",
+   "level": 1,
+   "description": "Your years of combat experience have given you an almost supernatural sense for danger and opportunity. You have advantage on initiative rolls when piloting a vehicle, and you can use your reaction to gain advantage on one attack roll or saving throw per combat. Additionally, you can perform complex flight maneuvers that other pilots would find impossible.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "pilot_initiative",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "piloting_vehicle",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on initiative rolls when piloting"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "ace_reaction",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "combat_situation",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Use reaction to gain advantage on one attack or save per combat"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Excellence. I strive to be the best at everything I do.",
+    "Freedom. The open space is my home.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred."
+   ],
+   "bonds": [
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_ace",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_ace.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

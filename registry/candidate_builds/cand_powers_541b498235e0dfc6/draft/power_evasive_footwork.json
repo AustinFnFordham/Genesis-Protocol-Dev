@@ -1,0 +1,191 @@
+{
+ "record": {
+  "id": "power_evasive_footwork",
+  "name": "Evasive Footwork",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "defensive",
+   "mobility",
+   "dodge",
+   "footwork",
+   "tactical",
+   "superiority"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced defensive mobility technique"
+   }
+  },
+  "narrative": "You weave through combat with unpredictable patterns, making yourself a moving target impossible to pin down. The power manifests as a blur of motion, ducking and weaving, each step calculated to throw off your opponent's aim while maintaining perfect balance for your next action.",
+  "flavor_text": "\"Float like a butterfly, sting like a krayt dragon.\" - Combat Instructor",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "fluid defensive footwork and body positioning"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "predicting attack angles while moving"
+   }
+  ],
+  "casting_time": "1 Maneuver",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "When you move, you can expend a superiority die to add the result to your AC until you stop moving.",
+   "mechanics": [
+    {
+     "type": "enhance_ac",
+     "value": {
+      "source": "superiority_die"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Add superiority die to AC until you stop moving"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "operative",
+    "narrative": "The Operative transforms Evasive Footwork into a deadly dance. Their training in infiltration and escape makes every dodge a setup for counterattack, every sidestep a positioning advantage, turning defense into the ultimate offense.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_movement",
+      "value": {
+       "distance": 10,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Operatives gain +10 feet of movement when using Evasive Footwork."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human athleticism and adaptability make their Evasive Footwork unpredictable. They blend techniques from dozens of martial arts, creating movement patterns that defy conventional combat logic and leave opponents guessing.",
+    "mechanical_benefit": [
+     {
+      "type": "opportunity_attack_immunity",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans don't provoke opportunity attacks while using Evasive Footwork."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has refined Evasive Footwork for guerrilla warfare. Hit-and-run tactics require perfect mobility, and Rebel fighters have learned to maintain defensive footwork even while retreating, turning every withdrawal into a fighting retreat.",
+    "mechanical_benefit": [
+     {
+      "type": "disengage_bonus",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebels can Disengage as a bonus action after using Evasive Footwork."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the constant motion—bobbing, weaving, sudden direction changes, never staying still long enough to target. Show attacks missing by inches, the character always one step ahead, their movement flowing like water around obstacles.",
+   "tactical_notes": "Evasive Footwork uses a superiority die to boost AC while moving. The bonus lasts only during movement, so plan your path carefully. Excellent for crossing dangerous terrain or reaching objectives under fire. Combines well with Dash actions.",
+   "narrative_hooks": [
+    "Evasive Footwork allows crossing a killzone unharmed",
+    "The technique's patterns reveal training from a specific master",
+    "A character uses the footwork to dance through a minefield"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior using evasive footwork to dodge multiple attacks. Motion blur shows their weaving path, afterimages marking where they were moments before. Weapons slash through empty air where they just stood. The fighter moves with liquid grace, untouchable in motion.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/evasive_footwork.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_evasive_footwork",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_evasive_footwork.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

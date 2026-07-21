@@ -1,0 +1,964 @@
+{
+ "record": {
+  "id": "compendium_weapons_expanded",
+  "category": "equipment",
+  "subcategory": "weapons",
+  "tags": [
+   "equipment",
+   "compendium",
+   "weapons",
+   "combat",
+   "armory",
+   "rare_to_legendary",
+   "lightsabers",
+   "exotic",
+   "force_imbued",
+   "jedi",
+   "sith",
+   "high_tech",
+   "specialized"
+  ],
+  "weapons_expanded": [
+   {
+    "id": "weapon_lightsaber_standard",
+    "name": "Standard Lightsaber",
+    "description": "A traditional lightsaber with a single blade, the weapon of choice for Jedi and Sith alike.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 15000,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "standard",
+     "jedi",
+     "sith",
+     "energy_weapon"
+    ],
+    "properties": [
+     "energy_weapon",
+     "lightsaber",
+     "force_resonant",
+     "deflect_capable"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "lightsaber_combat",
+     "force_weapon",
+     "jedi_tradition"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "lightsaber_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform lightsaber attacks with enhanced damage"
+     }
+    ]
+   },
+   {
+    "id": "weapon_lightsaber_double",
+    "name": "Double-Bladed Lightsaber",
+    "description": "A lightsaber with blades extending from both ends, requiring exceptional skill to wield effectively.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 25000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "double_bladed",
+     "advanced",
+     "dual_weapon"
+    ],
+    "properties": [
+     "energy_weapon",
+     "double_bladed",
+     "advanced_technique",
+     "dual_weapon"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "double_bladed_combat",
+     "advanced_technique",
+     "dual_weapon_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "double_bladed_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform double-bladed attacks with enhanced damage"
+     }
+    ]
+   },
+   {
+    "id": "weapon_lightsaber_shoto",
+    "name": "Shoto Lightsaber",
+    "description": "A shorter lightsaber designed for close combat and dual-wielding techniques.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 12000,
+    "rarity": 4,
+    "weight": 0.5,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "shoto",
+     "short",
+     "dual_wield",
+     "close_combat"
+    ],
+    "properties": [
+     "energy_weapon",
+     "short_blade",
+     "dual_wield",
+     "close_combat"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "shoto_combat",
+     "dual_wielding",
+     "close_combat_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "close_combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on close combat checks when wielding shoto"
+     }
+    ]
+   },
+   {
+    "id": "weapon_lightsaber_guard",
+    "name": "Lightsaber with Crossguard",
+    "description": "A lightsaber featuring a crossguard design that provides additional defensive capabilities.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 20000,
+    "rarity": 5,
+    "weight": 1.5,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "crossguard",
+     "defensive",
+     "enhanced"
+    ],
+    "properties": [
+     "energy_weapon",
+     "crossguard",
+     "defensive_enhancement",
+     "enhanced"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "crossguard_combat",
+     "defensive_enhancement",
+     "enhanced_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "defense_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on defense checks when wielding crossguard lightsaber"
+     }
+    ]
+   },
+   {
+    "id": "weapon_lightsaber_pike",
+    "name": "Lightsaber Pike",
+    "description": "A lightsaber mounted on a long staff, combining the power of a lightsaber with the reach of a polearm.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 30000,
+    "rarity": 5,
+    "weight": 3.0,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "pike",
+     "polearm",
+     "extended_reach",
+     "staff"
+    ],
+    "properties": [
+     "energy_weapon",
+     "extended_reach",
+     "polearm",
+     "staff_weapon"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "pike_combat",
+     "extended_reach",
+     "polearm_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "reach_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on reach attacks when wielding lightsaber pike"
+     }
+    ]
+   },
+   {
+    "id": "weapon_lightsaber_whip",
+    "name": "Lightsaber Whip",
+    "description": "A flexible lightsaber that can extend and retract like a whip, allowing for unpredictable attack patterns.",
+    "type": "Weapon",
+    "subtype": "Lightsaber",
+    "cost": 35000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "lightsaber",
+     "whip",
+     "flexible",
+     "unpredictable",
+     "exotic"
+    ],
+    "properties": [
+     "energy_weapon",
+     "flexible_blade",
+     "unpredictable",
+     "exotic_weapon"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "whip_combat",
+     "unpredictable_attacks",
+     "exotic_technique"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "unpredictable_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on unpredictable attack patterns with lightsaber whip"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_pistol_standard",
+    "name": "Standard Blaster Pistol",
+    "description": "A reliable blaster pistol that serves as the standard sidearm for many across the galaxy.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 500,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "blaster",
+     "pistol",
+     "standard",
+     "reliable",
+     "sidearm"
+    ],
+    "properties": [
+     "energy_weapon",
+     "reliable",
+     "standard",
+     "sidearm"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "blaster_combat",
+     "reliable_sidearm",
+     "standard_weapon"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "blaster_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "blaster_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform blaster attacks with standard damage"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_pistol_heavy",
+    "name": "Heavy Blaster Pistol",
+    "description": "A powerful blaster pistol with increased damage output and stopping power.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 1500,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "blaster",
+     "pistol",
+     "heavy",
+     "powerful",
+     "stopping_power"
+    ],
+    "properties": [
+     "energy_weapon",
+     "heavy_damage",
+     "stopping_power",
+     "powerful"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "heavy_blaster_combat",
+     "stopping_power",
+     "powerful_sidearm"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "heavy_blaster_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heavy_blaster_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform heavy blaster attacks with increased damage"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_rifle_standard",
+    "name": "Standard Blaster Rifle",
+    "description": "A versatile blaster rifle that provides good accuracy and damage for medium-range combat.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 1000,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "weapon",
+     "blaster",
+     "rifle",
+     "standard",
+     "versatile",
+     "medium_range"
+    ],
+    "properties": [
+     "energy_weapon",
+     "versatile",
+     "medium_range",
+     "accurate"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rifle_combat",
+     "medium_range_accuracy",
+     "versatile_weapon"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medium_range_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "rifle_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medium-range attacks with blaster rifle"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_rifle_sniper",
+    "name": "Sniper Blaster Rifle",
+    "description": "A precision blaster rifle designed for long-range accuracy and devastating single shots.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 3000,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "weapon",
+     "blaster",
+     "rifle",
+     "sniper",
+     "precision",
+     "long_range"
+    ],
+    "properties": [
+     "energy_weapon",
+     "precision",
+     "long_range",
+     "sniper"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sniper_combat",
+     "long_range_precision",
+     "devastating_shots"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "long_range_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "sniper_rifle_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on long-range attacks with sniper blaster rifle"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_carbine",
+    "name": "Blaster Carbine",
+    "description": "A compact blaster rifle that combines the power of a rifle with the mobility of a pistol.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 1200,
+    "rarity": 2,
+    "weight": 2.5,
+    "tags": [
+     "weapon",
+     "blaster",
+     "carbine",
+     "compact",
+     "mobile",
+     "versatile"
+    ],
+    "properties": [
+     "energy_weapon",
+     "compact",
+     "mobile",
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "carbine_combat",
+     "mobile_weapon",
+     "versatile_firepower"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "mobile_combat_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "carbine_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on mobile combat checks with blaster carbine"
+     }
+    ]
+   },
+   {
+    "id": "weapon_blaster_repeater",
+    "name": "Blaster Repeater",
+    "description": "A rapid-fire blaster weapon capable of sustained automatic fire for suppressing enemy positions.",
+    "type": "Weapon",
+    "subtype": "Blaster",
+    "cost": 2500,
+    "rarity": 3,
+    "weight": 5.0,
+    "tags": [
+     "weapon",
+     "blaster",
+     "repeater",
+     "automatic",
+     "suppression",
+     "rapid_fire"
+    ],
+    "properties": [
+     "energy_weapon",
+     "automatic",
+     "suppression",
+     "rapid_fire"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "repeater_combat",
+     "automatic_fire",
+     "suppression_tactics"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "automatic_fire",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "repeater_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform automatic fire attacks with blaster repeater"
+     }
+    ]
+   },
+   {
+    "id": "weapon_ion_blaster",
+    "name": "Ion Blaster",
+    "description": "A specialized blaster that fires ionized particles, effective against droids and electronic systems.",
+    "type": "Weapon",
+    "subtype": "Specialized Weapon",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "ion",
+     "blaster",
+     "specialized",
+     "droid_effective",
+     "electronic"
+    ],
+    "properties": [
+     "ion_weapon",
+     "droid_effective",
+     "electronic_damage",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ion_combat",
+     "droid_destruction",
+     "electronic_disruption"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "droid_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ion_blaster_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attacks against droids and electronic systems"
+     }
+    ]
+   },
+   {
+    "id": "weapon_disruptor",
+    "name": "Disruptor Weapon",
+    "description": "A banned weapon that disintegrates targets at the molecular level, leaving nothing behind.",
+    "type": "Weapon",
+    "subtype": "Specialized Weapon",
+    "cost": 50000,
+    "rarity": 6,
+    "weight": 3.0,
+    "tags": [
+     "weapon",
+     "disruptor",
+     "banned",
+     "molecular_disintegration",
+     "illegal",
+     "devastating"
+    ],
+    "properties": [
+     "molecular_disintegration",
+     "banned_weapon",
+     "devastating",
+     "illegal"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "disruptor_combat",
+     "molecular_disintegration",
+     "devastating_destruction"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "disruptor_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "disruptor_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform disruptor attacks with devastating molecular disintegration"
+     }
+    ]
+   },
+   {
+    "id": "weapon_bowcaster",
+    "name": "Bowcaster",
+    "description": "A traditional Wookiee weapon that fires explosive quarrels with devastating impact.",
+    "type": "Weapon",
+    "subtype": "Specialized Weapon",
+    "cost": 8000,
+    "rarity": 4,
+    "weight": 8.0,
+    "tags": [
+     "weapon",
+     "bowcaster",
+     "wookiee",
+     "explosive",
+     "traditional",
+     "devastating"
+    ],
+    "properties": [
+     "explosive_quarrels",
+     "wookiee_weapon",
+     "devastating_impact",
+     "traditional"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "bowcaster_combat",
+     "explosive_impact",
+     "wookiee_tradition"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "bowcaster_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bowcaster_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform bowcaster attacks with explosive damage"
+     }
+    ]
+   },
+   {
+    "id": "weapon_vibroblade",
+    "name": "Vibroblade",
+    "description": "A melee weapon with a vibrating blade that can cut through armor and deflect blaster bolts.",
+    "type": "Weapon",
+    "subtype": "Specialized Weapon",
+    "cost": 3000,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "weapon",
+     "vibroblade",
+     "melee",
+     "vibrating",
+     "armor_piercing",
+     "deflect"
+    ],
+    "properties": [
+     "vibrating_blade",
+     "armor_piercing",
+     "deflect_capable",
+     "melee"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "vibroblade_combat",
+     "armor_piercing",
+     "deflect_mastery"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "armor_piercing_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "vibroblade_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on armor-piercing attacks with vibroblade"
+     }
+    ]
+   },
+   {
+    "id": "weapon_thermal_detonator",
+    "name": "Thermal Detonator",
+    "description": "A powerful explosive device that creates a devastating blast radius, used for demolition and area denial.",
+    "type": "Weapon",
+    "subtype": "Explosive",
+    "cost": 1000,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "weapon",
+     "thermal_detonator",
+     "explosive",
+     "demolition",
+     "area_denial",
+     "devastating"
+    ],
+    "properties": [
+     "explosive",
+     "demolition",
+     "area_denial",
+     "devastating"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "explosive_demolition",
+     "area_denial",
+     "devastating_blast"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "thermal_detonation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "thermal_detonator_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can create devastating explosive blasts with thermal detonator"
+     }
+    ]
+   },
+   {
+    "id": "weapon_stun_baton",
+    "name": "Stun Baton",
+    "description": "A non-lethal weapon that delivers powerful electrical shocks to incapacitate targets.",
+    "type": "Weapon",
+    "subtype": "Specialized Weapon",
+    "cost": 500,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "weapon",
+     "stun_baton",
+     "non_lethal",
+     "electrical",
+     "incapacitate",
+     "law_enforcement"
+    ],
+    "properties": [
+     "non_lethal",
+     "electrical_shock",
+     "incapacitate",
+     "law_enforcement"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stun_combat",
+     "non_lethal_takedown",
+     "electrical_incapacitation"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "stun_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stun_baton_equipped",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform non-lethal stun attacks with electrical shock"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_weapons_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/weapons_expanded.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

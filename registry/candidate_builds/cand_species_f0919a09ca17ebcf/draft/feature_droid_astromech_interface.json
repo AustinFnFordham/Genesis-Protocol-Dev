@@ -1,0 +1,102 @@
+{
+ "record": {
+  "id": "feature_droid_astromech_interface",
+  "name": "Astromech Interface",
+  "category": "utility",
+  "xp_cost": 0,
+  "tags": [
+   "feature",
+   "specialization_feature",
+   "species",
+   "droid",
+   "utility",
+   "skill_enhancement",
+   "assassination",
+   "passive",
+   "leadership",
+   "ally_enhancement",
+   "offensive",
+   "tactical",
+   "low_cost"
+  ],
+  "narrative": "Your chassis integrates specialized ports, sensors, and firmware for direct interaction with starship systems. You speak in diagnostics and power cycles, thinking in vectors and currents.",
+  "flavor_text": "'Astromech Interface represents the pinnacle of mastery.' - Unknown Master",
+  "mechanics": [
+   {
+    "effect": "grant_ability",
+    "description": "Grants a special ability",
+    "parameters": {
+     "ability_name": "Astromech Interface",
+     "action_type": "passive"
+    }
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This ability should feel like a natural extension of the droid's consciousness. Describe how the droid's sensors light up with data streams, how they seem to 'think' in technical diagnostics, and how they can instantly understand complex systems. The interface should feel like a second language that only droids can speak.",
+   "tactical_notes": "This is a powerful utility ability that allows the droid to interact with technology in ways organic beings cannot. Use it to bypass security systems, perform complex repairs, or gather information from computer systems.",
+   "narrative_hooks": [
+    "The droid interfaces with a damaged starship's navigation system",
+    "The droid bypasses a security system to help the party escape",
+    "The droid discovers hidden information in a computer database",
+    "The droid performs emergency repairs on critical systems"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "An astromech droid interfacing with a starship's computer system, with data streams and diagnostic displays visible on screens. The droid's sensors are glowing with activity as it processes information and executes commands.",
+   "base_negative_keywords": [
+    "organic",
+    "manual",
+    "primitive",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/features/astromech_interface.png",
+   "icon": "/assets/icons/features/astromech_interface.svg",
+   "color": "#00BFFF"
+  }
+ },
+ "validation": {
+  "candidate_urid": "feature_droid_astromech_interface",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/features/species/droid/astromech_interface.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

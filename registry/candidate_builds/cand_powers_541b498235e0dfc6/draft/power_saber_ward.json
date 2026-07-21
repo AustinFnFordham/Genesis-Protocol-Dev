@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "power_saber_ward",
+  "name": "Saber Ward",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "lightsaber",
+   "defensive",
+   "protection",
+   "aura",
+   "jedi",
+   "sustained_defense"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced lightsaber defensive technique creating protective field"
+   }
+  },
+  "narrative": "You create a defensive perimeter with your lightsaber, the blade moving in constant protective patterns that intercept attacks from all angles. The power manifests as a blur of light surrounding you, the weapon's movements so fast they create walls of energy that nothing can penetrate.",
+  "flavor_text": "\"The lightsaber becomes a shield of pure light.\" - Form III Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "maintaining constant defensive saber patterns"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "using Force precognition to anticipate attacks"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create a defensive ward with your lightsaber.",
+   "mechanics": [
+    {
+     "type": "grant_ac_bonus",
+     "value": {
+      "bonus": 2,
+      "source": "defensive_patterns"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Gain +2 AC while maintaining saber ward"
+    },
+    {
+     "type": "defensive_stance",
+     "value": {
+      "movement_restriction": "half_speed"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Movement reduced to half speed while maintaining ward"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's defensive philosophy transforms Saber Ward into absolute protection. They've perfected Form III's defensive patterns, their ward so complete that breaking through becomes virtually impossible—defense elevated to art form.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_ac",
+      "value": {
+       "bonus": 3
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Guardians gain +3 AC instead of +2 from superior defensive mastery."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to blend Saber Ward with mobility. They've learned to maintain defensive patterns while moving more freely, turning static defense into fluid protection that doesn't sacrifice positioning.",
+    "mechanical_benefit": [
+     {
+      "type": "remove_movement_penalty",
+      "value": {
+       "movement": "full_speed"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans maintain full movement speed while using saber ward."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Saber Ward as meditation in motion—defensive patterns that calm the mind while protecting the body. Their techniques create wards that defend not just physically but spiritually, serenity through defense.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_protection",
+      "value": {
+       "radius": {
+        "distance": 5,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Jedi saber ward also grants +1 AC to allies within 5 feet."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the lightsaber moving in constant defensive patterns, creating a blur of light that forms protective walls. Show attacks bouncing harmlessly off the energy barrier, the defender's calm focus maintaining perfect defense. The ward should feel meditative yet impenetrable.",
+   "tactical_notes": "Saber Ward grants +2 AC for up to 1 minute with concentration, costing 1 Force Point. Excellent defensive buff but reduces speed to half. Perfect for holding positions or protecting allies. Requires lightsaber and maintains concentration.",
+   "narrative_hooks": [
+    "Saber ward protects allies through overwhelming enemy fire",
+    "The defensive technique reveals Form III training",
+    "Breaking ward concentration creates a critical vulnerability"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a Jedi maintaining saber ward. Their lightsaber moves in constant defensive patterns, creating a blur of light that forms protective walls around them. Attacks bounce harmlessly off the energy barrier as the defender stands calm and focused. The scene captures perfect defensive technique through Form III mastery. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric defensive glow, by Ryan Church",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/saber_ward.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_saber_ward",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_saber_ward.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

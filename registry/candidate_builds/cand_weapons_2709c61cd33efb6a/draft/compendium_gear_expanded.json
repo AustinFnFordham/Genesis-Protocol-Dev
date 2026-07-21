@@ -1,0 +1,1263 @@
+{
+ "record": {
+  "id": "compendium_gear_expanded",
+  "category": "equipment",
+  "subcategory": "gear",
+  "tags": [
+   "equipment",
+   "compendium",
+   "gear",
+   "utility",
+   "tools",
+   "rare_to_legendary",
+   "specialized",
+   "high_tech",
+   "advanced",
+   "exotic",
+   "varied_rarity"
+  ],
+  "gear_expanded": [
+   {
+    "id": "gear_medpack_basic",
+    "name": "Basic Medpack",
+    "description": "A standard medical kit containing basic supplies for treating minor injuries and wounds.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "medical",
+     "medpack",
+     "basic",
+     "treatment",
+     "first_aid"
+    ],
+    "properties": [
+     "basic_treatment",
+     "first_aid",
+     "wound_care",
+     "standard"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_treatment",
+     "first_aid",
+     "wound_care"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medpack_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medicine checks when basic medpack is available"
+     }
+    ]
+   },
+   {
+    "id": "gear_medpack_advanced",
+    "name": "Advanced Medpack",
+    "description": "A comprehensive medical kit with advanced treatment capabilities for serious injuries and medical emergencies.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "gear",
+     "medical",
+     "medpack",
+     "advanced",
+     "comprehensive",
+     "emergency"
+    ],
+    "properties": [
+     "advanced_treatment",
+     "comprehensive",
+     "emergency_care",
+     "serious_injuries"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "advanced_treatment",
+     "emergency_care",
+     "comprehensive_medical"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_medpack_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced advantage on medicine checks when advanced medpack is available"
+     }
+    ]
+   },
+   {
+    "id": "gear_bacta_tank",
+    "name": "Portable Bacta Tank",
+    "description": "A portable tank filled with healing bacta that can rapidly heal serious injuries and restore health.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 5000,
+    "rarity": 4,
+    "weight": 20.0,
+    "tags": [
+     "gear",
+     "medical",
+     "bacta",
+     "tank",
+     "healing",
+     "rapid_recovery"
+    ],
+    "properties": [
+     "rapid_healing",
+     "bacta_treatment",
+     "serious_injuries",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rapid_healing",
+     "bacta_treatment",
+     "serious_injury_recovery"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "bacta_healing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_tank_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform rapid bacta healing for serious injuries"
+     }
+    ]
+   },
+   {
+    "id": "gear_bacta_patch",
+    "name": "Bacta Patch",
+    "description": "A small, adhesive patch infused with bacta that provides rapid healing for minor wounds.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 100,
+    "rarity": 2,
+    "weight": 0.1,
+    "tags": [
+     "gear",
+     "medical",
+     "bacta",
+     "patch",
+     "adhesive",
+     "rapid_healing"
+    ],
+    "properties": [
+     "rapid_healing",
+     "adhesive",
+     "minor_wounds",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rapid_healing",
+     "minor_wound_treatment",
+     "adhesive_application"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "healing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_patch_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Healing status when bacta patch is applied"
+     }
+    ]
+   },
+   {
+    "id": "gear_stim_pack",
+    "name": "Stim Pack",
+    "description": "A medical injector containing stimulants that can temporarily boost performance and combat effectiveness.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "medical",
+     "stim",
+     "pack",
+     "performance_boost",
+     "combat_enhancement"
+    ],
+    "properties": [
+     "performance_boost",
+     "combat_enhancement",
+     "temporary",
+     "stimulant"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "performance_boost",
+     "combat_enhancement",
+     "stimulant_effect"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "stimulated",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stim_pack_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Stimulated status for temporary performance boost"
+     }
+    ]
+   },
+   {
+    "id": "gear_medical_scanner",
+    "name": "Medical Scanner",
+    "description": "A portable device that can diagnose injuries, illnesses, and medical conditions with high accuracy.",
+    "type": "Gear",
+    "subtype": "Medical Supplies",
+    "cost": 1500,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "medical",
+     "scanner",
+     "diagnosis",
+     "portable",
+     "accurate"
+    ],
+    "properties": [
+     "medical_diagnosis",
+     "portable",
+     "accurate",
+     "condition_analysis"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "medical_diagnosis",
+     "condition_analysis",
+     "accurate_assessment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "diagnosis_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medical_scanner_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medical diagnosis checks when scanner is active"
+     }
+    ]
+   },
+   {
+    "id": "gear_security_spike",
+    "name": "Security Spike",
+    "description": "A specialized device that can bypass security systems and electronic locks with advanced slicing capabilities.",
+    "type": "Gear",
+    "subtype": "Security Equipment",
+    "cost": 500,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "security",
+     "spike",
+     "bypass",
+     "slicing",
+     "electronic_locks"
+    ],
+    "properties": [
+     "security_bypass",
+     "slicing_capability",
+     "electronic_locks",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "security_bypass",
+     "electronic_lock_breach",
+     "slicing_operation"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "slicing_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "security_spike_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on slicing checks when security spike is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_tunneler",
+    "name": "Tunneler",
+    "description": "A compact drilling device that can create passages through walls, floors, and other barriers.",
+    "type": "Gear",
+    "subtype": "Security Equipment",
+    "cost": 1000,
+    "rarity": 3,
+    "weight": 3.0,
+    "tags": [
+     "gear",
+     "security",
+     "tunneler",
+     "drilling",
+     "passage_creation",
+     "barrier_breach"
+    ],
+    "properties": [
+     "passage_creation",
+     "barrier_breach",
+     "drilling_capability",
+     "compact"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "passage_creation",
+     "barrier_breach",
+     "drilling_operation"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "tunneling_operation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tunneler_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can create passages through barriers with tunneler"
+     }
+    ]
+   },
+   {
+    "id": "gear_lockpick_set",
+    "name": "Advanced Lockpick Set",
+    "description": "A comprehensive set of tools for picking mechanical locks and bypassing physical security measures.",
+    "type": "Gear",
+    "subtype": "Security Equipment",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "security",
+     "lockpick",
+     "mechanical_locks",
+     "physical_security",
+     "bypass"
+    ],
+    "properties": [
+     "mechanical_bypass",
+     "lockpicking",
+     "physical_security",
+     "comprehensive"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mechanical_bypass",
+     "lockpicking",
+     "physical_security_breach"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "lockpicking_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "lockpick_set_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on lockpicking checks when advanced lockpick set is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_stealth_field_generator",
+    "name": "Stealth Field Generator",
+    "description": "A device that creates a localized stealth field, making the user difficult to detect by sensors and visual observation.",
+    "type": "Gear",
+    "subtype": "Security Equipment",
+    "cost": 3000,
+    "rarity": 4,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "security",
+     "stealth",
+     "field_generator",
+     "sensor_evasion",
+     "visual_concealment"
+    ],
+    "properties": [
+     "stealth_field",
+     "sensor_evasion",
+     "visual_concealment",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stealth_field",
+     "sensor_evasion",
+     "visual_concealment"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "stealthed",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_field_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Stealthed status when stealth field generator is active"
+     }
+    ]
+   },
+   {
+    "id": "gear_jamming_device",
+    "name": "Signal Jamming Device",
+    "description": "A portable device that can jam communications, sensors, and electronic systems within a limited area.",
+    "type": "Gear",
+    "subtype": "Security Equipment",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 1.5,
+    "tags": [
+     "gear",
+     "security",
+     "jamming",
+     "signal_interference",
+     "communications",
+     "sensors"
+    ],
+    "properties": [
+     "signal_jamming",
+     "communications_interference",
+     "sensor_disruption",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "signal_jamming",
+     "communications_interference",
+     "sensor_disruption"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "signal_jamming",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "jamming_device_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can jam signals and disrupt electronic systems"
+     }
+    ]
+   },
+   {
+    "id": "gear_slicing_toolkit",
+    "name": "Slicing Toolkit",
+    "description": "A comprehensive set of tools and programs for hacking computer systems and accessing restricted data.",
+    "type": "Gear",
+    "subtype": "Slicing Equipment",
+    "cost": 600,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "slicing",
+     "toolkit",
+     "hacking",
+     "computer_systems",
+     "data_access"
+    ],
+    "properties": [
+     "computer_hacking",
+     "data_access",
+     "restricted_systems",
+     "comprehensive"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "computer_hacking",
+     "data_access",
+     "restricted_system_breach"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "slicing_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "slicing_toolkit_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on slicing checks when slicing toolkit is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_data_pad",
+    "name": "Advanced Data Pad",
+    "description": "A sophisticated portable computer with enhanced processing power and specialized slicing programs.",
+    "type": "Gear",
+    "subtype": "Slicing Equipment",
+    "cost": 1200,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "slicing",
+     "data_pad",
+     "portable_computer",
+     "enhanced_processing",
+     "slicing_programs"
+    ],
+    "properties": [
+     "enhanced_processing",
+     "slicing_programs",
+     "portable_computer",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_processing",
+     "slicing_programs",
+     "portable_computing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "computer_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "data_pad_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on computer checks when advanced data pad is available"
+     }
+    ]
+   },
+   {
+    "id": "gear_interface_spike",
+    "name": "Interface Spike",
+    "description": "A specialized device that can directly interface with computer systems and networks for advanced slicing operations.",
+    "type": "Gear",
+    "subtype": "Slicing Equipment",
+    "cost": 2000,
+    "rarity": 4,
+    "weight": 0.8,
+    "tags": [
+     "gear",
+     "slicing",
+     "interface",
+     "spike",
+     "direct_interface",
+     "network_access"
+    ],
+    "properties": [
+     "direct_interface",
+     "network_access",
+     "advanced_slicing",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "direct_interface",
+     "network_access",
+     "advanced_slicing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "network_slicing_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "interface_spike_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on network slicing checks when interface spike is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_binoculars",
+    "name": "Enhanced Binoculars",
+    "description": "Advanced binoculars with magnification, night vision, and targeting capabilities for reconnaissance operations.",
+    "type": "Gear",
+    "subtype": "Surveillance Equipment",
+    "cost": 400,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "surveillance",
+     "binoculars",
+     "magnification",
+     "night_vision",
+     "targeting"
+    ],
+    "properties": [
+     "magnification",
+     "night_vision",
+     "targeting_capability",
+     "reconnaissance"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "magnified_observation",
+     "night_vision",
+     "targeting_assistance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "binoculars_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on perception checks when enhanced binoculars are used"
+     }
+    ]
+   },
+   {
+    "id": "gear_surveillance_drone",
+    "name": "Surveillance Drone",
+    "description": "A small, flying drone equipped with cameras and sensors for aerial reconnaissance and surveillance.",
+    "type": "Gear",
+    "subtype": "Surveillance Equipment",
+    "cost": 1500,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "gear",
+     "surveillance",
+     "drone",
+     "aerial",
+     "cameras",
+     "sensors"
+    ],
+    "properties": [
+     "aerial_reconnaissance",
+     "camera_surveillance",
+     "sensor_array",
+     "remote_control"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "aerial_reconnaissance",
+     "camera_surveillance",
+     "remote_monitoring"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "aerial_surveillance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "surveillance_drone_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform aerial surveillance with surveillance drone"
+     }
+    ]
+   },
+   {
+    "id": "gear_motion_sensor",
+    "name": "Motion Sensor",
+    "description": "A device that can detect movement and alert the user to potential threats or surveillance targets.",
+    "type": "Gear",
+    "subtype": "Surveillance Equipment",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "surveillance",
+     "motion_sensor",
+     "movement_detection",
+     "threat_alert"
+    ],
+    "properties": [
+     "movement_detection",
+     "threat_alert",
+     "surveillance",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "movement_detection",
+     "threat_alert",
+     "surveillance_monitoring"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "awareness_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "motion_sensor_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on awareness checks when motion sensor is active"
+     }
+    ]
+   },
+   {
+    "id": "gear_multitool",
+    "name": "Advanced Multitool",
+    "description": "A versatile tool that combines multiple functions including cutting, gripping, and various repair capabilities.",
+    "type": "Gear",
+    "subtype": "Utility Equipment",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "utility",
+     "multitool",
+     "versatile",
+     "repair",
+     "cutting"
+    ],
+    "properties": [
+     "versatile_tool",
+     "repair_capability",
+     "cutting",
+     "gripping"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "versatile_repair",
+     "cutting_operations",
+     "gripping_tasks"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "repair_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "multitool_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on repair checks when advanced multitool is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_grappling_hook",
+    "name": "Grappling Hook",
+    "description": "A retractable grappling hook that can be used for climbing, crossing gaps, and accessing elevated areas.",
+    "type": "Gear",
+    "subtype": "Utility Equipment",
+    "cost": 150,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "utility",
+     "grappling_hook",
+     "climbing",
+     "crossing_gaps",
+     "elevated_access"
+    ],
+    "properties": [
+     "climbing_assistance",
+     "gap_crossing",
+     "elevated_access",
+     "retractable"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "climbing_assistance",
+     "gap_crossing",
+     "elevated_access"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "grappling_hook_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks when grappling hook is used"
+     }
+    ]
+   },
+   {
+    "id": "gear_emergency_beacon",
+    "name": "Emergency Beacon",
+    "description": "A distress beacon that can signal for help and provide location data in emergency situations.",
+    "type": "Gear",
+    "subtype": "Utility Equipment",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 0.3,
+    "tags": [
+     "gear",
+     "utility",
+     "emergency",
+     "beacon",
+     "distress_signal",
+     "location_data"
+    ],
+    "properties": [
+     "distress_signal",
+     "location_data",
+     "emergency",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "distress_signal",
+     "emergency_alert",
+     "location_transmission"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "emergency_signal",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "emergency_beacon_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can send emergency distress signal with location data"
+     }
+    ]
+   },
+   {
+    "id": "gear_ration_pack",
+    "name": "Ration Pack",
+    "description": "A compact, nutritious meal designed for extended missions and survival situations.",
+    "type": "Gear",
+    "subtype": "Utility Equipment",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "utility",
+     "ration",
+     "pack",
+     "nutrition",
+     "survival"
+    ],
+    "properties": [
+     "nutrition",
+     "survival",
+     "compact",
+     "extended_missions"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "nutrition_supply",
+     "survival_sustenance",
+     "mission_sustenance"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "nourished",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ration_pack_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Nourished status when ration pack is consumed"
+     }
+    ]
+   },
+   {
+    "id": "gear_force_detector",
+    "name": "Force Detector",
+    "description": "A specialized device that can detect Force sensitivity and measure Force energy levels in the surrounding area.",
+    "type": "Gear",
+    "subtype": "Specialized Equipment",
+    "cost": 5000,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "gear",
+     "specialized",
+     "force",
+     "detector",
+     "force_sensitivity",
+     "energy_measurement"
+    ],
+    "properties": [
+     "force_detection",
+     "sensitivity_measurement",
+     "energy_analysis",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_detection",
+     "sensitivity_measurement",
+     "energy_analysis"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "force_detection_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_detector_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Force detection checks when force detector is active"
+     }
+    ]
+   },
+   {
+    "id": "gear_environmental_scanner",
+    "name": "Environmental Scanner",
+    "description": "A device that analyzes environmental conditions, atmospheric composition, and potential hazards.",
+    "type": "Gear",
+    "subtype": "Specialized Equipment",
+    "cost": 800,
+    "rarity": 2,
+    "weight": 1.5,
+    "tags": [
+     "gear",
+     "specialized",
+     "environmental",
+     "scanner",
+     "atmospheric_analysis",
+     "hazard_detection"
+    ],
+    "properties": [
+     "environmental_analysis",
+     "atmospheric_composition",
+     "hazard_detection",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "environmental_analysis",
+     "atmospheric_composition",
+     "hazard_detection"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "investigation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "environmental_scanner_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on investigation checks when environmental scanner is active"
+     }
+    ]
+   },
+   {
+    "id": "gear_comm_link",
+    "name": "Secure Comm Link",
+    "description": "A secure communication device that provides encrypted communications and long-range connectivity.",
+    "type": "Gear",
+    "subtype": "Specialized Equipment",
+    "cost": 600,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "gear",
+     "specialized",
+     "comm",
+     "link",
+     "encrypted",
+     "long_range"
+    ],
+    "properties": [
+     "encrypted_communications",
+     "long_range",
+     "secure",
+     "portable"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "encrypted_communications",
+     "long_range_connectivity",
+     "secure_comm"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "communication_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "comm_link_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on communication checks when secure comm link is active"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_gear_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/gear_expanded.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

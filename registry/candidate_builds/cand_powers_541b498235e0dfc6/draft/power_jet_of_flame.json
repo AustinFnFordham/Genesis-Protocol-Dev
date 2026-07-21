@@ -1,0 +1,224 @@
+{
+ "record": {
+  "id": "power_jet_of_flame",
+  "name": "Jet of Flame",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "fire",
+   "flamethrower",
+   "burning",
+   "area_denial",
+   "incendiary",
+   "close_range"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Flamethrower technology for close-range incineration"
+   }
+  },
+  "narrative": "You unleash a gout of superheated flame from your wrist-mounted or handheld flamethrower, liquid fire spraying forward to engulf everything in its path. The power manifests as roaring orange flames that cling to surfaces and burn with chemical intensity, the heat so fierce it makes the air shimmer and twist.",
+  "flavor_text": "\"Fire solves most problems.\" - Mandalorian",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "aiming flamethrower nozzle and triggering ignition"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "controlling fuel flow and dispersal pattern"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "15 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You spray a jet of flame at a target within range, dealing fire damage.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "fire",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 fire damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's chemistry expertise transforms Jet of Flame into precision incendiary weapon. They've optimized fuel mixtures for maximum adhesion and burn temperature, creating flames that stick like napalm and burn through armor with chemical efficiency.",
+    "mechanical_benefit": [
+     {
+      "type": "lingering_burn",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "fire",
+       "modifier": 0
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Engineer flames burn for an additional 1d4 damage next round."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human improvisational genius makes their flamethrowers versatile tools. They use flames for everything from breaching doors to creating panic, from illumination to area denial—seeing tactical applications where others see only destruction.",
+    "mechanical_benefit": [
+     {
+      "type": "create_terrain",
+      "value": {
+       "terrain_type": "burning_ground",
+       "area": {
+        "shape": "line",
+        "length": {
+         "distance": 15,
+         "unit": "feet"
+        },
+        "width": {
+         "distance": 5,
+         "unit": "feet"
+        }
+       }
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "ground"
+      ],
+      "notes": "Human flames leave burning terrain that damages creatures entering (1d4 fire)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "mandalorian",
+    "narrative": "Mandalorian warriors have perfected Jet of Flame as a cultural weapon, their flamethrowers extensions of their armor and identity. Their techniques create walls of fire, use flames for crowd control, and turn close combat into an inferno—the signature weapon of their people.",
+    "mechanical_benefit": [
+     {
+      "type": "cone_attack",
+      "value": {
+       "shape": "cone",
+       "length": {
+        "distance": 15,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Mandalorians can spray flames in a 15-foot cone, hitting all creatures in area."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the roar of igniting fuel, the wave of heat that precedes the flames, enemies recoiling from the inferno. Show fire clinging to surfaces, burning with chemical intensity, the smell of fuel and charred flesh. The flames should feel viscerally dangerous.",
+   "tactical_notes": "Jet of Flame is a cantrip dealing 1d4 fire damage at close range (15 feet). The short range is risky but the damage is reliable with no resource cost. Effective for clearing close quarters or denying melee attackers. Watch for fire-resistant enemies.",
+   "narrative_hooks": [
+    "A jet of flame drives back charging enemies, creating breathing room",
+    "Flames reveal invisible enemies as fire outlines their forms",
+    "A well-placed flame burst ignites explosive materials, creating chaos"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a warrior unleashing a jet of flame from a wrist-mounted flamethrower. Orange and yellow fire roars forward in a deadly stream, heat shimmer distorting the air. The flames engulf a target, clinging to surfaces and burning with chemical intensity. The warrior's armor reflects the firelight as they control the inferno with practiced ease.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/jet_of_flame.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_jet_of_flame",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_jet_of_flame.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

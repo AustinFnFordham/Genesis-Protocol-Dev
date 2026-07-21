@@ -1,0 +1,408 @@
+{
+ "record": {
+  "id": "assassin",
+  "name": "Assassin",
+  "class_id": "bounty_hunter",
+  "base_class": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "assassin",
+   "stealth",
+   "deadly",
+   "dexterity_based",
+   "infiltrator",
+   "precision",
+   "hunter",
+   "ranged_specialist",
+   "tactical"
+  ],
+  "description": "Bounty Hunter Assassins are masters of stealth and precision, specializing in eliminating targets quickly and quietly. They excel at infiltration, disguise, and delivering fatal strikes from the shadows.",
+  "subclass_identity_profile": {
+   "core_fantasy": "Deadly precision of a silent predator",
+   "role_in_group": "Infiltrator and killer",
+   "visual_signals": [
+    {
+     "Signal1": "Darksaber hilt with an embedded tracking device"
+    },
+    {
+     "Signal2": "Worn leather jacket with hidden pockets"
+    }
+   ]
+  },
+  "talent_tree": [
+   {
+    "id": "assassin_talent_01",
+    "feature_id": "quick_strike",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 1,
+    "connections": [
+     "assassin_talent_05"
+    ]
+   },
+   {
+    "id": "assassin_talent_02",
+    "feature_id": "stalker",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 2,
+    "connections": [
+     "assassin_talent_05",
+     "assassin_talent_06"
+    ]
+   },
+   {
+    "id": "assassin_talent_03",
+    "feature_id": "shadow_veil",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 3,
+    "connections": [
+     "assassin_talent_06",
+     "assassin_talent_07"
+    ]
+   },
+   {
+    "id": "assassin_talent_04",
+    "feature_id": "precision_training",
+    "xp_cost": 5,
+    "tier": 1,
+    "column": 4,
+    "connections": [
+     "assassin_talent_07"
+    ]
+   },
+   {
+    "id": "assassin_talent_05",
+    "feature_id": "death_strike",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 1,
+    "connections": [
+     "assassin_talent_08",
+     "assassin_talent_09"
+    ],
+    "prerequisites": [
+     "assassin_talent_01",
+     "assassin_talent_02"
+    ]
+   },
+   {
+    "id": "assassin_talent_06",
+    "feature_id": "shadow_step",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 2,
+    "connections": [
+     "assassin_talent_09",
+     "assassin_talent_10"
+    ],
+    "prerequisites": [
+     "assassin_talent_02",
+     "assassin_talent_03"
+    ]
+   },
+   {
+    "id": "assassin_talent_07",
+    "feature_id": "silent_killer",
+    "xp_cost": 10,
+    "tier": 2,
+    "column": 3,
+    "connections": [
+     "assassin_talent_10",
+     "assassin_talent_11"
+    ],
+    "prerequisites": [
+     "assassin_talent_03",
+     "assassin_talent_04"
+    ]
+   },
+   {
+    "id": "assassin_talent_08",
+    "feature_id": "master_assassin",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 1,
+    "connections": [
+     "assassin_talent_12"
+    ],
+    "prerequisites": [
+     "assassin_talent_05"
+    ]
+   },
+   {
+    "id": "assassin_talent_09",
+    "feature_id": "phantom_strike",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 2,
+    "connections": [
+     "assassin_talent_12",
+     "assassin_talent_13"
+    ],
+    "prerequisites": [
+     "assassin_talent_05",
+     "assassin_talent_06"
+    ]
+   },
+   {
+    "id": "assassin_talent_10",
+    "feature_id": "death_mark",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 3,
+    "connections": [
+     "assassin_talent_13",
+     "assassin_talent_14"
+    ],
+    "prerequisites": [
+     "assassin_talent_06",
+     "assassin_talent_07"
+    ]
+   },
+   {
+    "id": "assassin_talent_11",
+    "feature_id": "shadow_mastery",
+    "xp_cost": 15,
+    "tier": 3,
+    "column": 4,
+    "connections": [
+     "assassin_talent_14"
+    ],
+    "prerequisites": [
+     "assassin_talent_07"
+    ]
+   },
+   {
+    "id": "assassin_talent_12",
+    "feature_id": "legendary_assassin",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 1,
+    "connections": [
+     "assassin_talent_15"
+    ],
+    "prerequisites": [
+     "assassin_talent_08",
+     "assassin_talent_09"
+    ]
+   },
+   {
+    "id": "assassin_talent_13",
+    "feature_id": "death_whisper",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 2,
+    "connections": [
+     "assassin_talent_15",
+     "assassin_talent_16"
+    ],
+    "prerequisites": [
+     "assassin_talent_09",
+     "assassin_talent_10"
+    ]
+   },
+   {
+    "id": "assassin_talent_14",
+    "feature_id": "shadow_legend",
+    "xp_cost": 20,
+    "tier": 4,
+    "column": 3,
+    "connections": [
+     "assassin_talent_16"
+    ],
+    "prerequisites": [
+     "assassin_talent_10",
+     "assassin_talent_11"
+    ]
+   },
+   {
+    "id": "assassin_talent_15",
+    "feature_id": "death_incarnate",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 1,
+    "connections": [],
+    "prerequisites": [
+     "assassin_talent_12",
+     "assassin_talent_13"
+    ]
+   },
+   {
+    "id": "assassin_talent_16",
+    "feature_id": "shadow_incarnate",
+    "xp_cost": 25,
+    "tier": 5,
+    "column": 2,
+    "connections": [],
+    "prerequisites": [
+     "assassin_talent_13",
+     "assassin_talent_14"
+    ]
+   }
+  ],
+  "progression_tree": [
+   {
+    "node_id": "assassin_level_3",
+    "feature_id": "precision_strike",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain a +1 bonus to Dexterity (Sleight of Hand) checks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "silent_strike",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "With calculated precision, I strike the vital spot, dealing an additional [d6] force damage to my target."
+     }
+    ]
+   },
+   {
+    "node_id": "assassin_level_7",
+    "feature_id": "shadow_walk",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "When you move through the space of another creature, you can make a Stealth check to remain undetected.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "silken_stealth",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As I strike, the darkness around me seems to coalesce into a whisper-thin veil of shadow. In this fleeting instant, I become one with the shadows, momentarily unassailable."
+     }
+    ]
+   },
+   {
+    "node_id": "assassin_level_11",
+    "feature_id": "deadly_precision",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Your attacks have advantage on all ranged damage rolls against creatures that are incapacitated.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "assassin_slaying_stance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "has_weapon",
+        "op": "is",
+        "value": true
+       }
+      ],
+      "notes": "Upon landing a hit, the assassin enters a deadly rhythm, momentarily freezing time and allowing them to reposition for the next attack."
+     }
+    ]
+   },
+   {
+    "node_id": "assassin_level_15",
+    "feature_id": "killer_instinct",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your bonus action to gain advantage on one attack roll against a creature within 30 feet.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "assassin_surge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "When striking an enemy, I briefly channel my focus into the hit area, sensing the flow of life and death. For a fleeting moment, I am attuned to the balance between living and dying."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "assassin_blade",
+    "bounty_hunter_goggles"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Deadly precision stance, with feet shoulder-width apart and weight evenly distributed between both legs, ready to strike at a moment's notice.",
+    "energy_signature": "A soft blue aura surrounds the assassin, indicating their stealthy nature and deadly accuracy. The aura is more intense when they are about to attack or have been in combat recently."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of an Assassin standing in a dimly lit alleyway, with a cityscape in the background and a faint glow from a nearby streetlamp illuminating their face.",
+    "contextual_modifiers": [
+     "low_light",
+     "high_stakes"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "assassin",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter_assassin.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

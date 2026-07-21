@@ -1,0 +1,157 @@
+{
+ "record": {
+  "id": "power_affect_mind",
+  "name": "Affect Mind",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "force",
+   "universal",
+   "control",
+   "mental",
+   "mind_control",
+   "persuasion",
+   "charm",
+   "telepathic",
+   "social",
+   "utility",
+   "ranged",
+   "concentration",
+   "subtle",
+   "manipulation"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "This Force power can be used by any Force-sensitive individual",
+    "light_side_use": "Used for peaceful resolution and de-escalation",
+    "dark_side_use": "Used for manipulation and domination"
+   }
+  },
+  "narrative": "You reach into a creature's mind with the Force, gently nudging their thoughts and emotions to make them more receptive to your influence. The power manifests as subtle mental pressure, like invisible fingers adjusting the strings of their consciousness, making them see you as trustworthy and their resistance seem unreasonable.",
+  "flavor_text": "'The mind is a powerful weapon.' - Jedi Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "subtle hand wave accompanying verbal suggestion"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "projecting calming influence through the Force"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You subtly influence the thoughts and emotions of a creature within range, making them more receptive to your words and suggestions.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": "charmed",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_hostile",
+       "op": "equals",
+       "value": false
+      }
+     ],
+     "notes": "Target must not be hostile toward you"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the target's expression softening as the Force influence takes hold. Their aggressive posture relaxes, suspicion fades from their eyes, and they begin to see the caster as reasonable, even friendly. The effect should feel like a warm suggestion rather than forceful control.",
+   "tactical_notes": "Affect Mind excels at avoiding combat entirely or turning enemies into temporary allies. The charmed condition prevents the target from attacking you and gives advantage on social checks. Note that it only works on non-hostile targets, so timing is crucial.",
+   "narrative_hooks": [
+    "A Jedi uses Affect Mind to convince stormtroopers these aren't the droids they're looking for",
+    "The power allows peaceful passage through a hostile checkpoint",
+    "A desperate negotiator uses it to prevent a deal from falling apart"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a Force user making a subtle hand gesture while speaking to a guard. Soft, translucent waves of Force energy flow from the user's fingers toward the target's head, visualized as gentle ribbons of light that wrap around their thoughts. The target's expression shifts from suspicion to calm acceptance, their weapon lowering as the mental influence takes hold.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/affect_mind.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_affect_mind",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_affect_mind.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

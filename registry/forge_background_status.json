@@ -1,0 +1,22 @@
+{
+ "worker_running": false,
+ "process_id": 33364,
+ "forge_version": "forge_worker_v1.0",
+ "source_registry_build_id": "de78ad1a30d9c0f2",
+ "active_job_id": "job_cand_species_f0919a09ca17ebcf",
+ "active_batch": "f0919a09ca17ebcf",
+ "active_domain": "species",
+ "candidate_count": 47,
+ "completed_count": 47,
+ "passed_count": 0,
+ "quarantined_count": 1,
+ "failed_count": 0,
+ "unresolved_count": 46,
+ "started_at": "2026-07-21T16:16:42",
+ "estimated_remaining": 0,
+ "output_root": "E:\\StarWars\\registry\\candidate_builds\\cand_species_f0919a09ca17ebcf",
+ "log_path": "E:\\StarWars\\registry\\candidate_builds\\cand_species_f0919a09ca17ebcf\\worker.log",
+ "checkpoint_path": "E:\\StarWars\\registry\\candidate_builds\\cand_species_f0919a09ca17ebcf\\checkpoint.json",
+ "candidate_registry_build_id": "cand_species_f0919a09ca17ebcf",
+ "last_heartbeat": "2026-07-21T16:16:42"
+}

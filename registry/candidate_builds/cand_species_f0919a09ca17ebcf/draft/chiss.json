@@ -1,0 +1,611 @@
+{
+ "record": {
+  "id": "chiss",
+  "name": "Chiss",
+  "tags": [
+   "calculating",
+   "charisma_based",
+   "chiss",
+   "commander",
+   "disciplined",
+   "intelligence_based",
+   "mysterious",
+   "rare",
+   "scholar",
+   "starship_pilot",
+   "strategist",
+   "support",
+   "tactical"
+  ],
+  "description": "The Chiss are a proud and enigmatic species of blue-skinned humanoids from the Unknown Regions. They are known for their intelligence, discipline, and strategic minds.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Intelligence",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Cheunh",
+   "Basic"
+  ],
+  "base_hp": 10,
+  "base_strain": 11,
+  "innate_traits": [
+   {
+    "id": "chiss_tactical_genius",
+    "name": "Tactical Genius",
+    "narrative": "Your species evolved in the harsh Unknown Regions, developing incredible strategic thinking and tactical awareness. Every Chiss is born with an innate understanding of battlefield dynamics and the ability to predict and counter enemy movements.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Tactical Disadvantage",
+      "action_type": "bonus_action",
+      "description": "You can use a bonus action on your turn to choose one creature you can see within 30 feet of you. That creature has disadvantage on the next attack roll it makes before the start of your next turn.",
+      "rules": [
+       "range:30_feet",
+       "target:visible_creature",
+       "effect:disadvantage_on_next_attack",
+       "duration:until_start_of_next_turn",
+       "action_cost:bonus_action"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_strategic_mind",
+     "ui_transition": {
+      "animation": "darkening_strategic_vision",
+      "sfx": " ominous_calculating"
+     }
+    }
+   },
+   {
+    "id": "chiss_resilience",
+    "name": "Chiss Resilience",
+    "narrative": "Your species' disciplined nature and strong will make you highly resistant to mental manipulation and emotional control. Your strategic mind cannot be easily swayed by external influences.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Mental Fortitude",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against being charmed or frightened.",
+      "rules": [
+       "save_type:advantage",
+       "conditions:charmed_frightened"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chiss_enhanced_vision",
+    "name": "Enhanced Vision",
+    "narrative": "Your distinctive red eyes evolved to see clearly in the perpetual darkness of the Unknown Regions. These eyes can detect details and movements that would be invisible to other species, making you exceptional at observation and reconnaissance.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Superior Sight",
+      "action_type": "passive",
+      "description": "You have advantage on Perception checks that rely on sight in dim light or darkness.",
+      "rules": [
+       "skill:perception",
+       "context:sight",
+       "lighting:dim_light_darkness",
+       "advantage:granted"
+      ],
+      "conditions": [
+       {
+        "key": "lighting_condition",
+        "op": "in",
+        "value": [
+         "dim_light",
+         "darkness"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_nocturnal_awareness",
+     "ui_transition": {
+      "animation": "darkening_visual_senses",
+      "sfx": " unsettling_shadow_perception"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Blue skin",
+    "Red eyes",
+    "Disciplined bearing",
+    "Strategic mindset",
+    "Proud demeanor"
+   ],
+   "skin_color_variants": [
+    "Light Blue",
+    "Medium Blue",
+    "Dark Blue",
+    "Navy Blue",
+    "Grey Blue",
+    "Mottled blue patterns"
+   ],
+   "eye_color_variants": [
+    "Bright Red",
+    "Dark Red",
+    "Crimson",
+    "Ruby Red",
+    "Amber Red"
+   ],
+   "hair_color_variants": [
+    "Black",
+    "Dark Blue",
+    "Grey",
+    "White",
+    "Silver"
+   ],
+   "common_adornments": [
+    "Military uniforms and formal attire",
+    "Traditional Chiss ceremonial garments",
+    "Strategic and tactical equipment",
+    "Cultural jewelry and accessories",
+    "Professional and diplomatic clothing"
+   ],
+   "llm_description_prompt": "Describe a Chiss character. Emphasize their distinctive blue skin and piercing red eyes that convey both intelligence and strategic thinking. Their bearing should be disciplined and proud, reflecting their military and strategic heritage. Consider their enigmatic nature and the way they carry themselves with the confident, calculated demeanor of someone who thinks several steps ahead."
+  },
+  "class_synergies": [
+   {
+    "class": "Scholar",
+    "narrative": "Chiss's natural intelligence and strategic minds make them exceptional Scholars, able to analyze complex situations and develop sophisticated theories.",
+    "mechanical_benefits": [
+     "High Intelligence supports academic pursuits",
+     "Tactical Genius trait enhances analytical thinking",
+     "Enhanced Vision trait aids in detailed observation"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Chiss's natural charisma and strategic thinking make them exceptional Consulars, able to navigate complex diplomatic situations with tactical precision.",
+    "mechanical_benefits": [
+     "Tactical Genius trait enhances diplomatic strategy",
+     "Chiss Resilience trait prevents mental manipulation",
+     "High Charisma supports diplomatic functions"
+    ]
+   },
+   {
+    "class": "Guardian (Strategist)",
+    "narrative": "Chiss's natural protective instincts and tactical abilities make them excellent Guardians, using strategic thinking to protect others effectively.",
+    "mechanical_benefits": [
+     "Tactical Genius trait enhances protective strategies",
+     "Chiss Resilience trait prevents mental control",
+     "Enhanced Vision trait aids in threat detection"
+    ]
+   },
+   {
+    "class": "Operative (Strategist)",
+    "narrative": "Chiss's natural intelligence and tactical abilities make them excellent Operatives, able to plan and execute complex operations with strategic precision.",
+    "mechanical_benefits": [
+     "Tactical Genius trait enhances operational planning",
+     "Enhanced Vision trait aids in reconnaissance",
+     "Chiss Resilience trait supports covert operations"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Chiss Ascendancy",
+    "narrative": "Chiss are the elite of their own Ascendancy, serving as military officers, diplomats, and strategic advisors in their highly organized society."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Some Chiss serve the Republic as strategic advisors and military officers, their tactical genius making them valuable assets in complex operations."
+   },
+   {
+    "faction": "Independent Strategists",
+    "narrative": "Many Chiss prefer to work as independent strategists and advisors, using their tactical genius to pursue their own goals and agendas."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your tactical genius becomes more refined, allowing you to coordinate with allies and develop more sophisticated strategies.",
+     "mechanical_benefit": "You can use your Tactical Genius ability to grant advantage to an ally's next attack roll instead of imposing disadvantage on an enemy, representing your enhanced coordination abilities."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your strategic thinking reaches new heights, allowing you to analyze complex situations and develop comprehensive plans.",
+     "mechanical_benefit": "You can use your action to gain advantage on all Intelligence-based skill checks for the next minute, representing your enhanced analytical abilities."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your tactical mastery allows you to use your strategic thinking to gain combat advantages.",
+     "mechanical_benefit": "When you successfully use your Tactical Genius ability, you gain a +2 bonus to attack rolls and damage rolls for the next minute, representing your enhanced combat strategy."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your strategic mind reaches its peak, making you nearly impossible to manipulate or control.",
+     "mechanical_benefit": "You have advantage on all Intelligence and Wisdom saving throws, and you can use your reaction to gain advantage on any one skill check per long rest."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "As a Chiss, you've begun to grasp the intricacies of strategy and tactics. Your analytical mind allows you to anticipate potential outcomes and adjust your plans accordingly.",
+    "level_10": "Your understanding of complex systems and strategic planning has improved significantly. You can now effectively communicate your ideas and inspire others to follow your lead.",
+    "level_15": "You've reached a new level of mastery over strategic thinking, allowing you to see multiple layers of possibilities and anticipate potential threats or opportunities.",
+    "level_20": "Your tactical genius is unmatched, and you possess the ability to adapt to any situation. Your insight into complex systems and strategies allows you to make decisive decisions that often change the course of events."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Chiss have sacred rituals that celebrate strategic thinking and tactical planning, often involving complex simulations and strategic games.",
+    "name": "Strategic Rituals",
+    "activation": "Activate when the group begins a long-term mission or strategy session.",
+    "narrative_enhancement": "As you participate in these sacred rituals, your Chiss heritage shines through. You gain a better understanding of strategic depth and begin to anticipate potential outcomes.\n",
+    "faction_connection": "The Enclave"
+   },
+   {
+    "description": "Chiss military traditions emphasize discipline, strategy, and tactical excellence, with each generation learning from the strategic wisdom of their ancestors.",
+    "name": "Military Traditions",
+    "activation": "Activate when you or a group member receives orders or begins a new mission.",
+    "narrative_enhancement": "As you follow these proud traditions, your Chiss heritage imbues you with discipline and tactical acumen. You begin to see potential weaknesses in the enemy's strategy.\n",
+    "faction_connection": "The Council of Sages"
+   },
+   {
+    "description": "Chiss diplomatic traditions utilize their strategic thinking to navigate complex political situations and achieve their goals through careful planning.",
+    "name": "Diplomatic Strategy",
+    "activation": "Activate when you or a group member engages in high-level negotiations or meets with influential figures.",
+    "narrative_enhancement": "As you master these time-honored diplomatic strategies, your Chiss heritage allows you to weave intricate webs of alliances and subtly manipulate situations to achieve your objectives.\n",
+    "faction_connection": "The Enclave"
+   },
+   {
+    "description": "Chiss practice meditation techniques that enhance their analytical thinking and strategic planning abilities.",
+    "name": "Analytical Meditation",
+    "activation": "Activate when the group is faced with a complex problem or must make a critical decision.",
+    "narrative_enhancement": "As you meditate, your Chiss heritage enhances your ability to analyze situations from multiple angles. You begin to see patterns and connections that others may miss.\n",
+    "faction_connection": "The Council of Sages"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "space",
+    "adaptation_name": "Space Adaptation",
+    "description": "Your species evolved in the Unknown Regions, making you perfectly suited for space travel and zero-gravity environments.",
+    "mechanical_benefit": "You have advantage on all skill checks related to space travel and navigation, and you can function normally in zero-gravity environments."
+   },
+   {
+    "environment": "strategic",
+    "adaptation_name": "Strategic Environment",
+    "description": "Your tactical genius allows you to thrive in complex strategic environments where planning and coordination are essential.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in strategic environments, and you can sense tactical opportunities within 60 feet."
+   },
+   {
+    "environment": "low_light",
+    "adaptation_name": "Low-Light Mastery",
+    "description": "Your enhanced vision allows you to operate effectively in low-light conditions that would hinder other species.",
+    "mechanical_benefit": "You can see normally in dim light, and you have advantage on Perception checks in low-light conditions."
+   },
+   {
+    "environment": "tactical",
+    "adaptation_name": "Tactical Awareness",
+    "description": "Your strategic mind allows you to understand and navigate complex tactical situations with ease.",
+    "mechanical_benefit": "You have advantage on saving throws against being surprised, and you can sense the presence of hidden threats within 30 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on tactical abilities and strategic thinking, complementing rather than overshadowing class features",
+    "Strategic improvements maintain the species' unique identity while providing meaningful advancement",
+    "Tactical and analytical abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on strategic traditions and military culture rather than mechanical advantages",
+    "Strategic rituals and military traditions provide unique roleplaying opportunities and cultural depth",
+    "Diplomatic strategy and analytical meditation enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for strategic and space environments where tactical thinking is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Tactical awareness and low-light mastery provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Chiss",
+   "cultural_networks": [
+    {
+     "Name": "The Enclave",
+     "Description": "A network of high-ranking military officers who prioritize strategic excellence and tactical prowess."
+    },
+    {
+     "Name": "The Council of Sages",
+     "Description": "A gathering of esteemed scholars and strategists who seek to understand the intricacies of the galaxy through study and analysis."
+    }
+   ],
+   "traditional_practices": [
+    {
+     "Practice": "Strategic Simulations",
+     "Description": "Complex games that challenge Chiss warriors to think strategically and anticipate potential outcomes."
+    },
+    {
+     "Practice": "Tactical Briefings",
+     "Description": "Formal meetings where high-ranking officers share their tactical assessments and coordinate efforts with other military units."
+    }
+   ],
+   "cultural_knowledge": [
+    {
+     "Topic": "The Art of War",
+     "Description": "A comprehensive study on the application of strategic thinking in conflict resolution, emphasizing adaptability, deception, and misdirection."
+    },
+    {
+     "Topic": "Galactic Politics",
+     "Description": "An examination of the intricacies of intergalactic relations, diplomacy, and strategy, highlighting key events and figures that shaped the galaxy."
+    }
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    {
+     "Name": "Space",
+     "Description": "The Chiss are naturally suited for space travel and have developed a profound understanding of strategic planning in this environment."
+    }
+   ],
+   "environmental_knowledge": [
+    {
+     "Topic": "Strategic Navigation",
+     "Description": "A study on optimal routes, astrogation, and tactical considerations when navigating through hyperspace or within planetary systems."
+    },
+    {
+     "Topic": "Tactical Operations in Low-G Environments",
+     "Description": "An analysis of combat strategies tailored to zero-gravity environments, including orbital battles and space station operations."
+    }
+   ],
+   "survival_techniques": [
+    {
+     "Technique": "Enhanced Sensors",
+     "Description": "Chiss sensors allow for heightened awareness of their surroundings, making it easier to detect and respond to threats in low-light or high-radiation environments."
+    },
+    {
+     "Technique": "Gravity Adaptation Suits",
+     "Description": "Specialized suits that enable Chiss warriors to survive in extreme gravitational conditions, facilitating operations on hostile planets or space stations."
+    }
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "blue_skin",
+     "sharply_cut_feathers",
+     "average_build"
+    ],
+    "morphology": {
+     "head_type": "pointed",
+     "body_type": "athletic",
+     "average_height": "1.8 meters"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": [
+       {
+        "eyes": "large_and_ expressive"
+       },
+       {
+        "skin": "soft_and_pale"
+       }
+      ],
+      "adult": [
+       {
+        "eyes": "sharp_and_keen"
+       },
+       {
+        "skin": "firm_but_smooth"
+       }
+      ],
+      "elder": [
+       {
+        "eyes": "wisdom-filled"
+       },
+       {
+        "skin": "wrinkled_and_age-lined"
+       }
+      ]
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "yellow_eyes",
+       "pale_skin"
+      ],
+      "light_side": [
+       "calm_aura"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "scars",
+     "tattoos"
+    ],
+    "prompt_schema": {
+     "base_prompt": "Chiss {{pronoun}} standing on a starship bridge, gazing out at the galaxy with an air of determination.",
+     "contextual_modifiers": [
+      "age",
+      "clothing",
+      "accessories"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "A Chiss character begins to notice whispers and rumors about their own dark past, leading them to seek answers within the Ascendancy's archives.",
+     "threat_level": "low"
+    },
+    "escalation": {
+     "description": "As they delve deeper into the mysteries of their family's history, they become targeted by rival factions seeking to exploit their newfound knowledge.",
+     "threat_level": "medium"
+    },
+    "confrontation": {
+     "description": "The Chiss character confronts a powerful enemy from their past, who seeks to claim the secrets and power for themselves. A high-stakes battle ensues, with the fate of their people hanging in the balance.",
+     "threat_level": "high"
+    }
+   },
+   "resolution_paths": [
+    {
+     "victory": "The Chiss emerge victorious, but not without scars; they must now navigate the aftermath of their actions."
+    },
+    {
+     "redemption": "Through selfless sacrifice and determination, the Chiss redeem themselves and earn a new path forward."
+    },
+    {
+     "escape": "In desperation, the Chiss flee, seeking refuge among allies or distant corners of the galaxy."
+    }
+   ],
+   "conflict_triggers": [
+    "Receiving an encrypted message from a long-lost relative.",
+    "Discovering a hidden text within the Ascendancy's archives.",
+    "Witnessing a powerful ally being betrayed by their own kin."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "revenge"
+    ],
+    "vendetta_type": "revenge"
+   },
+   "overrides": {
+    "primary_nemesis_type": "Historical Enemy",
+    "historical_enemy_name": "Sith Empire (specifically, the Sith Lord Darth Vraxxis)",
+    "tragic_flaw": "Overemphasis on honor and reputation leading to reckless decisions in pursuit of glory"
+   }
+  },
+  "romance_engine": {
+   "archetype": "standard_romance",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "Shared love of strategy and planning",
+     "Mutual respect for discipline and duty",
+     "Passion for discovery and exploration"
+    ],
+    "romance_progression": [
+     {
+      "friendship": "Chiss and romantic interest bond over shared interests, building trust."
+     },
+     {
+      "budding_romance": "Whispers of attraction grow into a spark of passion as they explore each other's world."
+     },
+     {
+      "committed": "Their love becomes the foundation on which they build their future together."
+     }
+    ],
+    "romance_events": [
+     "A Chiss character receives a heartfelt gift from their romantic interest, showcasing their thoughtfulness.",
+     "During a tense mission, the Chiss and their partner must rely on each other to overcome a seemingly insurmountable challenge.",
+     "The couple's love is tested as they face opposing factions vying for control of the galaxy."
+    ],
+    "romance_modifiers": [
+     "Giving thoughtful gifts or small tokens of appreciation",
+     "Sharing quiet moments together during missions"
+    ],
+    "courtship_style": "Formal and ritualistic",
+    "bonding_process": "Bonding is a deliberate process, often facilitated by the clan's elder or respected community leaders.",
+    "cultural_approach_to_love": "Chiss value loyalty and commitment above passion or romance. A Chiss will only form a bond with someone they deem worthy of their family's honor."
+   }
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "name": "Strategic Mind",
+     "traits": [
+      "disciplined",
+      "calculating"
+     ]
+    },
+    "motivations": {
+     "primary": "protect my people",
+     "secondary": "seek knowledge"
+    },
+    "combat_behavior": "When fighting alongside your allies, you coordinate a swift and strategic assault. You often use your surroundings to gain an advantage.\n",
+    "social_behavior": "In conversation, you are measured and thoughtful, always seeking to understand the other person's perspective before offering guidance.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "start": 20,
+     "max": 100
+    },
+    "loyalty_triggers": [
+     "you have saved me or my people",
+     "you have earned my respect"
+    ]
+   },
+   "services": [
+    {
+     "name": "Strategic Advisor",
+     "description": "Offer your expertise to allies seeking strategic guidance."
+    }
+   ]
+  },
+  "flavor_text": "The Chiss are a proud and enigmatic species, born from the harsh environment of Csilla. Their blue skin is a testament to their resilience and adaptability in the face of adversity. A Chiss's honor is not just a personal trait, but a reflection of their family and clan's reputation.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Chiss, you are trained from birth to prioritize discipline and strategy over individual desires or emotions. This can lead to internal conflict when faced with moral dilemmas or personal relationships.",
+   "narrative_hooks": [
+    "Your family's legacy as great warriors and strategists weighs heavily on your shoulders.",
+    "You struggle to balance your duty to your clan with your own sense of identity and purpose."
+   ],
+   "social_dynamics": "Chiss value loyalty, duty, and respect above all else. They are known for their ability to form lasting bonds with those they deem worthy, but will not hesitate to sever ties if honor is compromised.",
+   "common_motivations": [
+    "Protecting one's family and clan",
+    "Maintaining honor and reputation"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "chiss",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/chiss.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

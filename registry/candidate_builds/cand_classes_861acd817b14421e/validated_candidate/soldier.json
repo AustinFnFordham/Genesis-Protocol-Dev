@@ -1,0 +1,641 @@
+{
+ "record": {
+  "id": "soldier",
+  "name": "Soldier",
+  "era": "Galactic_Empire",
+  "rarity": "common",
+  "tags": [
+   "soldier",
+   "military",
+   "martial",
+   "tank",
+   "strength_based",
+   "heavy_weapons",
+   "tactical",
+   "disciplined",
+   "armor_specialist",
+   "battlefield_control"
+  ],
+  "narrative": "Soldiers are the backbone of every military force in the galaxy, from the disciplined ranks of the Imperial Army to the determined fighters of the Rebel Alliance. They are trained military personnel who excel in combat tactics, heavy weapons, and battlefield coordination. Whether serving their government, fighting for freedom, or working as mercenaries, soldiers bring discipline, firepower, and tactical expertise to any conflict.",
+  "flavor_text": "I'm a soldier, I fight where I'm told, and I win where I fight. - General Veers",
+  "cultural_significance": "Soldiers are respected for their discipline, courage, and tactical expertise. They represent the organized military forces that maintain order and fight wars across the galaxy.",
+  "description": "Soldiers are trained military personnel who excel in combat tactics, heavy weapons, and battlefield coordination. Whether serving in the Imperial Army, Rebel Alliance, or as mercenaries, they bring discipline, firepower, and tactical expertise to any conflict. Their training makes them formidable opponents in both individual combat and large-scale battles.",
+  "origin_story": "The soldier tradition dates back to the earliest civilizations, but it reached new prominence during the Clone Wars and Galactic Civil War. The need for disciplined, well-trained military personnel has made soldiers an essential part of every major conflict in galactic history.",
+  "class_identity_profile": {
+   "core_fantasy": "A disciplined warrior and tactical expert, using superior training, heavy weapons, and battlefield coordination to dominate any conflict.",
+   "key_attributes": [
+    "Strength (for heavy weapons and armor)",
+    "Constitution (for endurance and survivability)"
+   ],
+   "iconic_gear": [
+    "Heavy armor",
+    "Blaster rifles",
+    "Heavy weapons",
+    "Tactical equipment",
+    "Military gear"
+   ],
+   "role_in_galaxy": "Soldiers are the backbone of military forces across the galaxy, serving as the primary fighting force for governments, rebellions, and mercenary companies.",
+   "famous_exemplars": [
+    "General Veers",
+    "Captain Rex",
+    "Commander Cody",
+    "Sergeant Kreel",
+    "Lieutenant Thire"
+   ],
+   "species_synergies": [
+    {
+     "species": "human",
+     "narrative": "Human adaptability and determination make them natural soldiers, able to excel in any military environment."
+    },
+    {
+     "species": "clone",
+     "narrative": "Clones are literally bred for war, making them the ultimate soldiers with perfect training and discipline."
+    },
+    {
+     "species": "zabrak",
+     "narrative": "Zabrak toughness and determination make them excellent soldiers who never give up in battle."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "galactic_empire",
+     "narrative": "The Empire's military relies heavily on disciplined soldiers to maintain order across the galaxy."
+    },
+    {
+     "faction": "rebel_alliance",
+     "narrative": "The Rebel Alliance depends on dedicated soldiers to fight against overwhelming Imperial forces."
+    }
+   ]
+  },
+  "hit_die": "1d12",
+  "proficiencies": {
+   "armor": [
+    "Light armor",
+    "Medium armor",
+    "Heavy armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Martial weapons",
+    "Blaster pistols",
+    "Blaster rifles",
+    "Heavy weapons"
+   ],
+   "tools": [
+    "Military kit",
+    "Tactical equipment",
+    "Heavy weapons",
+    "Armor repair kit"
+   ],
+   "saving_throws": [
+    "Strength",
+    "Constitution"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "Athletics",
+     "Intimidation",
+     "Perception",
+     "Survival",
+     "Technology",
+     "Vehicles"
+    ]
+   }
+  },
+  "primary_ability": "Strength or Constitution",
+  "primary_resource": "Combat Focus",
+  "connections": [
+   {
+    "target_id": "galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "The Empire's military relies heavily on disciplined soldiers to maintain order across the galaxy.",
+    "mechanical_benefit": "Access to Imperial military resources and training"
+   },
+   {
+    "target_id": "rebel_alliance",
+    "target_type": "Faction",
+    "relationship": "Common Among",
+    "narrative": "The Rebel Alliance depends on dedicated soldiers to fight against overwhelming Imperial forces.",
+    "mechanical_benefit": "Access to Rebel military networks and equipment"
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "As a Soldier, you embody the principles of discipline, loyalty, and sacrifice. You are trained to work well under pressure, make tactical decisions in combat, and prioritize the safety of your comrades.\n",
+   "narrative_hooks": [
+    "Describe a moment where you had to make a difficult decision on the battlefield to save lives.",
+    "Recount a time when you overcame an obstacle through teamwork and coordination with your fellow soldiers.",
+    "Recall a mission or operation that pushed you to your limits, but ultimately resulted in success due to your training and experience."
+   ],
+   "social_dynamics": "As a Soldier, you are accustomed to following orders and working within a chain of command. However, you also understand the importance of trust and camaraderie among comrades-in-arms. You can form strong bonds with your fellow soldiers, but be mindful not to let personal relationships cloud your judgment in critical situations.\n",
+   "common_motivations": [
+    "Protecting fellow soldiers and innocent civilians",
+    "Completing missions and objectives despite adversity",
+    "Upholding the values and principles of your military organization"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A professional soldier in the Star Wars universe, wearing military armor and carrying tactical equipment with a disciplined, determined expression",
+   "contextual_modifiers": [
+    {
+     "target_type": "Portrait",
+     "modifier_text": "Close-up portrait showing disciplined features and military bearing"
+    },
+    {
+     "target_type": "Action_Shot",
+     "modifier_text": "In combat or tactical stance, using military equipment and weapons"
+    },
+    {
+     "target_type": "Class_Scene",
+     "modifier_text": "In a military base or battlefield, surrounded by other soldiers and equipment"
+    }
+   ]
+  },
+  "ui": {
+   "image": "images/classes/soldier.jpg",
+   "icon": "icons/classes/soldier.svg",
+   "color": "#8B0000"
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "blaster_rifle",
+    "combat_vest",
+    "helmet",
+    "tactical_goggles"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Steadfast and unyielding, standing firm in the face of battle with a deep breath and a calculated gaze.",
+    "energy_signature": "A fierce blue aura emanates from their armor, pulsating with contained power as they wield heavy firepower."
+   },
+   "prompt_schema": {
+    "base_prompt": "Describe a skilled Soldier taking down a group of Imperial Stormtroopers using heavy blaster fire and tactical maneuvers",
+    "contextual_modifiers": [
+     "location: Battle-scarred planet surface",
+     "time_of_day: Daybreak, with the horizon ablaze in fiery hues",
+     "weather: Scattered sandstorms reducing visibility"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Enemies will initially underestimate the Soldier's combat prowess, viewing them as cannon fodder. However,\nafter several battles where they prove themselves to be formidable opponents, the enemy will begin to take\nthem seriously and develop strategies to counter their abilities.\n",
+    "escalation": "As the Soldier gains more experience in combat, they will attract the attention of higher-ranking officers or\ncommanders who recognize their potential as a valuable asset on the battlefield. These individuals may try to\npoach the Soldier for their own ranks or use them to further their own careers.\n",
+    "confrontation": "Eventually, the Soldier will face off against an enemy commander or officer who is determined to eliminate\nthem as a threat. This individual will be highly skilled and well-prepared, pushing the Soldier to their limits\nin combat.\n"
+   },
+   "resolution_paths": {
+    "victory": "The Soldier emerges victorious, having defeated the enemy commander and secured a significant strategic advantage for their own side.",
+    "redemption": "The Soldier is able to redeem themselves by completing a difficult mission or making a heroic sacrifice, earning the respect of their enemies and gaining new allies.",
+    "escape": "The Soldier narrowly escapes defeat, but their reputation as a formidable opponent spreads throughout the galaxy, attracting new enemies who seek to challenge them."
+   },
+   "conflict_triggers": [
+    "Betrayal by fellow soldiers",
+    "Disagreements over military strategy or tactics",
+    "Perceived weakness or failure in combat",
+    "Conflicts of interest between military and personal goals"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "The Soldier meets a potential romantic partner at a social event, such as a party or gathering.\nInitial interactions are friendly and light-hearted, with the Soldier struggling to balance their duties\nwith personal relationships.\n",
+    "stage2": "As the Soldier spends more time with their partner, they begin to develop strong feelings for each other,\nbut must navigate the challenges of long-distance relationships due to military deployments or assignments.\n",
+    "stage3": "The Soldier and their partner face increased scrutiny from friends and family members who disapprove\nof their relationship. They must work together to build a support network and defend their love against\nexternal criticism.\n",
+    "stage4": "Tensions rise as the Soldier is deployed on a high-risk mission, leaving their partner behind to worry about\ntheir safety. The relationship becomes strained, but ultimately stronger due to their shared commitment.\n",
+    "stage5": "The Soldier returns from deployment, and they must reconcile with their partner and work together to rebuild\ntheir life and relationship.\n"
+   },
+   "lifestyle_challenges": [
+    "Long deployments or assignments separate the Soldier from their partner",
+    "The Soldier's duties require them to put themselves in harm's way, making it difficult for their partner to cope with the stress of waiting anxiously for news",
+    "Military protocol prohibits romantic relationships between soldiers and civilians",
+    "The Soldier's reputation as a skilled warrior makes it difficult for them to form close relationships due to fear of being seen as vulnerable or weak"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Disciplined",
+      "Loyal",
+      "Practical"
+     ],
+     "quirks": [
+      "Tendency to follow orders without question",
+      "Prone to making rash decisions in combat"
+     ]
+    },
+    "motivations": {
+     "short-term": [
+      "Protect allies",
+      "Complete mission objectives"
+     ],
+     "long-term": [
+      "Uphold military honor",
+      "Build reputation as a skilled soldier"
+     ]
+    },
+    "combat_behavior": "A Soldier will engage enemies with precision and strategy, using their training and experience to outmaneuver opponents. They prioritize protecting comrades and completing objectives over individual victories.\n",
+    "social_behavior": "A Soldier is polite and professional in interactions, but can be stern or even abrasive if they perceive a threat or disloyalty. They value loyalty and discipline above all else.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "Initiate with caution",
+     "Build through shared experiences",
+     "Earn through reliability"
+    ],
+    "loyalty_triggers": [
+     "Protecting fellow soldiers",
+     "Upholding military honor",
+     "Defending innocent civilians"
+    ]
+   },
+   "services": [
+    "Providing tactical advice to allies",
+    "Conducting reconnaissance and gathering intelligence",
+    "Offering medical assistance or first aid in combat situations"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "fighting_style_1",
+    "feature_id": "fighting_style",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Select a fighting style, such as Unarmored Defense or Maneuvers.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "",
+      "notes": "Choose one style from the list of fighting styles."
+     }
+    ]
+   },
+   {
+    "node_id": "military_training_1",
+    "feature_id": "military_training",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Gain access to additional training and tactics.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an advantage when making attack or defense rolls.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_1",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Gain expertise in two skills.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Soldier is proficient with one additional skill.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "action_surge_2",
+    "feature_id": "action_surge",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "You can use your bonus action to make an opportunity attack.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Action Surge.",
+      "notes": "Use bonus action to make an Opportunity Attack."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_choice_3",
+    "feature_id": "subclass_choice",
+    "level_requirement": 3,
+    "type": "choice",
+    "description": "Choose a soldier subclass.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one of the four subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "Gain the ability to make two attacks.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Extra Attack.",
+      "notes": "Soldier can make an additional attack."
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_5",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "Gain expertise in two skills.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Soldier is proficient with one additional skill.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_6",
+    "feature_id": "subclass_feature",
+    "level_requirement": 6,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "indomitable_9",
+    "feature_id": "indomitable",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "You can use your bonus action to make an Opportunity Attack.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Indomitable.",
+      "notes": "Use bonus action to make an Opportunity Attack."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_10",
+    "feature_id": "subclass_feature",
+    "level_requirement": 10,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "Increase your ability score.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Soldier gets an increase to their ability scores.",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "description": "Choose an ability from your class's list of abilities.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Soldier gets access to advanced abilities, based on their chosen class.",
+      "notes": "Select one ability from the Soldier subclasses for Soldier."
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_soldier_20",
+    "feature_id": "legendary_soldier",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "Become a legendary soldier.",
+    "effects": [
+     {
+      "type": "grant_ability",
+      "value": "Legendary Soldier.",
+      "notes": "Soldier gets access to the Legendary Soldier abilities."
+     }
+    ]
+   },
+   {
+    "node_id": "proficiency_bonus_20",
+    "feature_id": "proficiency_bonus",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "Gain expertise in two skills.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Soldier is proficient with one additional skill.",
+      "notes": ""
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "soldier",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/soldier.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

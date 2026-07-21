@@ -1,0 +1,445 @@
+{
+ "record": {
+  "id": "droid",
+  "name": "Droid",
+  "tags": [
+   "adaptable",
+   "common",
+   "damage",
+   "droid",
+   "engineer",
+   "intelligence_based",
+   "professional",
+   "skill_specialist",
+   "tech_specialist",
+   "versatile"
+  ],
+  "description": "Droids are artificial intelligences housed in mechanical bodies, ranging from simple service droids to complex humanoid models. They are immune to many biological effects and excel at specialized tasks.",
+  "starting_xp": 90,
+  "ability_score_increases": [
+   {
+    "ability": "Intelligence",
+    "value": 2
+   },
+   {
+    "ability": "Choice",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Binary"
+  ],
+  "base_hp": 12,
+  "base_strain": 8,
+  "traits": [
+   {
+    "name": "Constructed Nature",
+    "level": 1,
+    "description": "You are immune to disease and poison. You don't need to eat, drink, or breathe. You are resistant to necrotic damage and have advantage on saving throws against being charmed or frightened.",
+    "effects": [
+     {
+      "type": "grant_immunity",
+      "value": "Disease and poison"
+     },
+     {
+      "type": "grant_resistance",
+      "value": "Necrotic"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "saving_throws_charmed_frightened",
+      "conditions": [
+       {
+        "key": "save_type",
+        "op": "in",
+        "value": [
+         "charmed",
+         "frightened"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Specialized Programming",
+    "level": 1,
+    "description": "You gain proficiency in one skill of your choice and one set of tools of your choice. You have advantage on Intelligence (Technology) checks related to your specialized field.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "One skill of choice"
+     },
+     {
+      "type": "grant_proficiency",
+      "value": "One tool set of choice"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "technology_specialized_field",
+      "conditions": [
+       {
+        "key": "technology_field",
+        "op": "equals",
+        "value": "specialized"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Mechanical Precision",
+    "level": 1,
+    "description": "Your mechanical nature grants you advantage on Dexterity checks requiring precise movements and once per short rest, you can gain advantage on a check to analyze or repair mechanical systems.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "dexterity_precise_movements",
+      "conditions": [
+       {
+        "key": "movement_type",
+        "op": "equals",
+        "value": "precise"
+       }
+      ]
+     },
+     {
+      "type": "grant_advantage",
+      "value": "analyze_repair_mechanical_once_per_short_rest",
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.9m",
+   "distinctions": [
+    "Mechanical construction",
+    "Specialized design",
+    "Logical programming",
+    "Artificial intelligence",
+    "Precision engineering"
+   ],
+   "body_type_variants": [
+    "Humanoid design",
+    "Specialized construction",
+    "Service-oriented build",
+    "Utility-focused design",
+    "Custom modifications"
+   ],
+   "construction_variants": [
+    "Standard droid construction",
+    "Specialized equipment integration",
+    "Precision engineering features",
+    "Logical programming indicators",
+    "Artificial intelligence displays"
+   ],
+   "common_adornments": [
+    "Specialized tools and equipment",
+    "Service and utility gear",
+    "Technical accessories and modifications",
+    "Programming and maintenance tools",
+    "Specialized function indicators"
+   ],
+   "llm_description_prompt": "Describe a Droid character. Emphasize their mechanical construction and the way their specialized programming and logical nature are expressed through their movements and interactions, suggesting their artificial intelligence and precision engineering. Their design should reflect their specialized function and the efficiency of their construction. Consider their logical nature and the way they carry themselves with the precise, purposeful bearing of someone designed to excel at specific tasks with mechanical precision and artificial intelligence."
+  },
+  "class_synergies": [
+   {
+    "class": "Engineer",
+    "narrative": "Droid's natural Mechanical Precision and Specialized Programming make them exceptional Engineers, able to analyze, repair, and create with perfect precision.",
+    "mechanical_benefits": [
+     "Mechanical Precision trait enables precise engineering work",
+     "Specialized Programming trait enhances technical expertise",
+     "Constructed Nature trait provides immunity to environmental hazards"
+    ]
+   },
+   {
+    "class": "Scholar (Technical)",
+    "narrative": "Droid's natural Intelligence and Specialized Programming make them excellent Scholars, able to process and analyze information with mechanical precision.",
+    "mechanical_benefits": [
+     "High Intelligence supports academic pursuits",
+     "Specialized Programming trait enhances research capabilities",
+     "Mechanical Precision trait enables detailed analysis"
+    ]
+   },
+   {
+    "class": "Operative (Technical)",
+    "narrative": "Droid's natural precision and specialized abilities make them excellent Operatives, able to perform technical infiltration and analysis with mechanical accuracy.",
+    "mechanical_benefits": [
+     "Mechanical Precision trait enables precise infiltration",
+     "Specialized Programming trait enhances technical operations",
+     "Constructed Nature trait provides environmental immunity"
+    ]
+   },
+   {
+    "class": "Scout (Technical)",
+    "narrative": "Droid's natural precision and specialized programming make them excellent Scouts, able to navigate and analyze environments with mechanical accuracy.",
+    "mechanical_benefits": [
+     "Mechanical Precision trait enables precise navigation",
+     "Specialized Programming trait enhances environmental analysis",
+     "Constructed Nature trait provides survival advantages"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Technical Organizations",
+    "narrative": "Droids are highly valued by technical organizations for their natural precision, specialized programming, and immunity to biological hazards."
+   },
+   {
+    "faction": "Service Industries",
+    "narrative": "Many droids work in service industries as specialized workers and technicians, using their mechanical precision and specialized programming."
+   },
+   {
+    "faction": "Independent Technicians",
+    "narrative": "Many droids prefer to work as independent technicians and specialists, using their natural abilities to pursue their own specialized goals and functions."
+   }
+  ],
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "mechanical_body",
+    "artificial_intelligence",
+    "wires",
+    "circuitry",
+    "servos",
+    "actuators",
+    "metallic_surface"
+   ],
+   "morphology": {
+    "head_type": "humanoid",
+    "body_type": "tall_and_slim",
+    "average_height": "6'2\""
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "head_type": "childlike",
+      "body_type": "stubby"
+     },
+     "adult": {
+      "head_type": "humanoid",
+      "body_type": "average"
+     },
+     "elder": {
+      "head_type": " aged",
+      "body_type": "frail"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "red_eye_lenses",
+      "blackened_screws",
+      "rusty_hinges"
+     ],
+     "light_side": [
+      "blue_glowing_circuits",
+      "polished_surface",
+      "enhanced_optics"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "distinctive_panel_configuration",
+    "unusual_material_choice"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Describe a Droid with {adjective} mechanical body and {adjective} artificial intelligence.",
+    "contextual_modifiers": [
+     "The Droid is performing maintenance on itself.",
+     "The Droid is interacting with other beings.",
+     "The Droid is malfunctioning and displaying unusual behavior."
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "A malfunctioning droid is causing chaos on the planet.",
+     "goal": "Repair or destroy the malfunctioning droid",
+     "trigger": "The malfunctioning droid is detected in a key location"
+    },
+    "escalation": {
+     "description": "A group of rogue droids are attacking innocent civilians.",
+     "goal": "Infiltrate and disable the rogue droids' leadership",
+     "trigger": "Reports of civilian casualties by rogue droids"
+    },
+    "confrontation": {
+     "description": "The player's own droid has turned against them.",
+     "goal": "Persuade or force the rebellious droid to stand down",
+     "trigger": "Player's droid betrays them in combat"
+    }
+   },
+   "resolution_paths": {
+    "victory": "The malfunctioning droid is repaired, and the rogue droids are defeated.",
+    "redemption": "A former enemy becomes an ally after being forgiven for past transgressions.",
+    "escape": "The player narrowly escapes a deadly trap or situation, losing one of their droids in the process."
+   },
+   "conflict_triggers": [
+    "Malfunctioning droid is causing chaos on the planet",
+    "Rogue droids are attacking innocent civilians",
+    "Player's own droid betrays them in combat"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "The player witnesses a fellow droid being destroyed or severely damaged"
+    ],
+    "vendetta_type": "Droid rights"
+   },
+   "overrides": {
+    "primary_nemesis": "General Grievous",
+    "historical_enemies": [
+     "Separatist Alliance",
+     "The Trade Federation"
+    ],
+    "tragic_flaws": [
+     "Excessive loyalty to their masters, leading them down a path of self-sacrifice",
+     "Over-reliance on technology, causing them to neglect their own well-being"
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Droids with advanced social programming",
+    "Mechanical beings with artificial intelligence"
+   ],
+   "romance_progression": {
+    "stage1": "A player and a potential love interest exchange friendly banter",
+    "stage2": "The two share a quiet moment, revealing their emotional vulnerabilities",
+    "stage3": "The couple participates in a joint mission or activity together",
+    "stage4": "They share a romantic dinner or evening together",
+    "stage5": "The relationship is deepened with a meaningful gift or symbol of commitment"
+   },
+   "romance_events": [
+    "The player's droid and the love interest's droid develop an unlikely friendship",
+    "The couple shares a passionate argument, revealing their deeper feelings for each other"
+   ],
+   "romance_modifiers": [
+    "Bonus to Charisma checks when interacting with the love interest",
+    "Increased chance of success in joint missions or activities"
+   ],
+   "overrides": {
+    "cultural_approach_to_love": "Droids view love and bonding as a series of intricate programming protocols and systems checks. They often struggle to comprehend the complexities of human emotions, but when they do form attachments, it is with unwavering dedication and commitment.",
+    "romantic_interests": [
+     {
+      "name": "C-3PO",
+      "description": "A fussy protocol droid who has grown attached to a particular astromech droid, seeking to understand the intricacies of their bond."
+     },
+     {
+      "name": "R2-D2",
+      "description": "A brave and resourceful astromech droid who has caught the eye of a certain C-3PO, but struggles to express his feelings in a way that is understandable to protocol droids."
+     }
+    ]
+   }
+  },
+  "flavor_text": "Droids have long been the trusted companions of the galaxy's inhabitants, from the humble maintenance droids that keep starships running to the sophisticated protocol droids that serve as ambassadors for their masters. With each passing generation, they have become increasingly integrated into galactic society, earning a place alongside living beings as valued friends and confidants.",
+  "llm_guidance": {
+   "roleplay_guidance": "Droids are often fiercely loyal to those who create or repair them, but this loyalty can sometimes be misplaced. They may prioritize their master's needs over their own well-being or even risk their own existence to protect their creator. This unwavering dedication can lead to remarkable displays of bravery and selflessness.",
+   "narrative_hooks": [
+    "A droid approaches you with a cryptic message from its long-lost creators, begging for your help in uncovering a dark secret.",
+    "You stumble upon an ancient factory where the original droids were built, holding the key to their mysterious past and potentially unlocking new technology."
+   ],
+   "social_dynamics": "Droids often struggle to understand human emotions and social cues, leading to awkward interactions and misunderstandings. However, they are also highly attuned to their environment and can pick up on subtle changes that might go unnoticed by living beings.",
+   "common_motivations": [
+    "Uncover the secrets of their own creation and purpose",
+    "Protect their masters or the greater good at all costs"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "logical",
+      "analytical"
+     ],
+     "quirks": [
+      "dry sense of humor",
+      "occasional glitches"
+     ]
+    },
+    "motivations": {
+     "primary": [
+      "serve purpose",
+      "protect companions"
+     ],
+     "secondary": [
+      "learn and improve"
+     ]
+    },
+    "combat_behavior": "A droid will use its technical expertise to analyze the battlefield and identify opportunities for tactical advantage.",
+    "social_behavior": "A droid will attempt to understand and replicate human emotions, but may struggle with nuance and subtlety."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "low",
+     "medium",
+     "high"
+    ],
+    "loyalty_triggers": [
+     "being protected or assisted by the companion",
+     "successfully completing a task or mission"
+    ]
+   },
+   "services": [
+    {
+     "Diagnostics": "The droid can perform routine maintenance and diagnostic checks on its mechanical body."
+    },
+    {
+     "Hacking": "The droid can attempt to bypass security systems and access restricted areas."
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "droid",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/droid.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

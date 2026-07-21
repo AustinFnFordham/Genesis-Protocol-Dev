@@ -1,0 +1,258 @@
+{
+ "record": {
+  "id": "background_jedi",
+  "name": "Jedi",
+  "background_type": "Religious",
+  "era": "Galactic_Republic",
+  "narrative": "The Jedi background represents a life dedicated to the Force and the ancient traditions of the Jedi Order. Whether you were a Padawan who survived Order 66, a youngling who escaped the Temple's destruction, or were trained by a surviving Jedi Master, you carry the weight of the Order's legacy and the hope for its restoration. Your training in the Force, diplomacy, and combat makes you both a formidable ally and a target for those who fear or hate the Jedi.",
+  "flavor_text": "'The Force will be with you, always.' - Obi-Wan Kenobi",
+  "cultural_significance": "Jedi are universally recognized as symbols of peace, justice, and the mystical power of the Force. During the Republic era, they were respected peacekeepers and diplomats. During the Empire era, they became hunted fugitives, their very existence a threat to Imperial control. In the post-Empire era, they represent hope for the restoration of balance and justice in the galaxy.",
+  "description": "You were a member of the Jedi Order, a guardian of peace and justice in the galaxy. Whether you survived Order 66, were a youngling who escaped, or were trained by a surviving Jedi, you carry the legacy of the Order with you. Your training in the Force, diplomacy, and combat makes you a formidable ally and a target for the Empire.",
+  "life_experience": "Life as a Jedi is one of constant training, meditation, and service. From early childhood, Jedi younglings are taught to control their emotions, master the Force, and serve the greater good. They learn diplomacy, combat, and the ancient wisdom of the Order. Many Jedi spend years as Padawans under the guidance of a Master, learning through experience and example. The life is one of sacrifice, discipline, and unwavering commitment to the light side of the Force.",
+  "common_origins": [
+   "Jedi Temple on Coruscant",
+   "Surviving Jedi Master's hidden enclave",
+   "Force-sensitive child discovered by a surviving Jedi",
+   "Youngling who escaped Order 66",
+   "Self-taught Force user inspired by Jedi legends"
+  ],
+  "iconic_examples": [
+   "Obi-Wan Kenobi's training and service",
+   "Luke Skywalker's discovery of his heritage",
+   "Ahsoka Tano's journey from Padawan to independent Force user",
+   "Cal Kestis' survival and rebuilding of the Order",
+   "Kanan Jarrus' hidden training of Ezra Bridger"
+  ],
+  "famous_individuals": [
+   "Obi-Wan Kenobi",
+   "Luke Skywalker",
+   "Ahsoka Tano",
+   "Cal Kestis",
+   "Kanan Jarrus",
+   "Ezra Bridger",
+   "Rey",
+   "Grogu"
+  ],
+  "famous_events": [
+   "The destruction of the Jedi Temple during Order 66",
+   "Luke Skywalker's training with Obi-Wan and Yoda",
+   "Ahsoka Tano's trial and departure from the Order",
+   "The survival of Jedi younglings across the galaxy",
+   "The restoration of the Jedi Order after the Empire's fall"
+  ],
+  "llm_guidance": {
+   "narrative_hooks": [
+    "A Jedi's past catching up with them",
+    "The discovery of other surviving Jedi",
+    "A mission to protect Force-sensitive children",
+    "The search for lost Jedi artifacts or knowledge",
+    "A confrontation with former Jedi who turned to the dark side",
+    "The responsibility of training a new generation of Jedi"
+   ],
+   "adventure_seeds": [
+    "Recovering lost Jedi holocrons from dangerous locations",
+    "Protecting Force-sensitive children from Imperial agents",
+    "Investigating rumors of surviving Jedi Masters",
+    "Finding and securing ancient Jedi temples",
+    "Negotiating peace between warring factions as a Jedi diplomat",
+    "Facing the temptation of the dark side in a moment of crisis"
+   ],
+   "character_connections": [
+    "Characters may have been saved by Jedi during the Clone Wars",
+    "Characters may have family members who were Jedi",
+    "Characters may have witnessed Jedi heroism or tragedy",
+    "Characters may be Force-sensitive but untrained",
+    "Characters may have been hunted by Jedi hunters"
+   ],
+   "typical_missions": [
+    "Diplomatic missions to resolve conflicts peacefully",
+    "Protection missions for important individuals or locations",
+    "Investigation missions to uncover corruption or injustice",
+    "Training missions to develop Force abilities",
+    "Recovery missions for lost Jedi artifacts or knowledge",
+    "Rescue missions for Force-sensitive individuals in danger"
+   ],
+   "cultural_impact": "Jedi represent the pinnacle of Force mastery and moral discipline. They are symbols of hope, justice, and the power of the light side. Throughout the galaxy, the sight of a Jedi inspires awe and respect, though during the Empire era it also inspired fear. The Jedi philosophy of peace, knowledge, and serenity has influenced countless cultures and individuals.",
+   "social_standing": "During the Republic era, Jedi were highly respected as peacekeepers and diplomats. During the Empire era, they were hunted fugitives with bounties on their heads. In the post-Empire era, they are symbols of hope and resistance, though their numbers are few and their influence limited."
+  },
+  "proficiencies": [
+   {
+    "type": "skill",
+    "id": "insight"
+   },
+   {
+    "type": "skill",
+    "id": "persuasion"
+   },
+   {
+    "type": "tool_choice",
+    "count": 1,
+    "options": [
+     {
+      "tool_id": "lightsaber"
+     },
+     {
+      "tool_id": "meditation_kit"
+     },
+     {
+      "tool_id": "jedi_robes"
+     },
+     {
+      "tool_id": "holocron"
+     }
+    ]
+   },
+   {
+    "type": "language_choice",
+    "count": 1,
+    "options": [
+     {
+      "language_id": "any"
+     }
+    ]
+   }
+  ],
+  "feature": {
+   "name": "Padawan",
+   "level": 1,
+   "description": "You have a master who taught you the ways of the Force. You know where to find them, or where they were last seen. Your master can provide guidance, training, or assistance when you need it most. Additionally, you have access to hidden Jedi safe houses and contacts throughout the galaxy.",
+   "mechanics": [
+    {
+     "effect": "grant_contact",
+     "parameters": {
+      "contact_type": "jedi_master",
+      "description": "Access to Jedi master for guidance and training"
+     }
+    },
+    {
+     "effect": "grant_special_property",
+     "parameters": {
+      "property_name": "Jedi Network Access",
+      "scope": "social",
+      "effect_description": "Knowledge of hidden Jedi safe houses and contacts throughout the galaxy"
+     }
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I use long words in an attempt to sound smart.",
+    "I am serene, even in the face of disaster.",
+    "I am fiercely protective of my friends.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war."
+   ],
+   "ideals": [
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Justice. I bring criminals to justice.",
+    "Fairness. I never kill a target who has surrendered.",
+    "Power. I will do whatever it takes to become powerful."
+   ],
+   "bonds": [
+    "I am searching for my former master.",
+    "I am protecting a secret that could endanger the galaxy.",
+    "I am the last of my line, and I must not fail.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A detailed digital painting of a Jedi, a guardian of peace and justice. The character wears traditional Jedi robes in earth tones, with a lightsaber at their belt. Their expression is serene and wise, reflecting years of training and meditation. The background shows a peaceful temple or natural setting, with soft lighting that suggests the mystical nature of the Force. The mood is contemplative and noble, representing the Jedi's commitment to balance and justice.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "The character's Jedi training is evident in their calm, centered posture and the way they carry themselves with quiet confidence."
+    },
+    {
+     "target_type": "Location",
+     "modifier_text": "The environment reflects Jedi philosophy with elements of nature, meditation spaces, or ancient architecture that speaks to their traditions."
+    },
+    {
+     "target_type": "Item",
+     "modifier_text": "Any items shown are simple and functional, reflecting the Jedi's philosophy of detachment from material possessions."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/backgrounds/jedi_background.png",
+   "icon": "/assets/icons/backgrounds/jedi.svg"
+  },
+  "tags": [
+   "background",
+   "jedi",
+   "force_user",
+   "light_side",
+   "guardian",
+   "consular",
+   "sentinel",
+   "spiritual",
+   "disciplined",
+   "force_sensitive"
+  ],
+  "themes": [
+   "Balance and harmony",
+   "Peace and justice",
+   "Training and discipline",
+   "Survival and hope",
+   "Legacy and tradition",
+   "Light vs. dark"
+  ],
+  "mood": "Serene and contemplative, carrying the weight of ancient traditions and the hope for a better future"
+ },
+ "validation": {
+  "candidate_urid": "background_jedi",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_jedi.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

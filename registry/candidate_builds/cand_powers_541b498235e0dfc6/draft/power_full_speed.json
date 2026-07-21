@@ -1,0 +1,170 @@
+{
+ "record": {
+  "id": "power_full_speed",
+  "name": "Full Speed",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You empower your allies to achieve various beneficial effects. The power manifests as empowering energy, tactical focus, creating a moment of empowering determination.",
+  "flavor_text": "These aren't the droids you're looking for.",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "executing tactical movement or stance"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "assessing battlefield conditions and opportunities"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "Take the Dash action with your starship.",
+   "mechanics": [
+    {
+     "type": "grant_action",
+     "value": "dash",
+     "target_scopes": [
+      "starship"
+     ],
+     "notes": "Take Dash action with starship"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "Engineer approaches Full Speed through the lens of creation, finding unexpected harmony in the executing tactical movements. Their building and repairing through technology guides them to calculated movement with a tactical awareness that reflects their unique perspective.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers gain +1 to Tech power attack rolls.",
+      "value": "+2_attack_rolls"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to quickly master new powers.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_advantage",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans gain advantage on power learning checks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance values technological expertise.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebels gain +2 to Tech power saving throw DCs.",
+      "value": "+2_saving_throw_dc"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe . Focus on how the power's effects manifest physically and mechanically, emphasizing provide utility effects.",
+   "tactical_notes": "Full Speed is excellent for providing provide utility effects in various situations. Use it at 0 feet range.",
+   "narrative_hooks": [
+    "Full Speed proves crucial in a difficult situation, its effects turning the tide",
+    "The utility of Full Speed reveals itself in an unexpected but critical moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of. Full Speed. in action. achieving provide utility effects. with empowering energy, tactical focus. The mood is empowering determination, showing the raw power and intensity of the effect.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/full_speed.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_full_speed",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_full_speed.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,219 @@
+{
+ "record": {
+  "id": "power_saber_throw",
+  "name": "Saber Throw",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "lightsaber",
+   "ranged",
+   "force_guidance",
+   "telekinesis",
+   "jedi",
+   "iconic"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Iconic Force-guided lightsaber throw technique"
+   }
+  },
+  "narrative": "You hurl your lightsaber through the air with Force telekinesis, the blade spinning as it cuts through enemies before returning to your hand. The power manifests as the weapon flying like guided missile, arcing impossibly through space, carving through targets with the Force directing its path.",
+  "flavor_text": "\"The elegance of the lightsaber throw—a Jedi classic.\" - Jedi Instructor",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "throwing lightsaber while maintaining Force control"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "guiding weapon telekinetically through targets"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You throw your lightsaber at targets, guiding it with the Force.",
+   "mechanics": [
+    {
+     "type": "ranged_attack",
+     "value": {
+      "damage": "weapon_damage",
+      "special": "force_guided"
+     },
+     "target_scopes": [
+      "targets"
+     ],
+     "notes": "Make ranged Force attack with lightsaber, weapon returns to hand"
+    },
+    {
+     "type": "multi_target",
+     "value": {
+      "targets": 2,
+      "arc_path": true
+     },
+     "target_scopes": [
+      "enemies"
+     ],
+     "notes": "Can target up to 2 enemies along the blade's path"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's protective instinct transforms Saber Throw into defensive offense. They hurl their blade to intercept threats before they reach allies, the thrown weapon becoming mobile protection that eliminates dangers at range.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_targets",
+      "value": {
+       "count": 1
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Guardians can target 3 enemies instead of 2 with saber throw."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity makes their Saber Throw unpredictable and devastating. They throw at impossible angles, use environmental ricochets, even feint with the blade's trajectory—turning straightforward attack into tactical masterpiece.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 6,
+       "damage_type": "energy",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "targets"
+      ],
+      "notes": "Humans deal an additional 1d6 damage with saber throw from creative trajectories."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order teaches Saber Throw as advanced Force technique—the art of maintaining telekinetic control while the weapon is distant. Their methods create throws that can curve around cover, strike from unexpected angles, defying normal physics.",
+    "mechanical_benefit": [
+     {
+      "type": "ignore_cover",
+      "value": {
+       "cover_types": [
+        "half",
+        "three_quarters"
+       ]
+      },
+      "target_scopes": [
+       "targets"
+      ],
+      "notes": "Jedi saber throws ignore half and three-quarters cover (Force-guided)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the lightsaber spinning through air like guided missile, carving through enemies in brilliant arcs. Show it curving impossibly, the Force guiding its path, before snapping back to your hand. The throw should feel iconic and powerful.",
+   "tactical_notes": "Saber Throw attacks 2 targets at 60 feet with Force-guided accuracy for 1 Force Point. Excellent ranged option for lightsaber users. The blade returns automatically. Can hit multiple enemies along the path. Watch for enemies with lightsaber resistance.",
+   "narrative_hooks": [
+    "A thrown lightsaber eliminates a distant sniper threatening allies",
+    "The blade's impossible curve reveals Force guidance to witnesses",
+    "Losing control of the throw creates dangerous consequences"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a Jedi throwing their lightsaber with Force guidance. The glowing blade spins through the air in an impossible arc, cutting through multiple enemies before returning to the user's outstretched hand. The trajectory defies physics, clearly guided by telekinetic control. The scene captures the iconic lightsaber throw technique. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric lightsaber trail, by Feng Zhu",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/saber_throw.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_saber_throw",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_saber_throw.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,850 @@
+{
+ "record": {
+  "recipes": [
+   {
+    "id": "recipe_basic_blaster_pistol",
+    "name": "Basic Blaster Pistol",
+    "description": "A standard blaster pistol crafted from basic components. The process involves carefully assembling the power cell, focusing crystal, and barrel components to create a reliable sidearm.",
+    "category": "weapon",
+    "difficulty": 12,
+    "crafting_time": {
+     "base_time": 8,
+     "time_unit": "hours",
+     "modifiers": [
+      {
+       "condition": "workshop_available",
+       "multiplier": 0.5
+      },
+      {
+       "condition": "master_crafter",
+       "multiplier": 0.75
+      }
+     ]
+    },
+    "materials": [
+     {
+      "item_id": "power_cell_standard",
+      "quantity": 1,
+      "rarity": "common"
+     },
+     {
+      "item_id": "focusing_crystal_basic",
+      "quantity": 1,
+      "rarity": "common"
+     },
+     {
+      "item_id": "blaster_barrel_standard",
+      "quantity": 1,
+      "rarity": "common"
+     },
+     {
+      "item_id": "durasteel_plating",
+      "quantity": 2,
+      "rarity": "common"
+     },
+     {
+      "item_id": "electronic_components",
+      "quantity": 3,
+      "rarity": "common"
+     }
+    ],
+    "tools": [
+     {
+      "tool_id": "armstech_implements",
+      "proficiency_required": true,
+      "quality_bonus": 2
+     },
+     {
+      "tool_id": "precision_tools",
+      "proficiency_required": false,
+      "quality_bonus": 1
+     }
+    ],
+    "skills": [
+     {
+      "skill_name": "Intelligence (Technology)",
+      "proficiency_bonus": 2,
+      "primary": true
+     },
+     {
+      "skill_name": "Dexterity (Sleight of Hand)",
+      "proficiency_bonus": 1,
+      "primary": false
+     }
+    ],
+    "prerequisites": [
+     {
+      "type": "level",
+      "value": "3",
+      "description": "Requires level 3 or higher"
+     },
+     {
+      "type": "tool_proficiency",
+      "value": "armstech_implements",
+      "description": "Must be proficient with Armstech's Implements"
+     }
+    ],
+    "result": {
+     "item_id": "blaster_pistol_basic",
+     "quantity": 1,
+     "quality_modifiers": [
+      {
+       "check_margin": 5,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "reliable",
+         "description": "Weapon gains the Reliable property"
+        }
+       ]
+      },
+      {
+       "check_margin": 10,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "accurate",
+         "description": "Weapon gains the Accurate property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "damage_bonus_1",
+         "description": "+1 to damage rolls"
+        }
+       ]
+      }
+     ]
+    },
+    "failure_effects": [
+     {
+      "failure_margin": 5,
+      "effects": [
+       {
+        "type": "material_loss",
+        "value": "50%",
+        "description": "Lose 50% of materials"
+       }
+      ]
+     },
+     {
+      "failure_margin": 10,
+      "effects": [
+       {
+        "type": "tool_damage",
+        "value": "minor",
+        "description": "Tools take minor damage"
+       },
+       {
+        "type": "time_waste",
+        "value": "4_hours",
+        "description": "Waste 4 hours of work"
+       }
+      ]
+     }
+    ],
+    "special_effects": [
+     {
+      "type": "customization",
+      "value": "color_scheme",
+      "description": "Can customize the weapon's color scheme",
+      "conditions": [
+       {
+        "key": "artistic_talent",
+        "op": "equals",
+        "value": true
+       }
+      ]
+     }
+    ],
+    "narrative_outcomes": [
+     "The weapon bears subtle marks of your craftsmanship, making it uniquely yours",
+     "Local law enforcement recognizes your work and may offer special treatment",
+     "The weapon's reliability becomes a point of pride in your community"
+    ],
+    "tags": [
+     "blaster",
+     "pistol",
+     "basic",
+     "ranged",
+     "energy"
+    ],
+    "rarity": "common",
+    "cost": {
+     "base_cost": 150,
+     "cost_modifiers": [
+      {
+       "condition": "bulk_materials",
+       "multiplier": 0.8
+      }
+     ]
+    },
+    "experience_reward": 50,
+    "reputation_effects": [
+     {
+      "faction": "local_merchants",
+      "change": 1,
+      "description": "Gain reputation with local merchants for quality work"
+     }
+    ]
+   },
+   {
+    "id": "recipe_heavy_blaster_rifle",
+    "name": "Heavy Blaster Rifle",
+    "description": "A powerful blaster rifle designed for sustained fire and heavy damage. The crafting process requires precise alignment of multiple focusing crystals and a reinforced barrel to handle the increased power output.",
+    "category": "weapon",
+    "difficulty": 16,
+    "crafting_time": {
+     "base_time": 24,
+     "time_unit": "hours",
+     "modifiers": [
+      {
+       "condition": "workshop_available",
+       "multiplier": 0.6
+      },
+      {
+       "condition": "master_crafter",
+       "multiplier": 0.8
+      }
+     ]
+    },
+    "materials": [
+     {
+      "item_id": "power_cell_heavy",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "focusing_crystal_enhanced",
+      "quantity": 2,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "blaster_barrel_heavy",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "durasteel_reinforced",
+      "quantity": 4,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "electronic_components_advanced",
+      "quantity": 5,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "cooling_system",
+      "quantity": 1,
+      "rarity": "uncommon"
+     }
+    ],
+    "tools": [
+     {
+      "tool_id": "armstech_implements",
+      "proficiency_required": true,
+      "quality_bonus": 3
+     },
+     {
+      "tool_id": "precision_tools",
+      "proficiency_required": true,
+      "quality_bonus": 2
+     },
+     {
+      "tool_id": "welding_torch",
+      "proficiency_required": false,
+      "quality_bonus": 1
+     }
+    ],
+    "skills": [
+     {
+      "skill_name": "Intelligence (Technology)",
+      "proficiency_bonus": 3,
+      "primary": true
+     },
+     {
+      "skill_name": "Strength (Athletics)",
+      "proficiency_bonus": 1,
+      "primary": false
+     }
+    ],
+    "prerequisites": [
+     {
+      "type": "level",
+      "value": "7",
+      "description": "Requires level 7 or higher"
+     },
+     {
+      "type": "tool_proficiency",
+      "value": "armstech_implements",
+      "description": "Must be proficient with Armstech's Implements"
+     },
+     {
+      "type": "feat",
+      "value": "heavy_weapon_master",
+      "description": "Must have Heavy Weapon Master feat"
+     }
+    ],
+    "result": {
+     "item_id": "blaster_rifle_heavy",
+     "quantity": 1,
+     "quality_modifiers": [
+      {
+       "check_margin": 5,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "sturdy",
+         "description": "Weapon gains the Sturdy property"
+        }
+       ]
+      },
+      {
+       "check_margin": 10,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "piercing",
+         "description": "Weapon gains the Piercing property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "damage_bonus_2",
+         "description": "+2 to damage rolls"
+        }
+       ]
+      },
+      {
+       "check_margin": 15,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "overcharge",
+         "description": "Weapon gains the Overcharge property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "range_bonus_30",
+         "description": "+30 feet to range"
+        }
+       ]
+      }
+     ]
+    },
+    "failure_effects": [
+     {
+      "failure_margin": 5,
+      "effects": [
+       {
+        "type": "material_loss",
+        "value": "75%",
+        "description": "Lose 75% of materials"
+       }
+      ]
+     },
+     {
+      "failure_margin": 10,
+      "effects": [
+       {
+        "type": "tool_damage",
+        "value": "moderate",
+        "description": "Tools take moderate damage"
+       },
+       {
+        "type": "injury",
+        "value": "minor_burns",
+        "description": "Suffer minor burns from power cell mishap"
+       }
+      ]
+     }
+    ],
+    "special_effects": [
+     {
+      "type": "customization",
+      "value": "firing_mode",
+      "description": "Can add select-fire capability",
+      "conditions": [
+       {
+        "key": "advanced_tech_knowledge",
+        "op": "equals",
+        "value": true
+       }
+      ]
+     }
+    ],
+    "narrative_outcomes": [
+     "The weapon's distinctive sound becomes recognizable to your allies",
+     "Military personnel may recognize the quality of your work",
+     "The weapon's power output creates a subtle hum that can be intimidating"
+    ],
+    "tags": [
+     "blaster",
+     "rifle",
+     "heavy",
+     "ranged",
+     "energy",
+     "military"
+    ],
+    "rarity": "uncommon",
+    "cost": {
+     "base_cost": 800,
+     "cost_modifiers": [
+      {
+       "condition": "military_contract",
+       "multiplier": 1.5
+      }
+     ]
+    },
+    "experience_reward": 150,
+    "reputation_effects": [
+     {
+      "faction": "military_contractors",
+      "change": 2,
+      "description": "Gain reputation with military contractors"
+     }
+    ]
+   },
+   {
+    "id": "recipe_basic_lightsaber",
+    "name": "Basic Lightsaber",
+    "description": "A Jedi's weapon of choice, crafted through meditation and connection to the Force. The process involves finding a suitable crystal, constructing the hilt, and attuning the weapon to your connection to the Force.",
+    "category": "weapon",
+    "difficulty": 18,
+    "crafting_time": {
+     "base_time": 48,
+     "time_unit": "hours",
+     "modifiers": [
+      {
+       "condition": "force_meditation",
+       "multiplier": 0.5
+      },
+      {
+       "condition": "crystal_attunement",
+       "multiplier": 0.8
+      }
+     ]
+    },
+    "materials": [
+     {
+      "item_id": "kyber_crystal",
+      "quantity": 1,
+      "rarity": "rare",
+      "substitutes": [
+       "synthetic_kyber",
+       "natural_crystal"
+      ]
+     },
+     {
+      "item_id": "lightsaber_hilt_components",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "focusing_lens",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "power_cell_advanced",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "durasteel_reinforced",
+      "quantity": 2,
+      "rarity": "uncommon"
+     }
+    ],
+    "tools": [
+     {
+      "tool_id": "lightsaber_assembly_tools",
+      "proficiency_required": true,
+      "quality_bonus": 3
+     },
+     {
+      "tool_id": "force_attunement_chamber",
+      "proficiency_required": false,
+      "quality_bonus": 2
+     }
+    ],
+    "skills": [
+     {
+      "skill_name": "Wisdom (Insight)",
+      "proficiency_bonus": 3,
+      "primary": true
+     },
+     {
+      "skill_name": "Intelligence (Technology)",
+      "proficiency_bonus": 2,
+      "primary": false
+     }
+    ],
+    "prerequisites": [
+     {
+      "type": "level",
+      "value": "5",
+      "description": "Requires level 5 or higher"
+     },
+     {
+      "type": "power",
+      "value": "force_sensitive",
+      "description": "Must be Force-sensitive"
+     },
+     {
+      "type": "class",
+      "value": "jedi",
+      "description": "Must be a Jedi or have Jedi training"
+     }
+    ],
+    "result": {
+     "item_id": "lightsaber_basic",
+     "quantity": 1,
+     "quality_modifiers": [
+      {
+       "check_margin": 5,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "balanced",
+         "description": "Lightsaber gains the Balanced property"
+        }
+       ]
+      },
+      {
+       "check_margin": 10,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "force_attuned",
+         "description": "Lightsaber gains the Force Attuned property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "damage_bonus_1",
+         "description": "+1 to damage rolls"
+        }
+       ]
+      },
+      {
+       "check_margin": 15,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "crystal_resonance",
+         "description": "Lightsaber gains the Crystal Resonance property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "attack_bonus_1",
+         "description": "+1 to attack rolls"
+        }
+       ]
+      }
+     ]
+    },
+    "failure_effects": [
+     {
+      "failure_margin": 5,
+      "effects": [
+       {
+        "type": "material_loss",
+        "value": "100%",
+        "description": "Lose all materials, especially the crystal"
+       }
+      ]
+     },
+     {
+      "failure_margin": 10,
+      "effects": [
+       {
+        "type": "injury",
+        "value": "force_feedback",
+        "description": "Suffer Force feedback damage"
+       },
+       {
+        "type": "time_waste",
+        "value": "24_hours",
+        "description": "Waste 24 hours of work"
+       }
+      ]
+     }
+    ],
+    "special_effects": [
+     {
+      "type": "force_enhancement",
+      "value": "crystal_bond",
+      "description": "The crystal bonds with your Force signature",
+      "conditions": [
+       {
+        "key": "force_meditation",
+        "op": "equals",
+        "value": true
+       }
+      ]
+     }
+    ],
+    "narrative_outcomes": [
+     "The lightsaber's blade color reflects your connection to the Force",
+     "The weapon hums with a frequency unique to your Force signature",
+     "Other Force users can sense the quality of your craftsmanship"
+    ],
+    "tags": [
+     "lightsaber",
+     "melee",
+     "energy",
+     "force",
+     "jedi",
+     "elegant"
+    ],
+    "rarity": "rare",
+    "cost": {
+     "base_cost": 2000,
+     "cost_modifiers": [
+      {
+       "condition": "jedi_order_support",
+       "multiplier": 0.5
+      }
+     ]
+    },
+    "experience_reward": 300,
+    "reputation_effects": [
+     {
+      "faction": "jedi_order",
+      "change": 3,
+      "description": "Gain reputation with the Jedi Order"
+     }
+    ]
+   },
+   {
+    "id": "recipe_vibroblade",
+    "name": "Vibroblade",
+    "description": "A deadly melee weapon that uses high-frequency vibrations to cut through armor and flesh. The crafting process requires precise calibration of the vibration generator and careful balancing of the blade.",
+    "category": "weapon",
+    "difficulty": 14,
+    "crafting_time": {
+     "base_time": 16,
+     "time_unit": "hours",
+     "modifiers": [
+      {
+       "condition": "workshop_available",
+       "multiplier": 0.7
+      },
+      {
+       "condition": "precision_calibration",
+       "multiplier": 0.8
+      }
+     ]
+    },
+    "materials": [
+     {
+      "item_id": "durasteel_blade",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "vibration_generator",
+      "quantity": 1,
+      "rarity": "uncommon"
+     },
+     {
+      "item_id": "power_cell_standard",
+      "quantity": 1,
+      "rarity": "common"
+     },
+     {
+      "item_id": "electronic_components",
+      "quantity": 4,
+      "rarity": "common"
+     },
+     {
+      "item_id": "grip_material",
+      "quantity": 1,
+      "rarity": "common"
+     }
+    ],
+    "tools": [
+     {
+      "tool_id": "weapon_smith_tools",
+      "proficiency_required": true,
+      "quality_bonus": 2
+     },
+     {
+      "tool_id": "precision_tools",
+      "proficiency_required": true,
+      "quality_bonus": 2
+     }
+    ],
+    "skills": [
+     {
+      "skill_name": "Intelligence (Technology)",
+      "proficiency_bonus": 2,
+      "primary": true
+     },
+     {
+      "skill_name": "Dexterity (Sleight of Hand)",
+      "proficiency_bonus": 2,
+      "primary": false
+     }
+    ],
+    "prerequisites": [
+     {
+      "type": "level",
+      "value": "4",
+      "description": "Requires level 4 or higher"
+     },
+     {
+      "type": "tool_proficiency",
+      "value": "weapon_smith_tools",
+      "description": "Must be proficient with Weapon Smith's Tools"
+     }
+    ],
+    "result": {
+     "item_id": "vibroblade",
+     "quantity": 1,
+     "quality_modifiers": [
+      {
+       "check_margin": 5,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "keen",
+         "description": "Vibroblade gains the Keen property"
+        }
+       ]
+      },
+      {
+       "check_margin": 10,
+       "effects": [
+        {
+         "type": "enhance_property",
+         "value": "armor_piercing",
+         "description": "Vibroblade gains the Armor Piercing property"
+        },
+        {
+         "type": "modify_stat",
+         "value": "damage_bonus_1",
+         "description": "+1 to damage rolls"
+        }
+       ]
+      }
+     ]
+    },
+    "failure_effects": [
+     {
+      "failure_margin": 5,
+      "effects": [
+       {
+        "type": "material_loss",
+        "value": "60%",
+        "description": "Lose 60% of materials"
+       }
+      ]
+     },
+     {
+      "failure_margin": 10,
+      "effects": [
+       {
+        "type": "tool_damage",
+        "value": "minor",
+        "description": "Tools take minor damage"
+       },
+       {
+        "type": "injury",
+        "value": "vibration_burns",
+        "description": "Suffer vibration burns during testing"
+       }
+      ]
+     }
+    ],
+    "special_effects": [
+     {
+      "type": "customization",
+      "value": "blade_length",
+      "description": "Can customize blade length for different fighting styles",
+      "conditions": [
+       {
+        "key": "combat_expertise",
+        "op": "equals",
+        "value": true
+       }
+      ]
+     }
+    ],
+    "narrative_outcomes": [
+     "The weapon's distinctive whine becomes recognizable in combat",
+     "The blade's balance feels perfectly suited to your fighting style",
+     "Local bounty hunters may recognize your work and offer better prices"
+    ],
+    "tags": [
+     "vibroblade",
+     "melee",
+     "vibration",
+     "armor_piercing",
+     "bounty_hunter"
+    ],
+    "rarity": "uncommon",
+    "cost": {
+     "base_cost": 400,
+     "cost_modifiers": [
+      {
+       "condition": "bounty_hunter_guild",
+       "multiplier": 0.8
+      }
+     ]
+    },
+    "experience_reward": 100,
+    "reputation_effects": [
+     {
+      "faction": "bounty_hunters",
+      "change": 2,
+      "description": "Gain reputation with bounty hunters"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "weapon_recipes",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/crafting/weapon_recipes.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "c7a4ad3016daf2eaa559eba7083c35335c5ced7b7ed632d9639ed64445227e9b",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

@@ -1,0 +1,221 @@
+{
+ "record": {
+  "id": "power_technological_omniscience",
+  "name": "Technological Omniscience",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "omniscience",
+   "knowledge",
+   "information",
+   "awareness",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate information access—omniscience through data networks"
+   }
+  },
+  "narrative": "You interface with all information networks simultaneously, accessing every database, reading every transmission, knowing everything that exists in digital form. The power manifests as data flooding your consciousness—not overwhelming but perfectly organized, infinite knowledge made comprehensible through technological transcendence.",
+  "flavor_text": "\"I know everything. Every secret, every lie, every truth buried in data. I am knowledge incarnate.\" - Omniscient One",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "interfacing with universal data networks"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "processing infinite information streams simultaneously"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "Unlimited (data networks)",
+  "duration": "Concentration, up to 1 hour",
+  "base_effect": {
+   "description": "You gain access to all information stored in technological systems.",
+   "mechanics": [
+    {
+     "type": "universal_knowledge_access",
+     "value": {
+      "scope": "all_databases_and_networks",
+      "range": "unlimited_if_connected"
+     },
+     "target_scopes": [
+      "information"
+     ],
+     "notes": "Access any information stored digitally anywhere in connected networks"
+    },
+    {
+     "type": "perfect_analysis",
+     "value": {
+      "effect": "instant_understanding"
+     },
+     "target_scopes": [
+      "information"
+     ],
+     "notes": "Instantly understand and analyze all accessed information"
+    },
+    {
+     "type": "predictive_modeling",
+     "value": {
+      "effect": "predict_future_from_data"
+     },
+     "target_scopes": [
+      "events"
+     ],
+     "notes": "Predict likely future events by analyzing all available data"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "scholar",
+    "narrative": "The Scholar's analytical mind synergizes perfectly with omniscience. They don't just access knowledge—they synthesize it, finding connections across disparate data that reveal deeper truths invisible to lesser minds.",
+    "mechanical_benefit": [
+     {
+      "type": "deep_insights",
+      "value": {
+       "effect": "gain_prophetic_understanding"
+      },
+      "target_scopes": [
+       "information"
+      ],
+      "notes": "Scholars gain insights that border on prophecy through perfect data synthesis."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human pattern recognition makes their omniscience devastatingly effective. They find meaningful signals in information noise, their intuition guiding them to exactly the data that matters from infinite possibilities.",
+    "mechanical_benefit": [
+     {
+      "type": "intuitive_search",
+      "value": {
+       "effect": "find_any_needed_information"
+      },
+      "target_scopes": [
+       "databases"
+      ],
+      "notes": "Humans instinctively locate precisely the information they need from all available data."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses omniscience for total intelligence superiority. Their analysts know every secret, predict every rebellion, uncover every conspiracy through absolute information dominance—knowledge as ultimate weapon.",
+    "mechanical_benefit": [
+     {
+      "type": "tactical_omniscience",
+      "value": {
+       "effect": "know_all_enemy_positions_and_plans"
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Imperial omniscience reveals all enemy locations, capabilities, and intentions."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe data flooding consciousness—infinite information perfectly organized, every secret laid bare. Show the moment of total knowledge where all questions have answers, all mysteries solved. The omniscience should feel transcendent and overwhelming.",
+   "tactical_notes": "Technological Omniscience grants access to all digital information and perfect analysis for 1 hour with concentration, costing 9 Tech Points. Literal god-tier knowledge power. Can access any database, predict future events, understand everything. Game-breaking for mystery/investigation scenarios.",
+   "narrative_hooks": [
+    "Omniscience reveals truth that was meant to stay hidden forever",
+    "Perfect knowledge creates moral burden of knowing too much",
+    "The information access attracts attention from those who guard secrets"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of technological omniscience manifested. Data streams flood into a figure's consciousness, infinite information perfectly organized. Their eyes glow with knowledge, seeing connections across all data networks. Every secret, every truth visible simultaneously. The scene captures godhood through perfect information. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric data streams, by Beeple",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_omniscience.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_omniscience",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_omniscience.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

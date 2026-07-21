@@ -1,0 +1,242 @@
+{
+ "record": {
+  "id": "species_wookiee",
+  "name": "Wookiee",
+  "era": "All_Eras",
+  "rarity": "uncommon",
+  "narrative": "Wookiees are a proud, honor-bound species from the forest world of Kashyyyk. Towering and incredibly strong, they are known for their fierce loyalty, exceptional craftsmanship, and deep connection to nature. Wookiees value honor above all else and form lifelong bonds of friendship. Their natural climbing abilities and strength make them formidable warriors and skilled mechanics.",
+  "flavor_text": "'Wookiees are known to tear people's arms out of their sockets when they lose.' - C-3PO",
+  "cultural_significance": "Wookiees are respected throughout the galaxy for their honor, strength, and loyalty. They are known as fierce warriors and skilled craftspeople, particularly in the construction of starships and weapons.",
+  "description": "Wookiees are large, fur-covered humanoids with incredible strength and natural climbing abilities. They are known for their honor-bound culture, fierce loyalty, and exceptional craftsmanship.",
+  "origin_story": "Wookiees evolved on the forest world of Kashyyyk, developing their climbing abilities and strength to survive in the dangerous wroshyr trees. Their culture emphasizes honor, loyalty, and craftsmanship.",
+  "innate_traits": [
+   {
+    "id": "wookiee_strength",
+    "name": "Natural Strength",
+    "narrative": "Wookiees possess incredible natural strength, making them formidable in physical combat.",
+    "mechanics": [
+     {
+      "effect": "modify_stat",
+      "parameters": {
+       "stat": "Strength",
+       "modifier": 2,
+       "description": "Your Strength score increases by 2"
+      }
+     }
+    ]
+   },
+   {
+    "id": "wookiee_climbing",
+    "name": "Natural Climber",
+    "narrative": "Wookiees are natural climbers, able to scale trees and other surfaces with ease.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "parameters": {
+       "type": "skill_check",
+       "skill": "Athletics",
+       "condition": "climbing",
+       "description": "You have advantage on Athletics checks made to climb"
+      }
+     }
+    ]
+   },
+   {
+    "id": "wookiee_fury",
+    "name": "Wookiee Fury",
+    "narrative": "When a Wookiee's honor is challenged or their friends are threatened, they can enter a berserker rage.",
+    "mechanics": [
+     {
+      "effect": "trigger_effect",
+      "parameters": {
+       "trigger": "honor_challenged_or_friend_threatened",
+       "effect": "rage",
+       "duration": "1 minute",
+       "description": "Once per long rest, you can enter a rage that grants advantage on Strength checks and +2 damage to melee attacks"
+      }
+     }
+    ]
+   }
+  ],
+  "physical_characteristics": {
+   "average_height": "7'0\" to 8'0\"",
+   "average_weight": "200 to 400 lbs",
+   "lifespan": "400 to 600 years",
+   "skin_colors": [
+    "brown fur",
+    "black fur",
+    "gray fur",
+    "white fur"
+   ],
+   "hair_colors": [
+    "brown",
+    "black",
+    "gray",
+    "white",
+    "reddish-brown"
+   ],
+   "eye_colors": [
+    "brown",
+    "black",
+    "amber",
+    "gold"
+   ]
+  },
+  "homeworld": "Kashyyyk",
+  "common_languages": [
+   "Shyriiwook",
+   "Basic"
+  ],
+  "cultural_notes": "Wookiees are deeply honor-bound and form lifelong bonds of friendship. They are skilled craftspeople and value family above all else.",
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "increase": 2
+   },
+   {
+    "ability": "Constitution",
+    "increase": 1
+   }
+  ],
+  "size": "Medium",
+  "speed": 30,
+  "languages": [
+   "Shyriiwook",
+   "Basic"
+  ],
+  "special_abilities": [
+   {
+    "name": "Natural Weapons",
+    "description": "Your claws are natural weapons, which you can use to make unarmed strikes. If you hit with them, you deal slashing damage equal to 1d4 + your Strength modifier."
+   },
+   {
+    "name": "Fury",
+    "description": "As a bonus action, you can enter a rage. While raging, you have advantage on Strength checks and saving throws, and you deal +2 damage with melee weapon attacks. The rage lasts for 1 minute or until you end it as a bonus action. You can use this feature once per long rest."
+   }
+  ],
+  "connections": [
+   {
+    "target_id": "faction_rebel_alliance",
+    "target_type": "Faction",
+    "relationship": "Strong_Allies",
+    "narrative": "Wookiees have been strong allies of the Rebel Alliance, particularly after the Empire enslaved their people.",
+    "mechanical_benefit": "Wookiees gain advantage on Charisma checks when dealing with Rebel Alliance members"
+   },
+   {
+    "target_id": "faction_galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Enslaved_By",
+    "narrative": "The Empire enslaved Wookiees for their strength and used them as forced labor.",
+    "mechanical_benefit": "Wookiees have disadvantage on Charisma checks when dealing with Imperial officials"
+   },
+   {
+    "target_id": "class_guardian",
+    "target_type": "Class",
+    "relationship": "Natural_Fit",
+    "narrative": "Wookiees' strength and honor make them natural Jedi Guardians.",
+    "mechanical_benefit": "Wookiee Guardians gain +1 to their hit point maximum per level"
+   },
+   {
+    "target_id": "class_engineer",
+    "target_type": "Class",
+    "relationship": "Natural_Fit",
+    "narrative": "Wookiees' natural craftsmanship and mechanical aptitude make them excellent Engineers.",
+    "mechanical_benefit": "Wookiee Engineers gain advantage on checks to repair or modify starships"
+   }
+  ],
+  "iconic_examples": [
+   "Chewbacca - Han Solo's loyal co-pilot and friend",
+   "Tarfful - Wookiee chieftain who fought alongside Yoda",
+   "Lowbacca - Jedi Knight and Chewbacca's nephew"
+  ],
+  "famous_wookiees": [
+   "Chewbacca",
+   "Tarfful",
+   "Lowbacca",
+   "Zaalbar",
+   "Hanharr"
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Wookiees are fiercely loyal and honor-bound. They form deep, lifelong friendships and will go to great lengths to protect those they care about. They are also known for their temper when their honor is challenged or their friends are threatened.",
+   "narrative_hooks": [
+    "A Wookiee character seeks to free their enslaved people",
+    "A Wookiee character must choose between honor and survival",
+    "A Wookiee character forms a life-debt with another character",
+    "A Wookiee character's craftsmanship skills are needed for a critical mission"
+   ],
+   "social_dynamics": "Wookiees are generally respected for their honor and strength, but some species may be intimidated by their size and ferocity. They are known to be excellent friends but dangerous enemies.",
+   "common_motivations": [
+    "Protecting family and friends",
+    "Upholding honor and tradition",
+    "Fighting against slavery and oppression",
+    "Mastering their craft",
+    "Forming and maintaining life-debts"
+   ],
+   "species_development": "Wookiee characters often grow through learning to balance their fierce nature with wisdom and diplomacy. They excel at protecting others and standing up for what's right."
+  },
+  "image_generation": {
+   "base_prompt": "A detailed portrait of a Wookiee character in the Star Wars universe. The character should be tall and imposing, covered in thick fur in various shades of brown, black, or gray. They should have expressive eyes and a strong, noble bearing. The character should be dressed in appropriate Star Wars attire - whether that's Jedi robes, Rebel gear, or traditional Wookiee clothing. The background should reflect their environment, possibly showing the forests of Kashyyyk or a starship. The mood should capture their honor, strength, and loyalty.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "Focus on the Wookiee's expressive eyes and noble bearing, showing their honor and strength"
+    },
+    {
+     "target_type": "Action_Shot",
+     "modifier_text": "Show the Wookiee in combat or climbing, demonstrating their natural abilities and ferocity"
+    },
+    {
+     "target_type": "Cultural_Scene",
+     "modifier_text": "Show the Wookiee in their natural environment or with their family, highlighting their cultural values"
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/species/wookiee.png",
+   "icon": "/assets/icons/species/wookiee.svg",
+   "color": "#8B4513"
+  }
+ },
+ "validation": {
+  "candidate_urid": "species_wookiee",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/species/wookiee.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

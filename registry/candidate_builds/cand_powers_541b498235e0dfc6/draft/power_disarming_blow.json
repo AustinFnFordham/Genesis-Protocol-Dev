@@ -1,0 +1,206 @@
+{
+ "record": {
+  "id": "power_disarming_blow",
+  "name": "Disarming Blow",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "martial",
+   "disarm",
+   "tactical",
+   "weapon_control",
+   "superiority"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Tactical disarmament technique"
+   }
+  },
+  "narrative": "You strike with surgical precision at the tendons, pressure points, or weapon grip of your opponent, using superior technique to send their weapon flying. The power manifests as a perfectly timed strike that catches them mid-swing, exploiting the moment when their grip is weakest.",
+  "flavor_text": "\"A warrior without a weapon is just another victim.\" - Mandalorian Proverb",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "precise strike targeting weapon hand or grip"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "analyzing grip strength and weapon balance"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "On a hit, expend a superiority die to add to the damage and attempt to disarm the target.",
+   "mechanics": [
+    {
+     "type": "enhance_damage",
+     "value": {
+      "source": "superiority_die"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Add superiority die to damage"
+    },
+    {
+     "type": "disarm_creature",
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target must make Strength save or drop a held object"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "fighter",
+    "narrative": "The Fighter's mastery of weapon dynamics transforms Disarming Blow into an art form. They understand the physics of every weapon—balance points, grip requirements, momentum vectors—allowing them to not just disarm, but send weapons exactly where they want them.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_dc",
+      "value": {
+       "bonus": 2,
+       "stat": "saving_throw_dc"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Fighters increase the Strength save DC by 2."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability shines in Disarming Blow execution. They instinctively adjust their technique for different weapon types and fighting styles, whether disarming a vibroblade, blaster, or exotic alien weapon, making their disarms universally effective.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_effect",
+      "value": {
+       "effect": "kick_weapon_away"
+      },
+      "target_scopes": [
+       "object"
+      ],
+      "notes": "Humans can kick the disarmed weapon up to 15 feet away."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "mandalorian",
+    "narrative": "Mandalorian combat doctrine treats Disarming Blow as essential survival skill. They've perfected techniques for disarming while wearing heavy armor, using beskar gauntlets to strike with devastating precision that can disarm even the strongest grip.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "stunned"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Mandalorians stun the target for 1 round if disarm succeeds."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the precise strike—hitting nerve clusters, striking the thumb, catching the weapon at its balance point. Show the weapon spinning away, clattering across the floor, while the disarmed opponent looks at their empty hand in shock.",
+   "tactical_notes": "Disarming Blow requires a superiority die and a successful melee hit. The target makes a Strength save or drops one held object. Excellent against single powerful enemies or to neutralize ranged threats. The superiority die also adds to damage.",
+   "narrative_hooks": [
+    "A perfectly timed disarm turns a losing fight into victory",
+    "The disarmed weapon becomes an improvised projectile or trap",
+    "A warrior's prized weapon is sent flying, changing the entire dynamic"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a precise martial strike sending an opponent's weapon flying. The attacker's blow connects perfectly with the defender's wrist, their weapon spinning through the air in slow motion. The disarmed warrior's face shows shock and vulnerability. Dynamic action lines emphasize the speed and precision of the technique.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/disarming_blow.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_disarming_blow",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_disarming_blow.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

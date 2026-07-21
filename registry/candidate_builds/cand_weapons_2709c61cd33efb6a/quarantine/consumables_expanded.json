@@ -1,0 +1,1376 @@
+{
+ "record": {
+  "consumables_expanded": [
+   {
+    "id": "consumable_medpack_basic",
+    "name": "Basic Medpack",
+    "description": "A standard medical kit containing basic supplies for treating minor injuries and wounds.",
+    "type": "Consumables",
+    "subtype": "Medical",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "consumable",
+     "medical",
+     "medpack",
+     "basic",
+     "treatment",
+     "wounds"
+    ],
+    "properties": [
+     "basic_treatment",
+     "wound_care",
+     "medical_supplies"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_treatment",
+     "wound_care",
+     "medical_supplies"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "medpack_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medicine checks when basic medpack is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_medpack_advanced",
+    "name": "Advanced Medpack",
+    "description": "A comprehensive medical kit with advanced treatment capabilities for serious injuries and medical emergencies.",
+    "type": "Consumables",
+    "subtype": "Medical",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "consumable",
+     "medical",
+     "medpack",
+     "advanced",
+     "comprehensive",
+     "emergency"
+    ],
+    "properties": [
+     "advanced_treatment",
+     "emergency_care",
+     "comprehensive_medical"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "advanced_treatment",
+     "emergency_care",
+     "comprehensive_medical"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_medicine_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_medpack_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all medicine checks when advanced medpack is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_bacta_tank",
+    "name": "Portable Bacta Tank",
+    "description": "A portable tank filled with healing bacta that can rapidly heal serious injuries and restore health.",
+    "type": "Consumables",
+    "subtype": "Medical",
+    "cost": 5000,
+    "rarity": 4,
+    "weight": 20.0,
+    "tags": [
+     "consumable",
+     "medical",
+     "bacta",
+     "tank",
+     "healing",
+     "rapid"
+    ],
+    "properties": [
+     "rapid_healing",
+     "bacta_treatment",
+     "serious_injuries"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rapid_healing",
+     "bacta_treatment",
+     "serious_injuries"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "bacta_healing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_tank_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform rapid bacta healing for serious injuries"
+     }
+    ]
+   },
+   {
+    "id": "consumable_bacta_patch",
+    "name": "Bacta Patch",
+    "description": "A small, adhesive patch infused with bacta that provides rapid healing for minor wounds.",
+    "type": "Consumables",
+    "subtype": "Medical",
+    "cost": 100,
+    "rarity": 2,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "medical",
+     "bacta",
+     "patch",
+     "adhesive",
+     "rapid"
+    ],
+    "properties": [
+     "rapid_healing",
+     "adhesive",
+     "minor_wounds"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "rapid_healing",
+     "minor_wounds",
+     "adhesive_application"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "healing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "bacta_patch_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Healing status when bacta patch is applied"
+     }
+    ]
+   },
+   {
+    "id": "consumable_stim_pack",
+    "name": "Stim Pack",
+    "description": "A medical injector containing stimulants that can temporarily boost performance and combat effectiveness.",
+    "type": "Consumables",
+    "subtype": "Medical",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "medical",
+     "stim",
+     "pack",
+     "performance",
+     "combat"
+    ],
+    "properties": [
+     "performance_boost",
+     "combat_enhancement",
+     "temporary"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "performance_boost",
+     "combat_enhancement",
+     "temporary"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "stimulated",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stim_pack_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Stimulated status for temporary performance boost"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ration_basic",
+    "name": "Basic Ration Pack",
+    "description": "A compact, nutritious meal designed for extended missions and survival situations.",
+    "type": "Consumables",
+    "subtype": "Food",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "food",
+     "ration",
+     "pack",
+     "nutrition",
+     "survival"
+    ],
+    "properties": [
+     "nutrition",
+     "survival",
+     "compact",
+     "extended_missions"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "nutrition",
+     "survival",
+     "extended_missions"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "nourished",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ration_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Nourished status when ration pack is consumed"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ration_advanced",
+    "name": "Advanced Ration Pack",
+    "description": "A high-quality meal with enhanced nutrition and long-lasting sustenance for demanding missions.",
+    "type": "Consumables",
+    "subtype": "Food",
+    "cost": 150,
+    "rarity": 2,
+    "weight": 0.8,
+    "tags": [
+     "consumable",
+     "food",
+     "ration",
+     "advanced",
+     "enhanced",
+     "long_lasting"
+    ],
+    "properties": [
+     "enhanced_nutrition",
+     "long_lasting",
+     "high_quality"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_nutrition",
+     "long_lasting",
+     "high_quality"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "well_nourished",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_ration_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Well Nourished status when advanced ration pack is consumed"
+     }
+    ]
+   },
+   {
+    "id": "consumable_luxury_food",
+    "name": "Luxury Food Item",
+    "description": "A gourmet food item that provides exceptional taste and quality, often used for special occasions.",
+    "type": "Consumables",
+    "subtype": "Food",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "consumable",
+     "food",
+     "luxury",
+     "gourmet",
+     "exceptional",
+     "special"
+    ],
+    "properties": [
+     "gourmet_quality",
+     "exceptional_taste",
+     "luxury_food"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "gourmet_quality",
+     "exceptional_taste",
+     "luxury_food"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "social_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_food_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on social checks when luxury food is consumed"
+     }
+    ]
+   },
+   {
+    "id": "consumable_emergency_food",
+    "name": "Emergency Food Supply",
+    "description": "A concentrated food supply designed for emergency situations and extreme survival conditions.",
+    "type": "Consumables",
+    "subtype": "Food",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 0.3,
+    "tags": [
+     "consumable",
+     "food",
+     "emergency",
+     "concentrated",
+     "extreme",
+     "survival"
+    ],
+    "properties": [
+     "concentrated_nutrition",
+     "emergency_supply",
+     "extreme_survival"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "concentrated_nutrition",
+     "emergency_supply",
+     "extreme_survival"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "sustained",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "emergency_food_consumed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Sustained status when emergency food supply is consumed"
+     }
+    ]
+   },
+   {
+    "id": "consumable_chemical_basic",
+    "name": "Basic Chemical Compound",
+    "description": "A standard chemical compound used for various purposes including cleaning, repair, and basic reactions.",
+    "type": "Consumables",
+    "subtype": "Chemicals",
+    "cost": 100,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "consumable",
+     "chemical",
+     "compound",
+     "basic",
+     "cleaning",
+     "repair"
+    ],
+    "properties": [
+     "basic_chemical",
+     "cleaning",
+     "repair",
+     "reactions"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_chemical",
+     "cleaning",
+     "repair",
+     "reactions"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "repair_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "chemical_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on repair checks when basic chemical compound is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_chemical_advanced",
+    "name": "Advanced Chemical Compound",
+    "description": "A sophisticated chemical compound with enhanced properties for specialized applications and reactions.",
+    "type": "Consumables",
+    "subtype": "Chemicals",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 1.5,
+    "tags": [
+     "consumable",
+     "chemical",
+     "compound",
+     "advanced",
+     "sophisticated",
+     "specialized"
+    ],
+    "properties": [
+     "enhanced_chemical",
+     "specialized_applications",
+     "sophisticated_reactions"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_chemical",
+     "specialized_applications",
+     "sophisticated_reactions"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_chemical_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_chemical_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all chemical checks when advanced chemical compound is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_explosive_compound",
+    "name": "Explosive Compound",
+    "description": "A volatile chemical compound that can be used to create explosives or perform demolition work.",
+    "type": "Consumables",
+    "subtype": "Chemicals",
+    "cost": 300,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "consumable",
+     "chemical",
+     "explosive",
+     "volatile",
+     "demolition",
+     "compound"
+    ],
+    "properties": [
+     "volatile_compound",
+     "explosive_potential",
+     "demolition_work"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "volatile_compound",
+     "explosive_potential",
+     "demolition_work"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "demolition_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "explosive_compound_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on demolition checks when explosive compound is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_poison_compound",
+    "name": "Poison Compound",
+    "description": "A toxic chemical compound that can be used for various purposes including hunting and self-defense.",
+    "type": "Consumables",
+    "subtype": "Chemicals",
+    "cost": 400,
+    "rarity": 3,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "chemical",
+     "poison",
+     "toxic",
+     "hunting",
+     "self_defense"
+    ],
+    "properties": [
+     "toxic_compound",
+     "poison_application",
+     "hunting_utility"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "toxic_compound",
+     "poison_application",
+     "hunting_utility"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "poison_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "poison_compound_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on poison checks when poison compound is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_fuel_basic",
+    "name": "Basic Fuel Cell",
+    "description": "A standard fuel cell that provides energy for various devices and equipment.",
+    "type": "Consumables",
+    "subtype": "Fuels",
+    "cost": 200,
+    "rarity": 1,
+    "weight": 3.0,
+    "tags": [
+     "consumable",
+     "fuel",
+     "cell",
+     "basic",
+     "energy",
+     "devices"
+    ],
+    "properties": [
+     "basic_energy",
+     "fuel_cell",
+     "device_power"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_energy",
+     "fuel_cell",
+     "device_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "device_power",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "fuel_cell_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can power devices when fuel cell is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_fuel_advanced",
+    "name": "Advanced Fuel Cell",
+    "description": "A high-efficiency fuel cell that provides enhanced energy output for demanding applications.",
+    "type": "Consumables",
+    "subtype": "Fuels",
+    "cost": 800,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "consumable",
+     "fuel",
+     "cell",
+     "advanced",
+     "high_efficiency",
+     "enhanced"
+    ],
+    "properties": [
+     "high_efficiency",
+     "enhanced_energy",
+     "demanding_applications"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "high_efficiency",
+     "enhanced_energy",
+     "demanding_applications"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "energy_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_fuel_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on energy checks when advanced fuel cell is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_hyperdrive_fuel",
+    "name": "Hyperdrive Fuel",
+    "description": "Specialized fuel designed for hyperdrive systems that enables faster-than-light travel.",
+    "type": "Consumables",
+    "subtype": "Fuels",
+    "cost": 2000,
+    "rarity": 3,
+    "weight": 10.0,
+    "tags": [
+     "consumable",
+     "fuel",
+     "hyperdrive",
+     "specialized",
+     "faster_than_light",
+     "travel"
+    ],
+    "properties": [
+     "hyperdrive_fuel",
+     "faster_than_light",
+     "specialized_travel"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "hyperdrive_fuel",
+     "faster_than_light",
+     "specialized_travel"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "hyperdrive_travel",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "hyperdrive_fuel_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can enable hyperdrive travel when hyperdrive fuel is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_plasma_fuel",
+    "name": "Plasma Fuel",
+    "description": "High-energy plasma fuel that provides immense power output for heavy-duty equipment and weapons.",
+    "type": "Consumables",
+    "subtype": "Fuels",
+    "cost": 1500,
+    "rarity": 4,
+    "weight": 5.0,
+    "tags": [
+     "consumable",
+     "fuel",
+     "plasma",
+     "high_energy",
+     "immense",
+     "heavy_duty"
+    ],
+    "properties": [
+     "high_energy",
+     "immense_power",
+     "heavy_duty_fuel"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "high_energy",
+     "immense_power",
+     "heavy_duty_fuel"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "power_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "plasma_fuel_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on power checks when plasma fuel is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ammo_basic",
+    "name": "Basic Ammunition",
+    "description": "Standard ammunition for blaster weapons and other ranged weapons.",
+    "type": "Consumables",
+    "subtype": "Ammunition",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "consumable",
+     "ammo",
+     "basic",
+     "blaster",
+     "ranged",
+     "weapons"
+    ],
+    "properties": [
+     "basic_ammo",
+     "blaster_compatible",
+     "ranged_weapons"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_ammo",
+     "blaster_compatible",
+     "ranged_weapons"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "ranged_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ammo_loaded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform ranged attacks when ammunition is loaded"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ammo_advanced",
+    "name": "Advanced Ammunition",
+    "description": "High-quality ammunition with enhanced performance and specialized properties.",
+    "type": "Consumables",
+    "subtype": "Ammunition",
+    "cost": 200,
+    "rarity": 3,
+    "weight": 1.5,
+    "tags": [
+     "consumable",
+     "ammo",
+     "advanced",
+     "high_quality",
+     "enhanced",
+     "specialized"
+    ],
+    "properties": [
+     "enhanced_performance",
+     "high_quality",
+     "specialized_properties"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_performance",
+     "high_quality",
+     "specialized_properties"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "ranged_attack_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_ammo_loaded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on ranged attack checks when advanced ammunition is loaded"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ion_ammo",
+    "name": "Ion Ammunition",
+    "description": "Specialized ammunition designed to disable electronic systems and droids.",
+    "type": "Consumables",
+    "subtype": "Ammunition",
+    "cost": 300,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "consumable",
+     "ammo",
+     "ion",
+     "specialized",
+     "disable",
+     "electronic"
+    ],
+    "properties": [
+     "ion_ammo",
+     "disable_electronic",
+     "droid_effective"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ion_ammo",
+     "disable_electronic",
+     "droid_effective"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "droid_attack_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ion_ammo_loaded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on droid attack checks when ion ammunition is loaded"
+     }
+    ]
+   },
+   {
+    "id": "consumable_explosive_ammo",
+    "name": "Explosive Ammunition",
+    "description": "Ammunition that explodes on impact, providing area damage and explosive effects.",
+    "type": "Consumables",
+    "subtype": "Ammunition",
+    "cost": 400,
+    "rarity": 4,
+    "weight": 2.5,
+    "tags": [
+     "consumable",
+     "ammo",
+     "explosive",
+     "impact",
+     "area_damage",
+     "explosive"
+    ],
+    "properties": [
+     "explosive_impact",
+     "area_damage",
+     "explosive_effects"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "explosive_impact",
+     "area_damage",
+     "explosive_effects"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "explosive_attack_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "explosive_ammo_loaded",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on explosive attack checks when explosive ammunition is loaded"
+     }
+    ]
+   },
+   {
+    "id": "consumable_stealth_coating",
+    "name": "Stealth Coating",
+    "description": "A specialized coating that can be applied to equipment to reduce detection and improve stealth capabilities.",
+    "type": "Consumables",
+    "subtype": "Specialized",
+    "cost": 600,
+    "rarity": 3,
+    "weight": 1.0,
+    "tags": [
+     "consumable",
+     "stealth",
+     "coating",
+     "specialized",
+     "detection",
+     "stealth"
+    ],
+    "properties": [
+     "stealth_coating",
+     "reduced_detection",
+     "stealth_enhancement"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "stealth_coating",
+     "reduced_detection",
+     "stealth_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_coating_applied",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on stealth checks when stealth coating is applied"
+     }
+    ]
+   },
+   {
+    "id": "consumable_repair_paste",
+    "name": "Repair Paste",
+    "description": "A specialized paste that can quickly repair minor damage to equipment and machinery.",
+    "type": "Consumables",
+    "subtype": "Specialized",
+    "cost": 250,
+    "rarity": 2,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "repair",
+     "paste",
+     "specialized",
+     "quick",
+     "equipment"
+    ],
+    "properties": [
+     "quick_repair",
+     "equipment_fix",
+     "repair_paste"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "quick_repair",
+     "equipment_fix",
+     "repair_paste"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "repair_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "repair_paste_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on repair checks when repair paste is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_enhancement_drug",
+    "name": "Enhancement Drug",
+    "description": "A pharmaceutical compound that temporarily enhances physical and mental capabilities.",
+    "type": "Consumables",
+    "subtype": "Specialized",
+    "cost": 1000,
+    "rarity": 4,
+    "weight": 0.2,
+    "tags": [
+     "consumable",
+     "enhancement",
+     "drug",
+     "pharmaceutical",
+     "temporary",
+     "capabilities"
+    ],
+    "properties": [
+     "temporary_enhancement",
+     "physical_boost",
+     "mental_boost"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "temporary_enhancement",
+     "physical_boost",
+     "mental_boost"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "enhanced",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "enhancement_drug_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Enhanced status when enhancement drug is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_truth_serum",
+    "name": "Truth Serum",
+    "description": "A chemical compound that can be used to extract truthful information from subjects.",
+    "type": "Consumables",
+    "subtype": "Specialized",
+    "cost": 800,
+    "rarity": 4,
+    "weight": 0.1,
+    "tags": [
+     "consumable",
+     "truth",
+     "serum",
+     "chemical",
+     "extract",
+     "information"
+    ],
+    "properties": [
+     "truth_extraction",
+     "information_gathering",
+     "truth_serum"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "truth_extraction",
+     "information_gathering",
+     "truth_serum"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "interrogation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "truth_serum_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on interrogation checks when truth serum is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ultimate_healing",
+    "name": "Ultimate Healing Elixir",
+    "description": "A miraculous healing elixir that can restore even the most grievous injuries and restore full health.",
+    "type": "Consumables",
+    "subtype": "Ultimate",
+    "cost": 10000,
+    "rarity": 6,
+    "weight": 0.5,
+    "tags": [
+     "consumable",
+     "ultimate",
+     "healing",
+     "elixir",
+     "miraculous",
+     "restore"
+    ],
+    "properties": [
+     "miraculous_healing",
+     "full_restoration",
+     "ultimate_elixir"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "miraculous_healing",
+     "full_restoration",
+     "ultimate_elixir"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "fully_healed",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ultimate_healing_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Fully Healed status when ultimate healing elixir is used"
+     }
+    ]
+   },
+   {
+    "id": "consumable_ultimate_enhancement",
+    "name": "Ultimate Enhancement Compound",
+    "description": "A revolutionary compound that provides ultimate enhancement of all physical and mental capabilities.",
+    "type": "Consumables",
+    "subtype": "Ultimate",
+    "cost": 50000,
+    "rarity": 6,
+    "weight": 1.0,
+    "tags": [
+     "consumable",
+     "ultimate",
+     "enhancement",
+     "compound",
+     "revolutionary",
+     "all_capabilities"
+    ],
+    "properties": [
+     "ultimate_enhancement",
+     "all_capabilities",
+     "revolutionary_compound"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ultimate_enhancement",
+     "all_capabilities",
+     "revolutionary_compound"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "ultimately_enhanced",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ultimate_enhancement_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain Ultimately Enhanced status when ultimate enhancement compound is used"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "consumables_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/consumables_expanded.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

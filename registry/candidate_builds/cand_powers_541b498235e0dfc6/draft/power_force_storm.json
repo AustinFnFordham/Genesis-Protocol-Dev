@@ -1,0 +1,237 @@
+{
+ "record": {
+  "id": "power_force_storm",
+  "name": "Force Storm",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 9,
+  "narrative": "You channel the raw power of the dark side, creating a devastating storm of Force energy that tears through everything in its path. This is the ultimate expression of destructive Force power, capable of leveling entire areas.",
+  "flavor_text": "'Unlimited power!' - Emperor Palpatine",
+  "casting_time": "1 Action",
+  "range": "120 feet",
+  "duration": "Concentration, up to 1 minute",
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 13
+   },
+   {
+    "type": "Strain",
+    "amount": 5
+   }
+  ],
+  "manifestation": [
+   "Somatic (raising both hands to the sky)",
+   "Verbal (dark incantations in ancient Sith tongue)",
+   "Mental Focus (channeling pure hatred and rage)"
+  ],
+  "uses_per_rest": "long",
+  "base_effect": {
+   "description": "You create a massive storm of dark Force energy in a 60-foot radius sphere centered on a point within range. The area becomes filled with howling winds, crackling lightning, and destructive Force energy.",
+   "mechanics": [
+    {
+     "effect": "create_area_of_effect",
+     "parameters": {
+      "shape": "sphere",
+      "radius": 60,
+      "unit": "feet"
+     }
+    },
+    {
+     "effect": "apply_damage",
+     "parameters": {
+      "damage_dice": "8d10",
+      "damage_type": "force",
+      "damage_dice_secondary": "4d6",
+      "damage_type_secondary": "lightning"
+     }
+    },
+    {
+     "effect": "apply_conditional_status",
+     "parameters": {
+      "condition": "deafened",
+      "duration": "1 minute"
+     }
+    },
+    {
+     "effect": "apply_conditional_status",
+     "parameters": {
+      "condition": "blinded",
+      "duration": "1 round"
+     }
+    }
+   ]
+  },
+  "upgrades": [
+   {
+    "id": "storm_upgrade_annihilation",
+    "name": "Annihilation",
+    "description": "Your Force Storm deals additional damage and can destroy structures.",
+    "xp_cost": 25,
+    "prerequisites": [],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "increase_damage_dice",
+      "parameters": {
+       "primary_damage": "10d10",
+       "secondary_damage": "6d6"
+      }
+     },
+     {
+      "effect": "modify_base_power",
+      "modification": "add_structure_damage",
+      "parameters": {
+       "structure_damage": "4d10"
+      }
+     }
+    ]
+   },
+   {
+    "id": "storm_upgrade_control",
+    "name": "Storm Control",
+    "description": "You can move the storm's center as a bonus action.",
+    "xp_cost": 20,
+    "prerequisites": [
+     "storm_upgrade_annihilation"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "allow_movement",
+      "parameters": {
+       "movement_speed": 30,
+       "unit": "feet"
+      }
+     }
+    ]
+   },
+   {
+    "id": "storm_upgrade_consumption",
+    "name": "Life Consumption",
+    "description": "The storm feeds on the life force of those it damages, healing you.",
+    "xp_cost": 30,
+    "prerequisites": [
+     "storm_upgrade_control"
+    ],
+    "mechanics": [
+     {
+      "effect": "modify_base_power",
+      "modification": "add_life_steal",
+      "parameters": {
+       "healing_percentage": 0.5
+      }
+     },
+     {
+      "effect": "modify_power_cost",
+      "description": "Channeling this much dark power takes a heavy toll on your own life force.",
+      "modification": "add_cost",
+      "parameters": {
+       "type": "Hit_Points",
+       "amount": 10
+      }
+     }
+    ]
+   }
+  ],
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "Sith Warriors channel their rage and hatred to make the Force Storm even more devastating.",
+    "mechanical_benefit": "Sith Warriors can extend the storm's duration by spending additional Force Points."
+   },
+   {
+    "class_id": "sith_assassin",
+    "narrative": "Sith Assassins use the storm's chaos to cover their movements and eliminate targets.",
+    "mechanical_benefit": "Sith Assassins can teleport within the storm's area without provoking opportunity attacks."
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human ambition and capacity for hatred makes them particularly effective at channeling this dark power.",
+    "mechanical_benefit": "Humans can reduce the Hit Point cost by 5 when casting Force Storm."
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order has preserved the ancient techniques for channeling such destructive power.",
+    "mechanical_benefit": "Sith gain +2 to Force Storm damage rolls."
+   }
+  ],
+  "llm_guidance": {
+   "iconic_usage": "Emperor Palpatine demonstrates the ultimate expression of Force Storm during the Battle of Endor, creating a devastating storm that nearly destroys the Rebel fleet.",
+   "tactical_notes": "Force Storm is the ultimate area denial and destruction power. It's perfect for clearing large groups of enemies or destroying fortified positions, but its high cost and limited uses make it a strategic choice.",
+   "narrative_hooks": [
+    "A fallen Jedi unleashes Force Storm in a moment of pure rage and despair",
+    "A Sith Lord uses Force Storm to demonstrate their absolute power and dominance",
+    "The power is used as a last resort when all other options have failed",
+    "Ancient Sith texts describe Force Storm as the ultimate test of dark side mastery"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A detailed digital painting of Force Storm in action. A dark figure stands at the center of a massive storm of black and purple Force energy, their arms raised to the sky. Lightning crackles through the dark clouds, while destructive winds tear through the landscape. The storm creates a sphere of pure chaos and destruction, with debris and enemies being tossed about by the powerful winds. The scene is apocalyptic and terrifying, representing the ultimate expression of dark side power.",
+   "contextual_modifiers": [
+    {
+     "target_type": "Character_Portrait",
+     "modifier_text": "The character is wreathed in dark Force energy, their eyes glowing with malevolent power, and their expression twisted with pure hatred and rage."
+    },
+    {
+     "target_type": "Combat_Scene",
+     "modifier_text": "The Force Storm dominates the battlefield, creating an area of pure destruction that enemies must avoid or be torn apart by the chaotic energy."
+    },
+    {
+     "target_type": "Location",
+     "modifier_text": "The environment is being systematically destroyed by the storm, with structures crumbling and the landscape being reshaped by the raw power."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/powers/force_storm.png",
+   "icon": "/assets/icons/powers/force_storm.svg"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_storm",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_storm2.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

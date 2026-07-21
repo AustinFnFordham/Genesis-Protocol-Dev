@@ -1,0 +1,101 @@
+{
+ "record": {
+  "id": "feature_droid_binary_communication",
+  "name": "Binary Communication",
+  "category": "utility",
+  "xp_cost": 0,
+  "tags": [
+   "feature",
+   "specialization_feature",
+   "species",
+   "droid",
+   "utility",
+   "skill_enhancement",
+   "passive",
+   "ally_enhancement",
+   "teamwork",
+   "networking",
+   "tactical",
+   "low_cost"
+  ],
+  "narrative": "You converse in machine-code bursts that organic ears hear as beeps and whistles. Among droids, it is nuance-rich speech.",
+  "flavor_text": "'Binary Communication represents the pinnacle of mastery.' - Unknown Master",
+  "mechanics": [
+   {
+    "effect": "grant_ability",
+    "description": "Grants a special ability",
+    "parameters": {
+     "ability_name": "Binary Communication",
+     "action_type": "passive"
+    }
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This ability should feel like the droid speaking in a language that only other droids can fully understand. Describe the beeps and whistles that organic beings hear, while emphasizing the rich, nuanced communication that occurs between droids. The binary language should feel both technical and expressive.",
+   "tactical_notes": "This is a powerful communication ability that allows the droid to coordinate with other droids and encrypt messages. Use it to communicate secretly with droid allies or to understand droid conversations that organic beings cannot decode.",
+   "narrative_hooks": [
+    "The droid communicates with a friendly astromech droid",
+    "The droid encrypts a message that organic beings cannot understand",
+    "The droid translates binary communication for the party",
+    "The droid uses binary to coordinate with a droid network"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A droid communicating in binary, with visible sound waves or data streams representing the beeps and whistles. The scene shows the droid's communication array active, with other droids responding in kind.",
+   "base_negative_keywords": [
+    "organic",
+    "verbal",
+    "silent",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/features/binary_communication.png",
+   "icon": "/assets/icons/features/binary_communication.svg",
+   "color": "#32CD32"
+  }
+ },
+ "validation": {
+  "candidate_urid": "feature_droid_binary_communication",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/features/species/droid/binary_communication.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

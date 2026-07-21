@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "background_survivor",
+  "name": "Survivor",
+  "tags": [
+   "background",
+   "survivor",
+   "resilient",
+   "adaptable",
+   "wilderness_expert",
+   "constitution_based",
+   "resourceful",
+   "tough",
+   "survival_expert",
+   "frontier"
+  ],
+  "description": "You have survived against incredible odds, whether through war, disaster, or personal tragedy. Your experiences have taught you to be resourceful, resilient, and always prepared for the worst. You understand the value of community, the importance of hope, and the strength that comes from overcoming adversity. Your survival skills and determination make you a valuable ally in any dangerous situation.",
+  "proficiencies": {
+   "skills": [
+    "Athletics",
+    "Survival"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Survival Kit",
+      "Medical Kit",
+      "Repair Kit",
+      "Communications Kit",
+      "Emergency Rations",
+      "Shelter Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Resilient Spirit",
+   "level": 1,
+   "description": "You have learned to find strength in adversity. When you fail a saving throw, you can choose to reroll it and take the second result. You can use this feature once per long rest. Additionally, you have advantage on saving throws against fear effects, and you can't be frightened while you are conscious.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "fear_resistance",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "saving_throw",
+       "op": "equals",
+       "value": "fear"
+      }
+     ],
+     "notes": "Advantage on saving throws against fear effects"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "reroll_save",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "failed_save",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Once per long rest, reroll a failed saving throw"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I am always calm, no matter what the situation.",
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Hope. Even in the darkest times, there is always hope.",
+    "Community. We are stronger together than apart.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Justice. I bring criminals to justice."
+   ],
+   "bonds": [
+    "I have a family to provide for.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission.",
+    "I am overly critical of others' flaws."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_survivor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_survivor.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "record": {
+  "id": "big_game_hunter",
+  "name": "Big-Game Hunter",
+  "class_id": "explorer",
+  "base_class": "explorer",
+  "tags": [
+   "explorer",
+   "big_game_hunter",
+   "hunter",
+   "tracker",
+   "predator",
+   "wilderness_expert",
+   "dexterity_based",
+   "ranged_specialist",
+   "survival_expert"
+  ],
+  "description": "Big-Game Hunters are masters of tracking and hunting dangerous creatures, using their skills to track, trap, and defeat the most formidable beasts in the galaxy.",
+  "specialization_features": [
+   "tracking_expertise",
+   "beast_lore",
+   "hunting_mastery",
+   "trophy_collector",
+   "legendary_hunter"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Fearless trackers of the galaxy's most ferocious beasts.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Worn leather armor",
+    "Hunting trophies on belt"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "bg_hunter_1",
+    "feature_id": "big_game_hunter_feature",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain proficiency in Survival and Nature. Your Dexterity modifier is added to your initiative rolls.",
+    "effects": [
+     {
+      "type": "proficiency",
+      "value": "Survival, Nature"
+     },
+     {
+      "type": "ability_score_modification",
+      "value": "Dexterity modifier on initiative"
+     }
+    ]
+   },
+   {
+    "node_id": "bg_hunter_2",
+    "feature_id": "big_game_hunter_feature_2",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You learn to use the environment to your advantage. You can hide in areas with difficult terrain, even when you're not hiding.",
+    "effects": [
+     {
+      "type": "environmental_advantage",
+      "value": "Difficult terrain"
+     }
+    ]
+   },
+   {
+    "node_id": "bg_hunter_3",
+    "feature_id": "big_game_hunter_feature_3",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You learn to track and predict the movements of your prey. You can use your Wisdom (Perception) score instead of your Dexterity score for stealth checks.",
+    "effects": [
+     {
+      "type": "ability_score_modification",
+      "value": "Wisdom (Perception) for stealth"
+     }
+    ]
+   },
+   {
+    "node_id": "bg_hunter_4",
+    "feature_id": "big_game_hunter_feature_4",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You learn to set up traps and ambushes. You can use your proficiency in Athletics or Acrobatics to set up a trap, which deals damage to creatures that trigger it.",
+    "effects": [
+     {
+      "type": "trap_setting",
+      "value": "Athletics or Acrobatics for trap setting"
+     }
+    ]
+   },
+   {
+    "node_id": "bg_hunter_5",
+    "feature_id": "big_game_hunter_feature_5",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You gain expertise in two skills of your choice. You can use this expertise to make skill checks related to tracking and hunting.",
+    "effects": [
+     {
+      "type": "expertise",
+      "value": "Two skills of your choice"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "GalacticTrackerGlyph",
+    "ForceSaberHiltToken"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a stance of balance and agility, with knees slightly bent and weight evenly distributed between both feet.",
+    "energy_signature": "Emits a distinctive aura of concentrated force energy surrounding the user's lightsaber, pulsating with a soothing blue-white light."
+   },
+   "prompt_schema": {
+    "base_prompt": "A fearless galaxy tracker standing heroically amidst a swirling vortex of debris, their trusty blaster at the ready to face whatever dangers lie ahead.",
+    "contextual_modifiers": [
+     "In a dimly lit, abandoned temple on the forest moon of Endor",
+     "With a pack of loyal, genetically engineered hunting beasts by their side"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "big_game_hunter",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/explorer_subclasses/explorer_big_game_hunter.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

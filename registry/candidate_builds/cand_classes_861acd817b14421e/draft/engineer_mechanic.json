@@ -1,0 +1,478 @@
+{
+ "record": {
+  "id": "engineer_mechanic",
+  "name": "Mechanic",
+  "class_id": "engineer",
+  "tags": [
+   "engineer",
+   "mechanic",
+   "tech_specialist",
+   "intelligence_based",
+   "repair",
+   "support",
+   "practical",
+   "reliable"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "mechanical_expertise_3",
+    "feature_id": "mechanical_expertise",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop specialized expertise in mechanical systems and engineering. When you work on mechanical devices, you gain advantage on Technology checks, and you can use your Tech Points to enhance or repair mechanical systems.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "mechanical_technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "working_on_mechanical",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Technology checks for mechanical devices"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "tech_point_mechanical_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Tech Points to enhance or repair mechanical systems"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "repair_specialist_5",
+    "feature_id": "repair_specialist",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "mechanical_technique_5",
+    "description": "You specialize in repairing and maintaining mechanical systems. When you spend time repairing a device, you can restore it to better than new condition, and you can use your Tech Points to perform emergency repairs.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "superior_repair",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "repair_time_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore devices to better than new condition"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "emergency_repair",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Tech Points for emergency repairs"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_expertise_3"
+    ]
+   },
+   {
+    "node_id": "innovation_specialist_5",
+    "feature_id": "innovation_specialist",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "mechanical_technique_5",
+    "description": "You excel at creating new mechanical innovations and improvements. When you work on mechanical systems, you can add new features or capabilities, and you can use your Tech Points to create temporary enhancements.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "mechanical_innovation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "working_on_mechanical",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add new features or capabilities to mechanical systems"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "temporary_enhancements",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Tech Points to create temporary enhancements"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_expertise_3"
+    ]
+   },
+   {
+    "node_id": "precision_engineering_7",
+    "feature_id": "precision_engineering",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "mechanical_focus_7",
+    "description": "You master precision engineering and fine-tuning. When you spend Tech Points on mechanical systems, you can achieve perfect calibration and optimal performance, making devices more efficient and reliable.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_calibration",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve perfect calibration and optimal performance with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "repair_specialist_5"
+    ]
+   },
+   {
+    "node_id": "rapid_prototyping_7",
+    "feature_id": "rapid_prototyping",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "mechanical_focus_7",
+    "description": "You excel at rapid prototyping and quick modifications. When you spend Tech Points, you can quickly create or modify mechanical devices, allowing you to adapt to changing situations with remarkable speed.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "rapid_creation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Quickly create or modify mechanical devices with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "innovation_specialist_5"
+    ]
+   },
+   {
+    "node_id": "mechanical_mastery_9",
+    "feature_id": "mechanical_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your mechanical engineering becomes overwhelming. When you spend Tech Points, you can achieve both perfect precision and rapid innovation, creating mechanical systems that are both optimally efficient and highly adaptable.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_mechanical_engineering",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve both precision and rapid innovation with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "precision_engineering_7",
+     "rapid_prototyping_7"
+    ]
+   },
+   {
+    "node_id": "system_integration_11",
+    "feature_id": "system_integration",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "mechanical_technique_11",
+    "description": "You can integrate multiple mechanical systems into cohesive units. When you spend Tech Points, you can combine different mechanical devices to create complex systems with enhanced capabilities.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "system_combination",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Combine mechanical devices into complex systems with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_mastery_9"
+    ]
+   },
+   {
+    "node_id": "predictive_maintenance_11",
+    "feature_id": "predictive_maintenance",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "mechanical_technique_11",
+    "description": "You can predict and prevent mechanical failures before they occur. When you spend Tech Points, you can analyze mechanical systems to identify potential problems and implement preventive measures.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "failure_prediction",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Predict and prevent mechanical failures with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_mastery_9"
+    ]
+   },
+   {
+    "node_id": "mechanical_legend_13",
+    "feature_id": "mechanical_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of mechanical engineering. Your Tech Points are more potent, and when you spend them, you can create mechanical systems that are not only highly efficient but also possess unique capabilities.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_tech_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Tech Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "unique_mechanical_capabilities",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create mechanical systems with unique capabilities"
+     }
+    ],
+    "prerequisites": [
+     "system_integration_11",
+     "predictive_maintenance_11"
+    ]
+   },
+   {
+    "node_id": "mechanical_perfection_15",
+    "feature_id": "mechanical_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_mechanical_15",
+    "description": "Your mechanical engineering achieves perfection. When you spend Tech Points, you can create mechanical systems that operate at the absolute limits of efficiency and capability, achieving what others consider impossible.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_mechanical_systems",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create mechanical systems at absolute limits of efficiency"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_legend_13"
+    ]
+   },
+   {
+    "node_id": "mechanical_innovation_15",
+    "feature_id": "mechanical_innovation",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_mechanical_15",
+    "description": "Your mechanical innovations become revolutionary. When you spend Tech Points, you can create mechanical systems that introduce entirely new principles and capabilities, changing how technology is understood.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "revolutionary_mechanical_systems",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create revolutionary mechanical systems with new principles"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_legend_13"
+    ]
+   },
+   {
+    "node_id": "mechanical_legend_17",
+    "feature_id": "mechanical_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of mechanical innovation. When you spend Tech Points, you can create mechanical systems that are not only perfect and revolutionary but also possess capabilities that transcend normal technological limitations.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "transcendent_mechanical_systems",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create mechanical systems that transcend technological limitations"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_perfection_15",
+     "mechanical_innovation_15"
+    ]
+   },
+   {
+    "node_id": "perfect_mechanical_20",
+    "feature_id": "perfect_mechanical",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of mechanical engineering. When you spend Tech Points, you can create mechanical systems that are not only perfect and transcendent but also possess the ability to evolve and improve themselves.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "self_evolving_mechanical_systems",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create mechanical systems that can evolve and improve themselves"
+     }
+    ],
+    "prerequisites": [
+     "mechanical_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Blaster Pistol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A focused stance with legs shoulder-width apart, weight evenly distributed between both feet, and a firm grip on the lightsaber hilt.",
+    "energy_signature": "A swirling aura of blue energy emanating from the being's body, pulsing in sync with their heartbeat."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a skilled Jedi Master standing tall, ready for combat, surrounded by a halo of soft light on a misty forest moon.",
+    "contextual_modifiers": [
+     "High-contrast colors",
+     "Soft focus"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Mechanics of the galaxy use their knowledge of engines and machinery to create complex machines that aid them in combat.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "a set of goggles perched on their forehead, signifying their expertise with machinery",
+    "a utility belt at their hip, holding various tools and gadgets"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "engineer_mechanic",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer.mechanic.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

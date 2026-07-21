@@ -1,0 +1,233 @@
+{
+ "record": {
+  "id": "teacher",
+  "name": "Teacher",
+  "class_id": "consular",
+  "base_class": "consular",
+  "tags": [
+   "consular",
+   "teacher",
+   "scholar",
+   "mentor",
+   "inspiring",
+   "wise",
+   "light_side",
+   "jedi",
+   "support",
+   "wisdom_based"
+  ],
+  "description": "Teachers are masters of education and knowledge sharing. They excel at imparting wisdom, training others in the ways of the Force, and inspiring students to reach their full potential.",
+  "specialization_features": [
+   "teaching_expertise",
+   "knowledge_sharing",
+   "inspirational_guidance",
+   "teacher_mastery",
+   "legendary_teacher"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of education, imparting wisdom to others.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    {
+     "Signal1": "Wise and venerable appearance"
+    },
+    {
+     "Signal2": "Carrying a staff or ceremonial sash"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "teacher_feature_level_3",
+    "feature_id": "wise_teacher",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain the ability to inspire and motivate your students.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "command_respect (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "ability_score",
+        "op": "greater_than",
+        "value": 18
+       }
+      ],
+      "notes": "When the Teacher strikes a powerful blow, they issue a stern command that makes their enemies more likely to show respect. The consular's presence becomes less intimidating to foes who are already wary of them."
+     }
+    ]
+   },
+   {
+    "node_id": "teacher_feature_level_7",
+    "feature_id": "master_mentor",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You become a master mentor, able to sense your students' strengths and weaknesses.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "mentor_surge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "consular"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "teacher"
+       }
+      ],
+      "notes": "As the Master Mentor surges, the Teacher's aura of insight focuses and intensifies. They suddenly grasp the subtleties of the situation, gaining proficiency in Insight for a short time."
+     }
+    ]
+   },
+   {
+    "node_id": "teacher_feature_level_11",
+    "feature_id": "scholar_of_the_force",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You become a renowned scholar of the Force, able to access ancient tomes and forbidden knowledge.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "unlocked_ancient_text (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "Upon striking a target, the Consular gains access to a forbidden tome, granting them insight into the mysteries of the Force. The text's secrets are whispered to the Consular's mind, revealing new avenues for study and discovery."
+     }
+    ]
+   },
+   {
+    "node_id": "teacher_feature_level_15",
+    "feature_id": "wise_one",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You become a wise and venerable sage, able to impart your wisdom upon others.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "divine_intuition",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       },
+       {
+        "key": "has_weapon_equipped",
+        "op": "true"
+       }
+      ],
+      "notes": "As the divine power of the Teacher flows through you, a gentle whisper provides insight into the foe's vulnerabilities. The wise one's keen understanding reveals hidden weaknesses, granting advantage on the next attack roll against the hit target."
+     }
+    ]
+   },
+   {
+    "node_id": "teacher_feature_level_19",
+    "feature_id": "master_teacher",
+    "level_requirement": 19,
+    "type": "core",
+    "description": "You become a master teacher, able to teach others in the ways of the Force.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "imbued_sagehood",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Consular Teacher focuses their energy, they imbue their opponents with a spark of wisdom. The opponent's attack is momentarily disrupted, allowing the Consular to better anticipate and counter their movements."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Teacher's Staff",
+    "Jedi Robes"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The Teacher assumes a defensive stance, with feet shoulder-width apart and arms raised in a calming gesture, radiating an aura of wisdom and authority.",
+    "energy_signature": "A gentle, pulsing glow emanates from the Teacher's staff, as if infused with the power of the Force. This soft luminescence underscores their connection to the mystical energies surrounding them."
+   },
+   "prompt_schema": {
+    "base_prompt": "A venerable Jedi Master stands before a galaxy-spanning library, surrounded by ancient relics and mysterious artifacts.",
+    "contextual_modifiers": [
+     "In a serene, mist-shrouded environment",
+     "With subtle hints of holographic projections in the background"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "teacher",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular_teacher.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

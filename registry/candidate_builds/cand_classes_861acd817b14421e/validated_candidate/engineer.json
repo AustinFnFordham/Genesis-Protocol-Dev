@@ -1,0 +1,295 @@
+{
+ "record": {
+  "id": "engineer",
+  "name": "Engineer",
+  "tags": [
+   "tech_specialist",
+   "engineer",
+   "intelligence_based",
+   "support",
+   "utility",
+   "crafter",
+   "inventor",
+   "tech_mastery",
+   "problem_solver",
+   "modification_expert"
+  ],
+  "description": "Engineers are masters of technology and innovation, using their technical expertise to create gadgets, modify equipment, and solve complex problems through mechanical ingenuity.",
+  "class_features": [
+   "technical_expertise",
+   "engineering_kit",
+   "rapid_prototyping",
+   "master_craftsman",
+   "legendary_engineer"
+  ],
+  "hit_die": 8,
+  "primary_ability": "Intelligence",
+  "saving_throw_proficiencies": [
+   "Intelligence",
+   "Dexterity"
+  ],
+  "armor_proficiencies": [
+   "light_armor"
+  ],
+  "weapon_proficiencies": [
+   "simple_weapons",
+   "blaster_pistols"
+  ],
+  "tool_proficiencies": [
+   "engineers_kit",
+   "slicers_kit"
+  ],
+  "skill_proficiencies": {
+   "choose": 3,
+   "from": [
+    "Investigation",
+    "Lore",
+    "Medicine",
+    "Perception",
+    "Piloting",
+    "Technology"
+   ]
+  },
+  "era": "Galactic_Empire",
+  "rarity": "common",
+  "narrative": "Rich narrative description for engineer...",
+  "flavor_text": "Iconic quote for engineer...",
+  "cultural_significance": "Cultural significance for engineer...",
+  "origin_story": "Origin story for engineer...",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "goggles",
+    "toolbelt",
+    "circuitry-covered armature",
+    "engineering manual",
+    "multi-tool",
+    "tech-specs display"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "The Engineer stands tall, feet shoulder-width apart, with a confident stance and hands resting on the grip of their trusty multitool.",
+    "energy_signature": "A faint hum of machinery emanates from their body, punctuated by bursts of glowing blue circuitry that dance across their arms and torso as they channel their technological prowess."
+   },
+   "prompt_schema": {
+    "base_prompt": "An Engineer",
+    "contextual_modifiers": [
+     "in a combat stance",
+     "with an energy signature",
+     "using <tool>"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Engineers often clash with the 'Artisans' subclass due to disagreements over technological vs. magical approaches.",
+    "escalation": "As Engineers continue to push boundaries, they may encounter resentment from those who feel threatened by their innovations.",
+    "confrontation": "The Engineer's drive for perfection can lead to confrontations with the 'Explorers' subclass, who value adaptability and flexibility."
+   },
+   "resolution_paths": {
+    "victory": "Engineers may be able to resolve conflicts through a showcase of their creations or by demonstrating the benefits of their technological solutions.",
+    "redemption": "By making amends for past mistakes or sharing knowledge to help others, Engineers can earn forgiveness and even gain allies among those they previously clashed with.",
+    "escape": "In extreme cases, Engineers may need to temporarily retreat from social situations to recharge and regroup before resuming interactions."
+   },
+   "conflict_triggers": [
+    "The Engineer's relentless pursuit of innovation leads them to disregard or exploit existing relationships.",
+    "Their creations often disrupt established power dynamics or social norms."
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "Early connections formed through shared interests in technology and problem-solving can blossom into friendly relationships.",
+    "stage2": "Mutual respect for the Engineer's skills and expertise can lead to a deeper understanding of each other's motivations and values.",
+    "stage3": "Engineers may struggle with balancing their passion for innovation with emotional vulnerability, making it difficult to express themselves in relationships.",
+    "stage4": "Partners learn to appreciate the value of compromise and adapting to each other's needs, leading to stronger bonds and increased trust.",
+    "stage5": "The Engineer's ability to balance creativity with commitment helps them form lasting, fulfilling partnerships that support both personal and professional growth."
+   },
+   "lifestyle_challenges": [
+    "The Engineer's need for solitude to focus on projects can lead to feelings of neglect or isolation in relationships.",
+    "Their dedication to their work may result in long hours away from loved ones, causing strain on relationships and emotional connections."
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Engage in spirited conversations about the latest advancements in technology. Explore how they might apply their skills to help others.\n",
+   "narrative_hooks": [
+    "You stumble upon an ancient Sith temple hidden deep within a nebula.",
+    "A group of Republic soldiers are stranded on a desolate planet with damaged equipment.",
+    "A mysterious stranger approaches you with an unusual device in need of repair."
+   ],
+   "social_dynamics": "Engineers often find themselves at the center of complex problem-solving sessions. They use their technical expertise to mediate between different factions and personalities.\n",
+   "common_motivations": [
+    "Protecting the greater good through technological innovation.",
+    "Developing solutions that benefit multiple parties, rather than just individual interests."
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Curious",
+      "Analytical"
+     ],
+     "mannerisms": [
+      "Fidgets with tools during conversations"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "Solving complex problems and improving the galaxy through technology",
+     "secondary_motivations": [
+      "Collaborating with others to achieve a common goal",
+      "Improving personal skills in various disciplines"
+     ]
+    },
+    "combat_behavior": {
+     "tactics": [
+      "Utilizing shields and defensive equipment",
+      "Employing drone support"
+     ],
+     "strategies": [
+      "Maintaining distance while providing suppressive fire",
+      "Flanking with allies while analyzing enemy positions"
+     ]
+    },
+    "social_behavior": {
+     "communication_style": [
+      "Clear and concise",
+      "Using technical jargon to describe concepts"
+     ],
+     "emotional_expression": [
+      "Calm under pressure",
+      "Displaying enthusiasm when discussing new ideas"
+     ]
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "initial_trust": 50,
+     "growth_rate": "10",
+     "max_trust": 100,
+     "decay_rate": "5"
+    },
+    "loyalty_triggers": [
+     "When the Engineer helps someone in need",
+     "If they're part of a team that achieves a significant goal"
+    ]
+   },
+   "services": [
+    "Repair and maintenance of equipment.",
+    "Development of custom solutions for specific problems.",
+    "Analysis and improvement of existing technology."
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "A technological virtuoso",
+   "key_attributes": [
+    "Intelligence",
+    "Dexterity"
+   ],
+   "iconic_gear": [
+    "Cyberdeck",
+    "Graviton Gauntlets"
+   ],
+   "role_in_galaxy": "Problem-solvers and innovators who bring order to the galaxy through technology",
+   "famous_exemplars": [
+    "Kira Harper",
+    "Arin Vexis"
+   ],
+   "species_synergies": [
+    {
+     "species": "Trandoshan",
+     "narrative": "Their innate mechanical aptitude complements the Engineer's expertise, making them a formidable team in the field."
+    },
+    {
+     "species": "Bothan",
+     "narrative": "Their keen analytical minds and attention to detail make them natural allies for Engineers seeking innovative solutions."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "innovative_start_1",
+    "feature_id": "innovative_start",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "At level 1, you gain access to your starting equipment and tools. You can use this feature at any time, even if it's not a numbered day in the campaign.\n",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Tool Proficiencies",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "tool_proficiency_1_2",
+    "feature_id": "tool_proficiency_1",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "At level 2, you gain proficiency in one tool of your choice. You can choose from the following tools:\n  - Alchemist's Kit\n  - Arcana Kit\n  - Brewer's Tools\n  - Burglar's Pack\n  - Carpenter's Tools\n  - Cartographer's Tools\n  - Chef's Tools\n  - Cleric's Pack\n  - Herbalism Kit\n  - Jester's Pack\n  - Mannerisms Book\n  - Musical Instrument (any)\n  - Painter's Supplies\n  - Poisoner's Kit\n  - Smith's Tools\n  - Thieves' Tools\n  - Vagabond's Pack\n",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Tool Proficiency",
+      "notes": ""
+     }
+    ]
+   },
+   {
+    "node_id": "technological_advancements_3",
+    "feature_id": "technological_advancements",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "At level 3, you gain access to the following technological advancements:\n  - Improved Mechanical Relays (grants a +1 bonus to Intimidation checks)\n  - Enhanced Algorithmic Processes (grants a +1 bonus to Intelligence saving throws)\n",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Intelligence",
+      "notes": "+1 bonus to Intelligence saving throws and skill checks"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "engineer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/engineer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

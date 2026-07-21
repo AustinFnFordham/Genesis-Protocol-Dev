@@ -1,0 +1,642 @@
+{
+ "record": {
+  "id": "nautolan",
+  "name": "Nautolan",
+  "tags": [
+   "adaptable",
+   "agile",
+   "evasion",
+   "force_sensitive",
+   "guardian",
+   "jedi",
+   "nautolan",
+   "perception",
+   "perceptive",
+   "strength_based",
+   "uncommon"
+  ],
+  "description": "Amphibious and perceptive, Nautolans master water and current—reading motion through their head-tentacles and thriving above and below the surface.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Nautila"
+  ],
+  "base_hp": 12,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "nautolan_aquatic_mastery",
+    "name": "Aquatic Mastery",
+    "narrative": "Your body is perfectly adapted to life in and around water. You move through aquatic environments with the same ease as walking on land, your muscles and physiology honed by generations of underwater living.",
+    "mechanics": [
+     {
+      "effect": "grant_movement",
+      "name": "Swimming Speed",
+      "action_type": "passive",
+      "description": "You have a swimming speed equal to your walking speed.",
+      "rules": [
+       "movement_type:swimming",
+       "speed:equals_walking"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Aquatic Athletics",
+      "action_type": "passive",
+      "description": "You have advantage on Athletics checks to swim or dive.",
+      "rules": [
+       "skill:athletics",
+       "context:swimming_diving"
+      ],
+      "conditions": [
+       {
+        "key": "athletics_action",
+        "op": "in",
+        "value": [
+         "swimming",
+         "diving"
+        ]
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "nautolan_marine_monstrosity",
+     "ui_transition": {
+      "animation": "nautolan_twisting",
+      "sfx": "distorted_whale_calls"
+     }
+    }
+   },
+   {
+    "id": "nautolan_water_sense",
+    "name": "Water Sense",
+    "narrative": "Your head-tentacles are highly sensitive organs that can detect the subtlest vibrations and movements in water. This ancient adaptation allows you to sense your surroundings in ways that land-dwellers cannot comprehend.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Tactile Perception",
+      "action_type": "passive",
+      "description": "You have advantage on Perception checks relying on touch or vibration.",
+      "rules": [
+       "skill:perception",
+       "context:touch_vibration"
+      ],
+      "conditions": [
+       {
+        "key": "perception_type",
+        "op": "in",
+        "value": [
+         "touch",
+         "vibration"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Water Movement Detection",
+      "action_type": "passive",
+      "description": "You can sense movement in water within 60 feet.",
+      "rules": [
+       "range:60_feet",
+       "environment:aquatic",
+       "detection_type:movement"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "water_bound",
+     "ui_transition": {
+      "animation": "water_crawling_animation",
+      "sfx": "gurgling_sound"
+     }
+    }
+   },
+   {
+    "id": "nautolan_amphibious_resilience",
+    "name": "Amphibious Resilience",
+    "narrative": "Your dual respiratory system and thick, insulating skin evolved to handle the harsh conditions of both aquatic and terrestrial environments. You can thrive where others would struggle to survive.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Dual Breathing",
+      "action_type": "passive",
+      "description": "You can breathe air and water.",
+      "rules": [
+       "breathing_type:amphibious"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Cold Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against cold damage.",
+      "rules": [
+       "damage_type:cold",
+       "save_type:advantage"
+      ],
+      "conditions": [
+       {
+        "key": "damage_type",
+        "op": "equals",
+        "value": "cold"
+       }
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Extended Breath Holding",
+      "action_type": "passive",
+      "description": "You can hold your breath for up to 2 hours.",
+      "rules": [
+       "duration:2_hours",
+       "breath_holding:extended"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "skin_disease",
+     "ui_transition": {
+      "animation": "lesion_spreading_animation",
+      "sfx": "scaly_squeeze_sound"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.8m - 2.1m",
+   "distinctions": [
+    "Smooth, hairless skin",
+    "Head-tentacles (lekku)",
+    "Large, dark eyes",
+    "Amphibious physiology",
+    "Graceful, fluid movements"
+   ],
+   "skin_color_variants": [
+    "Dark Green",
+    "Olive Green",
+    "Blue Green",
+    "Grey Green",
+    "Brown",
+    "Mottled patterns"
+   ],
+   "head_tentacle_variants": [
+    "Long, flowing tentacles",
+    "Short, practical tentacles",
+    "Thick, muscular tentacles",
+    "Thin, delicate tentacles",
+    "Decorated with small ornaments"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Golden eyes",
+    "Green eyes",
+    "Blue eyes",
+    "Silver eyes"
+   ],
+   "common_adornments": [
+    "Water-resistant clothing and gear",
+    "Traditional Nautolan ceremonial garments",
+    "Practical aquatic equipment",
+    "Simple, functional attire",
+    "Cultural jewelry and accessories"
+   ],
+   "llm_description_prompt": "Describe a Nautolan character. Emphasize their smooth, amphibious skin and the graceful way their head-tentacles move, sensing the environment around them. Their eyes should convey both intelligence and a deep connection to water. Consider their natural aquatic heritage and the way they carry themselves with fluid, confident movements that reflect their mastery of both land and sea."
+  },
+  "class_synergies": [
+   {
+    "class": "Scout",
+    "narrative": "Nautolans' natural aquatic abilities and Water Sense make them exceptional Scouts, able to navigate and explore both terrestrial and aquatic environments with unmatched skill.",
+    "mechanical_benefits": [
+     "Aquatic Mastery trait enables underwater exploration",
+     "Water Sense enhances environmental awareness",
+     "Amphibious Resilience supports long-term operations"
+    ]
+   },
+   {
+    "class": "Soldier (Aquatic)",
+    "narrative": "Nautolans' natural strength and aquatic mastery make them formidable Soldiers, especially in water-based combat and amphibious operations.",
+    "mechanical_benefits": [
+     "Aquatic Mastery trait enhances combat mobility in water",
+     "High Strength supports heavy weapon use",
+     "Amphibious Resilience allows for extended operations"
+    ]
+   },
+   {
+    "class": "Operative (Infiltrator)",
+    "narrative": "Nautolans' natural stealth and sensory abilities make them excellent Operatives, able to move silently through water and sense approaching threats.",
+    "mechanical_benefits": [
+     "Water Sense trait aids in stealth and detection",
+     "Aquatic Mastery enables unique infiltration routes",
+     "Natural sensory abilities enhance reconnaissance"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Nautolans' protective instincts and natural resilience make them excellent Guardians, able to defend others in any environment.",
+    "mechanical_benefits": [
+     "Amphibious Resilience enhances durability",
+     "High Constitution supports protective role",
+     "Natural adaptability to different environments"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Aquatic Communities",
+    "narrative": "Nautolans often form tight-knit communities in aquatic environments, working together to protect their territories and way of life."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Nautolans have served the Republic as scouts and soldiers, their unique abilities making them valuable assets in diverse environments."
+   },
+   {
+    "faction": "Independent Explorers",
+    "narrative": "Many Nautolans prefer to work as independent explorers and guides, using their natural abilities to chart unknown waters and territories."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your Water Sense becomes more refined, allowing you to detect even subtler movements and vibrations in water.",
+     "mechanical_benefit": "Increase the range of Water Sense from 60 feet to 90 feet, and gain advantage on Perception checks to detect hidden creatures in aquatic environments."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your aquatic mastery reaches new heights, allowing you to navigate complex underwater currents with ease.",
+     "mechanical_benefit": "You can use your swimming speed to move through difficult terrain in water without penalty, and gain advantage on Athletics checks to resist being moved by water currents."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your natural strength and aquatic adaptations combine to make you a more formidable combatant in water.",
+     "mechanical_benefit": "When fighting in water or on wet surfaces, you gain a +2 bonus to damage rolls with melee weapons and unarmed strikes."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your amphibious resilience reaches its peak, making you nearly immune to environmental hazards.",
+     "mechanical_benefit": "You have advantage on all saving throws against environmental effects, and you can survive in extreme temperatures and pressures that would kill most other species."
+    }
+   },
+   "narrative_progression": {
+    "level_5": "As they reach this milestone, Nautolans begin to develop a deeper connection to their aquatic heritage. They start to sense changes in water currents and pressure, allowing them to navigate more efficiently and predict upcoming events.",
+    "level_10": "At this stage, Nautolans' perception of their surroundings expands, granting them insight into hidden patterns and connections between living beings and the environment. This newfound awareness enables them to adapt to new situations with greater ease and make more informed decisions.",
+    "level_15": "Nautolans have now honed their ability to communicate with water spirits, gaining valuable knowledge about ancient secrets and forgotten lore. They can tap into this collective wisdom to inform their choices and solve complex problems.",
+    "level_20": "As master aquatic mystics, Nautolans possess a profound understanding of the interconnectedness of all living things. They can manipulate currents, pressure, and temperature to achieve remarkable feats, blurring the lines between reality and myth."
+   }
+  },
+  "cultural_features": [
+   {
+    "description": "Nautolans have ancient rituals that involve communing with water spirits and seeking guidance from the depths. These ceremonies often involve meditation in sacred pools or underwater caves.",
+    "name": "Water Communion",
+    "activation": "When a Nautolan is at peace with their aquatic heritage, they can perform this ritual to seek guidance.",
+    "narrative_enhancement": "As you meditate in the sacred pool, you feel the water spirits' energy coursing through your being. The whispers of ancient wisdom echo within your mind, guiding you toward a deeper understanding.",
+    "faction_connection": "Naboo"
+   },
+   {
+    "description": "Nautolans can read water currents and tides to predict weather patterns and navigate safely. This knowledge is passed down through generations.",
+    "name": "Current Reading",
+    "activation": "When in the midst of a storm or navigating treacherous waters, Nautolans can use their skill to predict changes.",
+    "narrative_enhancement": "As you sense the shifts in water currents, you feel a surge of confidence. The patterns reveal themselves, guiding your actions and decisions.",
+    "faction_connection": "The Current Keepers"
+   },
+   {
+    "description": "Nautolan oral traditions often involve stories told while floating in water, with the storyteller using their tentacles to create ripples and patterns that enhance the narrative.",
+    "name": "Aquatic Storytelling",
+    "activation": "When sharing tales around a sacred pool or underwater cave.",
+    "narrative_enhancement": "As you weave your tale, the water responds with rhythmic undulations. The audience is captivated by the visual storytelling, deepening their connection to the narrative.",
+    "faction_connection": "The Aquatic Circle"
+   },
+   {
+    "description": "Nautolans practice meditation techniques that involve descending to great depths, where the pressure and darkness help them achieve profound mental clarity.",
+    "name": "Depth Meditation",
+    "activation": "When a Nautolan seeks to quiet their mind and access hidden wisdom.",
+    "narrative_enhancement": "As you descend into the dark, silent depths, your mind quiets. The weight of pressure presses aside the distractions of the surface world, allowing you to tap into ancient secrets.",
+    "faction_connection": "Naboo"
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "aquatic",
+    "adaptation_name": "Pressure Adaptation",
+    "description": "Your body is naturally adapted to handle the pressures of deep water, allowing you to dive to depths that would crush other species.",
+    "mechanical_benefit": "You can survive in high-pressure environments without special equipment, and you have advantage on saving throws against pressure-related damage."
+   },
+   {
+    "environment": "cold",
+    "adaptation_name": "Thermal Insulation",
+    "description": "Your thick skin and natural insulation protect you from extreme cold, both in water and on land.",
+    "mechanical_benefit": "You have resistance to cold damage and can survive in freezing temperatures without special protection."
+   },
+   {
+    "environment": "wet",
+    "adaptation_name": "Moisture Retention",
+    "description": "Your amphibious physiology allows you to retain moisture and function normally in humid or wet environments.",
+    "mechanical_benefit": "You don't suffer penalties from wet conditions, and you have advantage on saving throws against moisture-related hazards."
+   },
+   {
+    "environment": "stormy",
+    "adaptation_name": "Storm Sense",
+    "description": "Your sensitivity to atmospheric pressure and water currents allows you to predict and prepare for storms.",
+    "mechanical_benefit": "You can predict weather changes with a successful Nature check, and you have advantage on saving throws against storm-related effects."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements are designed to complement rather than overshadow class abilities",
+    "Aquatic mastery improvements maintain the species' unique identity while providing meaningful advancement",
+    "Environmental adaptations provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on narrative depth and social interaction rather than mechanical advantages",
+    "Water-based traditions provide unique roleplaying opportunities and cultural identity",
+    "Storytelling and meditation features enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for aquatic and water-adjacent environments",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Storm sense and pressure adaptation provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "cultural_connections": {
+   "primary_culture": "Naboo",
+   "cultural_networks": [
+    {
+     "name": "The Aquatic Circle",
+     "description": "A network of Nautolan elders who gather to share knowledge, meditate, and perform sacred rituals."
+    },
+    {
+     "name": "The Current Keepers",
+     "description": "A group of skilled Nautolans dedicated to monitoring water currents and predicting weather patterns."
+    }
+   ],
+   "traditional_practices": [
+    {
+     "name": "Water Communion Ceremonies",
+     "description": "Sacred events where Nautolans connect with water spirits, seeking guidance and wisdom."
+    },
+    {
+     "name": "Current Reading Rites",
+     "description": "Traditional practices that involve reading water currents and tides to predict the future."
+    }
+   ],
+   "cultural_knowledge": [
+    {
+     "name": "Aquatic Anatomy",
+     "description": "A deep understanding of the intricate connections between living beings and their aquatic environment."
+    },
+    {
+     "name": "Hydrokinesis",
+     "description": "The ability to manipulate water, pressure, and temperature to achieve remarkable feats."
+    }
+   ]
+  },
+  "environmental_mastery": {
+   "primary_environments": [
+    "aquatic",
+    "wetlands"
+   ],
+   "environmental_knowledge": [
+    {
+     "name": "Aquatic Adaptation",
+     "description": "Nautolans have a deep understanding of the aquatic ecosystem, including adaptations for survival in various water environments."
+    },
+    {
+     "name": "Hydrology",
+     "description": "A comprehensive knowledge of water currents, pressure, and temperature patterns."
+    }
+   ],
+   "survival_techniques": [
+    {
+     "name": "Water Current Reading",
+     "description": "Nautolans can read water currents to navigate safely, predict weather changes, and avoid danger."
+    },
+    {
+     "name": "Pressure Adaptation",
+     "description": "Nautolans have adapted to handle high-pressure environments without special equipment."
+    }
+   ]
+  },
+  "rarity": "common",
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "description": "A Nautolan adversary emerges from their aquatic surroundings, using their perception to track you.",
+     "triggers": [
+      "water",
+      "swimming",
+      "detection"
+     ],
+     "effects": [
+      "You sense a presence lurking beneath the surface.",
+      "The Nautolan's head-tentacles detect your movements and track you."
+     ]
+    },
+    "escalation": {
+     "description": "The Nautolan adversary gains strength and speed, using their aquatic abilities to outmaneuver you.",
+     "triggers": [
+      "attacking",
+      "defending",
+      "escape"
+     ],
+     "effects": [
+      "The Nautolan's agility increases, allowing them to dodge attacks with ease.",
+      "They begin to swim at incredible speeds, making it difficult for you to keep up."
+     ]
+    },
+    "confrontation": {
+     "description": "The Nautolan adversary unleashes their full fury upon you, using the Force and their aquatic abilities in a devastating combination.",
+     "triggers": [
+      "attack",
+      "defend",
+      "force_sensitive"
+     ],
+     "effects": [
+      "The Nautolan's connection to the Force amplifies their physical abilities.",
+      "They unleash a powerful blast of water that knocks you off balance."
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": "You successfully defeat the Nautolan adversary, earning their respect and admiration.",
+    "redemption": "You manage to redeem the Nautolan's past mistakes, freeing them from their vendetta against you.",
+    "escape": "You narrowly escape the Nautolan's attack, but know that they will not stop until you are defeated."
+   },
+   "conflict_triggers": [
+    "water",
+    "swimming",
+    "detection",
+    "attacking",
+    "defending",
+    "escape"
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "You attacked a Nautolan in the past.",
+     "A Nautolan was injured or killed during one of your adventures.",
+     "A Nautolan's family member is being threatened by your actions."
+    ],
+    "vendetta_type": "revenge"
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "adaptable",
+    "agile",
+    "evasion",
+    "force_sensitive",
+    "guardian",
+    "jedi",
+    "nautolan",
+    "perception",
+    "perceptive",
+    "strength_based",
+    "uncommon"
+   ],
+   "romance_progression": {
+    "stage1": "You and the Nautolan begin to interact, exchanging stories and learning about each other's cultures.",
+    "stage2": "The Nautolan begins to show interest in your skills and abilities, asking for your help with a task or mission.",
+    "stage3": "The Nautolan invites you on a date, taking you to a secluded underwater location where they can get to know you better.",
+    "stage4": "The Nautolan reveals their true feelings for you, confessing their love in a heartfelt and emotional speech.",
+    "stage5": "You and the Nautolan share a romantic moment, solidifying your relationship and commitment to each other."
+   },
+   "romance_events": [
+    {
+     "Nautolan's Gift": "The Nautolan gives you a beautiful shell necklace as a token of their affection."
+    },
+    {
+     "Underwater Adventure": "You go on an underwater adventure with the Nautolan, exploring the ocean floor together."
+    }
+   ],
+   "romance_modifiers": [
+    {
+     "Adaptable Partner": "The Nautolan is highly adaptable and can adjust to any situation, making them an excellent partner in times of crisis."
+    },
+    {
+     "Force-Sensitive Connection": "The Nautolan's connection to the Force amplifies their emotions, allowing you to sense their feelings more deeply."
+    }
+   ]
+  },
+  "visual_engine": {
+   "archetype": "aquatic_humanoid",
+   "overrides": {}
+  },
+  "flavor_text": "With their head-tentacles rippling in the currents, Nautolans navigate the subtleties of water and air with uncanny ease. Their adaptability and perceptive nature make them guardians of balance in a galaxy torn apart by conflict.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Play the Nautolan as an astute guardian who weaves together the forces of water, current, and perception to navigate challenges.\n",
+   "narrative_hooks": [
+    "A stormy night on the planet's surface",
+    "The Nautolan's sensitive connection to the currents reveals hidden secrets",
+    "Their aquatic home is threatened by pollution or overfishing"
+   ],
+   "social_dynamics": "As a guardian, the Nautolan feels a deep sense of responsibility to protect and preserve their environment. They may be drawn to Force-sensitive individuals who share this concern.\n",
+   "common_motivations": [
+    "Protecting their aquatic home",
+    "Preserving balance in the ecosystem",
+    "Helping others understand the importance of living in harmony with nature"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "loyal",
+      "empathetic"
+     ],
+     "description": "The Nautolan companion is dedicated to serving and protecting its allies. It has a strong sense of empathy and can sense changes in those around it."
+    },
+    "motivations": [
+     "Protecting its companions",
+     "Understanding the needs and emotions of others",
+     "Preserving balance in the ecosystem"
+    ],
+    "combat_behavior": "The Nautolan companion uses its agility and perception to dodge attacks, striking back at vulnerable moments.",
+    "social_behavior": "The Nautolan is gentle and reserved but will fiercely defend those it cares for. It has a unique way of communicating through subtle head-tentacle movements."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "Level 1": "Initial introduction"
+     },
+     {
+      "Level 2": "Shared challenges or victories"
+     },
+     {
+      "Level 3": "Open sharing of thoughts and feelings"
+     },
+     {
+      "Level 4": "Unwavering loyalty in times of crisis"
+     }
+    ],
+    "loyalty_triggers": [
+     "Betrayal of its companions",
+     "Threats to the ecosystem or environment it cares for"
+    ]
+   },
+   "services": [
+    "Skill checks related to perception and adaptation (Survival, Perception, Athletics)",
+    "Guidance on navigating aquatic environments",
+    "Support in preserving balance in ecosystems"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "nautolan",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/nautolan.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

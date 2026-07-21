@@ -1,0 +1,222 @@
+{
+ "record": {
+  "id": "agitator",
+  "name": "Agitator",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "agitator",
+   "charisma_based",
+   "provocative",
+   "deceptive",
+   "social_specialist",
+   "rebel",
+   "cunning",
+   "disruptive"
+  ],
+  "description": "Agitators are masters of manipulation and public opinion. They excel at stirring up trouble, manipulating crowds, and using words as weapons to achieve their goals through chaos and social unrest.",
+  "specialization_features": [
+   "crowd_manipulation",
+   "provocateur",
+   "social_unrest",
+   "agitator_mastery",
+   "legendary_agitator"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Agitators are charismatic manipulators who excel at stirring up trouble and influencing public opinion through their words.",
+   "role_in_group": "Agitators often take on roles as provocateurs, using their charm and cunning to incite chaos and social unrest within groups they infiltrate or lead.",
+   "visual_signals": [
+    {
+     "Signal1": "A whispered rumor spreads throughout the group about an Agitator's latest scheme"
+    },
+    {
+     "Signal2": "An Agitator uses their charisma to calm a tense situation, but with a hint of underlying menace"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "agitator_1",
+    "feature_id": "manipulative_language",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You become more adept at using your words to manipulate others.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "silver_tongue",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_check_type",
+        "op": "equals",
+        "value": "deception"
+       }
+      ],
+      "notes": "As you speak, your words weave a subtle web of deception. When making a Deception check, you can add your increased ability to deceive to the roll."
+     }
+    ]
+   },
+   {
+    "node_id": "agitator_2",
+    "feature_id": "crowd_works",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain expertise in Intimidation and can use your action to incite a crowd.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "agitator_crowdsway",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "has_ability",
+        "op": "equals",
+        "value": "intimidation"
+       }
+      ],
+      "notes": "When you successfully intimidate an enemy, the crowd is drawn to your charismatic performance, granting you a fierce presence. Your ability to command fear increases by +1 for 1 minute."
+     }
+    ]
+   },
+   {
+    "node_id": "agitator_3",
+    "feature_id": "social_unrest",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can use your action to create social unrest, causing creatures within a certain area to become hostile towards each other.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "unrest_amplifier",
+      "target_scopes": [
+       "affected_by_trigger"
+      ],
+      "conditions": [
+       {
+        "key": "feature_name",
+        "op": "equals",
+        "value": "social_unrest"
+       }
+      ],
+      "notes": "As you stir the embers of rebellion, affected creatures gain advantage on their next Intimidation check against each other, fueled by your masterful manipulation."
+     }
+    ]
+   },
+   {
+    "node_id": "agitator_4",
+    "feature_id": "chaotic_leadership",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You become a charismatic leader, inspiring others to follow your chaotic path.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "unruly_influence",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "leader",
+        "op": "is",
+        "value": "true"
+       }
+      ],
+      "notes": "When in a leadership position, your authority sparks discord among your foes. Creatures within 10 feet of you gain advantage on their Wisdom (Insight) checks against each other, as they struggle to discern friend from foe."
+     }
+    ]
+   },
+   {
+    "node_id": "agitator_5",
+    "feature_id": "social_engineering",
+    "level_requirement": 19,
+    "type": "core",
+    "description": "You become an expert in social engineering, able to manipulate others' perceptions and actions.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "social_engineering_deception_boost",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "event_type",
+        "op": "equals",
+        "value": "deception_check"
+       }
+      ],
+      "notes": "When you make a Deception check, your ability to deceive increases by +1. Additionally, when using this feature to create social unrest, affected creatures gain disadvantage on their Wisdom (Insight) checks against each other."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Agitator_Saber_Hilt",
+    "Agitator_Cloak_Fur"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a relaxed stance, feet shoulder-width apart, with the lightsaber hilt resting on one hip and the cloak flowing behind.",
+    "energy_signature": "Pulses with an unsettling, dark side energy that seems to draw in those around it like a moth to flame."
+   },
+   "prompt_schema": {
+    "base_prompt": "A charismatic Agitator stands confidently, addressing a crowd with a fiery speech that stirs up dissent and controversy.",
+    "contextual_modifiers": [
+     "Highlight the Agitator's cunning expression",
+     "Emphasize the dark side energy emanating from their presence"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "agitator",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_agitator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

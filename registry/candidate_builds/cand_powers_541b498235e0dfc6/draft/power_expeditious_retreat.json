@@ -1,0 +1,197 @@
+{
+ "record": {
+  "id": "power_expeditious_retreat",
+  "name": "Expeditious Retreat",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "speed",
+   "movement",
+   "enhancement",
+   "escape",
+   "mobility",
+   "tech_augmentation"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Speed enhancement technology"
+   }
+  },
+  "narrative": "You activate speed-enhancing technology—servo-assisted legs, micro-repulsors, or stim injectors—that doubles your movement speed. The power manifests as a blur of motion, your body moving faster than the eye can track, leaving afterimages in your wake.",
+  "flavor_text": "\"Run! And dont look back!\" - Every retreat ever",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating speed enhancement tech"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "maintaining balance at enhanced velocity"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "0 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You use technology to enhance your movement speed and agility.",
+   "mechanics": [
+    {
+     "type": "enhance_movement",
+     "value": {
+      "multiplier": 2,
+      "target": "speed"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Your speed is doubled for the duration"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's speed tech goes beyond simple acceleration. They optimize energy distribution, reduce friction coefficients, and enhance reaction time processors, turning retreat into strategic repositioning at velocities that defy safety regulations.",
+    "mechanical_benefit": [
+     {
+      "type": "dash_bonus",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Engineers can Dash as a bonus action while enhanced."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human endurance allows them to maintain enhanced speed longer than most species. Their bodies adapt to the strain, their minds process the blur of motion, turning what should be disorienting speed into controlled, purposeful movement.",
+    "mechanical_benefit": [
+     {
+      "type": "jump_enhancement",
+      "value": {
+       "multiplier": 3,
+       "target": "jump_distance"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans also triple jump distance while speed-enhanced."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has mastered tactical withdrawal as survival art. Their Expeditious Retreat tech includes smoke dispensers, holo-decoys, and sensor scramblers—not just running away, but disappearing entirely.",
+    "mechanical_benefit": [
+     {
+      "type": "opportunity_attack_immunity",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Rebels don't provoke opportunity attacks while retreating."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the acceleration—the world blurring, wind resistance increasing, the ground flying beneath enhanced strides. Show the character covering impossible distances, outpacing vehicles, leaving pursuers in the dust.",
+   "tactical_notes": "Expeditious Retreat doubles movement speed for up to 1 minute with concentration. Perfect for escapes, repositioning, or reaching objectives quickly. Remember the concentration requirement—taking damage might end the effect. Works with Dash for quadruple movement.",
+   "narrative_hooks": [
+    "Enhanced speed allows rescuing someone from certain death",
+    "The retreat becomes a chase scene through dangerous terrain",
+    "Speed enhancement reveals the limits of organic versus cybernetic"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a figure using tech-enhanced speed to escape danger. Motion blur and speed lines show them moving at impossible velocity, afterimages trailing behind. Dust kicks up in their wake, and pursuing fire falls far behind. The scene captures desperate speed and the thrill of escape.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/expeditious_retreat.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_expeditious_retreat",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_expeditious_retreat.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

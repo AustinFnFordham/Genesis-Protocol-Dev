@@ -1,0 +1,219 @@
+{
+ "record": {
+  "id": "power_technological_apocalypse",
+  "name": "Technological Apocalypse",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "legendary",
+   "apocalyptic",
+   "systems_failure",
+   "emp",
+   "civilization_ending",
+   "god_tier"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate technological warfare—civilization-ending EMP"
+   }
+  },
+  "narrative": "You trigger a cascading electromagnetic pulse that spreads like wildfire through all electronic systems, every technological device within miles failing simultaneously as civilization's infrastructure collapses. The power manifests as invisible wave of disruption radiating outward, lights dying, machines seizing, communications going silent—the end of the technological age in a single pulse.",
+  "flavor_text": "\"Welcome to the dark ages. Population: everyone.\" - EMP Specialist",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "activating civilization-scale EMP device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calibrating cascade pattern for maximum technological destruction"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "1 mile radius",
+  "duration": "Permanent (until repaired)",
+  "base_effect": {
+   "description": "You create an electromagnetic pulse that permanently disables all technology in a massive area.",
+   "mechanics": [
+    {
+     "type": "emp_apocalypse",
+     "value": {
+      "radius": {
+       "distance": 1,
+       "unit": "mile"
+      },
+      "effect": "disable_all_technology",
+      "duration": "permanent"
+     },
+     "target_scopes": [
+      "all_electronics"
+     ],
+     "notes": "All electronic devices within 1 mile are permanently disabled"
+    },
+    {
+     "type": "cascade_failure",
+     "value": {
+      "spread": "networked_systems",
+      "range": "unlimited_if_connected"
+     },
+     "target_scopes": [
+      "connected_technology"
+     ],
+     "notes": "Cascades through networked systems beyond initial radius"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of electromagnetic principles makes their Apocalypse surgical. They can shape the pulse to spare critical systems, target specific technology types, or create timed cascades—turning civilization-ending weapon into precision instrument.",
+    "mechanical_benefit": [
+     {
+      "type": "selective_apocalypse",
+      "value": {
+       "effect": "exclude_chosen_systems"
+      },
+      "target_scopes": [
+       "all_electronics"
+      ],
+      "notes": "Engineers can exempt specific systems from the apocalypse effect."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human understanding of civilization's technological dependence makes their Apocalypse devastatingly effective. They know exactly which systems to target for maximum societal collapse—power grids, communications, transportation infrastructure.",
+    "mechanical_benefit": [
+     {
+      "type": "cascade_acceleration",
+      "value": {
+       "effect": "instant_spread_through_networks"
+      },
+      "target_scopes": [
+       "connected_technology"
+      ],
+      "notes": "Human apocalypse cascades instantly instead of gradually through networks."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire views Technological Apocalypse as ultimate deterrent—the power to end civilizations by destroying their technological base. Their versions can target planetary infrastructure, leaving worlds helpless and primitive.",
+    "mechanical_benefit": [
+     {
+      "type": "planetary_scale",
+      "value": {
+       "radius": {
+        "distance": "planetary",
+        "unit": "global"
+       }
+      },
+      "target_scopes": [
+       "all_electronics"
+      ],
+      "notes": "Imperial apocalypse can affect entire planetary technological infrastructure."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the invisible pulse radiating outward—lights flickering then dying, machines seizing, displays going dark. Show cascading failures as civilization's infrastructure collapses, communications going silent, power grids failing. The apocalypse should feel like the end of the modern age.",
+   "tactical_notes": "Technological Apocalypse permanently disables all technology in 1-mile radius and cascades through networks. Costs 9 Tech Points. This is civilization-ending power—literal societal collapse. Use only for ultimate scenarios. The permanent duration makes it irreversible without massive reconstruction.",
+   "narrative_hooks": [
+    "Apocalypse stops invasion by destroying enemy's technological advantage",
+    "The permanent failure creates moral crisis about acceptable costs",
+    "Cascading failures affect unintended targets, creating catastrophic consequences"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of electromagnetic apocalypse spreading across a cityscape. Invisible EMP wave radiates outward, lights dying in cascading pattern, electronic systems failing simultaneously. Buildings go dark, vehicles stop, displays flicker out—civilization's infrastructure collapsing in real-time. The scene captures technological apocalypse as ultimate weapon. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric EMP effects, by Simon Stålenhag",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/technological_apocalypse.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_technological_apocalypse",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_technological_apocalypse.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

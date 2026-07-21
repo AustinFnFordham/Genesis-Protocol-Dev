@@ -1,0 +1,212 @@
+{
+ "record": {
+  "id": "power_squadron_command",
+  "name": "Squadron Command",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "leadership",
+   "teamwork",
+   "coordination",
+   "tactical",
+   "group_buff",
+   "command"
+  ],
+  "power_cost": [
+   {
+    "type": "Superiority_Dice",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced leadership technique for coordinating multiple allies"
+   }
+  },
+  "narrative": "You issue precise tactical commands that coordinate your squadron's actions with military precision, each ally knowing exactly where to move and when to strike. The power manifests as crisp orders cutting through combat chaos, your leadership transforming individuals into synchronized fighting force.",
+  "flavor_text": "\"On my mark. Three... two... one... Execute!\" - Squadron Leader",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "gesturing commands and tactical signals"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "coordinating multiple allies' actions simultaneously"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You coordinate multiple allies for synchronized action.",
+   "mechanics": [
+    {
+     "type": "grant_movement",
+     "value": {
+      "distance": "half_movement_speed",
+      "timing": "as_reaction"
+     },
+     "target_scopes": [
+      "multiple_allies"
+     ],
+     "notes": "Up to 3 allies can move up to half their speed as a reaction"
+    },
+    {
+     "type": "grant_bonus",
+     "value": {
+      "bonus": "superiority_die",
+      "stat": "next_attack_or_save"
+     },
+     "target_scopes": [
+      "commanded_allies"
+     ],
+     "notes": "Commanded allies add superiority die to next attack roll or saving throw"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "scholar",
+    "narrative": "The Scholar's tactical genius transforms Squadron Command into perfect coordination. They calculate optimal positioning for each ally, their commands creating synergistic advantages where the whole exceeds the sum of its parts.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_allies",
+      "value": {
+       "count": 5
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Scholars can command 5 allies instead of 3 with Squadron Command."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human leadership charisma makes their commands inspiring as well as tactical. Allies don't just follow orders—they're motivated to exceed expectations, human commanders turning good soldiers into heroes through personal connection.",
+    "mechanical_benefit": [
+     {
+      "type": "grant_temporary_hp",
+      "value": {
+       "temp_hp": 5
+      },
+      "target_scopes": [
+       "commanded_allies"
+      ],
+      "notes": "Humans also grant 5 temporary HP to commanded allies from inspirational leadership."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Squadron Command through coordinated strikes against superior forces. Their commanders can orchestrate complex multi-vector attacks where every ally's action contributes to unified tactical objective.",
+    "mechanical_benefit": [
+     {
+      "type": "coordinate_attacks",
+      "value": {
+       "effect": "advantage_if_two_attack_same"
+      },
+      "target_scopes": [
+       "commanded_allies"
+      ],
+      "notes": "Rebel commands grant advantage if two or more allies attack the same target."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe crisp tactical commands cutting through chaos—precise orders, hand signals, coordinated movement. Show allies responding with military precision, each knowing their role in the synchronized assault. The coordination should feel professional and effective.",
+   "tactical_notes": "Squadron Command allows 3 allies to reposition and adds superiority die to their next roll for 1 round, costing a superiority die. Excellent force multiplier for tactical leaders. Uses your action but empowers multiple allies. The coordination creates devastating combined attacks.",
+   "narrative_hooks": [
+    "Squadron command allows impossible coordinated strike that wins the battle",
+    "The military precision reveals character's combat training",
+    "Perfect coordination creates cinematic synchronized assault moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a squadron leader commanding coordinated assault. Multiple allies respond to crisp tactical signals, moving in synchronized precision. The leader's gestures direct each fighter to optimal position, creating devastating combined attack through perfect coordination. The scene captures leadership transforming chaos into order.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/squadron_command.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_squadron_command",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_squadron_command.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

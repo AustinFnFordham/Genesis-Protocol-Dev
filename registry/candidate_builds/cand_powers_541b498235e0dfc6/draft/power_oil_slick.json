@@ -1,0 +1,236 @@
+{
+ "record": {
+  "id": "power_oil_slick",
+  "name": "Oil Slick",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "area_control",
+   "slippery",
+   "terrain",
+   "crowd_control",
+   "hazard",
+   "incendiary"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Slippery chemical deployment technology"
+   }
+  },
+  "narrative": "You spray a pressurized canister of slippery industrial lubricant across the ground, creating a treacherous surface where enemies slip and fall. The power manifests as a sheen of rainbow-colored oil spreading rapidly, the chemical's frictionless properties turning stable footing into an ice rink of humiliation.",
+  "flavor_text": "\"Watch your step.\" - Saboteur",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "deploying oil canister or sprayer"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating optimal coverage and dispersal pattern"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You create a slippery oil slick that impedes enemy movement.",
+   "mechanics": [
+    {
+     "type": "create_terrain",
+     "value": {
+      "terrain_type": "difficult",
+      "area": {
+       "shape": "square",
+       "size": {
+        "length": 10,
+        "width": 10,
+        "unit": "feet"
+       }
+      }
+     },
+     "target_scopes": [
+      "ground"
+     ],
+     "notes": "Create 10-foot square of difficult terrain (oil slick)"
+    },
+    {
+     "type": "apply_prone_risk",
+     "value": {
+      "dexterity_save_dc": 12,
+      "effect": "prone_on_fail"
+     },
+     "target_scopes": [
+      "creatures_entering"
+     ],
+     "notes": "Creatures entering area must make Dexterity save or fall prone"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's chemistry expertise creates specialized oil formulations—some impossibly slippery, others adhesive, some even corrosive. Their slicks aren't just hazards but tactical tools precisely calibrated for maximum effect against specific threats.",
+    "mechanical_benefit": [
+     {
+      "type": "chemical_options",
+      "value": {
+       "variants": [
+        "super_slick",
+        "adhesive",
+        "corrosive"
+       ]
+      },
+      "target_scopes": [
+       "ground"
+      ],
+      "notes": "Engineers can choose oil type - extra slippery, sticky (restraining), or corrosive (1d4 acid/round)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity transforms Oil Slick into versatile weapon. They use it to channel enemy movement, create escape routes, or set fire traps—the slick's flammability becoming tactical advantage when ignited at the perfect moment.",
+    "mechanical_benefit": [
+     {
+      "type": "increase_area",
+      "value": {
+       "area": {
+        "shape": "square",
+        "size": {
+         "length": 15,
+         "width": 15,
+         "unit": "feet"
+        }
+       }
+      },
+      "target_scopes": [
+       "ground"
+      ],
+      "notes": "Human oil slicks cover 15-foot square instead of 10-foot."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Oil Slick for guerrilla warfare. Their versions can be remotely ignited, creating walls of fire that devastate Imperial formations—the humble slick transformed into area-denial inferno through creative application.",
+    "mechanical_benefit": [
+     {
+      "type": "incendiary_option",
+      "value": {
+       "ignition": "bonus_action",
+       "damage": {
+        "dice_count": 2,
+        "dice_size": 4,
+        "damage_type": "fire",
+        "modifier": 0
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Rebels can ignite slick as bonus action, dealing 2d4 fire damage to creatures in area."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the oil spraying out in an arc, spreading in a rainbow-sheened slick across the ground. Show enemies' feet sliding out from under them, undignified tumbles and falls. The hazard should feel both tactically useful and comedically humiliating for victims.",
+   "tactical_notes": "Oil Slick creates 10-foot square difficult terrain forcing Dexterity saves or prone. Costs 1 Tech Point, lasts up to 1 minute with concentration. Perfect for controlling choke points or creating escape routes. The flammability adds versatility for creative players.",
+   "narrative_hooks": [
+    "An oil slick causes pursuing enemies to comically pile up in a heap",
+    "The slick is ignited, transforming tactical hazard into deadly inferno",
+    "Slipping on oil at a critical moment creates devastating vulnerability"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tactical oil slick spreading across the ground. Rainbow-sheened lubricant covers the floor in a treacherous sheen, enemies losing their footing and falling in humiliating tumbles. The slick's flammability is suggested by nearby flames, the potential for ignition creating tactical tension. The scene captures area control through chemical warfare.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/oil_slick.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_oil_slick",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_oil_slick.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

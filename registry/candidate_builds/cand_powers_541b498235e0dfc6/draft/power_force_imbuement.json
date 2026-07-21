@@ -1,0 +1,185 @@
+{
+ "record": {
+  "id": "power_force_imbuement",
+  "name": "Force Imbuement",
+  "power_type": "Force",
+  "alignment": "Universal",
+  "level": 0,
+  "power_cost": [],
+  "narrative": "You channel the Force directly into a weapon, causing it to hum with supernatural power. The power manifests as a faint glow along the weapon's edge, crackling energy that dances across its surface, and an unmistakable sense of enhanced lethality.",
+  "flavor_text": "\"The Force flows through all things—even the tools we wield.\" - Ancient Jedi Weaponmaster",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "hand hovering over weapon as Force energy flows into it"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling the Force to enhance the weapon's cutting power"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You channel the Force into a weapon or object, enhancing its effectiveness.",
+   "mechanics": [
+    {
+     "type": "enhance_weapon",
+     "value": {
+      "bonus": 1,
+      "target_stat": "damage"
+     },
+     "target_scopes": [
+      "weapon"
+     ],
+     "notes": "Weapon deals +1 damage for the duration"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's connection to their weapon transforms Force Imbuement into a deeper bond. Their lightsaber or blade becomes an extension of their will, glowing brighter and striking truer as the Force flows through both warrior and weapon.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "force",
+       "modifier": 0
+      },
+      "target_scopes": [
+       "weapon"
+      ],
+      "notes": "Guardian's imbued weapons deal an additional 1d4 force damage"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity allows them to imbue unconventional objects with the Force. Their imagination transforms everyday items into temporary weapons, channeling power through tools never meant for combat.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_targets",
+      "value": {
+       "scope": "any_object"
+      },
+      "target_scopes": [
+       "object"
+      ],
+      "notes": "Humans can imbue non-weapon objects, granting them 1d4 damage"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's ancient techniques allow their Force Imbuement to purify as well as empower. Their imbued weapons glow with righteous light, especially effective against dark side corruption.",
+    "mechanical_benefit": [
+     {
+      "type": "bonus_vs_dark",
+      "value": {
+       "bonus": 2,
+       "target_stat": "damage"
+      },
+      "target_scopes": [
+       "dark_side_users"
+      ],
+      "notes": "Jedi imbued weapons deal +2 damage to dark side users"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the weapon coming alive with Force energy—glowing edges, crackling power, the hum of enhanced lethality. Show how each strike carries supernatural force, cutting deeper and hitting harder. The weapon feels lighter yet more powerful.",
+   "tactical_notes": "Force Imbuement is a cantrip that enhances weapon damage by +1 for up to 1 minute with concentration. Perfect for extended combats. Works on any weapon within 5 feet. Remember concentration can be broken by damage.",
+   "narrative_hooks": [
+    "An ordinary blade becomes a Force weapon, cutting through supposedly impervious armor",
+    "The imbued weapon reveals hidden runes or markings when empowered",
+    "The Force energy resonates with the weapon's history"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of Force Imbuement empowering a weapon. A blade glows with ethereal blue-white Force energy, crackling lightning dancing along its edge. The wielder's hand channels visible streams of power into the weapon, which hums with supernatural might. The scene captures the moment of enhancement, by Tyler Jacobson",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_imbuement.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_imbuement",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_imbuement.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

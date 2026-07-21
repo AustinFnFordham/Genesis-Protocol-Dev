@@ -1,0 +1,239 @@
+{
+ "record": {
+  "id": "power_force_creation",
+  "name": "Force Creation",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 7,
+  "tags": [
+   "light_side",
+   "creation",
+   "matter_generation",
+   "life",
+   "manifestation",
+   "legendary",
+   "divine"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 14
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 95,
+    "penalties": {
+     "cost_multiplier": 2.0,
+     "dc_penalty": 5
+    },
+    "mastery_check": {
+     "description": "A Dark-aligned master may create through sheer will, but their creations are twisted by darkness.",
+     "ability": "Wisdom",
+     "dc": 25
+    }
+   }
+  },
+  "narrative": "You become a conduit for the Living Force itself, channeling its infinite creative potential to bring forth new existence. Matter coalesces from pure energy at your command, life sparks from nothingness, and reality reshapes itself according to your will. This is the ultimate expression of Light Side mastery—creation rather than destruction.",
+  "flavor_text": "\"Size matters not. Judge me by my size, do you? And well you should not, for my ally is the Force.\" - Master Yoda",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "arms spread wide, hands glowing with creative Force energy as matter forms"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "absolute concentration on bringing new existence into being through the Force"
+   }
+  ],
+  "casting_time": "1 Hour",
+  "range": "1000 feet",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You wield the power of creation itself, bringing new life and matter into existence from pure Force energy.",
+   "mechanics": [
+    {
+     "type": "create_life",
+     "value": "force_constructs",
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Create up to 10 Force constructs with CR equal to your level"
+    },
+    {
+     "type": "modify_terrain",
+     "value": "force_landscape",
+     "target_scopes": [
+      "area"
+     ],
+     "conditions": [
+      {
+       "key": "power_cast",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Transform terrain within range to your design"
+    },
+    {
+     "type": "apply_status",
+     "value": "creation_mastery",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "power_active",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Can create any non-magical object or structure"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "jedi_consular",
+    "narrative": "The Jedi Consular's deep understanding of the Force's mysteries allows them to create with precision and permanence. Their creations are not mere constructs but living extensions of the Force itself, imbued with purpose and wisdom.",
+    "mechanical_benefit": [
+     {
+      "type": "permanent_creation",
+      "value": "lasting_constructs",
+      "target_scopes": [
+       "created_objects"
+      ],
+      "notes": "Consular's creations last for 24 hours instead of 1 round"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity and imagination empower their Force Creation beyond normal limits. Their species' boundless potential allows them to conceive of and manifest creations that other species cannot even imagine.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_creation",
+      "value": "double_constructs",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Humans can create up to 20 Force constructs instead of 10"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's millennia of knowledge includes the sacred art of Force Creation. Their teachings ensure creations serve the greater good, manifesting as guardians of peace rather than weapons of war.",
+    "mechanical_benefit": [
+     {
+      "type": "benevolent_creation",
+      "value": "healing_aura",
+      "target_scopes": [
+       "allies_within_30_feet"
+      ],
+      "notes": "Jedi creations emit healing energy, restoring 1d4 HP per round to nearby allies"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the act of creation—energy coalescing into matter, life sparking from nothingness, reality bending to your will. Show the wonder and terror of wielding god-like power. Constructs shimmer into existence, terrain reshapes, and new possibilities emerge from the Force itself.",
+   "tactical_notes": "Force Creation is a game-breaking Level 6 power with 1-hour casting time. Creating 10+ constructs can completely change battlefield dynamics. The 1-round duration is the only limitation. Plan your creation carefully—you're essentially a temporary god.",
+   "narrative_hooks": [
+    "The power to create life raises profound philosophical questions",
+    "Witnesses are forever changed by seeing creation ex nihilo",
+    "The temptation to play god tests even the strongest Jedi"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.3), An awe-inspiring digital painting of Force Creation in action. A Jedi Master stands with arms outstretched as reality itself bends to their will. Streams of pure Force energy spiral outward, coalescing into living beings of light, transforming barren ground into lush gardens, and manifesting structures from pure thought. The scene captures the divine moment of creation, by Marc Simonetti and Peter Mohrbacher",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_creation.svg",
+   "color": "#FF6600"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_creation",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_creation.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

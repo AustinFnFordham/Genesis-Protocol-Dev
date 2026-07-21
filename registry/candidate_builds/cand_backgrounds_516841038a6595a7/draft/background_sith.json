@@ -1,0 +1,169 @@
+{
+ "record": {
+  "id": "background_sith",
+  "name": "Sith",
+  "tags": [
+   "background",
+   "sith",
+   "force_user",
+   "dark_side",
+   "power_hungry",
+   "ruthless",
+   "intimidating",
+   "force_mastery",
+   "ambitious",
+   "offensive"
+  ],
+  "description": "You are a practitioner of the dark side of the Force, whether as a Sith acolyte, fallen Jedi, or someone who has embraced the power of the dark side. Your training in the Sith arts has taught you to channel your emotions into power, but it has also left you with a hunger for more. You understand the seductive nature of the dark side and the price that comes with its power.",
+  "proficiencies": {
+   "skills": [
+    "Intimidation",
+    "Deception"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Lightsaber",
+      "Sith Holocron",
+      "Dark Side Artifacts",
+      "Meditation Chamber",
+      "Sith Robes",
+      "Force Imbued Items"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Dark Side Attunement",
+   "level": 1,
+   "description": "Your connection to the dark side has granted you unique abilities and insights. You have advantage on Intimidation checks, and you can sense the presence of other Force users within 30 feet of you. Additionally, when you use Force powers, you can choose to channel the dark side, gaining a bonus to your Force power rolls but taking 1d4 damage as the dark side takes its toll.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "dark_intimidation",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "intimidation"
+      }
+     ],
+     "notes": "Advantage on Intimidation checks"
+    },
+    {
+     "type": "narrative_effect",
+     "value": "force_sense",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Sense other Force users within 30 feet"
+    },
+    {
+     "type": "trigger_effect",
+     "value": "dark_side_channeling",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "using_force_power",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Channel dark side for Force power bonus, take 1d4 damage"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I am incredibly slow to trust.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly.",
+    "I always have a plan for what to do when things go wrong."
+   ],
+   "ideals": [
+    "Power. I will do whatever it takes to become powerful.",
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Justice. I bring criminals to justice."
+   ],
+   "bonds": [
+    "I am searching for my former master.",
+    "I am protecting a secret that could endanger the galaxy.",
+    "I am the last of my line, and I must not fail.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_sith",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_sith.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

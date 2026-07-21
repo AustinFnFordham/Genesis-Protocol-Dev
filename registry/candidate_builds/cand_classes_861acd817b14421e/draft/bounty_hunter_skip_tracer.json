@@ -1,0 +1,290 @@
+{
+ "record": {
+  "id": "bounty_hunter_skip_tracer",
+  "name": "Skip Tracer",
+  "class_id": "bounty_hunter",
+  "tags": [
+   "bounty_hunter",
+   "skip_tracer",
+   "tracker",
+   "intelligence_based",
+   "investigator",
+   "perceptive",
+   "hunter",
+   "information_gatherer",
+   "skill_specialist"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "bounty_hunter_skip_tracer_entry_3",
+    "feature_id": "bounty_hunter_skip_tracer_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "bounty_hunter_specialization",
+    "description": "Skip Tracers specialize in finding people who don't want to be found—leveraging contacts, databases, and subtle manipulation to locate, corner, and capture targets with minimal collateral."
+   },
+   {
+    "node_id": "network_of_contacts_7",
+    "feature_id": "network_of_contacts",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "bounty_hunter_skip_tracer_entry_3"
+    ],
+    "description": "You cultivate informants across the underworld. In settlements, you can spend 1 hour and some credits to gather intel, gaining advantage on Investigation checks to locate a specific person for the next 24 hours. Once per long rest, you can automatically learn one recent known location or alias for your mark.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "investigation_to_locate_target",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "spent_one_hour_and_credits",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Investigation to find targets for 24h"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "learn_recent_location_or_alias",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "long_rest_since_last_use",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain one recent location/alias of the mark"
+     }
+    ]
+   },
+   {
+    "node_id": "digital_footprint_11",
+    "feature_id": "digital_footprint",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "network_of_contacts_7"
+    ],
+    "description": "You can analyze comms, transactions, and travel data to predict movement. Over 10 minutes, make an Intelligence (Technology) check vs DC set by data quality; on success, you learn the most likely next location/route of the target, and you and allies gain advantage on checks to pursue that route for 1 hour.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "predict_next_route",
+      "target_scopes": [
+       "self",
+       "party"
+      ],
+      "conditions": [],
+      "notes": "Predict next location/route; advantage on pursuit checks"
+     }
+    ]
+   },
+   {
+    "node_id": "nonlethal_takedown_13",
+    "feature_id": "nonlethal_takedown",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "digital_footprint_11"
+    ],
+    "description": "You can incapacitate targets with minimal harm. When you reduce a creature to 0 HP with a melee attack, you can choose to render it unconscious and stable instead. In addition, once per short rest, when you hit a creature with a melee attack, it must succeed on a Constitution saving throw or be restrained until the end of your next turn.",
+    "effects": [
+     {
+      "type": "modify_rule",
+      "value": "choose_unconscious_stable_on_melee_0hp",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [],
+      "notes": "Knock out and stabilize instead of kill with melee"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "restrain_on_melee_hit",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "short_rest_since_last_use",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "On melee hit, target makes Con save or is restrained"
+     }
+    ]
+   },
+   {
+    "node_id": "paper_trail_erasure_17",
+    "feature_id": "paper_trail_erasure",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "nonlethal_takedown_13"
+    ],
+    "description": "You can temporarily scrub traces to isolate your mark. As an action, choose an area or system (e.g., local grid). Until the end of your next short rest, your mark’s attempts to gain aid or hide via local networks have disadvantage, and checks to locate the mark through those networks have advantage.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "suppress_assistance_and_cover",
+      "target_scopes": [
+       "area",
+       "systems"
+      ],
+      "conditions": [],
+      "notes": "Impair mark’s aid/hide; bolster location attempts"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_skip_tracer_19",
+    "feature_id": "legendary_skip_tracer",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "paper_trail_erasure_17"
+    ],
+    "description": "Enter a state of flawless pursuit for 1 minute (once per long rest). During this time, you have advantage on Investigation and Insight checks, creatures you have Marked cannot Hide from you, and when you hit a creature you have Marked, it must succeed on a Strength saving throw or be knocked prone.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "investigation_and_insight",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "skip_tracer_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Investigation and Insight"
+     },
+     {
+      "type": "modify_rule",
+      "value": "marked_cannot_hide_from_you",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "is_marked_by_you",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "skip_tracer_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Marked targets cannot Hide from you"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "knock_prone_on_hit_marked",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "is_marked_by_you",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "attack_hit",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "skip_tracer_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Marked target STR save or be knocked prone"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Dagobah Mist",
+    "Lightsaber Hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Eyes closed, breathing deeply, with a calm yet focused expression",
+    "energy_signature": "A swirling aura of blue and green lights surrounding the being"
+   },
+   "prompt_schema": {
+    "base_prompt": "A Jedi Master standing on a cliff overlooking a stunning sunset on Tatooine",
+    "contextual_modifiers": [
+     "Weather conditions: stormy",
+     "Time of day: dawn"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A skip tracer uses their keen senses and skills to track down and bring in bounties, operating on the fringes of law and society.",
+   "role_in_group": "Controller",
+   "visual_signals": [
+    "Leather jacket with numerous pockets",
+    "Scars or tattoos indicating numerous close calls"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "bounty_hunter_skip_tracer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/bounty_hunter_subclasses/bounty_hunter.skip_tracer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,212 @@
+{
+ "record": {
+  "id": "hired_gun_demolitionist",
+  "name": "Demolitionist",
+  "class_id": "hired_gun",
+  "tags": [
+   "hired_gun",
+   "demolitionist",
+   "explosive",
+   "demolitions",
+   "tactical",
+   "mercenary",
+   "battlefield_control",
+   "destructive",
+   "intelligence_based"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "hired_gun_demolitionist_entry_3",
+    "feature_id": "hired_gun_demolitionist_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "hired_gun_specialization",
+    "description": "Demolitionists are experts in explosives—breaching defenses, collapsing fortifications, and controlling the battlefield through calculated detonations."
+   },
+   {
+    "node_id": "breach_charge_7",
+    "feature_id": "breach_charge",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "hired_gun_demolitionist_entry_3"
+    ],
+    "description": "You can place a breaching charge on a door, wall, or barrier you can touch as an action. The charge detonates after 1 round, dealing force damage in a 10-foot radius (Dex save for half) and automatically opening/breaking mundane barriers of up to reinforced door strength. You can create a number of charges per long rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "place_object",
+      "value": "breach_charge",
+      "target_scopes": [
+       "terrain"
+      ],
+      "conditions": [],
+      "notes": "Place charge; detonate after 1 round; open/breach barriers"
+     }
+    ]
+   },
+   {
+    "node_id": "controlled_detonation_11",
+    "feature_id": "controlled_detonation",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "breach_charge_7"
+    ],
+    "description": "Your explosions spare allies. When you cause an explosion from a charge or grenade, you can choose a number of creatures up to your Dexterity modifier to automatically succeed on the saving throw and take no damage on a success.",
+    "effects": [
+     {
+      "type": "modify_rule",
+      "value": "selective_explosion_protection",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [],
+      "notes": "Protect allies in blast up to DEX mod"
+     }
+    ]
+   },
+   {
+    "node_id": "area_denial_13",
+    "feature_id": "area_denial",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "controlled_detonation_11"
+    ],
+    "description": "You can deploy proximity mines covering a 15-foot cone. The first time a creature enters the area on a turn, it must succeed on a Dexterity saving throw or take explosive damage and have its speed reduced by 10 feet until the end of its next turn. The field persists for 1 minute or until dismissed.",
+    "effects": [
+     {
+      "type": "area_effect",
+      "value": "deploy_proximity_mines",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [],
+      "notes": "Cone of proximity mines; damage + slow on trigger"
+     }
+    ]
+   },
+   {
+    "node_id": "chain_reaction_17",
+    "feature_id": "chain_reaction",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "area_denial_13"
+    ],
+    "description": "When you hit a creature with a ranged weapon attack, you can trigger a delayed micro-charge on a surface within 5 feet of the target to detonate, forcing the target and each creature within 5 feet to make a Dexterity saving throw or take explosive damage. You can use this feature a number of times per short rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "detonate_micro_charge_on_hit",
+      "target_scopes": [
+       "area",
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "ranged_attack_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Detonate secondary blast near the hit target"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_demolitionist_19",
+    "feature_id": "legendary_demolitionist",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "chain_reaction_17"
+    ],
+    "description": "For 1 minute (once per long rest), your explosives are hyper-efficient. Your explosive effects deal maximum damage on a failed save and half of maximum on a successful save; structures have vulnerability to your explosive damage.",
+    "effects": [
+     {
+      "type": "modify_damage",
+      "value": "maximize_explosive_damage",
+      "target_scopes": [
+       "targets_in_explosions"
+      ],
+      "conditions": [
+       {
+        "key": "demolitionist_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Explosions deal max/half-max; structures vulnerable"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Kyber Crystal",
+    "Lightsaber Hilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance, feet shoulder-width apart, with lightsaber at the ready",
+    "energy_signature": "Surrounded by an aura of blue and purple energy, signifying the user's connection to the Force"
+   },
+   "prompt_schema": {
+    "base_prompt": "A Jedi Master stands proudly, holding their lightsaber aloft in a moment of triumph over the dark side",
+    "contextual_modifiers": [
+     "In a dense forest",
+     "With stormy weather in the background"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A skilled engineer who uses explosives to demolish enemy fortifications, creating breaches in defensive lines and weakening enemy positions.",
+   "role_in_group": "Striker",
+   "visual_signals": [
+    "Cybernetic Eye Implants",
+    "Explosive Gauntlets"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "hired_gun_demolitionist",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/hired_gun_subclasses/hired_gun.demolitionist.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,628 @@
+{
+ "record": {
+  "actions": [
+   {
+    "id": "reaction_opportunity_attack",
+    "name": "Opportunity Attack",
+    "description": "When a hostile creature you can see moves out of your reach, you can quickly strike at them. This represents the instinctive combat reflexes of a trained warrior.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "make_attack",
+      "value": "opportunity_attack",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "enemy_leaves_reach",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "enemy_visible",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Make one melee weapon attack against enemy leaving your reach"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_precise_strike",
+     "threat_opportunity_miss",
+     "advantage_combat_reflexes",
+     "threat_awkward_position",
+     "advantage_tactical_awareness",
+     "threat_reaction_delay"
+    ]
+   },
+   {
+    "id": "reaction_uncanny_dodge",
+    "name": "Uncanny Dodge",
+    "description": "When an attacker you can see hits you with an attack, you can use your reaction to halve the attack's damage against you. This represents the supernatural reflexes and combat awareness of a skilled fighter.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "reduce_damage",
+      "value": "half",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attacker_visible",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "hit_by_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Reduce damage from visible attacker's hit by half"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_supernatural_reflexes",
+     "threat_dodge_failure",
+     "advantage_combat_awareness",
+     "threat_reflex_overload",
+     "advantage_instinctive_defense",
+     "threat_dodge_misjudgment"
+    ]
+   },
+   {
+    "id": "reaction_parry",
+    "name": "Parry",
+    "description": "You use your weapon or shield to deflect an incoming attack, turning a potentially devastating blow into a glancing hit. This represents the defensive mastery of a skilled warrior.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "reduce_damage",
+      "value": "1d10 + proficiency bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "wielding_weapon_or_shield",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "hit_by_melee_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Reduce melee attack damage by 1d10 + proficiency bonus"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_parry",
+     "threat_parry_failure",
+     "advantage_defensive_mastery",
+     "threat_weapon_damage",
+     "advantage_combat_technique",
+     "threat_parry_misjudgment"
+    ]
+   },
+   {
+    "id": "reaction_force_reflect",
+    "name": "Force Reflect",
+    "description": "You channel the Force to create a protective barrier that reflects incoming attacks back at your attacker. This represents the defensive mastery of a skilled Force user.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 30
+    },
+    "effects": [
+     {
+      "type": "reflect_attack",
+      "value": "force_reflect",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "hit_by_ranged_attack",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Reflect ranged attack back at attacker with Force check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_reflection",
+     "threat_reflect_failure",
+     "advantage_force_barrier",
+     "threat_force_dispersion",
+     "advantage_defensive_mastery",
+     "threat_force_exhaustion"
+    ]
+   },
+   {
+    "id": "reaction_force_precognition",
+    "name": "Force Precognition",
+    "description": "Your connection to the Force gives you a split-second warning of danger, allowing you to react with supernatural speed. This represents the precognitive abilities of a Force-sensitive individual.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_saving_throw",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "danger_present",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on next saving throw through Force precognition"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_precognitive_warning",
+     "threat_precognition_confusion",
+     "advantage_force_awareness",
+     "threat_force_distraction",
+     "advantage_danger_sense",
+     "threat_precognition_overload"
+    ]
+   },
+   {
+    "id": "reaction_tech_counter",
+    "name": "Tech Counter",
+    "description": "You rapidly analyze and counter a technological attack or system intrusion, using your technical expertise to turn the tables on your attacker. This represents the quick thinking of a skilled technician.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "object",
+     "range": 10
+    },
+    "effects": [
+     {
+      "type": "counter_tech_attack",
+      "value": "tech_counter",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "tech_attack_incoming",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 10
+       }
+      ],
+      "notes": "Counter technological attack with Technology check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_rapid_analysis",
+     "threat_counter_failure",
+     "advantage_tech_mastery",
+     "threat_system_overload",
+     "advantage_quick_thinking",
+     "threat_tech_confusion"
+    ]
+   },
+   {
+    "id": "reaction_emergency_override",
+    "name": "Emergency Override",
+    "description": "You activate an emergency protocol or system override to prevent disaster or gain control of a situation. This represents the technical ingenuity and quick thinking of a skilled engineer.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "object",
+     "range": 5
+    },
+    "effects": [
+     {
+      "type": "emergency_override",
+      "value": "system_control",
+      "target_scopes": [
+       "object"
+      ],
+      "conditions": [
+       {
+        "key": "system_malfunction",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "notes": "Override malfunctioning system with Technology check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_quick_thinking",
+     "threat_override_failure",
+     "advantage_emergency_protocol",
+     "threat_system_damage",
+     "advantage_technical_ingenuity",
+     "threat_override_complication"
+    ]
+   },
+   {
+    "id": "reaction_quick_retort",
+    "name": "Quick Retort",
+    "description": "You respond with a witty or cutting remark that undermines your opponent's confidence or position. This represents the sharp wit and social skills of a skilled diplomat or negotiator.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 30
+    },
+    "effects": [
+     {
+      "type": "impose_disadvantage",
+      "value": "next_ability_check",
+      "target_scopes": [
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 30
+       },
+       {
+        "key": "can_hear_you",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Impose disadvantage on target's next ability check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_sharp_wit",
+     "threat_retort_backfire",
+     "advantage_social_mastery",
+     "threat_communication_breakdown",
+     "advantage_psychological_edge",
+     "threat_retort_weakness"
+    ]
+   },
+   {
+    "id": "reaction_empathic_sense",
+    "name": "Empathic Sense",
+    "description": "You instinctively read the emotions and intentions of those around you, gaining insight into their true feelings and motivations. This represents the heightened empathy and social awareness of a skilled diplomat.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 30
+    },
+    "effects": [
+     {
+      "type": "make_check",
+      "value": "Wisdom (Insight)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_visible",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 30
+       }
+      ],
+      "notes": "Read target's emotions and intentions with Insight check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_emotional_reading",
+     "threat_empathic_overload",
+     "advantage_social_intuition",
+     "threat_emotional_confusion",
+     "advantage_empathic_connection",
+     "threat_empathic_distortion"
+    ]
+   },
+   {
+    "id": "reaction_shadow_step",
+    "name": "Shadow Step",
+    "description": "You instinctively move to take advantage of shadows and cover when danger approaches, disappearing from view with supernatural grace. This represents the stealth mastery of a skilled rogue.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "teleport",
+      "value": "shadow_step",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "shadows_available",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "danger_present",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Teleport up to 60 feet to unoccupied space in dim light or darkness"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_concealment",
+     "threat_shadow_misstep",
+     "advantage_stealth_mastery",
+     "threat_teleport_misfire",
+     "advantage_shadow_movement",
+     "threat_stealth_exposure"
+    ]
+   },
+   {
+    "id": "reaction_evasion",
+    "name": "Evasion",
+    "description": "You instinctively dodge out of the way of area effects and explosions, using your agility and reflexes to avoid harm. This represents the survival instincts of a skilled scout or rogue.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "evade_damage",
+      "value": "area_effect",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "area_effect_incoming",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "dexterity_save_success",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Take no damage on successful Dexterity save against area effect"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_perfect_evasion",
+     "threat_evasion_failure",
+     "advantage_agile_movement",
+     "threat_awkward_dodge",
+     "advantage_survival_instinct",
+     "threat_evasion_misjudgment"
+    ]
+   },
+   {
+    "id": "reaction_hunter_s_instinct",
+    "name": "Hunter's Instinct",
+    "description": "Your predatory instincts kick in when you sense danger or opportunity, allowing you to react with animal-like reflexes. This represents the primal awareness of a skilled hunter.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack_roll",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "danger_or_opportunity",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on next attack roll through hunter's instinct"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_predatory_focus",
+     "threat_instinct_confusion",
+     "advantage_hunter_awareness",
+     "threat_instinct_overload",
+     "advantage_primal_reaction",
+     "threat_instinct_misjudgment"
+    ]
+   },
+   {
+    "id": "reaction_survival_adaptation",
+    "name": "Survival Adaptation",
+    "description": "You instinctively adapt to changing environmental conditions or threats, using your survival knowledge to protect yourself and allies. This represents the adaptive nature of a skilled survivor.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "self",
+     "range": 0
+    },
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "environmental_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "environmental_threat",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain resistance to environmental damage through adaptation"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_environmental_adaptation",
+     "threat_adaptation_failure",
+     "advantage_survival_knowledge",
+     "threat_environmental_overwhelm",
+     "advantage_quick_adaptation",
+     "threat_adaptation_strain"
+    ]
+   },
+   {
+    "id": "reaction_emergency_stabilize",
+    "name": "Emergency Stabilize",
+    "description": "You provide immediate medical attention to stabilize a critically injured ally, using your medical knowledge to prevent further harm. This represents the quick thinking of a skilled medic.",
+    "cost": [
+     "reaction"
+    ],
+    "target": {
+     "type": "creature",
+     "range": 5
+    },
+    "effects": [
+     {
+      "type": "stabilize_creature",
+      "value": "emergency_stabilize",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ally_dying",
+        "op": "equals",
+        "value": true
+       },
+       {
+        "key": "within_range",
+        "op": "less_than_or_equal",
+        "value": 5
+       }
+      ],
+      "notes": "Stabilize dying ally within 5 feet with Medicine check"
+     }
+    ],
+    "narrative_outcomes": [
+     "advantage_rapid_stabilization",
+     "threat_stabilization_failure",
+     "advantage_medical_expertise",
+     "threat_medical_complication",
+     "advantage_life_saving_skill",
+     "threat_medical_error"
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "reactions",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/actions/reactions.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "e9823f20ecb78ab2b53b06fd9a3c329531a9e169688a338997d66be6bca23099",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

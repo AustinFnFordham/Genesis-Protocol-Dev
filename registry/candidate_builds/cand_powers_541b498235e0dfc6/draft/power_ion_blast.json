@@ -1,0 +1,207 @@
+{
+ "record": {
+  "id": "power_ion_blast",
+  "name": "Ion Blast",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "ion",
+   "electrical",
+   "emp",
+   "droid_killer",
+   "systems_disruption",
+   "anti_tech"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ion weapon technology for disabling electronic systems"
+   }
+  },
+  "narrative": "You fire a concentrated burst of ionized particles that scrambles electronic systems on contact, blue-white energy cascading across circuits and causing catastrophic failures. The power manifests as crackling bolts that leave droids twitching and technology sparking, their systems overwhelmed by electromagnetic pulse.",
+  "flavor_text": "\"Ion weapons are the great equalizer against technology.\" - Rebel Engineer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "firing ion blaster or activating EMP device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "targeting electronic systems for maximum disruption"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You fire a small ion projectile that deals ion damage and can disable electronic devices.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "ion",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 ion damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of electronics transforms Ion Blast from simple disruption to surgical system shutdown. They know exactly which circuits to fry for maximum effect—targeting power cores, disabling weapons systems, or scrambling memory banks with precision strikes.",
+    "mechanical_benefit": [
+     {
+      "type": "system_shutdown",
+      "value": {
+       "effect": "disable_one_system",
+       "duration": {
+        "amount": 1,
+        "unit": "round"
+       }
+      },
+      "target_scopes": [
+       "droids_and_electronics"
+      ],
+      "notes": "Engineers can disable one system (movement/weapons/sensors) for 1 round."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical flexibility makes their ion weapons versatile tools. They've learned to modulate output for different effects—low power for stunning, high power for permanent damage, creating a spectrum of electronic warfare options from a single weapon.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_vs_droids",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "ion",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "droids"
+      ],
+      "notes": "Humans deal an additional 1d4 ion damage to droids."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has weaponized Ion Blast against Imperial technology. Their versions can cascade through connected systems, one blast disabling entire droid squads or causing chain reactions in Imperial equipment—asymmetric warfare through electromagnetic sabotage.",
+    "mechanical_benefit": [
+     {
+      "type": "chain_disruption",
+      "value": {
+       "additional_targets": 1,
+       "connection": "networked_systems"
+      },
+      "target_scopes": [
+       "droids_and_electronics"
+      ],
+      "notes": "Rebel ion blasts can jump to one connected electronic system."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the blue-white ion bolt striking its target, electricity arcing across circuits. Show droids jerking as systems fail, lights flickering and dying, mechanical limbs freezing mid-motion. For vehicles, describe dashboards going dark, engines sputtering, electronics dead.",
+   "tactical_notes": "Ion Blast is a cantrip dealing 1d4 ion damage at 60 feet, devastating against droids and electronics. The damage type is rarely resisted by mechanical targets but less effective against organic enemies. Perfect for anti-droid operations with no resource cost.",
+   "narrative_hooks": [
+    "An ion blast disables a security droid patrol at a critical moment",
+    "The weapon shorts out an enemy's cybernetic implants painfully",
+    "A well-placed shot causes a droid army's command unit to malfunction"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of an ion blast striking a droid. Blue-white electricity cascades across metal surfaces, circuits sparking and failing. The droid convulses as systems shut down, photoreceptors flickering and dying. Arcs of electromagnetic energy radiate from the impact point, showing the devastating effect of ion weapons on technology.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/ion_blast.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_ion_blast",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_ion_blast.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

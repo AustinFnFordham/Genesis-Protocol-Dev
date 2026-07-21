@@ -1,0 +1,470 @@
+{
+ "record": {
+  "id": "guardian_force_warrior",
+  "name": "Force Warrior",
+  "class_id": "guardian",
+  "tags": [
+   "guardian",
+   "force_warrior",
+   "offensive",
+   "melee_specialist",
+   "force_user",
+   "light_side",
+   "jedi",
+   "force_mastery",
+   "striker"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "force_combat_mastery_3",
+    "feature_id": "force_combat_mastery",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop mastery of Force combat techniques. When you use your Force abilities in combat, you gain enhanced benefits: +2 to attack rolls and damage rolls with Force powers, and you can use your Force Points to enhance your combat abilities.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "force_combat_enhancement",
+      "target_property": "force_attack_and_damage_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_powers_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 to attack and damage rolls with Force powers"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "force_point_combat_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Force Points to enhance combat abilities"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "force_weapon_mastery_5",
+    "feature_id": "force_weapon_mastery",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "force_combat_technique_5",
+    "description": "You master the art of Force weapon combat. When you spend Force Points, you can enhance your weapon attacks with Force energy, dealing additional Force damage and gaining special combat abilities.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "force_weapon_enhancement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhance weapon attacks with Force energy for additional damage"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_mastery_3"
+    ]
+   },
+   {
+    "node_id": "force_combat_techniques_5",
+    "feature_id": "force_combat_techniques",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "force_combat_technique_5",
+    "description": "You develop advanced Force combat techniques. When you spend Force Points, you can perform special combat maneuvers such as Force-enhanced strikes, telekinetic combat, or Force-powered movement.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "advanced_force_combat_techniques",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform special combat maneuvers like Force-enhanced strikes and telekinetic combat"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_mastery_3"
+    ]
+   },
+   {
+    "node_id": "force_battle_mastery_7",
+    "feature_id": "force_battle_mastery",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "force_combat_focus_7",
+    "description": "You master Force battle techniques. When you spend Force Points, you can enter a state of Force battle mastery that grants you advantage on all attack rolls and allows you to make additional Force-enhanced attacks.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "force_battle_mastery_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all attacks and additional Force-enhanced attacks"
+     }
+    ],
+    "prerequisites": [
+     "force_weapon_mastery_5"
+    ]
+   },
+   {
+    "node_id": "force_combat_legend_7",
+    "feature_id": "force_combat_legend",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "force_combat_focus_7",
+    "description": "You become a legend of Force combat. When you spend Force Points, you can perform legendary Force combat feats such as Force-powered charges, telekinetic weapon control, or Force-enhanced reflexes.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_force_combat_feats",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform legendary Force combat feats like Force-powered charges and telekinetic weapon control"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_techniques_5"
+    ]
+   },
+   {
+    "node_id": "force_combat_mastery_9",
+    "feature_id": "force_combat_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your mastery of Force combat becomes overwhelming. When you spend Force Points, you can achieve both enhanced battle techniques and legendary combat feats, making you a master of both precision and power.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_force_combat_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve both enhanced battle techniques and legendary combat feats with Force Points"
+     }
+    ],
+    "prerequisites": [
+     "force_battle_mastery_7",
+     "force_combat_legend_7"
+    ]
+   },
+   {
+    "node_id": "force_weapon_legend_11",
+    "feature_id": "force_weapon_legend",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "force_combat_technique_11",
+    "description": "You become a legend with Force weapons. When you spend Force Points, you can wield weapons with perfect Force mastery, creating weapons of pure Force energy and achieving impossible combat feats.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "force_weapon_legendary_mastery",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Wield weapons with perfect Force mastery and create weapons of pure Force energy"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_mastery_9"
+    ]
+   },
+   {
+    "node_id": "force_combat_perfection_11",
+    "feature_id": "force_combat_perfection",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "force_combat_technique_11",
+    "description": "You achieve perfect Force combat form. When you spend Force Points, you can perform perfect Force combat techniques that never miss their target and always deal maximum Force damage.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_force_combat_techniques",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Perform perfect Force combat techniques that never miss and deal maximum Force damage"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_mastery_9"
+    ]
+   },
+   {
+    "node_id": "force_combat_legend_13",
+    "feature_id": "force_combat_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of Force combat. Your Force Points are more potent, and when you spend them, you can achieve Force combat capabilities that transcend normal limitations, including the ability to manipulate the Force itself in combat.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_force_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Force Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "force_manipulation_in_combat",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the Force itself in combat with Force Points"
+     }
+    ],
+    "prerequisites": [
+     "force_weapon_legend_11",
+     "force_combat_perfection_11"
+    ]
+   },
+   {
+    "node_id": "force_warrior_perfection_15",
+    "feature_id": "force_warrior_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_force_combat_15",
+    "description": "Your Force warrior abilities achieve perfection. When you spend Force Points, you can achieve perfect Force combat mastery, becoming one with the Force in battle and achieving impossible combat feats.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_force_warrior_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve perfect Force combat mastery and become one with the Force in battle"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_legend_13"
+    ]
+   },
+   {
+    "node_id": "force_combat_perfection_15",
+    "feature_id": "force_combat_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_force_combat_15",
+    "description": "You achieve perfect Force combat form. When you spend Force Points, you can become one with the Force itself, gaining omniscient awareness of all combat possibilities and the ability to predict and counter any attack.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "force_combat_omniscience",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain omniscient awareness of all combat possibilities and predict/counter any attack"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_legend_13"
+    ]
+   },
+   {
+    "node_id": "force_combat_legend_17",
+    "feature_id": "force_combat_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of Force combat. When you spend Force Points, you can achieve Force combat capabilities that transcend reality itself, including the ability to manipulate the very concept of combat.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_combat_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the very concept of combat"
+     }
+    ],
+    "prerequisites": [
+     "force_warrior_perfection_15",
+     "force_combat_perfection_15"
+    ]
+   },
+   {
+    "node_id": "perfect_force_warrior_20",
+    "feature_id": "perfect_force_warrior",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of Force combat. When you spend Force Points, you can achieve Force combat capabilities that are not only perfect and reality-transcending but also allow you to create combat techniques from pure Force energy and will.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "pure_force_combat_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "force_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create combat techniques from pure Force energy and will"
+     }
+    ],
+    "prerequisites": [
+     "force_combat_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "X-Wing",
+    "Stormtrooper Helmet"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "In a defensive stance with blaster at the ready, shield activated",
+    "energy_signature": "A burst of blue light emanating from the lightsaber hilt"
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a Jedi Master facing off against a Sith Lord in a galaxy far, far away",
+    "contextual_modifiers": [
+     "Nighttime Battle",
+     "Dark Side Energy"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Harnessing the power of the Force to enhance physical prowess and protect allies.",
+   "role_in_group": "Tank",
+   "visual_signals": [
+    "Worn leather armor with intricate circuitry",
+    "Emblematic lightsaber crystal"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "guardian_force_warrior",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/guardian_subclasses/guardian.force_warrior.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,241 @@
+{
+ "record": {
+  "id": "power_force_barrier",
+  "name": "Force Barrier",
+  "power_type": "Force",
+  "alignment": "Light",
+  "level": 2,
+  "tags": [
+   "light_side",
+   "defensive",
+   "barrier",
+   "protection",
+   "force_shield",
+   "energy"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 2
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Light",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 80,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Dark-aligned user may create barriers through sheer will rather than compassion.",
+     "ability": "Wisdom",
+     "dc": 18
+    }
+   }
+  },
+  "narrative": "You weave the Force into a shimmering dome of protective energy, creating an invisible barrier that deflects harm. The power manifests as translucent ripples of light that appear only when struck, each impact creating beautiful geometric patterns across the shield's surface.",
+  "flavor_text": "\"The Force is my ally, and a powerful ally it is.\" - Master Yoda",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "hands raised, palms outward, creating an invisible dome of protection"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling protective intent through the Force to shield allies"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Concentration, up to 10 minute",
+  "base_effect": {
+   "description": "You create a protective barrier of Force energy that shields you and your allies from harm.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "damage_resistance"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_within_range",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Resistance to all damage types"
+    },
+    {
+     "type": "modify_stat",
+     "value": {
+      "effect": "temporary_hit_points"
+     },
+     "target_property": "temp_hp",
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "target_within_range",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Gain 2d6 + Force modifier temporary hit points"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "guardian",
+    "narrative": "The Guardian's dedication to protection transforms Force Barrier into an unbreakable aegis. Their defensive philosophy allows them to extend the barrier's radius and reinforce its structure against even the most devastating attacks.",
+    "mechanical_benefit": [
+     {
+      "type": "expand_area",
+      "value": {
+       "radius": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Guardian's Force Barrier protects all allies within 10 feet"
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human determination strengthens their Force Barriers through sheer willpower. Their species' resilience allows them to maintain the barrier even under extreme duress, refusing to let it fall while allies need protection.",
+    "mechanical_benefit": [
+     {
+      "type": "maintain_concentration",
+      "value": {
+       "effect": "advantage_on_saves"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans have advantage on concentration saves for Force Barrier"
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "jedi_order",
+    "narrative": "The Jedi Order's teachings of selfless protection infuse their Force Barriers with additional strength. Their barriers shimmer with the light side's power, providing both physical and spiritual protection to those within.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_protection",
+      "value": {
+       "temp_hp": {
+        "dice_count": 1,
+        "dice_size": 6,
+        "modifier": 0
+       }
+      },
+      "target_scopes": [
+       "allies"
+      ],
+      "notes": "Jedi Force Barriers grant an additional 1d6 temporary hit points"
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the barrier's appearance—shimmering air, geometric patterns when struck, the feeling of safety it provides. Show how attacks splash harmlessly against its surface, creating ripples of light. The barrier hums with protective energy.",
+   "tactical_notes": "Force Barrier provides both damage resistance and temporary HP, making it excellent for pre-combat buffing or mid-fight protection. The concentration requirement means you can't stack it with other concentration powers. Position yourself to protect multiple allies.",
+   "narrative_hooks": [
+    "The barrier saves a dying ally from a killing blow",
+    "Enemies must change tactics when their attacks prove ineffective",
+    "The barrier's beauty contrasts with the violence it repels"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality:1.2), A stunning digital painting of Force Barrier protecting allies. A translucent dome of shimmering Force energy surrounds a group, geometric patterns rippling across its surface as attacks strike harmlessly. Inside, allies stand protected while outside, blaster bolts and debris bounce off the barrier creating beautiful light patterns. The barrier glows with protective blue-white energy, by Wojtek Fus and Raymond Swanland",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/force_barrier.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_force_barrier",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_force_barrier.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

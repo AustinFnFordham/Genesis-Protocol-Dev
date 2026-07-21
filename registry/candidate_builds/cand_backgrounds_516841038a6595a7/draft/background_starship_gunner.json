@@ -1,0 +1,118 @@
+{
+ "record": {
+  "id": "background_starship_gunner",
+  "name": "Gunner",
+  "description": "You shape battles with firing solutions—managing power, leading targets, and coordinating salvos under pressure.",
+  "proficiencies": {
+   "skills": [
+    "Perception",
+    "Technology"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Targeting Suite",
+      "Weapon Calibration Kit",
+      "Sensor Suite",
+      "Communications Kit"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Fire Control",
+   "level": 1,
+   "description": "You have advantage on checks to acquire or maintain target locks and to fire ship-mounted weapons under duress. Once per short rest, the ship’s next weapon attack gains advantage.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "acquire_or_maintain_target_lock",
+     "target_scopes": [
+      "self"
+     ]
+    },
+    {
+     "type": "grant_advantage",
+     "value": "next_ship_weapon_attack_once_per_short_rest",
+     "target_scopes": [
+      "ship"
+     ],
+     "conditions": [
+      {
+       "key": "rest_cooldown",
+       "op": "equals",
+       "value": "short"
+      }
+     ]
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I breathe out on the shot.",
+    "I narrate ranges when stressed."
+   ],
+   "ideals": [
+    "Precision. One clean volley beats ten wild ones.",
+    "Protection. I shoot to guard my crew."
+   ],
+   "bonds": [
+    "A patched cannon and I survived together—I name her before battles."
+   ],
+   "flaws": [
+    "I overcommit to a target and ignore the flank."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_starship_gunner",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/starship_backgrounds/background_starship_gunner.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "340171ae4cfe608c3c628c3b4b23f4ba93385ae50f4a0ed2731c6448abf4cd95",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

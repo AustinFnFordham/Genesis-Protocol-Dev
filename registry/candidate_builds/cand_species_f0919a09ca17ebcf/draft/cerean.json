@@ -1,0 +1,526 @@
+{
+ "record": {
+  "id": "cerean",
+  "name": "Cerean",
+  "tags": [
+   "balanced",
+   "cerean",
+   "consular",
+   "force_sensitive",
+   "human",
+   "intelligence_based",
+   "jedi",
+   "peaceful",
+   "perceptive",
+   "scholar",
+   "support",
+   "survivor_background",
+   "uncommon",
+   "wisdom_based",
+   "wise"
+  ],
+  "description": "The Cereans are a peaceful, near-human species native to the planet Cerea. They are known for their elongated heads, which contain a second brain, and their deep connection to nature and harmony.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Intelligence",
+    "value": 2
+   },
+   {
+    "ability": "Wisdom",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Cerean"
+  ],
+  "base_hp": 9,
+  "base_strain": 12,
+  "innate_traits": [
+   {
+    "id": "cerean_closed_mind",
+    "name": "Closed Mind",
+    "narrative": "Your unique dual-brain physiology provides exceptional mental fortitude. The second brain acts as a backup system, making you highly resistant to mental manipulation and emotional control.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Mental Fortitude",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against being charmed or frightened.",
+      "rules": [
+       "save_type:advantage",
+       "conditions:charmed_frightened"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "cerean_oppressed_mind",
+     "ui_transition": {
+      "animation": "mind_shackling",
+      "sfx": "whispering_demons"
+     }
+    }
+   },
+   {
+    "id": "cerean_natural_harmony",
+    "name": "Natural Harmony",
+    "narrative": "Your deep connection to nature and the Force flows through your dual consciousness, allowing you to understand and commune with natural phenomena in ways that others cannot comprehend.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "name": "Nature Proficiency",
+      "action_type": "passive",
+      "description": "You gain proficiency in the Nature skill.",
+      "rules": [
+       "skill:nature",
+       "proficiency:granted"
+      ]
+     },
+     {
+      "effect": "grant_advantage",
+      "name": "Natural Understanding",
+      "action_type": "passive",
+      "description": "You have advantage on checks to understand natural phenomena.",
+      "rules": [
+       "skill:nature",
+       "context:natural_phenomena"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "cerean_tainted_nature",
+     "ui_transition": {
+      "animation": "nature_twisting",
+      "sfx": "thorns_growing"
+     }
+    }
+   },
+   {
+    "id": "cerean_diplomatic_insight",
+    "name": "Diplomatic Insight",
+    "narrative": "Your dual-brain physiology grants you exceptional insight into others' thoughts and motivations. You can process social cues and emotional states with remarkable clarity, making you a natural diplomat and mediator.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Enhanced Insight",
+      "action_type": "passive",
+      "description": "You have advantage on Insight checks.",
+      "rules": [
+       "skill:insight",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Diplomatic Advantage",
+      "action_type": "free_action",
+      "description": "Once per short rest, you can gain advantage on a Persuasion check.",
+      "rules": [
+       "cooldown:short_rest",
+       "skill:persuasion",
+       "advantage:once_per_rest"
+      ],
+      "conditions": [
+       {
+        "key": "rest_cooldown",
+        "op": "equals",
+        "value": "short"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "cerean_deceptive_influence",
+     "ui_transition": {
+      "animation": "deception_twist",
+      "sfx": "influence_sound"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.7m - 1.9m",
+   "distinctions": [
+    "Elongated, cone-shaped head",
+    "Second brain",
+    "Peaceful demeanor",
+    "Near-human features",
+    "Contemplative expression"
+   ],
+   "skin_color_variants": [
+    "Pale",
+    "Fair",
+    "Olive",
+    "Tan",
+    "Light Brown",
+    "Various human-like tones"
+   ],
+   "head_shape_variants": [
+    "Classic cone shape",
+    "Elongated cone shape",
+    "Rounded cone shape",
+    "Angular cone shape"
+   ],
+   "eye_color_variants": [
+    "Brown",
+    "Blue",
+    "Green",
+    "Hazel",
+    "Grey",
+    "Amber"
+   ],
+   "common_adornments": [
+    "Simple, flowing robes",
+    "Traditional Cerean ceremonial garments",
+    "Natural fiber clothing",
+    "Meditation and philosophical tools",
+    "Cultural jewelry and accessories"
+   ],
+   "llm_description_prompt": "Describe a Cerean character. Emphasize their distinctive elongated, cone-shaped head which contains their second brain, and their peaceful, contemplative demeanor. Their eyes should convey wisdom and deep thought. Consider their natural philosophical nature and the way they carry themselves with quiet dignity and intellectual curiosity."
+  },
+  "class_synergies": [
+   {
+    "class": "Scholar",
+    "narrative": "Cereans' dual-brain physiology and natural intelligence make them exceptional Scholars, able to process and synthesize information with remarkable efficiency.",
+    "mechanical_benefits": [
+     "High Intelligence supports academic pursuits",
+     "Closed Mind trait enhances mental resilience",
+     "Natural Harmony aids in understanding complex systems"
+    ]
+   },
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Cereans' natural diplomatic abilities and dual-brain insight make them exceptional Consulars, able to understand and mediate complex situations.",
+    "mechanical_benefits": [
+     "Diplomatic Insight trait enhances negotiation and mediation",
+     "Closed Mind trait prevents mental manipulation",
+     "High Wisdom supports diplomatic functions"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Cereans' peaceful nature and mental fortitude make them unique Guardians, protecting others through wisdom and understanding rather than force.",
+    "mechanical_benefits": [
+     "Closed Mind trait enhances resistance to mental control",
+     "Diplomatic Insight aids in protective strategies",
+     "Natural Harmony supports peaceful resolution"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Cereans' connection to nature and enhanced perception make them excellent Scouts, able to understand and navigate natural environments.",
+    "mechanical_benefits": [
+     "Natural Harmony trait enhances environmental awareness",
+     "High Wisdom supports survival and navigation",
+     "Natural curiosity drives exploration"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Cereans have served the Republic as diplomats and advisors, using their wisdom and peaceful nature to promote harmony and understanding."
+   },
+   {
+    "faction": "Philosophical Orders",
+    "narrative": "Many Cereans join philosophical and spiritual orders, dedicating themselves to the pursuit of knowledge and wisdom."
+   },
+   {
+    "faction": "Independent Scholars",
+    "narrative": "Cereans often work as independent scholars and researchers, using their dual-brain physiology to advance knowledge and understanding."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your dual-brain coordination becomes more refined, allowing you to process information and make decisions with even greater efficiency.",
+     "mechanical_benefit": "You can use your bonus action to gain advantage on one Intelligence or Wisdom check per short rest, representing your enhanced mental processing."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your connection to nature deepens, allowing you to sense and understand natural phenomena with unprecedented clarity.",
+     "mechanical_benefit": "You can cast the 'Detect Magic' spell once per long rest without using a spell slot, and you have advantage on all Nature checks related to magical phenomena."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your mental discipline and dual consciousness allow you to channel your peaceful nature into protective abilities.",
+     "mechanical_benefit": "When using non-lethal force or protective abilities, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced focus and control."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your dual-brain physiology reaches its peak, making you nearly immune to mental manipulation and allowing you to process complex situations instantly.",
+     "mechanical_benefit": "You have advantage on all Intelligence and Wisdom saving throws, and you can use your reaction to gain advantage on any one skill check per long rest."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Dual Meditation",
+    "type": "ceremonial",
+    "description": "Cereans practice unique meditation techniques that utilize both brains simultaneously, achieving states of consciousness that are impossible for other species.",
+    "narrative_impact": "Provides deep spiritual connection and mental clarity. Can be used for problem-solving and character development."
+   },
+   {
+    "name": "Philosophical Discourse",
+    "type": "cultural",
+    "description": "Cerean philosophical traditions involve complex debates and discussions that utilize their dual-brain physiology to consider multiple perspectives simultaneously.",
+    "narrative_impact": "Creates unique social interactions and intellectual exchanges. Can be used for information gathering and relationship building."
+   },
+   {
+    "name": "Natural Communion",
+    "type": "traditional",
+    "description": "Cereans have ancient rituals that involve communing with nature and the Force, using their enhanced perception to understand the natural world.",
+    "narrative_impact": "Provides spiritual connection and environmental awareness. Can be used for exploration and problem-solving."
+   },
+   {
+    "name": "Harmony Practices",
+    "type": "narrative",
+    "description": "Cereans practice techniques designed to maintain harmony and balance, both within themselves and in their interactions with others.",
+    "narrative_impact": "Provides character development opportunities and conflict resolution approaches. Can be used for social interactions and stress relief."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "rural",
+    "adaptation_name": "Rural Harmony",
+    "description": "Your deep connection to nature makes you perfectly at home in rural and natural environments, where you can sense and understand the natural world.",
+    "mechanical_benefit": "You have advantage on all skill checks related to rural survival and natural navigation, and you can sense nearby natural phenomena."
+   },
+   {
+    "environment": "academic",
+    "adaptation_name": "Academic Focus",
+    "description": "Your dual-brain physiology allows you to process and retain information with exceptional efficiency in academic and scholarly environments.",
+    "mechanical_benefit": "You have advantage on Intelligence-based skill checks in academic settings, and you can study and learn more effectively."
+   },
+   {
+    "environment": "diplomatic",
+    "adaptation_name": "Diplomatic Awareness",
+    "description": "Your enhanced insight and dual consciousness make you exceptionally skilled at navigating complex social and political environments.",
+    "mechanical_benefit": "You have advantage on Charisma-based skill checks in diplomatic settings, and you can read social situations more accurately."
+   },
+   {
+    "environment": "peaceful",
+    "adaptation_name": "Peaceful Resonance",
+    "description": "Your natural peaceful nature and mental discipline allow you to create and maintain calm, harmonious environments.",
+    "mechanical_benefit": "You can use your action to create a zone of calm that grants advantage on saving throws against fear and charm effects to allies within 10 feet."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on mental abilities and peaceful resolution, complementing rather than overshadowing class features",
+    "Dual-brain improvements maintain the species' unique identity while providing meaningful advancement",
+    "Diplomatic and academic abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on philosophical traditions and peaceful practices rather than mechanical advantages",
+    "Dual meditation and philosophical discourse provide unique roleplaying opportunities and cultural depth",
+    "Harmony practices and natural communion enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for peaceful, academic, and natural environments",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Peaceful resonance provides unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "flavor_text": "Cereans are a species deeply connected to the natural world, their dual-brained physiology allowing them to harmonize with the planet's rhythms. Their cities, known as 'Nexus Gardens,' blend seamlessly into the landscape, reflecting their reverence for balance and coexistence.",
+  "llm_guidance": {
+   "roleplay_guidance": "Play a Cerean who embodies the principles of harmony with nature. Emphasize your connection to the planet's cycles and rhythms. Be mindful of the delicate balance between progress and preservation.",
+   "narrative_hooks": [
+    "Discover an ancient, forgotten Cerean city hidden deep within the wilderness.",
+    "Investigate a series of mysterious disruptions in the planetary harmonics."
+   ],
+   "social_dynamics": "Cereans value consensus and cooperation. They often engage in meditative rituals to reach collective decisions. Avoid confrontational or aggressive behavior, as it disrupts the harmony they strive for.",
+   "common_motivations": [
+    "Protect the planet's ecosystem from destructive forces.",
+    "Maintain balance between technological progress and environmental preservation."
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "calm",
+      "reflective",
+      "empathetic"
+     ],
+     "tone": [
+      "gentle",
+      "soothing"
+     ]
+    },
+    "motivations": {
+     "goals": [
+      "harmony",
+      "balance",
+      "peace"
+     ],
+     "triggers": [
+      "nature's rhythms",
+      "others' emotions"
+     ]
+    },
+    "combat_behavior": "A Cerean ally uses their perceptive abilities to detect hidden threats and avoid unnecessary conflict.",
+    "social_behavior": "Cereans are naturally adept at building relationships, often serving as mediators or diplomats in party dynamics."
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "label": "Mistrust",
+      "range": [
+       0,
+       20
+      ]
+     },
+     {
+      "label": "Neutral",
+      "range": [
+       21,
+       50
+      ]
+     },
+     {
+      "label": "Trust",
+      "range": [
+       51,
+       100
+      ]
+     }
+    ],
+    "loyalty_triggers": [
+     {
+      "description": "When a Cerean is wronged, they become fiercely loyal to those who help them rectify the situation."
+     },
+     {
+      "trigger_threshold": 80
+     }
+    ]
+   },
+   "services": {
+    "name": "Cerean Companion Services",
+    "description": "Your companion provides emotional support and guidance on maintaining balance within your surroundings.",
+    "benefits": [
+     "Increased Wisdom (Perception) skill proficiency",
+     "Access to additional roleplaying hooks related to nature and harmony"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "overrides": {
+    "species_nemesis": "The Rakatan, an ancient species known for their aggressive expansion and disregard for ecological harmony.",
+    "tragic_flaw": "Over-reliance on technology to maintain balance, neglecting the natural world's intrinsic value."
+   }
+  },
+  "romance_engine": {
+   "overrides": {
+    "courtship_rituals": "Cereans use a meditative bonding process called 'The Nexus,' where they harmonize their brainwaves with a partner.",
+    "romantic_motivations": [
+     "Seeking a harmonious partnership to strengthen the connection between their dual brains.",
+     "Desiring a mate who shares their commitment to preserving balance within nature."
+    ]
+   }
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "human-like_body",
+    "elongated_head",
+    "second_brain",
+    "wise_expression"
+   ],
+   "morphology": {
+    "head_type": "elongated",
+    "body_type": "humanoid",
+    "average_height": "1.8 m"
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": [
+      "large_eyes",
+      "smooth_skin"
+     ],
+     "adult": [
+      "wrinkles_on_forehead",
+      "wisps_of_gray_hair"
+     ],
+     "elder": [
+      "deep_lines_on_face",
+      "silver_hair"
+     ]
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "pale_skin",
+      "sunken_eyes",
+      "malevolent_energy"
+     ],
+     "light_side": [
+      "radiant_aura",
+      "glowing_eye_color",
+      "gentle_smile"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "facial_expression",
+    "head_shape"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Cerean [age] with {attributes} eyes and {expression}",
+    "contextual_modifiers": [
+     "with a deep connection to nature",
+     "while meditating",
+     "in a peaceful environment"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "cerean",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/cerean.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

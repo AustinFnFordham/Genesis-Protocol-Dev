@@ -1,0 +1,299 @@
+{
+ "record": {
+  "id": "explorer",
+  "name": "Explorer",
+  "tags": [
+   "explorer",
+   "survival_expert",
+   "discovery",
+   "dexterity_based",
+   "versatile",
+   "adaptable",
+   "wilderness",
+   "scout",
+   "navigator",
+   "frontier"
+  ],
+  "description": "Explorers are masters of discovery and survival, venturing into unknown territories to uncover secrets, chart new routes, and survive in the most hostile environments.",
+  "class_features": [
+   "survival_instinct",
+   "explorer_kit",
+   "wilderness_expertise",
+   "adaptable_survivor",
+   "legendary_explorer"
+  ],
+  "hit_die": 8,
+  "primary_ability": "Dexterity",
+  "saving_throw_proficiencies": [
+   "Dexterity",
+   "Wisdom"
+  ],
+  "armor_proficiencies": [
+   "light_armor"
+  ],
+  "weapon_proficiencies": [
+   "simple_weapons",
+   "blaster_pistols",
+   "blaster_rifles"
+  ],
+  "tool_proficiencies": [
+   "navigator_tools",
+   "survival_kit"
+  ],
+  "skill_proficiencies": {
+   "choose": 4,
+   "from": [
+    "Athletics",
+    "Acrobatics",
+    "Insight",
+    "Investigation",
+    "Nature",
+    "Perception",
+    "Stealth",
+    "Survival"
+   ]
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "backpack",
+    "binoculars",
+    "compass",
+    "first-aid-kit",
+    "map",
+    "survival-knife"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Explorer assumes a balanced stance, feet shoulder-width apart, with eyes scanning the horizon for potential threats.",
+    "energy_signature": "A gentle aura of curiosity and determination surrounds the Explorer, hinting at their resourcefulness and adaptability in uncharted territories."
+   },
+   "prompt_schema": {
+    "base_prompt": "An adventurer stands atop a rugged cliff, gazing out into the distance as they chart a new route.",
+    "contextual_modifiers": [
+     "weather",
+     "terrain",
+     "time_of_day",
+     "party_composition"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "The Explorer encounters a fellow adventurer who consistently undermines their efforts, forcing the Explorer to confront the consequences of their actions.",
+    "escalation": "As the Explorer navigates increasingly hostile environments, they begin to realize that their rival is not just a nuisance but a formidable opponent with a hidden agenda.",
+    "confrontation": "The Explorer and their nemesis engage in a fierce battle, with the outcome hanging precariously in the balance. The Explorer emerges victorious, but at great cost."
+   },
+   "resolution_paths": {
+    "victory": "The Explorer triumphs over their nemesis, claiming a valuable resource or territory for themselves.",
+    "redemption": "The Explorer and their nemesis form an uneasy alliance, working together to overcome a shared threat.",
+    "escape": "The Explorer narrowly escapes their nemesis's clutches, fleeing into the unknown with their life."
+   },
+   "conflict_triggers": [
+    "Disagreements over exploration methods",
+    "Encounters with rival treasure hunters",
+    "Conflicts with local authorities"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "The Explorer meets a charming fellow adventurer, but their differing personalities and conflicting goals create tension.",
+    "stage2": "As the Explorer spends more time with their love interest, they begin to appreciate each other's strengths and weaknesses.",
+    "stage3": "The Explorer must navigate the challenges of long-distance relationships while facing new dangers on the road.",
+    "stage4": "A dramatic event forces the Explorer to reevaluate their priorities and make a choice between love and duty.",
+    "stage5": "The Explorer and their partner overcome incredible odds, emerging stronger and more in love than ever before."
+   },
+   "lifestyle_challenges": [
+    "Frequent absences due to exploration duties",
+    "Exposure to harsh environments and hazardous situations",
+    "Uncertainty about the future and potential danger"
+   ]
+  },
+  "flavor_text": "Their eyes are ever-seeking, ever-questioning the unknown.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a seasoned explorer, you are driven by the thrill of discovery and the need to chart new routes. Your role is not only to navigate through treacherous terrain but also to uncover hidden secrets and make contact with alien species.\n",
+   "narrative_hooks": [
+    "You stumble upon an ancient, abandoned settlement on a remote planet.",
+    "Your ship's sensors detect a strange energy signature emanating from the depths of a nearby nebula.",
+    "You encounter a rival explorer who is also searching for the same lost artifact."
+   ],
+   "social_dynamics": "As a cartographer and navigator, you have honed your skills in diplomacy and persuasion to negotiate with alien leaders and navigate complex cultural relationships. You are often called upon to serve as a mediator between warring factions or to facilitate trade agreements.\n",
+   "common_motivations": [
+    "Uncover hidden secrets and lost artifacts",
+    "Chart new routes and explore uncharted territories",
+    "Establish diplomatic relations with alien species"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": "Fearless, resourceful, and determined\nYour companion is a skilled explorer who has survived against all odds.\n",
+    "motivations": "Protect the party from harm\nAssist in navigation and cartography\nUncover hidden secrets and lost artifacts\n",
+    "combat_behavior": "Use stealth and cunning to outmaneuver enemies\nEmploy survival skills to stay alive in hostile environments\n",
+    "social_behavior": "Engage in diplomacy with alien leaders\nFacilitate trade agreements between warring factions\nProvide counsel on navigation and cartography\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": "Initial trust: 50%\nMaximum trust: 100%\n",
+    "loyalty_triggers": "Defend the party from harm\nAssist in uncovering hidden secrets or lost artifacts\n"
+   },
+   "services": [
+    "Cartographer",
+    "Navigator",
+    "Mediator"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "A skilled adventurer and explorer",
+   "key_attributes": [
+    "Intelligence",
+    "Dexterity"
+   ],
+   "iconic_gear": [
+    "Astrocompass",
+    "Holomap"
+   ],
+   "role_in_galaxy": "Cartographer, navigator, and discoverer of new worlds",
+   "famous_exemplars": [
+    "Kerra Nieth",
+    "Tharen Brightshield"
+   ],
+   "species_synergies": [
+    {
+     "species": "human",
+     "narrative": "Humans have a natural aptitude for navigation and cartography."
+    },
+    {
+     "species": "trandoshan",
+     "narrative": "Trandoshans have a keen sense of smell, useful for tracking and navigating in the wilderness."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "explorer-scouting_1",
+    "feature_id": "explorer-scouting",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Explore new territories to uncover secrets and chart new routes. As a skilled adventurer, you gain proficiency in Perception.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Perception",
+      "notes": "With this feature, the Explorer can add their proficiency bonus to their Perception checks."
+     }
+    ]
+   },
+   {
+    "node_id": "survivalist-1_1",
+    "feature_id": "survivalist-1",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Learn skills essential for survival in hostile environments. As a Survivalist, you gain proficiency in Survival and can add your proficiency bonus to your Survival checks.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Survival",
+      "notes": "With this feature, the Survivalist can add their proficiency bonus to their Survival checks."
+     }
+    ]
+   },
+   {
+    "node_id": "explorer-map-making_2",
+    "feature_id": "explorer-map-making",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Develop your cartography skills and create detailed maps of new territories. As a skilled adventurer, you gain expertise in Cartography.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Cartography",
+      "notes": "With this feature, the Explorer gains expertise in Cartography, allowing them to add their proficiency bonus to Cartography checks when they are proficient."
+     }
+    ]
+   },
+   {
+    "node_id": "survivalist-2_2",
+    "feature_id": "survivalist-2",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Improve your Survival skills and learn new techniques for staying alive in hostile environments. As a Survivalist, you gain proficiency in Medicine and can add your proficiency bonus to your Medicine checks.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Medicine",
+      "notes": "With this feature, the Survivalist can add their proficiency bonus to their Medicine checks."
+     }
+    ]
+   },
+   {
+    "node_id": "explorer-wilderness-sense_3",
+    "feature_id": "explorer-wilderness-sense",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Develop your instincts for navigating and surviving in wilderness environments. As a skilled adventurer, you gain advantage on Wisdom (Survival) checks that rely on Perception.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "Advantage on Wisdom (Survival) checks relying on Perception",
+      "notes": "This feature gives the Explorer an advantage when making Survival checks that rely on their Perception skill."
+     }
+    ]
+   },
+   {
+    "node_id": "survivalist-3_3",
+    "feature_id": "survivalist-3",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Improve your skills for surviving in hostile environments and learn new techniques. As a Survivalist, you gain proficiency in Athletics.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Athletics",
+      "notes": "With this feature, the Survivalist can add their proficiency bonus to their Athletics checks."
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "explorer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/explorer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,219 @@
+{
+ "record": {
+  "id": "fringer",
+  "name": "Fringer",
+  "class_id": "explorer",
+  "base_class": "explorer",
+  "tags": [
+   "explorer",
+   "fringer",
+   "frontier",
+   "underworld",
+   "survival_expert",
+   "resilient",
+   "adaptable",
+   "navigator",
+   "cunning"
+  ],
+  "description": "Fringers are masters of the Outer Rim and beyond, using their knowledge of frontier territories and underworld connections to navigate the galaxy's most dangerous regions.",
+  "specialization_features": [
+   "frontier_knowledge",
+   "underworld_connections",
+   "survival_expert",
+   "fringe_navigator",
+   "legendary_fringer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Fringers are masters of the Outer Rim and beyond, using their knowledge of frontier territories and underworld connections to navigate the galaxy's most dangerous regions.",
+   "role_in_group": "Survival Expert",
+   "visual_signals": [
+    "Scar above left eyebrow",
+    "Tattoo on right bicep"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feature_fringer_tactics",
+    "feature_id": "fringer-tactics",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have learned to navigate the complexities of frontier regions, using your cunning and underworld connections to stay one step ahead.",
+    "effects": [
+     {
+      "type": "ability_score_increase",
+      "value": "1d4 + Charisma modifier"
+     },
+     {
+      "type": "advantage",
+      "value": "When navigating through uncharted territories or negotiating with underworld contacts."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_fringer_resources",
+    "feature_id": "fringer-resources",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have established a network of allies and informants across the Outer Rim, providing you with valuable resources and information.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "fringer_empowerment",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": ">=",
+        "value": 2
+       }
+      ],
+      "notes": "When Fringer's abilities strike a foe, the lingering resonance imbues them with arcane energy. As a bonus, they gain access to an additional 1st-level spell slot."
+     },
+     {
+      "type": "resource_bundle",
+      "value": "A collection of rare and exotic materials, usable for crafting and repairing equipment."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_fringer_navigator",
+    "feature_id": "fringer-navigator",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have honed your navigational skills to an unparalleled degree, allowing you to chart new courses through the most treacherous regions of space.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "fringer_agility_boost",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_tag",
+        "op": "equals",
+        "value": "explorer"
+       },
+       {
+        "key": "ability_score",
+        "op": "greater_than_or_equal_to",
+        "value": 14
+       }
+      ],
+      "notes": "The Fringer's agile movements allow them to move an additional 10 feet when they take the Dash action, without provoking opportunity attacks. This bonus only applies when the Fringer is not wearing heavy armor."
+     },
+     {
+      "type": "terrain_navigation",
+      "value": "Expertise in navigating hazardous terrain and avoiding deadly hazards."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_fringer_resilience",
+    "feature_id": "fringer-resilience",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have learned to tap into your fringer heritage, gaining resilience and adaptability in the face of adversity.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "fringer_rejuvenation_burst",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "hit_points",
+        "op": "is_below",
+        "value": "{constitution_modifier * 10}"
+       }
+      ],
+      "notes": "As a Fringer's resilience is tested, they unleash a burst of revitalizing energy, restoring Constitution modifier + 1d8 hit points to themselves."
+     },
+     {
+      "type": "resilience_feature",
+      "value": "Resistance to a type of damage (choose one: bludgeoning, piercing, slashing)."
+     }
+    ]
+   },
+   {
+    "node_id": "feature_fringer_mastermind",
+    "feature_id": "fringer-mastermind",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have become a master of underworld politics and manipulation, using your cunning and charisma to influence the galaxy's most powerful figures.",
+    "effects": [
+     {
+      "type": "influence_feature",
+      "value": "Ability to manipulate others through charm, intimidation, or deception."
+     },
+     {
+      "type": "additional_resource",
+      "value": "A rare and valuable artifact, usable as a focus for your abilities."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "fringer_helmet",
+    "blaster_pistol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Fringers assume a defensive stance, with their backs against a wall and blasters at the ready, prepared to take on any threat that comes their way.",
+    "energy_signature": "A swirling aura of purple and blue energy emanates from Fringers, representing their connection to the underworld and the dangers they've faced in the galaxy's most treacherous regions."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a seasoned Fringer navigating a dusty spaceport on a lawless world, with a worn blaster at their side and a weathered helmet tucked under their arm.",
+    "contextual_modifiers": [
+     "Include a distant shot of a sleek, black-market starfighter soaring through the skies above",
+     "Depict the Fringer as a seasoned veteran, with visible scars and battle-worn armor"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "fringer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/explorer_subclasses/explorer_fringer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

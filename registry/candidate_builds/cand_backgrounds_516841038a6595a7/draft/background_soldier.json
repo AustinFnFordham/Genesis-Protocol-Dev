@@ -1,0 +1,162 @@
+{
+ "record": {
+  "id": "background_soldier",
+  "name": "Soldier",
+  "tags": [
+   "background",
+   "soldier",
+   "military",
+   "martial",
+   "strength_based",
+   "disciplined",
+   "tactical",
+   "combat_specialist",
+   "professional",
+   "resilient"
+  ],
+  "description": "You have served in the military, whether for the Republic, the Empire, a planetary defense force, or a mercenary company. Your training in combat, tactics, and military protocol makes you a disciplined and effective fighter. You understand the chain of command, military culture, and the harsh realities of war.",
+  "proficiencies": [
+   {
+    "type": "skill",
+    "id": "athletics"
+   },
+   {
+    "type": "skill",
+    "id": "intimidation"
+   },
+   {
+    "type": "tool_choice",
+    "count": 2,
+    "options": [
+     {
+      "tool_id": "vehicle_ground"
+     },
+     {
+      "tool_id": "vehicle_air"
+     },
+     {
+      "tool_id": "vehicle_space"
+     },
+     {
+      "tool_id": "military_kit"
+     },
+     {
+      "tool_id": "communications_kit"
+     },
+     {
+      "tool_id": "survival_kit"
+     }
+    ]
+   },
+   {
+    "type": "language_choice",
+    "count": 1,
+    "options": [
+     {
+      "language_id": "any"
+     }
+    ]
+   }
+  ],
+  "feature": {
+   "name": "Military Rank",
+   "level": 1,
+   "description": "You have a military rank from your career as a soldier. Soldiers loyal to your former military organization still recognize your authority and influence, and they defer to you if they are of a lower rank. You can invoke your rank to exert influence over other soldiers and requisition simple equipment or horses for temporary use. You can also usually gain access to friendly military encampments and fortresses where your rank is recognized.",
+   "mechanics": [
+    {
+     "effect": "grant_special_property",
+     "parameters": {
+      "property_name": "Military Authority",
+      "scope": "social",
+      "effect_description": "Authority over lower-ranking soldiers; can requisition simple equipment and gain access to military facilities"
+     }
+    },
+    {
+     "effect": "grant_contact",
+     "parameters": {
+      "contact_type": "military_network",
+      "description": "Access to military networks and former comrades"
+     }
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I am always calm, no matter what the situation.",
+    "I am incredibly slow to trust.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly.",
+    "I always have a plan for what to do when things go wrong."
+   ],
+   "ideals": [
+    "Duty. My duty is to my faction, and I will do whatever it takes to fulfill it.",
+    "Justice. I bring criminals to justice.",
+    "Fairness. I never kill a target who has surrendered.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first."
+   ],
+   "bonds": [
+    "I have a family to provide for.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission.",
+    "I am overly critical of others' flaws."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_soldier",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_soldier.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

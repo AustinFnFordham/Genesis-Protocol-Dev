@@ -1,0 +1,225 @@
+{
+ "record": {
+  "id": "power_psychic_charge",
+  "name": "Psychic Charge",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "psychic",
+   "mental",
+   "telepathic",
+   "pain",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist inflicting pure mental anguish through inner peace.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You project dark side energy directly into a target's mind, creating psychic pain that bypasses physical defenses entirely. The power manifests as invisible assault on consciousness, victims crying out from agony that has no wound, suffering without injury as their mind itself becomes the weapon against them.",
+  "flavor_text": "\"The pain is all in your head. That makes it so much worse.\" - Sith Torturer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "pointing at target while channeling mental assault"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "projecting psychic pain through Force telepathy"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel psychic energy that causes mental anguish.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "psychic",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 psychic damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior weaponizes Psychic Charge as fear tactic. They channel not just pain but terror, their mental assaults breaking enemy morale as much as causing damage—showing that resistance means suffering through psychological dominance.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_fear",
+      "value": {
+       "status_type": "frightened"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "conditions": [
+       {
+        "key": "damage_exceeds_threshold",
+        "op": "greater_than",
+        "value": 3
+       }
+      ],
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith Warriors frighten targets for 1 round if damage exceeds 3 (Wisdom save)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human psychological insight makes their Psychic Charge devastatingly personal. They channel specific fears, traumatic memories, or deep anxieties—targeting psychological vulnerabilities for maximum mental anguish beyond simple pain.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "psychic",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans deal an additional 1d4 psychic damage (2d4 total)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Psychic Charge as fundamental dark side technique—the power to cause suffering through thought alone. Their methods emphasize savoring the victim's anguish, drawing power from their mental torment.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_range",
+      "value": {
+       "range": {
+        "distance": 60,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith can project psychic pain up to 60 feet instead of 30."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the invisible assault—the target suddenly crying out, clutching their head, collapsing from pain that has no physical source. Show the psychic nature of the attack through their mental anguish, the horror of suffering without injury.",
+   "tactical_notes": "Psychic Charge is a cantrip dealing 1d4 psychic damage at 30 feet. Psychic damage bypasses physical defenses and is rarely resisted. No resource cost makes it reliable for dark side users. The mental nature makes it insidious and cruel.",
+   "narrative_hooks": [
+    "Psychic assault reveals a character's dark side corruption",
+    "The mental pain causes permanent psychological trauma",
+    "A Sith uses it to torture information from captives"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark Force user projecting psychic energy at a victim. The target clutches their head in agony, face contorted in pain despite having no physical wounds. Invisible waves of mental assault emanate from the Sith, the victim's suffering purely psychological but utterly real. The scene captures the cruelty of weaponized thought.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/psychic_charge.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_psychic_charge",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_psychic_charge.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

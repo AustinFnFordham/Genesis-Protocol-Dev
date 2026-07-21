@@ -1,0 +1,1099 @@
+{
+ "record": {
+  "trade_goods": [
+   {
+    "id": "trade_durasteel_ore",
+    "name": "Durasteel Ore",
+    "description": "Raw durasteel ore that can be refined into the galaxy's most common construction material.",
+    "type": "Trade Good",
+    "subtype": "Raw Material",
+    "cost": 25,
+    "rarity": 1,
+    "weight": 10.0,
+    "tags": [
+     "trade_good",
+     "raw_material",
+     "durasteel",
+     "construction",
+     "common"
+    ],
+    "properties": [
+     "refinable",
+     "construction_grade"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mining_operation",
+     "industrial_processing",
+     "construction_material"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "durasteel_products",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "refining_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be refined into durasteel for construction and crafting"
+     }
+    ]
+   },
+   {
+    "id": "trade_beskar_ore",
+    "name": "Beskar Ore",
+    "description": "Rare Mandalorian iron ore that can be refined into the legendary beskar alloy.",
+    "type": "Trade Good",
+    "subtype": "Raw Material",
+    "cost": 500,
+    "rarity": 4,
+    "weight": 15.0,
+    "tags": [
+     "trade_good",
+     "raw_material",
+     "beskar",
+     "mandalorian",
+     "rare"
+    ],
+    "properties": [
+     "refinable",
+     "mandalorian_grade",
+     "regulated"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mandalorian_mining",
+     "legendary_material",
+     "regulated_trade"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "beskar_alloy",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "mandalorian_crafting",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be refined into beskar alloy for legendary armor and weapons"
+     }
+    ]
+   },
+   {
+    "id": "trade_kyber_crystal",
+    "name": "Kyber Crystal",
+    "description": "A rare crystal that resonates with the Force, essential for lightsaber construction.",
+    "type": "Trade Good",
+    "subtype": "Raw Material",
+    "cost": 2000,
+    "rarity": 5,
+    "weight": 0.5,
+    "tags": [
+     "trade_good",
+     "raw_material",
+     "kyber",
+     "force",
+     "lightsaber"
+    ],
+    "properties": [
+     "force_resonant",
+     "lightsaber_grade",
+     "regulated"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_resonance",
+     "lightsaber_construction",
+     "jedi_artifact"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "lightsaber_construction",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "force_sensitive",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential component for lightsaber construction"
+     }
+    ]
+   },
+   {
+    "id": "trade_plasteel_compound",
+    "name": "Plasteel Compound",
+    "description": "A versatile plastic-steel compound used in various manufacturing processes.",
+    "type": "Trade Good",
+    "subtype": "Raw Material",
+    "cost": 50,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "trade_good",
+     "raw_material",
+     "plasteel",
+     "versatile",
+     "manufacturing"
+    ],
+    "properties": [
+     "versatile",
+     "manufacturing_grade"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "manufacturing_process",
+     "versatile_material",
+     "industrial_use"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "plasteel_products",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "manufacturing_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be used in various manufacturing processes"
+     }
+    ]
+   },
+   {
+    "id": "trade_energy_cells",
+    "name": "Energy Cells",
+    "description": "High-capacity energy storage cells used to power various devices and weapons.",
+    "type": "Trade Good",
+    "subtype": "Raw Material",
+    "cost": 100,
+    "rarity": 2,
+    "weight": 2.0,
+    "tags": [
+     "trade_good",
+     "raw_material",
+     "energy",
+     "power",
+     "technology"
+    ],
+    "properties": [
+     "energy_storage",
+     "power_source"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "energy_power",
+     "technology_fuel",
+     "power_distribution"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "energy_devices",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "energy_technology",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential power source for energy weapons and devices"
+     }
+    ]
+   },
+   {
+    "id": "trade_refined_durasteel",
+    "name": "Refined Durasteel",
+    "description": "Processed durasteel ready for use in construction and manufacturing.",
+    "type": "Trade Good",
+    "subtype": "Refined Resource",
+    "cost": 75,
+    "rarity": 2,
+    "weight": 8.0,
+    "tags": [
+     "trade_good",
+     "refined",
+     "durasteel",
+     "construction",
+     "manufacturing"
+    ],
+    "properties": [
+     "construction_ready",
+     "manufacturing_grade"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "construction_project",
+     "manufacturing_process",
+     "industrial_building"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "durasteel_construction",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "construction_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ready for use in construction and manufacturing projects"
+     }
+    ]
+   },
+   {
+    "id": "trade_beskar_alloy",
+    "name": "Beskar Alloy",
+    "description": "Legendary Mandalorian alloy with exceptional strength and energy resistance.",
+    "type": "Trade Good",
+    "subtype": "Refined Resource",
+    "cost": 1500,
+    "rarity": 5,
+    "weight": 12.0,
+    "tags": [
+     "trade_good",
+     "refined",
+     "beskar",
+     "mandalorian",
+     "legendary"
+    ],
+    "properties": [
+     "legendary_strength",
+     "energy_resistant",
+     "mandalorian_grade"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "mandalorian_crafting",
+     "legendary_construction",
+     "energy_protection"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "beskar_equipment",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "mandalorian_crafting",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Used to create legendary armor and weapons"
+     }
+    ]
+   },
+   {
+    "id": "trade_plasteel_sheets",
+    "name": "Plasteel Sheets",
+    "description": "Formed plasteel sheets ready for use in various applications.",
+    "type": "Trade Good",
+    "subtype": "Refined Resource",
+    "cost": 150,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "trade_good",
+     "refined",
+     "plasteel",
+     "sheets",
+     "versatile"
+    ],
+    "properties": [
+     "formed",
+     "versatile_application"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "versatile_construction",
+     "sheet_application",
+     "flexible_building"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "plasteel_construction",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "construction_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ready for use in various construction applications"
+     }
+    ]
+   },
+   {
+    "id": "trade_energy_cores",
+    "name": "Energy Cores",
+    "description": "High-efficiency energy cores used in advanced technology and weapons.",
+    "type": "Trade Good",
+    "subtype": "Refined Resource",
+    "cost": 300,
+    "rarity": 3,
+    "weight": 4.0,
+    "tags": [
+     "trade_good",
+     "refined",
+     "energy",
+     "core",
+     "advanced"
+    ],
+    "properties": [
+     "high_efficiency",
+     "advanced_technology"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "advanced_technology",
+     "energy_efficiency",
+     "power_optimization"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "advanced_technology",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_tech_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential for advanced technology and weapon systems"
+     }
+    ]
+   },
+   {
+    "id": "trade_spice",
+    "name": "Spice",
+    "description": "A highly addictive and valuable substance used for recreation and medicine.",
+    "type": "Trade Good",
+    "subtype": "Valuable Commodity",
+    "cost": 1000,
+    "rarity": 4,
+    "weight": 0.1,
+    "tags": [
+     "trade_good",
+     "commodity",
+     "spice",
+     "addictive",
+     "illegal"
+    ],
+    "properties": [
+     "addictive",
+     "illegal",
+     "valuable"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "illegal_trade",
+     "addiction_risk",
+     "high_value"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "high_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "black_market_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Extremely valuable on black markets"
+     }
+    ]
+   },
+   {
+    "id": "trade_credits",
+    "name": "Galactic Credits",
+    "description": "The standard currency of the galaxy, accepted almost everywhere.",
+    "type": "Trade Good",
+    "subtype": "Valuable Commodity",
+    "cost": 1,
+    "rarity": 0,
+    "weight": 0.0,
+    "tags": [
+     "trade_good",
+     "commodity",
+     "credits",
+     "currency",
+     "universal"
+    ],
+    "properties": [
+     "universal_currency",
+     "accepted_everywhere"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "universal_trade",
+     "currency_exchange",
+     "economic_transaction"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "universal_currency",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "trade_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Universal currency accepted throughout the galaxy"
+     }
+    ]
+   },
+   {
+    "id": "trade_rare_gems",
+    "name": "Rare Gems",
+    "description": "Precious gemstones valued for their beauty and rarity.",
+    "type": "Trade Good",
+    "subtype": "Valuable Commodity",
+    "cost": 500,
+    "rarity": 3,
+    "weight": 0.5,
+    "tags": [
+     "trade_good",
+     "commodity",
+     "gems",
+     "precious",
+     "beauty"
+    ],
+    "properties": [
+     "precious",
+     "beautiful",
+     "rare"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_trade",
+     "beauty_value",
+     "precious_commodity"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "luxury_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_market_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Highly valued in luxury markets"
+     }
+    ]
+   },
+   {
+    "id": "trade_artifacts",
+    "name": "Ancient Artifacts",
+    "description": "Mysterious artifacts from ancient civilizations with unknown value and power.",
+    "type": "Trade Good",
+    "subtype": "Valuable Commodity",
+    "cost": 2000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "trade_good",
+     "commodity",
+     "artifacts",
+     "ancient",
+     "mysterious"
+    ],
+    "properties": [
+     "ancient",
+     "mysterious",
+     "potentially_powerful"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ancient_mystery",
+     "potential_power",
+     "collector_value"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "collector_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "collector_market_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Extremely valuable to collectors and researchers"
+     }
+    ]
+   },
+   {
+    "id": "trade_food_stuffs",
+    "name": "Food Stuffs",
+    "description": "Preserved and packaged food items for trade and consumption.",
+    "type": "Trade Good",
+    "subtype": "Agricultural",
+    "cost": 10,
+    "rarity": 0,
+    "weight": 5.0,
+    "tags": [
+     "trade_good",
+     "agricultural",
+     "food",
+     "preserved",
+     "essential"
+    ],
+    "properties": [
+     "preserved",
+     "essential",
+     "consumable"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "food_trade",
+     "sustenance",
+     "essential_commodity"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "essential_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "food_shortage",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential commodity, value increases during shortages"
+     }
+    ]
+   },
+   {
+    "id": "trade_medical_supplies",
+    "name": "Medical Supplies",
+    "description": "Essential medical supplies and pharmaceuticals for healthcare.",
+    "type": "Trade Good",
+    "subtype": "Agricultural",
+    "cost": 200,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "trade_good",
+     "agricultural",
+     "medical",
+     "healthcare",
+     "essential"
+    ],
+    "properties": [
+     "medical_grade",
+     "essential",
+     "regulated"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "healthcare_trade",
+     "medical_treatment",
+     "regulated_commodity"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "medical_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "medical_emergency",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Value increases during medical emergencies"
+     }
+    ]
+   },
+   {
+    "id": "trade_luxury_foods",
+    "name": "Luxury Foods",
+    "description": "Exotic and expensive food items for the wealthy and elite.",
+    "type": "Trade Good",
+    "subtype": "Agricultural",
+    "cost": 300,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "trade_good",
+     "agricultural",
+     "luxury",
+     "exotic",
+     "elite"
+    ],
+    "properties": [
+     "luxury",
+     "exotic",
+     "elite"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_dining",
+     "elite_consumption",
+     "exotic_taste"
+    ],
+    "effects": [
+     {
+      "type": "trade_value",
+      "value": "luxury_value",
+      "target_scopes": [
+       "trade"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_market_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Highly valued in luxury markets"
+     }
+    ]
+   },
+   {
+    "id": "trade_circuit_boards",
+    "name": "Circuit Boards",
+    "description": "Electronic circuit boards used in various technological devices.",
+    "type": "Trade Good",
+    "subtype": "Technological",
+    "cost": 150,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "trade_good",
+     "technological",
+     "circuit",
+     "electronic",
+     "components"
+    ],
+    "properties": [
+     "electronic",
+     "component",
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "electronic_construction",
+     "component_trade",
+     "technology_building"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "electronic_devices",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "electronics_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential for electronic device construction"
+     }
+    ]
+   },
+   {
+    "id": "trade_droid_parts",
+    "name": "Droid Parts",
+    "description": "Various components and parts used in droid construction and repair.",
+    "type": "Trade Good",
+    "subtype": "Technological",
+    "cost": 250,
+    "rarity": 2,
+    "weight": 5.0,
+    "tags": [
+     "trade_good",
+     "technological",
+     "droid",
+     "parts",
+     "repair"
+    ],
+    "properties": [
+     "droid_compatible",
+     "repair_grade",
+     "versatile"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "droid_construction",
+     "repair_operation",
+     "droid_maintenance"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "droid_construction",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "droid_tech_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential for droid construction and repair"
+     }
+    ]
+   },
+   {
+    "id": "trade_weapon_components",
+    "name": "Weapon Components",
+    "description": "Specialized components used in weapon construction and modification.",
+    "type": "Trade Good",
+    "subtype": "Technological",
+    "cost": 400,
+    "rarity": 3,
+    "weight": 3.0,
+    "tags": [
+     "trade_good",
+     "technological",
+     "weapon",
+     "components",
+     "regulated"
+    ],
+    "properties": [
+     "weapon_grade",
+     "regulated",
+     "specialized"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "weapon_construction",
+     "regulated_trade",
+     "specialized_components"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "weapon_construction",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "weapon_crafting_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Essential for weapon construction and modification"
+     }
+    ]
+   },
+   {
+    "id": "trade_phrik_alloy",
+    "name": "Phrik Alloy",
+    "description": "An extremely rare and durable alloy that can resist lightsaber blades.",
+    "type": "Trade Good",
+    "subtype": "Exotic Material",
+    "cost": 3000,
+    "rarity": 5,
+    "weight": 8.0,
+    "tags": [
+     "trade_good",
+     "exotic",
+     "phrik",
+     "lightsaber_resistant",
+     "rare"
+    ],
+    "properties": [
+     "lightsaber_resistant",
+     "extremely_durable",
+     "rare"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "lightsaber_resistance",
+     "extreme_durability",
+     "rare_material"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "lightsaber_resistant_equipment",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "exotic_crafting_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be used to create lightsaber-resistant equipment"
+     }
+    ]
+   },
+   {
+    "id": "trade_cortosis_ore",
+    "name": "Cortosis Ore",
+    "description": "A rare mineral that can temporarily disable lightsabers and energy weapons.",
+    "type": "Trade Good",
+    "subtype": "Exotic Material",
+    "cost": 2500,
+    "rarity": 4,
+    "weight": 6.0,
+    "tags": [
+     "trade_good",
+     "exotic",
+     "cortosis",
+     "lightsaber_disable",
+     "rare"
+    ],
+    "properties": [
+     "lightsaber_disable",
+     "energy_weapon_disable",
+     "rare"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "lightsaber_disable",
+     "energy_weapon_counter",
+     "rare_mineral"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "anti_lightsaber_equipment",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "exotic_crafting_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be used to create anti-lightsaber equipment"
+     }
+    ]
+   },
+   {
+    "id": "trade_force_crystal",
+    "name": "Force Crystal",
+    "description": "A crystal that resonates with the Force, used in various Force-related technologies.",
+    "type": "Trade Good",
+    "subtype": "Exotic Material",
+    "cost": 1500,
+    "rarity": 4,
+    "weight": 1.0,
+    "tags": [
+     "trade_good",
+     "exotic",
+     "force_crystal",
+     "force_resonant",
+     "technology"
+    ],
+    "properties": [
+     "force_resonant",
+     "technology_enhanced",
+     "rare"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "force_resonance",
+     "technology_enhancement",
+     "force_technology"
+    ],
+    "effects": [
+     {
+      "type": "crafting_component",
+      "value": "force_enhanced_technology",
+      "target_scopes": [
+       "crafting"
+      ],
+      "conditions": [
+       {
+        "key": "force_tech_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can be used to create Force-enhanced technology"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "trade_goods",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/trade_goods.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

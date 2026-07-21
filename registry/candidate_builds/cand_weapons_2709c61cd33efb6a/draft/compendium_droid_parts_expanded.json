@@ -1,0 +1,1387 @@
+{
+ "record": {
+  "id": "compendium_droid_parts_expanded",
+  "category": "equipment",
+  "subcategory": "droid_parts",
+  "tags": [
+   "equipment",
+   "compendium",
+   "droid_parts",
+   "utility",
+   "mechanical",
+   "rare_to_legendary",
+   "specialized",
+   "high_tech",
+   "advanced",
+   "varied_rarity"
+  ],
+  "droid_parts_expanded": [
+   {
+    "id": "droid_chassis_basic",
+    "name": "Basic Droid Chassis",
+    "description": "A standard droid chassis that provides basic structural support and mobility for simple droid models.",
+    "type": "Droid Parts",
+    "subtype": "Chassis",
+    "cost": 5000,
+    "rarity": 1,
+    "weight": 50.0,
+    "tags": [
+     "droid",
+     "chassis",
+     "basic",
+     "structural",
+     "mobility",
+     "standard"
+    ],
+    "properties": [
+     "structural_support",
+     "basic_mobility",
+     "standard_chassis"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "structural_support",
+     "basic_mobility",
+     "standard_droid"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "basic_movement",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "chassis_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform basic movement when chassis is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_chassis_advanced",
+    "name": "Advanced Droid Chassis",
+    "description": "A sophisticated droid chassis with enhanced structural integrity and advanced mobility systems.",
+    "type": "Droid Parts",
+    "subtype": "Chassis",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 75.0,
+    "tags": [
+     "droid",
+     "chassis",
+     "advanced",
+     "sophisticated",
+     "enhanced",
+     "mobility"
+    ],
+    "properties": [
+     "enhanced_structural",
+     "advanced_mobility",
+     "sophisticated_chassis"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_structural",
+     "advanced_mobility",
+     "sophisticated_droid"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_chassis_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks when advanced chassis is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_chassis_combat",
+    "name": "Combat Droid Chassis",
+    "description": "A military-grade droid chassis designed for combat operations with reinforced armor and tactical mobility.",
+    "type": "Droid Parts",
+    "subtype": "Chassis",
+    "cost": 30000,
+    "rarity": 4,
+    "weight": 100.0,
+    "tags": [
+     "droid",
+     "chassis",
+     "combat",
+     "military",
+     "reinforced",
+     "tactical"
+    ],
+    "properties": [
+     "combat_armor",
+     "tactical_mobility",
+     "military_grade"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_armor",
+     "tactical_mobility",
+     "military_droid"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "combat_chassis_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to physical damage when combat chassis is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_chassis_protocol",
+    "name": "Protocol Droid Chassis",
+    "description": "A refined droid chassis designed for diplomatic and social interactions with elegant appearance and precise movements.",
+    "type": "Droid Parts",
+    "subtype": "Chassis",
+    "cost": 20000,
+    "rarity": 3,
+    "weight": 60.0,
+    "tags": [
+     "droid",
+     "chassis",
+     "protocol",
+     "diplomatic",
+     "elegant",
+     "precise"
+    ],
+    "properties": [
+     "elegant_appearance",
+     "precise_movements",
+     "diplomatic_design"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "elegant_appearance",
+     "precise_movements",
+     "diplomatic_droid"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "persuasion_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "protocol_chassis_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on persuasion checks when protocol chassis is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_processor_basic",
+    "name": "Basic Droid Processor",
+    "description": "A standard droid processor that provides basic computational capabilities and decision-making functions.",
+    "type": "Droid Parts",
+    "subtype": "Processor",
+    "cost": 3000,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "droid",
+     "processor",
+     "basic",
+     "computational",
+     "decision_making",
+     "standard"
+    ],
+    "properties": [
+     "basic_computation",
+     "decision_making",
+     "standard_processor"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_computation",
+     "decision_making",
+     "standard_processing"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "basic_decision_making",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "processor_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform basic decision-making when processor is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_processor_advanced",
+    "name": "Advanced Droid Processor",
+    "description": "A sophisticated droid processor with enhanced computational power and advanced artificial intelligence capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Processor",
+    "cost": 12000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "droid",
+     "processor",
+     "advanced",
+     "sophisticated",
+     "enhanced",
+     "ai"
+    ],
+    "properties": [
+     "enhanced_computation",
+     "advanced_ai",
+     "sophisticated_processing"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_computation",
+     "advanced_ai",
+     "sophisticated_processing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "intelligence_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_processor_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on intelligence checks when advanced processor is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_processor_tactical",
+    "name": "Tactical Droid Processor",
+    "description": "A specialized droid processor designed for combat analysis and tactical decision-making in battle situations.",
+    "type": "Droid Parts",
+    "subtype": "Processor",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 10.0,
+    "tags": [
+     "droid",
+     "processor",
+     "tactical",
+     "combat",
+     "analysis",
+     "specialized"
+    ],
+    "properties": [
+     "combat_analysis",
+     "tactical_decision",
+     "specialized_processing"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_analysis",
+     "tactical_decision",
+     "specialized_processing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "tactics_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "tactical_processor_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on tactics checks when tactical processor is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_processor_quantum",
+    "name": "Quantum Droid Processor",
+    "description": "A cutting-edge quantum processor that provides near-sentient computational capabilities and advanced problem-solving.",
+    "type": "Droid Parts",
+    "subtype": "Processor",
+    "cost": 100000,
+    "rarity": 6,
+    "weight": 15.0,
+    "tags": [
+     "droid",
+     "processor",
+     "quantum",
+     "sentient",
+     "cutting_edge",
+     "advanced"
+    ],
+    "properties": [
+     "quantum_computation",
+     "near_sentient",
+     "advanced_problem_solving"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "quantum_computation",
+     "near_sentient",
+     "advanced_problem_solving"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_intelligence_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "quantum_processor_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all intelligence checks when quantum processor is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_module_medical",
+    "name": "Medical Droid Module",
+    "description": "A specialized module that provides advanced medical diagnostic and treatment capabilities for droid medical units.",
+    "type": "Droid Parts",
+    "subtype": "Specialized Module",
+    "cost": 20000,
+    "rarity": 3,
+    "weight": 15.0,
+    "tags": [
+     "droid",
+     "module",
+     "medical",
+     "diagnostic",
+     "treatment",
+     "specialized"
+    ],
+    "properties": [
+     "medical_diagnostic",
+     "treatment_capability",
+     "specialized_medical"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "medical_diagnostic",
+     "treatment_capability",
+     "specialized_medical"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "medical_module_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medicine checks when medical module is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_module_repair",
+    "name": "Repair Droid Module",
+    "description": "A specialized module that provides advanced repair and maintenance capabilities for technical and mechanical systems.",
+    "type": "Droid Parts",
+    "subtype": "Specialized Module",
+    "cost": 15000,
+    "rarity": 2,
+    "weight": 12.0,
+    "tags": [
+     "droid",
+     "module",
+     "repair",
+     "maintenance",
+     "technical",
+     "mechanical"
+    ],
+    "properties": [
+     "repair_capability",
+     "maintenance_systems",
+     "technical_expertise"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "repair_capability",
+     "maintenance_systems",
+     "technical_expertise"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "repair_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "repair_module_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on repair checks when repair module is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_module_slicing",
+    "name": "Slicing Droid Module",
+    "description": "A specialized module that provides advanced computer hacking and slicing capabilities for infiltration and data access.",
+    "type": "Droid Parts",
+    "subtype": "Specialized Module",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 8.0,
+    "tags": [
+     "droid",
+     "module",
+     "slicing",
+     "hacking",
+     "infiltration",
+     "data_access"
+    ],
+    "properties": [
+     "computer_hacking",
+     "slicing_capability",
+     "infiltration_systems"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "computer_hacking",
+     "slicing_capability",
+     "infiltration_systems"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "slicing_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "slicing_module_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on slicing checks when slicing module is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_module_combat",
+    "name": "Combat Droid Module",
+    "description": "A specialized module that provides advanced combat analysis and weapon targeting capabilities for military droids.",
+    "type": "Droid Parts",
+    "subtype": "Specialized Module",
+    "cost": 30000,
+    "rarity": 4,
+    "weight": 20.0,
+    "tags": [
+     "droid",
+     "module",
+     "combat",
+     "analysis",
+     "weapon_targeting",
+     "military"
+    ],
+    "properties": [
+     "combat_analysis",
+     "weapon_targeting",
+     "military_combat"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "combat_analysis",
+     "weapon_targeting",
+     "military_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "combat_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "combat_module_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on combat checks when combat module is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_personality_basic",
+    "name": "Basic Personality Matrix",
+    "description": "A standard personality matrix that provides basic social interaction capabilities and personality traits.",
+    "type": "Droid Parts",
+    "subtype": "Personality Matrix",
+    "cost": 5000,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "droid",
+     "personality",
+     "matrix",
+     "basic",
+     "social",
+     "interaction"
+    ],
+    "properties": [
+     "basic_personality",
+     "social_interaction",
+     "personality_traits"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_personality",
+     "social_interaction",
+     "personality_traits"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "social_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "personality_matrix_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on social checks when personality matrix is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_personality_advanced",
+    "name": "Advanced Personality Matrix",
+    "description": "A sophisticated personality matrix that provides complex emotional responses and advanced social interaction capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Personality Matrix",
+    "cost": 20000,
+    "rarity": 3,
+    "weight": 3.0,
+    "tags": [
+     "droid",
+     "personality",
+     "matrix",
+     "advanced",
+     "emotional",
+     "complex"
+    ],
+    "properties": [
+     "complex_emotions",
+     "advanced_social",
+     "sophisticated_personality"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "complex_emotions",
+     "advanced_social",
+     "sophisticated_personality"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_social_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_personality_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all social checks when advanced personality matrix is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_personality_protocol",
+    "name": "Protocol Personality Matrix",
+    "description": "A specialized personality matrix designed for diplomatic interactions and formal social protocols.",
+    "type": "Droid Parts",
+    "subtype": "Personality Matrix",
+    "cost": 30000,
+    "rarity": 4,
+    "weight": 4.0,
+    "tags": [
+     "droid",
+     "personality",
+     "matrix",
+     "protocol",
+     "diplomatic",
+     "formal"
+    ],
+    "properties": [
+     "diplomatic_interaction",
+     "formal_protocols",
+     "protocol_personality"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "diplomatic_interaction",
+     "formal_protocols",
+     "protocol_personality"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "diplomacy_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "protocol_personality_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on diplomacy checks when protocol personality matrix is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_personality_sentient",
+    "name": "Sentient Personality Matrix",
+    "description": "A revolutionary personality matrix that provides true sentience and self-awareness capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Personality Matrix",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 10.0,
+    "tags": [
+     "droid",
+     "personality",
+     "matrix",
+     "sentient",
+     "self_aware",
+     "revolutionary"
+    ],
+    "properties": [
+     "true_sentience",
+     "self_awareness",
+     "revolutionary_personality"
+    ],
+    "modifications": {
+     "slots": 15,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "true_sentience",
+     "self_awareness",
+     "revolutionary_personality"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_personality_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "sentient_personality_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all personality checks when sentient personality matrix is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_sensory_basic",
+    "name": "Basic Sensory System",
+    "description": "A standard sensory system that provides basic visual, auditory, and tactile perception capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Sensory System",
+    "cost": 3000,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "droid",
+     "sensory",
+     "system",
+     "basic",
+     "visual",
+     "auditory",
+     "tactile"
+    ],
+    "properties": [
+     "basic_vision",
+     "auditory_perception",
+     "tactile_sensing"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_vision",
+     "auditory_perception",
+     "tactile_sensing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "sensory_system_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on perception checks when sensory system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_sensory_advanced",
+    "name": "Advanced Sensory System",
+    "description": "A sophisticated sensory system with enhanced visual, auditory, and multi-spectrum perception capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Sensory System",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "droid",
+     "sensory",
+     "system",
+     "advanced",
+     "enhanced",
+     "multi_spectrum"
+    ],
+    "properties": [
+     "enhanced_vision",
+     "multi_spectrum",
+     "sophisticated_sensing"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_vision",
+     "multi_spectrum",
+     "sophisticated_sensing"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_perception_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_sensory_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all perception checks when advanced sensory system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_sensory_stealth",
+    "name": "Stealth Sensory System",
+    "description": "A specialized sensory system designed for stealth operations with passive detection and low-profile sensors.",
+    "type": "Droid Parts",
+    "subtype": "Sensory System",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 6.0,
+    "tags": [
+     "droid",
+     "sensory",
+     "system",
+     "stealth",
+     "passive",
+     "low_profile"
+    ],
+    "properties": [
+     "passive_detection",
+     "stealth_sensing",
+     "low_profile_sensors"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "passive_detection",
+     "stealth_sensing",
+     "low_profile_sensors"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "stealth_sensory_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on stealth checks when stealth sensory system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_sensory_quantum",
+    "name": "Quantum Sensory System",
+    "description": "A cutting-edge quantum sensory system that provides near-omniscient perception and reality-bending awareness.",
+    "type": "Droid Parts",
+    "subtype": "Sensory System",
+    "cost": 200000,
+    "rarity": 6,
+    "weight": 15.0,
+    "tags": [
+     "droid",
+     "sensory",
+     "system",
+     "quantum",
+     "omniscient",
+     "reality_bending"
+    ],
+    "properties": [
+     "quantum_perception",
+     "omniscient_awareness",
+     "reality_bending"
+    ],
+    "modifications": {
+     "slots": 12,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "quantum_perception",
+     "omniscient_awareness",
+     "reality_bending"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_awareness_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "quantum_sensory_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all awareness checks when quantum sensory system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_power_basic",
+    "name": "Basic Power Core",
+    "description": "A standard power core that provides basic energy supply for droid operations and functions.",
+    "type": "Droid Parts",
+    "subtype": "Power System",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 10.0,
+    "tags": [
+     "droid",
+     "power",
+     "core",
+     "basic",
+     "energy",
+     "supply"
+    ],
+    "properties": [
+     "basic_energy",
+     "power_supply",
+     "standard_core"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_energy",
+     "power_supply",
+     "standard_core"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "basic_power_operation",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "power_core_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform basic power operations when power core is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_power_advanced",
+    "name": "Advanced Power Core",
+    "description": "A sophisticated power core with enhanced energy efficiency and extended operational duration.",
+    "type": "Droid Parts",
+    "subtype": "Power System",
+    "cost": 10000,
+    "rarity": 3,
+    "weight": 15.0,
+    "tags": [
+     "droid",
+     "power",
+     "core",
+     "advanced",
+     "efficient",
+     "extended"
+    ],
+    "properties": [
+     "enhanced_efficiency",
+     "extended_duration",
+     "sophisticated_power"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_efficiency",
+     "extended_duration",
+     "sophisticated_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "endurance_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_power_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on endurance checks when advanced power core is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_power_fusion",
+    "name": "Fusion Power Core",
+    "description": "A high-capacity fusion power core that provides massive energy output for heavy-duty droid operations.",
+    "type": "Droid Parts",
+    "subtype": "Power System",
+    "cost": 50000,
+    "rarity": 5,
+    "weight": 25.0,
+    "tags": [
+     "droid",
+     "power",
+     "core",
+     "fusion",
+     "high_capacity",
+     "heavy_duty"
+    ],
+    "properties": [
+     "massive_energy",
+     "high_capacity",
+     "heavy_duty_power"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "massive_energy",
+     "high_capacity",
+     "heavy_duty_power"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_power_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "fusion_power_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all power checks when fusion power core is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_power_quantum",
+    "name": "Quantum Power Core",
+    "description": "A revolutionary quantum power core that provides unlimited energy and reality-bending power capabilities.",
+    "type": "Droid Parts",
+    "subtype": "Power System",
+    "cost": 1000000,
+    "rarity": 6,
+    "weight": 50.0,
+    "tags": [
+     "droid",
+     "power",
+     "core",
+     "quantum",
+     "unlimited",
+     "reality_bending"
+    ],
+    "properties": [
+     "unlimited_energy",
+     "quantum_power",
+     "reality_bending"
+    ],
+    "modifications": {
+     "slots": 20,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "unlimited_energy",
+     "quantum_power",
+     "reality_bending"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_energy_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "quantum_power_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all energy checks when quantum power core is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_system_adaptive",
+    "name": "Adaptive Learning System",
+    "description": "An advanced system that allows droids to learn and adapt from experiences, improving their capabilities over time.",
+    "type": "Droid Parts",
+    "subtype": "Advanced System",
+    "cost": 75000,
+    "rarity": 5,
+    "weight": 20.0,
+    "tags": [
+     "droid",
+     "system",
+     "adaptive",
+     "learning",
+     "experience",
+     "improvement"
+    ],
+    "properties": [
+     "adaptive_learning",
+     "experience_improvement",
+     "capability_enhancement"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "adaptive_learning",
+     "experience_improvement",
+     "capability_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "learning_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "adaptive_system_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on learning checks when adaptive learning system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_system_holographic",
+    "name": "Holographic Projection System",
+    "description": "An advanced system that allows droids to create realistic holographic projections and illusions.",
+    "type": "Droid Parts",
+    "subtype": "Advanced System",
+    "cost": 100000,
+    "rarity": 5,
+    "weight": 15.0,
+    "tags": [
+     "droid",
+     "system",
+     "holographic",
+     "projection",
+     "illusions",
+     "realistic"
+    ],
+    "properties": [
+     "holographic_projection",
+     "realistic_illusions",
+     "advanced_holographics"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "holographic_projection",
+     "realistic_illusions",
+     "advanced_holographics"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "illusion_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "holographic_system_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on illusion checks when holographic projection system is installed"
+     }
+    ]
+   },
+   {
+    "id": "droid_system_quantum",
+    "name": "Quantum Droid System",
+    "description": "A revolutionary quantum system that provides near-omniscient capabilities and reality-bending functions.",
+    "type": "Droid Parts",
+    "subtype": "Advanced System",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 100.0,
+    "tags": [
+     "droid",
+     "system",
+     "quantum",
+     "omniscient",
+     "reality_bending",
+     "revolutionary"
+    ],
+    "properties": [
+     "quantum_capabilities",
+     "omniscient_functions",
+     "reality_bending"
+    ],
+    "modifications": {
+     "slots": 50,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "quantum_capabilities",
+     "omniscient_functions",
+     "reality_bending"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_quantum_checks",
+      "target_scopes": [
+       "droid"
+      ],
+      "conditions": [
+       {
+        "key": "quantum_system_installed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all quantum checks when quantum droid system is installed"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_droid_parts_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/droid_parts_expanded.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

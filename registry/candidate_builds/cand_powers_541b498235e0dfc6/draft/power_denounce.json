@@ -1,0 +1,208 @@
+{
+ "record": {
+  "id": "power_denounce",
+  "name": "Denounce",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "mental",
+   "fear",
+   "doubt",
+   "psychological",
+   "debuff",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist the temptation to sow doubt through sheer compassion.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You channel the dark side to plant seeds of doubt in your target's mind, whispering their failures and inadequacies through the Force. The power manifests as an oppressive weight of self-doubt, their confidence crumbling as every mistake they've ever made echoes in their thoughts.",
+  "flavor_text": "\"Your overconfidence is your weakness.\" - Emperor Palpatine",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "pointing accusingly while channeling dark side energy"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "projecting waves of contempt and disappointment"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the dark side to denounce a creature, causing them to feel doubt and fear.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "disadvantage_next_attack"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target has disadvantage on their next attack roll"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior transforms Denounce from mere doubt into crushing despair. They don't just question the target's abilities—they systematically dismantle their self-worth, using the dark side to amplify every insecurity until the target's fighting spirit breaks.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "frightened"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith Warriors also impose the frightened condition for 1 round."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human understanding of psychology makes their Denounce particularly devastating. They know exactly which doubts to amplify, which failures to highlight, targeting the specific insecurities that will shatter their opponent's concentration at the crucial moment.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "attacks": 2
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human-cast Denounce affects the next two attack rolls instead of one."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Denounce as a fundamental tool of domination. Through it, they break enemies before battle even begins, using psychological warfare to ensure victory through fear rather than strength—a more complete form of conquest.",
+    "mechanical_benefit": [
+     {
+      "type": "area_effect",
+      "value": {
+       "radius": {
+        "distance": 5,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "enemies_in_area"
+      ],
+      "notes": "Sith can affect all enemies within 5 feet of the target."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the psychological assault—the target's hands trembling, eyes widening with sudden doubt, their stance becoming uncertain. Show them second-guessing their actions, hesitating at crucial moments, their confidence visibly cracking under the weight of Force-amplified self-doubt.",
+   "tactical_notes": "Denounce is a cantrip that imposes disadvantage on the target's next attack roll. Use it to protect allies from powerful attackers or to disrupt enemy combos. No save required makes it reliable, but the effect is limited to one attack.",
+   "narrative_hooks": [
+    "A warrior's perfect strike falters as Denounce fills them with doubt at the crucial moment",
+    "Denounce causes a sniper to question their aim, saving an ally's life",
+    "The power reveals deep-seated insecurities that become plot points later"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark Force user casting Denounce on a faltering opponent. Dark tendrils of doubt manifest as shadowy whispers around the target's head, their confident stance crumbling into uncertainty. The victim's eyes show dawning horror as their deepest insecurities are laid bare. The scene captures psychological warfare through the Force.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/denounce.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_denounce",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_denounce.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

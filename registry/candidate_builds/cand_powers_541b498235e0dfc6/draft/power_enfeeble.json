@@ -1,0 +1,205 @@
+{
+ "record": {
+  "id": "power_enfeeble",
+  "name": "Enfeeble",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "debuff",
+   "weakness",
+   "drain",
+   "physical",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist the urge to drain another's strength through compassion.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You reach out through the dark side to sap your target's physical strength, making their muscles feel like water and their limbs heavy as stone. The power manifests as invisible tendrils of exhaustion that wrap around their body, draining vitality and leaving them struggling to lift even their own weapon.",
+  "flavor_text": "\"Your strength fails you.\" - Darth Vader",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "clenching fist as if crushing their strength"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling exhaustion and decay through the Force"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel the dark side to weaken a creature's physical strength.",
+   "mechanics": [
+    {
+     "type": "apply_status",
+     "value": {
+      "status_type": "strength_disadvantage"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Target has disadvantage on Strength-based checks and attacks"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior uses Enfeeble as the perfect setup for domination. They drain their opponent's strength not just to weaken them, but to demonstrate superiority—showing their enemy that even their own body betrays them before the dark side's power.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_duration",
+      "value": {
+       "amount": 2,
+       "unit": "rounds"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith Warriors extend the disadvantage to 2 rounds."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human understanding of physical limits makes their Enfeeble particularly cruel. They know exactly how much strength to leave—just enough for hope, not enough for success—creating a psychological torture as victims struggle against their own failing bodies.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "speed_halved"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human Enfeeble also reduces target's speed by half."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Enfeeble as a lesson in dominance. Through it, acolytes learn that true victory comes not from killing, but from making enemies too weak to resist—forcing them to live with the knowledge of their helplessness.",
+    "mechanical_benefit": [
+     {
+      "type": "cascade_effect",
+      "value": {
+       "scope": "adjacent_enemy"
+      },
+      "target_scopes": [
+       "enemies"
+      ],
+      "notes": "Sith can affect one adjacent enemy with half duration."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the physical drain—muscles trembling, weapons suddenly feeling impossibly heavy, the target struggling to maintain their stance. Show them trying to swing and barely managing, or failing to break free from grapples they should easily escape.",
+   "tactical_notes": "Enfeeble is a cantrip imposing disadvantage on Strength checks and attacks. Excellent against melee fighters and grapplers. No save makes it reliable. Combines well with grappling allies or environmental hazards requiring Strength saves.",
+   "narrative_hooks": [
+    "A mighty warrior's signature weapon becomes too heavy to lift properly",
+    "Enfeeble prevents an enemy from breaking down a door during a chase",
+    "The weakness reveals that apparent strength was cybernetically enhanced"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark Force user draining an opponent's strength. The victim's muscles visibly atrophy, their weapon drooping in weakened hands as invisible dark tendrils sap their vitality. Their posture slumps from powerful to pathetic, knees buckling under their own weight. Dark energy flows from victim to caster.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/enfeeble.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_enfeeble",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_enfeeble.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

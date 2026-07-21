@@ -1,0 +1,776 @@
+{
+ "record": {
+  "id": "wookiee",
+  "name": "Wookiee",
+  "tags": [
+   "ambitious",
+   "arboreal",
+   "honorable",
+   "kashyyyk_native",
+   "legendary",
+   "loyal",
+   "melee_specialist",
+   "precise",
+   "predator",
+   "resilient",
+   "strength",
+   "strength_based",
+   "uncommon",
+   "warrior",
+   "wilderness",
+   "wookiee"
+  ],
+  "description": "Towering and fiercely loyal, Wookiees are famed for their strength, climbing prowess, and unyielding bonds of honor.",
+  "starting_xp": 105,
+  "ability_score_increases": [
+   {
+    "ability": "Strength",
+    "value": 2
+   },
+   {
+    "ability": "Constitution",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Shyriiwook",
+   "Basic"
+  ],
+  "base_hp": 14,
+  "base_strain": 8,
+  "innate_traits": [
+   {
+    "id": "wookiee_feral_strength",
+    "name": "Feral Strength",
+    "narrative": "A Wookiee's rage is a powerful weapon. When pushed, you can enter a state of primal fury, striking with overwhelming force.",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "name": "Feral Strike",
+      "action_type": "free_action",
+      "description": "Once per short rest, when you hit with a melee or unarmed attack, you can activate this ability to deal an additional 2d4 damage.",
+      "rules": [
+       "cooldown:short_rest",
+       "trigger:on_melee_hit"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_brutish_strength",
+     "ui_transition": {
+      "animation": "ui-corruption-brutish-strength",
+      "sfx": "sound-effect-dark-side-brutish-strength"
+     }
+    }
+   },
+   {
+    "id": "wookiee_climbing_claws",
+    "name": "Climbing Claws",
+    "narrative": "Your hands and feet house retractable claws, a biological inheritance from a life spent in the canopy of Kashyyyk's wroshyr trees.",
+    "mechanics": [
+     {
+      "effect": "grant_movement",
+      "parameters": {
+       "type": "climbing",
+       "value": "equal_to_walking_speed"
+      }
+     },
+     {
+      "effect": "modify_unarmed_strike",
+      "parameters": {
+       "damage_dice": "1d4",
+       "damage_type": "slashing"
+      }
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_crawling_horror",
+     "ui_transition": {
+      "animation": "ui-corruption-crawling-horror",
+      "sfx": "sound-effect-dark-side-crawling-horror"
+     }
+    }
+   },
+   {
+    "id": "wookiee_indomitable_roar",
+    "name": "Indomitable Roar",
+    "narrative": "Your powerful roar is not just a challenge; it's a manifestation of an unbreakable will that steels you against fear.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on all saving throws against being frightened.",
+      "conditions": [
+       {
+        "key": "saving_throw_type",
+        "op": "equals",
+        "value": "frightened"
+       }
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_berserker_mode",
+     "ui_transition": {
+      "animation": "ui-corruption-berserker-mode",
+      "sfx": "sound-effect-dark-side-berserker-mode"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "2.1m - 2.4m",
+   "distinctions": [
+    "Thick fur covering entire body",
+    "Retractable climbing claws",
+    "Powerful, muscular build",
+    "Deep, resonant voice"
+   ],
+   "fur_color_variants": [
+    "Rich Brown",
+    "Golden Brown",
+    "Dark Brown",
+    "Reddish Brown",
+    "Black",
+    "Grey",
+    "White (rare)"
+   ],
+   "fur_patterns": [
+    "Solid color",
+    "Subtle striping",
+    "Mottled patterns",
+    "Gradient variations"
+   ],
+   "eye_color_variants": [
+    "Dark Brown",
+    "Golden Amber",
+    "Deep Blue",
+    "Green",
+    "Hazel"
+   ],
+   "common_adornments": [
+    "Leather bandoliers and pouches",
+    "Woven fiber belts and straps",
+    "Bone or wood jewelry",
+    "Combat armor with fur trim",
+    "Traditional Kashyyyk ceremonial garments"
+   ],
+   "llm_description_prompt": "Describe a Wookiee character. Emphasize their towering presence, the texture and color of their fur, and their powerful, dignified bearing. Their eyes should convey both intelligence and primal strength. Consider their traditional Kashyyyk heritage and the stories their scars and adornments might tell."
+  },
+  "class_synergies": [
+   {
+    "class": "Guardian",
+    "narrative": "A Wookiee's legendary loyalty and protective instincts make them a natural Guardian, willing to endure any hardship to defend their friends and honor their life-debts.",
+    "mechanical_benefits": [
+     "Feral Strength trait synergizes with Guardian's defensive abilities",
+     "High Constitution supports Guardian's tank role",
+     "Indomitable Roar enhances Guardian's ability to protect allies"
+    ]
+   },
+   {
+    "class": "Soldier (Brawler)",
+    "narrative": "Combining their immense strength with formal combat training, a Wookiee Soldier is one of the most terrifying melee combatants in the galaxy.",
+    "mechanical_benefits": [
+     "Climbing Claws provide natural weapons for unarmed combat",
+     "Feral Strength amplifies Soldier's damage output",
+     "Natural durability supports frontline combat role"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Wookiees' arboreal heritage and natural climbing abilities make them exceptional Scouts, able to navigate any terrain and track prey with primal instincts.",
+    "mechanical_benefits": [
+     "Climbing Claws enable vertical exploration and ambush tactics",
+     "Keen senses from arboreal hunting background",
+     "Natural stealth in forest and urban environments"
+    ]
+   },
+   {
+    "class": "Berserker",
+    "narrative": "When a Wookiee's rage is unleashed, few can stand against their primal fury and overwhelming strength.",
+    "mechanical_benefits": [
+     "Feral Strength trait perfectly complements Berserker's rage mechanics",
+     "Indomitable Roar enhances Berserker's intimidation abilities",
+     "Natural durability supports reckless combat style"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Rebel Alliance",
+    "narrative": "Wookiees' strong sense of justice and resistance to oppression made them natural allies of the Rebellion, with many serving as elite warriors and loyal companions."
+   },
+   {
+    "faction": "Kashyyyk Resistance",
+    "narrative": "Wookiees fiercely defend their homeworld and traditions, forming tight-knit communities that resist external threats and exploitation."
+   },
+   {
+    "faction": "Mandalorian Clans",
+    "narrative": "Some Wookiees find kinship with Mandalorian culture, respecting their warrior traditions and code of honor while bringing their own unique strength to the clan."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Feral Strength",
+   "base_description": "Your species is naturally strong and resilient. You have advantage on Strength checks and gain resistance to bludgeoning damage.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your legendary strength has grown more formidable. Your natural weapons and unarmed strikes deal additional damage.",
+     "mechanical_effect": {
+      "type": "bonus_damage",
+      "value": "+2",
+      "conditions": [
+       {
+        "key": "weapon_type",
+        "op": "in",
+        "value": [
+         "unarmed",
+         "natural_weapon",
+         "melee_weapon"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your strength has become legendary. You can use your Strength modifier for Intimidation checks, and your presence alone can cow lesser beings.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Charisma (Intimidation) checks",
+      "conditions": [
+       {
+        "key": "intimidation_method",
+        "op": "equals",
+        "value": "physical_presence"
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "new_ability",
+     "description": "Your strength has reached epic proportions. Once per long rest, you can perform a feat of legendary strength.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Legendary Strength",
+      "description": "As an action, you can attempt a feat of legendary strength (break through walls, lift massive objects, etc.)"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "Your strength has become truly legendary. You are a living embodiment of Wookiee might and resilience.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Wookiee Might",
+      "description": "Once per long rest, you can add 1d12 to any Strength check or saving throw, and gain advantage on all Strength-based actions for 1 minute"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Wookiee's strength has grown more formidable. Their muscles ripple with barely contained power, and their presence commands respect even from seasoned warriors.",
+    "level_10": "Your Wookiee's strength has become legendary. Their very presence can cow lesser beings, and their roar can shake the foundations of buildings. They are a living embodiment of Wookiee might.",
+    "level_15": "Your Wookiee's strength has reached epic proportions. They can perform feats that seem impossible to other species - breaking through reinforced walls, lifting starship components, and inspiring awe in all who witness their power.",
+    "level_20": "Your Wookiee's strength has become truly legendary. They are a living legend, a force of nature whose very presence can change the course of battles. Their strength is not just physical - it's the strength of their spirit, their loyalty, and their unbreakable will."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Life-Debt Tradition",
+    "type": "traditional",
+    "description": "Your species' sacred tradition of life-debts, where saving another's life creates an unbreakable bond of loyalty and service.",
+    "activation": "When someone saves your life or you save another's life",
+    "effect": {
+     "type": "cultural_connection",
+     "value": "advantage",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "life_debt_fulfillment",
+        "loyalty_actions",
+        "protective_actions"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can call upon the sacred bonds of life-debt, creating unbreakable connections with allies and inspiring others with your unwavering loyalty.",
+    "faction_connection": "Kashyyyk Traditions",
+    "optional": true
+   },
+   {
+    "name": "Honor-Bound Warrior",
+    "type": "cultural",
+    "description": "Your deep connection to Wookiee warrior traditions and the code of honor that guides your actions.",
+    "activation": "When facing challenges to your honor or defending your principles",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "honor_challenges",
+        "principled_actions",
+        "warrior_traditions"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "Your adherence to Wookiee warrior traditions grants you respect and authority among those who value honor and courage.",
+    "faction_connection": "Mandalorian Clans",
+    "optional": true
+   },
+   {
+    "name": "Kashyyyk Heritage",
+    "type": "narrative",
+    "description": "Your deep connection to Kashyyyk's natural world and the wisdom of your arboreal ancestors.",
+    "activation": "When interacting with nature, climbing, or navigating forest environments",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Survival) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "in",
+       "value": [
+        "forest",
+        "arboreal",
+        "natural"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon the ancient wisdom of Kashyyyk, understanding the natural world in ways that seem almost mystical to other species.",
+    "faction_connection": "Kashyyyk Resistance",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Kashyyyk Warrior Traditions",
+   "cultural_networks": [
+    "Kashyyyk Resistance",
+    "Wookiee Honor Societies",
+    "Arboreal Wisdom Keepers",
+    "Life-Debt Brotherhoods",
+    "Warrior Clans"
+   ],
+   "traditional_practices": [
+    "Life-Debt Ceremonies",
+    "Honor Duels and Challenges",
+    "Arboreal Hunting Rituals",
+    "Warrior Initiation Rites",
+    "Ancestral Wisdom Sharing"
+   ],
+   "cultural_knowledge": [
+    "Arboreal Navigation",
+    "Honor Codes and Traditions",
+    "Natural Medicine",
+    "Warrior Tactics",
+    "Kashyyyk History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "arboreal",
+    "advantage": "Natural climbing ability and tree-dwelling expertise",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Athletics (Climbing) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "arboreal"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "climbing",
+        "swinging",
+        "tree_navigation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through the trees with natural grace, your arboreal heritage making you perfectly at home in forest canopies and urban vertical spaces.",
+    "narrative_hooks": [
+     "Vertical exploration and ambush tactics",
+     "Tree-to-tree navigation and travel",
+     "Arboreal hunting and tracking",
+     "Urban rooftop navigation"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "forest",
+    "advantage": "Enhanced senses and natural camouflage in forest environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Stealth checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "forest"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "hiding",
+        "tracking",
+        "ambush"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural fur and arboreal instincts allow you to blend seamlessly into forest environments, moving silently and tracking prey with primal precision.",
+    "narrative_hooks": [
+     "Forest survival and hunting",
+     "Natural camouflage and stealth",
+     "Wildlife tracking and communication",
+     "Forest-based ambush tactics"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "urban_vertical",
+    "advantage": "Expertise in navigating urban vertical spaces and climbing structures",
+    "situational_bonus": {
+     "type": "skill_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "urban_vertical"
+      },
+      {
+       "key": "skill_type",
+       "op": "in",
+       "value": [
+        "athletics",
+        "acrobatics",
+        "stealth"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your climbing abilities translate perfectly to urban environments, allowing you to navigate buildings, rooftops, and vertical spaces as easily as trees.",
+    "narrative_hooks": [
+     "Urban rooftop navigation",
+     "Building climbing and infiltration",
+     "Vertical escape routes",
+     "Urban ambush tactics"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "high_gravity",
+    "advantage": "Enhanced strength and resilience in high-gravity environments",
+    "situational_bonus": {
+     "type": "saving_throw_bonus",
+     "value": "+2",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "high_gravity"
+      },
+      {
+       "key": "save_type",
+       "op": "in",
+       "value": [
+        "constitution",
+        "strength"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural strength and resilience make you perfectly adapted to high-gravity environments, where your power becomes even more formidable.",
+    "narrative_hooks": [
+     "High-gravity world exploration",
+     "Enhanced strength demonstrations",
+     "Gravity-based combat advantages",
+     "Heavy lifting and construction"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "arboreal",
+    "forest",
+    "urban_vertical",
+    "high_gravity"
+   ],
+   "environmental_knowledge": [
+    "Arboreal Navigation",
+    "Forest Ecology",
+    "Urban Vertical Movement",
+    "High-Gravity Adaptation",
+    "Natural Camouflage",
+    "Tree-Dwelling Techniques"
+   ],
+   "survival_techniques": [
+    "Vertical Climbing and Swinging",
+    "Forest Stealth and Tracking",
+    "Urban Rooftop Navigation",
+    "High-Gravity Movement",
+    "Natural Camouflage",
+    "Arboreal Hunting"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "mammalian_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     {
+      "fur_texture": "coarse_hair"
+     },
+     {
+      "skin_color": "brown"
+     },
+     {
+      "eye_color": "green_or_yellow"
+     },
+     {
+      "facial_expression": "fierce"
+     }
+    ],
+    "morphology": {
+     "head_type": "pointed_ears_head",
+     "body_type": "furry_body",
+     "average_height": "1.8_meters"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "height_progression": "0.5-1.2 meters",
+       "weight_progression": "10-30 kg",
+       "facial_expression": "playful"
+      },
+      "adult": {
+       "height_progression": "1.5-2.2 meters",
+       "weight_progression": "40-70 kg",
+       "facial_expression": "fierce"
+      },
+      "elder": {
+       "height_progression": "1.8-2.5 meters",
+       "weight_progression": "80-100 kg",
+       "facial_expression": "wise"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": {
+       "fur_texture": "matted_and_dirty",
+       "skin_color": "pale_or_sickly",
+       "eye_color": "red_or_purple"
+      },
+      "light_side": {
+       "fur_texture": "shiny_andHealthy",
+       "skin_color": "tanned_orBronzed",
+       "eye_color": "bright_blue_or_green"
+      }
+     }
+    },
+    "unique_identifiers": [
+     "Shaggy Fur Pattern",
+     "Scars Above the Left Eye",
+     "Notch in the Right Ear"
+    ],
+    "prompt_schema": {
+     "base_prompt": "A towering, furry Wookiee with {contextual_modifiers} and a fierce expression.",
+     "contextual_modifiers": [
+      "age",
+      "alignment",
+      "background"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "blood_feud",
+   "overrides": {
+    "progression_path": {
+     "emergence": "The nemesis begins as a rumor, whispered among the Wookiee clans. A figure of great strength and ferocity,\nsaid to be on a mission of vengeance against the Wookiees.\n",
+     "escalation": "As the Wookiee encounters more clues about their nemesis' identity and motivations, they begin to feel\nincreasingly threatened and defensive.\n",
+     "confrontation": "The Wookiee finally confronts their nemesis in a climactic battle. If victorious, they may emerge with a\nnewfound sense of respect and admiration for their foe.\n"
+    },
+    "resolution_paths": {
+     "victory": "The Wookiee defeats their nemesis, claiming a great triumph for themselves and their clan.",
+     "redemption": "The Wookiee finds an opportunity to redeem their nemesis, saving them from a fate worse than death.",
+     "escape": "The Wookiee narrowly escapes their nemesis' deadly grasp, but not without scars both physical and emotional."
+    },
+    "conflict_triggers": [
+     "The Wookiee encounters evidence of their nemesis' past wrongdoings",
+     "A rival clan member betrays the Wookiee to their nemesis",
+     "The Wookiee is ambushed by their nemesis in a treacherous wilderness setting"
+    ],
+    "personal_vendetta": {
+     "formation_triggers": [
+      "The Wookiee discovers their nemesis' identity",
+      "A close friend or family member falls victim to their nemesis"
+     ],
+     "vendetta_type": "A burning desire for revenge and retribution"
+    },
+    "aggressive_type": "warrior",
+    "passive_type": "protector",
+    "primary_trait": "ferocity",
+    "secondary_trait": " loyalty"
+   }
+  },
+  "romance_engine": {
+   "archetype": "warrior_bond",
+   "overrides": {
+    "romance_potential": true,
+    "romance_compatibility": [
+     "ambitious",
+     "arboreal",
+     "honorable"
+    ],
+    "romance_progression": {
+     "stage1": "The Wookiee notices a romantic interest in another character, but is unsure if the feeling is mutual.\n",
+     "stage2": "The Wookiee begins to subtly flirt and show interest in the other character, hoping to initiate a romance.\n",
+     "stage3": "The Wookiee and their love interest share a tender moment, solidifying their connection and sparking deeper emotions.\n",
+     "stage4": "As the relationship deepens, the Wookiee must confront challenges and obstacles that test their commitment and trust in one another.\n",
+     "stage5": "The Wookiee and their partner stand strong together, facing the future with love, loyalty, and mutual support.\n"
+    },
+    "romance_events": [
+     "The Wookiee's romantic interest is kidnapped by a rival clan",
+     "A close friend of the Wookiee tries to play matchmaker for them",
+     "The Wookiee's partner has a traumatic event in their past that affects their trust and intimacy with the Wookiee"
+    ],
+    "romance_modifiers": [
+     {
+      "loyal": "increases relationship tension when faced with external threats"
+     },
+     {
+      "precise": "allows for more creative and nuanced romantic interactions"
+     }
+    ],
+    "bonding_mechanic": "deepening bond through shared experiences and mutual support",
+    "courtship_routine": "gift-giving and honor-based rituals to demonstrate commitment",
+    "relationship_goals": [
+     "establish a lifelong bond",
+     "build a family together"
+    ]
+   }
+  },
+  "flavor_text": "Wookiees are known for their deep connection to the natural world, and their reverence for the ancient forest moon of Kashyyyk. Their culture is built upon a profound respect for life, honor, and family - principles that guide them in all aspects of their lives. As a Wookiee, you embody these values, and your actions are shaped by the unwavering commitment to protect and preserve the balance of nature.",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Wookiee, you have an innate sense of loyalty and duty. You prioritize family and tribe above all else, and will go to great lengths to defend and support those you care about. However, this strong sense of allegiance can sometimes lead to blind spots and conflicts with others who do not share your values or priorities. Be mindful of this tendency, and strive to find a balance between loyalty and self-awareness.",
+   "narrative_hooks": [
+    "Explore the complexities of Wookiee honor culture",
+    "Delve into the ancient history of Kashyyyk and its impact on modern Wookiee society"
+   ],
+   "social_dynamics": "Wookiees are known for their close-knit family bonds, but this also means they can be fiercely protective and sometimes isolationist. Be prepared to navigate these dynamics when interacting with other species or individuals who may not understand or respect Wookiee customs.",
+   "common_motivations": [
+    "Protect the balance of nature",
+    "Uphold honor and tradition",
+    "Reunite lost loved ones"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "loyal_protector",
+   "overrides": {
+    "ai_behavior": {
+     "personality": "\"Independent, loyal, and fiercely protective. A Wookiee is driven by a strong sense of duty to its loved ones.\n It values honesty and directness in communication.\"\n",
+     "motivations": [
+      "Protect allies from harm",
+      "Defend the innocent",
+      "Uphold honor and reputation",
+      "Explore the wilderness and discover new things"
+     ],
+     "combat_behavior": "\"A Wookiee is a skilled melee fighter, relying on its strength and agility to take down opponents.\n It will often use its surroundings to gain an advantage in combat.\"\n",
+     "social_behavior": "\"A Wookiee values building strong relationships through shared experiences and mutual respect.\n It will often go out of its way to help others and support those in need.\"\n"
+    },
+    "relationship_tracking": {
+     "trust_levels": "\"Initial trust levels are high due to the Wookiee's natural loyalty and sense of duty.\n However, this can be broken if the player consistently betrays or disrespects their pack.\"\n",
+     "loyalty_triggers": "\"The Wookiee will become more loyal and dedicated to the player if they demonstrate a strong sense of honor\n and protect them from harm. Conversely, failure to uphold these values may erode trust and loyalty.\"\n"
+    },
+    "services": [
+     "Combat support (melee fighting)",
+     "Exploration and navigation (due to their climbing prowess)",
+     "Mediation and negotiation (using their natural diplomacy skills)"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "wookiee",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/wookiee.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

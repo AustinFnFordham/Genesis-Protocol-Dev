@@ -1,0 +1,180 @@
+{
+ "record": {
+  "id": "background_bounty_hunter",
+  "name": "Bounty Hunter",
+  "tags": [
+   "background",
+   "bounty_hunter",
+   "hunter",
+   "tracker",
+   "mercenary",
+   "dexterity_based",
+   "tactical",
+   "predator",
+   "skilled",
+   "underworld"
+  ],
+  "description": "You are a skilled hunter of sentient life, tracking down fugitives for credits. Whether you work for the Empire, criminal syndicates, or as an independent contractor, you've developed a reputation for getting the job done. Your skills in tracking, intimidation, and combat make you a force to be reckoned with in the galaxy's underworld.",
+  "proficiencies": [
+   {
+    "type": "skill",
+    "id": "intimidation"
+   },
+   {
+    "type": "skill",
+    "id": "investigation"
+   },
+   {
+    "type": "tool_choice",
+    "count": 2,
+    "options": [
+     {
+      "tool_id": "gaming_set"
+     },
+     {
+      "tool_id": "musical_instrument"
+     },
+     {
+      "tool_id": "vehicle_ground"
+     },
+     {
+      "tool_id": "vehicle_air"
+     },
+     {
+      "tool_id": "tracking_kit"
+     },
+     {
+      "tool_id": "stun_cuffs"
+     }
+    ]
+   },
+   {
+    "type": "language_choice",
+    "count": 1,
+    "options": [
+     {
+      "language_id": "any"
+     }
+    ]
+   }
+  ],
+  "feature": {
+   "name": "Hunter's Quarry",
+   "level": 1,
+   "description": "You have advantage on Wisdom (Perception) checks made to track your quarry, as well as on Wisdom (Survival) checks made to track your quarry. Additionally, you can use your knowledge of the criminal underworld to find information about your targets.",
+   "mechanics": [
+    {
+     "effect": "grant_advantage",
+     "parameters": {
+      "check_type": "skill_check",
+      "skill": "perception",
+      "scope": "tracking_quarry",
+      "bonus_type": "expertise",
+      "condition": {
+       "type": "target_is_quarry",
+       "target_scope": "target"
+      }
+     }
+    },
+    {
+     "effect": "grant_advantage",
+     "parameters": {
+      "check_type": "skill_check",
+      "skill": "survival",
+      "scope": "tracking_quarry",
+      "bonus_type": "expertise",
+      "condition": {
+       "type": "target_is_quarry",
+       "target_scope": "target"
+      }
+     }
+    },
+    {
+     "effect": "grant_contact",
+     "parameters": {
+      "contact_type": "criminal_underworld",
+      "description": "Access to criminal underworld information networks for locating targets"
+     }
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I am always calm, no matter what the situation.",
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Greed. I'm in it for the money.",
+    "Justice. I bring criminals to justice.",
+    "Fairness. I never kill a target who has surrendered.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first."
+   ],
+   "bonds": [
+    "I have a family to provide for.",
+    "I have a rival bounty hunter who always seems to be one step ahead.",
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family."
+   ],
+   "flaws": [
+    "I'll do anything for a big payday.",
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_bounty_hunter",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_bounty_hunter.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

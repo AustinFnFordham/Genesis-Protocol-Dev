@@ -1,0 +1,360 @@
+{
+ "record": {
+  "id": "commander",
+  "name": "Commander",
+  "tags": [
+   "commander",
+   "leadership",
+   "tactical",
+   "charisma_based",
+   "support",
+   "buff",
+   "coordination",
+   "strategic",
+   "inspiring",
+   "battlefield_control"
+  ],
+  "description": "Commanders are natural leaders and tactical experts, using their strategic thinking and leadership abilities to coordinate allies, inspire troops, and achieve victory through superior planning and execution.",
+  "class_features": [
+   "leadership_expertise",
+   "tactical_awareness",
+   "inspiring_presence",
+   "strategic_mastery",
+   "legendary_commander"
+  ],
+  "hit_die": 8,
+  "primary_ability": "Charisma",
+  "saving_throw_proficiencies": [
+   "Charisma",
+   "Wisdom"
+  ],
+  "armor_proficiencies": [
+   "light_armor",
+   "medium_armor"
+  ],
+  "weapon_proficiencies": [
+   "simple_weapons",
+   "blaster_pistols",
+   "blaster_rifles"
+  ],
+  "tool_proficiencies": [
+   "tactical_kit",
+   "communications_equipment"
+  ],
+  "skill_proficiencies": {
+   "choose": 4,
+   "from": [
+    "Athletics",
+    "Deception",
+    "Insight",
+    "Intimidation",
+    "Investigation",
+    "Perception",
+    "Persuasion",
+    "Technology"
+   ]
+  },
+  "visual_engine": {
+   "base_visual_tokens": [
+    "commanding_staff",
+    "blaster_pistol",
+    "armor_plating",
+    "communication_device",
+    "tactical_map"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing tall with feet shoulder-width apart, blaster at the ready, scanning the battlefield for optimal positioning.",
+    "energy_signature": "A subtle hum of blue energy emanates from the Commander's armor, representing their ability to analyze and adapt to situations quickly."
+   },
+   "prompt_schema": {
+    "base_prompt": "A skilled military leader",
+    "contextual_modifiers": [
+     "with a tactical mind",
+     "in charge of a squad",
+     "utilizing advanced communication devices"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "Rivals emerge as Commander's reputation grows, often from those who feel threatened by their success.",
+    "escalation": "As Commander achieves more victories, rivals become increasingly aggressive and desperate to take them down.",
+    "confrontation": "The final confrontation with the nemesis occurs when they launch a last-ditch attack on Commander's stronghold or during a critical mission."
+   },
+   "resolution_paths": {
+    "victory": "Commander defeats their rival in a dramatic showdown, earning the respect of their peers and solidifying their position as a leader.",
+    "redemption": "Commander is able to redeem their nemesis by offering them a chance at forgiveness and reconciliation, restoring balance to their relationship.",
+    "escape": "Commander narrowly escapes their nemesis' clutches, but not without scars and a newfound appreciation for the dangers of their role."
+   },
+   "conflict_triggers": [
+    "Betrayal",
+    "Competing interests",
+    "Power struggles"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "Commander meets potential love interest while on a mission or attending a social event, but their duties and responsibilities make it difficult to connect.",
+    "stage2": "As Commander's reputation grows, so does the attention from romantic interests, but they struggle to balance their relationships with their duties.",
+    "stage3": "Commander begins to open up and form deeper connections with someone special, but old habits and past traumas threaten to derail the relationship.",
+    "stage4": "Commander faces a major challenge or crisis that tests their relationship and forces them to confront their own flaws and weaknesses.",
+    "stage5": "Commander emerges stronger and wiser from their experiences, able to maintain a healthy balance between their duties and relationships."
+   },
+   "lifestyle_challenges": [
+    "Frequent deployments and absences",
+    "High-stakes decision-making and responsibility",
+    "Danger and risk of injury or death"
+   ]
+  },
+  "flavor_text": "A seasoned veteran with years of experience, a Commander's leadership is forged in the fires of battle. Their strategic mind and unwavering resolve inspire loyalty in their troops, making them a force to be reckoned with on the battlefield.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "\"As a Commander, you are a natural leader and tactical expert. Your goal is to inspire your allies, coordinate their efforts, and achieve victory through superior planning and execution. Remember that your strength lies not in individual feats of bravery, but in the bonds you forge with those around you.\"\n",
+   "narrative_hooks": [
+    "A key ally has gone missing during a critical mission.",
+    "Your commander-in-chief has assigned you to lead a high-stakes operation against a formidable foe.",
+    "Your troops are beginning to question your leadership and tactics, threatening to undermine morale and cohesion."
+   ],
+   "social_dynamics": "\"As a Commander, you have a natural charisma that inspires loyalty in those around you. However, this also means you must navigate complex web of relationships and personalities within your unit, often having to make difficult choices between individual needs and the greater good.\"\n",
+   "common_motivations": [
+    "Protecting their comrades at all costs",
+    "Achieving victory through superior planning and execution",
+    "Earning the respect and admiration of their peers"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "confident",
+      "charismatic",
+      "strategic"
+     ],
+     "quirks": [
+      "has a habit of collecting rare military insignia"
+     ]
+    },
+    "motivations": {
+     "primary": "protect unit and achieve victory",
+     "secondary": "earn respect and admiration of peers"
+    },
+    "combat_behavior": {
+     "tactics": "employs coordinated attacks, using strengths to compensate for weaknesses",
+     "decision-making": "adapts plans in real-time based on changing battlefield conditions"
+    },
+    "social_behavior": {
+     "interaction_style": "warm, encouraging, and supportive",
+     "emotional_intelligence": "empathetic, understanding, and self-aware"
+    }
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "max_level": 100,
+     "growth_rate": "moderate"
+    },
+    "loyalty_triggers": {
+     "trigger_threshold": 50,
+     "consequence": "If the NPC's trust level falls below 50, they will begin to question their Commander's leadership and may even abandon them in times of need."
+    }
+   },
+   "services": [
+    "tactical advice and planning",
+    "morale boosting and team motivation",
+    "strategic guidance for high-stakes operations"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "Noble Warrior",
+   "key_attributes": [
+    "Strength",
+    "Charisma"
+   ],
+   "iconic_gear": [
+    "Commander's Baton",
+    "Star Map"
+   ],
+   "role_in_galaxy": "Strategic Leader",
+   "famous_exemplars": [
+    "Anakin Skywalker",
+    "Mon Mothma"
+   ],
+   "species_synergies": [
+    {
+     "species": "Human",
+     "narrative": "Humans are naturally inclined to leadership and strategic thinking."
+    },
+    {
+     "species": "Bothan",
+     "narrative": "Bothans have a unique ability to analyze complex tactical situations."
+    }
+   ],
+   "faction_synergies": [
+    {
+     "faction": "Jedi Order",
+     "narrative": "The Jedi Order has a long tradition of producing skilled commanders."
+    },
+    {
+     "faction": "Rebel Alliance",
+     "narrative": "The Rebel Alliance relies heavily on the strategic leadership of its commanders."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "tactical_genius_1",
+    "feature_id": "tactical_genius",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "You have expertise in a skill of your choice. Proficiency bonus is added to all ability checks you make that use that skill.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "proficiency_bonus",
+      "notes": "Adds proficiency bonus to relevant ability check"
+     }
+    ]
+   },
+   {
+    "node_id": "inspiring_presence_2",
+    "feature_id": "inspiring_presence",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "You have a special gift for motivating and guiding allies. When you start combat, you can give one ally within 30 feet of you advantage on the first attack roll they make.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "start_combat",
+      "notes": "Grants advantage on first attack roll of chosen ally"
+     }
+    ]
+   },
+   {
+    "node_id": "battlefield_awareness_3",
+    "feature_id": "battlefield_awareness",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have a heightened sense of awareness in combat. You can use your reaction to take the disengage or hide action as a bonus action.",
+    "effects": [
+     {
+      "type": "modify_reaction",
+      "value": "bonus_action",
+      "notes": "Changes reaction options to bonus action"
+     }
+    ]
+   },
+   {
+    "node_id": "second_wind_4",
+    "feature_id": "second_wind",
+    "level_requirement": 4,
+    "type": "core",
+    "description": "You can use your action to regain lost hit points equal to 1d10 + your fighter level.",
+    "effects": [
+     {
+      "type": "heal",
+      "value": "1d10 + fighter_level",
+      "notes": "Restores hit points based on fighter level"
+     }
+    ]
+   },
+   {
+    "node_id": "master_of_strategy_5",
+    "feature_id": "master_of_strategy",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "You have a deep understanding of strategy and tactics. You can add your proficiency bonus to all Intelligence, Wisdom, or Charisma checks you make that aren't already improved by another ability.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "proficiency_bonus",
+      "notes": "Adds proficiency bonus to relevant ability check"
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "You can make an additional attack roll with a melee or ranged weapon you wield. This attack must be made with the same kind of attack that your original attack was.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": 1,
+      "notes": "Allows extra attack"
+     }
+    ]
+   },
+   {
+    "node_id": "as_i_8",
+    "feature_id": "asi",
+    "level_requirement": 8,
+    "type": "asi",
+    "description": "You can add an additional point to one ability score of your choice that is already improved by a racial trait or other source.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": 1,
+      "notes": "Adds ability score improvement"
+     }
+    ]
+   },
+   {
+    "node_id": "tactical_expertise_9",
+    "feature_id": "tactical_expertise",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "You gain a +2 bonus to attack and damage rolls you make with a type of weapon chosen when you select this class feature.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": 2,
+      "notes": "Adds bonus to attack and damage"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "commander",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/commander.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

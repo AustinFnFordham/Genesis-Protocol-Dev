@@ -1,0 +1,103 @@
+{
+ "record": {
+  "id": "feature_droid_resilience",
+  "name": "Droid Resilience",
+  "category": "utility",
+  "xp_cost": 0,
+  "tags": [
+   "feature",
+   "specialization_feature",
+   "species",
+   "droid",
+   "utility",
+   "skill_enhancement",
+   "assassination",
+   "protection",
+   "defensive",
+   "passive",
+   "ally_enhancement",
+   "offensive",
+   "tactical",
+   "low_cost"
+  ],
+  "narrative": "Your synthetic construction resists many hazards that plague organics. You shrug off toxins and shrug through hostile atmospheres with machine certainty.",
+  "flavor_text": "'Droid Resilience represents the pinnacle of mastery.' - Unknown Master",
+  "mechanics": [
+   {
+    "effect": "grant_ability",
+    "description": "Grants a special ability",
+    "parameters": {
+     "ability_name": "Droid Resilience",
+     "action_type": "passive"
+    }
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "This ability should feel like the droid's mechanical nature providing natural protection. Describe how toxins simply don't affect the droid's systems, how they can operate in environments that would kill organic beings, and how their synthetic construction makes them immune to biological threats.",
+   "tactical_notes": "This is a powerful defensive ability that makes the droid immune to many common threats. Use it to explore dangerous environments, resist enemy attacks, or operate in conditions that would incapacitate organic party members.",
+   "narrative_hooks": [
+    "The droid walks through a toxic gas cloud that would kill organic beings",
+    "The droid is unaffected by a psychic attack that stuns the rest of the party",
+    "The droid operates in a vacuum or hostile atmosphere",
+    "The droid is immune to a disease that affects the rest of the party"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A droid standing confidently in a hazardous environment, with toxic gas or psychic energy swirling around them harmlessly. The droid's mechanical construction is clearly visible, showing their synthetic nature and resilience.",
+   "base_negative_keywords": [
+    "organic",
+    "vulnerable",
+    "affected",
+    "cartoonish",
+    "blurry"
+   ]
+  },
+  "ui": {
+   "image": "/assets/images/features/droid_resilience.png",
+   "icon": "/assets/icons/features/droid_resilience.svg",
+   "color": "#C0C0C0"
+  }
+ },
+ "validation": {
+  "candidate_urid": "feature_droid_resilience",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/features/species/droid/droid_resilience.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

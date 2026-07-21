@@ -1,0 +1,174 @@
+{
+ "record": {
+  "id": "advocate",
+  "name": "Advocate",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "advocate",
+   "charisma_based",
+   "passionate",
+   "persuasive",
+   "social_specialist",
+   "inspiring",
+   "peaceful",
+   "justice"
+  ],
+  "description": "Advocates are masters of argumentation and legal advocacy. They excel at defending others' interests, presenting compelling cases, and using the power of words to achieve justice and protect their clients.",
+  "specialization_features": [
+   "legal_expertise",
+   "compelling_argument",
+   "defense_strategy",
+   "advocate_mastery",
+   "legendary_advocate"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Diplomatic Champions",
+   "role_in_group": "Masters of Argumentation",
+   "visual_signals": [
+    "Sophisticated Robes",
+    "Imposing Aura"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "advocate1",
+    "feature_id": "Advocate's Presence",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You exude an aura of confidence and authority, making you a compelling figure in any social situation.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "charisma_bloom",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_trait",
+        "op": "equals",
+        "value": "advocate"
+       }
+      ],
+      "notes": "When you engage with others in a conversation, your charisma score increases by 1 due to the natural gravitation of authority towards your presence."
+     }
+    ]
+   },
+   {
+    "node_id": "advocate2",
+    "feature_id": "Persuasive Voice",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have a gift for persuasive speech, making it easier to convince others of your viewpoint.",
+    "effects": [
+     {
+      "type": "feature",
+      "value": "persuasive_aura",
+      "target_scopes": [
+       "ally",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "has_trigger",
+        "op": "equals",
+        "value": "Persuasive Voice"
+       }
+      ],
+      "notes": "The Advocate's voice takes on a persuasive quality, making their words harder to resist. As they speak, the air around them seems to vibrate with conviction, subtly amplifying their Charisma checks."
+     }
+    ]
+   },
+   {
+    "node_id": "advocate3",
+    "feature_id": "Counselor's Insight",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have a keen understanding of human nature, allowing you to offer insightful advice and guidance.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "diplomatic_acumen",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_skill",
+        "op": "equals",
+        "value": "persuasion"
+       },
+       {
+        "key": "has_stat",
+        "op": "greater_than_or_equal_to",
+        "value": "3"
+       }
+      ],
+      "notes": "As you engage with others, your keen diplomatic mind grants you an intuitive understanding of their thoughts and intentions. Your Wisdom score increases by 1 during social interactions, allowing you to navigate complex relationships and make more informed decisions."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Sith_Armor_Plate",
+    "Blaster_Rifle_Grip"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A fierce warrior's stance, with knees bent and lightsaber at the ready",
+    "energy_signature": "A swirling aura of blue and purple energy, with intricate Force patterns dancing around it"
+   },
+   "prompt_schema": {
+    "base_prompt": "A majestic image of an Advocate in a heroic pose, surrounded by a halo of light",
+    "contextual_modifiers": [
+     "With a gleam of determination in the eyes",
+     "Surrounded by a subtle Force field"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "advocate",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_advocate.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

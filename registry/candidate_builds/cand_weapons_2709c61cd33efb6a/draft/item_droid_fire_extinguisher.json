@@ -1,0 +1,93 @@
+{
+ "record": {
+  "id_file": "droid_part_fire_extinguisher",
+  "category": "equipment",
+  "subcategory": "droid_parts",
+  "tags": [
+   "equipment",
+   "item",
+   "droid_parts",
+   "utility",
+   "safety",
+   "fire_suppression",
+   "emergency",
+   "specialized"
+  ],
+  "id": "item_droid_fire_extinguisher",
+  "name": "Integrated Fire Extinguisher",
+  "item_type": "Gear",
+  "era": "Galactic_Empire",
+  "narrative": "A chassis-integrated suppressant canister and nozzle for emergency response in hangars and engine rooms.",
+  "mechanics": {
+   "category": "utility",
+   "actions": [
+    {
+     "name": "Discharge Suppressants",
+     "effect": "extinguish_flames",
+     "area": "cone_15ft",
+     "special": "Creatures in the cone must succeed on a DC 12 Dexterity save or be doused and have open flames extinguished."
+    }
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A compact droid-mounted fire suppressant nozzle spraying a fine mist; red warning chevrons on the panel. Realistic spray, industrial textures.",
+   "base_negative_keywords": [
+    "cartoonish",
+    "blurry"
+   ],
+   "contextual_modifiers": [
+    {
+     "target_type": "Item_Action",
+     "modifier_text": "Motion blur on spray, metallic paneling, warning labels."
+    }
+   ]
+  },
+  "ui": {
+   "image": "/images/items/droid_parts/fire_extinguisher.jpg",
+   "icon": "/icons/items/droid_parts/fire_extinguisher.svg",
+   "color": "#B24E4E"
+  }
+ },
+ "validation": {
+  "candidate_urid": "item_droid_fire_extinguisher",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/droid_parts/fire_extinguisher.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

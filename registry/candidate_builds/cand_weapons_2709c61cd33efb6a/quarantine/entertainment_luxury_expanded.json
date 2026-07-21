@@ -1,0 +1,1274 @@
+{
+ "record": {
+  "entertainment_luxury_expanded": [
+   {
+    "id": "entertainment_holo_game_basic",
+    "name": "Basic Holo-Game Console",
+    "description": "A standard holographic gaming console that provides immersive virtual entertainment experiences.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Games",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "entertainment",
+     "holo_game",
+     "console",
+     "virtual",
+     "immersive",
+     "basic"
+    ],
+    "properties": [
+     "holographic_gaming",
+     "virtual_entertainment",
+     "immersive_experience"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "holographic_gaming",
+     "virtual_entertainment",
+     "immersive_experience"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "entertainment_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_game_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on entertainment checks when holo-game console is active"
+     }
+    ]
+   },
+   {
+    "id": "entertainment_holo_game_advanced",
+    "name": "Advanced Holo-Game Console",
+    "description": "A sophisticated holographic gaming system with enhanced graphics, multiplayer capabilities, and realistic simulations.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Games",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "entertainment",
+     "holo_game",
+     "console",
+     "advanced",
+     "multiplayer",
+     "realistic"
+    ],
+    "properties": [
+     "enhanced_graphics",
+     "multiplayer_gaming",
+     "realistic_simulation"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_gaming",
+     "multiplayer_experience",
+     "realistic_simulation"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "social_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_holo_game_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on social checks when advanced holo-game console is active"
+     }
+    ]
+   },
+   {
+    "id": "entertainment_virtual_reality_suite",
+    "name": "Virtual Reality Suite",
+    "description": "A complete virtual reality system that provides fully immersive experiences in any environment or scenario.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Games",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 15.0,
+    "tags": [
+     "entertainment",
+     "virtual_reality",
+     "suite",
+     "immersive",
+     "complete",
+     "advanced"
+    ],
+    "properties": [
+     "full_immersion",
+     "virtual_reality",
+     "complete_experience"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "full_immersion",
+     "virtual_reality",
+     "complete_experience"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_entertainment_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "vr_suite_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all entertainment checks when virtual reality suite is active"
+     }
+    ]
+   },
+   {
+    "id": "entertainment_holo_theater",
+    "name": "Personal Holo-Theater",
+    "description": "A private holographic theater that provides cinematic experiences with surround sound and immersive visuals.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Holo-Games",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 20.0,
+    "tags": [
+     "entertainment",
+     "holo_theater",
+     "cinematic",
+     "surround_sound",
+     "immersive"
+    ],
+    "properties": [
+     "cinematic_experience",
+     "surround_sound",
+     "immersive_visuals"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "cinematic_experience",
+     "surround_sound",
+     "immersive_visuals"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_theater_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on perception checks when holo-theater is active"
+     }
+    ]
+   },
+   {
+    "id": "luxury_fashion_basic",
+    "name": "Basic Luxury Fashion Set",
+    "description": "A collection of high-quality clothing and accessories that provides basic luxury fashion and style.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 3000,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "luxury",
+     "fashion",
+     "clothing",
+     "accessories",
+     "style",
+     "basic"
+    ],
+    "properties": [
+     "luxury_fashion",
+     "style_enhancement",
+     "quality_clothing"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_fashion",
+     "style_enhancement",
+     "quality_appearance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "persuasion_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_fashion_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on persuasion checks when luxury fashion is worn"
+     }
+    ]
+   },
+   {
+    "id": "luxury_fashion_designer",
+    "name": "Designer Luxury Fashion Set",
+    "description": "An exclusive collection of designer clothing and accessories that provides premium luxury fashion and status.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 15000,
+    "rarity": 4,
+    "weight": 5.0,
+    "tags": [
+     "luxury",
+     "fashion",
+     "designer",
+     "exclusive",
+     "premium",
+     "status"
+    ],
+    "properties": [
+     "designer_fashion",
+     "exclusive_status",
+     "premium_quality"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "designer_fashion",
+     "exclusive_status",
+     "premium_appearance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "intimidation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "designer_fashion_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on intimidation checks when designer fashion is worn"
+     }
+    ]
+   },
+   {
+    "id": "luxury_jewelry_basic",
+    "name": "Basic Luxury Jewelry Set",
+    "description": "A collection of fine jewelry and precious stones that provides basic luxury adornment and style.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 5000,
+    "rarity": 2,
+    "weight": 1.0,
+    "tags": [
+     "luxury",
+     "jewelry",
+     "precious_stones",
+     "adornment",
+     "style",
+     "basic"
+    ],
+    "properties": [
+     "luxury_jewelry",
+     "precious_stones",
+     "adornment"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_jewelry",
+     "precious_adornment",
+     "style_enhancement"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "charisma_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_jewelry_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on charisma checks when luxury jewelry is worn"
+     }
+    ]
+   },
+   {
+    "id": "luxury_jewelry_royal",
+    "name": "Royal Luxury Jewelry Set",
+    "description": "An exquisite collection of royal jewelry with rare gems and precious metals that provides ultimate luxury status.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Goods",
+    "cost": 50000,
+    "rarity": 5,
+    "weight": 2.0,
+    "tags": [
+     "luxury",
+     "jewelry",
+     "royal",
+     "exquisite",
+     "rare_gems",
+     "ultimate"
+    ],
+    "properties": [
+     "royal_jewelry",
+     "rare_gems",
+     "ultimate_luxury"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "royal_jewelry",
+     "rare_gem_adornment",
+     "ultimate_luxury"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_social_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "royal_jewelry_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all social checks when royal jewelry is worn"
+     }
+    ]
+   },
+   {
+    "id": "recreation_sport_equipment",
+    "name": "Sport Equipment Set",
+    "description": "A collection of high-quality sports equipment for various athletic activities and recreational sports.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 10.0,
+    "tags": [
+     "recreation",
+     "sport",
+     "equipment",
+     "athletic",
+     "recreational",
+     "basic"
+    ],
+    "properties": [
+     "sport_equipment",
+     "athletic_activities",
+     "recreational_sports"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sport_activities",
+     "athletic_recreation",
+     "sport_equipment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "sport_equipment_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks when sport equipment is used"
+     }
+    ]
+   },
+   {
+    "id": "recreation_luxury_vehicle",
+    "name": "Luxury Recreational Vehicle",
+    "description": "A high-end recreational vehicle designed for luxury travel and entertainment on the go.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 100000,
+    "rarity": 5,
+    "weight": 5000.0,
+    "tags": [
+     "recreation",
+     "luxury",
+     "vehicle",
+     "travel",
+     "entertainment",
+     "high_end"
+    ],
+    "properties": [
+     "luxury_travel",
+     "mobile_entertainment",
+     "high_end_vehicle"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_travel",
+     "mobile_entertainment",
+     "high_end_transport"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "travel_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_vehicle_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on travel checks when luxury recreational vehicle is used"
+     }
+    ]
+   },
+   {
+    "id": "recreation_holo_simulator",
+    "name": "Holographic Simulator",
+    "description": "An advanced simulator that provides realistic training and entertainment experiences in various scenarios.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 30000,
+    "rarity": 4,
+    "weight": 50.0,
+    "tags": [
+     "recreation",
+     "holo",
+     "simulator",
+     "realistic",
+     "training",
+     "entertainment"
+    ],
+    "properties": [
+     "realistic_simulation",
+     "training_experience",
+     "entertainment"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "realistic_simulation",
+     "training_experience",
+     "entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "training_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_simulator_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on training checks when holographic simulator is active"
+     }
+    ]
+   },
+   {
+    "id": "recreation_luxury_yacht",
+    "name": "Luxury Space Yacht",
+    "description": "A magnificent space yacht designed for luxury travel and entertainment among the stars.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Recreational Equipment",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 10000.0,
+    "tags": [
+     "recreation",
+     "luxury",
+     "yacht",
+     "space",
+     "travel",
+     "magnificent"
+    ],
+    "properties": [
+     "luxury_space_travel",
+     "magnificent_yacht",
+     "stellar_entertainment"
+    ],
+    "modifications": {
+     "slots": 20,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_space_travel",
+     "magnificent_yacht",
+     "stellar_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_travel_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_yacht_used",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all travel checks when luxury space yacht is used"
+     }
+    ]
+   },
+   {
+    "id": "social_entertainment_basic",
+    "name": "Basic Social Entertainment Set",
+    "description": "A collection of entertainment equipment for social gatherings and basic party activities.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 1500,
+    "rarity": 1,
+    "weight": 5.0,
+    "tags": [
+     "social",
+     "entertainment",
+     "gatherings",
+     "party",
+     "basic",
+     "activities"
+    ],
+    "properties": [
+     "social_gatherings",
+     "party_activities",
+     "basic_entertainment"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "social_gatherings",
+     "party_activities",
+     "basic_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "performance_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "social_entertainment_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on performance checks when social entertainment is active"
+     }
+    ]
+   },
+   {
+    "id": "social_entertainment_luxury",
+    "name": "Luxury Social Entertainment Suite",
+    "description": "A comprehensive entertainment suite designed for high-end social events and luxury gatherings.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 25.0,
+    "tags": [
+     "social",
+     "entertainment",
+     "luxury",
+     "suite",
+     "high_end",
+     "events"
+    ],
+    "properties": [
+     "luxury_entertainment",
+     "high_end_events",
+     "comprehensive_suite"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_entertainment",
+     "high_end_events",
+     "comprehensive_suite"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_social_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_entertainment_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all social checks when luxury entertainment suite is active"
+     }
+    ]
+   },
+   {
+    "id": "social_holo_band",
+    "name": "Holographic Band System",
+    "description": "An advanced holographic music system that creates virtual bands and orchestras for entertainment.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 15.0,
+    "tags": [
+     "social",
+     "holo",
+     "band",
+     "music",
+     "virtual",
+     "orchestra"
+    ],
+    "properties": [
+     "holographic_music",
+     "virtual_band",
+     "orchestra_entertainment"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "holographic_music",
+     "virtual_band",
+     "orchestra_entertainment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "performance_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "holo_band_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on performance checks when holographic band system is active"
+     }
+    ]
+   },
+   {
+    "id": "social_royal_ballroom",
+    "name": "Royal Ballroom Entertainment System",
+    "description": "A magnificent entertainment system designed for royal balls and the most prestigious social events.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Social Entertainment",
+    "cost": 100000,
+    "rarity": 6,
+    "weight": 100.0,
+    "tags": [
+     "social",
+     "royal",
+     "ballroom",
+     "entertainment",
+     "prestigious",
+     "magnificent"
+    ],
+    "properties": [
+     "royal_entertainment",
+     "prestigious_events",
+     "magnificent_system"
+    ],
+    "modifications": {
+     "slots": 15,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "royal_entertainment",
+     "prestigious_events",
+     "magnificent_system"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_entertainment_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "royal_ballroom_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all entertainment checks when royal ballroom system is active"
+     }
+    ]
+   },
+   {
+    "id": "luxury_service_basic",
+    "name": "Basic Luxury Service Package",
+    "description": "A package of basic luxury services including personal assistance and comfort amenities.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 5000,
+    "rarity": 2,
+    "weight": 0.0,
+    "tags": [
+     "luxury",
+     "service",
+     "package",
+     "personal",
+     "assistance",
+     "basic"
+    ],
+    "properties": [
+     "personal_assistance",
+     "comfort_amenities",
+     "basic_services"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "personal_assistance",
+     "comfort_amenities",
+     "basic_services"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "comfort_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_service_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on comfort checks when luxury service package is active"
+     }
+    ]
+   },
+   {
+    "id": "luxury_service_premium",
+    "name": "Premium Luxury Service Suite",
+    "description": "A comprehensive suite of premium luxury services including personal attendants and exclusive amenities.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 0.0,
+    "tags": [
+     "luxury",
+     "service",
+     "premium",
+     "suite",
+     "exclusive",
+     "attendants"
+    ],
+    "properties": [
+     "premium_services",
+     "personal_attendants",
+     "exclusive_amenities"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "premium_services",
+     "personal_attendants",
+     "exclusive_amenities"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_comfort_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "premium_service_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all comfort checks when premium luxury service suite is active"
+     }
+    ]
+   },
+   {
+    "id": "luxury_service_royal",
+    "name": "Royal Luxury Service System",
+    "description": "The ultimate luxury service system providing royal treatment and the most exclusive amenities available.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Luxury Services",
+    "cost": 100000,
+    "rarity": 6,
+    "weight": 0.0,
+    "tags": [
+     "luxury",
+     "service",
+     "royal",
+     "ultimate",
+     "exclusive",
+     "treatment"
+    ],
+    "properties": [
+     "royal_treatment",
+     "ultimate_luxury",
+     "exclusive_services"
+    ],
+    "modifications": {
+     "slots": 0,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "royal_treatment",
+     "ultimate_luxury",
+     "exclusive_services"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_luxury_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "royal_service_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all luxury checks when royal luxury service system is active"
+     }
+    ]
+   },
+   {
+    "id": "collectible_art_basic",
+    "name": "Basic Art Collection",
+    "description": "A collection of fine art pieces that provides basic cultural enrichment and aesthetic value.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 10000,
+    "rarity": 3,
+    "weight": 20.0,
+    "tags": [
+     "collectible",
+     "art",
+     "collection",
+     "cultural",
+     "aesthetic",
+     "basic"
+    ],
+    "properties": [
+     "fine_art",
+     "cultural_enrichment",
+     "aesthetic_value"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "fine_art",
+     "cultural_enrichment",
+     "aesthetic_value"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "culture_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "art_collection_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on culture checks when art collection is owned"
+     }
+    ]
+   },
+   {
+    "id": "collectible_art_masterpiece",
+    "name": "Masterpiece Art Collection",
+    "description": "A collection of priceless masterpieces that provides ultimate cultural prestige and artistic value.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 50.0,
+    "tags": [
+     "collectible",
+     "art",
+     "masterpiece",
+     "priceless",
+     "prestige",
+     "ultimate"
+    ],
+    "properties": [
+     "priceless_masterpieces",
+     "cultural_prestige",
+     "ultimate_artistic"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "priceless_masterpieces",
+     "cultural_prestige",
+     "ultimate_artistic"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_culture_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "masterpiece_collection_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all culture checks when masterpiece collection is owned"
+     }
+    ]
+   },
+   {
+    "id": "collectible_antique_basic",
+    "name": "Basic Antique Collection",
+    "description": "A collection of historical antiques that provides basic historical value and cultural significance.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 30.0,
+    "tags": [
+     "collectible",
+     "antique",
+     "historical",
+     "cultural",
+     "significance",
+     "basic"
+    ],
+    "properties": [
+     "historical_antiques",
+     "cultural_significance",
+     "basic_value"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "historical_antiques",
+     "cultural_significance",
+     "basic_value"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "history_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "antique_collection_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on history checks when antique collection is owned"
+     }
+    ]
+   },
+   {
+    "id": "collectible_antique_legendary",
+    "name": "Legendary Antique Collection",
+    "description": "A collection of legendary historical artifacts that provides ultimate historical prestige and cultural significance.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Collectibles",
+    "cost": 1000000,
+    "rarity": 6,
+    "weight": 100.0,
+    "tags": [
+     "collectible",
+     "antique",
+     "legendary",
+     "artifacts",
+     "prestige",
+     "ultimate"
+    ],
+    "properties": [
+     "legendary_artifacts",
+     "historical_prestige",
+     "ultimate_significance"
+    ],
+    "modifications": {
+     "slots": 12,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "legendary_artifacts",
+     "historical_prestige",
+     "ultimate_significance"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_history_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "legendary_collection_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all history checks when legendary antique collection is owned"
+     }
+    ]
+   },
+   {
+    "id": "ultimate_luxury_palace",
+    "name": "Luxury Palace System",
+    "description": "A complete luxury palace system that provides the ultimate in luxury living and entertainment.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Ultimate Luxury",
+    "cost": 5000000,
+    "rarity": 6,
+    "weight": 10000.0,
+    "tags": [
+     "ultimate",
+     "luxury",
+     "palace",
+     "system",
+     "complete",
+     "living"
+    ],
+    "properties": [
+     "luxury_palace",
+     "complete_system",
+     "ultimate_living"
+    ],
+    "modifications": {
+     "slots": 50,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "luxury_palace",
+     "complete_system",
+     "ultimate_living"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_luxury_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "luxury_palace_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all luxury checks when luxury palace system is owned"
+     }
+    ]
+   },
+   {
+    "id": "ultimate_entertainment_complex",
+    "name": "Ultimate Entertainment Complex",
+    "description": "A massive entertainment complex that provides every form of luxury entertainment and recreation imaginable.",
+    "type": "Entertainment & Luxury",
+    "subtype": "Ultimate Luxury",
+    "cost": 10000000,
+    "rarity": 6,
+    "weight": 50000.0,
+    "tags": [
+     "ultimate",
+     "entertainment",
+     "complex",
+     "massive",
+     "every_form",
+     "imaginable"
+    ],
+    "properties": [
+     "ultimate_entertainment",
+     "massive_complex",
+     "every_form"
+    ],
+    "modifications": {
+     "slots": 100,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ultimate_entertainment",
+     "massive_complex",
+     "every_form"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "all_entertainment_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "entertainment_complex_owned",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all entertainment checks when ultimate entertainment complex is owned"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "entertainment_luxury_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/entertainment_luxury_expanded.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

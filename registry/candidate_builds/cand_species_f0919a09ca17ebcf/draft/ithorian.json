@@ -1,0 +1,888 @@
+{
+ "record": {
+  "id": "ithorian",
+  "name": "Ithorian",
+  "tags": [
+   "charisma_based",
+   "compassionate",
+   "diplomat",
+   "force_sensitive",
+   "healer",
+   "ithorian",
+   "peaceful",
+   "scholar",
+   "sonic",
+   "support",
+   "uncommon",
+   "wilderness",
+   "wisdom_based"
+  ],
+  "description": "Peaceful stewards of living worlds, Ithorians blend wisdom, song, and diplomacy, shaping communities rather than battles.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Wisdom",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Ithorese"
+  ],
+  "base_hp": 10,
+  "base_strain": 10,
+  "innate_traits": [
+   {
+    "id": "ithorian_harmony_of_voices",
+    "name": "Harmony of Voices",
+    "narrative": "Your species' unique dual-voice physiology allows you to create harmonious, layered communication that can convey complex emotions and ideas with remarkable clarity.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Performance checks when singing or speaking in harmony.",
+      "conditions": [
+       {
+        "key": "performance_type",
+        "op": "in",
+        "value": [
+         "singing",
+         "speaking",
+         "harmony"
+        ]
+       }
+      ]
+     },
+     {
+      "effect": "narrative_effect",
+      "description": "You can communicate complex ideas more effectively through your dual-voice harmony."
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "menacing_siren",
+     "ui_transition": {
+      "animation": "manipulative_wavering",
+      "sfx": "ominous_choral"
+     }
+    }
+   },
+   {
+    "id": "ithorian_natures_ally",
+    "name": "Nature's Ally",
+    "narrative": "Your species has evolved in perfect harmony with nature, developing an innate understanding of living things and natural environments.",
+    "mechanics": [
+     {
+      "effect": "grant_proficiency",
+      "parameters": {
+       "skill": "Nature"
+      }
+     },
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Animal Handling checks.",
+      "conditions": [
+       {
+        "key": "skill_type",
+        "op": "equals",
+        "value": "animal_handling"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ithorian_peaceful_resolution",
+    "name": "Peaceful Resolution",
+    "narrative": "Your species' peaceful nature and deep wisdom allow you to find peaceful solutions to conflicts, using understanding and empathy rather than force.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "description": "You have advantage on Persuasion checks made to de-escalate conflict.",
+      "conditions": [
+       {
+        "key": "persuasion_goal",
+        "op": "equals",
+        "value": "de_escalate_conflict"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.8m - 2.1m",
+   "distinctions": [
+    "Hammer-shaped head",
+    "Two mouths",
+    "Long, graceful neck",
+    "Gentle, peaceful demeanor",
+    "Natural connection to life"
+   ],
+   "skin_color_variants": [
+    "Pale Green",
+    "Olive Green",
+    "Dark Green",
+    "Brown",
+    "Grey",
+    "Mottled patterns"
+   ],
+   "head_shape_variants": [
+    "Classic hammer shape",
+    "Elongated hammer shape",
+    "Rounded hammer shape",
+    "Angular hammer shape"
+   ],
+   "eye_color_variants": [
+    "Large, dark eyes",
+    "Golden eyes",
+    "Green eyes",
+    "Brown eyes",
+    "Blue eyes"
+   ],
+   "common_adornments": [
+    "Flowing, natural-fiber robes",
+    "Living plant jewelry and accessories",
+    "Traditional Ithorian ceremonial garments",
+    "Practical, nature-inspired clothing",
+    "Meditation and healing tools"
+   ],
+   "llm_description_prompt": "Describe an Ithorian character. Emphasize their unique hammer-shaped head and the gentle, peaceful way they move and speak. Their dual-voice should create a harmonious, layered communication style. Consider their natural connection to life and the way they carry themselves with wisdom and serenity, reflecting their role as stewards of nature."
+  },
+  "class_synergies": [
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Ithorians' natural wisdom and Harmony of Voices make them exceptional Consulars, able to mediate conflicts and bring harmony through their unique communication abilities.",
+    "mechanical_benefits": [
+     "Harmony of Voices trait enhances diplomatic communication",
+     "Peaceful Resolution trait supports conflict mediation",
+     "High Wisdom supports insight and negotiation"
+    ]
+   },
+   {
+    "class": "Scholar",
+    "narrative": "Ithorians' deep wisdom and connection to nature make them excellent Scholars, particularly in environmental studies and cultural preservation.",
+    "mechanical_benefits": [
+     "Nature's Ally trait enhances environmental knowledge",
+     "High Wisdom supports academic pursuits",
+     "Natural curiosity drives scholarly investigation"
+    ]
+   },
+   {
+    "class": "Guardian (Protector)",
+    "narrative": "Ithorians' protective instincts and connection to life make them unique Guardians, defending not just people but the natural world itself.",
+    "mechanical_benefits": [
+     "Nature's Ally trait aids in protecting natural environments",
+     "Peaceful Resolution supports protective strategies",
+     "Natural empathy enhances protective abilities"
+    ]
+   },
+   {
+    "class": "Scout",
+    "narrative": "Ithorians' connection to nature and animal handling abilities make them excellent Scouts, especially in wilderness environments.",
+    "mechanical_benefits": [
+     "Nature's Ally trait enhances wilderness survival",
+     "Animal Handling advantage aids in reconnaissance",
+     "Natural environmental awareness"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Environmental Protection",
+    "narrative": "Ithorians are natural advocates for environmental protection and conservation, working to preserve natural habitats and life throughout the galaxy."
+   },
+   {
+    "faction": "Galactic Republic",
+    "narrative": "Ithorians have served the Republic as diplomats and advisors, using their wisdom and peaceful nature to promote harmony and understanding."
+   },
+   {
+    "faction": "Independent Conservationists",
+    "narrative": "Many Ithorians work independently or in small groups to protect natural environments and promote sustainable practices throughout the galaxy."
+   }
+  ],
+  "species_progression": {
+   "base_trait": "Harmony of Voices",
+   "base_description": "Your species' unique dual-voice physiology allows you to create harmonious, layered communication that can convey complex emotions and ideas with remarkable clarity.",
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "communication_enhancement",
+     "description": "Your Harmony of Voices has grown more sophisticated. You can communicate with even greater clarity and emotional depth.",
+     "mechanical_effect": {
+      "type": "advantage",
+      "value": "Charisma (Performance) checks",
+      "conditions": [
+       {
+        "key": "communication_type",
+        "op": "in",
+        "value": [
+         "complex_ideas",
+         "emotional_expression",
+         "harmonious_communication"
+        ]
+       }
+      ]
+     },
+     "optional": true
+    },
+    "level_10": {
+     "enhancement_type": "new_ability",
+     "description": "Your Harmony of Voices has become legendary. You can create powerful emotional effects through your dual-voice communication.",
+     "mechanical_effect": {
+      "type": "new_action",
+      "value": "Harmonic Resonance",
+      "description": "Once per long rest, you can use your dual-voice to create a powerful emotional effect on listeners"
+     },
+     "optional": true
+    },
+    "level_15": {
+     "enhancement_type": "legendary_feature",
+     "description": "You have become a master of harmonious communication. Your voice can heal, inspire, and bring peace.",
+     "mechanical_effect": {
+      "type": "legendary_action",
+      "value": "Voice of Peace",
+      "description": "Once per long rest, you can use your voice to calm conflicts and heal emotional wounds"
+     },
+     "optional": true
+    },
+    "level_20": {
+     "enhancement_type": "epic_feature",
+     "description": "You are a living legend of harmonious communication. Your voice can change hearts and minds across the galaxy.",
+     "mechanical_effect": {
+      "type": "epic_action",
+      "value": "Epic Harmony",
+      "description": "Once per long rest, you can use your voice to create a powerful effect that can influence entire groups"
+     },
+     "optional": true
+    }
+   },
+   "balance_guidelines": {
+    "max_bonus_per_tier": 3,
+    "requires_class_synergy": false,
+    "optional_by_default": true
+   },
+   "narrative_progression": {
+    "level_5": "Your Ithorian's Harmony of Voices has grown more sophisticated. Their dual-voice communication has become more nuanced and powerful.",
+    "level_10": "Your Ithorian's Harmony of Voices has become legendary. They can create powerful emotional effects through their unique communication abilities.",
+    "level_15": "Your Ithorian has become a master of harmonious communication. Their voice can heal, inspire, and bring peace to any situation.",
+    "level_20": "Your Ithorian is a living legend of harmonious communication. Their voice can change hearts and minds across the galaxy."
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Environmental Stewardship",
+    "type": "traditional",
+    "description": "Your deep connection to environmental protection and the sacred duty of preserving natural life.",
+    "activation": "When protecting natural environments or promoting conservation",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Nature) checks",
+     "conditions": [
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "environmental_protection",
+        "conservation",
+        "natural_preservation"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can draw upon your species' deep connection to nature, understanding and protecting natural environments with wisdom and care.",
+    "faction_connection": "Environmental Protection",
+    "optional": true
+   },
+   {
+    "name": "Peaceful Mediation",
+    "type": "cultural",
+    "description": "Your species' natural ability to mediate conflicts and bring harmony through understanding and empathy.",
+    "activation": "When mediating conflicts or promoting peaceful resolution",
+    "effect": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "situation",
+       "op": "in",
+       "value": [
+        "conflict_mediation",
+        "peaceful_resolution",
+        "harmony_promotion"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can bring peace to any conflict through your natural wisdom and empathetic understanding.",
+    "faction_connection": "Galactic Republic",
+    "optional": true
+   },
+   {
+    "name": "Life Connection",
+    "type": "narrative",
+    "description": "Your deep connection to all living things and the ability to communicate with and understand them.",
+    "activation": "When interacting with living creatures or natural environments",
+    "effect": {
+     "type": "advantage",
+     "value": "Wisdom (Animal Handling) checks",
+     "conditions": [
+      {
+       "key": "interaction_type",
+       "op": "in",
+       "value": [
+        "animal_communication",
+        "life_understanding",
+        "natural_connection"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can communicate with and understand living things in ways that seem almost mystical to other species.",
+    "faction_connection": "Independent Conservationists",
+    "optional": true
+   },
+   {
+    "name": "Wisdom Keeper",
+    "type": "social",
+    "description": "Your role as a keeper of ancient wisdom and cultural knowledge.",
+    "activation": "When sharing wisdom or preserving cultural knowledge",
+    "effect": {
+     "type": "advantage",
+     "value": "Intelligence (History) checks",
+     "conditions": [
+      {
+       "key": "knowledge_type",
+       "op": "in",
+       "value": [
+        "cultural_wisdom",
+        "ancient_knowledge",
+        "traditional_lore"
+       ]
+      }
+     ]
+    },
+    "narrative_enhancement": "You can share the ancient wisdom of your people, preserving cultural knowledge and guiding others with your insights.",
+    "faction_connection": "Ithorian Cultural Traditions",
+    "optional": true
+   }
+  ],
+  "cultural_connections": {
+   "primary_culture": "Ithorian Environmental Stewardship",
+   "cultural_networks": [
+    "Environmental Protection",
+    "Galactic Republic",
+    "Independent Conservationists",
+    "Ithorian Cultural Traditions",
+    "Peace Mediators"
+   ],
+   "traditional_practices": [
+    "Harmonic Communication Rituals",
+    "Environmental Protection Ceremonies",
+    "Peace Mediation Practices",
+    "Life Connection Rituals",
+    "Wisdom Sharing Traditions"
+   ],
+   "cultural_knowledge": [
+    "Environmental Science",
+    "Peace Mediation",
+    "Life Communication",
+    "Cultural Preservation",
+    "Ithorian History"
+   ]
+  },
+  "environmental_adaptations": [
+   {
+    "environment": "jungle",
+    "advantage": "Natural expertise in jungle environments and life-rich ecosystems",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Survival checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "jungle"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "navigation",
+        "survival",
+        "life_interaction"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "You move through jungle environments with natural ease, your species' evolutionary adaptation to life-rich ecosystems making you perfectly at home among diverse flora and fauna.",
+    "narrative_hooks": [
+     "Jungle navigation and survival",
+     "Life-rich ecosystem interaction",
+     "Biodiversity appreciation",
+     "Natural harmony maintenance"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "natural_ecosystems",
+    "advantage": "Enhanced understanding and interaction with natural ecosystems",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Wisdom (Nature) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "natural_ecosystems"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "ecosystem_understanding",
+        "life_interaction",
+        "natural_balance"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural connection to life allows you to understand and interact with natural ecosystems in ways that seem almost mystical to other species.",
+    "narrative_hooks": [
+     "Ecosystem understanding",
+     "Life interaction and communication",
+     "Natural balance maintenance",
+     "Environmental harmony"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "peaceful_communities",
+    "advantage": "Enhanced ability to promote peace and harmony in community settings",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Charisma (Persuasion) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "peaceful_communities"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "peace_promotion",
+        "harmony_creation",
+        "community_building"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your peaceful nature and wisdom make you perfectly suited for promoting harmony and understanding in community settings.",
+    "narrative_hooks": [
+     "Peace promotion",
+     "Community harmony",
+     "Conflict resolution",
+     "Cultural understanding"
+    ],
+    "optional": true
+   },
+   {
+    "environment": "conservation_areas",
+    "advantage": "Enhanced ability to protect and preserve natural environments",
+    "situational_bonus": {
+     "type": "advantage",
+     "value": "Wisdom (Survival) checks",
+     "conditions": [
+      {
+       "key": "environment",
+       "op": "equals",
+       "value": "conservation_areas"
+      },
+      {
+       "key": "activity",
+       "op": "in",
+       "value": [
+        "environmental_protection",
+        "conservation",
+        "natural_preservation"
+       ]
+      }
+     ]
+    },
+    "immersion_effect": "Your natural connection to life and environmental stewardship make you perfectly suited for protecting and preserving natural environments.",
+    "narrative_hooks": [
+     "Environmental protection",
+     "Conservation efforts",
+     "Natural preservation",
+     "Life stewardship"
+    ],
+    "optional": true
+   }
+  ],
+  "environmental_mastery": {
+   "primary_environments": [
+    "jungle",
+    "natural_ecosystems",
+    "peaceful_communities",
+    "conservation_areas"
+   ],
+   "environmental_knowledge": [
+    "Jungle Navigation",
+    "Ecosystem Understanding",
+    "Peace Promotion",
+    "Environmental Protection",
+    "Life Communication",
+    "Cultural Preservation"
+   ],
+   "survival_techniques": [
+    "Jungle Survival and Navigation",
+    "Ecosystem Interaction",
+    "Peace Mediation",
+    "Environmental Conservation",
+    "Life Communication",
+    "Cultural Wisdom Sharing"
+   ]
+  },
+  "advanced_system_balance": {
+   "progression_balance": {
+    "max_bonus_per_tier": 3,
+    "optional_by_default": true,
+    "narrative_focus": true
+   },
+   "cultural_balance": {
+    "max_features_per_character": 3,
+    "narrative_focus": true,
+    "optional_by_default": true
+   },
+   "environmental_balance": {
+    "max_adaptations_per_character": 4,
+    "situational_advantages": true,
+    "optional_by_default": true
+   }
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "base_visual_tokens": [
+    "long_hair",
+    "humanoid",
+    "quad limbs",
+    "green_skin",
+    "almond eyes",
+    "slender build"
+   ],
+   "morphology": {
+    "head_type": "rounded",
+    "body_type": "quadrupedal",
+    "average_height": "6'1\""
+   },
+   "dynamic_visuals": {
+    "age_progression": {
+     "child": {
+      "skin_tone": "pale_green",
+      "hair_color": "light_blue",
+      "facial_feature": "prominent_nose"
+     },
+     "adult": {
+      "skin_tone": "olive_green",
+      "hair_color": "dark_brown",
+      "facial_feature": "angular_jawline"
+     },
+     "elder": {
+      "skin_tone": "earthy_brown",
+      "hair_color": "graying_white",
+      "facial_feature": "lined_forehead"
+     }
+    },
+    "morality_corruption": {
+     "dark_side": [
+      "scarred_forehead",
+      "sunken_eyes",
+      "pale_green_tinted_skin"
+     ],
+     "light_side": [
+      "radiant_aura",
+      "shimmering_hair",
+      "warm_smile"
+     ]
+    }
+   },
+   "unique_identifiers": [
+    "iridescent_scales",
+    "bioluminescent_marks",
+    "rare_eye_color"
+   ],
+   "prompt_schema": {
+    "base_prompt": "Create an Ithorian with a calm demeanor",
+    "contextual_modifiers": [
+     "age: child, adult or elder",
+     "morality: light side or dark side",
+     "environment: forest, mountain or desert"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": {
+     "name": "New Ambassador to Ithor",
+     "description": "An Ithorian ambassador arrives on the planet, bringing with them a message of peace and cooperation.",
+     "npcs": [
+      "Ithorian Ambassador"
+     ],
+     "narrative": [
+      "The ambassador is met with open arms by the local population.",
+      "However, they soon realize that their peaceful intentions are not shared by all factions on the planet."
+     ]
+    },
+    "escalation": {
+     "name": "Conflict in Ithor's Name",
+     "description": "A conflict erupts between different factions vying for control of a valuable resource.",
+     "npcs": [
+      "Local Leaders",
+      "Ithorian Diplomats"
+     ],
+     "narrative": [
+      "The ambassador struggles to maintain peace as tensions rise.",
+      "A group of local leaders, seeking to exploit the situation, begin to secretly work with one of the factions."
+     ]
+    },
+    "confrontation": {
+     "name": "Betrayal on Ithor",
+     "description": "The true intentions of the Ithorian ambassador are revealed, and a personal vendetta is formed against them.",
+     "npcs": [
+      "Ithorian Ambassador",
+      "Local Leaders"
+     ],
+     "narrative": [
+      "The ambassador's peaceful message was just a ruse to gain control over the valuable resource.",
+      "A local leader, betrayed by their former allies, seeks revenge against the Ithorians."
+     ]
+    }
+   },
+   "resolution_paths": {
+    "victory": {
+     "description": "The Ithorian ambassador successfully negotiates a peace treaty between the warring factions.",
+     "npcs": [
+      "Ithorian Ambassador",
+      "Local Leaders"
+     ],
+     "narrative": [
+      "The ambassador's diplomatic skills and knowledge of the local culture help to bring the parties together.",
+      "A lasting peace is forged, and the Ithorians are hailed as heroes."
+     ]
+    },
+    "redemption": {
+     "description": "The Ithorian ambassador makes amends for their past mistakes by helping those affected by the conflict.",
+     "npcs": [
+      "Ithorian Ambassador",
+      "Local Leaders"
+     ],
+     "narrative": [
+      "The ambassador uses their knowledge of the local culture to help rebuild and restore communities damaged in the conflict.",
+      "They earn the respect and gratitude of the people, and their reputation as a wise and compassionate leader spreads throughout the galaxy."
+     ]
+    },
+    "escape": {
+     "description": "The Ithorian ambassador is forced to flee the planet under threat of harm.",
+     "npcs": [
+      "Ithorian Ambassador",
+      "Local Leaders"
+     ],
+     "narrative": [
+      "The ambassador's peaceful message is met with hostility by those who seek power and control over the valuable resource.",
+      "They are forced to escape, leaving behind a trail of destruction and heartbreak."
+     ]
+    }
+   },
+   "conflict_triggers": [
+    "A local leader betrays their allies, seeking to exploit the situation for personal gain.",
+    "The Ithorian ambassador's peaceful message is met with hostility by those who seek power and control over the valuable resource."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "A betrayal of trust",
+     "Personal loss or harm caused by the nemesis"
+    ],
+    "vendetta_type": "Seeking revenge"
+   },
+   "overrides": {
+    "species_renowned_for": "Diplomacy",
+    "historical_enemies": [
+     "Yuuzhan Vong",
+     "Sith Empire"
+    ],
+    "tragic_flaws": [
+     "Overreliance on diplomacy",
+     "Neglect of personal power and influence"
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Ithorian"
+   ],
+   "romance_progression": {
+    "stage1": {
+     "description": "Initial Encounter",
+     "npcs": [
+      "Local Ithorian"
+     ],
+     "narrative": [
+      "The player meets a charming and intelligent Ithorian who is interested in their work.",
+      "They share stories of the forest moon, and the player begins to develop feelings for the Ithorian's kind and gentle nature."
+     ]
+    },
+    "stage2": {
+     "description": "Growing Friendship",
+     "npcs": [
+      "Ithorian"
+     ],
+     "narrative": [
+      "The player and the Ithorian continue to spend time together, exploring the planet and learning more about each other's cultures.",
+      "Their bond deepens as they share laughter and stories around campfires under the stars."
+     ]
+    },
+    "stage3": {
+     "description": "Romantic Tensions",
+     "npcs": [
+      "Ithorian"
+     ],
+     "narrative": [
+      "The player starts to realize their feelings for the Ithorian are more than friendship, but is unsure if it's reciprocated.",
+      "They try to navigate their emotions, but things become complicated when they're faced with challenges in their work on the planet."
+     ]
+    },
+    "stage4": {
+     "description": "Emotional Intimacy",
+     "npcs": [
+      "Ithorian"
+     ],
+     "narrative": [
+      "The player and the Ithorian share a romantic moment, confessing their love for each other amidst the beauty of nature.",
+      "Their bond strengthens as they confront the challenges and obstacles that come with being in a relationship across different worlds."
+     ]
+    },
+    "stage5": {
+     "description": "Commitment",
+     "npcs": [
+      "Ithorian"
+     ],
+     "narrative": [
+      "The player and the Ithorian commit to each other, promising to support and love one another through thick and thin.",
+      "Their love becomes an inspiration to others on the planet, a symbol of hope in a galaxy torn apart by conflict."
+     ]
+    }
+   },
+   "romance_events": [],
+   "romance_modifiers": [],
+   "overrides": {
+    "species_approach_to_love": "Empathetic understanding",
+    "cultural_significance_of_romantic_relationships": [
+     "Emphasis on long-term commitment",
+     "Value placed on mutual respect and trust"
+    ]
+   }
+  },
+  "flavor_text": "Ithorians are masterful diplomats, often serving as mediators in intergalactic disputes. Their homeworld, Ithor, is a lush paradise renowned for its breathtaking landscapes and diverse ecosystems. As respected leaders, they strive to balance the needs of their world with those of the galaxy at large. Ithorian cities blend seamlessly into their surroundings, reflecting their deep connection to nature.",
+  "llm_guidance": {
+   "roleplay_guidance": "As an Ithorian, you value cooperation and understanding above all else. You're skilled in mediating conflicts and finding mutually beneficial solutions. Your empathetic nature allows you to connect with others from diverse backgrounds, but be cautious not to overextend yourself – your people's emphasis on harmony can sometimes lead to passivity.",
+   "narrative_hooks": [
+    "You stumble upon an ancient Ithorian artifact hidden deep within the planet's forest, holding secrets about your species' past and its connection to the Force.",
+    "A group of settlers on a distant world seek your expertise in resolving a long-standing dispute between rival factions."
+   ],
+   "social_dynamics": "Ithorians tend to be naturally inclusive and welcoming. They value deep connections with others, often forming close-knit communities. However, their strong emphasis on cooperation can sometimes lead to a reluctance to assert individual opinions or take bold action.",
+   "common_motivations": [
+    "Protecting the balance of nature on Ithor",
+    "Preserving ancient traditions and knowledge"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "wise_mentor",
+   "overrides": {
+    "ai_behavior": {
+     "personality": {
+      "traits": [
+       "calm",
+       " compassionate",
+       "diplomatic"
+      ],
+      "tone": "soothing"
+     },
+     "motivations": {
+      "primary_goal": "facilitate peaceful resolution"
+     },
+     "combat_behavior": "attempt to reason with opponents before engaging in physical conflict",
+     "social_behavior": "initiate conversations and build relationships through shared activities"
+    },
+    "relationship_tracking": {
+     "trust_levels": {
+      "low": "Ithorian shows interest, but maintains distance",
+      "medium": "Ithorian shares knowledge and experiences",
+      "high": "Ithorian opens up about personal struggles"
+     },
+     "loyalty_triggers": {
+      "showing compassion during a difficult time": null
+     }
+    },
+    "services": [
+     {
+      "name": "Healing Melody",
+      "description": "A soothing song to calm wounds and heal emotional trauma",
+      "effects": [
+       "heal",
+       "calm"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "ithorian",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/ithorian.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

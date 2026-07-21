@@ -1,0 +1,1119 @@
+{
+ "record": {
+  "force_powers_comprehensive": [
+   {
+    "id": "force_technique",
+    "name": "Force Technique",
+    "description": "You channel the light side to enhance your physical abilities, gaining a brief burst of speed or strength.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_ability_check",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next Strength or Dexterity check"
+     }
+    ]
+   },
+   {
+    "id": "give_life",
+    "name": "Give Life",
+    "description": "You touch a dying creature and stabilize them, preventing them from dying.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "stabilize_creature",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_dying",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target is stabilized and no longer dying"
+     }
+    ]
+   },
+   {
+    "id": "guidance",
+    "name": "Guidance",
+    "description": "You touch one willing creature and grant them divine guidance for a brief moment.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_ability_check",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target gains advantage on their next ability check"
+     }
+    ]
+   },
+   {
+    "id": "rebuke",
+    "name": "Rebuke",
+    "description": "You channel the light side to rebuke undead or dark side creatures, causing them to flee.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "frightened",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_undead_or_dark_side",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target must make Wisdom save or be frightened for 1 round"
+     }
+    ]
+   },
+   {
+    "id": "spare_the_dying",
+    "name": "Spare the Dying",
+    "description": "You touch a living creature that has 0 hit points and stabilize them.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "stabilize_creature",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_has_0_hp",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target is stabilized and no longer dying"
+     }
+    ]
+   },
+   {
+    "id": "valor",
+    "name": "Valor",
+    "description": "You inspire courage in yourself and nearby allies, granting temporary hit points.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Light",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_temporary_hp",
+      "value": "1d4",
+      "target_scopes": [
+       "self",
+       "allies_within_10_feet"
+      ],
+      "notes": "Grant 1d4 temporary hit points to self and nearby allies"
+     }
+    ]
+   },
+   {
+    "id": "denounce",
+    "name": "Denounce",
+    "description": "You channel the dark side to denounce a creature, causing them to feel doubt and fear.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "disadvantage_next_attack",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target has disadvantage on their next attack roll"
+     }
+    ]
+   },
+   {
+    "id": "enfeeble",
+    "name": "Enfeeble",
+    "description": "You channel the dark side to weaken a creature's physical strength.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "strength_disadvantage",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target has disadvantage on Strength-based checks and attacks"
+     }
+    ]
+   },
+   {
+    "id": "feedback",
+    "name": "Feedback",
+    "description": "You channel the dark side to create a feedback loop in a creature's mind, causing them pain.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_psychic",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 psychic damage to target"
+     }
+    ]
+   },
+   {
+    "id": "lightning_charge",
+    "name": "Lightning Charge",
+    "description": "You channel the dark side to create a small electrical charge that can shock a target.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 lightning damage to target"
+     }
+    ]
+   },
+   {
+    "id": "necrotic_charge",
+    "name": "Necrotic Charge",
+    "description": "You channel the dark side to create a small necrotic charge that can harm a target.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_necrotic",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 necrotic damage to target"
+     }
+    ]
+   },
+   {
+    "id": "necrotic_touch",
+    "name": "Necrotic Touch",
+    "description": "You touch a creature and channel the dark side to drain their life force.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_necrotic",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 necrotic damage to target"
+     }
+    ]
+   },
+   {
+    "id": "psychic_charge",
+    "name": "Psychic Charge",
+    "description": "You channel the dark side to create a small psychic charge that can harm a target's mind.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_psychic",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 psychic damage to target"
+     }
+    ]
+   },
+   {
+    "id": "seethe",
+    "name": "Seethe",
+    "description": "You channel the dark side to fuel your own rage and hatred, gaining temporary strength.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "next_attack_roll",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Advantage on your next attack roll"
+     }
+    ]
+   },
+   {
+    "id": "shock",
+    "name": "Shock",
+    "description": "You channel the dark side to create a small electrical shock that can stun a target.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Dark",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "apply_damage",
+      "value": "1d4_lightning",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Deal 1d4 lightning damage to target"
+     }
+    ]
+   },
+   {
+    "id": "affect_mind",
+    "name": "Affect Mind",
+    "description": "You subtly influence the thoughts and emotions of a creature within range, making them more receptive to your words and suggestions.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "charmed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hostile",
+        "op": "equals",
+        "value": false
+       }
+      ],
+      "notes": "Target must not be hostile toward you"
+     }
+    ]
+   },
+   {
+    "id": "battle_insight",
+    "name": "Battle Insight",
+    "description": "Through the Force, you gain a brief insight into a target's defenses, allowing you to strike with greater precision.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "next_attack_against_target",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on next attack against target"
+     }
+    ]
+   },
+   {
+    "id": "burst",
+    "name": "Burst",
+    "description": "You cause the earth to burst from beneath your feet, creating a shockwave that affects all creatures around you.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "1d4_force",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_5_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "All creatures within 5 feet take 1d4 force damage"
+     }
+    ]
+   },
+   {
+    "id": "force_disarm",
+    "name": "Force Disarm",
+    "description": "You use the Force to disarm a creature, causing them to drop a weapon or object they're holding.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "disarm_creature",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target must make Strength save or drop a held object"
+     }
+    ]
+   },
+   {
+    "id": "force_imbuement",
+    "name": "Force Imbuement",
+    "description": "You channel the Force into a weapon or object, enhancing its effectiveness.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 5,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "enhance_weapon",
+      "value": "+1_damage",
+      "target_scopes": [
+       "weapon"
+      ],
+      "notes": "Weapon deals +1 damage for the duration"
+     }
+    ]
+   },
+   {
+    "id": "force_leap",
+    "name": "Force Leap",
+    "description": "You channel the Force to enhance your jumping ability, allowing you to leap great distances.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_movement",
+      "value": "jump_distance_doubled",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Your jump distance is doubled for this turn"
+     }
+    ]
+   },
+   {
+    "id": "force_push",
+    "name": "Force Push",
+    "description": "You unleash a telekinetic burst, shoving creatures and objects away from you.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "forced_movement",
+      "value": "10_feet_away",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target is pushed 10 feet away from you"
+     }
+    ]
+   },
+   {
+    "id": "force_pull",
+    "name": "Force Pull",
+    "description": "You use the Force to pull a creature or object toward you.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "forced_movement",
+      "value": "10_feet_toward",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target is pulled 10 feet toward you"
+     }
+    ]
+   },
+   {
+    "id": "force_shunt",
+    "name": "Force Shunt",
+    "description": "You use the Force to quickly move a creature or object to a different position.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "forced_movement",
+      "value": "10_feet_any_direction",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target is moved 10 feet in any direction you choose"
+     }
+    ]
+   },
+   {
+    "id": "force_whisper",
+    "name": "Force Whisper",
+    "description": "You use the Force to communicate telepathically with a creature within range.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "telepathic_communication",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "You can communicate telepathically with the target"
+     }
+    ]
+   },
+   {
+    "id": "mind_trick",
+    "name": "Mind Trick",
+    "description": "You use the Force to influence a creature's mind, making them more likely to comply with your requests.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "charmed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_intelligence_6_or_higher",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Target must have Intelligence 6 or higher"
+     }
+    ]
+   },
+   {
+    "id": "saber_reflect",
+    "name": "Saber Reflect",
+    "description": "You use the Force to enhance your lightsaber's ability to deflect incoming attacks.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "reaction"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "enhance_deflection",
+      "value": "+2_ac",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain +2 AC against ranged attacks until your next turn"
+     }
+    ]
+   },
+   {
+    "id": "saber_throw",
+    "name": "Saber Throw",
+    "description": "You use the Force to throw your lightsaber at a target, then return it to your hand.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "ranged_attack",
+      "value": "lightsaber_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Make a ranged attack with your lightsaber"
+     }
+    ]
+   },
+   {
+    "id": "saber_ward",
+    "name": "Saber Ward",
+    "description": "You use the Force to enhance your lightsaber's defensive capabilities.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "enhance_deflection",
+      "value": "+1_ac",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Gain +1 AC for the duration"
+     }
+    ]
+   },
+   {
+    "id": "slow",
+    "name": "Slow",
+    "description": "You use the Force to slow down a creature's movements and reactions.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "slowed",
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Target's speed is halved and they have disadvantage on attacks"
+     }
+    ]
+   },
+   {
+    "id": "sound_trick",
+    "name": "Sound Trick",
+    "description": "You use the Force to create a small sound or noise at a location within range.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "create_sound",
+      "value": "small_noise",
+      "target_scopes": [
+       "point_in_space"
+      ],
+      "notes": "Create a small sound at a point within range"
+     }
+    ]
+   },
+   {
+    "id": "spirit_blade",
+    "name": "Spirit Blade",
+    "description": "You channel the Force to create a blade of pure energy that you can wield.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_weapon",
+      "value": "force_blade",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Create a melee weapon that deals force damage"
+     }
+    ]
+   },
+   {
+    "id": "turbulence",
+    "name": "Turbulence",
+    "description": "You use the Force to create a small area of turbulent air that can affect movement.",
+    "type": "Force",
+    "level": 0,
+    "alignment": "Universal",
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_difficult_terrain",
+      "value": "5_foot_radius",
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Create difficult terrain in a 5-foot radius"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "force_powers_comprehensive",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/force_powers_comprehensive.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "3b9b097ff30803c9bc60875c14fd5fa37df1900a1d17f9fa3583bfbc0f080e14",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

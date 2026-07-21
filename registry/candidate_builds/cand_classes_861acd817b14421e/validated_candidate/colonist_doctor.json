@@ -1,0 +1,249 @@
+{
+ "record": {
+  "id": "colonist_doctor",
+  "name": "Doctor",
+  "class_id": "colonist",
+  "tags": [
+   "colonist",
+   "doctor",
+   "healer",
+   "medical",
+   "wisdom_based",
+   "support",
+   "professional",
+   "compassionate",
+   "civic_leader"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "colonist_doctor_entry_3",
+    "feature_id": "colonist_doctor_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "colonist_specialization",
+    "description": "Doctors are practitioners of the medical arts, capable of stabilizing the gravely wounded, enhancing recovery, and keeping allies in peak condition under fire."
+   },
+   {
+    "node_id": "field_medic_7",
+    "feature_id": "field_medic",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "colonist_doctor_entry_3"
+    ],
+    "description": "As a bonus action, you can expend a use of your Medical Kit to restore hit points to a creature you can touch equal to 1d8 + your proficiency bonus + your Intelligence or Wisdom modifier. You can do this a number of times per short rest equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "grant_bonus_action",
+      "value": "medical_kit_heal",
+      "target_scopes": [
+       "ally",
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Bonus action heal using Medical Kit"
+     }
+    ]
+   },
+   {
+    "node_id": "trauma_specialist_11",
+    "feature_id": "trauma_specialist",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "field_medic_7"
+    ],
+    "description": "When you restore hit points to a creature, you can also end one of the following conditions affecting it: blinded, deafened, poisoned, or stunned. You can use this feature a number of times per long rest equal to your Intelligence modifier (minimum 1).",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "cleanse_minor_condition_on_heal",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "healed_by_you_this_turn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "End one listed condition on heal"
+     }
+    ]
+   },
+   {
+    "node_id": "rapid_triage_13",
+    "feature_id": "rapid_triage",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "trauma_specialist_11"
+    ],
+    "description": "When a creature within 30 feet drops to 0 HP, you can use your reaction to move up to your speed toward it without provoking opportunity attacks. If you reach it, you can immediately stabilize it as part of the reaction.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "dash_to_stabilize",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "ally_dropped_to_0hp",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Move without OAs and stabilize as reaction"
+     }
+    ]
+   },
+   {
+    "node_id": "surgical_precision_17",
+    "feature_id": "surgical_precision",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "rapid_triage_13"
+    ],
+    "description": "Your medical interventions restore the maximum possible amount when you roll healing dice. Additionally, creatures you heal gain temporary hit points equal to your proficiency bonus.",
+    "effects": [
+     {
+      "type": "modify_rule",
+      "value": "maximize_healing_dice",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [],
+      "notes": "Healing dice you roll are maximized"
+     },
+     {
+      "type": "grant_temp_hp",
+      "value": "proficiency_bonus",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "healed_by_you_this_turn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Grant temp HP equal to PB on heal"
+     }
+    ]
+   },
+   {
+    "node_id": "legendary_physician_19",
+    "feature_id": "legendary_physician",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "surgical_precision_17"
+    ],
+    "description": "For 1 minute (once per long rest), your medical mastery peaks: your healing also removes one condition from the list under Trauma Specialist, and allies you heal during this time have resistance to blaster damage until the start of your next turn.",
+    "effects": [
+     {
+      "type": "modify_rule",
+      "value": "cleanse_condition_on_each_heal",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "physician_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Each heal also cleanses a condition"
+     },
+     {
+      "type": "apply_resistance",
+      "value": "blaster_damage_until_your_next_turn",
+      "target_scopes": [
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "physician_focus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resist blaster damage until your next turn after heal"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "lightsaber_hilt",
+    "blaster_pistol"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "A deep, wide stance with feet shoulder-width apart, knees slightly bent, and weight evenly distributed between both legs.",
+    "energy_signature": "A swirling aura of blue and yellow energy that dances around the figure's body, pulsating with a gentle, rhythmic intensity."
+   },
+   "prompt_schema": {
+    "base_prompt": "A young Padawan stands confidently in a training room, surrounded by tall windows offering a stunning view of the planet's twin suns.",
+    "contextual_modifiers": [
+     "lightsaber_training",
+     "jedi_mastery"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Healers who travel to distant worlds, using their knowledge and skills to mend the physical and emotional wounds of others.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "A small medical pack or satchel slung over their shoulder",
+    "A collection of holographic medical records and diagnostic tools attached to their utility belt"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "colonist_doctor",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist.doctor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

@@ -1,0 +1,340 @@
+{
+ "record": {
+  "id": "mystic",
+  "name": "Mystic",
+  "tags": [
+   "force_user",
+   "mystic",
+   "scholar",
+   "esoteric",
+   "intelligence_based",
+   "wisdom_based",
+   "force_mastery",
+   "ancient_knowledge",
+   "seeker",
+   "versatile"
+  ],
+  "description": "Mystics are Force-wielders who seek to understand the deeper mysteries of the Force and the universe. They are scholars of ancient knowledge, masters of esoteric techniques, and seekers of hidden truths that lie beyond normal understanding.",
+  "class_features": [
+   "mystical_insight",
+   "esoteric_knowledge",
+   "force_understanding",
+   "mystical_mastery",
+   "legendary_mystic"
+  ],
+  "proficiencies": {
+   "armor": [
+    "light"
+   ],
+   "weapons": [
+    "lightsabers",
+    "blaster_pistols",
+    "simple_weapons"
+   ],
+   "tools": [
+    "meditation_kit",
+    "force_imbued_items",
+    "mystical_artifacts"
+   ],
+   "saving_throws": [
+    "intelligence",
+    "wisdom"
+   ],
+   "skills": {
+    "choose": 2,
+    "from": [
+     "insight",
+     "investigation",
+     "lore",
+     "perception",
+     "persuasion",
+     "survival"
+    ]
+   }
+  },
+  "starting_equipment": [
+   "A lightsaber",
+   "A blaster pistol and 50 rounds",
+   "Meditation kit",
+   "Mystical artifacts",
+   "Explorer's pack",
+   "50 credits"
+  ],
+  "hit_die": 8,
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Jedi Robes",
+    "Lightsaber Hilt (empty)",
+    "Mystical Tomes"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Mystic's Focus: Standing with feet shoulder-width apart, hands held out to the sides as if channeling the Force.",
+    "energy_signature": "Luminous aura surrounding the Mystic, with wisps of dark or light energy swirling around them like a vortex."
+   },
+   "prompt_schema": {
+    "base_prompt": "A mysterious figure stands alone on a windswept dune, surrounded by an otherworldly glow. What is their role in the galaxy's unfolding drama?",
+    "contextual_modifiers": [
+     "Show the Mystic using their abilities to sense and manipulate the Force",
+     "Depict the Mystic wielding a staff or focusing crystal instead of a lightsaber",
+     "Include a subtle hint at the Mystic's unknown past or hidden agenda"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "The Mystic's investigations into ancient mysteries attract the attention of a rival who seeks to claim their research for themselves.",
+    "escalation": "As the Mystic uncovers more secrets, their rival becomes increasingly aggressive in their pursuit, resorting to sabotage and intimidation to steal their discoveries.",
+    "confrontation": "A final showdown between the Mystic and their rival is inevitable, with the fate of the ancient knowledge hanging in the balance."
+   },
+   "resolution_paths": {
+    "victory": "The Mystic emerges victorious, securing their place as a leading authority on the Force. Their research is hailed as a breakthrough, but their rivalry has left them wary of future challengers.",
+    "redemption": "The Mystic's rival reveals a hidden motivation behind their actions: to prevent a powerful force from misusing the ancient knowledge. The two former rivals now work together to ensure its safekeeping.",
+    "escape": "The Mystic flees, leaving their research and reputation behind. Though they may have saved themselves, their legacy is tarnished by the controversy surrounding their departure."
+   },
+   "conflict_triggers": [
+    "The Mystic's pursuit of ancient secrets",
+    "Their rejection of conventional wisdom",
+    "The power struggles within the Force community"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "High",
+   "romance_progression": {
+    "stage1": "A chance encounter at a research conference sparks curiosity and a desire for intellectual connection.",
+    "stage2": "As the Mystic delves deeper into their research, they find themselves working closely with their partner on various projects.",
+    "stage3": "The couple faces challenges in balancing their relationship with the demands of their work. Jealousy and possessiveness begin to creep in.",
+    "stage4": "A rival suitor emerges, seeking to sabotage the Mystic's relationships as well as their research. The couple must navigate this new obstacle together.",
+    "stage5": "Ultimately, the Mystic's commitment to their research and their partner is put to the test. They must choose between the two loves of their life."
+   },
+   "lifestyle_challenges": [
+    "Long hours spent researching",
+    "Constant travel for conferences and fieldwork",
+    "Difficulty sharing personal feelings due to focus on intellectual pursuits"
+   ]
+  },
+  "flavor_text": "A Mystic's power comes from their ability to tap into the mysteries of the universe, weaving ancient knowledge and forgotten lore into a tapestry of understanding.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "As a Mystic, your character seeks to understand the mysteries of the Force and the universe. They may be scholars of ancient knowledge, masters of esoteric techniques, or seekers of hidden truths that lie beyond normal understanding.\n",
+   "narrative_hooks": [
+    "Your character stumbles upon an ancient text that hints at a long-lost secret of the Force.",
+    "You sense a disturbance in the Force, and must navigate its cause to maintain balance.",
+    "A mysterious figure approaches you with a cryptic message, seeking your expertise."
+   ],
+   "social_dynamics": "As a Mystic, your character is likely to be seen as an expert or authority on matters of the Force. They may attract followers who seek guidance, or be approached by those in need of their unique skills.\n",
+   "common_motivations": [
+    "Seeking knowledge and understanding",
+    "Maintaining balance within the Force",
+    "Uncovering hidden secrets"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "Curious",
+      "Analytical"
+     ],
+     "tone": "Enthusiastic"
+    },
+    "motivations": [
+     "Learn new knowledge",
+     "Protect allies from threats to balance"
+    ],
+    "combat_behavior": "Defend allies while seeking opportunities to understand and counter enemy tactics.",
+    "social_behavior": "Engage in respectful dialogue, using persuasion to resolve conflicts peacefully when possible."
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "default": 20,
+     "increase": 5,
+     "decrease": 10
+    },
+    "loyalty_triggers": [
+     "A Mystic's ally is gravely injured and requires their assistance.",
+     "The party uncovers a powerful secret related to the Force, and a Mystic provides crucial insight."
+    ]
+   },
+   "services": [
+    "Offer expert analysis on Force-related phenomena",
+    "Provide guidance on meditation and contemplation practices",
+    "Translate ancient texts or cryptic messages for allies"
+   ]
+  },
+  "class_identity_profile": {
+   "core_fantasy": "Mystic (Force-wielder, Seeker of Truth)",
+   "key_attributes": [
+    "Force",
+    "Intelligence"
+   ],
+   "iconic_gear": [
+    "Lightsaber Crystal",
+    "Ancient Tomes"
+   ],
+   "role_in_galaxy": "Seekers of Hidden Truths",
+   "famous_exemplars": [
+    "Count Dooku",
+    "Qui-Gon Jinn"
+   ],
+   "species_synergies": [
+    {
+     "species": "Zabrak",
+     "narrative": "Their connection to the Living Force enhances their mystical abilities."
+    },
+    {
+     "species": "Trandoshan",
+     "narrative": "Their keen senses and stealth capabilities make them excellent spies for the Mystic order."
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "force_sense_1",
+    "feature_id": "force_sense",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Allows the Mystic to sense the presence and movements of creatures within a certain range. As they progress in their studies, they become more adept at sensing subtle energies and connections.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ForceSense Range",
+      "notes": "Increases range by 1 meter at level 1."
+     }
+    ]
+   },
+   {
+    "node_id": "mystic_initiate_1",
+    "feature_id": "mystic_initiate",
+    "level_requirement": 1,
+    "type": "core",
+    "description": "Grants access to the mystical practices and traditions of the Mystic's chosen path, allowing them to tap into the power of the Force.",
+    "effects": [
+     {
+      "type": "grant_proficiency",
+      "value": "Mystic Traditions"
+     }
+    ]
+   },
+   {
+    "node_id": "force_awareness_2",
+    "feature_id": "force_awareness",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Enhances the Mystic's awareness of their surroundings, granting them a heightened sense of perception and connection to the Force.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Perception"
+     }
+    ]
+   },
+   {
+    "node_id": "mystic_focus_2",
+    "feature_id": "mystic_focus",
+    "level_requirement": 2,
+    "type": "core",
+    "description": "Allows the Mystic to focus their mind and concentrate on specific energies or entities, allowing them to better understand and manipulate the Force.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Concentration"
+     }
+    ]
+   },
+   {
+    "node_id": "force_connection_3",
+    "feature_id": "force_connection",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Enhances the Mystic's ability to connect with other beings and entities, granting them a deeper understanding of the interconnectedness of all things.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Connection"
+     }
+    ]
+   },
+   {
+    "node_id": "force_empowerment_5",
+    "feature_id": "force_empowerment",
+    "level_requirement": 5,
+    "type": "core",
+    "description": "Grants the Mystic increased power and energy when wielding the Force, allowing them to perform more complex and intricate actions.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Power"
+     }
+    ]
+   },
+   {
+    "node_id": "force_mastery_14",
+    "feature_id": "force_mastery",
+    "level_requirement": 14,
+    "type": "core",
+    "description": "Grants the Mystic mastery over their connection to the Force, allowing them to perform highly complex and intricate actions with ease.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Mastery"
+     }
+    ]
+   },
+   {
+    "node_id": "force_transcendence_17",
+    "feature_id": "force_transcendence",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "Allows the Mystic to transcend their physical form and connect directly with the source of all energy, granting them unparalleled power and understanding.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "Transcendence"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "mystic",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/mystic.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

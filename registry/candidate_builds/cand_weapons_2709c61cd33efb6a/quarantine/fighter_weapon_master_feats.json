@@ -1,0 +1,230 @@
+{
+ "record": {
+  "feats": [
+   {
+    "id": "feat_weapon_master_versatile_techniques",
+    "name": "Versatile Techniques",
+    "description": "Your mastery of multiple weapon styles allows you to adapt to any combat situation. You can use your bonus action to switch between weapon types, gaining advantage on attack rolls with the new weapon for the rest of your turn.",
+    "prerequisites": [
+     {
+      "class": "Fighter"
+     },
+     {
+      "subclass": "Weapon Master"
+     },
+     {
+      "level": 5
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "weapon_switch",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "switching_weapons",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Switch weapons and gain advantage on attacks for the turn"
+     }
+    ]
+   },
+   {
+    "id": "feat_weapon_master_tactical_superiority",
+    "name": "Tactical Superiority",
+    "description": "Your understanding of weapon tactics allows you to exploit weaknesses in your enemies' defenses. You can use your action to analyze an opponent's fighting style, gaining advantage on attack rolls against them for the next minute.",
+    "prerequisites": [
+     {
+      "class": "Fighter"
+     },
+     {
+      "subclass": "Weapon Master"
+     },
+     {
+      "level": 7
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_analysis",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "analyzing_opponent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on attacks against analyzed opponent for 1 minute"
+     }
+    ]
+   },
+   {
+    "id": "feat_weapon_master_weapon_specialization",
+    "name": "Weapon Specialization",
+    "description": "Your expertise with specific weapon types has reached new heights. Choose two weapon types. You have advantage on attack rolls with these weapons, and you can use your reaction to make an additional attack with one of these weapons when you hit.",
+    "prerequisites": [
+     {
+      "class": "Fighter"
+     },
+     {
+      "subclass": "Weapon Master"
+     },
+     {
+      "level": 9
+     }
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "specialized_weapon_attacks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "using_specialized_weapon",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on attacks with two specialized weapon types"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "specialized_counter_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "specialized_weapon_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Make additional attack with specialized weapon on hit"
+     }
+    ]
+   },
+   {
+    "id": "feat_weapon_master_master_of_arms",
+    "name": "Master of Arms",
+    "description": "Your mastery of weapons has become legendary. You can use your action to enter a state of perfect weapon control, gaining advantage on all weapon attack rolls and the ability to use any weapon as if you were proficient with it for the next minute.",
+    "prerequisites": [
+     {
+      "class": "Fighter"
+     },
+     {
+      "subclass": "Weapon Master"
+     },
+     {
+      "level": 11
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "master_of_arms_state",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "entering_mastery",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain advantage on all weapon attacks and proficiency with any weapon for 1 minute"
+     }
+    ]
+   },
+   {
+    "id": "feat_weapon_master_legendary_weapon_master",
+    "name": "Legendary Weapon Master",
+    "description": "Your weapon mastery has reached the pinnacle of martial achievement. Once per long rest, you can use your action to perform a legendary weapon demonstration, making up to four weapon attacks with advantage, each dealing additional damage equal to your Fighter level.",
+    "prerequisites": [
+     {
+      "class": "Fighter"
+     },
+     {
+      "subclass": "Weapon Master"
+     },
+     {
+      "level": 13
+     }
+    ],
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "legendary_weapon_demonstration",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "long_rest_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Once per long rest, make four weapon attacks with advantage and bonus damage"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "fighter_weapon_master_feats",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/feats/fighter_weapon_master_feats.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "26c0a384ed8788e376c120d21cec48dca4dbaddc2f9eec3e89174ef274b7a2fc",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "subclass without parent class reference"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

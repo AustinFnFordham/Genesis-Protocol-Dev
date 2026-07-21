@@ -1,0 +1,218 @@
+{
+ "record": {
+  "id": "power_trip_attack",
+  "name": "Trip Attack",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "trip",
+   "prone",
+   "tactical",
+   "control",
+   "superiority",
+   "martial"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Basic combat technique for knocking enemies prone"
+   }
+  },
+  "narrative": "You strike at an enemy's legs or balance point, sending them crashing to the ground. The power manifests as precise low strike that sweeps feet or targets knees, your opponent tumbling helplessly as gravity becomes weapon.",
+  "flavor_text": "\"The bigger they are, the harder they fall.\" - Every Fighter",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "low strike targeting legs or balance"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "timing strike to exploit enemy stance"
+   }
+  ],
+  "casting_time": "Special (part of attack)",
+  "range": "Melee",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You attempt to knock an enemy prone with your attack.",
+   "mechanics": [
+    {
+     "type": "apply_prone",
+     "value": {
+      "save_type": "strength",
+      "dc": "8_plus_strength_plus_proficiency"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "conditions": [
+      {
+       "key": "attack_hits",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Target must succeed on Strength save or be knocked prone if attack hits"
+    },
+    {
+     "type": "add_damage",
+     "value": {
+      "dice": "superiority_die"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Add superiority die to attack damage"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "fighter",
+    "narrative": "The Fighter's combat expertise makes their trips devastatingly effective. They read enemy stances perfectly, knowing exactly when weight distribution creates vulnerability—turning balance into liability through superior technique.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_dc",
+      "value": {
+       "bonus": 2,
+       "stat": "save_dc"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Fighters increase trip save DC by 2 from perfect technique."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human adaptability allows them to trip enemies of any size or anatomy. They find creative ways to unbalance foes whether bipedal or not, their innovative approach making conventional trips work against unconventional targets.",
+    "mechanical_benefit": [
+     {
+      "type": "ignore_size_restriction",
+      "value": {
+       "effect": "trip_huge_and_smaller"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans can trip creatures up to Huge size instead of just Large."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance teaches Trip Attack as equalizer against superior foes. Their fighters use terrain, environment, and creative thinking to topple enemies that outmatch them through strength—turning advantage into disadvantage.",
+    "mechanical_benefit": [
+     {
+      "type": "difficult_terrain",
+      "value": {
+       "radius": {
+        "distance": 5,
+        "unit": "feet"
+       },
+       "duration": "1_round"
+      },
+      "target_scopes": [
+       "area_around_target"
+      ],
+      "notes": "Rebel trips also create difficult terrain around target from debris kicked up."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the precise low strike targeting legs or balance point, enemy's feet swept out from under them. Show them crashing to the ground, the impact jarring, their prone position creating tactical disadvantage.",
+   "tactical_notes": "Trip Attack knocks target prone on failed Strength save when attack hits, adding superiority die to damage. Prone condition grants advantage to melee attackers and disadvantage on target's attacks. Perfect for setting up allies or controlling dangerous enemies. Uses superiority die.",
+   "narrative_hooks": [
+    "Trip sends dangerous enemy crashing at perfect moment",
+    "The technique reveals character's martial training style",
+    "Prone enemy creates opening for devastating follow-up"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a fighter executing trip attack. A precise low strike sweeps an enemy's feet out from under them, sending them crashing to the ground. The enemy falls in mid-motion, caught off-balance by superior technique. The scene captures martial expertise creating tactical advantage.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/trip_attack.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_trip_attack",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_trip_attack.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

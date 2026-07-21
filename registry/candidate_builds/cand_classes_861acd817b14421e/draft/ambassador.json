@@ -1,0 +1,223 @@
+{
+ "record": {
+  "id": "ambassador",
+  "name": "Ambassador",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "ambassador",
+   "negotiator",
+   "charisma_based",
+   "persuasive",
+   "peaceful",
+   "social_specialist",
+   "political",
+   "formal"
+  ],
+  "description": "Ambassadors are formal diplomatic representatives who serve as the face of their faction or organization in interplanetary relations. They excel at formal negotiations, protocol, and representing their people's interests on the galactic stage.",
+  "specialization_features": [
+   "formal_protocol",
+   "diplomatic_immunity",
+   "interplanetary_relations",
+   "ambassador_mastery",
+   "legendary_ambassador"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Ambassadors are formal diplomatic representatives who serve as the face of their faction or organization in interplanetary relations.",
+   "role_in_group": "Social Specialist",
+   "visual_signals": [
+    "Diplomatic Crest",
+    "Galactic Passport"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "level1",
+    "feature_id": "Ambassdor's Training",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "The Ambassador selects a minor aspect of diplomacy to focus on.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "diplomatic_acumen",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": "equals_or_greater_than",
+        "value": 3
+       }
+      ],
+      "notes": "During intense negotiations, you gain a subtle insight into your opponent's motivations. You develop a keen sense of how to manipulate their perceptions, granting you proficiency in one type of tool, art supply, or musical instrument."
+     }
+    ]
+   },
+   {
+    "node_id": "level3",
+    "feature_id": "Diplomatic Immunity",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "The Ambassador gains immunity to certain forms of persuasion, manipulation, and coercion.",
+    "effects": [
+     {
+      "type": "feature",
+      "value": "diplomatic_shield",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_type",
+        "op": "equals",
+        "value": "cha"
+       }
+      ],
+      "notes": "When an opponent attempts to charm or intimidate you, their words fall flat against your diplomatic shield. You gain advantage on saving throws against being charmed or intimidated, and are immune to any effects that would otherwise charm or intimidate you."
+     }
+    ]
+   },
+   {
+    "node_id": "level7",
+    "feature_id": "Galactic Network",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "The Ambassador expands their network of influential contacts across the galaxy.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "stellar_connection_established",
+      "target_scopes": [
+       "self",
+       "ally"
+      ],
+      "conditions": [
+       {
+        "key": "level",
+        "op": "greater_than_or_equal_to",
+        "value": 10
+       }
+      ],
+      "notes": "Upon reaching level 10, your Ambassador's reputation precedes you. You receive a cryptic message from an anonymous patron, detailing the location and contact information of a high-ranking government official who may be willing to aid or compromise your mission."
+     }
+    ]
+   },
+   {
+    "node_id": "level11",
+    "feature_id": "Protocol Mastery",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "The Ambassador gains expertise in navigating the intricacies of galactic protocol.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "diplomatic_flow (snake_case)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_scores",
+        "op": "gte",
+        "value": "charisma"
+       }
+      ],
+      "notes": "When interacting with a creature that can understand your language, you instinctively adapt to their cultural nuances. You gain proficiency in the creature's language and can use your knowledge of etiquette to navigate complex social situations, granting you advantage on all Charisma checks against them for 1 minute."
+     }
+    ]
+   },
+   {
+    "node_id": "level15",
+    "feature_id": "Negotiation Mastery",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "The Ambassador becomes a master negotiator, able to extract concessions from even the most recalcitrant parties.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "diplomatic_sway",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "class_feature",
+        "op": "equals",
+        "value": "Negotiation Mastery"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "Ambassador"
+       }
+      ],
+      "notes": "You raise your voice in a dramatic flourish, using your charisma to subtly manipulate the emotions of those around you. Enemies become uncertain and demoralized, while allies gain confidence and focus."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Diplomatic Crest",
+    "Faction Emblem"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a formal, yet assertive stance with feet shoulder-width apart and hands clasped behind the back.",
+    "energy_signature": "Surrounding aura of calm, blue-white energy that pulses with a gentle, soothing rhythm."
+   },
+   "prompt_schema": {
+    "base_prompt": "A dignified ambassador from {faction} standing in front of a sleek, silver diplomatic vessel with a starscapes background.",
+    "contextual_modifiers": [
+     "Include a subtle, holographic display on the diplomat's wrist showcasing real-time data on interplanetary relations and trade agreements.",
+     "Add a faint, shimmering effect to the ambassador's attire to convey their importance and status within their organization."
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "ambassador",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_ambassador.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

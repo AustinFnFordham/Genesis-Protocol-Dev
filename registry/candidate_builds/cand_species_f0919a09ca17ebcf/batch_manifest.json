@@ -1,0 +1,94 @@
+{
+ "forge_batch": {
+  "job_id": "job_cand_species_f0919a09ca17ebcf",
+  "domain": "species",
+  "source_query": "SELECT DISTINCT source_pointer FROM entity_candidates WHERE source_pointer LIKE '%species%' AND source_pointer LIKE '%.yml'",
+  "source_candidate_ids": [
+   "SW5e_Data_Hub/forge_v3/backend/features/species/droid/astromech_interface.yml",
+   "SW5e_Data_Hub/forge_v3/backend/features/species/droid/binary_communication.yml",
+   "SW5e_Data_Hub/forge_v3/backend/features/species/droid/droid_resilience.yml",
+   "SW5e_Data_Hub/forge_v3/backend/features/species/droid/environmental_adaptation.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/SPECIES_REGISTRY.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/aqualish.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/besalisk.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/bothan.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/cathar.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/cerean.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/chiss.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/clawdite.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/droid.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/droid_player_character.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/droid_scout.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/droid_type_iv_protocol.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/duros.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/echani.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/gank.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/human.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/human_alderaanian.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/human_chandrilan.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/human_corellian.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/human_lothal.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/ithorian.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/kel_dor.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/miraluka.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/mon_calamari.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/nautolan.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/quarren.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/rodian.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/sith_pureblood.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/togruta.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/togruta_nightsister.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/trandoshan.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/twilek.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/weequay.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/wookiee.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/zabrak.yml",
+   "SW5e_Data_Hub/forge_v3/backend/species/zabrak_dathomirian.yml",
+   "SW5e_Data_Hub/forge_v3/backend/wip/species/species_unknown.yml",
+   "SW5e_Data_Hub/source_data/features/species/droid/astromech_interface.yml",
+   "SW5e_Data_Hub/source_data/features/species/droid/binary_communication.yml",
+   "SW5e_Data_Hub/source_data/features/species/droid/droid_resilience.yml",
+   "SW5e_Data_Hub/source_data/features/species/droid/environmental_adaptation.yml",
+   "SW5e_Data_Hub/source_data/species/human.yml",
+   "SW5e_Data_Hub/source_data/species/wookiee.yml"
+  ],
+  "input_hash": "f0919a09ca17ebcf",
+  "forge_version": "forge_worker_v1.0",
+  "schema_versions": [
+   "schema-lite-v1 (strict schemas at promotion)"
+  ],
+  "validation_required": {
+   "strict_parse": true,
+   "duplicate_detection": true,
+   "schema": true,
+   "semantic": true,
+   "mechanical": true,
+   "references": true,
+   "cardinality": true,
+   "articles_of_creation": true,
+   "atomic": true,
+   "soul": true,
+   "chaos": true
+  },
+  "promotion": {
+   "automatic": false,
+   "allowed_outputs": [
+    "draft",
+    "quarantine",
+    "validated_candidate"
+   ]
+  },
+  "resume": {
+   "checkpoint_every": 10,
+   "idempotent": true,
+   "restart_safe": true
+  }
+ },
+ "results_summary": {
+  "processed": 47,
+  "passed": 0,
+  "draft": 46,
+  "quarantined": 1,
+  "failed": 0
+ }
+}

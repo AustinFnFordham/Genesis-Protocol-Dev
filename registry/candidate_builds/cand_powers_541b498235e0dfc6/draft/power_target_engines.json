@@ -1,0 +1,204 @@
+{
+ "record": {
+  "id": "power_target_engines",
+  "name": "Target Engines",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "starship",
+   "targeting",
+   "systems_damage",
+   "disable",
+   "vehicular",
+   "tactical"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Precision targeting for vehicle propulsion systems"
+   }
+  },
+  "narrative": "You target a vehicle's propulsion systems with surgical precision, your attacks focusing on engines and thrusters to cripple mobility. The power manifests as targeting computer highlighting engine weak points, your shots finding fuel lines, reactor cores, and thruster assemblies with devastating accuracy.",
+  "flavor_text": "\"Cant run if you cant move.\" - Starfighter Ace",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "designating engine systems on targeting computer"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating optimal shots for mobility kill"
+   }
+  ],
+  "casting_time": "1 Bonus Action",
+  "range": "Varies (weapon range)",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You focus your next attack on a vehicle's propulsion systems.",
+   "mechanics": [
+    {
+     "type": "targeted_attack",
+     "value": {
+      "target_system": "engines",
+      "special_effect": "reduce_speed"
+     },
+     "target_scopes": [
+      "vehicle"
+     ],
+     "notes": "Next successful attack reduces target vehicle's speed by half"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer's understanding of propulsion systems makes their engine targeting devastatingly effective. They know exactly which components to hit for catastrophic failure—targeting fuel injectors for explosions, coolant systems for meltdown.",
+    "mechanical_benefit": [
+     {
+      "type": "critical_damage",
+      "value": {
+       "effect": "disable_engines_on_crit"
+      },
+      "target_scopes": [
+       "vehicle"
+      ],
+      "notes": "Engineers disable engines completely on critical hits against vehicles."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human tactical creativity transforms engine targeting into strategic advantage. They don't just cripple mobility—they force vehicles into predictable trajectories, create collision hazards, turn disabled ships into obstacles for their allies.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_effect",
+      "value": {
+       "duration": {
+        "amount": 3,
+        "unit": "rounds"
+       }
+      },
+      "target_scopes": [
+       "vehicle"
+      ],
+      "notes": "Human engine damage persists for 3 rounds instead of being repairable."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected engine targeting for asymmetric starfighter combat. Their pilots can cripple Imperial capital ships' mobility, turning invincible warships into floating targets through precision strikes on vulnerable propulsion.",
+    "mechanical_benefit": [
+     {
+      "type": "cascade_failure",
+      "value": {
+       "effect": "damage_adjacent_systems"
+      },
+      "target_scopes": [
+       "vehicle"
+      ],
+      "notes": "Rebel engine hits also damage adjacent systems (power or weapons)."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe targeting computer highlighting engine systems in red, optimal firing solutions calculating. Show shots finding weak points—fuel lines rupturing, thrusters exploding, the vehicle's movement becoming sluggish as propulsion fails.",
+   "tactical_notes": "Target Engines reduces vehicle speed by half on next successful hit for 1 round, costing 1 Tech Point. Essential for vehicular combat where mobility equals survival. The bonus action timing allows combining with normal attacks. Perfect for disabling fleeing enemies.",
+   "narrative_hooks": [
+    "Engine targeting cripples fleeing enemy, preventing escape",
+    "Disabled starfighter crashes, creating moral question about pilot survival",
+    "Precision shot reveals character's expertise in vehicular combat"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a starfighter targeting another ship's engines. Targeting computer highlights propulsion systems in red, showing optimal firing solutions. A precise shot strikes the engine, causing explosions and disabling thrust as the target ship loses mobility. The scene captures tactical precision in vehicular combat.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/target_engines.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_target_engines",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_target_engines.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

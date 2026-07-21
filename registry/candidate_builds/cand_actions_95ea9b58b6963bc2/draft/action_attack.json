@@ -1,0 +1,197 @@
+{
+ "record": {
+  "action_process": "Choose a target within your weapon's range, make an attack roll using your weapon's attack bonus, and if successful, roll damage dice to determine the harm inflicted.",
+  "action_type": "Combat",
+  "connections": [
+   {
+    "mechanical_benefit": "Guardians gain additional attack options and defensive capabilities",
+    "narrative": "Jedi Guardians are masters of lightsaber combat, turning the basic attack into a flowing dance of defense and offense.",
+    "relationship": "Iconic To",
+    "target_id": "class_guardian",
+    "target_type": "Class"
+   },
+   {
+    "mechanical_benefit": "Bounty Hunters gain advantage on attack rolls against marked targets",
+    "narrative": "Bounty Hunters specialize in precise, efficient attacks designed to quickly neutralize targets.",
+    "relationship": "Enhanced By",
+    "target_id": "class_bounty_hunter",
+    "target_type": "Class"
+   },
+   {
+    "mechanical_benefit": "Mandalorians gain proficiency with all weapons",
+    "narrative": "Mandalorian culture places great emphasis on martial prowess, with attack techniques passed down through generations.",
+    "relationship": "Cultural Mastery",
+    "target_id": "species_mandalorian",
+    "target_type": "Species"
+   },
+   {
+    "mechanical_benefit": "Jedi gain access to special defensive attack techniques",
+    "narrative": "The Jedi Order teaches that attack should only be used in defense of life and justice, never in anger or aggression.",
+    "relationship": "Restricted By",
+    "target_id": "faction_jedi_order",
+    "target_type": "Faction"
+   }
+  ],
+  "cost": {
+   "type": "action",
+   "value": 1
+  },
+  "cultural_significance": "Different cultures view attack differently - Jedi see it as a last resort, Mandalorians as honorable combat, bounty hunters as business, and criminals as survival. The method and style of attack often reveals more about the attacker than the target.",
+  "description": "Make a weapon attack against a target within range. Roll to hit, then roll damage if successful.",
+  "effects": [
+   {
+    "effect": "make_attack_roll",
+    "parameters": {
+     "attack_bonus": "weapon_attack_bonus",
+     "damage": {
+      "dice_count": 1,
+      "dice_type": 8
+     },
+     "damage_type": "weapon_damage_type"
+    }
+   }
+  ],
+  "era": "All_Eras",
+  "famous_instances": [
+   "The Battle of Geonosis - first major battle of the Clone Wars",
+   "The Siege of Mandalore - Ahsoka's final confrontation with Maul",
+   "The Battle of Endor - the final assault on the Death Star II"
+  ],
+  "famous_users": [
+   "Obi-Wan Kenobi",
+   "Boba Fett",
+   "Darth Vader",
+   "Ahsoka Tano",
+   "Din Djarin"
+  ],
+  "flavor_text": "'The best defense is a swift and decisive offense.' - Ancient Mandalorian proverb",
+  "iconic_examples": [
+   "Obi-Wan Kenobi's defensive stance against Darth Vader",
+   "Boba Fett's precise blaster shots",
+   "Mandalorian warriors' coordinated assault tactics",
+   "Jedi lightsaber combat forms"
+  ],
+  "id": "action_attack",
+  "image_generation": {
+   "base_prompt": "A dynamic action scene showing a character in mid-attack, weapon drawn and ready to strike. The composition captures the intensity and precision of combat, with dramatic lighting highlighting the moment of action. The scene conveys the character's training and combat style through their stance and weapon choice.",
+   "contextual_modifiers": [
+    {
+     "modifier_text": "The character is shown in a combat stance, weapon at the ready, reflecting their training and combat philosophy.",
+     "target_type": "Character_Portrait"
+    },
+    {
+     "modifier_text": "The attack is part of a larger battle, with multiple combatants and environmental hazards adding complexity to the scene.",
+     "target_type": "Combat_Scene"
+    },
+    {
+     "modifier_text": "The attack takes place in a distinctive environment that influences the combat style and tactics used.",
+     "target_type": "Location"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "adventure_seeds": [
+    "A master of a unique attack style seeks an apprentice",
+    "A forbidden attack technique has resurfaced, causing concern among authorities",
+    "A tournament tests different attack philosophies and methods"
+   ],
+   "character_connections": [
+    "Characters may have personal reasons for choosing certain attack methods",
+    "Past experiences with violence can affect how characters approach combat",
+    "Cultural background influences attack preferences and effectiveness"
+   ],
+   "cultural_impact": "Attack methods and philosophies vary greatly across the galaxy, from the disciplined forms of the Jedi to the brutal efficiency of criminal organizations. These differences often lead to cultural misunderstandings and conflicts.",
+   "narrative_hooks": [
+    "A character's attack style reveals their training and background",
+    "The choice of weapon and attack method can create interesting social dynamics",
+    "Different cultures may react differently to certain types of attacks"
+   ],
+   "tactical_significance": "The choice of when and how to attack is often more important than the attack itself. Timing, positioning, and understanding your opponent's capabilities are crucial for success.",
+   "typical_usage": [
+    "Self-defense in dangerous situations",
+    "Honorable combat in duels and tournaments",
+    "Military operations and warfare",
+    "Criminal activities and bounty hunting"
+   ]
+  },
+  "mood": "Intense and focused, representing the concentration and skill required for effective combat",
+  "name": "Attack",
+  "narrative": "The fundamental act of violence in the galaxy - whether with blaster, blade, or bare hands. Every sentient being learns to defend themselves, but true masters turn attack into an art form. From the precise strikes of a Jedi Guardian to the brutal efficiency of a Mandalorian warrior, the way one attacks reveals their training, culture, and philosophy.",
+  "narrative_outcomes": [
+   "advantage_01",
+   "advantage_02",
+   "advantage_03",
+   "threat_01",
+   "threat_02",
+   "threat_03"
+  ],
+  "origin_story": "The concept of attack predates recorded history, evolving from basic survival instincts into sophisticated martial arts and combat techniques across countless species and cultures.",
+  "tags": [
+   "combat",
+   "basic",
+   "weapon",
+   "offensive",
+   "universal"
+  ],
+  "target": {
+   "conditions": [
+    "must have weapon or unarmed attack available"
+   ],
+   "range": 5,
+   "type": "creature"
+  },
+  "themes": [
+   "violence",
+   "self-defense",
+   "martial prowess",
+   "honor",
+   "survival"
+  ],
+  "ui": {
+   "icon": "/assets/icons/actions/attack.svg",
+   "image": "/assets/images/actions/attack_action.png"
+  }
+ },
+ "validation": {
+  "candidate_urid": "action_attack",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/actions/attack_action.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

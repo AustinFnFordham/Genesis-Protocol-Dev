@@ -1,0 +1,211 @@
+{
+ "record": {
+  "id": "power_cryogenic_wave",
+  "name": "Cryogenic Wave",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 1,
+  "tags": [
+   "ice",
+   "cold",
+   "cryogenic",
+   "wave",
+   "area_effect",
+   "line",
+   "freezing"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Advanced cryogenic wave projector technology"
+   }
+  },
+  "narrative": "You unleash a sweeping wave of cryogenic energy that flash-freezes everything in its path, leaving a trail of ice and frost. The power manifests as a horizontal avalanche of supercooled particles racing forward, the temperature dropping so rapidly that the air itself crystallizes into a deadly frozen barrier.",
+  "flavor_text": "\"Winter is coming... at 60 feet per second.\" - Arctic Trooper",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "sweeping gesture with cryo-emitter creating wave pattern"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating wave propagation for maximum coverage"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You create a wave of cryogenic energy that deals cold damage to all creatures in a line.",
+   "mechanics": [
+    {
+     "type": "line_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "cold"
+     },
+     "target_scopes": [
+      "line"
+     ],
+     "notes": "Deal 2d4 cold damage to all creatures in a 60-foot line"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "Engineers optimize the wave's thermodynamic properties, using advanced coolant dispersal patterns and pressure differentials to create a perfectly uniform freeze-front that maximizes area coverage.",
+    "mechanical_benefit": [
+     {
+      "type": "wider_wave",
+      "value": {
+       "width": {
+        "distance": 10,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "area"
+      ],
+      "notes": "Engineer's wave is 10 feet wide instead of 5 feet."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human battlefield innovation transforms Cryogenic Wave into a versatile tool, using environmental factors like humidity and air pressure to amplify the freezing effect beyond standard parameters.",
+    "mechanical_benefit": [
+     {
+      "type": "ice_trail",
+      "value": {
+       "terrain_type": "difficult"
+      },
+      "duration": {
+       "amount": 10,
+       "unit": "minutes"
+      },
+      "target_scopes": [
+       "ground"
+      ],
+      "notes": "Human wave leaves a trail of ice (difficult terrain) for 10 minutes."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "Rebel technicians have repurposed starship coolant systems into portable cryo-weapons, their improvised modifications creating wider wave patterns perfect for crowd control against Imperial forces.",
+    "mechanical_benefit": [
+     {
+      "type": "knockback",
+      "value": {
+       "distance": 5,
+       "unit": "feet"
+      },
+      "target_scopes": [
+       "enemies_in_line"
+      ],
+      "notes": "Rebel wave pushes Small/Medium creatures 5 feet back."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the wave as a visible wall of freezing air and ice particles rushing forward. Everything in its path becomes coated in frost - armor cracks from thermal shock, weapons become brittle, and organic tissue suffers immediate frostbite. The ground is left covered in ice.",
+   "tactical_notes": "Cryogenic Wave excels at hitting multiple enemies in a line. The 60-foot range and 2d4 damage affects everyone in the path. Position yourself to catch maximum targets. Remember it hits everything in the line - allies too. Great for corridor fights or lined-up enemies.",
+   "narrative_hooks": [
+    "The wave flash-freezes a water-filled corridor, trapping enemies in ice",
+    "A desperate defender uses it to create an ice wall by freezing falling debris",
+    "The cold wave reveals invisible enemies as frost outlines their forms"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a massive wave of cryogenic energy sweeping across a battlefield. The wave appears as a translucent wall of ice crystals and frozen air, leaving everything in its path covered in thick frost. Multiple enemies are caught mid-freeze, their forms crystallizing as the absolute zero temperatures wash over them. The ground cracks and ice spreads in the wave's wake.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/cryogenic_wave.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_cryogenic_wave",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_cryogenic_wave.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

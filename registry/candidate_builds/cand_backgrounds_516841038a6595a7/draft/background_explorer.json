@@ -1,0 +1,159 @@
+{
+ "record": {
+  "id": "background_explorer",
+  "name": "Explorer",
+  "tags": [
+   "background",
+   "explorer",
+   "scout",
+   "discovery",
+   "wilderness_expert",
+   "dexterity_based",
+   "wisdom_based",
+   "survival_expert",
+   "adaptable",
+   "frontier"
+  ],
+  "description": "You are an adventurer, surveyor, or pioneer who has dedicated your life to discovering new worlds and uncharted territories. Whether you map unknown regions, search for ancient ruins, or lead expeditions into dangerous areas, your skills in navigation, survival, and discovery make you invaluable. You understand the thrill of the unknown and the importance of documenting your findings.",
+  "proficiencies": {
+   "skills": [
+    "Survival",
+    "Investigation"
+   ],
+   "tools": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Surveying Equipment",
+      "Mapping Tools",
+      "Archaeological Kit",
+      "Survival Kit",
+      "Communications Kit",
+      "Exploration Gear"
+     ]
+    }
+   },
+   "languages": {
+    "choose": {
+     "count": 2,
+     "from": [
+      "Any"
+     ]
+    }
+   }
+  },
+  "feature": {
+   "name": "Explorer's Instincts",
+   "level": 1,
+   "description": "Your experience with exploration has given you an uncanny sense for hidden things and dangerous situations. You have advantage on Investigation checks to find hidden objects or secret passages, and you can use your action to search an area more thoroughly than normal. Additionally, you can sense when you're being watched or followed.",
+   "effects": [
+    {
+     "type": "grant_advantage",
+     "value": "exploration_advantage",
+     "target_scopes": [
+      "self"
+     ],
+     "conditions": [
+      {
+       "key": "skill_check",
+       "op": "equals",
+       "value": "investigation"
+      },
+      {
+       "key": "searching_area",
+       "op": "equals",
+       "value": true
+      }
+     ],
+     "notes": "Advantage on Investigation checks for hidden objects"
+    },
+    {
+     "type": "narrative_effect",
+     "value": "danger_sense",
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Sense when being watched or followed"
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Discovery. There's always something new to find.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Knowledge. The path to power and self-improvement is through knowledge.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred.",
+    "Freedom. The open space is my home."
+   ],
+   "bonds": [
+    "I owe a debt to the person who trained me.",
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I am overly critical of others' flaws.",
+    "I am haunted by visions of the future.",
+    "My pride sometimes gets the better of me.",
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my mission, I'll choose my mission."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_explorer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_explorer.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

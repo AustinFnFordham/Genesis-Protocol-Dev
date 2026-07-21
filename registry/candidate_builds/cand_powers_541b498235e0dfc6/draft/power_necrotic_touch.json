@@ -1,0 +1,231 @@
+{
+ "record": {
+  "id": "power_necrotic_touch",
+  "name": "Necrotic Touch",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 1,
+  "tags": [
+   "dark_side",
+   "necrotic",
+   "life_drain",
+   "decay",
+   "sustained_damage",
+   "touch"
+  ],
+  "power_cost": [
+   {
+    "type": "Force_Points",
+    "amount": 1
+   }
+  ],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist sustained channeling of death by focusing on life's sanctity.",
+     "ability": "Wisdom",
+     "dc": 17
+    }
+   }
+  },
+  "narrative": "You establish a sustained connection to your victim's life force, death energy flowing continuously as you drain them dry. The power manifests as tendrils of necrotic corruption linking you to your target, their vitality streaming into you as a visible flow of stolen life while their body withers and decays.",
+  "flavor_text": "\"Your life sustains me.\" - Darth Nihilus",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "maintaining physical contact or Force link"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling sustained life drain"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Concentration, up to 1 minute",
+  "base_effect": {
+   "description": "You establish a sustained necrotic link that drains life force continuously.",
+   "mechanics": [
+    {
+     "type": "ongoing_damage",
+     "value": {
+      "dice_count": 2,
+      "dice_size": 4,
+      "damage_type": "necrotic",
+      "modifier": 0,
+      "timing": "start_of_each_turn"
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 2d4 necrotic damage at start of each of your turns"
+    },
+    {
+     "type": "life_drain",
+     "value": {
+      "healing": "half_damage_dealt"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Heal for half the necrotic damage dealt"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior transforms Necrotic Touch into perfect parasitic symbiosis. They've mastered channeling the drain while fighting, each moment of sustained contact making them stronger while enemies wither—turning extended combat into execution through entropy.",
+    "mechanical_benefit": [
+     {
+      "type": "enhanced_drain",
+      "value": {
+       "healing": "full_damage_dealt"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Sith Warriors heal for full necrotic damage dealt instead of half."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human emotional capacity makes their Necrotic Touch psychologically devastating. Victims don't just feel life draining—they experience existential horror, understanding their vitality feeding another's power, creating trauma that transcends physical damage.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_status",
+      "value": {
+       "status_type": "frightened"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "minute"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Human Necrotic Touch also frightens target for duration (Wisdom save each round)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Necrotic Touch as ultimate dark side sustenance—the ability to feed on life itself. Their techniques emphasize establishing dominance through drain, showing victims their powerlessness as their strength becomes yours.",
+    "mechanical_benefit": [
+     {
+      "type": "enhance_damage",
+      "value": {
+       "dice_count": 1,
+       "dice_size": 4,
+       "damage_type": "necrotic",
+       "modifier": 0,
+       "operation": "add"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith deal an additional 1d4 necrotic damage per round."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the visible connection between you and victim—tendrils of green-black energy flowing from them to you. Show their flesh withering, skin tightening over bones, vitality visibly draining as you grow stronger. They should feel the horror of being consumed alive.",
+   "tactical_notes": "Necrotic Touch deals 2d4 necrotic damage per round with life drain healing for half. Costs 1 Force Point but lasts up to 1 minute with concentration. Perfect for sustained combat where healing keeps you in the fight. The 5-foot range requires staying close to victims.",
+   "narrative_hooks": [
+    "A Sith drains an enemy completely, leaving a withered husk",
+    "The life drain keeps a dark side user fighting through overwhelming odds",
+    "Horror of watching someone being consumed alive breaks enemy morale"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of a Sith maintaining necrotic touch on a victim. Visible tendrils of sickly green energy flow from the withering target to the Sith, life force streaming as luminous corruption. The victim ages rapidly, flesh decaying while the Sith grows stronger, wounds healing as they feed. The scene captures parasitic dark side power at its most horrifying. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric necrotic effects, by Craig Mullins",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/necrotic_touch.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_necrotic_touch",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_necrotic_touch.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

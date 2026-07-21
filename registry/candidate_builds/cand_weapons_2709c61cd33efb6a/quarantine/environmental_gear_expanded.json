@@ -1,0 +1,1177 @@
+{
+ "record": {
+  "environmental_gear_expanded": [
+   {
+    "id": "env_space_suit_basic",
+    "name": "Basic Space Suit",
+    "description": "A standard pressure suit that provides basic protection against vacuum and radiation for short spacewalks.",
+    "type": "Environmental Gear",
+    "subtype": "Space Suit",
+    "cost": 5000,
+    "rarity": 2,
+    "weight": 15.0,
+    "tags": [
+     "environmental",
+     "space",
+     "suit",
+     "vacuum",
+     "basic",
+     "pressure"
+    ],
+    "properties": [
+     "vacuum_protection",
+     "pressure_sealed",
+     "basic_radiation"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "vacuum_survival",
+     "space_walk",
+     "pressure_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "radiation_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to radiation damage when suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_space_suit_advanced",
+    "name": "Advanced Space Suit",
+    "description": "A sophisticated pressure suit with enhanced life support, radiation shielding, and extended operation time.",
+    "type": "Environmental Gear",
+    "subtype": "Space Suit",
+    "cost": 15000,
+    "rarity": 3,
+    "weight": 20.0,
+    "tags": [
+     "environmental",
+     "space",
+     "suit",
+     "advanced",
+     "enhanced",
+     "life_support"
+    ],
+    "properties": [
+     "enhanced_vacuum_protection",
+     "advanced_life_support",
+     "radiation_shielding"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "extended_space_operations",
+     "enhanced_protection",
+     "advanced_life_support"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "radiation_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced resistance to radiation damage"
+     }
+    ]
+   },
+   {
+    "id": "env_space_suit_combat",
+    "name": "Combat Space Suit",
+    "description": "A military-grade space suit designed for combat operations in vacuum environments with armor plating.",
+    "type": "Environmental Gear",
+    "subtype": "Space Suit",
+    "cost": 25000,
+    "rarity": 4,
+    "weight": 25.0,
+    "tags": [
+     "environmental",
+     "space",
+     "suit",
+     "combat",
+     "military",
+     "armored"
+    ],
+    "properties": [
+     "combat_armor",
+     "military_grade",
+     "vacuum_combat"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "vacuum_combat",
+     "military_operations",
+     "armored_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "combat_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to physical damage in addition to vacuum protection"
+     }
+    ]
+   },
+   {
+    "id": "env_emergency_breathing_apparatus",
+    "name": "Emergency Breathing Apparatus",
+    "description": "A compact device that provides emergency oxygen supply in vacuum or toxic environments.",
+    "type": "Environmental Gear",
+    "subtype": "Space Suit",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 2.0,
+    "tags": [
+     "environmental",
+     "space",
+     "breathing",
+     "emergency",
+     "oxygen"
+    ],
+    "properties": [
+     "emergency_oxygen",
+     "compact",
+     "life_support"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "emergency_breathing",
+     "oxygen_supply",
+     "life_support"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "emergency_breathing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "apparatus_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can breathe in vacuum or toxic environments for limited time"
+     }
+    ]
+   },
+   {
+    "id": "env_diving_suit_basic",
+    "name": "Basic Diving Suit",
+    "description": "A standard diving suit that provides protection against water pressure and temperature for shallow dives.",
+    "type": "Environmental Gear",
+    "subtype": "Underwater Equipment",
+    "cost": 3000,
+    "rarity": 1,
+    "weight": 8.0,
+    "tags": [
+     "environmental",
+     "underwater",
+     "diving",
+     "suit",
+     "basic",
+     "pressure"
+    ],
+    "properties": [
+     "water_protection",
+     "pressure_resistant",
+     "temperature_regulation"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "underwater_exploration",
+     "pressure_protection",
+     "diving_operations"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "swimming_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "diving_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on swimming checks when diving suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_diving_suit_deep_sea",
+    "name": "Deep Sea Diving Suit",
+    "description": "A heavy-duty diving suit designed for extreme depths with enhanced pressure resistance and life support.",
+    "type": "Environmental Gear",
+    "subtype": "Underwater Equipment",
+    "cost": 12000,
+    "rarity": 3,
+    "weight": 20.0,
+    "tags": [
+     "environmental",
+     "underwater",
+     "diving",
+     "deep_sea",
+     "heavy_duty",
+     "extreme_depth"
+    ],
+    "properties": [
+     "extreme_pressure_resistance",
+     "deep_sea_life_support",
+     "heavy_duty"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "deep_sea_exploration",
+     "extreme_depth_operations",
+     "pressure_resistance"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "pressure_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "deep_sea_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to pressure damage at extreme depths"
+     }
+    ]
+   },
+   {
+    "id": "env_underwater_breathing_apparatus",
+    "name": "Underwater Breathing Apparatus",
+    "description": "A device that extracts oxygen from water, allowing extended underwater operations without surfacing.",
+    "type": "Environmental Gear",
+    "subtype": "Underwater Equipment",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 5.0,
+    "tags": [
+     "environmental",
+     "underwater",
+     "breathing",
+     "oxygen_extraction",
+     "extended_operations"
+    ],
+    "properties": [
+     "oxygen_extraction",
+     "extended_underwater",
+     "life_support"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "extended_underwater_operations",
+     "oxygen_extraction",
+     "underwater_exploration"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "underwater_breathing",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "breathing_apparatus_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can breathe underwater for extended periods"
+     }
+    ]
+   },
+   {
+    "id": "env_underwater_light",
+    "name": "Underwater Light",
+    "description": "A powerful waterproof light designed for underwater exploration and visibility in dark depths.",
+    "type": "Environmental Gear",
+    "subtype": "Underwater Equipment",
+    "cost": 1500,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "environmental",
+     "underwater",
+     "light",
+     "waterproof",
+     "visibility"
+    ],
+    "properties": [
+     "waterproof_light",
+     "underwater_visibility",
+     "powerful"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "underwater_illumination",
+     "dark_depth_visibility",
+     "exploration_light"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "underwater_light_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on perception checks in dark underwater environments"
+     }
+    ]
+   },
+   {
+    "id": "env_cold_weather_suit",
+    "name": "Cold Weather Suit",
+    "description": "A thermal suit designed to protect against extreme cold temperatures and freezing conditions.",
+    "type": "Environmental Gear",
+    "subtype": "Extreme Weather Gear",
+    "cost": 4000,
+    "rarity": 2,
+    "weight": 6.0,
+    "tags": [
+     "environmental",
+     "weather",
+     "cold",
+     "thermal",
+     "freezing",
+     "protection"
+    ],
+    "properties": [
+     "thermal_protection",
+     "cold_resistance",
+     "freezing_protection"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "cold_weather_survival",
+     "thermal_protection",
+     "freezing_resistance"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "cold_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "cold_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to cold damage when cold weather suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_heat_resistant_suit",
+    "name": "Heat Resistant Suit",
+    "description": "A specialized suit designed to protect against extreme heat, fire, and thermal damage.",
+    "type": "Environmental Gear",
+    "subtype": "Extreme Weather Gear",
+    "cost": 6000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "environmental",
+     "weather",
+     "heat",
+     "fire",
+     "thermal",
+     "resistance"
+    ],
+    "properties": [
+     "heat_resistance",
+     "fire_protection",
+     "thermal_shielding"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "heat_survival",
+     "fire_protection",
+     "thermal_resistance"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "fire_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "heat_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to fire and heat damage when heat resistant suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_storm_survival_gear",
+    "name": "Storm Survival Gear",
+    "description": "A comprehensive set of equipment designed for survival in extreme weather conditions and storms.",
+    "type": "Environmental Gear",
+    "subtype": "Extreme Weather Gear",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 12.0,
+    "tags": [
+     "environmental",
+     "weather",
+     "storm",
+     "survival",
+     "extreme",
+     "comprehensive"
+    ],
+    "properties": [
+     "storm_protection",
+     "survival_equipment",
+     "weather_resistance"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "storm_survival",
+     "weather_protection",
+     "extreme_conditions"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "storm_gear_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on survival checks in extreme weather conditions"
+     }
+    ]
+   },
+   {
+    "id": "env_toxic_environment_suit",
+    "name": "Toxic Environment Suit",
+    "description": "A sealed suit designed to protect against toxic gases, chemicals, and hazardous environments.",
+    "type": "Environmental Gear",
+    "subtype": "Extreme Weather Gear",
+    "cost": 10000,
+    "rarity": 3,
+    "weight": 10.0,
+    "tags": [
+     "environmental",
+     "weather",
+     "toxic",
+     "chemical",
+     "hazardous",
+     "sealed"
+    ],
+    "properties": [
+     "toxic_protection",
+     "chemical_resistance",
+     "sealed_environment"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "toxic_environment_survival",
+     "chemical_protection",
+     "hazardous_operations"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "poison_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "toxic_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to poison and toxic damage when toxic environment suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_gravity_suit",
+    "name": "Gravity Suit",
+    "description": "A specialized suit that provides protection and mobility in high-gravity or zero-gravity environments.",
+    "type": "Environmental Gear",
+    "subtype": "Specialized Environmental",
+    "cost": 20000,
+    "rarity": 4,
+    "weight": 15.0,
+    "tags": [
+     "environmental",
+     "specialized",
+     "gravity",
+     "mobility",
+     "protection",
+     "advanced"
+    ],
+    "properties": [
+     "gravity_protection",
+     "mobility_enhancement",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "gravity_adaptation",
+     "mobility_enhancement",
+     "gravity_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "athletics_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "gravity_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on athletics checks in extreme gravity conditions"
+     }
+    ]
+   },
+   {
+    "id": "env_radiation_suit",
+    "name": "Radiation Suit",
+    "description": "A heavily shielded suit designed to protect against intense radiation and radioactive environments.",
+    "type": "Environmental Gear",
+    "subtype": "Specialized Environmental",
+    "cost": 18000,
+    "rarity": 4,
+    "weight": 18.0,
+    "tags": [
+     "environmental",
+     "specialized",
+     "radiation",
+     "shielded",
+     "radioactive",
+     "protection"
+    ],
+    "properties": [
+     "radiation_shielding",
+     "radioactive_protection",
+     "heavy_shielding"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "radiation_protection",
+     "radioactive_survival",
+     "shielding_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "radiation_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "radiation_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced resistance to radiation damage when radiation suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_atmospheric_filter",
+    "name": "Atmospheric Filter",
+    "description": "A device that filters and purifies air, allowing survival in polluted or toxic atmospheres.",
+    "type": "Environmental Gear",
+    "subtype": "Specialized Environmental",
+    "cost": 5000,
+    "rarity": 2,
+    "weight": 3.0,
+    "tags": [
+     "environmental",
+     "specialized",
+     "atmospheric",
+     "filter",
+     "purification",
+     "pollution"
+    ],
+    "properties": [
+     "air_purification",
+     "pollution_filter",
+     "atmospheric_protection"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "air_purification",
+     "pollution_protection",
+     "atmospheric_survival"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "poison_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "atmospheric_filter_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to poison damage from atmospheric toxins"
+     }
+    ]
+   },
+   {
+    "id": "env_climate_control_unit",
+    "name": "Climate Control Unit",
+    "description": "A portable device that creates a controlled environment bubble, protecting against extreme weather conditions.",
+    "type": "Environmental Gear",
+    "subtype": "Specialized Environmental",
+    "cost": 15000,
+    "rarity": 4,
+    "weight": 8.0,
+    "tags": [
+     "environmental",
+     "specialized",
+     "climate",
+     "control",
+     "environment_bubble",
+     "portable"
+    ],
+    "properties": [
+     "climate_control",
+     "environment_bubble",
+     "portable_protection"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "climate_control",
+     "environment_protection",
+     "controlled_environment"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "environmental_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "climate_control_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to environmental damage when climate control unit is active"
+     }
+    ]
+   },
+   {
+    "id": "env_survival_kit",
+    "name": "Survival Kit",
+    "description": "A comprehensive kit containing essential tools and equipment for survival in harsh environments.",
+    "type": "Environmental Gear",
+    "subtype": "Survival Equipment",
+    "cost": 3000,
+    "rarity": 2,
+    "weight": 5.0,
+    "tags": [
+     "environmental",
+     "survival",
+     "kit",
+     "comprehensive",
+     "essential",
+     "tools"
+    ],
+    "properties": [
+     "survival_tools",
+     "essential_equipment",
+     "comprehensive"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "survival_operations",
+     "essential_tools",
+     "harsh_environment_survival"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "survival_kit_available",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on survival checks when survival kit is available"
+     }
+    ]
+   },
+   {
+    "id": "env_emergency_beacon",
+    "name": "Emergency Beacon",
+    "description": "A distress beacon that can signal for help in emergency situations across vast distances.",
+    "type": "Environmental Gear",
+    "subtype": "Survival Equipment",
+    "cost": 2000,
+    "rarity": 1,
+    "weight": 1.0,
+    "tags": [
+     "environmental",
+     "survival",
+     "beacon",
+     "emergency",
+     "distress",
+     "signal"
+    ],
+    "properties": [
+     "distress_signal",
+     "emergency_beacon",
+     "long_range"
+    ],
+    "modifications": {
+     "slots": 1,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "emergency_signal",
+     "distress_beacon",
+     "rescue_signal"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "emergency_signal",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "beacon_activated",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can send emergency distress signal for rescue"
+     }
+    ]
+   },
+   {
+    "id": "env_portable_shelter",
+    "name": "Portable Shelter",
+    "description": "A compact, deployable shelter that provides protection from environmental hazards and extreme conditions.",
+    "type": "Environmental Gear",
+    "subtype": "Survival Equipment",
+    "cost": 6000,
+    "rarity": 3,
+    "weight": 8.0,
+    "tags": [
+     "environmental",
+     "survival",
+     "shelter",
+     "portable",
+     "deployable",
+     "protection"
+    ],
+    "properties": [
+     "portable_shelter",
+     "deployable_protection",
+     "environmental_shield"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "shelter_protection",
+     "deployable_shelter",
+     "environmental_protection"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "environmental_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "shelter_deployed",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to environmental damage when shelter is deployed"
+     }
+    ]
+   },
+   {
+    "id": "env_environmental_scanner",
+    "name": "Environmental Scanner",
+    "description": "A device that analyzes environmental conditions and provides detailed information about hazards and safety.",
+    "type": "Environmental Gear",
+    "subtype": "Survival Equipment",
+    "cost": 8000,
+    "rarity": 3,
+    "weight": 2.0,
+    "tags": [
+     "environmental",
+     "survival",
+     "scanner",
+     "analysis",
+     "hazards",
+     "safety"
+    ],
+    "properties": [
+     "environmental_analysis",
+     "hazard_detection",
+     "safety_assessment"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "environmental_analysis",
+     "hazard_detection",
+     "safety_assessment"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "investigation_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "scanner_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on investigation checks for environmental hazards"
+     }
+    ]
+   },
+   {
+    "id": "env_force_field_generator",
+    "name": "Personal Force Field Generator",
+    "description": "A portable force field generator that creates a protective barrier against environmental hazards and attacks.",
+    "type": "Environmental Gear",
+    "subtype": "Advanced Environmental",
+    "cost": 50000,
+    "rarity": 5,
+    "weight": 10.0,
+    "tags": [
+     "environmental",
+     "advanced",
+     "force_field",
+     "generator",
+     "protective",
+     "barrier"
+    ],
+    "properties": [
+     "protective_barrier",
+     "force_field",
+     "environmental_shield",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "protective_barrier",
+     "force_field",
+     "environmental_shield"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "all_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "force_field_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to all damage when force field generator is active"
+     }
+    ]
+   },
+   {
+    "id": "env_adaptive_environmental_suit",
+    "name": "Adaptive Environmental Suit",
+    "description": "A highly advanced suit that automatically adapts to different environmental conditions and hazards.",
+    "type": "Environmental Gear",
+    "subtype": "Advanced Environmental",
+    "cost": 75000,
+    "rarity": 6,
+    "weight": 12.0,
+    "tags": [
+     "environmental",
+     "advanced",
+     "adaptive",
+     "suit",
+     "automatic",
+     "versatile"
+    ],
+    "properties": [
+     "adaptive_protection",
+     "automatic_adaptation",
+     "versatile",
+     "advanced"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "adaptive_protection",
+     "automatic_adaptation",
+     "versatile_environmental"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "environmental_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "adaptive_suit_worn",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatic resistance to environmental damage when adaptive suit is worn"
+     }
+    ]
+   },
+   {
+    "id": "env_quantum_shield_generator",
+    "name": "Quantum Shield Generator",
+    "description": "A cutting-edge shield generator that uses quantum technology to provide ultimate protection against all environmental threats.",
+    "type": "Environmental Gear",
+    "subtype": "Advanced Environmental",
+    "cost": 100000,
+    "rarity": 6,
+    "weight": 15.0,
+    "tags": [
+     "environmental",
+     "advanced",
+     "quantum",
+     "shield",
+     "ultimate",
+     "protection"
+    ],
+    "properties": [
+     "quantum_protection",
+     "ultimate_shield",
+     "all_threats",
+     "cutting_edge"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "quantum_protection",
+     "ultimate_shield",
+     "all_threats"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "all_damage",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "quantum_shield_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ultimate resistance to all damage when quantum shield generator is active"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "environmental_gear_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/items/environmental_gear_expanded.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

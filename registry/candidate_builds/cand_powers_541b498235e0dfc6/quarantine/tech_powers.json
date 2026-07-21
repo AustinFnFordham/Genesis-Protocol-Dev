@@ -1,0 +1,1006 @@
+{
+ "record": {
+  "tech_powers": [
+   {
+    "id": "jet_of_flame",
+    "name": "Jet of Flame",
+    "description": "You project a concentrated jet of flame from your wrist-mounted apparatus, creating a devastating stream of fire.",
+    "type": "Tech",
+    "level": 0,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "single_target_damage",
+      "value": "1d8_fire",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_hit",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Tech attack roll, 1d8 fire damage on hit"
+     },
+     {
+      "type": "apply_status",
+      "value": "burning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constitution save or take 1d4 fire damage at start of next turn"
+     }
+    ]
+   },
+   {
+    "id": "shield_barrier",
+    "name": "Shield Barrier",
+    "description": "You deploy a personal energy shield that provides protection against incoming attacks and projectiles.",
+    "type": "Tech",
+    "level": 0,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "shield_ac_bonus",
+      "target_property": "armor_class",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+2 bonus to AC while shield is active"
+     },
+     {
+      "type": "apply_status",
+      "value": "damage_resistance",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy and ion damage"
+     }
+    ]
+   },
+   {
+    "id": "holographic_decoy",
+    "name": "Holographic Decoy",
+    "description": "You create a convincing holographic duplicate of yourself that can distract enemies and draw their attention.",
+    "type": "Tech",
+    "level": 0,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "create_decoy",
+      "value": "holographic_copy",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create a holographic decoy within range"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "decoy_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Stealth checks while decoy is active"
+     }
+    ]
+   },
+   {
+    "id": "targeting_assist",
+    "name": "Targeting Assist",
+    "description": "Your targeting computer analyzes enemy movements and provides real-time combat data to improve your accuracy.",
+    "type": "Tech",
+    "level": 0,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "round"
+    },
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "ranged_attack_rolls",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on ranged weapon attacks against target"
+     },
+     {
+      "type": "modify_stat",
+      "value": "ignore_cover",
+      "target_property": "cover_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "target_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Ignore half and three-quarters cover"
+     }
+    ]
+   },
+   {
+    "id": "explosive_fuel",
+    "name": "Explosive Fuel",
+    "description": "You launch a canister of highly volatile fuel that detonates on impact, creating a devastating explosion.",
+    "type": "Tech",
+    "level": 1,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "3d6_fire",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_10_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 3d6 fire damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "burning",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save causes ongoing fire damage"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The damage increases by 1d6 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "area"
+        ],
+        "notes": "Additional 1d6 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "ion_pulse",
+    "name": "Ion Pulse",
+    "description": "You emit a powerful pulse of ion energy that disrupts electronic systems and damages technological constructs.",
+    "type": "Tech",
+    "level": 1,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "2d8_ion",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_15_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 2d8 ion damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "ionized",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_construct_or_droid",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constructs and droids have disadvantage on attacks for 1 minute"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The damage increases by 1d8 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "area"
+        ],
+        "notes": "Additional 1d8 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "repair_droid",
+    "name": "Repair Droid",
+    "description": "You deploy a small repair droid that can mend wounds and restore damaged equipment in the field.",
+    "type": "Tech",
+    "level": 1,
+    "prerequisites": [],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 30,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 10,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "heal",
+      "value": "1d6_plus_modifier",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_creature",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 1d6 + Tech modifier hit points"
+     },
+     {
+      "type": "repair_equipment",
+      "value": "fix_damaged_gear",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_has_damaged_equipment",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Repair one damaged piece of equipment"
+     }
+    ],
+    "scaling_effects": {
+     "level_2": {
+      "description": "The healing increases by 1d6 for each slot level above 1st.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_healing",
+        "target_property": "healing_dice",
+        "target_scopes": [
+         "target"
+        ],
+        "notes": "Additional 1d6 healing per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "plasma_grenade",
+    "name": "Plasma Grenade",
+    "description": "You throw a grenade filled with superheated plasma that explodes in a devastating blast of energy.",
+    "type": "Tech",
+    "level": 2,
+    "prerequisites": [
+     "explosive_fuel"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "4d6_energy",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_20_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 4d6 energy damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "blinded",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save blinds target until end of next turn"
+     }
+    ],
+    "scaling_effects": {
+     "level_3": {
+      "description": "The damage increases by 1d6 for each slot level above 2nd.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "area"
+        ],
+        "notes": "Additional 1d6 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "stealth_field",
+    "name": "Stealth Field",
+    "description": "You activate a personal stealth field generator that renders you nearly invisible to sensors and the naked eye.",
+    "type": "Tech",
+    "level": 2,
+    "prerequisites": [
+     "holographic_decoy"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 10,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "invisible",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become invisible while stealth field is active"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "stealth_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Stealth checks"
+     },
+     {
+      "type": "modify_stat",
+      "value": "sensor_evasion",
+      "target_property": "detection_dc",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+10 to DC to detect with sensors"
+     }
+    ]
+   },
+   {
+    "id": "orbital_strike",
+    "name": "Orbital Strike",
+    "description": "You call down a devastating orbital bombardment that rains destruction upon your enemies from above.",
+    "type": "Tech",
+    "level": 3,
+    "prerequisites": [
+     "plasma_grenade",
+     "ion_pulse"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 120,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "instantaneous"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "6d8_energy",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_30_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dexterity save or take 6d8 energy damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "knocked_prone",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save knocks target prone"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "terrain_destruction",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Destroy or damage terrain features in the area"
+     }
+    ],
+    "scaling_effects": {
+     "level_4": {
+      "description": "The damage increases by 1d8 for each slot level above 3rd.",
+      "effects": [
+       {
+        "type": "modify_stat",
+        "value": "extra_damage",
+        "target_property": "damage_dice",
+        "target_scopes": [
+         "area"
+        ],
+        "notes": "Additional 1d8 damage per slot level"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "nanite_swarm",
+    "name": "Nanite Swarm",
+    "description": "You release a cloud of microscopic repair nanites that can heal allies and repair equipment en masse.",
+    "type": "Tech",
+    "level": 3,
+    "prerequisites": [
+     "repair_droid",
+     "shield_barrier"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 60,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "area_heal",
+      "value": "3d6_plus_modifier",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "ally_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Restore 3d6 + Tech modifier hit points to all allies"
+     },
+     {
+      "type": "repair_equipment",
+      "value": "fix_all_equipment",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "ally_has_damaged_equipment",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Repair all damaged equipment for allies"
+     },
+     {
+      "type": "apply_status",
+      "value": "nanite_enhancement",
+      "target_scopes": [
+       "allies"
+      ],
+      "conditions": [
+       {
+        "key": "ally_within_range",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Temporary hit points equal to Tech modifier"
+     }
+    ]
+   },
+   {
+    "id": "quantum_disruptor",
+    "name": "Quantum Disruptor",
+    "description": "You unleash a quantum disruption field that temporarily destabilizes reality itself, affecting all matter within range.",
+    "type": "Tech",
+    "level": 4,
+    "prerequisites": [
+     "orbital_strike",
+     "stealth_field"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 90,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "5d8_force",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_40_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Constitution save or take 5d8 force damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "quantum_instability",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save causes random teleportation within 30 feet"
+     },
+     {
+      "type": "modify_stat",
+      "value": "reality_distortion",
+      "target_property": "attack_rolls",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_within_field",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disadvantage on attack rolls while in the field"
+     }
+    ]
+   },
+   {
+    "id": "singularity_cannon",
+    "name": "Singularity Cannon",
+    "description": "You fire a projectile that creates a miniature black hole, drawing everything toward it and crushing matter with gravitational force.",
+    "type": "Tech",
+    "level": 5,
+    "prerequisites": [
+     "quantum_disruptor",
+     "nanite_swarm"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "action"
+    },
+    "range": {
+     "value": 150,
+     "unit": "feet"
+    },
+    "duration": {
+     "type": "concentration",
+     "value": 1,
+     "unit": "minute"
+    },
+    "effects": [
+     {
+      "type": "area_damage",
+      "value": "8d10_force",
+      "target_scopes": [
+       "area"
+      ],
+      "conditions": [
+       {
+        "key": "within_50_foot_radius",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Strength save or take 8d10 force damage"
+     },
+     {
+      "type": "apply_status",
+      "value": "gravitational_pull",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Failed save pulls target 20 feet toward center"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "ongoing_crush",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "concentration_maintained",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "4d10 force damage at start of target's turn"
+     },
+     {
+      "type": "apply_status",
+      "value": "crushed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_failed_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Speed reduced to 0 while in the singularity"
+     }
+    ]
+   },
+   {
+    "id": "technological_ascension",
+    "name": "Technological Ascension",
+    "description": "You achieve the pinnacle of technological mastery, becoming one with machines and gaining unprecedented control over technology.",
+    "type": "Tech",
+    "level": 5,
+    "prerequisites": [
+     "nanite_swarm",
+     "quantum_disruptor"
+    ],
+    "casting_time": {
+     "value": 1,
+     "unit": "minute"
+    },
+    "range": {
+     "value": 0,
+     "unit": "self"
+    },
+    "duration": {
+     "type": "timed",
+     "value": 24,
+     "unit": "hour"
+    },
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "technological_union",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_cast",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Become immune to ion damage and tech-based effects"
+     },
+     {
+      "type": "modify_stat",
+      "value": "machine_control",
+      "target_property": "tech_power_dc",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "+5 to save DC for tech powers"
+     },
+     {
+      "type": "grant_advantage",
+      "value": "tech_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "power_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on all Intelligence (Technology) checks"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "automatic_repair",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "equipment_damaged",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Automatically repair damaged equipment at start of turn"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "tech_powers",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/catalogs/tech_powers.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "10bd0cde66e95e33e4647600428ebb323031fea616d47e37fb81f9ba1ae4825f",
+  "errors": [
+   "no stable id/urid"
+  ],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": false,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "quarantine"
+ }
+}

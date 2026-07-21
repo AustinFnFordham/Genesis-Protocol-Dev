@@ -1,0 +1,151 @@
+{
+ "record": {
+  "id": "power_calculated_strike",
+  "name": "Calculated Strike",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "power",
+   "maneuver",
+   "universal",
+   "offensive",
+   "tactical",
+   "precision",
+   "intelligence",
+   "analysis",
+   "critical_hit",
+   "calculated",
+   "buff",
+   "support",
+   "single_target",
+   "melee",
+   "damage_boost"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "An intellectual approach to combat available to any analytical fighter"
+   }
+  },
+  "narrative": "You analyze your target's defenses in real-time, using tactical intelligence to identify and exploit the perfect striking angle. The power manifests as a moment of perfect clarity where mathematics and combat merge, your intellect guiding your weapon to maximum effect.",
+  "flavor_text": "\"Precision beats power, and timing beats speed.\" - Echani Weapons Master",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "precise weapon positioning"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "calculating optimal strike vector"
+   }
+  ],
+  "casting_time": "1 Bonus_Action",
+  "range": "0 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You make a calculated strike, adding your Intelligence modifier to your next damage roll.",
+   "mechanics": [
+    {
+     "type": "enhance_damage",
+     "value": {
+      "source": "ability_modifier",
+      "ability": "intelligence"
+     },
+     "target_scopes": [
+      "self"
+     ],
+     "notes": "Add your Intelligence modifier to your next damage roll"
+    }
+   ]
+  },
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment of analysis before the strike - the fighter's eyes tracking weak points, their mind calculating angles and force vectors. The strike itself is perfectly placed, hitting exactly where it will do the most damage. This isn't brute force but surgical precision.",
+   "tactical_notes": "Calculated Strike adds Intelligence modifier to damage as a bonus action, perfect for intelligent fighters. Stack with high-damage attacks for maximum effect. The bonus action timing lets you use it alongside your regular attack action.",
+   "narrative_hooks": [
+    "An analyst-turned-fighter uses mathematics to defeat a stronger opponent",
+    "The calculated strike finds a critical weakness in seemingly impenetrable armor",
+    "A tactical genius demonstrates that brains can beat brawn in combat"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tactical fighter executing a perfectly calculated strike. Glowing tactical overlays show angle calculations and weak point analysis. The weapon strikes with surgical precision at the exact optimal point, with mathematical formulas and trajectory lines visible in the air. The scene captures the fusion of intellect and combat prowess.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/calculated_strike.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_calculated_strike",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/powers/power_calculated_strike.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

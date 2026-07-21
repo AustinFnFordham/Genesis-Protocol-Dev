@@ -1,0 +1,470 @@
+{
+ "record": {
+  "id": "engineer_inventor",
+  "name": "Inventor",
+  "class_id": "engineer",
+  "tags": [
+   "engineer",
+   "inventor",
+   "crafter",
+   "tech_specialist",
+   "intelligence_based",
+   "problem_solver",
+   "creative",
+   "support"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "inventive_mind_3",
+    "feature_id": "inventive_mind",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You develop an inventive mind that can create new technologies and innovations. When you work on creating new devices or systems, you gain advantage on Technology checks, and you can use your Tech Points to accelerate the invention process.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "invention_technology_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "creating_new_devices",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on Technology checks for creating new devices"
+     },
+     {
+      "type": "narrative_effect",
+      "value": "tech_point_invention_acceleration",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Use Tech Points to accelerate invention process"
+     }
+    ],
+    "prerequisites": []
+   },
+   {
+    "node_id": "rapid_prototyping_5",
+    "feature_id": "rapid_prototyping",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "invention_technique_5",
+    "description": "You excel at rapid prototyping and quick innovation. When you spend Tech Points, you can quickly create prototypes of new devices, allowing you to test ideas and concepts with remarkable speed.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "rapid_prototype_creation",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Quickly create prototypes of new devices with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "inventive_mind_3"
+    ]
+   },
+   {
+    "node_id": "theoretical_breakthrough_5",
+    "feature_id": "theoretical_breakthrough",
+    "level_requirement": 5,
+    "type": "choice",
+    "choice_group": "invention_technique_5",
+    "description": "You can achieve theoretical breakthroughs in technology. When you spend Tech Points, you can develop new theoretical frameworks and principles that can be applied to create revolutionary technologies.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "theoretical_framework_development",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Develop new theoretical frameworks and principles with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "inventive_mind_3"
+    ]
+   },
+   {
+    "node_id": "innovation_mastery_7",
+    "feature_id": "innovation_mastery",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "invention_focus_7",
+    "description": "You master the art of innovation. When you spend Tech Points, you can create breakthrough technologies that introduce entirely new capabilities and change how technology is understood.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "breakthrough_technology_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create breakthrough technologies with entirely new capabilities"
+     }
+    ],
+    "prerequisites": [
+     "rapid_prototyping_5"
+    ]
+   },
+   {
+    "node_id": "system_integration_7",
+    "feature_id": "system_integration",
+    "level_requirement": 7,
+    "type": "choice",
+    "choice_group": "invention_focus_7",
+    "description": "You excel at integrating different technologies into cohesive systems. When you spend Tech Points, you can combine multiple technologies to create complex systems with enhanced capabilities.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "technology_system_integration",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Combine multiple technologies into complex systems with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "theoretical_breakthrough_5"
+    ]
+   },
+   {
+    "node_id": "invention_mastery_9",
+    "feature_id": "invention_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "description": "Your mastery of invention becomes overwhelming. When you spend Tech Points, you can achieve both rapid innovation and theoretical breakthroughs, making you a master of both practical creation and theoretical advancement.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "comprehensive_invention_mastery",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Achieve both rapid innovation and theoretical breakthroughs with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "innovation_mastery_7",
+     "system_integration_7"
+    ]
+   },
+   {
+    "node_id": "revolutionary_invention_11",
+    "feature_id": "revolutionary_invention",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "invention_technique_11",
+    "description": "You can create revolutionary inventions. When you spend Tech Points, you can develop technologies that fundamentally change how the world works, introducing concepts that were previously thought impossible.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "revolutionary_technology_development",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Develop technologies that fundamentally change how the world works"
+     }
+    ],
+    "prerequisites": [
+     "invention_mastery_9"
+    ]
+   },
+   {
+    "node_id": "future_technology_11",
+    "feature_id": "future_technology",
+    "level_requirement": 11,
+    "type": "choice",
+    "choice_group": "invention_technique_11",
+    "description": "You can create technologies from the future. When you spend Tech Points, you can develop advanced technologies that are generations ahead of current capabilities, bringing the future into the present.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "future_technology_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Develop advanced technologies generations ahead of current capabilities"
+     }
+    ],
+    "prerequisites": [
+     "invention_mastery_9"
+    ]
+   },
+   {
+    "node_id": "invention_legend_13",
+    "feature_id": "invention_legend",
+    "level_requirement": 13,
+    "type": "core",
+    "description": "You have become a legend of invention. Your Tech Points are more potent, and when you spend them, you can achieve invention capabilities that transcend normal limitations, including the ability to create technologies that defy the laws of physics.",
+    "effects": [
+     {
+      "type": "modify_effect",
+      "value": "enhanced_tech_points",
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Tech Points are more potent"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "physics_defying_technology",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create technologies that defy the laws of physics with Tech Points"
+     }
+    ],
+    "prerequisites": [
+     "revolutionary_invention_11",
+     "future_technology_11"
+    ]
+   },
+   {
+    "node_id": "perfect_invention_15",
+    "feature_id": "perfect_invention",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_invention_15",
+    "description": "Your invention mastery achieves perfection. When you spend Tech Points, you can create perfect technologies that operate at the absolute limits of possibility, achieving what others consider impossible.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "perfect_technology_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create perfect technologies at the absolute limits of possibility"
+     }
+    ],
+    "prerequisites": [
+     "invention_legend_13"
+    ]
+   },
+   {
+    "node_id": "invention_perfection_15",
+    "feature_id": "invention_perfection",
+    "level_requirement": 15,
+    "type": "choice",
+    "choice_group": "legendary_invention_15",
+    "description": "You achieve perfect invention form. When you spend Tech Points, you can become one with technology itself, gaining omniscient awareness of all technological possibilities and the ability to create any technology imaginable.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "technology_omniscience",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Gain omniscient awareness of all technological possibilities"
+     }
+    ],
+    "prerequisites": [
+     "invention_legend_13"
+    ]
+   },
+   {
+    "node_id": "invention_legend_17",
+    "feature_id": "invention_legend",
+    "level_requirement": 17,
+    "type": "core",
+    "description": "You have become a legend of invention and technology. When you spend Tech Points, you can achieve invention capabilities that transcend reality itself, including the ability to manipulate the very concept of technology.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "conceptual_technology_manipulation",
+      "target_scopes": [
+       "self",
+       "other"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Manipulate the very concept of technology"
+     }
+    ],
+    "prerequisites": [
+     "perfect_invention_15",
+     "invention_perfection_15"
+    ]
+   },
+   {
+    "node_id": "perfect_inventor_20",
+    "feature_id": "perfect_inventor",
+    "level_requirement": 20,
+    "type": "core",
+    "description": "You have achieved perfect mastery of invention and technology. When you spend Tech Points, you can achieve invention capabilities that are not only perfect and reality-transcending but also allow you to create technology from pure thought and imagination.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "thought_technology_creation",
+      "target_scopes": [
+       "self",
+       "environment"
+      ],
+      "conditions": [
+       {
+        "key": "tech_points_spent",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Create technology from pure thought and imagination"
+     }
+    ],
+    "prerequisites": [
+     "invention_legend_17"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "KyberCrystalFocus",
+    "SithSaberHilt"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a powerful stance, with feet shoulder-width apart and lightsaber at the ready.",
+    "energy_signature": "Surrounds self in a swirling aura of dark side energy, pulsating with malevolent intent."
+   },
+   "prompt_schema": {
+    "base_prompt": "A Sith Lord stands victorious on a desert planet, surrounded by twisted stormtrooper armor and destroyed Jedi temples.",
+    "contextual_modifiers": [
+     "use_jedi_robes",
+     "add_tattered_hood"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "Geniuses of engineering and innovation, Inventors use their knowledge of machines and technology to craft innovative solutions.",
+   "role_in_group": "Controller",
+   "visual_signals": [
+    "Goggles",
+    "Mechanical Exosuit"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "engineer_inventor",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer.inventor.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

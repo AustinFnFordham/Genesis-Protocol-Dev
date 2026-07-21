@@ -1,0 +1,164 @@
+{
+ "record": {
+  "id": "slicer",
+  "name": "Slicer",
+  "class_id": "engineer",
+  "base_class": "engineer",
+  "tags": [
+   "engineer",
+   "slicer",
+   "hacker",
+   "tech_specialist",
+   "intelligence_based",
+   "infiltrator",
+   "spy",
+   "skill_specialist"
+  ],
+  "description": "Slicers are masters of computer systems and digital networks, using their hacking skills to infiltrate secure databases, manipulate systems, and extract valuable information.",
+  "specialization_features": [
+   "hacking_expertise",
+   "digital_infiltration",
+   "system_manipulation",
+   "slicer_mastery",
+   "legendary_slicer"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master of digital networks and computer systems.",
+   "role_in_group": "Skill Specialist",
+   "visual_signals": [
+    "Hacking console on wrist-mounted gadget",
+    "Digital blue glow around eyes when hacking"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "slicer-feature-1",
+    "feature_id": "slicer-feature-1",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You can use your proficiency bonus to add to an ability check you make to interact with a computer system.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Add Proficiency Bonus to Intelligence checks related to digital systems"
+     }
+    ]
+   },
+   {
+    "node_id": "slicer-feature-2",
+    "feature_id": "slicer-feature-2",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can hack into a device and gain temporary access, allowing you to extract information or disable security measures.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Gain temporary access to device and add Proficiency Bonus to skill checks related to device"
+     }
+    ]
+   },
+   {
+    "node_id": "slicer-feature-3",
+    "feature_id": "slicer-feature-3",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can create a digital backdoor in a system, allowing you to access it remotely.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Create digital backdoor and gain access to system from anywhere"
+     }
+    ]
+   },
+   {
+    "node_id": "slicer-feature-4",
+    "feature_id": "slicer-feature-4",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your hacking skills to create a convincing digital identity, allowing you to infiltrate secure systems.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Create convincing digital identity and gain access to secure systems"
+     }
+    ]
+   },
+   {
+    "node_id": "slicer-feature-5",
+    "feature_id": "slicer-feature-5",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You can use your hacking skills to disrupt the security measures of a system, allowing you to bypass even the most secure defenses.",
+    "effects": [
+     {
+      "type": "mechanic_type",
+      "value": "Disrupt security measures and gain full access to system"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Jedi_Robes"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance, with lightsaber at the ready and eyes scanning for potential threats.",
+    "energy_signature": "Projects a calming aura of blue-green energy that seems to soothe nearby allies and deter enemies."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone Jedi Master stands on a cliff overlooking a desert planet, surrounded by swirling clouds of sand and heat haze.",
+    "contextual_modifiers": [
+     {
+      "Time_of_day": "Sunset"
+     },
+     {
+      "Environment": "Desert"
+     }
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "slicer",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer_slicer.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

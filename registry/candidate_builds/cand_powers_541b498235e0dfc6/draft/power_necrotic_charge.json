@@ -1,0 +1,221 @@
+{
+ "record": {
+  "id": "power_necrotic_charge",
+  "name": "Necrotic Charge",
+  "power_type": "Force",
+  "alignment": "Dark",
+  "level": 0,
+  "tags": [
+   "dark_side",
+   "necrotic",
+   "life_drain",
+   "decay",
+   "death",
+   "cantrip"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": "Dark",
+   "opposite_alignment_access": {
+    "allowed": true,
+    "threshold": 75,
+    "penalties": {
+     "cost_multiplier": 1.5,
+     "dc_penalty": 2
+    },
+    "mastery_check": {
+     "description": "A Light-aligned user may resist channeling death energy by affirming their commitment to life.",
+     "ability": "Wisdom",
+     "dc": 15
+    }
+   }
+  },
+  "narrative": "You channel the dark side's essence of death and decay, your touch withering living tissue and sapping vitality. The power manifests as sickly green-black energy that flows from your hand, flesh turning gray and necrotic where dark side corruption touches, life force draining away to fuel your power.",
+  "flavor_text": "\"Feel your life slipping away.\" - Sith Acolyte",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "reaching out with corrupted touch"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "channeling death energy through the dark side"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "5 feet",
+  "duration": "Instantaneous",
+  "base_effect": {
+   "description": "You channel necrotic energy that withers and drains life force.",
+   "mechanics": [
+    {
+     "type": "apply_damage",
+     "value": {
+      "dice_count": 1,
+      "dice_size": 4,
+      "damage_type": "necrotic",
+      "modifier": 0
+     },
+     "target_scopes": [
+      "target"
+     ],
+     "notes": "Deal 1d4 necrotic damage to target"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "sith_warrior",
+    "narrative": "The Sith Warrior weaponizes Necrotic Charge as life-stealing strike. They've learned to channel it through their weapons, each blow draining vitality to fuel their own endurance—turning combat into parasitic exchange where enemy weakness becomes their strength.",
+    "mechanical_benefit": [
+     {
+      "type": "life_drain",
+      "value": {
+       "healing": "half_damage_dealt"
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Sith Warriors heal for half the necrotic damage dealt."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human capacity for cruelty amplifies Necrotic Charge's psychological impact. They channel not just death but despair, their victims feeling life drain away in a way that breaks will as much as body—torture through entropy.",
+    "mechanical_benefit": [
+     {
+      "type": "apply_fear",
+      "value": {
+       "status_type": "frightened"
+      },
+      "duration": {
+       "amount": 1,
+       "unit": "round"
+      },
+      "conditions": [
+       {
+        "key": "damage_exceeds_threshold",
+        "op": "greater_than",
+        "value": 3
+       }
+      ],
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans frighten targets for 1 round if damage exceeds 3 (Wisdom save)."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "sith_order",
+    "narrative": "The Sith Order teaches Necrotic Charge as fundamental dark side technique—the power to unmake life with a touch. Their methods emphasize savoring the victim's terror, drawing power from fear as much as life force, corruption feeding on suffering.",
+    "mechanical_benefit": [
+     {
+      "type": "extend_range",
+      "value": {
+       "range": {
+        "distance": 15,
+        "unit": "feet"
+       }
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Sith can project necrotic energy up to 15 feet instead of 5."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the sickly green-black energy flowing from your hand, skin turning gray and lifeless where it touches. Show flesh withering, vitality draining visibly from the victim as they age years in seconds. The effect should feel viscerally wrong, a violation of life itself.",
+   "tactical_notes": "Necrotic Charge is a cantrip dealing 1d4 necrotic damage at close range (5 feet). The necrotic damage type bypasses many resistances. No resource cost makes it reliable for dark side users. Close range is risky but the life-drain synergies reward aggressive play.",
+   "narrative_hooks": [
+    "Necrotic touch ages a victim decades in seconds, revealing their mortality",
+    "The life-drain reveals a character's dark side corruption to horrified allies",
+    "A Sith sustains themselves through combat by feeding on enemy life force"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a dark side user channeling necrotic energy from their hand. Sickly green-black corruption flows toward a victim, their flesh withering and turning gray where death energy touches. Life force visibly drains away as streams of stolen vitality, the victim aging and weakening before eyes. The scene captures the horrifying power of channeled death.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/necrotic_charge.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_necrotic_charge",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_necrotic_charge.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

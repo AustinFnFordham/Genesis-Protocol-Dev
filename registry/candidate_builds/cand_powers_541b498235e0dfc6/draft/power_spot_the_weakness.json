@@ -1,0 +1,206 @@
+{
+ "record": {
+  "id": "power_spot_the_weakness",
+  "name": "Spot the Weakness",
+  "power_type": "Maneuver",
+  "alignment": "Universal",
+  "level": 0,
+  "tags": [
+   "tactical",
+   "analysis",
+   "advantage",
+   "insight",
+   "combat_knowledge",
+   "superiority"
+  ],
+  "power_cost": [],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Tactical analysis technique for identifying vulnerabilities"
+   }
+  },
+  "narrative": "You analyze an enemy's fighting style with tactical precision, identifying gaps in their defense that can be exploited. The power manifests as sudden clarity—recognizing that favored left side, that slight delay in guard recovery, that habitual overextension—turning observation into tactical advantage.",
+  "flavor_text": "\"Everyone has a weakness. I just find it faster.\" - Tactical Analyst",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "studying enemy movement patterns"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "analyzing fighting style for exploitable vulnerabilities"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "30 feet",
+  "duration": "1 round",
+  "base_effect": {
+   "description": "You identify tactical weaknesses in an enemy's defenses.",
+   "mechanics": [
+    {
+     "type": "grant_advantage",
+     "value": {
+      "benefit": "attack_advantage",
+      "source": "tactical_analysis"
+     },
+     "target_scopes": [
+      "next_attacker"
+     ],
+     "notes": "Next ally to attack the target gains advantage on their attack roll"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "scholar",
+    "narrative": "The Scholar's analytical mind transforms Spot the Weakness into perfect tactical assessment. They don't just see weaknesses—they understand why they exist, predict how enemies will react to exploitation, creating opportunities that cascade into victory.",
+    "mechanical_benefit": [
+     {
+      "type": "extended_advantage",
+      "value": {
+       "duration": {
+        "amount": 1,
+        "unit": "minute"
+       }
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Scholar's spotted weaknesses grant advantage for 1 minute instead of 1 attack."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human pattern recognition makes them natural tactical analysts. They spot weaknesses others miss by drawing from diverse combat experience, seeing vulnerabilities in fighting styles they've never encountered through creative extrapolation.",
+    "mechanical_benefit": [
+     {
+      "type": "additional_benefit",
+      "value": {
+       "effect": "reveal_damage_vulnerabilities"
+      },
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Humans also learn target's damage vulnerabilities when spotting weakness."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "rebel_alliance",
+    "narrative": "The Rebel Alliance has perfected Spot the Weakness through necessity—finding vulnerabilities in superior Imperial forces. Their analysts can identify critical weak points that turn impossible fights into winnable battles through precision targeting.",
+    "mechanical_benefit": [
+     {
+      "type": "critical_weakness",
+      "value": {
+       "effect": "next_attack_auto_crit_on_hit"
+      },
+      "conditions": [
+       {
+        "key": "attack_hits",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "target_scopes": [
+       "target"
+      ],
+      "notes": "Rebel analysis grants automatic critical hit on next attack that hits the target."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe the moment of recognition—seeing the pattern in enemy movements, that subtle tell before they commit, the gap in their defense. Show tactical mind processing combat data, turning observation into exploitable advantage. The analysis should feel intelligent and satisfying.",
+   "tactical_notes": "Spot the Weakness grants advantage on next attack against target using superiority die. Perfect for tactical classes who can identify vulnerabilities. Uses action and superiority die but creates opportunity for allies. The 30-foot range allows safe analysis.",
+   "narrative_hooks": [
+    "Spotted weakness allows impossible victory against superior opponent",
+    "The analysis reveals enemy's combat training and background",
+    "Sharing tactical insight creates teamwork moment"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "A dramatic digital painting of a tactical analyst studying an enemy combatant. Their eyes track movement patterns, identifying gaps in defense through careful observation. Visual indicators show the recognized weaknesses—gaps in guard, favored side, predictable patterns. The scene captures tactical intelligence creating combat advantage.",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/spot_the_weakness.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_spot_the_weakness",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_spot_the_weakness.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,259 @@
+{
+ "record": {
+  "id": "consular_negotiator",
+  "name": "Negotiator",
+  "class_id": "consular",
+  "tags": [
+   "consular",
+   "negotiator",
+   "diplomat",
+   "force_mastery",
+   "mind_trick",
+   "charisma_based",
+   "light_side",
+   "jedi",
+   "support"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "negotiator_entry_3",
+    "feature_id": "negotiator_entry",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [],
+    "choice_group": "consular_specialization",
+    "description": "Negotiators are masters of Force manipulation and psychological warfare, using their abilities to control minds and bend others to their will. They excel at getting what they want through subtle Force techniques."
+   },
+   {
+    "node_id": "mind_trick_7",
+    "feature_id": "mind_trick",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "negotiator_entry_3"
+    ],
+    "description": "You can use your action to attempt to influence a creature you can see within 30 feet. The target must succeed on a Wisdom saving throw or be charmed by you for 1 minute. While charmed, the target will follow a simple command you give it.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "charmed",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "failed_wisdom_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Charm target and give simple command for 1 minute"
+     }
+    ]
+   },
+   {
+    "node_id": "force_persuasion_11",
+    "feature_id": "force_persuasion",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "mind_trick_7"
+    ],
+    "description": "You have advantage on all Charisma-based skill checks. Additionally, when you make a Charisma check, you can roll a d4 and add the number rolled to the check. You can use this feature a number of times equal to your Charisma modifier (minimum 1) per long rest.",
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "charisma_checks",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "skill_check",
+        "op": "equals",
+        "value": "charisma_based"
+       }
+      ],
+      "notes": "Advantage on Charisma-based skill checks"
+     },
+     {
+      "type": "modify_roll",
+      "value": "charisma_check_bonus",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "charisma_check",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add d4 to Charisma check"
+     }
+    ]
+   },
+   {
+    "node_id": "mass_suggestion_13",
+    "feature_id": "mass_suggestion",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "force_persuasion_11"
+    ],
+    "description": "You can use your action to attempt to influence up to six creatures you can see within 60 feet. Each target must succeed on a Wisdom saving throw or be charmed by you for 1 hour. While charmed, the targets will follow a reasonable suggestion you give them.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "charmed",
+      "target_scopes": [
+       "multiple_targets"
+      ],
+      "conditions": [
+       {
+        "key": "failed_wisdom_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Charm up to 6 targets for 1 hour with suggestion"
+     }
+    ]
+   },
+   {
+    "node_id": "dominate_mind_17",
+    "feature_id": "dominate_mind",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "mass_suggestion_13"
+    ],
+    "description": "You can use your action to attempt to take control of a creature you can see within 30 feet. The target must succeed on a Wisdom saving throw or be dominated by you for 1 minute. While dominated, you control the target's actions.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "dominated",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "failed_wisdom_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Dominate target and control actions for 1 minute"
+     }
+    ]
+   },
+   {
+    "node_id": "master_manipulator_19",
+    "feature_id": "master_manipulator",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "dominate_mind_17"
+    ],
+    "description": "When you use any of your mind-affecting features, the target has disadvantage on the saving throw. Additionally, you can use your reaction to force a creature that can see you to make a Wisdom saving throw. On a failure, the creature is frightened of you for 1 minute.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "disadvantage_save",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_mind_affecting",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Disadvantage on saves against mind-affecting features"
+     },
+     {
+      "type": "trigger_effect",
+      "value": "frighten_creature",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "failed_wisdom_save",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Frighten target for 1 minute"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber_Hilt",
+    "Blaster_Gun"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance with knees bent and lightsaber at the ready.",
+    "energy_signature": "Exudes a blue plasma aura that crackles with electrical energy."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate an image of a Jedi Master standing on a catwalk, surrounded by stars in space.",
+    "contextual_modifiers": [
+     "Include a red lightsaber hilt",
+     "Show the subject gazing up at the stars with a contemplative expression"
+    ]
+   }
+  },
+  "subclass_identity_profile": {
+   "core_fantasy": "A master of persuasive speech and diplomatic finesse, able to navigate even the most treacherous of negotiations with ease.",
+   "role_in_group": "Face",
+   "visual_signals": [
+    "Carrying a ornate diplomatic pouch",
+    "Wearing a finely embroidered Consular robe"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "consular_negotiator",
+  "kind": "subclass",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/consular_subclasses/consular.negotiator.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

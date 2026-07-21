@@ -1,0 +1,677 @@
+{
+ "record": {
+  "id": "tracker",
+  "name": "Tracker",
+  "tags": [
+   "tracker",
+   "hunter",
+   "wilderness_expert",
+   "ranged_specialist",
+   "dexterity_based",
+   "predator",
+   "survival_expert",
+   "precision",
+   "sniper",
+   "tactical"
+  ],
+  "description": "Trackers are expert hunters and wilderness specialists who excel at finding their prey, surviving in hostile environments, and eliminating targets with precision strikes. They combine ancient hunting techniques with modern technology to become the ultimate predators.",
+  "hit_die": 10,
+  "primary_ability": "dexterity",
+  "primary_resource": "hunt_points",
+  "proficiencies": {
+   "armor": [
+    "light",
+    "medium"
+   ],
+   "weapons": [
+    "simple",
+    "blaster_pistols",
+    "blaster_rifles",
+    "sniper_rifles",
+    "vibroweapons"
+   ],
+   "tools": [
+    "survival_kit",
+    "tracking_gear",
+    "binoculars"
+   ],
+   "saving_throws": [
+    "dexterity",
+    "wisdom"
+   ],
+   "skills": {
+    "choose": 4,
+    "from": [
+     "athletics",
+     "insight",
+     "investigation",
+     "nature",
+     "perception",
+     "stealth",
+     "survival"
+    ]
+   }
+  },
+  "progression_tree": [
+   {
+    "node_id": "hunters_mark_1",
+    "feature_id": "hunters_mark",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": [],
+    "description": "You can mark a creature as your quarry. As a bonus action, you can mark one creature you can see within 90 feet of you. You deal an extra 1d6 damage to the marked creature when you hit it with a weapon attack. The mark lasts until the creature dies or you mark a different creature.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "hunters_mark",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "using_hunters_mark",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Mark creature as quarry for extra damage"
+     },
+     {
+      "type": "modify_weapon",
+      "value": "extra_damage",
+      "target_scopes": [
+       "target"
+      ],
+      "conditions": [
+       {
+        "key": "target_marked",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Deal extra 1d6 damage to marked target"
+     }
+    ]
+   },
+   {
+    "node_id": "tracker_style_1",
+    "feature_id": "tracker_style",
+    "level_requirement": 1,
+    "type": "choice",
+    "prerequisites": [
+     "hunters_mark_1"
+    ],
+    "choice_group": "tracker_style_level_1",
+    "description": "Choose your approach to hunting and tracking."
+   },
+   {
+    "node_id": "wilderness_expert_2",
+    "feature_id": "wilderness_expert",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "tracker_style_1"
+    ],
+    "choice_group": "tracker_focus_level_2",
+    "description": "Focus on wilderness survival and terrain mastery."
+   },
+   {
+    "node_id": "precision_hunter_2",
+    "feature_id": "precision_hunter",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "tracker_style_1"
+    ],
+    "choice_group": "tracker_focus_level_2",
+    "description": "Focus on precision strikes and target elimination."
+   },
+   {
+    "node_id": "tracker_specialization_3",
+    "feature_id": "tracker_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "wilderness_expert_2",
+     "precision_hunter_2"
+    ],
+    "choice_group": "tracker_specialization",
+    "description": "Choose your specialization as a Tracker."
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "tracker_specialization_3"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ],
+    "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn.",
+    "effects": [
+     {
+      "type": "grant_extra_attack",
+      "value": "extra_attack",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Attack twice with Attack action"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_6",
+    "feature_id": "subclass_feature",
+    "level_requirement": 6,
+    "type": "core",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "lands_stride_7",
+    "feature_id": "lands_stride",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_6"
+    ],
+    "description": "Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "ignore_difficult_terrain",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Ignore difficult terrain movement cost"
+     },
+     {
+      "type": "apply_status",
+      "value": "ignore_plant_hazards",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Ignore damage from plant hazards"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "lands_stride_7"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_9",
+    "feature_id": "subclass_feature",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "hide_in_plain_sight_10",
+    "feature_id": "hide_in_plain_sight",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_9"
+    ],
+    "description": "You can spend 1 minute creating camouflage from natural materials. You can then hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "hide_in_light_obscurement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "using_camouflage",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Hide in light obscurement with camouflage"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "hide_in_plain_sight_10"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "vanish_14",
+    "feature_id": "vanish",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ],
+    "description": "You can use the Hide action as a bonus action on your turn. Also, you can't be tracked by nonmagical means unless you choose to leave a trail.",
+    "effects": [
+     {
+      "type": "grant_bonus_action",
+      "value": "hide_action",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Hide as bonus action"
+     },
+     {
+      "type": "apply_status",
+      "value": "untrackable",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Cannot be tracked by nonmagical means"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "vanish_14"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ],
+    "description": "You gain a feature from your chosen specialization.",
+    "effects": [
+     {
+      "type": "grant_feat",
+      "value": "subclass_feature",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Gain subclass feature"
+     }
+    ]
+   },
+   {
+    "node_id": "feral_senses_18",
+    "feature_id": "feral_senses",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ],
+    "description": "You gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it.",
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "no_disadvantage_blind",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "No disadvantage when attacking unseen creatures"
+     }
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_19",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "feral_senses_18"
+    ],
+    "description": "You can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1.",
+    "effects": [
+     {
+      "type": "modify_stat",
+      "value": "ability_score_improvement",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [],
+      "notes": "Increase ability scores as chosen"
+     }
+    ]
+   },
+   {
+    "node_id": "foe_slayer_20",
+    "feature_id": "foe_slayer",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_19"
+    ],
+    "description": "You become an unparalleled hunter. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied.",
+    "effects": [
+     {
+      "type": "modify_roll",
+      "value": "add_wisdom_modifier",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "attacking_favored_enemy",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Add Wisdom modifier to attack or damage roll"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Hunting bow",
+    "Tracker's cloak with built-in camo-tech",
+    "Energy rifle (dual-wielded)",
+    "Tracking goggles (with integrated comms and scanner)",
+    "Survival knife",
+    "Combat armor (utility suit with enhanced mobility)"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Tracker assumes a crouched stance, knees bent, and body low to the ground, ready to pounce on unsuspecting prey.",
+    "energy_signature": "A swirling aura of blue-green energy surrounds the Tracker, pulsating in sync with their heartbeat and hunting instincts."
+   },
+   "prompt_schema": {
+    "base_prompt": "Create a detailed illustration of a Tracker character standing at the edge of a dense forest, scanning the surroundings for signs of hidden enemies or targets.",
+    "contextual_modifiers": [
+     "Show the Tracker's outfit as practical yet intimidating, incorporating various technologies and tools that aid their hunting prowess.",
+     "Depict the surrounding environment as hazardous, with treacherous terrain, steep cliffs, and thick foliage to create a sense of danger and urgency."
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "The Tracker's reputation as a skilled hunter precedes them, attracting rival predators who seek to test their skills.",
+    "escalation": "As the Tracker takes down increasingly powerful targets, they earn the enmity of more formidable foes who resent their success.",
+    "confrontation": "When a Tracker faces off against a particularly powerful nemesis, the stakes are raised, and the consequences of failure become dire."
+   },
+   "resolution_paths": {
+    "victory": "The Tracker emerges victorious, earning the respect and fear of their enemies.",
+    "redemption": "The Tracker finds a way to reconcile with their enemy, often through a display of exceptional skill or compassion.",
+    "escape": "The Tracker manages to evade their enemy, but the threat lingers, waiting for another opportunity to strike."
+   },
+   "conflict_triggers": [
+    "Success in hunting a powerful target",
+    "Interference with an enemy's plans or operations",
+    "Displaying exceptional skill or abilities that threaten rival predators"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "Initial encounters are awkward, but there is a spark of attraction.",
+    "stage2": "The Tracker and their love interest begin to share stories and experiences, deepening their connection.",
+    "stage3": "As the Tracker's reputation grows, so does the attention from admirers and rivals, making it difficult for them to maintain a relationship.",
+    "stage4": "The Tracker's partner becomes increasingly aware of the dangers and responsibilities that come with loving a skilled hunter.",
+    "stage5": "The Tracker's partner must decide whether their love is worth the risks and challenges that come with being involved with someone like them."
+   },
+   "lifestyle_challenges": [
+    "Frequent absences due to hunting missions or other obligations",
+    "Exposure to violence, danger, and trauma",
+    "Pressure to maintain a public image as a skilled hunter while balancing personal relationships"
+   ]
+  },
+  "flavor_text": "\"Like a predator stalking its prey, the Tracker moves unseen and unheard, striking with precision and deadliness. Theirs is a patience born of respect for the wilderness and its creatures.\"\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Trackers must embody a mix of patience and precision. They are the ultimate predators, using their surroundings to outmaneuver prey.",
+   "narrative_hooks": [
+    "Surviving in hostile environments",
+    "Precision strikes",
+    "Ancient hunting techniques"
+   ],
+   "social_dynamics": "Trackers may struggle with their role within society, as they often operate outside of established norms. They might be seen as loners or outcasts by some.\n",
+   "common_motivations": [
+    "Survival and self-preservation",
+    "Pursuit of prey",
+    "Understanding the wilderness"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "type": "pragmatist",
+     "traits": [
+      "reliable",
+      "resourceful"
+     ]
+    },
+    "motivations": [
+     "protection",
+     "hunting",
+     "exploration"
+    ],
+    "combat_behavior": "Trackers are skilled in ranged combat, using their knowledge of the environment to set up ambushes or pick off prey from a distance.\n",
+    "social_behavior": [
+     "Trackers have strong instincts for self-preservation and may prioritize their own survival over others if necessary.\n",
+     "They can be fiercely loyal to those they deem worthy."
+    ]
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     "familial",
+     "allied"
+    ],
+    "loyalty_triggers": [
+     "betrayal",
+     "abandonment"
+    ]
+   },
+   "services": [
+    "Tracking down targets",
+    "Survival and wilderness survival skills",
+    "Guided hunting excursions"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "tracker",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/tracker.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

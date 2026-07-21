@@ -1,0 +1,430 @@
+{
+ "record": {
+  "id": "sentinel",
+  "name": "Sentinel",
+  "tags": [
+   "force_user",
+   "jedi",
+   "sentinel",
+   "balanced",
+   "investigator",
+   "diplomat",
+   "light_side",
+   "versatile",
+   "intelligence_based",
+   "skill_specialist"
+  ],
+  "description": "Sentinels are balanced Force-wielders who combine diplomacy, investigation, and combat skills. They serve as mediators, investigators, and protectors, using their connection to the Force to maintain balance and uncover hidden truths.",
+  "hit_die": "1d8",
+  "proficiencies": {
+   "armor": [
+    "Light armor"
+   ],
+   "weapons": [
+    "Simple weapons",
+    "Lightsabers",
+    "Blaster pistols"
+   ],
+   "tools": {
+    "choose": {
+     "count": 1,
+     "from": [
+      "Investigator's Kit",
+      "Diplomat's Kit",
+      "Meditation Kit",
+      "Security Kit"
+     ]
+    }
+   },
+   "saving_throws": [
+    "Dexterity",
+    "Charisma"
+   ],
+   "skills": {
+    "choose": 3,
+    "from": [
+     "Acrobatics",
+     "Animal Handling",
+     "Insight",
+     "Intimidation",
+     "Perception",
+     "Persuasion",
+     "Piloting",
+     "Stealth",
+     "Technology"
+    ]
+   }
+  },
+  "primary_ability": "Dexterity or Charisma",
+  "primary_resource": "Force Points",
+  "progression_tree": [
+   {
+    "node_id": "force_connection_1",
+    "feature_id": "force_connection",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "sentinel_balance_1",
+    "feature_id": "sentinel_balance",
+    "level_requirement": 1,
+    "type": "core",
+    "prerequisites": []
+   },
+   {
+    "node_id": "investigation_focus_2",
+    "feature_id": "investigation_focus",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "force_connection_1"
+    ],
+    "choice_group": "sentinel_focus_level_2"
+   },
+   {
+    "node_id": "diplomacy_focus_2",
+    "feature_id": "diplomacy_focus",
+    "level_requirement": 2,
+    "type": "choice",
+    "prerequisites": [
+     "force_connection_1"
+    ],
+    "choice_group": "sentinel_focus_level_2"
+   },
+   {
+    "node_id": "sentinel_specialization_3",
+    "feature_id": "sentinel_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "investigation_focus_2",
+     "diplomacy_focus_2"
+    ],
+    "choice_group": "sentinel_specialization"
+   },
+   {
+    "node_id": "ability_score_improvement_4",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 4,
+    "type": "core",
+    "prerequisites": [
+     "sentinel_specialization_3"
+    ]
+   },
+   {
+    "node_id": "extra_attack_5",
+    "feature_id": "extra_attack",
+    "level_requirement": 5,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_4"
+    ]
+   },
+   {
+    "node_id": "enhanced_investigation_6",
+    "feature_id": "enhanced_investigation",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "sentinel_enhancement_level_6"
+   },
+   {
+    "node_id": "enhanced_diplomacy_6",
+    "feature_id": "enhanced_diplomacy",
+    "level_requirement": 6,
+    "type": "choice",
+    "prerequisites": [
+     "extra_attack_5"
+    ],
+    "choice_group": "sentinel_enhancement_level_6"
+   },
+   {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_investigation_6",
+     "enhanced_diplomacy_6"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_8",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 8,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_7"
+    ]
+   },
+   {
+    "node_id": "force_mastery_9",
+    "feature_id": "force_mastery",
+    "level_requirement": 9,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_8"
+    ]
+   },
+   {
+    "node_id": "battle_readiness_10",
+    "feature_id": "battle_readiness",
+    "level_requirement": 10,
+    "type": "core",
+    "prerequisites": [
+     "force_mastery_9"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_11",
+    "feature_id": "subclass_feature",
+    "level_requirement": 11,
+    "type": "core",
+    "prerequisites": [
+     "battle_readiness_10"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_12",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 12,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_11"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_13",
+    "feature_id": "subclass_feature",
+    "level_requirement": 13,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_12"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_14",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 14,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_13"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_15",
+    "feature_id": "subclass_feature",
+    "level_requirement": 15,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_14"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_16",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 16,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_15"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_17",
+    "feature_id": "subclass_feature",
+    "level_requirement": 17,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_16"
+    ]
+   },
+   {
+    "node_id": "ability_score_improvement_18",
+    "feature_id": "ability_score_improvement",
+    "level_requirement": 18,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_17"
+    ]
+   },
+   {
+    "node_id": "subclass_feature_19",
+    "feature_id": "subclass_feature",
+    "level_requirement": 19,
+    "type": "core",
+    "prerequisites": [
+     "ability_score_improvement_18"
+    ]
+   },
+   {
+    "node_id": "sentinel_mastery_20",
+    "feature_id": "sentinel_mastery",
+    "level_requirement": 20,
+    "type": "core",
+    "prerequisites": [
+     "subclass_feature_19"
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Sentinel's Robes",
+    "Combat Staff",
+    "Lightsaber (optional)",
+    "Daggers",
+    "Leather Armor"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance, lightsaber glowing in hand as they circle around their foe.",
+    "energy_signature": "Surrounded by an aura of blue and green Force energy, crackling with the power of the living Force."
+   },
+   "prompt_schema": {
+    "base_prompt": "Sentinel ",
+    "contextual_modifiers": [
+     "during investigation",
+     "in combat",
+     "using diplomacy"
+    ]
+   }
+  },
+  "nemesis_engine": {
+   "archetype": "class_rival",
+   "progression_path": {
+    "emergence": "The Sentinel stumbles upon a hidden truth about their past, forcing them to confront the implications.",
+    "escalation": "As they investigate further, they inadvertently threaten the interests of powerful figures who will stop at nothing to silence them.",
+    "confrontation": "With no other choice, the Sentinel must face off against these adversaries in a final showdown to protect themselves and others."
+   },
+   "resolution_paths": {
+    "victory": "The Sentinel successfully exposes the truth and brings justice to those responsible, earning their respect and admiration.",
+    "redemption": "Through self-reflection and determination, the Sentinel is able to redeem themselves and make amends for past mistakes.",
+    "escape": "In a narrow escape, the Sentinel manages to flee from their pursuers and regroup before continuing their mission."
+   },
+   "conflict_triggers": [
+    "Discovery of a dark secret",
+    "Threats against innocent lives",
+    "Challenges to authority or social order"
+   ]
+  },
+  "romance_engine": {
+   "archetype": "lifestyle_impact",
+   "romance_potential": "Medium",
+   "romance_progression": {
+    "stage1": "The Sentinel is drawn to their romantic interest, but struggles to balance their feelings with their duties as a mediator and protector.",
+    "stage2": "As the relationship deepens, the Sentinel must navigate the challenges of maintaining intimacy while also dealing with the stresses of their role.",
+    "stage3": "With increased familiarity, the Sentinel begins to question whether they can truly trust their partner amidst the dangers and uncertainties of their work.",
+    "stage4": "The Sentinel's romantic interest is drawn into the conflicts surrounding their role, forcing them to confront the personal costs of their actions.",
+    "stage5": "In a moment of crisis, the Sentinel must choose between their duty to protect others and their love for their partner."
+   },
+   "lifestyle_challenges": [
+    "Frequent travel and separation",
+    "Inherent dangers of the job (e.g. getting hurt or killed)",
+    "Pressure from both the Jedi Order and personal interests to prioritize duties over relationships"
+   ]
+  },
+  "flavor_text": "A guardian of peace and justice, Sentinels wield the power of the Force to protect and serve. Their connection to the living Force guides them in times of turmoil.\n",
+  "llm_guidance": {
+   "roleplay_guidance": "Play a mediator who seeks to resolve conflicts through understanding and empathy. Balance diplomacy with tactical prowess.\n",
+   "narrative_hooks": [
+    "A group of smugglers has stolen sensitive data from a key Imperial facility.",
+    "Rumors of a Sith cult operating on the outskirts of the galaxy have come to light.",
+    "The New Republic is at odds with the Jedi Order over resource allocation and territory control."
+   ],
+   "social_dynamics": "Establish yourself as a trusted authority, then use your influence to shape events and bring balance to the Force.\n",
+   "common_motivations": [
+    "Protect the innocent",
+    "Uncover hidden truths",
+    "Maintain balance in the Force"
+   ]
+  },
+  "companion_engine": {
+   "archetype": "npc_role",
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "wise",
+      "compassionate"
+     ],
+     "fears": [
+      "loss of control",
+      "betrayal by allies"
+     ],
+     "desires": [
+      "justice",
+      "knowledge"
+     ]
+    },
+    "motivations": {
+     "long_term": [
+      "protect allies",
+      "promote justice"
+     ],
+     "short_term": [
+      "resolve immediate threats",
+      "gather information"
+     ]
+    },
+    "combat_behavior": "Engage at a safe distance with blaster and Force abilities.",
+    "social_behavior": "Engage in calm, measured speech. Use persuasion to resolve conflicts peacefully.\n"
+   },
+   "relationship_tracking": {
+    "trust_levels": {
+     "low": "Betrayal is expected; take action to prevent it.",
+     "medium": "Monitor interactions for signs of betrayal or deception.",
+     "high": "Act as a trusted ally and friend."
+    },
+    "loyalty_triggers": [
+     "Betrayal",
+     "Deception"
+    ]
+   },
+   "services": [
+    "Mediation",
+    "Investigation",
+    "Protection"
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "sentinel",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/classes/sentinel.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "validated_candidate"
+ }
+}

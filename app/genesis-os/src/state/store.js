@@ -214,8 +214,18 @@ export const useGenesis = create((set, get) => ({
       const t = await r.json();
       if (t.status === 'duplicate') { set({ gmBusy: false }); return { accepted: false, duplicate: true }; }
       if (t.status !== 'ok') {
-        set((s) => ({ gmFeed: [...s.gmFeed, { who: 'SYSTEM', text: `STEWARD BLOCKED: ${t.reason ?? 'invalid turn'}` }], gmBusy: false }));
-        return { accepted: false };
+        // Gameplay gate §3: no generic invalid-turn output. Surface the
+        // disposition, the preserved intent, and executable alternatives.
+        const be = t.block_evidence;
+        const msg = be
+          ? `${(be.disposition ?? 'blocked').replace(/_/g, ' ').toUpperCase()} — ${be.exact_reason}\n${be.clarification_prompt ?? ''}\nOptions: ${(be.nearest_executable_options ?? []).join(' · ')}`
+          : (t.reason ?? 'The turn could not be resolved — try a concrete action.');
+        set((s) => ({ gmFeed: [...s.gmFeed, { who: 'SYSTEM', text: msg }], gmBusy: false }));
+        return { accepted: false, block_evidence: be };
+      }
+      if (t.block_evidence) {
+        const be = t.block_evidence;
+        set((s) => ({ gmFeed: [...s.gmFeed, { who: 'SYSTEM', text: `${(be.disposition ?? '').replace(/_/g, ' ').toUpperCase()} — ${be.exact_reason} Options: ${(be.nearest_executable_options ?? []).slice(0, 4).join(' · ')}` }] }));
       }
       if (t.command_id && t.command_id === get()._lastCommandId) { set({ gmBusy: false }); return { accepted: false, duplicate: true }; }
       set({ _lastCommandId: t.command_id });

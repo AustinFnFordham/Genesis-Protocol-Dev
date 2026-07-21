@@ -1,0 +1,161 @@
+{
+ "record": {
+  "id": "quartermaster",
+  "name": "Quartermaster",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "quartermaster",
+   "intelligence_based",
+   "professional",
+   "logistics",
+   "support",
+   "merchant",
+   "organized",
+   "practical"
+  ],
+  "description": "Quartermasters are masters of logistics and supply management. They excel at negotiating deals, managing resources, and ensuring their faction has everything it needs to operate effectively.",
+  "specialization_features": [
+   "logistical_expertise",
+   "supply_negotiation",
+   "resource_management",
+   "quartermaster_mastery",
+   "legendary_quartermaster"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Logistics masters with a keen eye for supply and demand.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Uniform insignia",
+    "Supply satchel"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "quartermaster_level_3",
+    "feature_id": "quartermaster_logistical_mastery",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You have mastered the art of logistical planning, allowing you to allocate resources more efficiently.",
+    "effects": [
+     {
+      "type": "bonus_action",
+      "value": "Take a bonus action to reorganize your supplies and equipment."
+     }
+    ]
+   },
+   {
+    "node_id": "quartermaster_level_7",
+    "feature_id": "quartermaster_supply_chain",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You have developed connections with suppliers, granting you access to rare materials and resources.",
+    "effects": [
+     {
+      "type": "reaction",
+      "value": "React when a merchant or supplier offers you an unusual item or service."
+     }
+    ]
+   },
+   {
+    "node_id": "quartermaster_level_11",
+    "feature_id": "quartermaster_resource_management",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You have honed your ability to manage resources, allowing you to store and retrieve equipment with ease.",
+    "effects": [
+     {
+      "type": "equipment_storage",
+      "value": "Add a number of equipment slots equal to your Intelligence modifier (minimum 1)."
+     }
+    ]
+   },
+   {
+    "node_id": "quartermaster_level_15",
+    "feature_id": "quartermaster_negotiation_skills",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You have developed exceptional negotiation skills, allowing you to persuade even the most reluctant parties.",
+    "effects": [
+     {
+      "type": "skill_increase",
+      "value": "Increase your Charisma (Persuasion) skill by +2."
+     }
+    ]
+   },
+   {
+    "node_id": "quartermaster_level_18",
+    "feature_id": "quartermaster_master_supply_chain",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have become a master of supply chain management, granting you unparalleled access to resources and materials.",
+    "effects": [
+     {
+      "type": "resource_access",
+      "value": "Gain access to rare and unusual items, as well as unique equipment and supplies."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "KyberCrystal",
+    "BinaryLoadCell"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a defensive stance, lightsaber at the ready with a deep breathing rhythm",
+    "energy_signature": "Exudes an aura of controlled efficiency, with subtle hums emanating from nearby datapads"
+   },
+   "prompt_schema": {
+    "base_prompt": "A seasoned Quartermaster surveys a busy docking bay, surrounded by stacks of crates and workers hustling to meet demand",
+    "contextual_modifiers": [
+     "captured_in_low_lighting",
+     "focusing_on_a_specific_crate_label"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "quartermaster",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_quartermaster.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

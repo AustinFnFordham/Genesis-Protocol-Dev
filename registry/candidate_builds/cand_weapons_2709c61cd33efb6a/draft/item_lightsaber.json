@@ -1,0 +1,323 @@
+{
+ "record": {
+  "id_file": "compendium_lightsaber",
+  "category": "equipment",
+  "subcategory": "weapons",
+  "tags": [
+   "weapon",
+   "melee",
+   "energy",
+   "force",
+   "jedi",
+   "lightsaber",
+   "legendary"
+  ],
+  "id": "item_lightsaber",
+  "name": "Lightsaber",
+  "item_type": "Weapon",
+  "subtype": "Lightsaber",
+  "era": "Galactic_Republic",
+  "rarity": "Legendary",
+  "narrative": "The lightsaber is the iconic weapon of the Jedi and Sith, a blade of pure energy contained within a plasma field. More than just a weapon, it is a symbol of the Force user's connection to the mystical energy that binds the galaxy together. Each lightsaber is unique, reflecting the personality and fighting style of its wielder. The construction of a lightsaber is a sacred rite of passage for Jedi, requiring deep meditation and a strong connection to the Force to properly align the kyber crystal that powers the weapon.",
+  "flavor_text": "'This weapon is your life.' - Obi-Wan Kenobi",
+  "cultural_significance": "The lightsaber is universally recognized as the symbol of the Jedi Order and Force users throughout the galaxy. To most beings, seeing a lightsaber inspires awe and respect, though during the Empire era it also inspired fear. The weapon represents the ancient traditions of the Jedi and their commitment to peace and justice.",
+  "description": "A lightsaber is an elegant weapon from a more civilized age. It consists of a metal hilt containing a kyber crystal that focuses and amplifies energy into a blade of pure plasma. The blade can cut through almost any material and can deflect blaster bolts. Each lightsaber is unique, with the color of the blade often reflecting the wielder's connection to the Force and their personality.",
+  "physical_description": "A cylindrical metal hilt, typically 25-30 centimeters long, with various control switches and a focusing lens. The hilt contains a kyber crystal, power cell, and focusing crystal. When activated, it projects a blade of pure energy, typically 1-1.5 meters long, that hums and crackles with power. The blade's color varies based on the kyber crystal used.",
+  "manufacturer": "Individual Jedi/Sith (handcrafted)",
+  "manufacturing_location": "Jedi Temple, Sith Academies, or personal workshops",
+  "connections": [
+   {
+    "target_id": "faction_jedi_order",
+    "target_type": "Faction",
+    "relationship": "Iconic Weapon",
+    "narrative": "The lightsaber is the signature weapon of the Jedi Order, representing their commitment to peace and justice. Jedi are extensively trained in lightsaber combat and gain bonuses when wielding them."
+   },
+   {
+    "target_id": "faction_sith_order",
+    "target_type": "Faction",
+    "relationship": "Iconic Weapon",
+    "narrative": "The Sith also wield lightsabers, though often with red blades from synthetic or corrupted kyber crystals. Their aggressive style makes their lightsaber attacks particularly deadly."
+   },
+   {
+    "target_id": "faction_galactic_empire",
+    "target_type": "Faction",
+    "relationship": "Hunted Weapon",
+    "narrative": "The Empire hunted down lightsabers and their wielders, making them rare and dangerous to possess. Imperial agents use the presence of a lightsaber as leverage in interrogations."
+   },
+   {
+    "target_id": "class_guardian",
+    "target_type": "Class",
+    "relationship": "Primary Weapon",
+    "narrative": "Guardians are the primary lightsaber combatants of the Jedi Order, mastering defensive and offensive techniques with years of dedicated practice."
+   },
+   {
+    "target_id": "class_consular",
+    "target_type": "Class",
+    "relationship": "Diplomatic Symbol",
+    "narrative": "Consulars use lightsabers as symbols of Jedi authority and for self-defense. The mere display of a lightsaber often grants them diplomatic leverage."
+   },
+   {
+    "target_id": "class_sentinel",
+    "target_type": "Class",
+    "relationship": "Investigation Tool",
+    "narrative": "Sentinels use lightsabers for both combat and as tools for investigation and problem-solving, cutting through locked doors and sealed barriers."
+   },
+   {
+    "target_id": "species_human",
+    "target_type": "Species",
+    "relationship": "Common Wielders",
+    "narrative": "Humans are the most common lightsaber wielders due to their strong connection to the Force and adaptability to lightsaber combat."
+   },
+   {
+    "target_id": "species_miraluka",
+    "target_type": "Species",
+    "relationship": "Force Sight",
+    "narrative": "Miraluka can see through the Force, making them particularly skilled with lightsabers. Their Force sight allows them to perceive their opponents' movements before they happen."
+   },
+   {
+    "target_id": "location_jedi_temple",
+    "target_type": "Location",
+    "relationship": "Construction Site",
+    "narrative": "The Jedi Temple contains the sacred chambers where younglings construct their first lightsabers, aided by the Temple's strong connection to the Force."
+   },
+   {
+    "target_id": "item_kyber_crystal",
+    "target_type": "Item",
+    "relationship": "Power Source",
+    "narrative": "Kyber crystals are the heart of every lightsaber, focusing and amplifying the Force energy. Natural kyber crystals create a particularly potent resonance."
+   }
+  ],
+  "synergy_rules_references": [
+   {
+    "rule_id": "item_lightsaber_jedi_attack_bonus"
+   },
+   {
+    "rule_id": "item_lightsaber_sith_damage_bonus"
+   },
+   {
+    "rule_id": "item_lightsaber_imperial_intimidation"
+   },
+   {
+    "rule_id": "item_lightsaber_guardian_combat_advantage"
+   },
+   {
+    "rule_id": "item_lightsaber_consular_persuasion_bonus"
+   },
+   {
+    "rule_id": "item_lightsaber_sentinel_utility"
+   },
+   {
+    "rule_id": "item_lightsaber_human_force_bonus"
+   },
+   {
+    "rule_id": "item_lightsaber_miraluka_attack_advantage"
+   },
+   {
+    "rule_id": "item_lightsaber_temple_construction_bonus"
+   },
+   {
+    "rule_id": "item_lightsaber_kyber_damage_bonus"
+   }
+  ],
+  "iconic_examples": [
+   "Luke Skywalker's green lightsaber",
+   "Anakin Skywalker's blue lightsaber",
+   "Darth Vader's red lightsaber",
+   "Obi-Wan Kenobi's blue lightsaber",
+   "Mace Windu's purple lightsaber",
+   "Yoda's green lightsaber"
+  ],
+  "famous_users": [
+   "Luke Skywalker",
+   "Anakin Skywalker",
+   "Obi-Wan Kenobi",
+   "Darth Vader",
+   "Mace Windu",
+   "Yoda",
+   "Ahsoka Tano",
+   "Rey"
+  ],
+  "famous_instances": [
+   "The duel on Mustafar between Anakin and Obi-Wan",
+   "Luke's first lightsaber training with Obi-Wan",
+   "The duel in Cloud City between Luke and Vader",
+   "Mace Windu's confrontation with Palpatine",
+   "Rey's discovery of Luke's lightsaber"
+  ],
+  "llm_guidance": {
+   "narrative_hooks": [
+    "A young Force-sensitive discovering their ability to use a lightsaber",
+    "A Jedi's lightsaber being stolen or lost",
+    "A lightsaber being passed down through generations",
+    "A Sith hunting for a specific lightsaber",
+    "A lightsaber being used as a symbol of authority",
+    "A lightsaber being constructed for the first time"
+   ],
+   "adventure_seeds": [
+    "Recovering a lost lightsaber from a dangerous location",
+    "Protecting a young Jedi as they construct their first lightsaber",
+    "Investigating the theft of lightsabers from the Jedi Temple",
+    "Finding a lightsaber in ancient ruins",
+    "Defending against a Sith seeking to claim a lightsaber",
+    "Using a lightsaber to solve a puzzle or open a sealed door"
+   ],
+   "character_connections": [
+    "Characters with Force sensitivity may be drawn to lightsabers",
+    "Characters with Jedi backgrounds have training in lightsaber combat",
+    "Characters with Sith backgrounds may seek to corrupt lightsabers",
+    "Characters with criminal backgrounds may try to steal lightsabers",
+    "Characters with military backgrounds may fear or respect lightsabers"
+   ],
+   "iconic_usage": [
+    "Deflecting blaster bolts in combat",
+    "Cutting through locked doors or barriers",
+    "Providing light in dark environments",
+    "Signaling for help or communication",
+    "Meditation and Force connection",
+    "Ceremonial and diplomatic functions"
+   ],
+   "cultural_impact": "The lightsaber represents the pinnacle of Jedi technology and philosophy. It symbolizes the balance between technology and spirituality, power and restraint. Throughout the galaxy, the sight of a lightsaber inspires hope in some and fear in others, depending on the era and the wielder's alignment.",
+   "technological_significance": "The lightsaber represents advanced technology that combines energy manipulation, crystal focusing, and Force sensitivity. The construction process requires deep understanding of both technology and the Force, making it one of the most sophisticated weapons in the galaxy."
+  },
+  "cost": 0,
+  "weight": 1.0,
+  "stats": {
+   "weapon_stats": {
+    "damage": {
+     "dice_count": 1,
+     "dice_type": 8
+    },
+    "damage_type": "energy",
+    "range": "melee",
+    "critical_rating": 1,
+    "ammo_capacity": 0,
+    "reload_time": "none"
+   }
+  },
+  "properties": [
+   {
+    "property_id": "finesse"
+   },
+   {
+    "property_id": "versatile"
+   },
+   {
+    "property_id": "deflect"
+   },
+   {
+    "property_id": "force_weapon"
+   }
+  ],
+  "modifications": {
+   "slots": 3,
+   "installed": [],
+   "compatible_mods": [
+    {
+     "mod_id": "mod_crystal_focus"
+    },
+    {
+     "mod_id": "mod_emitter_matrix"
+    },
+    {
+     "mod_id": "mod_power_cell"
+    },
+    {
+     "mod_id": "mod_hilt_grip"
+    }
+   ]
+  },
+  "effects": [
+   {
+    "effect": "grant_action",
+    "parameters": {
+     "action_name": "Lightsaber Deflect",
+     "action_type": "reaction",
+     "cost": {
+      "type": "reaction",
+      "value": 1
+     },
+     "description": "As a reaction, you can attempt to deflect a ranged weapon attack"
+    }
+   },
+   {
+    "effect": "grant_action",
+    "parameters": {
+     "action_name": "Lightsaber Throw",
+     "action_type": "action",
+     "cost": {
+      "type": "action",
+      "value": 1
+     },
+     "range": 30,
+     "range_unit": "feet",
+     "description": "As an action, you can throw your lightsaber up to 30 feet"
+    }
+   }
+  ],
+  "narrative_outcomes": [
+   {
+    "outcome_id": "outcome_lightsaber_hum"
+   },
+   {
+    "outcome_id": "outcome_force_connection"
+   },
+   {
+    "outcome_id": "outcome_kyber_resonance"
+   },
+   {
+    "outcome_id": "outcome_combat_precision"
+   }
+  ],
+  "themes": [
+   "Balance and harmony",
+   "Power and responsibility",
+   "Tradition and legacy",
+   "Technology and spirituality",
+   "Good vs. evil",
+   "Mastery and discipline"
+  ],
+  "mood": "Mystical and powerful, representing both the heights of Jedi achievement and the weight of their responsibilities"
+ },
+ "validation": {
+  "candidate_urid": "item_lightsaber",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/lightsaber.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

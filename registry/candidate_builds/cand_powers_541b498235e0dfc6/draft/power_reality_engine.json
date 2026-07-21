@@ -1,0 +1,201 @@
+{
+ "record": {
+  "id": "power_reality_engine",
+  "name": "Reality Engine",
+  "power_type": "Tech",
+  "alignment": "Universal",
+  "level": 9,
+  "tags": [
+   "quantum",
+   "reality_manipulation",
+   "creation",
+   "legendary",
+   "god_tier",
+   "omnipotence"
+  ],
+  "power_cost": [
+   {
+    "type": "Tech_Points",
+    "amount": 9
+   }
+  ],
+  "access_rules": {
+   "alignment_required": null,
+   "universal_access": {
+    "allowed": true,
+    "description": "Ultimate reality manipulation technology"
+   }
+  },
+  "narrative": "You activate a quantum device that rewrites reality at the fundamental level, making the impossible merely improbable and the improbable inevitable. The power manifests as reality itself bending to your will—matter appearing from nothing, laws of physics becoming suggestions, the universe accepting your edits to its source code.",
+  "flavor_text": "\"I dont break reality. I simply convince it to recompile with my preferred parameters.\" - Reality Engineer",
+  "manifestation": [
+   {
+    "type": "Somatic",
+    "description": "interfacing with reality manipulation device"
+   },
+   {
+    "type": "Mental Focus",
+    "description": "programming desired changes to universal constants"
+   }
+  ],
+  "casting_time": "1 Action",
+  "range": "Unlimited",
+  "duration": "Permanent (until dispelled)",
+  "base_effect": {
+   "description": "You alter reality itself to achieve nearly any effect.",
+   "mechanics": [
+    {
+     "type": "reality_manipulation",
+     "value": {
+      "scope": "fundamental_reality",
+      "limitations": "minimal",
+      "permanence": true
+     },
+     "target_scopes": [
+      "reality"
+     ],
+     "notes": "Alter reality to create nearly any effect - limited only by imagination and GM discretion"
+    }
+   ]
+  },
+  "class_synergies": [
+   {
+    "class_id": "engineer",
+    "narrative": "The Engineer doesn't just use Reality Engine—they understand it. Their grasp of quantum mechanics and reality's underlying architecture lets them make changes that persist, edits that become permanent features rather than temporary patches.",
+    "mechanical_benefit": [
+     {
+      "type": "perfect_implementation",
+      "value": {
+       "stability": "absolute",
+       "resistance": "immune_to_dispel"
+      },
+      "target_scopes": [
+       "reality_changes"
+      ],
+      "notes": "Engineer reality changes are more stable and harder to dispel (DC +5)."
+     }
+    ]
+   }
+  ],
+  "species_synergies": [
+   {
+    "species_id": "human",
+    "narrative": "Human creativity makes them natural reality manipulators. They envision possibilities others can't conceive, their flexible minds finding applications that rigid thinkers miss—imagination becoming the only true limit.",
+    "mechanical_benefit": [
+     {
+      "type": "reduced_cost",
+      "value": {
+       "tech_points": 7
+      },
+      "target_scopes": [
+       "self"
+      ],
+      "notes": "Humans can use Reality Engine for only 7 Tech Points due to natural aptitude."
+     }
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction_id": "imperial",
+    "narrative": "The Empire uses Reality Engine as ultimate control tool—rewriting history, erasing dissent from reality itself, making Imperial supremacy a fundamental law of physics. Power through literally redefining what's possible.",
+    "mechanical_benefit": [
+     {
+      "type": "combat_application",
+      "timing": "bonus_action",
+      "target_scopes": [
+       "reality"
+      ],
+      "notes": "Imperial users can activate Reality Engine as bonus action for tactical reality edits."
+     }
+    ]
+   }
+  ],
+  "llm_guidance": {
+   "roleplay_guidance": "Describe reality itself changing—impossible becoming possible, physics rewriting, matter appearing or vanishing. Show the universe accepting the changes as if they'd always been true. The power should feel godlike and terrifying in its scope.",
+   "tactical_notes": "Reality Engine costs 9 Tech Points but can do ANYTHING. This is literal reality manipulation—create matter, alter physics, rewrite history. Game-breaking by design. Reserve for climactic moments or face campaign-breaking consequences. Permanent changes require GM approval.",
+   "narrative_hooks": [
+    "Reality manipulation creates unexpected butterfly effects",
+    "Altering reality attracts attention from cosmic entities",
+    "The power to rewrite existence creates moral dilemmas about acceptable use"
+   ]
+  },
+  "image_generation": {
+   "base_prompt": "(masterpiece, best quality, cinematic still:1.2), Star Wars, A dramatic digital painting of reality being rewritten by quantum technology. Space itself tears and reforms, impossible geometries materializing as universal constants change. Matter appears from nothing, physics bend and break, the fabric of existence editing itself in real-time. A figure stands at the center of reality manipulation, surrounded by the power to make the impossible real. (cinematic film still:1.1), (epic concept art:1.05), (highly detailed:1.2), volumetric reality distortion, by Beeple",
+   "base_negative_keywords": [
+    "static",
+    "boring",
+    "cartoonish",
+    "blurry",
+    "unclear",
+    "small",
+    "weak",
+    "amateur",
+    "simple",
+    "generic",
+    "placeholder",
+    "template",
+    "basic",
+    "low quality",
+    "distorted",
+    "amateurish",
+    "clichéd",
+    "overused",
+    "stock photo",
+    "unoriginal",
+    "predictable",
+    "conventional",
+    "tactical maneuver",
+    "battlefield positioning",
+    "combat intensity",
+    "strategic movement"
+   ]
+  },
+  "ui": {
+   "icon": "/assets/icons/powers/reality_engine.svg",
+   "color": "#0066CC"
+  }
+ },
+ "validation": {
+  "candidate_urid": "power_reality_engine",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/powers/power_reality_engine.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

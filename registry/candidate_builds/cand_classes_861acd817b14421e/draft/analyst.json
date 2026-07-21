@@ -1,0 +1,218 @@
+{
+ "record": {
+  "id": "analyst",
+  "name": "Analyst",
+  "class_id": "diplomat",
+  "base_class": "diplomat",
+  "tags": [
+   "diplomat",
+   "analyst",
+   "intelligence_based",
+   "investigator",
+   "perceptive",
+   "information_gatherer",
+   "skill_specialist",
+   "analytical",
+   "tactical"
+  ],
+  "description": "Analysts are masters of information gathering and strategic analysis. They excel at processing complex data, identifying patterns, and providing crucial insights that inform diplomatic decisions and strategies.",
+  "specialization_features": [
+   "information_analysis",
+   "intelligence_gathering",
+   "strategic_insights",
+   "analyst_mastery",
+   "legendary_analyst"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master analysts excel at processing complex data, identifying patterns, and providing crucial insights.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Illuminated Data Slates",
+    "Cryptic Notes Scrawled on Arms"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "feat1_level3",
+    "feature_id": "feat1",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Analytical Mind. You can add your proficiency bonus to any Intelligence, Wisdom, or Charisma check you make that doesn't already include your proficiency bonus.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "diplomatic_piercing (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "As the Analyst's words cut deep, the target takes +1d4 piercing damage."
+     }
+    ]
+   },
+   {
+    "node_id": "feat2_level7",
+    "feature_id": "feat2",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "Information Network. You can use your action to ask a creature you can see within 60 feet of you one question about something you both are aware of, and the answer is revealed to you.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "long_range_diplomacy",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "attack_action",
+        "op": "exists"
+       }
+      ],
+      "notes": "The diplomat's sharp mind and quick reflexes allow their words to carry farther than usual, as if infused with an otherworldly energy. Their voice rings out across the battlefield, striking true at a distance of up to 30 feet."
+     }
+    ]
+   },
+   {
+    "node_id": "feat3_level11",
+    "feature_id": "feat3",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "Pattern Recognition. You can use your bonus action to analyze a creature you can see within 60 feet of you, and gain advantage on one ability check or attack roll against that creature until the start of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_precognition",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_score",
+        "op": "equals",
+        "value": "wisdom"
+       }
+      ],
+      "notes": "By analyzing the subtleties of an opponent's stance, a diplomat gains insight into their vulnerabilities, providing a chance to apply pressure in a precise and calculated manner."
+     }
+    ]
+   },
+   {
+    "node_id": "feat4_level15",
+    "feature_id": "feat4",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "Strategic Analysis. You can use your action to analyze a situation, and gain advantage on one ability check or attack roll against a creature you have analyzed until the start of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_reflection (snake_case)",
+      "target_scopes": [
+       "self",
+       "enemy"
+      ],
+      "conditions": [
+       {
+        "key": "trigger_event",
+        "op": "equals",
+        "value": "on_hit"
+       }
+      ],
+      "notes": "The diplomat's analytical mind flashes with insight, granting them a burst of precision. On hitting an enemy with a melee attack, they gain advantage on their next attack roll against that foe."
+     }
+    ]
+   },
+   {
+    "node_id": "feat5_level18",
+    "feature_id": "feat5",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "Master Analyst. You can use your bonus action to analyze a creature you can see within 60 feet of you, and gain advantage on all ability checks and attack rolls against that creature until the start of your next turn.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "platinum_precognition",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "condition_type",
+        "op": "equals",
+        "value": "on_damage_taken"
+       }
+      ],
+      "notes": "As a burst of analytical insight, you sense an opportunity to turn adversity into advantage. Your mind quickly recalculates the odds, allowing you to mitigate the damage by +1d4."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber hum",
+    "Holocron glow"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Coiled, like a Rancor's waiting strike",
+    "energy_signature": "A swirling aura of blue-white Force energy"
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone Analyst stands ready, amidst a sea of data streams",
+    "contextual_modifiers": [
+     "In a dimly lit Jedi Temple chamber",
+     "With a faint, holographic display hovering nearby"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "analyst",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/diplomat_subclasses/diplomat_analyst.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

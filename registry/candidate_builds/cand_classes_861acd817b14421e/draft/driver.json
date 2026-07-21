@@ -1,0 +1,177 @@
+{
+ "record": {
+  "id": "driver",
+  "name": "Driver",
+  "class_id": "explorer",
+  "base_class": "explorer",
+  "tags": [
+   "explorer",
+   "driver",
+   "pilot",
+   "vehicle_specialist",
+   "dexterity_based",
+   "navigator",
+   "agile",
+   "frontier",
+   "tactical"
+  ],
+  "description": "Drivers are masters of ground vehicles and speed, using their piloting skills to navigate dangerous terrain and transport allies through the most challenging environments.",
+  "specialization_features": [
+   "vehicle_expertise",
+   "terrain_navigation",
+   "speed_mastery",
+   "transport_specialist",
+   "legendary_driver"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Piloting virtuosos who command speed and precision on any terrain.",
+   "role_in_group": "Navigator",
+   "visual_signals": [
+    "Signal of Speed",
+    "Signal of Precision"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "driver-speed-vision-level-3",
+    "feature_id": "driving_speed_vision",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain advantage on any Intelligence, Wisdom, or Charisma saving throw against a vehicle's hazard. While piloting a ground vehicle, you have darkvision out to 60 feet.\n",
+    "effects": [
+     {
+      "type": "ability_saving_throw_advantage",
+      "value": "intelligence"
+     },
+     {
+      "type": "ability_saving_throw_advantage",
+      "value": "wisdom"
+     },
+     {
+      "type": "perception_ability_change",
+      "value": "darkvision"
+     }
+    ]
+   },
+   {
+    "node_id": "vehicle-handling-level-7",
+    "feature_id": "vehicle_handling",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You can add your proficiency bonus to any ability check you make that involves operating a ground vehicle. When you are the driver of a ground vehicle, you can use your reaction to take the vehicle's speed as an opportunity attack.\n",
+    "effects": [
+     {
+      "type": "ability_check_proficiency_bonus",
+      "value": "ground_vehicle_operation"
+     },
+     {
+      "type": "opportunity_attack",
+      "value": "takes the vehicle's speed"
+     }
+    ]
+   },
+   {
+    "node_id": "terrain-master-level-11",
+    "feature_id": "terrain_master",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain a +1 bonus to your initiative. When you are driving through difficult terrain, you can use your reaction to move the vehicle up to 10 feet without hindering it.\n",
+    "effects": [
+     {
+      "type": "initiative_bonus",
+      "value": 1
+     }
+    ]
+   },
+   {
+    "node_id": "survival-specialist-level-15",
+    "feature_id": "survival_specialist",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You learn to navigate even the most treacherous terrain. When you are piloting a ground vehicle, you can use your reaction to take a short or long rest.\n",
+    "effects": [
+     {
+      "type": "ability_reaction_rest",
+      "value": "short_or_long"
+     }
+    ]
+   },
+   {
+    "node_id": "ace-driver-level-18",
+    "feature_id": "ace_driver",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You have expertise in two skills of your choice that involve operating a ground vehicle. When you are the driver of a ground vehicle, you can use your reaction to make an opportunity attack.\n",
+    "effects": [
+     {
+      "type": "skill_expertise",
+      "value": "expertise_in_two_vehicle_skills"
+     },
+     {
+      "type": "opportunity_attack",
+      "value": "makes an opportunity attack"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Lightsaber Hilt",
+    "Speeder Bike"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assuming a crouched stance with knees bent and weight evenly distributed between both feet, ready to pounce into action.",
+    "energy_signature": "Surrounding the Driver's lightsaber is an aura of kinetic energy, pulsating with a bright blue light that seems to be fueled by their raw power and speed."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a highly detailed image of a skilled Driver navigating a treacherous asteroid field at high speeds in a sleek starfighter.",
+    "contextual_modifiers": [
+     "Show the pilot wearing a distinctive black and silver flight suit",
+     "Highlight the starfighter's advanced shields and armor plating"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "driver",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/explorer_subclasses/explorer_driver.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

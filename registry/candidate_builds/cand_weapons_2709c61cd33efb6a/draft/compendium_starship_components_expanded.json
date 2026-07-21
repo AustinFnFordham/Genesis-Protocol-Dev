@@ -1,0 +1,1147 @@
+{
+ "record": {
+  "id": "compendium_starship_components_expanded",
+  "category": "equipment",
+  "subcategory": "starship_components",
+  "tags": [
+   "equipment",
+   "compendium",
+   "starship_components",
+   "utility",
+   "space",
+   "rare_to_legendary",
+   "advanced",
+   "specialized",
+   "high_tech",
+   "exotic",
+   "varied_rarity"
+  ],
+  "starship_components_expanded": [
+   {
+    "id": "ship_engine_class_1",
+    "name": "Class 1 Hyperdrive",
+    "description": "A basic hyperdrive unit that provides standard hyperspace travel capabilities for small vessels.",
+    "type": "Starship Component",
+    "subtype": "Engine",
+    "cost": 50000,
+    "rarity": 3,
+    "weight": 1000.0,
+    "tags": [
+     "starship",
+     "engine",
+     "hyperdrive",
+     "class_1",
+     "basic",
+     "hyperspace"
+    ],
+    "properties": [
+     "hyperspace_travel",
+     "basic_propulsion",
+     "standard_speed"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "hyperspace_travel",
+     "basic_propulsion",
+     "standard_speed"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "hyperspace_jump",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "hyperdrive_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform hyperspace jumps with Class 1 hyperdrive"
+     }
+    ]
+   },
+   {
+    "id": "ship_engine_class_0.5",
+    "name": "Class 0.5 Hyperdrive",
+    "description": "An advanced hyperdrive that provides extremely fast hyperspace travel, often used by military and luxury vessels.",
+    "type": "Starship Component",
+    "subtype": "Engine",
+    "cost": 200000,
+    "rarity": 5,
+    "weight": 800.0,
+    "tags": [
+     "starship",
+     "engine",
+     "hyperdrive",
+     "class_0.5",
+     "advanced",
+     "military"
+    ],
+    "properties": [
+     "ultra_fast_hyperspace",
+     "advanced_propulsion",
+     "military_grade"
+    ],
+    "modifications": {
+     "slots": 8,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ultra_fast_hyperspace",
+     "advanced_propulsion",
+     "military_speed"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "ultra_fast_hyperspace_jump",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_hyperdrive_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform ultra-fast hyperspace jumps with Class 0.5 hyperdrive"
+     }
+    ]
+   },
+   {
+    "id": "ship_engine_ion_drive",
+    "name": "Ion Drive Engine",
+    "description": "A powerful ion propulsion system that provides excellent sublight speed and maneuverability.",
+    "type": "Starship Component",
+    "subtype": "Engine",
+    "cost": 75000,
+    "rarity": 4,
+    "weight": 1200.0,
+    "tags": [
+     "starship",
+     "engine",
+     "ion_drive",
+     "sublight",
+     "maneuverability",
+     "powerful"
+    ],
+    "properties": [
+     "ion_propulsion",
+     "high_maneuverability",
+     "sublight_speed"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ion_propulsion",
+     "high_maneuverability",
+     "sublight_speed"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "piloting_checks",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "ion_drive_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on piloting checks when ion drive is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_engine_repulsorlift",
+    "name": "Repulsorlift Engine",
+    "description": "A repulsorlift system that provides atmospheric flight and hover capabilities for starships.",
+    "type": "Starship Component",
+    "subtype": "Engine",
+    "cost": 30000,
+    "rarity": 2,
+    "weight": 500.0,
+    "tags": [
+     "starship",
+     "engine",
+     "repulsorlift",
+     "atmospheric",
+     "hover",
+     "flight"
+    ],
+    "properties": [
+     "atmospheric_flight",
+     "hover_capability",
+     "repulsorlift"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "atmospheric_flight",
+     "hover_capability",
+     "repulsorlift_operation"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "atmospheric_flight",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "repulsorlift_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform atmospheric flight with repulsorlift engine"
+     }
+    ]
+   },
+   {
+    "id": "ship_weapon_laser_cannon",
+    "name": "Laser Cannon Turret",
+    "description": "A standard laser cannon turret that provides reliable anti-fighter and anti-ship firepower.",
+    "type": "Starship Component",
+    "subtype": "Weapon",
+    "cost": 25000,
+    "rarity": 2,
+    "weight": 300.0,
+    "tags": [
+     "starship",
+     "weapon",
+     "laser_cannon",
+     "turret",
+     "anti_fighter",
+     "standard"
+    ],
+    "properties": [
+     "laser_weapon",
+     "turret_mounted",
+     "anti_fighter",
+     "standard"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "laser_weapon_fire",
+     "turret_operation",
+     "anti_fighter_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "laser_cannon_fire",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "laser_cannon_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can fire laser cannon at enemy targets"
+     }
+    ]
+   },
+   {
+    "id": "ship_weapon_ion_cannon",
+    "name": "Ion Cannon Battery",
+    "description": "An ion cannon battery that can disable enemy ships and systems without causing permanent damage.",
+    "type": "Starship Component",
+    "subtype": "Weapon",
+    "cost": 40000,
+    "rarity": 3,
+    "weight": 400.0,
+    "tags": [
+     "starship",
+     "weapon",
+     "ion_cannon",
+     "battery",
+     "disable",
+     "non_lethal"
+    ],
+    "properties": [
+     "ion_weapon",
+     "disable_capability",
+     "non_lethal",
+     "system_damage"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "ion_weapon_fire",
+     "disable_operation",
+     "system_damage"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "ion_cannon_fire",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "ion_cannon_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can fire ion cannon to disable enemy systems"
+     }
+    ]
+   },
+   {
+    "id": "ship_weapon_proton_torpedo",
+    "name": "Proton Torpedo Launcher",
+    "description": "A torpedo launcher that fires powerful proton torpedoes for devastating anti-ship attacks.",
+    "type": "Starship Component",
+    "subtype": "Weapon",
+    "cost": 60000,
+    "rarity": 4,
+    "weight": 200.0,
+    "tags": [
+     "starship",
+     "weapon",
+     "proton_torpedo",
+     "launcher",
+     "anti_ship",
+     "devastating"
+    ],
+    "properties": [
+     "proton_torpedo",
+     "anti_ship",
+     "devastating",
+     "guided"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "proton_torpedo_launch",
+     "anti_ship_attack",
+     "devastating_damage"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "proton_torpedo_launch",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "torpedo_launcher_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can launch proton torpedoes at enemy ships"
+     }
+    ]
+   },
+   {
+    "id": "ship_weapon_concussion_missile",
+    "name": "Concussion Missile Launcher",
+    "description": "A missile launcher that fires concussion missiles for area denial and anti-fighter operations.",
+    "type": "Starship Component",
+    "subtype": "Weapon",
+    "cost": 35000,
+    "rarity": 3,
+    "weight": 150.0,
+    "tags": [
+     "starship",
+     "weapon",
+     "concussion_missile",
+     "launcher",
+     "area_denial",
+     "anti_fighter"
+    ],
+    "properties": [
+     "concussion_missile",
+     "area_denial",
+     "anti_fighter",
+     "explosive"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "concussion_missile_launch",
+     "area_denial",
+     "anti_fighter_combat"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "concussion_missile_launch",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "missile_launcher_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can launch concussion missiles for area denial"
+     }
+    ]
+   },
+   {
+    "id": "ship_shield_standard",
+    "name": "Standard Shield Generator",
+    "description": "A standard shield generator that provides basic protection against energy weapons and projectiles.",
+    "type": "Starship Component",
+    "subtype": "Shield",
+    "cost": 30000,
+    "rarity": 2,
+    "weight": 400.0,
+    "tags": [
+     "starship",
+     "shield",
+     "generator",
+     "standard",
+     "protection",
+     "energy"
+    ],
+    "properties": [
+     "energy_protection",
+     "standard_shield",
+     "basic_defense"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "energy_protection",
+     "standard_shield",
+     "basic_defense"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "energy_damage",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "shield_generator_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Resistance to energy damage when shield generator is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_shield_advanced",
+    "name": "Advanced Shield Generator",
+    "description": "An advanced shield generator that provides superior protection and can be modulated for different threats.",
+    "type": "Starship Component",
+    "subtype": "Shield",
+    "cost": 80000,
+    "rarity": 4,
+    "weight": 600.0,
+    "tags": [
+     "starship",
+     "shield",
+     "generator",
+     "advanced",
+     "superior",
+     "modulated"
+    ],
+    "properties": [
+     "superior_protection",
+     "modulated_shield",
+     "advanced_defense"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "superior_protection",
+     "modulated_shield",
+     "advanced_defense"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "all_damage",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_shield_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced resistance to all damage when advanced shield is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_shield_particle",
+    "name": "Particle Shield Generator",
+    "description": "A specialized shield generator that provides excellent protection against physical projectiles and debris.",
+    "type": "Starship Component",
+    "subtype": "Shield",
+    "cost": 45000,
+    "rarity": 3,
+    "weight": 350.0,
+    "tags": [
+     "starship",
+     "shield",
+     "particle",
+     "physical",
+     "projectile",
+     "debris"
+    ],
+    "properties": [
+     "physical_protection",
+     "particle_shield",
+     "projectile_defense"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "physical_protection",
+     "particle_shield",
+     "projectile_defense"
+    ],
+    "effects": [
+     {
+      "type": "grant_resistance",
+      "value": "physical_damage",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "particle_shield_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Enhanced resistance to physical damage when particle shield is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_life_support_basic",
+    "name": "Basic Life Support System",
+    "description": "A standard life support system that provides oxygen, temperature control, and basic environmental regulation.",
+    "type": "Starship Component",
+    "subtype": "Life Support",
+    "cost": 15000,
+    "rarity": 1,
+    "weight": 200.0,
+    "tags": [
+     "starship",
+     "life_support",
+     "basic",
+     "oxygen",
+     "temperature",
+     "environmental"
+    ],
+    "properties": [
+     "oxygen_supply",
+     "temperature_control",
+     "environmental_regulation"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "oxygen_supply",
+     "temperature_control",
+     "environmental_regulation"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "life_support_operation",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "life_support_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can maintain life support for crew and passengers"
+     }
+    ]
+   },
+   {
+    "id": "ship_life_support_advanced",
+    "name": "Advanced Life Support System",
+    "description": "An advanced life support system with enhanced environmental controls and emergency backup systems.",
+    "type": "Starship Component",
+    "subtype": "Life Support",
+    "cost": 40000,
+    "rarity": 3,
+    "weight": 300.0,
+    "tags": [
+     "starship",
+     "life_support",
+     "advanced",
+     "enhanced",
+     "emergency",
+     "backup"
+    ],
+    "properties": [
+     "enhanced_environmental",
+     "emergency_backup",
+     "advanced_controls"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_environmental",
+     "emergency_backup",
+     "advanced_controls"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "survival_checks",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_life_support_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on survival checks when advanced life support is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_life_support_medical",
+    "name": "Medical Life Support System",
+    "description": "A specialized life support system with medical monitoring and treatment capabilities for injured crew.",
+    "type": "Starship Component",
+    "subtype": "Life Support",
+    "cost": 60000,
+    "rarity": 4,
+    "weight": 400.0,
+    "tags": [
+     "starship",
+     "life_support",
+     "medical",
+     "monitoring",
+     "treatment",
+     "specialized"
+    ],
+    "properties": [
+     "medical_monitoring",
+     "treatment_capability",
+     "specialized_life_support"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "medical_monitoring",
+     "treatment_capability",
+     "specialized_life_support"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "medicine_checks",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "medical_life_support_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on medicine checks when medical life support is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_nav_computer_basic",
+    "name": "Basic Navigation Computer",
+    "description": "A standard navigation computer that provides basic hyperspace calculations and route plotting.",
+    "type": "Starship Component",
+    "subtype": "Navigation",
+    "cost": 10000,
+    "rarity": 1,
+    "weight": 50.0,
+    "tags": [
+     "starship",
+     "navigation",
+     "computer",
+     "basic",
+     "hyperspace",
+     "route_plotting"
+    ],
+    "properties": [
+     "hyperspace_calculations",
+     "route_plotting",
+     "basic_navigation"
+    ],
+    "modifications": {
+     "slots": 2,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "hyperspace_calculations",
+     "route_plotting",
+     "basic_navigation"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "hyperspace_calculation",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "nav_computer_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform hyperspace calculations and route plotting"
+     }
+    ]
+   },
+   {
+    "id": "ship_nav_computer_advanced",
+    "name": "Advanced Navigation Computer",
+    "description": "An advanced navigation computer with sophisticated algorithms for complex routes and emergency calculations.",
+    "type": "Starship Component",
+    "subtype": "Navigation",
+    "cost": 35000,
+    "rarity": 3,
+    "weight": 75.0,
+    "tags": [
+     "starship",
+     "navigation",
+     "computer",
+     "advanced",
+     "sophisticated",
+     "emergency"
+    ],
+    "properties": [
+     "sophisticated_algorithms",
+     "complex_routes",
+     "emergency_calculations"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "sophisticated_algorithms",
+     "complex_routes",
+     "emergency_calculations"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "astrogation_checks",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_nav_computer_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on astrogation checks when advanced navigation computer is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_sensor_array_basic",
+    "name": "Basic Sensor Array",
+    "description": "A standard sensor array that provides basic detection and scanning capabilities for nearby objects and threats.",
+    "type": "Starship Component",
+    "subtype": "Sensors",
+    "cost": 20000,
+    "rarity": 2,
+    "weight": 100.0,
+    "tags": [
+     "starship",
+     "sensors",
+     "array",
+     "basic",
+     "detection",
+     "scanning"
+    ],
+    "properties": [
+     "basic_detection",
+     "scanning_capability",
+     "threat_identification"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "basic_detection",
+     "scanning_capability",
+     "threat_identification"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "sensor_scan",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "sensor_array_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can perform sensor scans of nearby objects and threats"
+     }
+    ]
+   },
+   {
+    "id": "ship_sensor_array_advanced",
+    "name": "Advanced Sensor Array",
+    "description": "An advanced sensor array with enhanced detection range, stealth detection, and detailed analysis capabilities.",
+    "type": "Starship Component",
+    "subtype": "Sensors",
+    "cost": 50000,
+    "rarity": 4,
+    "weight": 150.0,
+    "tags": [
+     "starship",
+     "sensors",
+     "array",
+     "advanced",
+     "enhanced",
+     "stealth_detection"
+    ],
+    "properties": [
+     "enhanced_detection",
+     "stealth_detection",
+     "detailed_analysis"
+    ],
+    "modifications": {
+     "slots": 5,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "enhanced_detection",
+     "stealth_detection",
+     "detailed_analysis"
+    ],
+    "effects": [
+     {
+      "type": "grant_advantage",
+      "value": "perception_checks",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "advanced_sensor_array_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Advantage on perception checks when advanced sensor array is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_cloaking_device",
+    "name": "Cloaking Device",
+    "description": "A sophisticated cloaking device that can render the starship invisible to most sensors and visual detection.",
+    "type": "Starship Component",
+    "subtype": "Specialized System",
+    "cost": 500000,
+    "rarity": 6,
+    "weight": 800.0,
+    "tags": [
+     "starship",
+     "cloaking",
+     "device",
+     "invisible",
+     "sophisticated",
+     "stealth"
+    ],
+    "properties": [
+     "invisibility",
+     "sensor_evasion",
+     "stealth_technology",
+     "sophisticated"
+    ],
+    "modifications": {
+     "slots": 10,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "invisibility",
+     "sensor_evasion",
+     "stealth_technology"
+    ],
+    "effects": [
+     {
+      "type": "apply_status",
+      "value": "cloaked",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "cloaking_device_active",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Starship becomes invisible when cloaking device is active"
+     }
+    ]
+   },
+   {
+    "id": "ship_tractor_beam",
+    "name": "Tractor Beam Generator",
+    "description": "A tractor beam generator that can capture and manipulate objects and smaller vessels in space.",
+    "type": "Starship Component",
+    "subtype": "Specialized System",
+    "cost": 75000,
+    "rarity": 4,
+    "weight": 300.0,
+    "tags": [
+     "starship",
+     "tractor_beam",
+     "generator",
+     "capture",
+     "manipulation",
+     "space"
+    ],
+    "properties": [
+     "object_capture",
+     "vessel_manipulation",
+     "tractor_technology"
+    ],
+    "modifications": {
+     "slots": 6,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "object_capture",
+     "vessel_manipulation",
+     "tractor_technology"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "tractor_beam_operation",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "tractor_beam_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can use tractor beam to capture and manipulate objects"
+     }
+    ]
+   },
+   {
+    "id": "ship_escape_pod",
+    "name": "Escape Pod System",
+    "description": "A system of escape pods that can safely evacuate crew and passengers in emergency situations.",
+    "type": "Starship Component",
+    "subtype": "Specialized System",
+    "cost": 25000,
+    "rarity": 2,
+    "weight": 200.0,
+    "tags": [
+     "starship",
+     "escape_pod",
+     "system",
+     "evacuation",
+     "emergency",
+     "safety"
+    ],
+    "properties": [
+     "crew_evacuation",
+     "emergency_safety",
+     "escape_system"
+    ],
+    "modifications": {
+     "slots": 3,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "crew_evacuation",
+     "emergency_safety",
+     "escape_system"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "escape_pod_launch",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "escape_pod_system_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can launch escape pods for crew evacuation"
+     }
+    ]
+   },
+   {
+    "id": "ship_cargo_hold",
+    "name": "Expanded Cargo Hold",
+    "description": "An expanded cargo hold system that provides additional storage capacity for goods and equipment.",
+    "type": "Starship Component",
+    "subtype": "Specialized System",
+    "cost": 30000,
+    "rarity": 2,
+    "weight": 500.0,
+    "tags": [
+     "starship",
+     "cargo_hold",
+     "expanded",
+     "storage",
+     "capacity",
+     "goods"
+    ],
+    "properties": [
+     "additional_storage",
+     "cargo_capacity",
+     "goods_storage"
+    ],
+    "modifications": {
+     "slots": 4,
+     "installed": []
+    },
+    "narrative_outcomes": [
+     "additional_storage",
+     "cargo_capacity",
+     "goods_storage"
+    ],
+    "effects": [
+     {
+      "type": "grant_action",
+      "value": "cargo_storage",
+      "target_scopes": [
+       "starship"
+      ],
+      "conditions": [
+       {
+        "key": "cargo_hold_operational",
+        "op": "equals",
+        "value": true
+       }
+      ],
+      "notes": "Can store additional cargo and equipment in expanded hold"
+     }
+    ]
+   }
+  ]
+ },
+ "validation": {
+  "candidate_urid": "compendium_starship_components_expanded",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/items/starship_components_expanded.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -1,0 +1,522 @@
+{
+ "record": {
+  "id": "companion_weapon_smith",
+  "name": "Weapon Smith",
+  "personal_name": "Grakk'orr",
+  "gender": "Male",
+  "species": "Trandoshan",
+  "character_level": 4,
+  "character_sheet": {
+   "species_id": "trandoshan",
+   "classes": [
+    {
+     "class_id": "engineer",
+     "level": 4
+    }
+   ],
+   "ability_scores": {
+    "strength": {
+     "base": 16,
+     "modifier": 3
+    },
+    "dexterity": {
+     "base": 14,
+     "modifier": 2
+    },
+    "constitution": {
+     "base": 14,
+     "modifier": 2
+    },
+    "intelligence": {
+     "base": 12,
+     "modifier": 1
+    },
+    "wisdom": {
+     "base": 10,
+     "modifier": 0
+    },
+    "charisma": {
+     "base": 8,
+     "modifier": -1
+    }
+   },
+   "hit_points": {
+    "maximum": 32,
+    "current": 32
+   },
+   "strain": {
+    "maximum": 12,
+    "current": 12
+   },
+   "armor_class": 13,
+   "initiative": 2,
+   "speed": 30,
+   "size": "Medium",
+   "skills": [
+    {
+     "name": "Technology",
+     "proficiency": true,
+     "modifier": 5
+    },
+    {
+     "name": "Athletics",
+     "proficiency": true,
+     "modifier": 5
+    },
+    {
+     "name": "Perception",
+     "proficiency": true,
+     "modifier": 2
+    },
+    {
+     "name": "Investigation",
+     "proficiency": true,
+     "modifier": 3
+    },
+    {
+     "name": "Acrobatics",
+     "proficiency": false,
+     "modifier": 2
+    },
+    {
+     "name": "Sleight of Hand",
+     "proficiency": false,
+     "modifier": 2
+    },
+    {
+     "name": "Stealth",
+     "proficiency": false,
+     "modifier": 2
+    },
+    {
+     "name": "Insight",
+     "proficiency": false,
+     "modifier": 0
+    },
+    {
+     "name": "Survival",
+     "proficiency": false,
+     "modifier": 0
+    },
+    {
+     "name": "Deception",
+     "proficiency": false,
+     "modifier": -1
+    },
+    {
+     "name": "Intimidation",
+     "proficiency": false,
+     "modifier": 1
+    },
+    {
+     "name": "Performance",
+     "proficiency": false,
+     "modifier": -1
+    },
+    {
+     "name": "Persuasion",
+     "proficiency": false,
+     "modifier": -1
+    }
+   ],
+   "languages": [
+    "Basic",
+    "Trandoshan"
+   ],
+   "equipment": [
+    "masterwork_forge_tools",
+    "weapon_blueprints",
+    "quality_materials",
+    "testing_range_access",
+    "security_system",
+    "apprentice_assistant"
+   ],
+   "features": [
+    {
+     "name": "Trandoshan Resilience",
+     "description": "You have advantage on saving throws against poison, and you have resistance against poison damage.",
+     "effects": [
+      {
+       "type": "grant_advantage",
+       "value": "saving_throws_poison"
+      },
+      {
+       "type": "grant_resistance",
+       "value": "poison"
+      }
+     ]
+    },
+    {
+     "name": "Master Craftsman",
+     "description": "You have advantage on Technology checks when crafting or modifying weapons. You can create custom modifications for weapons.",
+     "effects": [
+      {
+       "type": "grant_advantage",
+       "value": "technology_weapon_crafting",
+       "conditions": [
+        {
+         "key": "action_type",
+         "op": "in",
+         "value": [
+          "craft_weapon",
+          "modify_weapon"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Weapon Expertise",
+     "description": "You can identify the quality and origin of weapons with a successful Technology check. You know the best ways to maintain and repair weapons.",
+     "effects": [
+      {
+       "type": "grant_advantage",
+       "value": "technology_weapon_identification",
+       "conditions": [
+        {
+         "key": "action_type",
+         "op": "equals",
+         "value": "identify_weapon"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "shop_services": {
+   "weapon_sales": {
+    "description": "Standard weapons and ammunition for sale",
+    "inventory": [
+     "blaster_pistol_standard",
+     "blaster_rifle_standard",
+     "vibroblade_standard",
+     "thermal_detonator",
+     "ammunition_packs"
+    ],
+    "pricing": "Standard market prices"
+   },
+   "weapon_modifications": {
+    "description": "Custom modifications and upgrades for existing weapons",
+    "services": [
+     "Extended barrel for increased range",
+     "Enhanced power cell for increased damage",
+     "Custom grip for improved accuracy",
+     "Silencer attachment",
+     "Scope or targeting system"
+    ],
+    "pricing": "500-2000 credits per modification",
+    "time_required": "1-3 days depending on complexity"
+   },
+   "custom_weapons": {
+    "description": "Bespoke weapon creation to customer specifications",
+    "capabilities": [
+     "Custom blaster designs",
+     "Specialized melee weapons",
+     "Concealed weapons",
+     "Weapons with unique properties"
+    ],
+    "pricing": "2000-10000 credits depending on complexity",
+    "time_required": "1-2 weeks"
+   },
+   "weapon_repair": {
+    "description": "Repair and maintenance services for damaged weapons",
+    "services": [
+     "Power cell replacement",
+     "Barrel realignment",
+     "Circuit repair",
+     "General maintenance"
+    ],
+    "pricing": "100-500 credits depending on damage",
+    "time_required": "1-6 hours"
+   },
+   "weapon_training": {
+    "description": "Basic training in weapon maintenance and safety",
+    "courses": [
+     "Weapon safety and maintenance",
+     "Basic marksmanship",
+     "Weapon customization basics"
+    ],
+    "pricing": "200 credits per course",
+    "time_required": "4-8 hours"
+   }
+  },
+  "special_rules": [
+   "As a shop keeper, this weapon smith operates a business and has regular customers.",
+   "The smith can provide information about local weapon laws and regulations.",
+   "The smith has connections to other craftsmen and suppliers in the area.",
+   "The smith may offer discounts to regular customers or those who bring interesting materials.",
+   "The smith can identify the origin and quality of weapons brought to them."
+  ],
+  "ai_behavior": "This Trandoshan weapon smith is a skilled craftsman who takes great pride in their work. They are direct and businesslike, but appreciate customers who understand quality and craftsmanship.\n\n**Personality Traits:**\n- Proud of their work and expects others to recognize quality\n- Direct and honest in business dealings\n- Protective of their workshop and tools\n- Enjoys discussing weapon design and craftsmanship\n- Suspicious of those who don't respect weapons or safety\n\n**Motivations:**\n- Primary goal is to create the best weapons possible\n- Wants to maintain a good reputation in the community\n- Seeks interesting materials and designs to work with\n- Values loyalty and repeat customers\n\n**Business Behavior:**\n- Fair but firm in pricing and negotiations\n- Will refuse work that doesn't meet their standards\n- Offers advice on weapon selection and maintenance\n- Remembers regular customers and their preferences\n\n**Social Behavior:**\n- Respectful but not overly friendly\n- Appreciates customers who understand craftsmanship\n- May be gruff with those who don't respect weapons\n- Will share knowledge with those who show genuine interest\n\n**Special Abilities:**\n- Can identify weapon quality and origin at a glance\n- Knows the best materials and suppliers\n- Can create custom modifications and designs\n- Has connections to other craftsmen and suppliers\n",
+  "narrative_profile": {
+   "personality_traits": [
+    "I take great pride in my work and expect others to recognize quality.",
+    "I'm direct and honest in all my business dealings.",
+    "I enjoy discussing weapon design and craftsmanship with knowledgeable customers.",
+    "I'm protective of my workshop and the tools of my trade."
+   ],
+   "ideals": [
+    "Quality: I will never compromise on the quality of my work.",
+    "Honesty: I deal fairly with all my customers.",
+    "Craftsmanship: I take pride in creating weapons that are both beautiful and functional."
+   ],
+   "bonds": [
+    "My workshop is my home, and I've invested everything in making it the best.",
+    "I have a few trusted suppliers who provide me with the finest materials.",
+    "I remember every weapon I've ever made and who I made it for."
+   ],
+   "flaws": [
+    "I can be stubborn and refuse to compromise on my standards.",
+    "I'm suspicious of those who don't show proper respect for weapons.",
+    "I sometimes charge more than necessary because I overvalue my work."
+   ]
+  },
+  "visual_description": {
+   "appearance": {
+    "height": "2.1 meters (6'11\")",
+    "build": "Massive and muscular with the characteristic Trandoshan reptilian frame",
+    "skin_tone": "Scales in shades of dark green and brown, with a rough, textured surface",
+    "head_features": "Large, wedge-shaped head with prominent brow ridges, sharp teeth, and slit-pupiled eyes",
+    "facial_features": "Strong jawline, prominent snout, and small ear holes on the sides of his head",
+    "distinctive_markings": "Several old scars across his arms and chest from his warrior days, and a distinctive brand on his left shoulder",
+    "clothing_style": "Heavy leather apron for work, practical clothing that accommodates his size, and protective gear",
+    "accessories": "Tool belt with specialized weapon-making tools, protective goggles, and a collection of weapon prototypes"
+   },
+   "personality_indicators": {
+    "posture": "Confident and imposing, but moves with surprising grace for his size",
+    "expressions": "Intense focus when working, satisfied grin when completing a weapon, respectful nod when greeting customers",
+    "mannerisms": "Frequently tests weapon balance, gestures with large hands when explaining craftsmanship, maintains workshop cleanliness",
+    "voice": "Deep and gravelly with a distinctive Trandoshan accent, speaks with pride about his work"
+   }
+  },
+  "faction_affiliations": [
+   {
+    "faction": "independent",
+    "renown": 2,
+    "status": "respected"
+   },
+   {
+    "faction": "local_businesses",
+    "renown": 3,
+    "status": "trusted"
+   }
+  ],
+  "quest_hooks": [
+   "The smith needs rare materials for a special commission.",
+   "A customer's weapon has been stolen and they need help tracking it down.",
+   "The smith has discovered a flaw in a batch of weapons they sold.",
+   "Local authorities are investigating illegal weapon modifications.",
+   "A rival smith is trying to drive them out of business."
+  ],
+  "inventory_system": {
+   "materials_stock": [
+    "quality_metals",
+    "power_cells",
+    "optical_components",
+    "grip_materials",
+    "barrel_materials"
+   ],
+   "work_in_progress": [
+    "custom_blaster_for_client",
+    "weapon_modifications",
+    "repair_jobs"
+   ],
+   "special_orders": [
+    "bespoke_weapon_commission",
+    "bulk_order_for_gang",
+    "military_contract"
+   ]
+  },
+  "customer_relationships": {
+   "regular_customers": [
+    "Local security forces",
+    "Bounty hunters",
+    "Smugglers",
+    "Adventurers"
+   ],
+   "special_clients": [
+    "High-profile bounty hunters",
+    "Criminal organizations",
+    "Government officials",
+    "Military personnel"
+   ],
+   "reputation_tracks": {
+    "quality": {
+     "description": "Reputation for weapon quality and craftsmanship",
+     "levels": [
+      "Unknown: New to the area",
+      "Respectable: Known for good work",
+      "Renowned: Sought after for quality",
+      "Legendary: The best in the sector"
+     ]
+    },
+    "reliability": {
+     "description": "Reputation for completing work on time and as promised",
+     "levels": [
+      "Unreliable: Often late or poor quality",
+      "Dependable: Usually delivers as promised",
+      "Trustworthy: Always delivers quality work on time",
+      "Infallible: Never fails to deliver excellence"
+     ]
+    }
+   }
+  },
+  "business_operations": {
+   "hours": "Dawn to dusk, 6 days per week",
+   "location": "Industrial district, near other craftsmen",
+   "security": "Basic alarm system and apprentice assistant",
+   "suppliers": "Network of trusted material suppliers",
+   "competitors": "2-3 other weapon smiths in the area",
+   "pricing_policy": [
+    "Standard weapons at market price",
+    "Custom work at premium rates",
+    "Discounts for regular customers",
+    "Special pricing for interesting projects"
+   ]
+  },
+  "romantic_relationship": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Appreciates craftsmanship and quality work",
+    "Values honesty and direct communication",
+    "Respects dedication to craft and skill",
+    "Enjoys discussing weapons and combat"
+   ],
+   "romance_progression": [
+    {
+     "name": "Friendship",
+     "threshold": 0,
+     "description": "Professional friendship with crafting respect",
+     "effects": [
+      "Weapon collaboration opportunities",
+      "Shared crafting work"
+     ]
+    },
+    {
+     "name": "Close Friendship",
+     "threshold": 25,
+     "description": "Deep friendship with crafting admiration",
+     "effects": [
+      "Personal weapon consultations",
+      "Shared crafting interests"
+     ]
+    },
+    {
+     "name": "Romantic Interest",
+     "threshold": 50,
+     "description": "Growing romantic feelings and attraction",
+     "effects": [
+      "Romantic crafting gestures",
+      "Personal time together"
+     ]
+    },
+    {
+     "name": "Dating",
+     "threshold": 75,
+     "description": "Romantic relationship with crafting partnership",
+     "effects": [
+      "Romantic weapon crafting",
+      "Personal and professional support"
+     ]
+    },
+    {
+     "name": "Committed Relationship",
+     "threshold": 100,
+     "description": "Deep romantic commitment with crafting collaboration",
+     "effects": [
+      "Lifelong crafting partnership",
+      "Complete personal and professional support"
+     ]
+    }
+   ],
+   "romance_events": [
+    {
+     "event": "Shared Crafting",
+     "description": "Working together on weapon design and creation",
+     "romance_bonus": 8
+    },
+    {
+     "event": "Combat Training Together",
+     "description": "Learning to use weapons together",
+     "romance_bonus": 10
+    },
+    {
+     "event": "Teaching Crafting Skills",
+     "description": "Sharing weapon crafting knowledge and expertise",
+     "romance_bonus": 3
+    },
+    {
+     "event": "Crafting Achievement",
+     "description": "Creating a masterpiece weapon together",
+     "romance_bonus": 8
+    }
+   ],
+   "romance_modifiers": [
+    {
+     "action": "Appreciate craftsmanship",
+     "change": 3,
+     "description": "Romance increases when appreciating weapon quality"
+    },
+    {
+     "action": "Learn crafting skills",
+     "change": 2,
+     "description": "Romance increases when learning weapon crafting"
+    },
+    {
+     "action": "Respect weapon safety",
+     "change": 2,
+     "description": "Romance increases when respecting weapon handling"
+    },
+    {
+     "action": "Disrespect weapons",
+     "change": -3,
+     "description": "Romance decreases when showing weapon disrespect"
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "companion_weapon_smith",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/companions/shop_keepers/weapon_smith.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": "76223ec2f10166a1c35c94aa17d99def3e0c94f6f8e2cedf027d26bbbd616318",
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": false,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": false,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": false,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

@@ -77,7 +77,8 @@ test('Meridian vertical slice · atomic switch · fixture negatives · zero erro
   await page.waitForTimeout(500);
   await page.screenshot({ path: 'e2e/out/6_shadows_dna.png' });
   const sDna = await bodyText(page);
-  expect(sDna.toLowerCase(), 'Shadows DNA must state class is unresolved').toContain('no class established');
+  // OWNER RULING 2026-07-21: Aran migrated to class_operative � DNA must show Operative, Practice unresolved, never 'Operator'.
+  expect(sDna.toLowerCase(), 'Shadows DNA must show migrated Operative class').toContain('operative');
   await page.getByText(/close/i).first().click().catch(() => {});
   await page.waitForTimeout(300);
 
@@ -133,4 +134,5 @@ test('J behavior · suggestion populates composer (does NOT submit) · typing do
 
   expect(errors, `console/page errors: ${errors.join(' | ')}`).toHaveLength(0);
 });
+
 

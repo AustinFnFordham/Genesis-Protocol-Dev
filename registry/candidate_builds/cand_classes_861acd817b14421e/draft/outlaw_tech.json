@@ -1,0 +1,160 @@
+{
+ "record": {
+  "id": "outlaw_tech",
+  "name": "Outlaw Tech",
+  "class_id": "engineer",
+  "base_class": "engineer",
+  "tags": [
+   "engineer",
+   "outlaw_tech",
+   "underworld",
+   "tech_specialist",
+   "intelligence_based",
+   "crafter",
+   "cunning",
+   "modification_expert"
+  ],
+  "description": "Outlaw Techs are masters of illegal modifications and black market technology, using their skills to create powerful but unauthorized enhancements and bypass security systems.",
+  "specialization_features": [
+   "illegal_modifications",
+   "black_market_connections",
+   "security_bypass",
+   "outlaw_mastery",
+   "legendary_outlaw_tech"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "Master of illicit tech, weaving together scraps and gadgets to outwit foes.",
+   "role_in_group": "Support",
+   "visual_signals": [
+    "Cybernetic implants visible under the skin",
+    "Tattered black jacket with hidden pockets"
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "outlaw_tech_3",
+    "feature_id": "tech_scavenger",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "Gain proficiency in two types of thieves' tools or one type of artisan's tools.",
+    "effects": [
+     {
+      "type": "proficiency_bonus",
+      "value": "Two types of thieves' tools, one type of artisan's tools"
+     }
+    ]
+   },
+   {
+    "node_id": "outlaw_tech_7",
+    "feature_id": "junker_gear",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "When attempting to repair or modify a device with your Intelligence modifier (minimum +1), the DC is reduced by 2.",
+    "effects": [
+     {
+      "type": "ability_score_modification",
+      "value": "DC reduction on repair/modification checks"
+     }
+    ]
+   },
+   {
+    "node_id": "outlaw_tech_11",
+    "feature_id": "hacking_the_systems",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You can use your proficiency bonus to add your Intelligence modifier (minimum +1) to a Charisma (Deception) check to bypass security systems.",
+    "effects": [
+     {
+      "type": "ability_score_modification",
+      "value": "Add Int mod to Deception checks for bypassing security"
+     }
+    ]
+   },
+   {
+    "node_id": "outlaw_tech_15",
+    "feature_id": "custom_gadgets",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You can use your proficiency bonus and Intelligence modifier (minimum +1) to create a custom gadget with a specific function, which lasts for one hour.",
+    "effects": [
+     {
+      "type": "gadget_creation",
+      "value": "Custom gadget creation with specified function"
+     }
+    ]
+   },
+   {
+    "node_id": "outlaw_tech_18",
+    "feature_id": "master_crafter",
+    "level_requirement": 18,
+    "type": "core",
+    "description": "You can use your proficiency bonus and Intelligence modifier (minimum +1) to create a device that enhances one of your existing skills, making it more effective.",
+    "effects": [
+     {
+      "type": "skill_enhancement",
+      "value": "Skill enhancement with chosen skill"
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    "Blaster Burn Scar",
+    "Cybernetic Eye Implant"
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Assumes a balanced stance with feet shoulder-width apart, hands hovering over blasters at the ready.",
+    "energy_signature": "Pulsates with an otherworldly blue aura, indicative of illicit tech experimentation."
+   },
+   "prompt_schema": {
+    "base_prompt": "Generate a concept art for an engineer specializing in scavenging and repurposing Star Wars technology.",
+    "contextual_modifiers": [
+     "Show the engineer's workshop in the background",
+     "Highlight the use of scavenged parts in their equipment"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "outlaw_tech",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/engineer_subclasses/engineer_outlaw_tech.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

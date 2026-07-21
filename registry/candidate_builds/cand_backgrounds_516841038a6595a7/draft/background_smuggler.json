@@ -1,0 +1,180 @@
+{
+ "record": {
+  "id": "background_smuggler",
+  "name": "Smuggler",
+  "tags": [
+   "background",
+   "smuggler",
+   "scoundrel",
+   "pilot",
+   "underworld",
+   "dexterity_based",
+   "cunning",
+   "deceptive",
+   "opportunist",
+   "skilled"
+  ],
+  "description": "You are a skilled smuggler, blockade runner, or illicit trader who has mastered the art of moving contraband and avoiding authorities. Whether you work for criminal syndicates, the Rebellion, or as an independent operator, your skills in piloting, deception, and navigating dangerous situations make you a valuable asset. You understand the value of discretion and the importance of knowing who to trust.",
+  "proficiencies": [
+   {
+    "type": "skill",
+    "id": "deception"
+   },
+   {
+    "type": "skill",
+    "id": "technology"
+   },
+   {
+    "type": "tool_choice",
+    "count": 2,
+    "options": [
+     {
+      "tool_id": "smugglers_kit"
+     },
+     {
+      "tool_id": "vehicle_space"
+     },
+     {
+      "tool_id": "vehicle_air"
+     },
+     {
+      "tool_id": "disguise_kit"
+     },
+     {
+      "tool_id": "forgery_kit"
+     },
+     {
+      "tool_id": "contraband_scanner"
+     }
+    ]
+   },
+   {
+    "type": "language_choice",
+    "count": 1,
+    "options": [
+     {
+      "language_id": "any"
+     }
+    ]
+   }
+  ],
+  "feature": {
+   "name": "Smuggler's Luck",
+   "level": 1,
+   "description": "Your experience with smuggling has given you an uncanny ability to avoid detection and find hidden routes. You have advantage on Deception checks when trying to avoid suspicion, and you can use your action to scan an area for potential threats or surveillance. Additionally, you have contacts throughout the criminal underworld who can provide information about safe routes and potential buyers.",
+   "mechanics": [
+    {
+     "effect": "grant_advantage",
+     "parameters": {
+      "check_type": "skill_check",
+      "skill": "deception",
+      "scope": "all_checks",
+      "bonus_type": "expertise",
+      "condition": {
+       "type": "situational",
+       "situation": "avoiding_suspicion",
+       "target_scope": "self"
+      }
+     }
+    },
+    {
+     "effect": "grant_action",
+     "parameters": {
+      "action_name": "Scan for Threats",
+      "action_type": "action",
+      "cost": {
+       "type": "action",
+       "value": 1
+      },
+      "description": "Scan an area for potential threats or surveillance"
+     }
+    },
+    {
+     "effect": "grant_contact",
+     "parameters": {
+      "contact_type": "criminal_underworld",
+      "description": "Access to criminal underworld contacts; can provide information about safe routes and potential buyers"
+     }
+    }
+   ]
+  },
+  "personality_options": {
+   "traits": [
+    "I always have a plan for what to do when things go wrong.",
+    "I am incredibly slow to trust.",
+    "I am always calm, no matter what the situation.",
+    "I use multisyllabic words that others don't understand.",
+    "I have a strong sense of fair play.",
+    "I am haunted by memories of war.",
+    "I don't talk about the thing that torments me.",
+    "I idolize a particular hero of my faction and refer to them constantly."
+   ],
+   "ideals": [
+    "Freedom. Chains are meant to be broken, both for me and for others.",
+    "Independence. I am a free spirit—no one tells me what to do.",
+    "Greed. I will do whatever it takes to become wealthy.",
+    "Power. I will do whatever it takes to become powerful.",
+    "Peace. I will not be the one to draw my weapon first.",
+    "Respect. All life is sacred."
+   ],
+   "bonds": [
+    "I'm on the run from a crime lord I crossed.",
+    "I'm trying to pay off an old debt I owe to a benefactor.",
+    "My ill-gotten gains go to support my family.",
+    "I have a family to provide for.",
+    "I owe a debt to the person who trained me.",
+    "I am searching for my former master."
+   ],
+   "flaws": [
+    "I can't resist a pretty face.",
+    "When I see something valuable, I can't think about anything but how to steal it.",
+    "When faced with a choice between my friends and my ship, I'll choose my ship.",
+    "I'll do anything for a big payday.",
+    "I am haunted by the memory of a bounty that went wrong.",
+    "I am a sucker for a pretty face."
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "background_smuggler",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/source_data/backgrounds/background_smuggler.yml",
+  "source_root": "raw_source",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

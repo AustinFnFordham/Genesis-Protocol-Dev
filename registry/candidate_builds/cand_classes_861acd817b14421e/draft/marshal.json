@@ -1,0 +1,214 @@
+{
+ "record": {
+  "id": "marshal",
+  "name": "Marshal",
+  "class_id": "colonist",
+  "base_class": "colonist",
+  "tags": [
+   "colonist",
+   "marshal",
+   "law_enforcement",
+   "tactical",
+   "wisdom_based",
+   "protector",
+   "professional",
+   "justice",
+   "civic_leader"
+  ],
+  "description": "Marshals are law enforcement officers and peacekeepers, using their authority and tactical skills to maintain order and protect communities.",
+  "specialization_features": [
+   "law_enforcement",
+   "tactical_authority",
+   "community_protector",
+   "justice_seeker",
+   "legendary_marshal"
+  ],
+  "subclass_identity_profile": {
+   "core_fantasy": "A stalwart guardian of peace and justice",
+   "role_in_group": "Protector and Peacekeeper",
+   "visual_signals": [
+    {
+     "Signal1": "Badge of Office"
+    },
+    {
+     "Signal2": "Tactical Vest"
+    }
+   ]
+  },
+  "progression_tree": [
+   {
+    "node_id": "marshal_feat_3",
+    "feature_id": "Martial Training",
+    "level_requirement": 3,
+    "type": "core",
+    "description": "You gain proficiency in one type of artistic tool, one language, and one type of musical instrument. You can also choose to gain proficiency in a combat sport or a musical instrument as a bonus feat.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "marshal_dedication",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "class",
+        "op": "equals",
+        "value": "colonist"
+       },
+       {
+        "key": "subclass",
+        "op": "equals",
+        "value": "Marshal"
+       }
+      ],
+      "notes": "With careful training, the Marshal develops a keen awareness of their surroundings, granting proficiency in one tool or skill of their choice: Artistic Tool, Language, Musical Instrument, Combat Sport, or Performance. This focus on discipline and self-control also lends itself to expertise in Intimidation checks."
+     }
+    ]
+   },
+   {
+    "node_id": "marshal_feat_7",
+    "feature_id": "Justice's Eye",
+    "level_requirement": 7,
+    "type": "core",
+    "description": "You gain a +1 bonus to Wisdom (Perception) checks. You can also use your reaction to ask the DM for information about a creature within 30 feet of you, and the DM must provide truthful information.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "justice_senses_ignite",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "has_ability",
+        "op": "equals",
+        "value": "Wisdom Perception"
+       },
+       {
+        "key": "is_active",
+        "op": "true"
+       }
+      ],
+      "notes": "The Marshal's eyes blaze with an inner light, granting them keen insight. Whenever they land a hit against a foe, the Justice's Eye effect activates, imbuing their Wisdom Perception with a surge of clarity and focus."
+     }
+    ]
+   },
+   {
+    "node_id": "marshal_feat_11",
+    "feature_id": "Tactical Mind",
+    "level_requirement": 11,
+    "type": "core",
+    "description": "You gain a +2 bonus to Intelligence (Investigation) and Wisdom (Perception) checks. You can also use your action to analyze a scene or piece of evidence, and you gain advantage on one Investigation check of your choice within the next hour.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "tactical_surge",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "ability_usage",
+        "op": "equals",
+        "value": "Intelligence Investigation"
+       }
+      ],
+      "notes": "As I focus my mind, I gain a surge of tactical awareness. My Intelligence Investigation and Wisdom Perception abilities are heightened for this moment, allowing me to rapidly analyze the situation at hand."
+     }
+    ]
+   },
+   {
+    "node_id": "marshal_feat_15",
+    "feature_id": "Martial Prowess",
+    "level_requirement": 15,
+    "type": "core",
+    "description": "You gain a +3 bonus to Dexterity (Acrobatics) and Strength checks. You can also use your action to disarm a creature or disable a trap, and you gain advantage on one Acrobatics check of your choice within the next hour.",
+    "effects": [
+     {
+      "type": "trigger_effect",
+      "value": "marshal_prowess_trigger (snake_case)",
+      "target_scopes": [
+       "self"
+      ],
+      "conditions": [
+       {
+        "key": "action_type",
+        "op": "in_array",
+        "value": [
+         "Disarm",
+         "Disable"
+        ]
+       }
+      ],
+      "notes": "With a swift and precise motion, you disarm or disable your opponent's attack, leaving them momentarily off balance."
+     }
+    ]
+   }
+  ],
+  "visual_engine": {
+   "base_visual_tokens": [
+    [
+     "marshal_icon",
+     "colonist_base"
+    ],
+    [
+     "justice_token",
+     "peace_symbol"
+    ]
+   ],
+   "dynamic_visuals": {
+    "combat_stance": "Standing with feet shoulder-width apart, blaster at the ready, with a determined look on their face.",
+    "energy_signature": "A soft blue glow emanating from their lightsaber hilt, pulsing in sync with their breathing."
+   },
+   "prompt_schema": {
+    "base_prompt": "A lone marshal stands guard on a desert planet, surrounded by endless dunes, with a worn blaster slung over their shoulder and a look of quiet resolve on their face.",
+    "contextual_modifiers": [
+     "weather_condition: dusty_storm",
+     "background_elements: rocky_outcroppings, sandstorm_clouds"
+    ]
+   }
+  }
+ },
+ "validation": {
+  "candidate_urid": "marshal",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/subclasses/colonist_subclasses/colonist_marshal.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}

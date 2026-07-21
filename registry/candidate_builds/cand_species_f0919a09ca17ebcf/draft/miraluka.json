@@ -1,0 +1,577 @@
+{
+ "record": {
+  "id": "miraluka",
+  "name": "Miraluka",
+  "tags": [
+   "ancient_knowledge",
+   "charisma_based",
+   "consular",
+   "detection",
+   "force",
+   "force_mastery",
+   "force_sensitive",
+   "jedi",
+   "large",
+   "miraluka",
+   "mysterious",
+   "mystic",
+   "perceptive",
+   "rare",
+   "support",
+   "wisdom_based",
+   "wise"
+  ],
+  "description": "The Miraluka are a humanoid species from the planet Alpheridies, known for their lack of eyes and their natural talent for Force sensitivity and perception. They are often found working as Force users, seers, or spiritual guides, using their natural Force abilities to perceive the world around them. Their species has a natural affinity for the Force and spiritual matters.",
+  "starting_xp": 110,
+  "ability_score_increases": [
+   {
+    "ability": "Wisdom",
+    "value": 2
+   },
+   {
+    "ability": "Charisma",
+    "value": 1
+   }
+  ],
+  "speed": 30,
+  "size": "Medium",
+  "languages": [
+   "Basic",
+   "Miraluka"
+  ],
+  "base_hp": 10,
+  "base_strain": 12,
+  "innate_traits": [
+   {
+    "id": "miraluka_force_sight",
+    "name": "Force Sight",
+    "narrative": "Your species perceives the world through the Force instead of physical eyes. This unique form of perception allows you to see beyond the physical realm, perceiving the Force currents and spiritual energies that flow through all things.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Force Perception",
+      "action_type": "passive",
+      "description": "You have advantage on Wisdom (Perception) checks that rely on sight.",
+      "rules": [
+       "skill:perception",
+       "context:sight",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Force Vision",
+      "action_type": "passive",
+      "description": "You can see normally despite having no eyes through Force perception.",
+      "rules": [
+       "vision_type:force",
+       "range:normal"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "miraluka_force_sensitivity",
+    "name": "Force Sensitivity",
+    "narrative": "Your natural attunement to the Force is exceptionally strong, allowing you to sense the presence of other Force users and resist Force-based attacks with greater ease than most species.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Force Resistance",
+      "action_type": "passive",
+      "description": "You have advantage on saving throws against Force powers.",
+      "rules": [
+       "save_type:advantage",
+       "context:force_powers"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Force Detection",
+      "action_type": "passive",
+      "description": "You can sense the presence of other Force users within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "detection_type:force_users"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_force_absorption",
+     "ui_transition": {
+      "animation": "/UI/Animation/Dark Side/Corruption/MiralukaForceSensitivity.soa",
+      "sfx": "UI/SFX/Casting/DarkSide.snd"
+     }
+    }
+   },
+   {
+    "id": "miraluka_spiritual_insight",
+    "name": "Spiritual Insight",
+    "narrative": "Your deep connection to the Force grants you exceptional insight into the emotions and motivations of others. You can sense the spiritual currents that flow through all living beings.",
+    "mechanics": [
+     {
+      "effect": "grant_advantage",
+      "name": "Enhanced Insight",
+      "action_type": "passive",
+      "description": "You have advantage on Insight checks.",
+      "rules": [
+       "skill:insight",
+       "advantage:granted"
+      ]
+     },
+     {
+      "effect": "grant_ability",
+      "name": "Emotional Sensing",
+      "action_type": "passive",
+      "description": "You can sense strong emotions within 30 feet.",
+      "rules": [
+       "range:30_feet",
+       "detection_type:emotions",
+       "intensity:strong"
+      ]
+     }
+    ],
+    "corruption_transform": {
+     "can_corrupt": true,
+     "corrupts_to_feature_id": "dark_side_spiritual_possession",
+     "ui_transition": {
+      "animation": "/UI/Animation/Dark Side/Corruption/MiralukaSpiritualInsight.soa",
+      "sfx": "UI/SFX/Casting/DarkSide.snd"
+     }
+    }
+   }
+  ],
+  "appearance_profile": {
+   "height_range": "1.6m - 1.8m",
+   "distinctions": [
+    "No physical eyes",
+    "Force sight",
+    "Spiritual aura",
+    "Near-human features",
+    "Contemplative demeanor"
+   ],
+   "skin_color_variants": [
+    "Pale",
+    "Fair",
+    "Olive",
+    "Tan",
+    "Light Brown",
+    "Various human-like tones"
+   ],
+   "eye_area_variants": [
+    "Smooth skin where eyes would be",
+    "Subtle indentation",
+    "Decorative markings",
+    "Cultural symbols"
+   ],
+   "hair_color_variants": [
+    "Black",
+    "Brown",
+    "Blonde",
+    "Red",
+    "Grey",
+    "White"
+   ],
+   "common_adornments": [
+    "Spiritual robes and garments",
+    "Traditional Miraluka ceremonial attire",
+    "Force-related jewelry and accessories",
+    "Meditation and spiritual tools",
+    "Cultural head coverings"
+   ],
+   "llm_description_prompt": "Describe a Miraluka character. Emphasize their distinctive lack of physical eyes and the spiritual aura that surrounds them, suggesting their deep connection to the Force. Their movements should be deliberate and graceful, reflecting their Force-based perception. Consider their natural spiritual nature and the way they carry themselves with quiet wisdom and mystical presence."
+  },
+  "class_synergies": [
+   {
+    "class": "Consular (Diplomat)",
+    "narrative": "Miraluka's natural Force sensitivity and Spiritual Insight make them exceptional Consulars, able to understand and mediate conflicts through their deep connection to the Force.",
+    "mechanical_benefits": [
+     "Spiritual Insight trait enhances negotiation and mediation",
+     "Force Sensitivity trait aids in understanding others",
+     "High Wisdom supports diplomatic functions"
+    ]
+   },
+   {
+    "class": "Guardian (Force User)",
+    "narrative": "Miraluka's natural Force abilities and protective instincts make them excellent Guardians, using their Force sight and sensitivity to protect others.",
+    "mechanical_benefits": [
+     "Force Sight trait enhances protective awareness",
+     "Force Sensitivity trait aids in detecting threats",
+     "Spiritual Insight supports protective strategies"
+    ]
+   },
+   {
+    "class": "Scholar (Force Studies)",
+    "narrative": "Miraluka's natural connection to the Force and spiritual nature make them excellent Scholars, particularly in Force studies and spiritual matters.",
+    "mechanical_benefits": [
+     "Force Sensitivity trait enhances Force-related research",
+     "Spiritual Insight aids in understanding complex spiritual concepts",
+     "High Wisdom supports academic pursuits"
+    ]
+   },
+   {
+    "class": "Scout (Force Scout)",
+    "narrative": "Miraluka's Force sight and enhanced perception make them excellent Scouts, able to navigate and explore using their unique Force-based senses.",
+    "mechanical_benefits": [
+     "Force Sight trait enables unique perception abilities",
+     "Force Sensitivity trait enhances environmental awareness",
+     "Spiritual Insight aids in understanding surroundings"
+    ]
+   }
+  ],
+  "faction_synergies": [
+   {
+    "faction": "Jedi Order",
+    "narrative": "Miraluka are natural Jedi, their innate Force sensitivity and spiritual nature making them excellent candidates for Jedi training and service."
+   },
+   {
+    "faction": "Force Traditions",
+    "narrative": "Many Miraluka join various Force traditions and spiritual orders, dedicating themselves to the study and practice of Force abilities."
+   },
+   {
+    "faction": "Independent Force Users",
+    "narrative": "Some Miraluka prefer to work independently as Force users and spiritual guides, following their own paths of Force study and enlightenment."
+   }
+  ],
+  "species_progression": {
+   "progression_tiers": {
+    "level_5": {
+     "enhancement_type": "skill_enhancement",
+     "description": "Your Force sight becomes more refined, allowing you to perceive even subtler Force currents and spiritual energies.",
+     "mechanical_benefit": "Increase the range of Force detection from 30 feet to 60 feet, and gain advantage on Perception checks to detect hidden Force users or Force artifacts."
+    },
+    "level_10": {
+     "enhancement_type": "utility_improvement",
+     "description": "Your spiritual insight deepens, allowing you to understand and communicate with others on a profound level.",
+     "mechanical_benefit": "You can use your action to sense the emotional state of all creatures within 60 feet, and you have advantage on Charisma-based skill checks when dealing with Force-sensitive individuals."
+    },
+    "level_15": {
+     "enhancement_type": "damage_bonus",
+     "description": "Your Force sensitivity allows you to channel spiritual energy into protective and healing abilities.",
+     "mechanical_benefit": "When using Force-based healing or protective abilities, you gain a +2 bonus to the healing amount or protective effect, representing your enhanced Force attunement."
+    },
+    "level_20": {
+     "enhancement_type": "saving_throw_bonus",
+     "description": "Your connection to the Force reaches its peak, making you nearly immune to Force-based manipulation and allowing you to sense disturbances in the Force across great distances.",
+     "mechanical_benefit": "You have advantage on all saving throws against Force effects, and you can sense major Force disturbances within 1 mile."
+    }
+   }
+  },
+  "cultural_features": [
+   {
+    "name": "Force Meditation",
+    "type": "ceremonial",
+    "description": "Miraluka practice unique meditation techniques that enhance their Force sight and spiritual awareness, often involving communal meditation sessions.",
+    "narrative_impact": "Provides spiritual connection and Force enhancement. Can be used for character development and Force training scenarios."
+   },
+   {
+    "name": "Spiritual Guidance",
+    "type": "traditional",
+    "description": "Miraluka traditions emphasize providing spiritual guidance and counseling to others, using their enhanced insight to help resolve conflicts and provide comfort.",
+    "narrative_impact": "Creates counseling and guidance opportunities. Can be used for social interactions and conflict resolution."
+   },
+   {
+    "name": "Force Communion",
+    "type": "cultural",
+    "description": "Miraluka have rituals that involve communing with the Force and sharing spiritual experiences with other Force-sensitive individuals.",
+    "narrative_impact": "Provides unique spiritual experiences and Force-related interactions. Can be used for character development and Force training."
+   },
+   {
+    "name": "Seer Traditions",
+    "type": "narrative",
+    "description": "Miraluka seer traditions involve interpreting Force visions and providing prophetic guidance, though these visions are often symbolic rather than literal.",
+    "narrative_impact": "Provides unique storytelling opportunities and character development. Can be used for quest hooks and narrative advancement."
+   }
+  ],
+  "environmental_adaptations": [
+   {
+    "environment": "mystical",
+    "adaptation_name": "Mystical Awareness",
+    "description": "Your Force sight allows you to perceive and navigate mystical environments with ease, sensing the spiritual currents that flow through such places.",
+    "mechanical_benefit": "You have advantage on all skill checks in mystical or Force-rich environments, and you can sense the presence of Force artifacts or locations."
+   },
+   {
+    "environment": "spiritual",
+    "adaptation_name": "Spiritual Resonance",
+    "description": "Your natural spiritual nature allows you to thrive in environments rich with spiritual energy and Force presence.",
+    "mechanical_benefit": "You have advantage on saving throws against spiritual effects, and you can sense the emotional and spiritual state of your surroundings."
+   },
+   {
+    "environment": "dark",
+    "adaptation_name": "Force Vision",
+    "description": "Your Force sight allows you to see clearly in complete darkness, perceiving the Force currents that flow through all things.",
+    "mechanical_benefit": "You can see normally in complete darkness, and you have advantage on Perception checks in dark environments."
+   },
+   {
+    "environment": "ethereal",
+    "adaptation_name": "Ethereal Perception",
+    "description": "Your Force sensitivity allows you to perceive and interact with ethereal and spiritual entities that others cannot see.",
+    "mechanical_benefit": "You can see invisible creatures and ethereal entities, and you have advantage on saving throws against ethereal effects."
+   }
+  ],
+  "advanced_system_balance": {
+   "progression_balance": [
+    "Species progression enhancements focus on Force abilities and spiritual insight, complementing rather than overshadowing class features",
+    "Force sight improvements maintain the species' unique identity while providing meaningful advancement",
+    "Spiritual and mystical abilities provide situational advantages without making the species universally superior"
+   ],
+   "cultural_integration": [
+    "Cultural features focus on spiritual traditions and Force practices rather than mechanical advantages",
+    "Force meditation and spiritual guidance provide unique roleplaying opportunities and cultural depth",
+    "Seer traditions and Force communion enhance character development and party dynamics"
+   ],
+   "environmental_specialization": [
+    "Environmental adaptations are specifically designed for mystical and spiritual environments where Force sensitivity is valuable",
+    "Advantages are situational and thematic, maintaining game balance while enhancing immersion",
+    "Ethereal perception and mystical awareness provide unique utility without overshadowing other species' abilities"
+   ]
+  },
+  "rarity": "common",
+  "visual_engine": {
+   "archetype": "standard_humanoid",
+   "overrides": {
+    "base_visual_tokens": [
+     "no_eyes",
+     "pale_skin",
+     "fine_features",
+     "delicate_bones"
+    ],
+    "morphology": {
+     "head_type": "skull-like",
+     "body_type": "slender",
+     "average_height": "175-190 cm"
+    },
+    "dynamic_visuals": {
+     "age_progression": {
+      "child": {
+       "skin_tone": "pale_with_glowing_blue_marks",
+       "facial_features": "delicate_bones_and_fine_ features"
+      },
+      "adult": {
+       "skin_tone": "pale_with_age_spots",
+       "facial_features": "moredefined_jawline_and_wrinkles"
+      },
+      "elder": {
+       "skin_tone": "pale_with_age_spots_and_freckles",
+       "facial_features": "wrinkled_skin_and_bent posture"
+      }
+     },
+     "morality_corruption": {
+      "dark_side": [
+       "dark_halo_around_eyeless_socket",
+       "red_veins_on_pale_skins",
+       "withered_body_and_hollow_cheeks"
+      ],
+      "light_side": [
+       "glowing_blue_marks_on_pale_skin",
+       "brightening_hair_color",
+       "increased_energy_in_palms"
+      ]
+     }
+    },
+    "unique_identifiers": [
+     "Force-sensitivity_pattern_on_face",
+     "unique_tattoo_pattern_on_forehead",
+     "specialized Force-harvesting features"
+    ],
+    "prompt_schema": {
+     "base_prompt": "{species_name} with {age_progression} and {morality_corruption}",
+     "contextual_modifiers": [
+      "{context}: {action} through the Force, using their {unique_identifier}",
+      "{emotion}: {reaction} to the surrounding environment, tapping into its Force energies"
+     ]
+    }
+   }
+  },
+  "nemesis_engine": {
+   "progression_path": {
+    "emergence": [
+     "Your Miraluka character has a dark past that they have kept hidden, and a powerful nemesis from their past returns to confront them.",
+     "The nemesis is a master of the dark side, and your Miraluka character must use all their skills to defeat them."
+    ],
+    "escalation": [
+     "As your Miraluka character continues on their journey, their nemesis becomes increasingly powerful and difficult to defeat.",
+     "Your Miraluka character begins to question whether they are truly cut out for the role of a Force user."
+    ],
+    "confrontation": [
+     "The final showdown between your Miraluka character and their nemesis takes place in an ancient, ruined temple on a remote planet.",
+     "Your Miraluka character must confront their own doubts and fears in order to emerge victorious."
+    ]
+   },
+   "resolution_paths": {
+    "victory": "You have defeated your nemesis and saved the galaxy from their evil plans. However, the cost of victory is steep, and you are left to ponder the true nature of the Force.",
+    "redemption": "You have redeemed yourself in the eyes of your nemesis, who now sees you as a worthy ally rather than an enemy. Together, you work to bring peace to the galaxy.",
+    "escape": "You manage to escape from your nemesis and flee into exile, but not before they vow to one day hunt you down and destroy you."
+   },
+   "conflict_triggers": [
+    "Your Miraluka character has a personal vendetta against their nemesis due to a past betrayal.",
+    "The nemesis is seeking to exploit the power of the Force for their own gain.",
+    "The galaxy is in danger, and your Miraluka character must stop their nemesis at all costs."
+   ],
+   "personal_vendetta": {
+    "formation_triggers": [
+     "Your Miraluka character has a history with their nemesis that goes back years.",
+     "Their nemesis has caused them significant harm or loss in the past."
+    ],
+    "vendetta_type": "The nemesis is a powerful and ruthless foe who will stop at nothing to achieve their goals."
+   },
+   "overrides": {
+    "species_progression": [
+     {
+      "name": "The Blind Seer's Vigilance",
+      "description": "Increased awareness of surroundings and detection of hidden threats"
+     },
+     {
+      "name": "The Unyielding Resolve",
+      "description": "Enhanced resilience to mental and physical attacks"
+     }
+    ],
+    "species_triggers": [
+     "Betrayal by a trusted ally",
+     "Discovery of dark secrets about their homeworld"
+    ]
+   }
+  },
+  "romance_engine": {
+   "romance_potential": true,
+   "romance_compatibility": [
+    "Your Miraluka character is drawn to those with a strong connection to the Force.",
+    "They have a particular affinity for species with a strong emphasis on spirituality and mysticism."
+   ],
+   "romance_progression": {
+    "stage1": "You meet a potential love interest who is immediately drawn to your Miraluka character's calm and peaceful nature. They are impressed by their skills as a Force user, but also sense that there is something deeper at work.",
+    "stage2": "As you spend more time with your love interest, they begin to open up about their own past traumas and struggles. Your Miraluka character must use their empathetic nature to help them heal and find peace.",
+    "stage3": "Your love interest reveals that they have a deep connection to the Force, one that is rivalled only by your Miraluka character's own abilities. They propose a challenge to see who can harness the power of the Force most effectively.",
+    "stage4": "The competition between you and your love interest reaches its climax as you both face off in a intense lightsaber duel. In the end, it is clear that neither of you will emerge victorious without the other's help.",
+    "stage5": "In the aftermath of the duel, you and your love interest come together to find a new way to harness the power of the Force, one that combines your unique abilities in a way that no one else has ever seen before."
+   },
+   "romance_events": [
+    "You share a romantic dinner with your love interest on a secluded planet.",
+    "Your Miraluka character helps their love interest overcome a personal struggle and find inner peace.",
+    "The two of you go on a mission together to save the galaxy from an ancient evil."
+   ],
+   "romance_modifiers": [
+    "Increases Charisma score by 2 when interacting with your love interest",
+    "Gives you and your love interest a +1 bonus to Force checks when working together"
+   ],
+   "overrides": {
+    "species_approach": "Emphasis on mutual understanding and empathy, often developing through spiritual connections or shared Force experiences.",
+    "species_romantic_interests": [
+     {
+      "name": "A fellow Miraluka seeking a deeper connection",
+      "description": "Shared history, cultural heritage, and intuitive understanding"
+     },
+     {
+      "name": "An individual with strong empathetic abilities",
+      "description": "Deep emotional resonance and capacity for compassion"
+     }
+    ]
+   }
+  },
+  "flavor_text": "The Miraluka have always been attuned to the mystical energies that surround them. Their homeworld, Alpheridies, is a place of ancient power where the Force is palpable in every rock and whispering wind. Born without eyes, they've developed an acute sense of awareness through their connection to the living Force, which guides them through life's trials and tribulations.",
+  "llm_guidance": {
+   "roleplay_guidance": "The Miraluka are naturally empathetic beings with a deep understanding of the intricate balance between light and darkness. They often find themselves struggling with the weight of their intuition, torn between empathy for those who cause harm and the need to protect others from that same harm.",
+   "narrative_hooks": [
+    "Explore the Miraluka's connection to the Alpheridian crystals, which amplify their Force abilities",
+    "Delve into the legend of the ancient Miraluka seer, Kao Cen Darach, who prophesied a great calamity that would threaten the galaxy"
+   ],
+   "social_dynamics": "The Miraluka value wisdom and compassion above all else. They often form close bonds with other Force-sensitives, but can be wary of those who wield power without empathy or self-awareness.",
+   "common_motivations": [
+    "Uncover hidden truths about the Force",
+    "Protect others from harm"
+   ]
+  },
+  "companion_engine": {
+   "ai_behavior": {
+    "personality": {
+     "traits": [
+      "curious",
+      "compassionate",
+      "intuitive"
+     ],
+     "fears": [
+      "chaos",
+      "loss of control",
+      "disconnection from the Force"
+     ]
+    },
+    "motivations": {
+     "primary_motivation": "to serve and protect",
+     "secondary_motivations": [
+      "to learn and grow in understanding",
+      "to maintain balance in the Force"
+     ]
+    },
+    "combat_behavior": "uses stealth and cunning to outmaneuver opponents, often relying on allies for support",
+    "social_behavior": "is charismatic and persuasive, using their wisdom and insight to build strong relationships"
+   },
+   "relationship_tracking": {
+    "trust_levels": [
+     {
+      "initial_trust": 50,
+      "max_trust": 100,
+      "min_trust": 0
+     }
+    ],
+    "loyalty_triggers": [
+     "acts of great kindness or selflessness",
+     "offers guidance or wisdom in times of need",
+     "provides protection or support during a crisis"
+    ]
+   },
+   "services": [
+    {
+     "name": "Force Sense",
+     "description": "Gives the player a sense of their surroundings, including the presence and distance of enemies, allies, and objects."
+    },
+    {
+     "name": "Meditation",
+     "description": "Allows the player to focus their mind and gain temporary insight into the mysteries of the Force."
+    }
+   ]
+  }
+ },
+ "validation": {
+  "candidate_urid": "miraluka",
+  "kind": "class",
+  "source_pointer": "SW5e_Data_Hub/forge_v3/backend/species/miraluka.yml",
+  "source_root": "forge_v3_backend",
+  "duplicate_group": null,
+  "errors": [],
+  "warnings": [
+   "class without progression/hit-die signals"
+  ],
+  "creation_audit": {
+   "crunch_fluff_partition": true,
+   "emotions_structured_where_applicable": "n/a",
+   "urid_stable": true,
+   "visual_dna_present_where_applicable": "n/a",
+   "bifurcated_output_compatible": true,
+   "atomic": {
+    "schema_valid": null,
+    "deterministic": true,
+    "references_valid": null,
+    "provenance_complete": null,
+    "mutation_compatible": true
+   },
+   "soul": {
+    "identity_preserved": true,
+    "lore_preserved": true,
+    "relationships_preserved": "n/a",
+    "emotional_meaning_preserved": "n/a",
+    "visual_constants_preserved": "n/a"
+   },
+   "chaos": {
+    "synergy_inputs_declared": true,
+    "prerequisites_declared": false,
+    "consequence_hooks_present": false,
+    "world_reaction_hooks_present": false,
+    "no_automatic_unlock_from_tags": true
+   }
+  },
+  "forge_version": "forge_worker_v1.0",
+  "promotion": "requires_manifest_and_review",
+  "outcome": "draft"
+ }
+}
