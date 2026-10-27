@@ -1,0 +1,112 @@
+# Seed achievements (hidden: spoilers). Validated against schema/Achievement.schema.json.
+- id: achievement_first_blood
+  name: "First Blood"
+  category: combat
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: character_killed, conditions: [{actor: pc}, {victim_sapient: true}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: salvage}
+  system_voice: {announcement: "You killed something that knew its own name. Noted.", taunt_variants: ["It had a family. The System has a spreadsheet."]}
+  narrative: "The first time the character kills a sapient being."
+  tags: [combat, moral]
+- id: achievement_cheap_shot
+  name: "Cheap Shot"
+  category: combat
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: attack_resolved, conditions: [{target_state: unaware}, {result: hit}, {weapon_class: improvised}], window: {scope: single_turn, count: 1}}
+  reward: {cache_tier: salvage}
+  system_voice: {announcement: "Struck a man who was looking the other way, with a bucket. Effective.", taunt_variants: ["Honor is a luxury item. You can't afford it."]}
+  narrative: "A hit from surprise with an improvised weapon."
+  tags: [combat, improvised]
+- id: achievement_hold_the_line
+  name: "Hold the Line"
+  category: party
+  scope: party
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: combat_ended, conditions: [{party_outnumbered_ratio_gte: 3}, {party_members_standing: all}], window: {scope: scene, count: 1}}
+  reward: {cache_tier: standard}
+  system_voice: {announcement: "Outnumbered three to one. Nobody died. The System is mildly annoyed."}
+  narrative: "The whole party survives a fight against heavy odds."
+  tags: [party, combat]
+- id: achievement_last_words
+  name: "Last Words"
+  category: social
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: dialogue_resolved, conditions: [{target_state: dying}, {topic: confession_or_secret}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: standard}
+  system_voice: {announcement: "You made a dying man talk. He told you something. Whether it was true is your problem."}
+  narrative: "Extracting information from someone in their last moments."
+  tags: [social, moral]
+- id: achievement_wrong_end_of_the_bolt
+  name: "Wrong End of the Bolt"
+  category: survival
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: injury_sustained, conditions: [{injury_kind: permanent}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: standard}
+  system_voice: {announcement: "Something is gone and it is not coming back. Congratulations on the souvenir.", taunt_variants: ["Cauterized. You should be grateful."]}
+  narrative: "The character suffers a permanent injury and keeps going."
+  tags: [survival, injury]
+- id: achievement_the_long_way_down
+  name: "The Long Way Down"
+  category: absurd
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: fall_survived, conditions: [{distance_m_gte: 30}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: standard}
+  system_voice: {announcement: "Thirty meters. You are still here. Gravity files a complaint."}
+  narrative: "Surviving a very long fall."
+  tags: [absurd, survival]
+- id: achievement_nobody_asked
+  name: "Nobody Asked You"
+  category: social
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: social_resolved, conditions: [{target_faction_rank: leader}, {result: success}, {approach: bluff}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: reinforced}
+  system_voice: {announcement: "You lied to someone important and they thanked you for it. The System is taking notes."}
+  narrative: "Bluffing a faction leader successfully."
+  tags: [social, bluff]
+- id: achievement_first_of_its_kind
+  name: "First of Its Kind"
+  category: meta
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: false
+  first_in_world: true
+  trigger: {event: novel_ability_interaction, conditions: [{validated_by: record_keeper}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: prized, title_granted: "Trailblazer"}
+  system_voice: {announcement: "Nobody has done that. Not here, not before. The System does not know what happens next, and it is delighted."}
+  narrative: "A genuinely new combination of established abilities, confirmed by the Record Keeper."
+  tags: [meta, emergence]
+- id: achievement_spared
+  name: "You Could Have"
+  category: moral
+  scope: character
+  visibility: hidden_until_earned
+  repeatable: true
+  trigger: {event: character_spared, conditions: [{victim_state: helpless}, {victim_hostile: true}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: salvage}
+  system_voice: {announcement: "You could have. You did not. The System is not sure what to call that yet."}
+  narrative: "Sparing a helpless enemy. Consequences follow either way."
+  tags: [moral, mercy]
+- id: achievement_crew_hold
+  name: "Everybody Is Alive"
+  category: party
+  scope: party
+  visibility: hidden_until_earned
+  repeatable: false
+  trigger: {event: arc_ended, conditions: [{party_deaths: 0}], window: {scope: campaign, count: 1}}
+  reward: {cache_tier: reinforced}
+  system_voice: {announcement: "A whole arc without a funeral. Do not get comfortable."}
+  narrative: "The party finishes an entire arc without losing a member."
+  tags: [party, survival]

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Achievement Schema",
+  "description": "A System achievement: a deterministic trigger over the event log (Atomic), a reward (Atomic), and the System's announcement (Soul). Rewards never grant abilities directly; abilities come from play.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "pattern": "^achievement_[a-z0-9_]+$" },
+    "name": { "type": "string" },
+    "category": { "type": "string", "enum": ["combat", "survival", "social", "exploration", "craft", "moral", "absurd", "party", "meta"] },
+    "scope": { "type": "string", "enum": ["character", "party"] },
+    "visibility": { "type": "string", "enum": ["hidden_until_earned", "hinted", "visible"] },
+    "repeatable": { "type": "boolean" },
+    "first_in_world": { "type": "boolean", "description": "If true, only the first holder in the campaign world can earn it, and the System says so." },
+    "trigger": {
+      "type": "object",
+      "description": "Atomic: pattern over committed events. Evaluated by the Record Keeper, never by narration.",
+      "properties": {
+        "event": { "type": "string" },
+        "conditions": { "type": "array", "items": { "type": "object" } },
+        "window": { "type": "object", "properties": { "scope": { "type": "string", "enum": ["single_turn", "scene", "session", "campaign"] }, "count": { "type": "integer", "minimum": 1 } } }
+      },
+      "required": ["event", "conditions"]
+    },
+    "reward": {
+      "type": "object",
+      "properties": {
+        "cache_tier": { "type": "string", "enum": ["none", "salvage", "standard", "reinforced", "prized", "singular"] },
+        "guaranteed_items": { "type": "array", "items": { "type": "string" }, "description": "Registry item ids; must exist as validated Item files." },
+        "title_granted": { "type": "string" },
+        "effect_refs": { "type": "array", "items": { "type": "string", "pattern": "^effect_[a-z0-9_]+$" } }
+      },
+      "required": ["cache_tier"]
+    },
+    "system_voice": {
+      "type": "object",
+      "description": "Soul: what the System says. Plain, in-character, may be cruel. Never states hidden mechanics.",
+      "properties": {
+        "announcement": { "type": "string" },
+        "taunt_variants": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["announcement"]
+    },
+    "narrative": { "type": "string" },
+    "chaos": {
+      "type": "object",
+      "properties": {
+        "prerequisites": { "type": "array", "items": { "type": "string" } },
+        "synergy_inputs": { "type": "array", "items": { "type": "string" } },
+        "consequence_hooks": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "provenance": { "type": "object" }
+  },
+  "required": ["id", "name", "category", "scope", "visibility", "trigger", "reward", "system_voice", "narrative", "tags"]
+}

@@ -4,12 +4,12 @@
 Star Wars LitRPG. Star Wars lore sets the world: tech, factions, species, the Force, history. The LitRPG System is an extra phenomenon inside that world. Canon characters have their own lives and do not appear because the protagonist exists. No railroading toward canon events.
 
 ## Era
-Old Republic, Cold War period after the Treaty of Coruscant (roughly 3,650-3,640 BBY). GM-chosen. Exact start location, factions in motion, and System origin stay hidden.
+GM-chosen and hidden (see `hidden/GM_LEDGER.md`). Revealed through play.
 
 ## Roles
 - Player controls the protagonist(s). The GM never decides their actions, words, thoughts, or feelings.
 - GM controls world, NPCs, factions, enemies, consequences, and the System.
-- Target: a party (one active PC, others GM-driven companions with transferable control), as in Genesis.
+- Target: a trio (one protagonist plus two companions made together), one active PC at a time, others GM-driven and transferable, as in Genesis.
 
 ## Truth model (Genesis)
 - **Atomic**: state, rules, dice, time, injuries, gear, System state. Nothing major changes unrecorded.

@@ -1,6 +1,6 @@
 # Creator shortlist (2026-10-27)
 
-Era: Old Republic, Cold War period after the Treaty of Coruscant (roughly 3,650-3,640 BBY).
+Era: hidden (GM-chosen). Picks below are era-neutral.
 10 per file type, picked for likelihood of play and era fit. Status from `validate_candidates.py` (envelope stripped, cross-file refs resolved).
 PASS = schema-valid. Gaps list the missing required fields; 'other' counts type/shape errors.
 
