@@ -6,7 +6,7 @@ Goal: a full creator (species, background, class, subclass) built from valid, sc
 - `schema/CharacterCreator.schema.json`: a 7-line skeleton of ordered steps (`data_source`, `player_choice`). Needs to be filled out.
 - `schema/{Species,Class,Subclass,Background,Character}.schema.json`: real schemas with required fields.
 - `registry/candidate_builds/`: Forge drafts, each file wrapped as `{record, validation}`.
-- `registry/golden_slice/global_definitions/`: the only hand-validated set (Echani, Human, Sentinel, Operative, Jedi/Smuggler backgrounds, Sentry subclass, powers, features, items).
+- `registry/golden_slice/global_definitions/`: the promoted set, but its records use a different envelope (`urid` instead of `id`) and fail the schemas as written (Echani, Human, Sentinel, Operative, Jedi/Smuggler backgrounds, Sentry subclass, powers, features, items).
 - Reference build: Aero (`api_bridge/gm/aero_character_runtime.yml`), SW5e-style: six ability scores, proficiency bonus, HP, Strain, Force Points.
 
 ## Schema validation of candidate records (record only, envelope stripped)
@@ -14,8 +14,8 @@ Goal: a full creator (species, background, class, subclass) built from valid, sc
 |---|---|---|---|
 | Species drafts | 42 | 13 | missing `starting_xp`, `description`, `ability_score_increases`, `contextual_modifiers` |
 | Class drafts | 63 | 0 | missing `era`, `rarity`, `narrative`; 53 lack `hit_die` |
-| Class/subclass validated_candidate | 37 | 0 | same; 15 are subclasses being checked against the Class schema |
-| Backgrounds | 33 | not checked | validator crashed on the Background schema itself (bad `$id` handling) |
+| Class/subclass validated_candidate | 37 | 3 (all subclasses) | same; 15 are subclasses being checked against the Class schema |
+| Backgrounds | 33 | 0 | my first validator run could not resolve the cross-file `$ref` to `CharacterClassFeature.schema.json`; rerun with `validate_candidates.py` — 0 of 33 pass |
 
 ## Other findings
 - Species drafts carry `validation.kind: "class"`. Mislabeled.

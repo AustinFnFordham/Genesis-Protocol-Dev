@@ -4,7 +4,7 @@
 Star Wars LitRPG. Star Wars lore sets the world: tech, factions, species, the Force, history. The LitRPG System is an extra phenomenon inside that world. Canon characters have their own lives and do not appear because the protagonist exists. No railroading toward canon events.
 
 ## Era
-Undecided. Player leans Old Republic; High Republic is the alternate. Do not start play until set.
+Old Republic, Cold War period after the Treaty of Coruscant (roughly 3,650-3,640 BBY). GM-chosen. Exact start location, factions in motion, and System origin stay hidden.
 
 ## Roles
 - Player controls the protagonist(s). The GM never decides their actions, words, thoughts, or feelings.
@@ -32,4 +32,4 @@ Undecided. Player leans Old Republic; High Republic is the alternate. Do not sta
 - After each arc, we do the novel pass from the Arc Record plus the session log.
 
 ## Open decisions
-Era; party composition; how the System presents itself and who else perceives it; hidden-ledger visibility (public repo).
+How the System presents itself and who else perceives it; hidden-ledger visibility (public repo).
