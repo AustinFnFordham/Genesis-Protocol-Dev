@@ -1,12 +1,10 @@
-# Creator shortlist (2026-10-27)
+# Creator shortlist (2026-10-27, status refreshed by shortlist_status.py)
 
-Era: hidden (GM-chosen). Picks below are era-neutral.
-10 per file type, picked for likelihood of play and era fit. Status from `validate_candidates.py` (envelope stripped, cross-file refs resolved).
-PASS = schema-valid. Gaps list the missing required fields; 'other' counts type/shape errors.
+Era: hidden (GM-chosen). Picks are era-neutral. Status = schema validation with envelope stripped and cross-file refs resolved.
 
 ## Species
 
-| Pick | Status | Missing required fields | Other errors |
+| Pick | Status | Missing required | Other errors |
 |---|---|---|---|
 | human | PASS | - | 0 |
 | twilek | PASS | - | 0 |
@@ -21,22 +19,22 @@ PASS = schema-valid. Gaps list the missing required fields; 'other' counts type/
 
 ## Class
 
-| Pick | Status | Missing required fields | Other errors |
+| Pick | Status | Missing required | Other errors |
 |---|---|---|---|
-| guardian | gaps | level_progression | 4 |
-| sentinel | gaps | class_identity_profile, era, level_progression, narrative, rarity | 1 |
-| consular | gaps | level_progression | 0 |
-| soldier | gaps | level_progression | 0 |
-| scout | gaps | class_identity_profile, era, level_progression, narrative, rarity | 1 |
-| scoundrel | gaps | class_identity_profile, era, level_progression, narrative, rarity | 1 |
-| smuggler | gaps | era, level_progression, narrative, proficiencies, rarity | 1 |
-| bounty_hunter | gaps | level_progression | 0 |
-| engineer | gaps | level_progression, proficiencies | 1 |
-| spy | gaps | era, level_progression, narrative, primary_ability, rarity | 1 |
+| guardian | gaps | - | 4 |
+| sentinel | gaps | class_identity_profile, era, narrative, rarity | 1 |
+| consular | PASS | - | 0 |
+| soldier | PASS | - | 0 |
+| scout | gaps | class_identity_profile, era, narrative, rarity | 1 |
+| scoundrel | gaps | class_identity_profile, era, narrative, rarity | 1 |
+| smuggler | gaps | era, narrative, proficiencies, rarity | 1 |
+| bounty_hunter | PASS | - | 0 |
+| engineer | gaps | proficiencies | 1 |
+| spy | gaps | era, narrative, primary_ability, rarity | 1 |
 
 ## Subclass
 
-| Pick | Status | Missing required fields | Other errors |
+| Pick | Status | Missing required | Other errors |
 |---|---|---|---|
 | sentry | gaps | alignment_theme, class_id, class_identity_profile, id, llm_guidance, narrative, talent_tree, talent_tree_theme | 0 |
 | guardian_force_warrior | gaps | alignment_theme, class_identity_profile, llm_guidance, narrative, talent_tree, talent_tree_theme | 0 |
@@ -51,7 +49,7 @@ PASS = schema-valid. Gaps list the missing required fields; 'other' counts type/
 
 ## Background
 
-| Pick | Status | Missing required fields | Other errors |
+| Pick | Status | Missing required | Other errors |
 |---|---|---|---|
 | jedi | gaps | - | 6 |
 | soldier | gaps | background_type, image_generation, narrative, ui | 6 |
@@ -64,11 +62,11 @@ PASS = schema-valid. Gaps list the missing required fields; 'other' counts type/
 | mechanic | gaps | background_type, image_generation, narrative, ui | 5 |
 | diplomat | gaps | background_type, image_generation, narrative, ui | 6 |
 
-Variants kept with their parent species: `zabrak_dathomirian`, `togruta_nightsister`.
+Variants kept with parent species: `zabrak_dathomirian`, `togruta_nightsister`.
 
-## Structural findings (need a decision before workshopping)
-1. **Schema and data disagree on shape.** `schema/Class.schema.json` requires `level_progression`, `class_identity_profile`, `primary_ability`; the data uses `progression_tree` and `primary_resource`. Either the schema is stale or the data is.
-2. **Identity key differs.** Schemas require `id`; `golden_slice` records use `urid` plus an envelope (`entity_type`, `authority_lane`, `validation_status`).
-3. **Subclasses are mislabeled.** The 63 drafts tagged `kind: class` are all specializations with a `class_id` parent. The Subclass schema is the right target.
-4. **Backgrounds** embed a `feature` that must satisfy `CharacterClassFeature` (needs `id`, `era`, `rarity`, `narrative`, `connections`); every draft's feature is lighter than that.
-5. **Era is almost never set** on species, so nothing can be filtered by era yet.
+## Structural findings
+1. ~~Class schema required `level_progression`~~ Fixed 2026-10-29: `progression_tree` added, one of the two is required.
+2. Golden-slice records use `urid` + an envelope instead of `id`. Rule proposed: `urid = <entity_type>_<id>`, derived, never hand-written.
+3. The 63 class drafts are specializations (`class_id` parent) mislabeled `kind: class`. Target schema is Subclass.
+4. Backgrounds embed a `feature` that must satisfy CharacterClassFeature; all drafts are lighter than required.
+5. Era is almost never set on species.

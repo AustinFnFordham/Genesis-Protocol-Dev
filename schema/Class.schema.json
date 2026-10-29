@@ -135,6 +135,36 @@
       "required": ["core_fantasy", "key_attributes", "iconic_gear", "role_in_galaxy", "famous_exemplars"]
     },
 
+    "progression_tree": {
+      "type": "array",
+      "description": "Fluid progression: a flat graph of nodes. A class owns root nodes but nodes are not exclusive to it. A node is available when its prerequisites are held, the level requirement is met, and the character's recorded tag affinity meets affinity_requirements. The player still chooses to take it. Preferred over level_progression.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node_id": { "type": "string" },
+          "feature_id": { "type": "string", "description": "ID of the feature this node grants." },
+          "level_requirement": { "type": "integer", "minimum": 1, "maximum": 20 },
+          "type": { "enum": ["core", "choice", "subclass_entry", "asi"] },
+          "prerequisites": { "type": ["array", "null"], "items": { "type": "string" }, "description": "node_ids that must already be held." },
+          "choice_group": { "type": "string", "description": "Nodes sharing a choice_group are mutually exclusive picks." },
+          "description": { "type": "string" },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": { "type": { "type": "string" }, "value": {}, "notes": { "type": "string" } },
+              "required": ["type"]
+            }
+          },
+          "tags": { "type": "array", "items": { "type": "string" }, "description": "Master Tags vocabulary. Used for affinity and synergy." },
+          "affinity_requirements": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 1 }, "description": "tag -> minimum recorded affinity. Affinity is written only by the Record Keeper from committed events." },
+          "branch": { "type": "string", "description": "Optional cluster id. A subclass is a named branch cluster; taking most of it earns the subclass title." },
+          "synergy_edges": { "type": "array", "items": { "type": "string" }, "description": "node_ids (any class) this node combines with." }
+        },
+        "required": ["node_id", "feature_id", "level_requirement", "type"]
+      }
+    },
+
     "level_progression": {
       "type": "array",
       "description": "Progression features granted at each level from 1-20.",
@@ -286,5 +316,6 @@
       "required": ["image", "icon"]
     }
   },
-  "required": ["id", "name", "era", "rarity", "narrative", "description", "tags", "hit_die", "proficiencies", "primary_ability", "class_identity_profile", "level_progression"]
+  "required": ["id", "name", "era", "rarity", "narrative", "description", "tags", "hit_die", "proficiencies", "primary_ability", "class_identity_profile"],
+  "anyOf": [{ "required": ["progression_tree"] }, { "required": ["level_progression"] }]
 }
