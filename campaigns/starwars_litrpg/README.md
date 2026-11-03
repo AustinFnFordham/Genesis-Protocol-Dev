@@ -11,3 +11,5 @@ Persistent, player-driven LitRPG campaign in the Genesis Protocol setting. The A
 | `creator/` | both | Character creator work: audits, promoted canon examples. |
 
 Dice: `.claude/skills/litrpg-dice/`.
+
+Ledger: `.claude/skills/litrpg-ledger/` (events in `records/events.jsonl`, hidden events in `hidden/events.jsonl`).

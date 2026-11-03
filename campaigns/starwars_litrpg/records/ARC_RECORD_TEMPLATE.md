@@ -10,3 +10,6 @@ Dates (in-world): · Sessions: · Era/location:
 ## Unresolved threads
 ## Established canon (new facts that are now fixed)
 ## Novel notes (scenes worth keeping, voice, tone)
+
+---
+Generate this record from the event ledger (`records/events.jsonl` plus `hidden/events.jsonl`). Every consequential claim cites event ids. Prose may embellish committed events but may not invent consequential ones.
