@@ -9,6 +9,24 @@ Support two logically separate semantic collections, with typed pointers to orig
 
 These are **world and event memory stores**, but embeddings are not the *authority* for actual HP, location, inventory, treasury, clock, initiative or event sequence. Vectors store representations, metadata, semantic neighborhoods, and references. Exact canonical data remains structured, versioned and validated. A single vector nearest neighbor hit is a search candidate, not proof.
 
+## Clarification (2026-11-03): semantically routed, deterministic lookup DAG
+**Creator's intended meaning of "acyclic lookup":** a query about hardcoded powers, species, classes, factions, etc. follows a directed sequence of lookup stages. Semantic retrieval **routes to the right registry or query family**, then explicit typed filters/joins/indexes narrow to candidate URIDs, and those URIDs dereference authoritative files. This is *not* a requirement that the game-world relationship graph itself be acyclic.
+
+```text
+natural-language question
+ -> semantic route to collection (e.g. Powers Registry)
+ -> normalized typed predicate plan (class=marauder, alignment=light,
+                                     level_threshold<=18, redemption=true)
+ -> validated parameterized SQL/index filtering (no raw model SQL execution)
+ -> matching URIDs / file pointers
+ -> exact authoritative definitions and prerequisites
+ -> Rules Lawyer checks the **actual character** against all conditions
+```
+
+The semantic route need not run a large model when direct deterministic routing is sufficient. Any iterative fallback across lookup methods must have a **bounded budget**, trace and stable termination; DAG refers to the main directed dependency stages. The same system can separately maintain event-memory and world-memory semantic projections, each grounded in source IDs. A query target of under one second is a **benchmark hypothesis**, not a guaranteed performance property.
+
+**Example:** a light-side Marauder, level 18+, after a redemption arc is a *hypothetical* ruleset test fixture. Do not assert the corresponding power or `requires_redemption` schema field exists. For a real query, constrain the schema to actual indexed fields and validate detailed requirements against the resolved power record; do not conflate power discovery with a player having learned that power.
+
 ## The structures are complementary
 | Structure | What it is | Strengths | Limits | Role |
 |---|---|---|---|---|
