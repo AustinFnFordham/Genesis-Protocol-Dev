@@ -42,3 +42,6 @@ Subclass design (3 per class), cache tiers and gear-bonus rules, System voice ar
 - Aero: original runtime stays authoritative. Surname Do'ordo; relationship with Master Vael Taron preserved.
 - Other character state is not rewritten without a validated discrepancy.
 - Presentation priority: Claude-native UI (Artifact, mobile-friendly) before Tauri. Tauri is not a prerequisite. UI actions must never silently fork campaign history; a draft is not a committed turn.
+
+## Owner ruling 2026-11-05 (Rassira mechanics policy)
+Source mismatch is not a character error. Rassira's designed values are preserved provisionally (commit_ready false); custom ability increases and saves need an explicit recorded exception with mechanical justification. Species languages are kept separate from culture/background languages. Ammunition Points are resolved at the Trooper class-resource level. Sensory band is validated as custom equipment. Details: characters/REGISTRY_DEPENDENCY_REPORT.md.

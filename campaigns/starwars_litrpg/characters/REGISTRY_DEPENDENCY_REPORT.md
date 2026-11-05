@@ -63,7 +63,20 @@ Schemas: `E:\StarWars\schema\Species.schema.json`, `Class.schema.json`. Source r
 - **Tests:** schema after conversion; recompute her saves/skills from the resolved class; item-definition vs item-instance separation; sensory-band feature passes Atomic gate; her runtime stays `commit_ready: false` until Q1–Q3, Q6 are answered.
 
 ---
-## Questions that need your ruling
+## Owner policy received 2026-11-05 (supersedes my recommendations below where they differ)
+A source mismatch is not necessarily a character error; a provisional stat is not automatically approved. Rassira's designed values are preserved provisionally and `commit_ready` stays false.
+
+| Item | Treatment now | Evidence / what remains |
+|---|---|---|
+| Species ability increases (DEX+1, WIS+1 vs source WIS+2, CHA+1) | Preserve provisionally. Investigate whether intentional. | Her runtime labels it "adopted Miraluka spread (perceptive, agile)", written when the pack was thought missing, so no recorded justification beyond that note. Needs: owner confirms intent, then recorded as an explicit custom override with mechanical justification and balance check. Never written into the global species. |
+| Bounty Hunter saves (DEX+WIS vs source STR+WIS) | Compare to source; keep custom saves only with explicit exception. | Comparison done (above). Awaiting an explicit exception or switch to source. |
+| Base Strain (11 vs source 12) | Determine calculated vs adopted. | Answered by her runtime: `strain_formula: Miraluka adopted base Strain 11 + Constitution modifier 2`. The 2 is calculated; the 11 is a provisional adopted base, not derived from any source. Still needs approval or correction. |
+| Languages | Separate species languages from upbringing/background. | I framed this as a divergence; that was too strong. Dathomiri (culture/upbringing) and Huttese (underworld/Scoundrel) are consistent with her history. Only open point: her list omits Miraluka, which the species grants. Proper treatment: Miraluka (species) + Dathomiri (culture) + Huttese (background or personal history), with each slot's source recorded. Basic is "Galactic Basic" in her runtime vs "Basic" in the source (naming alias). |
+| Adaptive Countermovement | Keep approved; validate independently. | Campaign-local option, text untouched. Remaining: Q4 items. |
+| Ammunition Points | Resolve at Trooper class-resource level, not on Varon's sheet. | Varon's sheet gets no AP pool. Class `primary_resource` definition is the fix location; spend rules in trooper_feats / heavy_gunner still to be read. |
+| Sensory band | Validate as custom equipment feature incl. perceives / cannot perceive. | Her runtime already lists inputs and limits (no color, fine detail, writing, screens; jammable; no Force Sight/true sight). Needs an item-definition record and balance review of 15 ft blindsight + advantage. |
+
+## Original questions (kept for the record)
 **Q1. Miraluka ability increases** (source WIS+2/CHA+1 vs her DEX+1/WIS+1). Options: (a) *Adopt source* — cleanest, costs her AC 13→12 and DEX bonuses. (b) *Keep her spread as an approved campaign variant* — preserves the character, recorded as a custom override, never written into the global species. (c) *Re-spend her 27-point buy under the source spread* so DEX stays high; exact scores to be recomputed and checked for legality. Recommend **(c)** if you care about her hunter's DEX; otherwise (a).
 **Q2. Base Strain 11 vs source 12.** Recommend adopt source 12 (Strain 14); no identity cost.
 **Q3. Languages.** Source gives Miraluka; hers lists Dathomiri and Huttese instead. Recommend: Basic + Miraluka from species, Dathomiri from her culture, Huttese from Scoundrel or dropped if the background grants none.
