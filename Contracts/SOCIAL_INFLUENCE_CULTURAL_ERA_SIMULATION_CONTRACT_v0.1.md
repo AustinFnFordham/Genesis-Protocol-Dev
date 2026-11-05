@@ -110,3 +110,19 @@ status: not_run
 - UAT criteria for one original Before the Fall playthrough, one seed-replayed headless run, and one counterfactual leadership crisis.
 
 **Decision status:** User has endorsed the *purpose and testing direction*; schemas, equations, implementation and acceptance results are not ratified merely by this document.
+
+
+## 8. SID Design Interview Decisions (provisional; 2026-11-05)
+**Question 1 — Initiator:** Owner selects **event-driven** cultural-change evaluation. Evaluate on accepted events (including media exposure, leadership/policy decisions, scarcity and contact as applicable), not a continuous automatic rewriting of cultures. Event type alone does not mandate change. Other actors/institutions affect transmission and response, and autonomous population behavior may be represented through accepted events.
+
+**Question 2 — Conditions for enduring change:** Owner selects **combined, context-dependent evaluation**. Do not predetermine one driver (severity/duration, prior norms/cultural compatibility, social transmission and perceived approval, perceived practical effectiveness); evaluate these jointly at an appropriate level, with varying relevance by cohort, historical moment, and domain. Distinguish (a) externally enforced practice, (b) observed behavior, (c) perceived descriptive norm, (d) perceived injunctive norm, (e) private convictions, and (f) durable intergenerational tradition. Those may diverge rather than move simultaneously.
+
+**Research caveats / UAT probes:**
+- Gelfand, Gavrilets & Nunn, *Norm Dynamics* (Annual Review of Psychology 2024), doi:10.1146/annurev-psych-033020-013319 — ecology, historical context, social networks, transmission, mismatch, and persistence jointly shape norms.
+- Giuliano, *Sticky Traditions* (NBER Working Paper 35125, 2026), https://www.nber.org/papers/w35125 — deeply rooted traditions may persist while some redistributive/prosocial attitudes shift faster; rates are domain-specific.
+- Bicchieri & McNally, *Shrieking Sirens: Schemata, Scripts, and Social Norms* (2018), doi:10.1017/S0265052518000079 — events and social expectations are mediated by context, scripts, and learned interpretation.
+- Meta-analysis of social norm appeals, *Human Communication Research* (2020), doi:10.1093/hcr/hqz023 — messaging effects often small and heterogeneous, so media exposure cannot automatically reprogram population convictions.
+
+**Test requirements:** same crisis and duration, vary information reach, institutional trust, existing tradition, leader policy, material constraints, and cross-group network; allow compliance without internalization, durable practice without policy endorsement, resistance/backlash, and no change. No moral approval inferred from prevalence. Explicitly do not treat culture traits as immutable species attributes.
+
+**Next design question:** What state layers must SID represent and preserve when responding to an event? No coefficient selection until functional requirements are signed off.
