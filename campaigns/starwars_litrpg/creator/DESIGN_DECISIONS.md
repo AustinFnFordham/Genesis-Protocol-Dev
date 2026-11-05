@@ -51,3 +51,8 @@ Where sources disagree or balance is in question, stick to SW5e where that makes
 
 ## Owner ruling 2026-11-05 14:10 (supersedes the 13:45 tiebreaker wording)
 SW5e is the default only where FFG has no data. Where SW5e and FFG both have data and conflict, determine why they conflict and choose the resolution that best marries the two (SW5e supplies the mechanical frame; FFG's intent is preserved through adaptation). No source simply overrides the other. Does not rewrite promoted records or approved customizations.
+
+## Owner rulings 2026-11-05 14:15
+1. Ammunition Points: when a Trooper first takes an AP spender, resolve within the approved range: pool = proficiency bonus or 2x proficiency bonus; recovery = short or long rest. Nothing applied now (Varon needs none at Level 1).
+2. Bounty Hunter licensing: assume the character is licensed by virtue of the class. At Level 1 standing/renown starts at 0. Specific guild or issuer is GM-side. Not yet written into any character sheet.
+3. FFG skills adjacent to SW5e skills may be added as distinct skills with their own scope instead of folded into the nearest SW5e skill. Definitions pending (see SOURCE_COMPARISON).
