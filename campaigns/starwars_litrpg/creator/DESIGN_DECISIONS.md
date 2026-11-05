@@ -45,3 +45,6 @@ Subclass design (3 per class), cache tiers and gear-bonus rules, System voice ar
 
 ## Owner ruling 2026-11-05 (Rassira mechanics policy)
 Source mismatch is not a character error. Rassira's designed values are preserved provisionally (commit_ready false); custom ability increases and saves need an explicit recorded exception with mechanical justification. Species languages are kept separate from culture/background languages. Ammunition Points are resolved at the Trooper class-resource level. Sensory band is validated as custom equipment. Details: characters/REGISTRY_DEPENDENCY_REPORT.md.
+
+## Owner ruling 2026-11-05 (source tiebreaker)
+Where sources disagree or balance is in question, stick to SW5e where that makes the most sense. FFG/EDGE stays reference for lore and comparative design only (hybrid rule unchanged). Does not rewrite already-promoted canonical records (e.g. species_chiss) or approved character customizations; it governs how new candidates are resolved and balanced.

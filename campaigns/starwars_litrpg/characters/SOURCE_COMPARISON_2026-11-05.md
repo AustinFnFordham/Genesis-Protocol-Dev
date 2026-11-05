@@ -57,3 +57,6 @@ Exact lookups (v1, no fallback): found: `species_chiss`, three Chiss features. *
 - Rules cross-check against SW5e reaction/opportunity-attack text: no conflict (earlier section).
 - **Registration:** `forge_v3/data/campaign_local` contains only `Character__*` files; there is no convention for a campaign-local Feature. I did **not** write one. Registering it would need a Feature route in the campaign-local lane (or a campaign-scoped Rust promotion), and it also references `class_trooper`, which does not exist yet. Status: schema-valid candidate, not registered, not promoted.
 Side effect on your machine: a scratch copy of the candidate in `%TEMP%\acm_candidate.json` and OCR scratch in `%TEMP%\ffg_ocr*`. Nothing under `E:\StarWars` was written.
+
+## Owner tiebreaker (13:45)
+SW5e wins where sources conflict or balance is in doubt and that makes sense; FFG is lore/comparison only. Does not alter promoted records or approved customizations. Effect: Miraluka stays SW5e-sourced (FFG has no entry in the searchable or OCR'd pages); Bounty Hunter stays expressed in SW5e terms; Rassira's recommended defaults (source ASI, Strain, saves) already sit on the SW5e/Genesis side.
