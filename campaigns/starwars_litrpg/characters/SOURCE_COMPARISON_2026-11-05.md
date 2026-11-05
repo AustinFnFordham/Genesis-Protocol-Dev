@@ -95,3 +95,17 @@ Licensing: Bounty Hunter standing starts at 0 at Level 1. Genesis has faction ra
 - **Critical failure (natural 1):** surprised and subtracts from initiative.
 - **Defaults I will use unless corrected:** add = proficiency bonus on failure; subtract = proficiency bonus on a natural 1. Success-vs-failure as written means a failed check can leave a higher initiative than a success; that follows your wording and is intended as "the shock sharpens you", but say if you want success to carry a small bonus too.
 - Streetwise definition remains proposed, not yet confirmed.
+
+## Vigilance numbers, worked out (16:24) — recommended, pending owner OK, not applied
+Analysis (d20 math, run offline; not game dice):
+- **DC = 10 + the ambushers' best Stealth modifier**, taken from their stat block. Deterministic, so the GM sets nothing. Only the player's d20 is rolled. Success chance vs. modifier gap (Vigilance minus Stealth): -2 → 45%, 0 → 55%, +2 → 65%, +4 → 75% (a natural 1 always fails; included).
+- **Failure: +2 initiative, flat. Natural 1: -4 initiative, flat.** Flat, not proficiency-scaled: +2 moves initiative win chance vs an equal opponent from 47.5% to 57.3%; proficiency scaling would reach +6 (74%) at high levels and dominate Dexterity. -4 drops it to 30%, deliberately larger than the bonus because it happens only 5% of the time.
+- At equal modifiers: success 55%, ordinary failure 40%, natural 1 5%, so the expected initiative change per check is +0.6. A failed check never leaves a character worse off than the average, which keeps proficiency from feeling punished.
+- Surprise is the large effect (no first-round action); these initiative changes are the small, secondary one.
+
+GM-bias safeguards (the GM is Claude, so these are structural, not promises):
+1. The ambush and its Stealth modifier are written to the hidden ledger **before** the player declares anything. The ledger is append-only, so it can't be changed after the roll.
+2. The Stealth modifier comes from the adversary data, not from my judgment of the scene.
+3. The check is rolled with the dice skill and logged. Only the player's roll and the outcome are shown; the DC stays hidden.
+4. Outcomes are applied mechanically from the table. I can't upgrade or downgrade one afterward.
+Remaining GM discretion, stated openly: whether an ambush exists in a scene. Mitigation: ambush likelihood for a scene comes from a logged Chaos roll when the situation is open-ended; a story-driven ambush is recorded before the declaration like any other hidden setup.
