@@ -34,3 +34,11 @@ Subclass design (3 per class), cache tiers and gear-bonus rules, System voice ar
 - **Reference only:** Force Morality, Alignment Transform, and Inter-Party Influence docs (magnitude guidelines kept as reference, not modifiers).
 - **Play now.** Use current rules and source data; keep unresolved mechanics, provisional rulings, data gaps, and unexpected interactions in `hidden/UAT_LOG.md`.
 - **Protagonist:** Aero (existing sheet). Point buy remains the method for creating any new character.
+
+## Owner rulings 2026-11-05 (character authority)
+- Rassira: her original runtime is correct. Miraluka, raised in Dathomirian witch traditions, Bounty Hunter, Force connection severed. Do not change her species or make her a Force-using Nightsister.
+- Varon: Adaptive Countermovement is his intended Trooper Style. Keep the authored definition; report remaining validation issues rather than replacing it.
+- Togruta companion: created through play. No sheet is to be invented now. Introduced organically (entertainer or another suitable role).
+- Aero: original runtime stays authoritative. Surname Do'ordo; relationship with Master Vael Taron preserved.
+- Other character state is not rewritten without a validated discrepancy.
+- Presentation priority: Claude-native UI (Artifact, mobile-friendly) before Tauri. Tauri is not a prerequisite. UI actions must never silently fork campaign history; a draft is not a committed turn.

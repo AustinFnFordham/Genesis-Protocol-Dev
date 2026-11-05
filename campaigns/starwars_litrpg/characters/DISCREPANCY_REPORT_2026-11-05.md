@@ -29,3 +29,10 @@ Sources compared: the owner's local runtimes (`api_bridge/gm/characters/{aero,va
 2. Varon: adopt Adaptive Countermovement as his Trooper Style?
 3. Togruta: please provide her original sheet, or say we build her through play.
 4. Registry: Chiss, Miraluka, Trooper and Bounty Hunter need validated entries before the app can mount Varon and Rassira in strict mode.
+
+## Rulings received (2026-11-05, owner)
+1. Rassira: the original runtime is correct (Miraluka, Dathomirian witch-raised, Bounty Hunter, Force severed). Preserve it. Not a Force-using Nightsister.
+2. Varon: Adaptive Countermovement approved as his Trooper Style; preserve the authored definition and list validation gaps.
+3. Togruta: built through play; no sheet invented now.
+4. Aero: his runtime stays authoritative; surname Do'ordo and Master Vael Taron are preserved. The "Aero Taron" label in Varon's file is therefore a label error in that file, to be flagged, not applied to Aero.
+5. Registry gaps (Chiss, Miraluka, Trooper, Bounty Hunter): investigate through the existing pipeline; see REGISTRY_DEPENDENCY_REPORT.md.

@@ -1,0 +1,280 @@
+<title>Genesis Datapad</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: desktop = three-column command center (character | scene | record).
+   Phone = one column with a bottom tab bar (Scene / Aero / Gear / Journal). */
+:root {
+  --bg: #e9eef1;          /* datapad paper */
+  --panel: #f6f9fb;
+  --panel-2: #dfe7ec;
+  --line: #b7c6cf;
+  --fg: #14232d;
+  --dim: #55697a;
+  --accent: #0a6f8f;      /* scanner cyan */
+  --accent-fg: #ffffff;
+  --amber: #8f5a00;       /* warning / pending */
+  --good: #1f7a4d;
+  --bad: #a33a2a;
+  --f-ui: "Chakra Petch", system-ui, sans-serif;
+  --f-read: "Source Serif 4", Georgia, serif;
+  --f-data: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #070d13; --panel: #0d1721; --panel-2: #132431; --line: #1f3a4d; --fg: #d5e4ec; --dim: #7f98a8;
+    --accent: #4fc3e6; --accent-fg: #04202b; --amber: #f0b64a; --good: #54c98c; --bad: #ee7c68; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #070d13; --panel: #0d1721; --panel-2: #132431; --line: #1f3a4d; --fg: #d5e4ec; --dim: #7f98a8;
+  --accent: #4fc3e6; --accent-fg: #04202b; --amber: #f0b64a; --good: #54c98c; --bad: #ee7c68; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--fg); font: 15px/1.5 var(--f-ui);
+  padding-block: 10px 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.app { display: grid; gap: 12px; grid-template-columns: 290px minmax(0, 1fr) 330px; height: calc(100% - 10px); min-height: 0; }
+.col { min-height: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; }
+.panel > h2 { margin: 0 0 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.mirror { font: 11px var(--f-data); color: var(--dim); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.pill { font: 500 10px var(--f-data); letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--line); border-radius: 99px; color: var(--dim); white-space: nowrap; }
+.pill.fact { color: var(--good); border-color: var(--good); }
+.pill.report { color: var(--amber); border-color: var(--amber); }
+.pill.belief { color: var(--accent); border-color: var(--accent); }
+.pill.pend { color: var(--amber); border-color: var(--amber); }
+.pill.ok { color: var(--good); border-color: var(--good); }
+.hdr h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+.hdr .sub { color: var(--dim); font-size: 13px; display: flex; gap: 8px 14px; flex-wrap: wrap; margin-top: 2px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.tags span { font: italic 13px var(--f-read); color: var(--dim); border-bottom: 1px solid var(--line); }
+.feed { display: flex; flex-direction: column; gap: 12px; }
+.feed .meta { font: 500 10px var(--f-data); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.feed .you .meta { color: var(--accent); }
+.feed p { margin: 6px 0 0; font: 17px/1.65 var(--f-read); max-width: 68ch; }
+.feed p.say { padding-left: 12px; border-left: 2px solid var(--line); }
+.feed .you p { color: var(--accent); }
+.empty { color: var(--dim); font: italic 15px var(--f-read); }
+.sugg { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--panel-2); border: 1px solid var(--line); border-radius: 3px; padding: 8px 10px; text-align: left; min-height: 44px; flex: 1 1 210px; }
+.chip:hover { border-color: var(--accent); }
+.note { font-size: 12px; color: var(--dim); }
+.composer textarea { width: 100%; min-height: 84px; resize: vertical; background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 10px; font: 16px/1.5 var(--f-read); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { min-height: 44px; padding: 8px 16px; border-radius: 3px; border: 1px solid var(--line); background: var(--panel-2); font-weight: 500; letter-spacing: .04em; }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.act { border: 1px dashed var(--line); border-radius: 3px; padding: 8px 10px; margin-top: 8px; display: grid; gap: 4px; }
+.act q { font: 15px var(--f-read); quotes: none; }
+.bar { height: 8px; background: var(--panel-2); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.bar.hp i { background: var(--bad); } .bar.st i { background: var(--amber); }
+.stat { display: grid; grid-template-columns: 70px 1fr auto; gap: 8px; align-items: center; margin: 7px 0; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.stat b { font: 500 13px var(--f-data); }
+.pips { display: flex; gap: 5px; } .pips i { width: 14px; height: 14px; border: 1.5px solid var(--accent); transform: rotate(45deg); } .pips i.on { background: var(--accent); }
+.scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+.scores div { text-align: center; border: 1px solid var(--line); border-radius: 3px; padding: 6px 0; }
+.scores small { display: block; font: 10px var(--f-data); letter-spacing: .12em; color: var(--dim); }
+.scores b { font: 500 18px var(--f-data); } .scores em { font: 12px var(--f-data); color: var(--accent); font-style: normal; margin-left: 4px; }
+.portrait { aspect-ratio: 4/3; max-width: 100%; border: 1px solid var(--line); border-radius: 3px; display: grid; place-items: center; background: repeating-linear-gradient(135deg, var(--panel-2) 0 10px, var(--panel) 10px 20px); position: relative; }
+.portrait b { font: 600 44px var(--f-ui); letter-spacing: .08em; color: var(--accent); }
+.portrait small { position: absolute; bottom: 6px; left: 8px; font: 10px var(--f-data); color: var(--dim); letter-spacing: .1em; text-transform: uppercase; }
+ul.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+ul.plain li { border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+ul.plain li:last-child { border-bottom: 0; }
+details summary { cursor: pointer; font-weight: 500; min-height: 28px; }
+details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
+.kv { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+.kv span:last-child { font-family: var(--f-data); }
+.tabbar { display: none; }
+.pane { display: contents; }
+@media (max-width: 960px) {
+  body { padding-block: 8px 0; }
+  .app { display: block; height: auto; padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  .col { overflow: visible; display: none; }
+  .app[data-tab="scene"] .col.center, .app[data-tab="aero"] .col.left, .app[data-tab="gear"] .col.gear, .app[data-tab="journal"] .col.right { display: flex; }
+  .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--line);
+    padding: 0 max(8px, env(safe-area-inset-left, 0px)) env(safe-area-inset-bottom, 0px) max(8px, env(safe-area-inset-right, 0px)); z-index: 5; }
+  .tabbar button { background: none; border: 0; min-height: 56px; font: 500 11px var(--f-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+  .tabbar button[aria-selected="true"] { color: var(--accent); box-shadow: inset 0 2px 0 var(--accent); }
+}
+@media (min-width: 961px) { .col.gear { display: none; } .only-mobile { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="app" id="app" data-tab="scene">
+  <section class="col left" id="colLeft" aria-label="Aero"></section>
+  <section class="col center" id="colCenter" aria-label="Scene"></section>
+  <section class="col right" id="colRight" aria-label="Record"></section>
+  <section class="col gear" id="colGear" aria-label="Gear"></section>
+</div>
+<nav class="tabbar" id="tabbar" role="tablist" aria-label="Sections">
+  <button role="tab" data-t="scene" aria-selected="true">Scene</button>
+  <button role="tab" data-t="aero" aria-selected="false">Aero</button>
+  <button role="tab" data-t="gear" aria-selected="false">Gear</button>
+  <button role="tab" data-t="journal" aria-selected="false">Journal</button>
+</nav>
+
+<script>
+(function () {
+  "use strict";
+  var view = null, actions = [], dbRef = null, status = "connecting", err = "";
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } return ""; }
+  var draft = ls("datapad.draft");
+
+  /* ---------- rendering (pure function of `view` + `actions`) ---------- */
+  function bar(cls, cur, max) { return '<div class="bar ' + cls + '"><i style="width:' + Math.max(0, Math.min(100, max ? cur / max * 100 : 0)) + '%"></i></div>'; }
+  function paras(text) {
+    return String(text).split(/\n{2,}/).map(function (p) {
+      var say = /^["“]/.test(p.trim());
+      return "<p" + (say ? ' class="say"' : "") + ">" + esc(p.trim()).replace(/\*(.+?)\*/g, "<em>$1</em>") + "</p>";
+    }).join("");
+  }
+  function pendingAction() { return actions.filter(function (a) { return a.status === "submitted"; })[0] || null; }
+
+  function renderLeft(c) {
+    var f = c.force, pips = "";
+    for (var i = 0; i < f[1]; i++) pips += '<i class="' + (i < f[0] ? "on" : "") + '"></i>';
+    var sc = Object.keys(c.scores).map(function (k) { var v = c.scores[k]; return "<div><small>" + k + "</small><b>" + v[0] + "</b><em>" + (v[1] >= 0 ? "+" : "") + v[1] + "</em></div>"; }).join("");
+    return '<div class="panel"><div class="portrait"><b>AD</b><small>Portrait pending</small></div>' +
+      '<h1 style="font-size:18px;margin:10px 0 0">' + esc(c.name) + '</h1><div class="note">' + esc(c.line) + " · Level " + esc(c.level) + "</div></div>" +
+      '<div class="panel"><h2>Status</h2>' +
+      '<div class="stat"><span>HP</span>' + bar("hp", c.hp[0], c.hp[1]) + "<b>" + c.hp[0] + "/" + c.hp[1] + "</b></div>" +
+      '<div class="stat"><span>Strain</span>' + bar("st", c.strain[0], c.strain[1]) + "<b>" + c.strain[0] + "/" + c.strain[1] + "</b></div>" +
+      '<div class="stat"><span>Force</span><div class="pips">' + pips + "</div><b>" + f[0] + "/" + f[1] + "</b></div>" +
+      '<div class="kv"><span>Armor class</span><span>' + c.ac + '</span></div><div class="kv"><span>Speed</span><span>' + esc(c.speed) + '</span></div>' +
+      '<div class="kv"><span>Initiative</span><span>+' + c.initiative + '</span></div>' +
+      '<div class="kv"><span>Passive Perception / Insight</span><span>' + c.passive.perception + " / " + c.passive.insight + "</span></div>" +
+      '<div class="kv"><span>Conditions</span><span>' + (c.conditions.length ? esc(c.conditions.join(", ")) : "none") + "</span></div>" +
+      '<div class="scores">' + sc + "</div></div>" +
+      '<div class="panel"><h2>Skills</h2><div class="tags">' + c.skills.map(function (s) { return '<span style="font-style:normal;font-family:var(--f-data);font-size:12px">' + esc(s.name) + " " + (s.mod >= 0 ? "+" : "") + s.mod + "</span>"; }).join("") + "</div>" +
+      '<div class="note" style="margin-top:8px">Languages: ' + esc(c.languages.join(", ")) + "</div></div>" +
+      '<div class="panel"><h2>Powers</h2><ul class="plain">' + c.powers.map(function (p) { return "<li><details><summary>" + esc(p.name) + ' <span class="pill">' + esc(p.cost) + "</span></summary><p>" + esc(p.effect) + "</p></details></li>"; }).join("") + "</ul></div>" +
+      '<div class="panel"><h2>Features</h2><ul class="plain">' + c.features.map(function (p) { return "<li><details><summary>" + esc(p.name) + ' <span class="pill">' + esc(p.kind) + "</span></summary><p>" + esc(p.effect) + "</p></details></li>"; }).join("") + "</ul></div>";
+  }
+
+  function renderGear(c) {
+    return '<div class="panel"><h2>Weapons</h2><ul class="plain">' + c.weapons.map(function (w) { return '<li><div class="kv"><span>' + esc(w.name) + "</span><span>+" + w.attack + "</span></div><div class='note'>" + esc(w.damage) + "</div></li>"; }).join("") + "</ul></div>" +
+      '<div class="panel"><h2>Worn</h2><div class="kv"><span>' + esc(c.armor.name) + "</span><span>AC " + c.armor.ac + "</span></div></div>" +
+      '<div class="panel"><h2>Inventory</h2><ul class="plain">' + c.inventory.map(function (i) { return '<li class="kv"><span>' + esc(i.item) + "</span><span>×" + i.qty + "</span></li>"; }).join("") + '</ul><div class="kv" style="margin-top:8px"><span>Credits</span><span>' + c.credits + "</span></div></div>";
+  }
+
+  function renderRecord(v) {
+    var disc = v.journal.filter(function (j) { return j.kind === "observation"; });
+    var jr = v.journal.slice().reverse().map(function (j) {
+      return '<li><div class="row" style="justify-content:space-between"><span class="pill ' + esc(j.knowledge) + '">' + esc(j.knowledge) + '</span><span class="note">' + esc(j.time) + "</span></div><div style='margin-top:4px'>" + esc(j.text) + "</div></li>";
+    }).join("");
+    return '<div class="panel"><h2>Journal</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded yet.</li>') + "</ul></div>" +
+      '<div class="panel"><h2>Discoveries</h2><div class="note">' + disc.length + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
+      '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
+      '<div class="panel"><h2>Party</h2><ul class="plain">' + v.party.map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
+  }
+
+  function renderActions() {
+    if (!actions.length) return "";
+    return actions.slice(0, 3).map(function (a) {
+      var st = a.status === "committed" ? '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>" : '<span class="pill pend">Submitted · waiting for the GM</span>';
+      var wd = a.status === "submitted" ? ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button>' : "";
+      return '<div class="act"><div class="row">' + st + wd + "</div><q>" + esc(a.text) + "</q>" +
+        (a.status === "submitted" ? '<div class="note">Not part of the story yet. Send any message in the chat so the GM can pick it up.</div>' : "") + "</div>";
+    }).join("");
+  }
+
+  function renderCenter(v) {
+    var s = v.scene, pend = pendingAction();
+    var feed = v.feed.map(function (f) {
+      return '<div class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
+    }).join("");
+    var sug = v.suggestions.map(function (t, i) { return '<button class="chip" data-s="' + i + '">' + esc(t) + "</button>"; }).join("");
+    return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
+      '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
+      '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
+      '<div class="panel"><h2>Narrative</h2><div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      (sug ? '<div class="panel"><h2>Possible actions · tap to draft</h2><div class="sugg">' + sug + '</div><div class="note" style="margin-top:6px">These are conveniences. Write anything you like below.</div></div>' : "") +
+      '<div class="panel composer"><h2>Your action</h2>' +
+      '<textarea id="draft" placeholder="What does Aero do or say? Anything is allowed." ' + (pend ? "disabled" : "") + ">" + esc(pend ? "" : draft) + "</textarea>" +
+      '<div class="row" style="margin-top:8px"><button class="btn primary" id="submit" ' + (pend || !draft.trim() || status !== "live" ? "disabled" : "") + ">Submit to GM</button>" +
+      '<button class="btn" id="copy">Copy</button><span class="note" id="msg"></span></div>' +
+      '<div class="note" style="margin-top:6px">A draft is only on this device. <b>Submit</b> saves it for the GM; it becomes part of the story only after the GM commits it to the ledger. ' + (pend ? "One action at a time: withdraw the pending one to change it." : "") + "</div>" +
+      renderActions() + "</div>";
+  }
+
+  function render() {
+    var keep = document.activeElement && document.activeElement.id === "draft" ? [document.activeElement.selectionStart, document.activeElement.selectionEnd] : null;
+    if (!view) {
+      $("colCenter").innerHTML = '<div class="panel"><h2>Genesis Datapad</h2><div class="empty">' + (status === "unavailable" ? "The campaign store is not reachable from this view. Open the page while signed in to Claude." : status === "error" ? esc(err) : "Connecting to the campaign ledger…") + "</div></div>";
+      return;
+    }
+    $("colLeft").innerHTML = renderLeft(view.character);
+    $("colGear").innerHTML = renderGear(view.character);
+    $("colRight").innerHTML = renderRecord(view);
+    $("colCenter").innerHTML = renderCenter(view);
+    bindCenter();
+    if (keep && $("draft")) { $("draft").focus(); try { $("draft").setSelectionRange(keep[0], keep[1]); } catch (e) {} }
+  }
+
+  /* ---------- interaction ---------- */
+  function setMsg(t) { var m = $("msg"); if (m) m.textContent = t; }
+  function bindCenter() {
+    var d = $("draft");
+    if (d) d.addEventListener("input", function () { draft = d.value; ls("datapad.draft", draft); var b = $("submit"); if (b) b.disabled = !draft.trim() || status !== "live" || !!pendingAction(); });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-s]"), function (b) {
+      b.addEventListener("click", function () { if (pendingAction()) return; draft = view.suggestions[+b.getAttribute("data-s")]; ls("datapad.draft", draft); render(); $("draft").focus(); });
+    });
+    var sub = $("submit"); if (sub) sub.addEventListener("click", submit);
+    var cp = $("copy"); if (cp) cp.addEventListener("click", function () {
+      var t = ($("draft") || {}).value || ""; if (!t) return;
+      try { navigator.clipboard.writeText(t).then(function () { setMsg("Copied."); }, function () { $("draft").select(); setMsg("Select and copy."); }); } catch (e) { $("draft").select(); setMsg("Select and copy."); }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-wd]"), function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-wd"), a = actions.filter(function (x) { return x._id === id; })[0];
+        if (!a || a.status !== "submitted") { setMsg("Already picked up by the GM."); return; }
+        dbRef.doc("actions/" + id).delete().catch(function (e) { setMsg("Could not withdraw: " + (e && e.code || "error")); });
+      });
+    });
+  }
+  function submit() {
+    var text = ($("draft").value || "").trim();
+    if (!text || pendingAction() || !dbRef) return;
+    $("submit").disabled = true; setMsg("Saving…");
+    var ref = dbRef.collection("actions").doc();
+    ref.set({ text: text, status: "submitted", created_ms: Date.now(), based_on_revision: view.revision, ledger_head: view.ledger_head })
+      .then(function () { draft = ""; ls("datapad.draft", ""); setMsg(""); })
+      .catch(function (e) { setMsg("Not saved (" + (e && e.code || "error") + "). Your text is still here; use Copy and send it in the chat."); $("submit").disabled = false; });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#tabbar button"), function (b) {
+    b.addEventListener("click", function () {
+      $("app").setAttribute("data-tab", b.getAttribute("data-t"));
+      Array.prototype.forEach.call(document.querySelectorAll("#tabbar button"), function (x) { x.setAttribute("aria-selected", String(x === b)); });
+      window.scrollTo(0, 0);
+    });
+  });
+
+  /* ---------- data: subscribe once ---------- */
+  var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
+  function start(db) {
+    dbRef = db; status = "live";
+    db.doc("view/state").onSnapshot(function (snap) {
+      if (snap.exists) { view = snap.data(); clearTimeout(timer); }
+      render();
+    }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
+    db.collection("actions").orderBy("created_ms", "desc").limit(10).onSnapshot(function (q) {
+      actions = q.docs.map(function (d) { var x = Object.assign({}, d.data()); x._id = d.id; return x; });
+      render();
+    }, function () {});
+  }
+  render();
+  if (window.claude && window.claude.use) {
+    window.claude.use("db").then(function (db) { if (db) start(db); else { status = "unavailable"; clearTimeout(timer); render(); } }, function () { status = "unavailable"; render(); });
+  } else { status = "unavailable"; render(); }
+})();
+</script>

@@ -83,6 +83,8 @@ def sync():
                                'text': e['details'].get('text', e['summary']), 'dice': [],
                                'source_event_id': e['event_id'], 'campaign_id': CID,
                                'world_time': e['world_time']})
+        elif e['kind'] in ('scene_state', 'gm_suggestions'):
+            continue  # UI-only metadata, not story events
         else:
             chronicle.append({'event_id': e['event_id'], 'timestamp': e['world_time'],
                               'objective_event': f"[{e['kind']}] {e['summary']}",
