@@ -60,3 +60,16 @@ Side effect on your machine: a scratch copy of the candidate in `%TEMP%\acm_cand
 
 ## Owner tiebreaker (13:45)
 SW5e wins where sources conflict or balance is in doubt and that makes sense; FFG is lore/comparison only. Does not alter promoted records or approved customizations. Effect: Miraluka stays SW5e-sourced (FFG has no entry in the searchable or OCR'd pages); Bounty Hunter stays expressed in SW5e terms; Rassira's recommended defaults (source ASI, Strain, saves) already sit on the SW5e/Genesis side.
+
+## Correction (14:08): combine and enhance where both sources have it
+My earlier "keep Bounty Hunter SW5e-only, don't import FFG skills or licensing" over-applied the tiebreaker. The rule is: SW5e supplies mechanics and wins on conflict; where FFG also has the content, combine and enhance, translated into SW5e terms.
+
+Bounty Hunter, FFG (EotE PDF p58-60) vs Genesis class (SW5e-expressed):
+| Element | FFG | Genesis/SW5e | Proposed combination (not applied) |
+|---|---|---|---|
+| Specializations | Assassin, Gadgeteer, Survivalist | same three plus Operator, Skip Tracer, Martial Artist | Already combined. No change. |
+| Career skills | Athletics, Brawl, Perception, Piloting (Planetary/Space), Ranged (Heavy), Streetwise, Vigilance | choose 3 from Athletics, Deception, Intimidation, Investigation, Perception, Stealth, Survival, Technology | Athletics, Perception (covers Vigilance) already present. **Add SW5e Piloting** to the list (FFG lists it twice; SW5e has the skill). Brawl and Ranged (Heavy) are weapon training, already covered by Martial and blaster rifle proficiency. Streetwise has no SW5e skill; nearest existing choices are Investigation and Insight, so nothing to add. |
+| Hunter's Creed | "People don't have bounties; only acquisitions"; guild/independent code (p59) | no equivalent | Add as the class's narrative/Soul text. It fits Rassira's contract ethic. Flavor only, no mechanics. |
+| Legal status (license) | Imperial-era licensing assumed | none | Keep as an era-appropriate equivalent (guild standing or local license) as a narrative hook, specifics GM-side. Not mechanical. |
+
+Smallest change to the class source: add Piloting to the skill choice list and the Creed to its narrative. That edits a Genesis source file, so it goes through the Forge candidate lane for approval; I have not changed any source. Rassira's runtime (Investigation, Perception, Stealth, Survival) is unaffected.
