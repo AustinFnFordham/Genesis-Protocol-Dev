@@ -48,3 +48,6 @@ Source mismatch is not a character error. Rassira's designed values are preserve
 
 ## Owner ruling 2026-11-05 (source tiebreaker)
 Where sources disagree or balance is in question, stick to SW5e where that makes the most sense. FFG/EDGE stays reference for lore and comparative design only (hybrid rule unchanged). Does not rewrite already-promoted canonical records (e.g. species_chiss) or approved character customizations; it governs how new candidates are resolved and balanced.
+
+## Owner ruling 2026-11-05 14:10 (supersedes the 13:45 tiebreaker wording)
+SW5e is the default only where FFG has no data. Where SW5e and FFG both have data and conflict, determine why they conflict and choose the resolution that best marries the two (SW5e supplies the mechanical frame; FFG's intent is preserved through adaptation). No source simply overrides the other. Does not rewrite promoted records or approved customizations.
