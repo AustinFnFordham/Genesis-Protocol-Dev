@@ -43,5 +43,33 @@ def test_all():
         assert "not earlier" in msgs and "public file" in msgs
         add(c, "blocked while invalid", ok=False)   # refuses to append onto a broken ledger
 
+def test_moral_evaluations():
+    def moral(c, facets, *extra, ok=True, subject_kind="pc"):
+        d = {"subject": "aero", "subject_kind": subject_kind, "facets": facets}
+        return run(c, "add", "--kind", "moral_evaluation", "--summary", "m", "--world-time", "Day 1",
+                   "--details", json.dumps(d), "--visibility", "gm_only", *extra, ok=ok)
+    with tempfile.TemporaryDirectory() as t:
+        c = Path(t); (c / "records").mkdir(); (c / "hidden").mkdir()
+        good = {"action": "spared a wounded guard", "intent_source": "declared", "intent": "he is no threat now",
+                "knowledge": "believed unarmed", "consequences_accidental": "unknown"}
+        e1 = moral(c, good)["event"]
+        # undeclared intent must be empty; npc_soul is invalid for a PC; missing action rejected
+        moral(c, {"action": "x", "intent_source": "undeclared", "intent": "guessed"}, ok=False)
+        moral(c, {"action": "x", "intent_source": "npc_soul"}, ok=False)
+        moral(c, {"intent_source": "declared", "intent": "y"}, ok=False)
+        assert moral(c, {"action": "x", "intent_source": "undeclared"})["status"] == "committed"
+        assert moral(c, {"action": "hired by captain", "intent_source": "npc_soul"}, subject_kind="npc")["status"] == "committed"
+        # later revelation: new evaluation, same intent, new knowledge; rewriting intent is rejected
+        later = dict(good, knowledge="later learned guard was a courier", consequences_accidental="courier delivered the warning")
+        d = lambda f: {"subject": "aero", "subject_kind": "pc", "reevaluates": e1["event_id"], "facets": f}
+        ok = run(c, "add", "--kind", "moral_evaluation", "--summary", "m2", "--world-time", "Day 3",
+                 "--details", json.dumps(d(later)), "--visibility", "gm_only", "--caused-by", e1["event_id"])
+        assert ok["status"] == "committed"
+        rewritten = dict(later, intent="I wanted him to deliver the warning")
+        run(c, "add", "--kind", "moral_evaluation", "--summary", "m3", "--world-time", "Day 3",
+            "--details", json.dumps(d(rewritten)), "--visibility", "gm_only", ok=False)
+        assert run(c, "validate")["problems"] == []
+
+
 if __name__ == "__main__":
-    test_all(); print("ok test_all")
+    test_all(); print("ok test_all"); test_moral_evaluations(); print("ok test_moral_evaluations")

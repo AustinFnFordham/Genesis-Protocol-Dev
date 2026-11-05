@@ -38,6 +38,46 @@ def load_all(camp):
     return sorted(events, key=lambda e: int(ID_RE.match(e["event_id"]).group(1)))
 
 
+MORAL_FACETS = {"intent", "intent_source", "action", "knowledge", "foreseeability", "control",
+                "consequences_deliberate", "consequences_accidental", "convictions", "strain",
+                "normalization", "subsequent_choices"}
+
+
+def validate_moral(e, d, by_id):
+    """Adaptive Moral Dynamics, as summarized by the owner. A moral_evaluation records facets of one act.
+    Intent of a player character is only ever what the player declared; a re-evaluation never rewrites intent."""
+    errs = []
+    f = d.get("facets")
+    if not str(d.get("subject", "")).strip():
+        errs.append("moral_evaluation needs details.subject")
+    if not isinstance(f, dict):
+        return errs + ["moral_evaluation needs details.facets object"]
+    unknown = set(f) - MORAL_FACETS
+    if unknown:
+        errs.append(f"unknown facets {sorted(unknown)}")
+    if not f.get("action"):
+        errs.append("facets.action required")
+    src = f.get("intent_source")
+    if src not in {"declared", "undeclared", "npc_soul"}:
+        errs.append("facets.intent_source must be declared | undeclared | npc_soul")
+    if src == "declared" and not f.get("intent"):
+        errs.append("declared intent needs facets.intent text")
+    if src == "undeclared" and f.get("intent"):
+        errs.append("undeclared intent must be empty: never infer a player character's intent")
+    if src == "npc_soul" and d.get("subject_kind") != "npc":
+        errs.append("npc_soul intent is only valid for subject_kind npc")
+    re_of = d.get("reevaluates")
+    if re_of:
+        orig = by_id.get(re_of)
+        if not orig or orig.get("kind") != "moral_evaluation":
+            errs.append(f"reevaluates {re_of} is not an existing moral_evaluation")
+        else:
+            of = (orig.get("details") or {}).get("facets", {})
+            if f.get("intent") != of.get("intent") or src != of.get("intent_source"):
+                errs.append("re-evaluation may not rewrite the original intent")
+    return errs
+
+
 def validate_event(e, by_id, roll_ids):
     errs = []
     for k in REQUIRED:
@@ -66,6 +106,11 @@ def validate_event(e, by_id, roll_ids):
     for r in e["roll_ids"]:
         if r not in roll_ids:
             errs.append(f"roll {r} not in roll_log")
+    d = e.get("details", {})
+    if not isinstance(d, dict):
+        errs.append("details must be an object")
+    elif e["kind"] == "moral_evaluation":
+        errs += validate_moral(e, d, by_id)
     return errs
 
 
@@ -107,6 +152,11 @@ def cmd_add(a, camp):
             if e.get("idempotency_key") == a.idem:
                 print(json.dumps({"status": "duplicate", "event": e}))
                 return 0
+    try:
+        details = json.loads(a.details) if a.details else {}
+    except ValueError:
+        print(json.dumps({"error": "--details is not valid JSON"}), file=sys.stderr)
+        return 2
     turn = a.turn
     if turn is None:
         turn = json.loads(dice.read_text())["turn_no"] if dice.exists() else 0
@@ -115,7 +165,7 @@ def cmd_add(a, camp):
         "event_id": f"evt_{nxt:04d}", "session": a.session, "turn_no": turn, "world_time": a.world_time,
         "actor": a.actor, "kind": a.kind, "summary": a.summary, "visibility": a.visibility,
         "knowledge_type": a.type, "known_to": a.known_to or [], "caused_by": a.caused_by or [],
-        "roll_ids": a.roll or [], "tags": a.tag or [], "idempotency_key": a.idem,
+        "roll_ids": a.roll or [], "tags": a.tag or [], "details": details, "idempotency_key": a.idem,
     }
     by_id = {x["event_id"]: x for x in events}
     roll_ids = {r["roll_id"] for r in read_jsonl(rolls)}
@@ -168,6 +218,7 @@ def main(argv=None):
     s.add_argument("--type", choices=sorted(KNOWLEDGE), default="fact")
     s.add_argument("--known-to", nargs="*"); s.add_argument("--caused-by", nargs="*")
     s.add_argument("--roll", nargs="*"); s.add_argument("--tag", nargs="*")
+    s.add_argument("--details", help="JSON object of structured details (required shape for moral_evaluation)")
     s.add_argument("--idem"); s.add_argument("--session", type=int, default=1); s.add_argument("--turn", type=int)
     sub.add_parser("validate")
     w = sub.add_parser("show"); w.add_argument("--as", dest="as_", choices=["player", "gm"], default="player"); w.add_argument("--session", type=int)

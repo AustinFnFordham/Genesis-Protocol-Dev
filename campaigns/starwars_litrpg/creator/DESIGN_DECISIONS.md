@@ -27,3 +27,10 @@ The data already stores `progression_tree` as a flat node list (`node_id`, `feat
 
 ## Still open
 Subclass design (3 per class), cache tiers and gear-bonus rules, System voice architecture, achievement budget, in-world explanation of the System. Discussed in chat 2026-10-29; to be written up once agreed.
+
+## Owner decisions 2026-11-05 (supersede earlier proposals)
+- **Withdrawn:** the -100..+100 morality scale, the +/-40 swap bands, automatic mirrored-feature swaps on band crossing, save-based companion alignment shifts, session-end Conflict resolution from player-listed good deeds, a single affection meter for romance.
+- **Adopted:** Adaptive Moral Dynamics (multidimensional, history-dependent; normalization is not justification), convictions-only companion reactions with independent trust/respect/fear/affection, Conflict evaluated from fictional time and established events, diegetic visibility, character-driven romance deferred.
+- **Reference only:** Force Morality, Alignment Transform, and Inter-Party Influence docs (magnitude guidelines kept as reference, not modifiers).
+- **Play now.** Use current rules and source data; keep unresolved mechanics, provisional rulings, data gaps, and unexpected interactions in `hidden/UAT_LOG.md`.
+- **Protagonist:** Aero (existing sheet). Point buy remains the method for creating any new character.
