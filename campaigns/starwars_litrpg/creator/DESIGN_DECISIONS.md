@@ -59,3 +59,6 @@ SW5e is the default only where FFG has no data. Where SW5e and FFG both have dat
 
 ## Owner ruling 2026-11-05 16:22 (Vigilance, proposed skill, Wisdom)
 When surprise is possible, a Vigilance check gives a chance to protect against it. Success: not surprised. Failure: not protected from surprise, but the roll adds to initiative. Critical failure (natural 1): not protected, and the roll subtracts from initiative. Amounts are provisional (see SOURCE_COMPARISON) and nothing is applied to any sheet or source yet.
+
+## 2026-11-05 16:33 Vigilance numbers withdrawn pending redesign
+Owner challenge: (1) a failure bonus to initiative needs a coherent reason and does not offset losing the surprise action; (2) a natural 1 applying a fixed penalty regardless of the scene is not justified; (3) an expected value of +0.6 initiative does not show the mechanic is fair or interesting. The +2/-4 figures and the "failure adds to initiative" ladder are withdrawn and nothing was applied. Direction under investigation: separate independent layers (task result, narrative side effect, character appraisal, social consequence) instead of one success/failure ladder; AMD stays morality-only and is not coupled to skill checks. The surprise/no-surprise outcome and the DC rule (10 + best Stealth modifier, hidden-ledger pre-commitment) are unchanged.
