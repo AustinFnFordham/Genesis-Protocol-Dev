@@ -189,7 +189,8 @@ export const useGenesis = create((set, get) => ({
       if (r.campaign_id && cid && r.campaign_id !== cid) return [];
       if (r.mount_epoch != null && r.mount_epoch !== get().mountEpoch) return [];
       const entries = (r.entries ?? []).map((e) => ({
-        t: e.timestamp ? Date.parse(e.timestamp) : Date.now(),
+        t: e.timestamp && !Number.isNaN(Date.parse(e.timestamp)) ? Date.parse(e.timestamp) : null,
+        when: e.timestamp ?? null, // fictional in-world time (not a wall-clock date) when unparseable
         kind: e.source_resolution === 'combat_master' ? 'combat' : 'event',
         text: e.objective_event ?? '', location: e.location,
         participants: e.participants, eventId: e.event_id,

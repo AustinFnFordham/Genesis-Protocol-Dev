@@ -102,7 +102,12 @@ CAMPAIGN_CATALOG = {
                        'player': 'Aeleron "Aero" Do\'ordo', 'source': 'reference runtime (test data)'},
     'shadows_of_empire': {'name': 'Shadows of Empire: Remnants', 'era': 'New Republic',
                           'player': 'The Reconciliators (Voss / Ren / Zoran)', 'source': 'forge gold + AI pipeline'},
+    # LitRPG: GM'd externally; runtime/chronicle/transcript are DERIVED from the
+    # player-visible ledger by litrpg_adapter. Era is hidden from the player.
+    'starwars_litrpg': {'name': 'Star Wars LitRPG: Hask Meadow', 'era': 'Undisclosed',
+                        'player': 'Aeleron "Aero" Do\'ordo', 'source': 'event ledger (external GM)'},
 }
+EXTERNAL_GM = {'starwars_litrpg'}
 
 
 def list_campaigns():
@@ -117,10 +122,16 @@ def list_campaigns():
 def mount_campaign(cid):
     """Unload the current instance cleanly, then mount cid (building its
     runtime on first mount). Only one campaign lives in the stack at a time."""
+    if cid in EXTERNAL_GM:
+        import litrpg_adapter  # derived-from-ledger; resync on every (re)mount
+        litrpg_adapter.sync()
     if _MOUNTED['id'] == cid:
         return load_runtime()['metadata']
     _MOUNTED['id'] = None  # clean unload — no state carries over
     builders = {'meridian_reach': build_initial_runtime, 'shadows_of_empire': build_shadows_runtime}
+    if cid in EXTERNAL_GM:
+        import litrpg_adapter
+        builders[cid] = litrpg_adapter.build_runtime
     if cid not in builders:
         raise ValueError(f'unknown campaign: {cid}')
     _MOUNTED['id'] = cid
@@ -840,6 +851,8 @@ def record_keeper_commit(runtime, approved_patch, chronicle_entry, memory_notes)
 # ===========================================================================
 def run_turn(declaration, idempotency_key=None):
     runtime = load_runtime()
+    if (runtime.get('metadata') or {}).get('gm_mode') == 'external':
+        raise RuntimeError('this campaign is GM\'d externally; the bridge GM loop is disabled so the ledger stays the single authority')
     # DURABLE IDEMPOTENCY — gmBusy is UX; THIS is authoritative. A key that
     # was already processed returns its original command, creating nothing.
     if idempotency_key:
@@ -1204,6 +1217,8 @@ def restart_campaign_from_opening(cid, confirm=False):
     RETAINED:  opening.md (authored), opening.generated.json (persisted crawl),
                any campaign_bible.* / character definitions in the dir.
     """
+    if cid in EXTERNAL_GM:
+        raise ValueError('externally GM\'d campaign: restart is an owner decision made in the ledger, not the bridge')
     if not confirm:
         raise ValueError('restart requires explicit confirm=true')
     import shutil

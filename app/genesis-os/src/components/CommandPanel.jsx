@@ -67,7 +67,7 @@ export default function CommandPanel() {
               <div key={j.eventId ?? i} style={{ margin: '7px 0', animation: 'bootIn .4s ease-out' }}>
                 <span style={{ color: st.color, marginRight: 6 }}>{st.icon}</span>
                 <span style={{ fontSize: 'var(--sys-font-size-micro)', color: 'var(--dim)', marginRight: 6 }}>
-                  {new Date(j.t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {j.t ? new Date(j.t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : (j.when ?? '')}
                 </span>
                 <span>{j.text}</span>
                 {(j.location || j.participants?.length) && (

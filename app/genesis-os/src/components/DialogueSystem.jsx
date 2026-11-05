@@ -45,6 +45,8 @@ export default function DialogueSystem() {
   // The visual identity — portraits, mood, cinematic feed, structured
   // choices, Slicer Override — is preserved exactly; only the brain changes.
   const live = !!gmCampaign;
+  // EXTERNAL GM: the ledger is the only authority; the bridge GM loop is disabled for this campaign.
+  const external = gmRuntime?.metadata?.gm_mode === 'external';
   // H: the scripted Malice demo is DEV-ONLY and opt-in. It can NEVER render in a
   // production build, while a campaign is mounted (live), or during loading/API
   // failure (which present as !live) — those show an honest empty state instead.
@@ -257,7 +259,7 @@ export default function DialogueSystem() {
         )}
         <div className="sec-h">
           {live
-            ? `Cinematic Feed — ${gmRuntime?.metadata?.scene_id ?? 'scene'} · four-controller GM live`
+            ? external ? `Narrative Feed — ${gmRuntime?.campaign?.current_location ?? 'scene'} · ${gmRuntime?.campaign?.current_time ?? ''}` : `Cinematic Feed — ${gmRuntime?.metadata?.scene_id ?? 'scene'} · four-controller GM live`
             : `Cinematic Feed — Level 1313 · trust ${trust} (${trust < 30 ? 'seeking apprentice' : trust < 60 ? 'testing you' : 'bonded'})`}
         </div>
         <div ref={feedRef} onScroll={() => { if (nearBottom()) setUnread(false); }} data-region="cinematic-feed" data-campaign-id={gmCampaign ?? ''} style={{ flex: 1, overflowY: 'auto', paddingRight: 8 }}>
@@ -277,7 +279,7 @@ export default function DialogueSystem() {
         )}
 
         {/* choice wheel — live: GM suggestions (never rails); scripted: the Malice scene */}
-        <div className="sec-h">{live ? 'Suggested Responses — click to draft (does not send)' : 'Structured Choices — mechanically weighted'}</div>
+        {!(external && liveChoices.length === 0) && <div className="sec-h">{live ? 'Suggested Responses — click to draft (does not send)' : 'Structured Choices — mechanically weighted'}</div>}
         <div style={live ? { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, flex: '0 0 auto' } : undefined}>
         {(live ? liveChoices : choices).map((c) => (
           <div key={c.key} className="holo-card" style={{ opacity: c.disabled ? 0.4 : 1, pointerEvents: c.disabled ? 'none' : 'auto', margin: 0 }}
@@ -297,11 +299,14 @@ export default function DialogueSystem() {
           <input className="holo-input" style={{ flex: 1, width: 'auto' }} value={live ? narrativeDraft : input}
             placeholder="…or type a custom action / statement (Slicer Override)"
             onChange={(e) => live ? useGenesis.getState().setNarrativeDraft(e.target.value) : setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && submitOverride()} />
-          <span className={`holo-btn ${(live ? narrativeDraft : input).trim() ? 'primary' : 'disabled'}`} style={{ fontSize: 'var(--sys-font-size-caption)', padding: '6px 14px' }} onClick={submitOverride}>Transmit</span>
+            onKeyDown={(e) => e.key === 'Enter' && !external && submitOverride()} />
+          <span className={`holo-btn ${(live ? narrativeDraft : input).trim() ? 'primary' : 'disabled'}`} style={{ fontSize: 'var(--sys-font-size-caption)', padding: '6px 14px' }}
+            onClick={() => (external ? navigator.clipboard?.writeText(narrativeDraft).catch(() => {}) : submitOverride())}>{external ? 'Copy' : 'Transmit'}</span>
         </div>
         <div style={{ fontSize: 'var(--sys-font-size-label)', color: 'var(--dim)', marginTop: 3 }}>
-          override → rules engine → RFC6902 patch batch → O(1) state update → scene re-render (local adjudicator; qwen engine swaps in via Tauri)
+          {external
+            ? 'This campaign is run by the external GM. Write your action freely, copy it, and send it in the GM session; the ledger updates this view.'
+            : 'override → rules engine → RFC6902 patch batch → O(1) state update → scene re-render (local adjudicator; qwen engine swaps in via Tauri)'}
         </div>
       </div>
 
@@ -317,10 +322,10 @@ export default function DialogueSystem() {
             clipPath: 'polygon(30% 2%, 70% 2%, 78% 14%, 74% 30%, 88% 55%, 82% 100%, 18% 100%, 12% 55%, 26% 30%, 22% 14%)',
             border: 'none', filter: `drop-shadow(0 0 22px ${aura}66)`, transition: 'all 0.8s ease',
           }} />
-          <div style={{ position: 'absolute', top: '11%', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 26 }}>
+          {!(live && !focusNpc) && <div style={{ position: 'absolute', top: '11%', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 26 }}>
             <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#ffb300', boxShadow: '0 0 12px #ffb300, 0 0 26px #ffb30088', transition: 'all .5s' }} />
             <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#ffb300', boxShadow: '0 0 12px #ffb300, 0 0 26px #ffb30088' }} />
-          </div>
+          </div>}
           <div style={{ position: 'absolute', bottom: 8, left: 0, right: 0, textAlign: 'center', fontSize: 'var(--sys-font-size-label)', letterSpacing: 2, color: 'var(--dim)' }}>
             ALPHA-MASKED PORTRAIT — ComfyUI `load_portrait` slot
           </div>
@@ -329,7 +334,7 @@ export default function DialogueSystem() {
           <div style={{ fontSize: 'var(--sys-font-size-control)', color: '#ff8899', letterSpacing: 1 }}>{live ? (focusNpc?.name ?? '—') : (getName(malice) ?? 'Darth Malice')}
             <span style={{ fontSize: 'var(--sys-font-size-label)', color: 'var(--dim)', marginLeft: 8 }}>{live ? (focusNpc?.id ?? '') : (getId(malice) ?? '')}</span>
           </div>
-          <div style={{ fontSize: 'var(--sys-font-size-caption)', color: 'var(--amber)', letterSpacing: 1.5, marginTop: 2 }}>MOOD: {MOODS[mood]?.label ?? '—'}</div>
+          {!(live && !focusNpc) && <div style={{ fontSize: 'var(--sys-font-size-caption)', color: 'var(--amber)', letterSpacing: 1.5, marginTop: 2 }}>MOOD: {MOODS[mood]?.label ?? '—'}</div>}
           {live ? (
             <div style={{ fontSize: 'var(--sys-font-size-label)', color: 'var(--dim)', marginTop: 6 }}>
               {gmRuntime?.active_npcs?.[focusNpc?.id]?.disposition ?? ''}
