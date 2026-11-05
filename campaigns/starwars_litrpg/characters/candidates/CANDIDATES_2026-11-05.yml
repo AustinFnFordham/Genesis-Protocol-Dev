@@ -1,0 +1,116 @@
+# NONCANONICAL candidate records. Source retrieval is not Registry validation.
+# Nothing here is promoted. No Rules Lawyer / Atomic / Soul / Chaos / Custodian gate has been run on any of it.
+# Ruleset: SW5e (Genesis fork). Page citations appear only where the source file itself carried one.
+# Source roots: GH = E:\StarWars\SW5e_Data_Hub; OB = E:\StarWars\sw5e-data (OmniBrew structured data + manual text)
+candidates:
+
+- entity_type: Species
+  proposed_id: species_chiss@1            # urid prefix convention inferred from species_echani / class_sentinel
+  classification: source_backed_candidate
+  ruleset: SW5e
+  sources:
+    - {doc: "GH/forge_v3/backend/species/chiss.yml", kind: genesis_forge, original_id: chiss}
+    - {doc: "OB/data/species/chiss.md", kind: sw5e_phb_structured, front_matter_source: phb, page: not_in_file}
+  supported_properties:
+    asi: [INT+2, CHA+1]                   # identical in both sources
+    speed: 30
+    forge_only: {base_hp: 10, base_strain: 11, traits: [chiss_tactical_genius, chiss_resilience, chiss_enhanced_vision]}
+    sw5e_only: {armor: [light, medium], weapons: [heavy pistol, sniper rifle], skill: Insight, saves: "INT and DEX advantage vs tech powers", languages: "Basic, Cheunh + choice of Minnisiat or Sy Bisti"}
+  dependencies: [feature_chiss_tactical_genius, feature_chiss_resilience, feature_chiss_enhanced_vision]
+  differences_from_runtime:
+    - "Varon languages are Basic, Cheunh, Shyriiwook. Shyriiwook is not a Chiss option in SW5e; its origin is not recorded in his runtime."
+    - "Varon's runtime uses the Forge traits; SW5e's Chiss traits (tech-save advantage, Insight, weapon/armor proficiencies) are not in his runtime. Not a defect: the Forge Chiss is a Genesis adaptation."
+  proposed_resolution: "Map species_chiss -> chiss and feature_chiss_* -> chiss_*. Forge copy needs mechanical_benefit->advantage and a cultural_features type (in-memory test: 0 schema errors with both). Record Shyriiwook origin."
+  validation_status: {schema: "fails as-is (2 key-shape errors); passes after in-memory mapping", other_gates: not_run}
+  outstanding: [confirm cultural_features type value, record Shyriiwook origin, Custodian review]
+
+- entity_type: Species
+  proposed_id: species_miraluka@1
+  classification: source_backed_candidate
+  ruleset: SW5e
+  sources:
+    - {doc: "GH/forge_v3/backend/species/miraluka.yml", kind: genesis_forge, original_id: miraluka}
+    - {doc: "OB/data/species/miraluka.md", kind: sw5e_structured, front_matter_source: ec, page: not_in_file}
+    - {doc: "OB/data/traits/force_sight.md and force_sensitive.md", kind: sw5e_structured}
+  supported_properties:
+    asi: [WIS+2, CHA+1]                   # identical in both sources
+    speed: 30
+    languages: "Galactic Basic and Miralukese (SW5e); Forge writes 'Miraluka'"
+    sw5e_traits: {force_sight: "constantly under the force sight power, no concentration", force_sensitive: "denounce at will; curse at 3rd; bestow curse at 5th; CHA forcecasting"}
+    forge_only: {base_hp: 10, base_strain: 12, traits: [Force Sight, Force Sensitivity, Spiritual Insight]}
+  differences_from_runtime:
+    - "ASI: runtime DEX+1/WIS+1. Strain base: runtime adopted 11. Languages: runtime lacks Miraluka, adds Dathomiri and Huttese."
+    - "Force Sight and Force-Sensitive are negated by the approved Force severance."
+  proposed_resolution: "Recommended defaults (NOT applied): source ASI, source Strain base 12. Languages: restore Miraluka(lese) from species; keep Basic, Dathomiri (culture/upbringing: Dathomir witch-raised), Huttese (background/history), each with its origin recorded. Severance recorded as an explicit campaign override of the two species traits, never an edit of the species."
+  validation_status: {schema: "fails as-is (1 key-shape error); passes after in-memory mapping", other_gates: not_run}
+  outstanding: [Jade confirms whether DEX-based spread was intended, Strain base 11 customization justified or dropped, Custodian review]
+
+- entity_type: Class
+  proposed_id: class_bounty_hunter@1
+  classification: source_backed_candidate  # Genesis-authored class; SW5e has no Bounty Hunter class (only a background)
+  ruleset: SW5e (Genesis-original class)
+  sources:
+    - {doc: "GH/source_data/game_data.zip :: classes/bounty_hunter.yml", kind: genesis_source, notes: "has level_progression; schema-valid (0 errors) against Class.schema.json"}
+    - {doc: "GH/forge_v3/backend/classes/bounty_hunter.yml", kind: genesis_forge, notes: "progression_tree instead of level_progression; fails only on that"}
+    - {doc: "OB/data/backgrounds/bounty-hunter.md", kind: sw5e_phb_background, notes: "background, not a class; not what Rassira uses (she is Scoundrel)"}
+  supported_properties:
+    hit_die: 1d10
+    saves: [Strength, Wisdom]
+    armor: [Light, Medium]
+    weapons: [Simple, Martial, Blaster pistols, Blaster rifles]
+    primary_resource: "Hunter's Focus"
+    level_1_features: [hunter_quarry, proficiency_bonus]   # no hunter_quarry definition file found in either source
+  differences_from_runtime:
+    - "Saves: runtime DEX+WIS vs source STR+WIS. Controlled Pursuit is a custom feature; hunter_quarry text not found to compare against."
+  proposed_resolution: "Use the schema-valid game_data copy as the validation target. Saves default to source, not applied pending Jade. Controlled Pursuit stays a recorded customization (explicit_campaign_adaptation) until hunter_quarry is located; it must not replace it."
+  validation_status: {schema: "valid (game_data copy)", other_gates: not_run}
+  outstanding: [locate hunter_quarry definition, era-compatibility adaptation (GM-side, see hidden/UAT_LOG), Custodian review]
+
+- entity_type: Class
+  proposed_id: class_trooper@1
+  classification: unresolved_dependency    # structure sourced; Style options and AP pool absent from every file
+  ruleset: SW5e (Genesis-original class; no Trooper class in OmniBrew classes)
+  sources:
+    - {doc: "GH/source_data/game_data.zip :: classes/trooper.yml", kind: genesis_source, notes: "the copy Varon's runtime cites as 04-game_data.zip"}
+    - {doc: "GH/forge_v3/backend/classes/trooper.yml", kind: genesis_forge, notes: "newer, larger"}
+    - {doc: "GH/forge_v3/backend/feats/trooper_feats.yml and subclasses/trooper_subclasses/trooper.heavy_gunner.yml", kind: genesis_forge}
+  supported_properties:
+    hit_die: 12 (integer; schema wants string)
+    primary_resource: ammunition_points
+    level_1_nodes: [heavy_weapons_training_1, "trooper_style_1 (choice_group trooper_style_level_1, no options)"]
+    ammunition_point_spenders: {suppressive_fire_feat_L1: "2 AP, DC 15 CON save", heavy_weapons_specialist_L8: "1 AP", heavy_gunner_suppressive_fire_L11: "3 AP"}
+  undefined: [starting AP pool, AP recovery, the Style options]
+  differences_from_runtime: ["Varon takes none of the AP spenders and no listed Style option; his Style is the custom Adaptive Countermovement."]
+  proposed_resolution: "Gameplay: no L1 action needs AP, so continue normally. Registry: group needs >=1 option; register Adaptive Countermovement as campaign-local option; hit_die -> 'd12'; progression_tree->level_progression by Forge conversion. Do not invent a pool until a spender is taken."
+  validation_status: {schema: "fails both copies (hit_die type; missing era, rarity, narrative, class_identity_profile, level_progression)", other_gates: not_run}
+  outstanding: [authored era/rarity/narrative/identity fields, Style options (not in any file; maybe in a sourcebook not on disk), AP pool and recovery, Custodian review]
+
+- entity_type: Feature
+  proposed_id: feature_trooper_style_adaptive_countermovement@1   # lane: campaign_local
+  classification: explicit_campaign_adaptation
+  ruleset: SW5e
+  sources: [{doc: "api_bridge/gm/characters/varon/runtime.yml", kind: approved_character_design}]
+  supported_properties: {action: reaction, trigger: "hostile Varon can see within his weapon's normal range moves >=10 ft", effect: "move up to 10 ft to an unoccupied visible space; no opportunity attack from the triggering creature", uses: "proficiency bonus, long rest"}
+  rules_cross_check:
+    - {doc: "OB/text/en/manual/the-order-of-combat.md", note: "one reaction per round; reactions interrupt and the other creature resumes (source reference pages 90-91)"}
+    - {doc: "OB/text/en/manual/making-an-attack.md and actions-in-combat.md", note: "opportunity attacks trigger on leaving reach; Disengage prevents them"}
+  result_of_cross_check: "No conflict found. It spends the single reaction, grants no extra movement beyond 10 ft, and matches the authored limits. Whether the 10 ft costs normal movement is not stated in the authored text (it reads as separate from his move)."
+  dependencies: [heavy_weapons_training_1, class_trooper, trooper_style_level_1 group]
+  validation_status: {schema: not_applicable_until_registered, other_gates: not_run}
+  outstanding: [confirm 10 ft is separate from normal movement, Atomic decomposition, Custodian review]
+
+- entity_type: ItemDefinition
+  proposed_id: item_cybernetic_sensory_band@1
+  classification: explicit_campaign_adaptation   # unresolved balance
+  ruleset: SW5e
+  sources: [{doc: "api_bridge/gm/characters/rassira/runtime.yml#senses", kind: approved_character_concept}]
+  supported_properties: {sense: "technological blindsight 15 ft", within_range: "advantage on Perception to detect movement/position", cannot: "color, fine facial detail, distant writing, conventional screens; grants no Force Sight or true sight", vulnerable_to: [jamming, sensory-dampening fields, vacuum, damage]}
+  differences_from_source: "No source equipment record. SW5e Miraluka Force Sight is the replaced capability and is lost by severance. I did not search for a comparable SW5e cybernetic sense item in this pass."
+  validation_status: {other_gates: not_run}
+  outstanding: [item definition vs instance split, balance review of 15 ft + advantage, Rules Lawyer pass]
+
+- entity_type: ItemDefinition
+  proposed_id: "item_energy_bow / item_electro_whip_pair / item_holdout_blaster (names provisional)"
+  classification: unresolved_dependency
+  sources: [{doc: "rassira/runtime.yml#equipment", kind: provisional_draft}]
+  outstanding: ["no source records located for the three weapons; separate definitions from her instances; weapon profiles stay 'pending balance validation'"]
