@@ -64,7 +64,7 @@ Schemas: `E:\StarWars\schema\Species.schema.json`, `Class.schema.json`. Source r
 
 ---
 ## Questions that need your ruling
-**Q1. Miraluka ability increases** (source WIS+2/CHA+1 vs her DEX+1/WIS+1). Options: (a) *Adopt source* — cleanest, costs her AC 13→12 and DEX bonuses. (b) *Keep her spread as an approved campaign variant* — preserves the character, recorded as a custom override, never written into the global species. (c) *Re-spend the 27-point buy under the source spread* so she keeps DEX 16 (e.g. start DEX 14... legality to be recomputed). Recommend **(c)** if you care about her hunter's DEX; otherwise (a).
+**Q1. Miraluka ability increases** (source WIS+2/CHA+1 vs her DEX+1/WIS+1). Options: (a) *Adopt source* — cleanest, costs her AC 13→12 and DEX bonuses. (b) *Keep her spread as an approved campaign variant* — preserves the character, recorded as a custom override, never written into the global species. (c) *Re-spend her 27-point buy under the source spread* so DEX stays high; exact scores to be recomputed and checked for legality. Recommend **(c)** if you care about her hunter's DEX; otherwise (a).
 **Q2. Base Strain 11 vs source 12.** Recommend adopt source 12 (Strain 14); no identity cost.
 **Q3. Languages.** Source gives Miraluka; hers lists Dathomiri and Huttese instead. Recommend: Basic + Miraluka from species, Dathomiri from her culture, Huttese from Scoundrel or dropped if the background grants none.
 **Q4. Adaptive Countermovement scope.** Confirm: (i) registered campaign-local, not global; (ii) does the 10 ft come out of his normal movement (recommend no, per authored text); (iii) is "any hostile within normal range 80 ft" intended, versus a shorter trigger range (recommend keep as authored; it is limited by 2 uses).
