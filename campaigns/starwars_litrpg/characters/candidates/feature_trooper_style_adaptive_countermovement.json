@@ -1,0 +1,62 @@
+{
+ "id": "feature_trooper_style_adaptive_countermovement",
+ "name": "Adaptive Countermovement",
+ "xp_cost": 0,
+ "tags": [
+  "trooper_style",
+  "campaign_local"
+ ],
+ "narrative": "Varon reads routes, objectives, cover, elevation, and enemy intent as a changing system. He relocates to deny the outcome the opposition is trying to produce, often targeting the creature whose movement matters most rather than the nearest enemy.",
+ "activation": {
+  "cost": [
+   {
+    "type": "reaction",
+    "count": 1
+   }
+  ],
+  "trigger": "A hostile creature Varon can see within his equipped weapon's normal range moves at least 10 feet."
+ },
+ "targeting": {
+  "type": "self"
+ },
+ "mechanics": [
+  {
+   "effect": "grant_ability",
+   "name": "Countermovement",
+   "action_type": "reaction",
+   "description": "Varon moves up to 10 feet to an unoccupied space he can see. This movement does not provoke an opportunity attack from the triggering creature.",
+   "conditions": [
+    {
+     "key": "hostile_visible_in_weapon_normal_range_moves_ft",
+     "op": ">=",
+     "value": 10
+    }
+   ],
+   "parameters": {
+    "move_distance_ft": 10,
+    "destination": "unoccupied_visible_space",
+    "provokes_opportunity_attack_from_trigger_creature": false
+   },
+   "rules": [
+    "action_cost:reaction",
+    "range:weapon_normal_range",
+    "distance:10_feet"
+   ]
+  },
+  {
+   "effect": "limited_use",
+   "name": "Uses",
+   "description": "Uses: maximum equals proficiency bonus; recovery on a long rest.",
+   "parameters": {
+    "maximum": "proficiency_bonus",
+    "recovery": "long_rest"
+   }
+  },
+  {
+   "effect": "limitation",
+   "name": "Limitations",
+   "description": "Costs Varon's reaction. Does not interrupt, reduce, or prevent the triggering movement. Does not ignore difficult terrain, occupied spaces, solid barriers, or movement restrictions. Other creatures may make opportunity attacks normally when eligible.",
+   "parameters": {}
+  }
+ ]
+}

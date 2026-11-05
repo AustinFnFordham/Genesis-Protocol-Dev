@@ -42,3 +42,18 @@ Hybrid rule applied: SW5e gives mechanics; FFG gives lore and comparative design
 - **Genesis skill list vs FFG career skills:** Genesis expresses the class in SW5e skills, not FFG's (Athletics, Brawl, Perception, Piloting, Ranged (Heavy), Streetwise, Vigilance). No change proposed.
 
 Still nothing promoted; no gate run.
+
+## Update: gates run and Registry state checked (13:30–13:45)
+**Correction to my earlier reports.** The canonical Registry (Rust Registry Custodian, `E:\StarWars\registry\canonical_store`) already holds **`species_chiss`, `feature_chiss_tactical_genius`, `feature_chiss_resilience`, `feature_chiss_enhanced_vision` at v1**, promoted 2026-08-30 (package `chiss_species_features_b75e83383cfaa29d`; the current `chiss.yml` SHA-256 still matches). Verified by exact lookup through the Custodian adapter, not by reading files. The Forge's own projector (`forge_core/custody/species_feature_admission.py`) already maps `chiss_*` to `feature_chiss_*` and only projects fields that pass the Species/Feature schemas, so the `mechanical_benefit` and `type` defects I reported never reach the canonical record. **Varon's Chiss dependencies are satisfied.** Earlier "ID mismatch" and "schema incompatibility" for Chiss are retracted for the canonical store; they described the Python-lane files, which the repo's golden slice does not carry.
+
+Exact lookups (v1, no fallback): found: `species_chiss`, three Chiss features. **Not found:** `species_miraluka`, `class_trooper`, `class_bounty_hunter`, `feature_trooper_style_adaptive_countermovement`. (`species_echani` is also not in the Rust store; Aero's Echani/Sentinel resolve in the Python golden slice, a separate lane. Not touched.)
+
+**Established promotion path:** Forge preparation code → `rust_promotion_adapter.request_promotion` → Rust custodian is the only writer; the Python custodian is retired. Domain projectors exist only for **Species+Features (Chiss-specific table)** and **Items**. **There is no Class projector**, so Trooper and Bounty Hunter have no implemented route into the canonical store. That is the real blocker for those two, beyond the data gaps.
+
+**Adaptive Countermovement gate results** (candidate: `candidates/feature_trooper_style_adaptive_countermovement.json`, text verbatim from Varon's runtime):
+- Feature schema: **pass, 0 findings** (meaningful).
+- Atomic and Soul validators: reported pass in wip and gold, **but also passed deliberately broken control records** (id `bad id!`, narrative `TODO`). They check a different block layout, so for a Feature record their pass is **not evidence**. Not counted.
+- Chaos: no per-record gate exists for a Feature (only intake/proposal tests), so not applicable.
+- Rules cross-check against SW5e reaction/opportunity-attack text: no conflict (earlier section).
+- **Registration:** `forge_v3/data/campaign_local` contains only `Character__*` files; there is no convention for a campaign-local Feature. I did **not** write one. Registering it would need a Feature route in the campaign-local lane (or a campaign-scoped Rust promotion), and it also references `class_trooper`, which does not exist yet. Status: schema-valid candidate, not registered, not promoted.
+Side effect on your machine: a scratch copy of the candidate in `%TEMP%\acm_candidate.json` and OCR scratch in `%TEMP%\ffg_ocr*`. Nothing under `E:\StarWars` was written.
