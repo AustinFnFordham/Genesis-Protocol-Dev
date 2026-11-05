@@ -114,3 +114,25 @@ candidates:
   classification: unresolved_dependency
   sources: [{doc: "rassira/runtime.yml#equipment", kind: provisional_draft}]
   outstanding: ["no source records located for the three weapons; separate definitions from her instances; weapon profiles stay 'pending balance validation'"]
+
+# ---- Hybrid SW5e + FFG lineage (added after owner approval 2026-11-05) ----
+# FFG sources read as text from E:\StarWars\FFG_RULEBOOKS: EotE Core, AoR Beta (searchable). fnd_core.pdf and FnD_Deciples_of_Harmony.pdf are image-only (no extractable text), so they were NOT searched.
+# Page numbers below are PDF page indexes from extraction, not printed page numbers. Rule: SW5e supplies mechanics; FFG supplies lore and comparative design; no FFG mechanic transferred without an explicit adaptation.
+hybrid_lineage:
+  feature_trooper_style_adaptive_countermovement@1:
+    registration: {lane: campaign_local, status: approved_by_owner_for_registration, promotion: not_done}
+    mechanics_from: "SW5e reaction and opportunity-attack rules (OB manual: the-order-of-combat, making-an-attack, actions-in-combat)"
+    ffg_comparison: "No Trooper career or talent tree located in searchable AoR/EotE text; no FFG analog claimed."
+    classification: explicit_campaign_adaptation
+  class_trooper@1:
+    ammunition_points: {sw5e_origin: none_found, ffg_origin: "none: AoR PDF p117 says players do not track ammunition; EotE has the Limited Ammo quality and Spare Clip talent (EotE PDF p144)", conclusion: "Genesis invention; no source mechanic to transfer", status: unresolved_dependency}
+    trooper_style_options: {sw5e: none_found, ffg: none_found_in_searchable_text, status: unresolved_dependency}
+  class_bounty_hunter@1:
+    sw5e: "Background only (OB backgrounds/bounty-hunter.md). Not a class."
+    ffg: "EotE Bounty Hunter career (PDF p58-60) with Assassin, Gadgeteer, Survivalist trees; career skills Athletics, Brawl, Perception, Piloting (Planetary), Piloting (Space), Ranged (Heavy), Streetwise, Vigilance (PDF p60). Genesis subclasses assassin/gadgeteer/survivalist mirror these trees, so the class is an FFG-lineage design expressed in SW5e terms."
+    era_check: "FFG career text ties legal status to its own era's licensing and the Hunter's Creed (PDF p58-59). Licensing is setting layer, not class mechanics. SW5e background is era-neutral. Adaptation: keep class mechanics, omit that licensing. Specifics are GM-side."
+    classification: explicit_campaign_adaptation_of_source_backed_candidate
+  species_miraluka@1:
+    ffg: "Not checked: Force and Destiny core is image-only."
+  species_chiss@1:
+    ffg: "No Chiss entry in searchable EotE/AoR text."

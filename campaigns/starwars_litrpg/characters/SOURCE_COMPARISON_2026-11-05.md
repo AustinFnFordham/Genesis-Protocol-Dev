@@ -29,3 +29,16 @@ Rassira: source ASI, source saves (STR+WIS), source Strain base 12 pending Jade'
 3. **Location of the sourcebooks** if you want the missing Trooper Styles and `hunter_quarry` text sought in them.
 
 Everything else waits on Jade or on the Custodian lane.
+
+## Update: FFG rulebooks and owner approvals (13:22)
+Books are in `E:\StarWars\FFG_RULEBOOKS`. Searchable: EotE Core, AoR Beta, Beginner Game, Game Master's Kit/Guide. **Image-only, so unsearched: `fnd_core.pdf` and `FnD_Deciples_of_Harmony.pdf`** (needs OCR; that is where a Miraluka entry would be).
+
+Hybrid rule applied: SW5e gives mechanics; FFG gives lore and comparative design; nothing transferred without an adaptation. Page numbers are PDF page indexes.
+
+- **Adaptive Countermovement (approved):** registration approved as campaign-local, not performed. Mechanics are checked against SW5e only; no FFG Trooper analog found. Classified explicit campaign adaptation.
+- **Ammunition Points:** no origin in SW5e or FFG. AoR (p117) says ammo isn't tracked; EotE has Limited Ammo and Spare Clip (p144). AP is a Genesis invention, so there is nothing to transfer; stays unresolved, not needed at Level 1.
+- **Trooper Style options:** not in SW5e or any searchable FFG text.
+- **Bounty Hunter (era adaptation approved):** it is an FFG-lineage class (EotE career, Assassin/Gadgeteer/Survivalist, matching the Genesis subclasses). Both sources agree the class mechanics are era-neutral. The FFG career's legal-status text ties to its own setting, so the adaptation is to keep the mechanics and omit that licensing; specifics stay GM-side. Classified explicit campaign adaptation.
+- **Genesis skill list vs FFG career skills:** Genesis expresses the class in SW5e skills, not FFG's (Athletics, Brawl, Perception, Piloting, Ranged (Heavy), Streetwise, Vigilance). No change proposed.
+
+Still nothing promoted; no gate run.
