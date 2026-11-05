@@ -86,3 +86,12 @@ Conflicts found so far (most items had no FFG data, so SW5e/Genesis stands):
 No skill schema or skill registry exists in Genesis (skills are names in class/background lists and sheets), and SW5e data has no renown mechanic. So adding FFG-derived skills is a content decision, not a schema change. Brawl and Ranged (Heavy) are attack proficiencies in the 5e frame, not skills; they stay as proficiencies. Piloting exists in both and is already a SW5e skill.
 Proposed definitions (nothing applied): **Streetwise** (Wisdom): urban/underworld navigation, contacts, black markets, reading the street's social terrain. The urban counterpart of Survival, distinct from Investigation (deduction), Insight (reading intent), Persuasion (convincing). **Vigilance** (Wisdom): sustained alertness, being awake and ready, resisting ambush and surprise; Perception stays active noticing. Vigilance touches initiative/surprise math, so its exact effect needs an owner call.
 Licensing: Bounty Hunter standing starts at 0 at Level 1. Genesis has faction ranks (`rank_` ids, `factions/`), so the natural home is the lowest rung of the relevant guild's rank; not yet checked which faction record fits.
+
+## Vigilance ruling (16:22), drafted as a candidate rule (not applied)
+- **Trigger:** only when surprise is possible (ambush, hidden threat). Not a general initiative skill. Initiative stays a Dexterity check.
+- **Check:** Vigilance (Wisdom) vs a DC set by the GM or the ambusher's Stealth result.
+- **Success:** not surprised. No initiative change.
+- **Failure:** still surprised, but adds to initiative (reacting quickly once the shock passes).
+- **Critical failure (natural 1):** surprised and subtracts from initiative.
+- **Defaults I will use unless corrected:** add = proficiency bonus on failure; subtract = proficiency bonus on a natural 1. Success-vs-failure as written means a failed check can leave a higher initiative than a success; that follows your wording and is intended as "the shock sharpens you", but say if you want success to carry a small bonus too.
+- Streetwise definition remains proposed, not yet confirmed.

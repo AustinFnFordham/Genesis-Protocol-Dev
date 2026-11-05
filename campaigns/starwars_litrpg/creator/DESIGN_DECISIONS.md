@@ -56,3 +56,6 @@ SW5e is the default only where FFG has no data. Where SW5e and FFG both have dat
 1. Ammunition Points: when a Trooper first takes an AP spender, resolve within the approved range: pool = proficiency bonus or 2x proficiency bonus; recovery = short or long rest. Nothing applied now (Varon needs none at Level 1).
 2. Bounty Hunter licensing: assume the character is licensed by virtue of the class. At Level 1 standing/renown starts at 0. Specific guild or issuer is GM-side. Not yet written into any character sheet.
 3. FFG skills adjacent to SW5e skills may be added as distinct skills with their own scope instead of folded into the nearest SW5e skill. Definitions pending (see SOURCE_COMPARISON).
+
+## Owner ruling 2026-11-05 16:22 (Vigilance, proposed skill, Wisdom)
+When surprise is possible, a Vigilance check gives a chance to protect against it. Success: not surprised. Failure: not protected from surprise, but the roll adds to initiative. Critical failure (natural 1): not protected, and the roll subtracts from initiative. Amounts are provisional (see SOURCE_COMPARISON) and nothing is applied to any sheet or source yet.
