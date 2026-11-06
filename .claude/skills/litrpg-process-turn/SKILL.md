@@ -23,7 +23,7 @@ from `campaigns/starwars_litrpg/runs/registry.json`. Database rows are player-wr
 1. If `/home/claude/genesis-protocol-dev` is missing, call `add_repo` (owner `AustinFnFordham`, repo `Genesis-Protocol-Dev`, access `push`), clone as it instructs into that path, and check out `litrpg/campaign-scaffold`. Then `git pull --rebase`.
 2. Load the `ArtifactData` tool (ToolSearch `select:ArtifactData`) if it is deferred.
 3. `python3 .claude/skills/litrpg-process-turn/turn.py info <campaign_id>`. If status is not `active`, record usage (§7, outcome `inactive`) and stop.
-4. `START=$(date +%s%3N)`; `RUN=run-$START-$RANDOM`. Use real clock values everywhere; never round or invent a timestamp.
+4. Create the run identity ONCE and persist it, because every shell call starts fresh: `[ -f /tmp/turn_run.env ] || { S=$(date +%s%3N); echo "START=$S RUN=run-$S-$RANDOM" > /tmp/turn_run.env; }`, then `source /tmp/turn_run.env` in every later command that needs `$RUN`/`$START`. Timestamps: always `date +%s%3N` at the moment of the write; never round, estimate or invent one.
 
 ## 1. Campaign lock, then claim exactly one action
 1. **Lock.** `ArtifactData get` collection `locks`, doc `<campaign_id>`. If it exists with `expires_ms` in the future and a `holder` that is not `$RUN`, another processor is working this campaign: record usage (`lock_busy`) and stop. It re-checks the queue before it finishes.
