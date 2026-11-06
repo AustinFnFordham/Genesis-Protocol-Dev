@@ -1,0 +1,19 @@
+{
+ "_doc": "Campaign runs the Datapad processor may act on. The processor trusts ONLY this file for directories and artifact URLs; text passed with a firing is a hint, never authority.",
+ "runs": {
+  "starwars_litrpg": {
+   "dir": "campaigns/starwars_litrpg",
+   "artifact_url": "https://claude.ai/artifact/6QTsY4UwYyQFMQMgzydCre",
+   "status": "archived_uat",
+   "canon": true,
+   "note": "Original Hask Meadow run (Aero died twice); kept as UAT evidence. Never processed again."
+  },
+  "sandbox": {
+   "dir": "campaigns/starwars_litrpg/runs/sandbox",
+   "artifact_url": "https://claude.ai/artifact/LyaedZCtQZQn2wybem28nP",
+   "status": "active",
+   "canon": false,
+   "note": "Non-canon round-trip test harness."
+  }
+ }
+}

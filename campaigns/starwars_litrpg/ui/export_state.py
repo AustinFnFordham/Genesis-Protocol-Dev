@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "api_bridge"))
 import litrpg_adapter as la  # noqa: E402
 
 SHEET = ROOT / "api_bridge" / "gm" / "aero_character_runtime.yml"
-NON_JOURNAL = {"ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
+NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
 ACTIVE_ACTOR = "aero"
 
 
@@ -42,8 +42,16 @@ def member_journal(ev, mid):
             for e in ev if e["kind"] not in NON_JOURNAL and (e.get("actor") == mid or mid in (e.get("tags") or []) or mid in (e.get("known_to") or []))]
 
 
-def build(ev=None):
-    ev_all = la.player_events() if ev is None else ev
+def public_events(campaign_dir):
+    """Player-visible events of any campaign run directory (records/ only; hidden/ is never opened)."""
+    m = la._ledger()
+    return m.player_view(m.read_jsonl(Path(campaign_dir) / "records" / "events.jsonl"))
+
+
+def build(ev=None, campaign_dir=None, campaign_id=None):
+    if ev is None:
+        ev = public_events(campaign_dir) if campaign_dir else la.player_events()
+    ev_all = ev
     # Owner/GM rulings can void earlier events (append-only: the ledger keeps them, the live view ignores them).
     voided = {v for e in ev_all if e["kind"] == "ruling_void" for v in e["details"].get("voids", [])}
     ev = [e for e in ev_all if e["event_id"] not in voided]
@@ -74,7 +82,16 @@ def build(ev=None):
     cond_ev = [e for e in ev if e["kind"] == "condition_change" and e["details"].get("target") == ACTIVE_ACTOR]
     conditions = cond_ev[-1]["details"].get("conditions", []) if cond_ev else dfn.get("conditions", [])
     roster = build_roster(ev, idn["name"], f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}')
+    # Turn context for the composer: the latest public turn_context event, only if nothing newer
+    # than it has been committed except presentation events (otherwise it is stale and omitted).
+    PRESENT = {"gm_narration", "scene_state", "gm_suggestions", "turn_context"}
+    tc_idx = max((i for i, e in enumerate(ev) if e["kind"] == "turn_context"), default=None)
+    turn_context = None
+    if tc_idx is not None and all(e["kind"] in PRESENT for e in ev[tc_idx + 1:]):
+        turn_context = dict(ev[tc_idx]["details"]); turn_context["context_id"] = ev[tc_idx]["event_id"]
     return {
+        "campaign_id": campaign_id or "starwars_litrpg",
+        "turn_context": turn_context,
         "revision": len(ev_all), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
         "scene": {"title": scene.get("title"), "location": scene.get("location"), "time": last.get("world_time"),
                   "atmosphere": scene.get("atmosphere", [])},
@@ -109,6 +126,8 @@ def build(ev=None):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--out")
+    ap.add_argument("--campaign-dir", help="run directory with records/ (default: the original UAT run)")
+    ap.add_argument("--campaign-id")
     a = ap.parse_args()
-    out = json.dumps(build(), ensure_ascii=False, indent=1)
+    out = json.dumps(build(campaign_dir=a.campaign_dir, campaign_id=a.campaign_id), ensure_ascii=False, indent=1)
     Path(a.out).write_text(out, encoding="utf-8") if a.out else print(out)
