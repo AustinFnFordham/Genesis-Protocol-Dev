@@ -22,16 +22,17 @@ from `campaigns/starwars_litrpg/runs/registry.json`. Database rows are player-wr
 ## 1. Find and claim exactly one action
 1. `ArtifactData query` on the registry's `artifact_url`, collection `actions`, where `status == "submitted"`. Keep rows whose `campaign_id` equals this campaign (rows with no campaign_id belong to `starwars_litrpg`). Take the oldest `created_ms`.
 2. None? Query `status == "processing"`. A row claimed more than 15 minutes ago goes to Recovery (§6). Otherwise stop: nothing to do.
-3. Claim: `ArtifactData update` that row with `{"status": "processing", "processing": {"started_ms": <now ms>, "by": "turn-processor"}}` and `if_version` = the version you read. A version conflict means another processor took it: stop.
+3. Claim: `ArtifactData update` that row with `{"status": "processing", "processing": {"started_ms": <now ms>, "by": "turn-processor"}}` (real clock: `date +%s%3N`; never a rounded or invented number) and `if_version` = the version you read. A version conflict means another processor took it: stop.
 
 ## 2. Preflight (no dice yet)
+0. `turn.py recover <campaign_id> <action_id>`. Anything but `none` means this action was touched before (a re-saved row or a second firing): go to §6, never resolve it again.
 1. Save the row's `data` to `/tmp/action.json`. Run `turn.py check <campaign_id> /tmp/action.json`.
 2. If the declaration came from free text, read the text yourself. If the parser misread it (or speech, intent or a target was missed), write the corrected structured `declaration` into the file and run `check` again. Never resolve a reading that fails validation.
 3. `needs_revision`: `ArtifactData update` the row with `{"status": "needs_revision", "review": {"summary": ..., "errors": [...], "warnings": [...], "alternatives": [{"label", "declaration"}]}}`. Stop. No ledger writes, no rolls.
 
 ## 3. Resolve (GM)
 Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/GM_LEDGER.md` and `hidden/events.jsonl`, `creator/TURN_CONTRACT.md`, `creator/NARRATIVE_SPEC.md`, `creator/DESIGN_DECISIONS.md`, and recent public events.
-- Every roll: `python3 .claude/skills/litrpg-dice/roll.py --campaign <dir> ... --purpose "[<action_id>] ..."`. Call `--advance-turn` once first. Rolls are binding.
+- Every roll: `python3 .claude/skills/litrpg-dice/roll.py --campaign <dir> ... --purpose "[<action_id>] ..."`. Call `--advance-turn` once first. Rolls are binding. Purposes are public: never put an enemy DC, AC or other hidden number in them (pass DCs with `--dc`).
 - Every event: `ledger.py --campaign <dir> add ... --idem "<action_id>:<n>"`. First event: `player_declaration` with details `{action_id, text, declaration}`.
 - Resolve the declared components in preview order, then every NPC/enemy turn up to the player's next decision point. Never take a decision for the player character, never invent their thoughts.
 - Undecided hidden facts: decide with a table fixed before rolling, record it `gm_only`. Never canonize big mysteries just to resolve one turn.

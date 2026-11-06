@@ -1,0 +1,11 @@
+{
+ "rule": "protagonist_continuity",
+ "version": 1,
+ "status": "proposed",
+ "protected_characters": ["aero"],
+ "protected_phase": {"ends_at_level": 3, "ends_with_arc": "hask_meadow", "ended": false},
+ "costs_per_mark": [1, 2, 3],
+ "phase_ends_after_marks": 3,
+ "wake": "1d4 hours, 1 HP",
+ "doc": "creator/PROTAGONIST_CONTINUITY.md"
+}

@@ -106,6 +106,26 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
 }
 @media (min-width: 961px) { .col.gear { display: none; } .only-mobile { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+/* turn composer */
+.budget { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.pill.used { opacity: .55; text-decoration: line-through; }
+fieldset.grp { border: 1px solid var(--line); border-radius: 3px; margin: 10px 0 0; padding: 4px 8px 6px; min-width: 0; }
+fieldset.grp legend { font: 500 10px var(--f-data); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); padding: 0 4px; }
+fieldset[disabled] { opacity: .6; }
+.opt { display: flex; gap: 10px; align-items: flex-start; min-height: 40px; padding: 6px 4px; border-radius: 3px; cursor: pointer; }
+.opt:hover { background: var(--panel-2); }
+.opt input { margin: 3px 0 0; accent-color: var(--accent); width: 18px; height: 18px; flex: 0 0 auto; }
+.opt .lbl { min-width: 0; } .opt .lbl small { display: block; color: var(--dim); font-size: 12px; }
+.opt .tag { font: 500 10px var(--f-data); letter-spacing: .06em; text-transform: uppercase; color: var(--amber); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.seg button { background: none; border: 0; min-height: 36px; padding: 4px 14px; font: 500 12px var(--f-ui); letter-spacing: .08em; text-transform: uppercase; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
+.check { border-left: 3px solid var(--good); padding: 8px 10px; background: var(--panel-2); border-radius: 3px; margin-top: 10px; display: grid; gap: 6px; font-size: 14px; }
+.check.bad { border-left-color: var(--bad); } .check.warn { border-left-color: var(--amber); }
+.check ol { margin: 0; padding-left: 20px; }
+.msg-err { color: var(--bad); } .msg-warn { color: var(--amber); }
+input.txt, select.txt { width: 100%; min-height: 40px; margin: 2px 0 6px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 3px; padding: 6px 10px; font: 15px var(--f-ui); }
+.dice li > div:first-child { font-size: 13px; }
 </style>
 
 <div class="app" id="app" data-tab="scene">
@@ -122,13 +142,232 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
 </nav>
 
 <script>
+/* Genesis composite-turn contract: parse + preflight validation.
+ *
+ * ONE implementation, two hosts: the Datapad inlines this file (build_datapad.py) for the live
+ * preview, and the GM turn processor runs it under node (`node turn_contract.js validate ...`)
+ * before any die is rolled. Same input, same verdict.
+ *
+ * Inputs are PLAYER-VISIBLE only. `ctx` (the turn context) is published by the GM in view/state
+ * and never contains hidden stats, DCs, enemy HP or hidden capabilities. The validator therefore
+ * cannot leak them, and it never predicts dice.
+ *
+ * Declaration shape (the same for composer selections and parsed free text):
+ *   { actor, source: "composer"|"freeform", freeform: "...",
+ *     speech:  { option: "d1"|null, text: "...", approach: "...", extended: false } | null,
+ *     actions: [ { option: "burst", target: "dog_a"|null, trigger: "..."|null } ],   // primary actions
+ *     bonus_actions: [ { option: "...", target: null } ],
+ *     movement: { option: "to_ramp" } | null,
+ *     objects: [ "ignite_saber" ],                        // object interactions
+ *     reactions: [ "sentinel_balance" ],                  // declared reaction intents (conditional)
+ *     unmapped: [ "text the parser could not map" ] }
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.GenesisTurn = api;
+})(typeof self !== "undefined" ? self : this, function () {
+  "use strict";
+  var VERSION = "turn-contract/1";
+
+  function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
+  function lc(s) { return String(s || "").toLowerCase(); }
+  function uniq(a) { var o = []; a.forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); }); return o; }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function names(ctx, ids) { return ids.map(function (id) { var v = byId(ctx.visible, id); return v ? v.label : id; }); }
+  function joinAnd(a, w) { return a.length <= 1 ? (a[0] || "") : a.slice(0, -1).join(", ") + " " + (w || "and") + " " + a[a.length - 1]; }
+
+  function emptyDecl(ctx) {
+    return { actor: ctx.actor, source: "composer", freeform: "", speech: null, actions: [], bonus_actions: [],
+             movement: null, objects: [], reactions: [], unmapped: [] };
+  }
+
+  /* ---------- free-text parsing (deterministic, alias-driven) ----------
+   * The GM publishes aliases with every option. The parser finds every option whose alias occurs in
+   * the text and records ALL of them, so conflicts surface in validation instead of being silently
+   * resolved. The GM processor re-reads the text with judgment, but must run the same validator. */
+  function findAliases(text, list) {
+    var t = " " + lc(text).replace(/[^a-z0-9' ]+/g, " ") + " ", hits = [];
+    (list || []).forEach(function (o) {
+      var al = (o.aliases || []).concat([o.label || ""]);
+      for (var i = 0; i < al.length; i++) {
+        var a = lc(al[i]).replace(/[^a-z0-9' ]+/g, " ").trim();
+        if (a && t.indexOf(" " + a + " ") >= 0) { hits.push({ id: o.id, pos: t.indexOf(" " + a + " ") }); break; }
+      }
+    });
+    return hits.sort(function (x, y) { return x.pos - y.pos; }).map(function (h) { return h.id; });
+  }
+
+  function parseFreeform(text, ctx) {
+    var d = emptyDecl(ctx); d.source = "freeform"; d.freeform = String(text || "");
+    var quotes = d.freeform.match(/["“]([^"”]+)["”]/g);
+    var bare = d.freeform.replace(/["“][^"”]*["”]/g, " ");
+    if (quotes) d.speech = { option: null, text: quotes.map(function (q) { return q.replace(/^["“]|["”]$/g, ""); }).join(" "), approach: "freeform", extended: false };
+    var opts = (ctx.options || []);
+    // "ready" swallows the attack it readies: "ready a strike" is one action, not two.
+    var acts = findAliases(bare, opts.filter(function (o) { return o.slot === "action"; }));
+    var ready = acts.filter(function (id) { var o = byId(opts, id); return o && o.needs_trigger; });
+    if (ready.length) acts = acts.filter(function (id) { var o = byId(opts, id); return ready.indexOf(id) >= 0 || !(o && o.readiable); });
+    d.actions = acts.map(function (id) {
+      var o = byId(opts, id), a = { option: id, target: null, trigger: null };
+      if (o && o.needs_trigger) { var m = bare.match(/(?:against|at|when|if)\s+([^,.;]+)/i); a.trigger = m ? m[0].trim() : (o.default_trigger || null); }
+      if (o && o.needs_target) { var tg = findAliases(bare, ctx.visible); a.target = tg[0] || null; }
+      return a;
+    });
+    d.bonus_actions = findAliases(bare, opts.filter(function (o) { return o.slot === "bonus_action"; })).map(function (id) { return { option: id, target: null }; });
+    var mv = findAliases(bare, (ctx.movement || []).filter(function (m) { return m.id !== "hold"; }));
+    d.movement = mv.length ? { option: mv[0] } : null;
+    d.objects = findAliases(bare, ctx.objects);
+    d.reactions = findAliases(bare, ctx.reactions);
+    if (!d.actions.length && !d.movement && !d.objects.length && !d.speech) d.unmapped.push(d.freeform);
+    return d;
+  }
+
+  /* ---------- preflight validation ---------- */
+  function validate(decl, ctx) {
+    var errors = [], warnings = [], info = [], preview = [];
+    var b = ctx.budget || {}, opts = ctx.options || [];
+    function err(code, msg) { errors.push({ code: code, message: msg }); }
+    function warn(code, msg) { warnings.push({ code: code, message: msg }); }
+
+    // 1-2. acting character
+    if (decl.actor !== ctx.actor) err("ACTOR", "Only " + (ctx.actor_name || ctx.actor) + " can act this turn. Viewing another party member never grants control of them.");
+    if (ctx.actor_conditions && ctx.actor_conditions.some(function (c) { return /unconscious|dead|incapacitated/.test(c); }))
+      err("INCAPACITATED", (ctx.actor_name || ctx.actor) + " cannot act (" + ctx.actor_conditions.join(", ") + ").");
+
+    var actions = decl.actions || [], bonus = decl.bonus_actions || [], objs = decl.objects || [];
+    var flags = (ctx.state_flags || []).slice();
+    objs.forEach(function (oid) { var o = byId(ctx.objects, oid); if (o) flags = flags.concat(o.grants || []); });
+
+    // 4. capabilities exist
+    actions.concat(bonus).forEach(function (a) { if (!byId(opts, a.option)) err("UNKNOWN_OPTION", "\"" + a.option + "\" is not something " + (ctx.actor_name || ctx.actor) + " can do right now."); });
+    objs.forEach(function (oid) { if (!byId(ctx.objects, oid)) err("UNKNOWN_OBJECT", "\"" + oid + "\" is not an available object interaction."); });
+
+    // speech: brief speech is free; extended or check-based social actions use the action
+    var speechAction = decl.speech && decl.speech.extended && ctx.mode === "combat";
+    var actionCount = actions.length + (speechAction ? 1 : 0);
+    var actLabels = actions.map(function (a) { var o = byId(opts, a.option); return o ? o.label : a.option; });
+    if (speechAction) actLabels.push("an extended social action");
+
+    // 3. action economy
+    var extraObjects = Math.max(0, objs.length - (b.object_interaction == null ? 1 : b.object_interaction));
+    if (extraObjects) { actionCount += extraObjects; actLabels.push("a second object interaction"); }
+    var combat = ctx.mode === "combat";  // outside combat there is no action economy: beats happen in sequence
+    if (!combat && actionCount > 1) info.push({ code: "SEQUENCE", message: "Outside combat these happen one after another; the GM resolves the time they take." });
+    if (combat && actionCount > (b.action == null ? 1 : b.action))
+      err("ACTION_CONFLICT", joinAnd(actLabels) + (actionCount === 2 ? " both require" : " all require") + " your primary action, so you cannot use " + (actionCount === 2 ? "both" : "them all") +
+        " this turn unless another feature grants you an additional action.");
+    if (combat && bonus.length > (b.bonus_action == null ? 1 : b.bonus_action)) err("BONUS_CONFLICT", "You have one bonus action this turn.");
+    bonus.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "bonus_action") err("NOT_BONUS", o.label + " is not a bonus action."); });
+    actions.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "action") err("NOT_ACTION", o.label + " is not a primary action."); });
+
+    // 4-5. requirements, range, target, area
+    actions.concat(bonus).forEach(function (a) {
+      var o = byId(opts, a.option); if (!o) return;
+      (o.requires || []).forEach(function (r) { if (flags.indexOf(r) < 0) err("REQUIRES", o.label + " needs " + (ctx.flag_labels && ctx.flag_labels[r] || r) + " first."); });
+      if (o.needs_target) {
+        var t = byId(ctx.visible, a.target);
+        // movement may be split around the action, so the closest point of the declared move counts
+        var mvA = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
+        var dist = t ? Math.min(t.distance_ft, mvA && mvA.distance_after && mvA.distance_after[t.id] != null ? mvA.distance_after[t.id] : t.distance_ft) : null;
+        if (!t) err("TARGET", o.label + " needs a visible target.");
+        else if (o.reach_ft != null && dist > o.reach_ft) err("RANGE", t.label + " is about " + dist + " ft away, beyond " + o.label + "'s reach of " + o.reach_ft + " ft.");
+      }
+      if (o.needs_trigger && !a.trigger) err("TRIGGER", o.label + " needs a trigger (for example, \"" + (o.default_trigger || "when a hostile moves into reach") + "\").");
+      if (o.area_ft != null) {
+        var inside = (ctx.visible || []).filter(function (v) { return v.distance_ft <= o.area_ft; }).map(function (v) { return v.label; });
+        var outside = (ctx.visible || []).filter(function (v) { return v.distance_ft > o.area_ft; }).map(function (v) { return v.label + " (~" + v.distance_ft + " ft)"; });
+        info.push({ code: "AREA", message: o.label + " (" + o.area_ft + "-ft radius) would reach: " + (inside.length ? joinAnd(inside) : "no one visible") + "." + (outside.length ? " Out of reach: " + joinAnd(outside) + "." : "") });
+      }
+      if (o.cost && o.cost.force_points && (ctx.resources || {}).force_points < o.cost.force_points) err("RESOURCE", o.label + " costs " + o.cost.force_points + " Force Points; you have " + ctx.resources.force_points + ".");
+      if (o.uses_left === 0) err("RESOURCE", o.label + " has no uses left.");
+    });
+
+    // 6. movement and geometry
+    var dash = actions.some(function (a) { var o = byId(opts, a.option); return o && o.doubles_movement; });
+    var disengage = actions.some(function (a) { var o = byId(opts, a.option); return o && o.suppresses_opportunity_attacks; });
+    var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
+    if (decl.movement && !mv) err("UNKNOWN_MOVE", "That movement is not available here.");
+    if (combat && mv && mv.feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
+      err("DISTANCE", mv.label + " is about " + mv.feet + " ft; you can move " + (b.movement_ft * (dash ? 2 : 1)) + " ft this turn" + (dash ? "" : " (Dash would double it)") + ".");
+    if (mv && mv.blocked_by && mv.blocked_by.length) warn("PATH", mv.label + ": the way passes " + joinAnd(names(ctx, mv.blocked_by)) + "; you may have to go around or stop short.");
+
+    // 8. visible reaction and opportunity-attack risk (no hidden capability is consulted)
+    if (mv && ctx.mode === "combat" && !disengage) {
+      var leaving = (mv.leaves_reach_of || []).filter(function (id) { var v = byId(ctx.visible, id); return v && v.hostile; });
+      if (leaving.length) {
+        var prone = leaving.filter(function (id) { var v = byId(ctx.visible, id); return (v.conditions || []).indexOf("prone") >= 0; });
+        warn("OPPORTUNITY_ATTACK", "Moving away from " + joinAnd(names(ctx, leaving)) + " may provoke opportunity attacks." +
+          (prone.length ? " " + (prone.length === 1 ? "One of them is" : "Some are") + " currently prone, but prone does not automatically prevent an opportunity attack." : "") +
+          (byId(opts, "disengage") ? " Disengage would prevent them, but uses your action." : ""));
+      }
+    }
+    // reactions: one per round; Ready reserves it
+    var reservesReaction = actions.some(function (a) { var o = byId(opts, a.option); return o && o.uses_reaction_when_triggered; });
+    (decl.reactions || []).forEach(function (r) { if (!byId(ctx.reactions, r)) err("UNKNOWN_REACTION", "\"" + r + "\" is not an available reaction."); });
+    if (reservesReaction && (decl.reactions || []).length) warn("REACTION_SHARED", "A readied action spends your reaction when it triggers; " + joinAnd((decl.reactions || []).map(function (r) { var x = byId(ctx.reactions, r); return x ? x.label : r; })) + " would then be unavailable until your next turn.");
+    if ((decl.unmapped || []).length) info.push({ code: "UNMAPPED", message: "Part of this could not be matched to a listed option. The GM will interpret it and check it against these same rules before any roll." });
+
+    // 10. ordered preview
+    if (decl.speech && decl.speech.text) preview.push({ step: "speech", text: "Say: “" + decl.speech.text + "”" + (speechAction ? " (extended, uses your action)" : " (free)") });
+    objs.forEach(function (oid, i) { var o = byId(ctx.objects, oid); if (o) preview.push({ step: "object", text: o.label + (i === 0 ? " (free object interaction)" : " (uses your action)") }); });
+    var moveFirst = mv && mv.distance_after && actions.some(function (a) { return a.target && mv.distance_after[a.target] != null; });
+    if (mv && moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet && !/\d\s*(ft|m)\b/.test(mv.label) ? " (~" + mv.feet + " ft)" : "") });
+    actions.forEach(function (a) { var o = byId(opts, a.option); if (o) preview.push({ step: "action", text: o.label + (a.target ? " → " + names(ctx, [a.target])[0] : "") + (a.trigger ? " (trigger: " + a.trigger + ")" : "") }); });
+    bonus.forEach(function (a) { var o = byId(opts, a.option); if (o) preview.push({ step: "bonus_action", text: o.label }); });
+    if (mv && !moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet && !/\d\s*(ft|m)\b/.test(mv.label) ? " (~" + mv.feet + " ft)" : "") });
+    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
+
+    var used = { action: Math.min(actionCount, 9), bonus_action: bonus.length, movement_ft: mv ? mv.feet : 0, object_interaction: Math.min(objs.length, 1), reaction: reservesReaction ? 1 : 0 };
+    var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
+    return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && warnings.length > 0,
+             errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives };
+  }
+
+  function describe(decl, ctx) {
+    var parts = [];
+    decl.actions.forEach(function (a) { var o = byId(ctx.options, a.option); if (o) parts.push(o.label); });
+    var mv = decl.movement && byId(ctx.movement, decl.movement.option);
+    if (mv && mv.feet) parts.push(mv.label.charAt(0).toLowerCase() + mv.label.slice(1));
+    else parts.push("hold position");
+    if (decl.objects.length) parts.unshift(byId(ctx.objects, decl.objects[0]).label.toLowerCase());
+    return parts.join(" + ");
+  }
+
+  function alternativesFor(decl, ctx) {
+    var out = [];
+    decl.actions.forEach(function (a) {
+      var d = clone(decl); d.actions = [a]; d.source = "composer";
+      if (d.objects.length > 1) d.objects = d.objects.slice(0, 1);
+      var v = validate(d, ctx);
+      if (v.legal) out.push({ label: describe(d, ctx), declaration: d, warnings: v.warnings.map(function (w) { return w.message; }) });
+    });
+    if (decl.movement && byId(ctx.options, "disengage")) {
+      var d2 = clone(decl); d2.actions = [{ option: "disengage", target: null, trigger: null }]; d2.source = "composer";
+      if (d2.objects.length > 1) d2.objects = d2.objects.slice(0, 1);
+      if (validate(d2, ctx).legal) out.push({ label: describe(d2, ctx), declaration: d2, warnings: [] });
+    }
+    return out.slice(0, 4);
+  }
+
+  function summary(v) {
+    if (!v.legal) return v.errors.map(function (e) { return e.message; }).concat(v.warnings.map(function (w) { return w.message; })).join(" ") +
+      (v.alternatives.length ? " You may choose " + joinAnd(v.alternatives.map(function (a) { return a.label; }), "or") + ", subject to the active rules." : "");
+    return v.warnings.map(function (w) { return w.message; }).join(" ");
+  }
+
+  return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, validate: validate, summary: summary };
+});
+
+
+</script>
+<script>
 (function () {
   "use strict";
   var view = null, actions = [], dbRef = null, status = "connecting", err = "";
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } return ""; }
-  var draft = ls("datapad.draft");
   var selId = ls("datapad.member") || "aero";
   function roster(v) { return v.roster && v.roster.length ? v.roster : [{ id: "aero", name: v.character.name, line: v.character.line, role: "You", status: "Active", mechanics: "authoritative" }]; }
   function selected(v) { var r = roster(v); return r.filter(function (m) { return m.id === selId; })[0] || r[0]; }
@@ -154,7 +393,6 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
       return "<p" + (say ? ' class="say"' : "") + ">" + esc(p.trim()).replace(/\*(.+?)\*/g, "<em>$1</em>") + "</p>";
     }).join("");
   }
-  function pendingAction() { return actions.filter(function (a) { return a.status === "submitted"; })[0] || null; }
 
   function renderLeft(c, v) {
     var m = selected(v);
@@ -201,42 +439,197 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
       '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
   }
+  /* ===================== Turn composer (turn-contract/1) ===================== */
+  var T = window.GenesisTurn, mcpNs = null, phase = "", notifyState = {};
+  function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
+  function freshUi(ctxId, keepWrite) {
+    return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "",
+             sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [] } };
+  }
+  var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) return x; } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
+  function saveUi() { ls("datapad.ui", JSON.stringify(ui)); }
+  function ctxOf(v) { return v && v.turn_context ? v.turn_context : null; }
+  function syncCtx() {
+    var c = ctxOf(view), id = c ? c.context_id : null;
+    if (ui.ctxId !== id) { ui = freshUi(id, ui.write); saveUi(); }
+  }
+  var localPending = null;  // a turn this device just saved, until the store's listener reports it
+  function activeAction() {
+    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing"; })[0];
+    if (real) return real;
+    if (localPending && Date.now() - localPending.at < 20000 && !actions.some(function (a) { return a._id === localPending.id; }))
+      return { _id: localPending.id, status: "submitted", text: localPending.text };
+    return null;
+  }
+  function pendingAction() { return activeAction(); }
 
+  function declaration(c) {
+    if (ui.mode === "write") return T.parseFreeform(ui.write, c);
+    var d = T.emptyDecl(c), s = ui.sel;
+    if (s.dialogue === "own" && s.own.trim()) d.speech = { option: null, text: s.own.trim(), approach: "freeform", extended: false };
+    else { var dl = byId(c.dialogue, s.dialogue); if (dl) d.speech = { option: dl.id, text: dl.text, approach: dl.approach, extended: !!dl.extended }; }
+    if (s.action) {
+      var op = byId(c.options, s.action);
+      d.actions = [{ option: s.action, target: op && op.needs_target ? (s.target[s.action] || null) : null,
+                     trigger: op && op.needs_trigger ? (s.trigger.trim() || op.default_trigger || null) : null }];
+    }
+    if (s.bonus) d.bonus_actions = [{ option: s.bonus, target: null }];
+    if (s.movement && byId(c.movement, s.movement)) d.movement = { option: s.movement };
+    d.objects = s.objects.filter(function (o) { return byId(c.objects, o); });
+    d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
+    if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
+    return d;
+  }
+  function loadDeclaration(d, c) {
+    var s = freshUi(c.context_id).sel;
+    if (d.speech) { if (d.speech.option && byId(c.dialogue, d.speech.option)) s.dialogue = d.speech.option; else { s.dialogue = "own"; s.own = d.speech.text || ""; } }
+    if (d.actions && d.actions[0]) { s.action = d.actions[0].option; if (d.actions[0].target) s.target[s.action] = d.actions[0].target; s.trigger = d.actions[0].trigger || ""; }
+    if (d.bonus_actions && d.bonus_actions[0]) s.bonus = d.bonus_actions[0].option;
+    s.movement = d.movement ? d.movement.option : "hold";
+    s.objects = (d.objects || []).slice(); s.reactions = (d.reactions || []).slice();
+    ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).join(" "); saveUi();
+  }
+  function turnText(d, r) {
+    if (ui.mode === "write") return ui.write.trim();
+    return r.preview.map(function (p) { return p.text; }).join("; ") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
+  }
+
+  function radio(group, value, checked, label, small, tag) {
+    return '<label class="opt"><input type="radio" name="' + group + '" value="' + esc(value) + '" data-g="' + group + '"' + (checked ? " checked" : "") + '><span class="lbl">' + esc(label) +
+      (tag ? ' <span class="tag">' + esc(tag) + "</span>" : "") + (small ? "<small>" + esc(small) + "</small>" : "") + "</span></label>";
+  }
+  function check(group, value, checked, label, small) {
+    return '<label class="opt"><input type="checkbox" value="' + esc(value) + '" data-c="' + group + '"' + (checked ? " checked" : "") + '><span class="lbl">' + esc(label) + (small ? "<small>" + esc(small) + "</small>" : "") + "</span></label>";
+  }
+  function budget(c, r) {
+    if (c.mode !== "combat") return '<div class="note">Scene: no initiative. Say and do what you like; the GM applies the rules where they matter.</div>';
+    var b = c.budget || {}, u = r.used;
+    function p(name, used, txt) { return '<span class="pill ' + (used ? "used" : "ok") + '">' + name + ": " + txt + "</span>"; }
+    return '<div class="budget">' + p("Action", u.action >= (b.action || 1), u.action >= (b.action || 1) ? "Used" : "Available") +
+      p("Movement", u.movement_ft > 0, (b.movement_ft - u.movement_ft) + "/" + b.movement_ft + " ft") +
+      p("Bonus", u.bonus_action >= (b.bonus_action || 1), u.bonus_action ? "Used" : ((c.options || []).some(function (o) { return o.slot === "bonus_action"; }) ? "Available" : "None eligible")) +
+      p("Reaction", u.reaction > 0, u.reaction ? "Reserved" : "Available") +
+      p("Object", u.object_interaction > 0, u.object_interaction ? "Used" : "Available") + "</div>";
+  }
+  function checkPanel(r) {
+    var cls = r.legal ? (r.warnings.length ? "warn" : "") : "bad";
+    var head = r.legal ? (r.warnings.length ? "Legal, with known risks" : "Legal turn") : "Not legal yet";
+    var h = '<div class="check ' + cls + '" aria-live="polite"><b>' + head + "</b>";
+    r.errors.forEach(function (e) { h += '<div class="msg-err">' + esc(e.message) + "</div>"; });
+    r.warnings.forEach(function (w) { h += '<div class="msg-warn">' + esc(w.message) + "</div>"; });
+    r.info.forEach(function (i) { h += '<div class="note">' + esc(i.message) + "</div>"; });
+    if (r.preview.length) h += "<ol>" + r.preview.map(function (p) { return "<li>" + esc(p.text) + "</li>"; }).join("") + "</ol>";
+    if (r.alternatives.length) h += '<div class="note">Legal alternatives:</div><div class="sugg">' + r.alternatives.map(function (a, i) { return '<button class="chip" data-alt="' + i + '">' + esc(a.label) + "</button>"; }).join("") + "</div>";
+    if (r.legal && r.warnings.length) h += '<label class="opt"><input type="checkbox" id="confirmRisk"' + (ui.confirmed ? " checked" : "") + '><span class="lbl">I understand these risks. Submit anyway.</span></label>';
+    h += '<div class="note">Preflight checks legality and visible risks only. It never predicts the dice.</div>';
+    return h + "</div>";
+  }
+
+  function renderTurn(v) {
+    var c = ctxOf(v), busy = activeAction();
+    if (!c) return renderLegacy(v, busy);
+    var d = declaration(c), r = T.validate(d, c), s = ui.sel;
+    window.__lastValidation = r;
+    var dis = busy ? " disabled" : "";
+    var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
+      '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
+      budget(c, r) + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
+    if (ui.mode === "write") {
+      h += '<textarea id="w_write" placeholder="Describe the whole turn in your own words. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
+        '<div class="note">Read as: ' + esc(r.preview.map(function (p) { return p.text; }).join(" → ") || "nothing matched yet") + "</div>";
+    } else {
+      h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
+        radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
+        (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
+      h += '<fieldset class="grp"><legend>Primary action</legend>' + radio("action", "", !s.action, "No action") +
+        (c.options || []).filter(function (o) { return o.slot === "action"; }).map(function (o) {
+          var tag = (o.requires || []).length ? "needs " + o.requires.map(function (q) { return (c.flag_labels || {})[q] || q; }).join(", ") : "";
+          var x = radio("action", o.id, s.action === o.id, o.label, o.detail || (o.area_ft ? o.area_ft + "-ft radius" : o.reach_ft ? "reach " + o.reach_ft + " ft" : ""), tag);
+          if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
+          if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
+          return x;
+        }).join("") + "</fieldset>";
+      var bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
+      if (bon.length) h += '<fieldset class="grp"><legend>Bonus action</legend>' + radio("bonus", "", !s.bonus, "None") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + "</fieldset>";
+      h += '<fieldset class="grp"><legend>Movement</legend>' + (c.movement || []).map(function (m) {
+        var risk = c.mode === "combat" && (m.leaves_reach_of || []).length ? "opportunity attack risk" : "";
+        return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk);
+      }).join("") + "</fieldset>";
+      if ((c.objects || []).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
+      h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
+    }
+    h += "</fieldset>" + checkPanel(r);
+    var canSubmit = !busy && status === "live" && r.legal && (!r.warnings.length || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim());
+    h += '<div class="row" style="margin-top:10px"><button class="btn primary" id="submitTurn"' + (canSubmit && !phase ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : "Submit turn") + "</button>" +
+      '<button class="btn" id="clearTurn"' + dis + '>Clear</button><span class="note" id="msg"></span></div>' +
+      (busy ? '<div class="note">One turn at a time: the current one is with the GM.</div>' : "") + renderActions() + "</div>";
+    return h;
+  }
+
+  function renderLegacy(v, busy) {
+    return '<div class="panel composer"><h2>Your action</h2>' +
+      '<textarea id="w_write" placeholder="What does Aero do or say? Anything is allowed." ' + (busy ? "disabled" : "") + ">" + esc(ui.write) + "</textarea>" +
+      '<div class="row" style="margin-top:8px"><button class="btn primary" id="submitTurn" ' + (busy || !ui.write.trim() || status !== "live" || phase ? "disabled" : "") + ">Submit turn</button>" +
+      '<span class="note" id="msg"></span></div><div class="note" style="margin-top:6px">No turn options are published for this moment; the GM reads your text directly.</div>' + renderActions() + "</div>";
+  }
+
+  function ago(ms) { var s = Math.max(0, Math.round((Date.now() - ms) / 1000)); return s < 90 ? s + " s" : Math.round(s / 60) + " min"; }
+  function notifyLine(a) {
+    var n = notifyState[a._id];
+    if (!n) return "";
+    if (n.state === "sending") return '<div class="note">Starting the GM…</div>';
+    if (n.ok) return '<div class="note">GM started ' + ago(n.at) + " ago. The result appears here by itself.</div>";
+    var why = { approval_required: "The Datapad needs your permission to start the GM. Tap Start GM and choose Allow.", not_in_manifest: "Starting the GM is not allowed for this page. Allow Claude Code Remote in the page permissions.",
+      server_not_connected: "Claude Code Remote is not available to this page.", mcp_unavailable: "This view cannot start the GM automatically.", no_processor: "This campaign has no automatic GM." }[n.code] || ("Could not start the GM (" + n.code + ").");
+    return '<div class="note msg-warn">' + esc(why) + " Your turn is saved either way; sending any message in the chat also works.</div>";
+  }
   function renderActions() {
     if (!actions.length) return "";
     return actions.slice(0, 3).map(function (a) {
-      var st = a.status === "committed" ? '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>" : '<span class="pill pend">Submitted · waiting for the GM</span>';
-      var wd = a.status === "submitted" ? ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button>' : "";
-      return '<div class="act"><div class="row">' + st + wd + "</div><q>" + esc(a.text) + "</q>" +
-        (a.status === "submitted" ? '<div class="note">Not part of the story yet. Send any message in the chat so the GM can pick it up.</div>' : "") + "</div>";
+      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
+        needs_revision: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Needs revision</span>', failed: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Failed</span>', clarify: '<span class="pill pend">Needs revision</span>' };
+      var h = '<div class="act"><div class="row">' + (pills[a.status] || '<span class="pill">' + esc(a.status) + "</span>");
+      if (a.status === "submitted") h += ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button> <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Start GM</button>';
+      var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
+      if (stuck || a.status === "failed") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
+      h += "</div><q>" + esc(a.text) + "</q>";
+      if (a.status === "submitted") h += notifyLine(a);
+      if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
+      if (a.status === "needs_revision" && a.review) {
+        h += '<div class="note msg-err">' + esc(a.review.summary || "") + "</div>";
+        if ((a.review.alternatives || []).length) h += '<div class="sugg">' + a.review.alternatives.map(function (x, i) { return '<button class="chip" data-ralt="' + esc(a._id) + ":" + i + '">' + esc(x.label) + "</button>"; }).join("") + "</div>";
+        h += '<div class="note">No dice were rolled. Revise and submit again.</div>';
+      }
+      if (a.status === "failed") h += '<div class="note msg-err">' + esc(a.error || "Processing failed. Nothing was narrated.") + "</div>";
+      return h + "</div>";
     }).join("");
   }
 
+  function renderDice(v) {
+    if (!v.rolls || !v.rolls.length) return "";
+    return '<div class="panel"><h2>Dice · last turn</h2><ul class="plain dice">' + v.rolls.map(function (r) { return "<li><div>" + esc(r.purpose) + '</div><div class="kv"><span class="note">' + esc(r.by === "gm" ? "GM" : "You") + "</span><span>" + esc(r.summary) + "</span></div></li>"; }).join("") + "</ul></div>";
+  }
+
   function renderCenter(v) {
-    var s = v.scene, pend = pendingAction();
+    var s = v.scene;
     var feed = v.feed.map(function (f) {
       return '<div class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
-    var sug = v.suggestions.map(function (t, i) { return '<button class="chip" data-s="' + i + '">' + esc(t) + "</button>"; }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
       '<div class="panel"><h2>Narrative</h2><div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      (sug ? '<div class="panel"><h2>Possible actions · tap to draft</h2><div class="sugg">' + sug + '</div><div class="note" style="margin-top:6px">These are conveniences. Write anything you like below.</div></div>' : "") +
-      '<div class="panel composer"><h2>Your action</h2>' +
-      '<textarea id="draft" placeholder="What does Aero do or say? Anything is allowed." ' + (pend ? "disabled" : "") + ">" + esc(pend ? "" : draft) + "</textarea>" +
-      '<div class="row" style="margin-top:8px"><button class="btn primary" id="submit" ' + (pend || !draft.trim() || status !== "live" ? "disabled" : "") + ">Submit to GM</button>" +
-      '<button class="btn" id="copy">Copy</button><span class="note" id="msg"></span></div>' +
-      '<div class="note" style="margin-top:6px">A draft is only on this device. <b>Submit</b> saves it for the GM; it becomes part of the story only after the GM commits it to the ledger. ' + (pend ? "One action at a time: withdraw the pending one to change it." : "") + "</div>" +
-      renderActions() + "</div>";
+      renderDice(v) + renderTurn(v);
   }
 
   function render() {
-    var keep = document.activeElement && document.activeElement.id === "draft" ? [document.activeElement.selectionStart, document.activeElement.selectionEnd] : null;
+    var ae = document.activeElement, keep = ae && ae.id && /^w_/.test(ae.id) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
     if (!view) {
       $("colCenter").innerHTML = '<div class="panel"><h2>Genesis Datapad</h2><div class="empty">' + (status === "unavailable" ? "The campaign store is not reachable from this view. Open the page while signed in to Claude." : status === "error" ? esc(err) : "Connecting to the campaign ledger…") + "</div></div>";
       return;
     }
+    syncCtx();
     $("colLeft").innerHTML = renderLeft(view.character, view);
     $("colGear").innerHTML = renderGear(view.character, view);
     $("colRight").innerHTML = renderRecord(view);
@@ -245,21 +638,42 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
       el.addEventListener("change", function () { selId = el.value; ls("datapad.member", selId); render(); });
     });
     bindCenter();
-    if (keep && $("draft")) { $("draft").focus(); try { $("draft").setSelectionRange(keep[0], keep[1]); } catch (e) {} }
+    if (keep && $(keep.id)) { var el = $(keep.id); el.focus(); try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
   }
 
   /* ---------- interaction ---------- */
   function setMsg(t) { var m = $("msg"); if (m) m.textContent = t; }
+  function changed() { ui.confirmed = false; ui.draftId = ""; saveUi(); render(); }
   function bindCenter() {
-    var d = $("draft");
-    if (d) d.addEventListener("input", function () { draft = d.value; ls("datapad.draft", draft); var b = $("submit"); if (b) b.disabled = !draft.trim() || status !== "live" || !!pendingAction(); });
-    Array.prototype.forEach.call(document.querySelectorAll("[data-s]"), function (b) {
-      b.addEventListener("click", function () { if (pendingAction()) return; draft = view.suggestions[+b.getAttribute("data-s")]; ls("datapad.draft", draft); render(); $("draft").focus(); });
+    function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-mode]"), function (b) { b.addEventListener("click", function () { ui.mode = b.getAttribute("data-mode"); changed(); }); });
+    Array.prototype.forEach.call(document.querySelectorAll("input[data-g]"), function (el) {
+      el.addEventListener("change", function () { ui.sel[el.getAttribute("data-g")] = el.value; changed(); });
     });
-    var sub = $("submit"); if (sub) sub.addEventListener("click", submit);
-    var cp = $("copy"); if (cp) cp.addEventListener("click", function () {
-      var t = ($("draft") || {}).value || ""; if (!t) return;
-      try { navigator.clipboard.writeText(t).then(function () { setMsg("Copied."); }, function () { $("draft").select(); setMsg("Select and copy."); }); } catch (e) { $("draft").select(); setMsg("Select and copy."); }
+    Array.prototype.forEach.call(document.querySelectorAll("input[data-c]"), function (el) {
+      el.addEventListener("change", function () {
+        var g = el.getAttribute("data-c"), list = ui.sel[g].filter(function (x) { return x !== el.value; });
+        if (el.checked) list.push(el.value); ui.sel[g] = list; changed();
+      });
+    });
+    on("w_target", "change", function () { ui.sel.target[ui.sel.action] = $("w_target").value; changed(); });
+    var deb = null;
+    function typed(set) { return function (e) { set(e.target.value); ui.confirmed = false; ui.draftId = ""; saveUi(); clearTimeout(deb); deb = setTimeout(render, 350); }; }
+    on("w_own", "input", typed(function (x) { ui.sel.own = x; }));
+    on("w_trigger", "input", typed(function (x) { ui.sel.trigger = x; }));
+    on("w_note", "input", typed(function (x) { ui.note = x; }));
+    on("w_write", "input", typed(function (x) { ui.write = x; ls("datapad.draft", x); }));
+    on("confirmRisk", "change", function () { ui.confirmed = $("confirmRisk").checked; saveUi(); render(); });
+    on("clearTurn", "click", function () { ui = freshUi(ui.ctxId); saveUi(); render(); });
+    on("submitTurn", "click", submitTurn);
+    Array.prototype.forEach.call(document.querySelectorAll("[data-alt]"), function (b) {
+      b.addEventListener("click", function () { var r = window.__lastValidation; var a = r && r.alternatives[+b.getAttribute("data-alt")]; if (a) { loadDeclaration(a.declaration, ctxOf(view)); render(); } });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-ralt]"), function (b) {
+      b.addEventListener("click", function () {
+        var p = b.getAttribute("data-ralt").split(":"), a = actions.filter(function (x) { return x._id === p[0]; })[0];
+        var alt = a && a.review && a.review.alternatives[+p[1]]; if (alt && ctxOf(view)) { loadDeclaration(alt.declaration, ctxOf(view)); render(); }
+      });
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-wd]"), function (b) {
       b.addEventListener("click", function () {
@@ -268,16 +682,39 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
         dbRef.doc("actions/" + id).delete().catch(function (e) { setMsg("Could not withdraw: " + (e && e.code || "error")); });
       });
     });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-nudge]"), function (b) { b.addEventListener("click", function () { notifyGM(b.getAttribute("data-nudge")); }); });
   }
-  function submit() {
-    var text = ($("draft").value || "").trim();
-    if (!text || pendingAction() || !dbRef) return;
-    $("submit").disabled = true; setMsg("Saving…");
-    var ref = dbRef.collection("actions").doc();
-    ref.set({ text: text, actor: view.active_actor || "aero", status: "submitted", created_ms: Date.now(), based_on_revision: view.revision, ledger_head: view.ledger_head })
-      .then(function () { draft = ""; ls("datapad.draft", ""); setMsg(""); })
-      .catch(function (e) { setMsg("Not saved (" + (e && e.code || "error") + "). Your text is still here; use Copy and send it in the chat."); $("submit").disabled = false; });
+
+  function submitTurn() {
+    var c = ctxOf(view), busy = activeAction();
+    if (busy || !dbRef || phase) return;
+    var d = c ? declaration(c) : null, r = c ? T.validate(d, c) : null;
+    if (c && (!r.legal || (r.warnings.length && !ui.confirmed))) return;
+    var text = c ? turnText(d, r) : ui.write.trim();
+    if (!text) return;
+    phase = "validating"; render();
+    if (!ui.draftId) { ui.draftId = "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); saveUi(); }
+    var id = ui.draftId, ref = dbRef.doc("actions/" + id);
+    var doc = { text: text, declaration: d, source: c ? (ui.mode === "write" ? "freeform" : "composer") : "freeform", actor: view.active_actor || "aero",
+      campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, context_id: c ? c.context_id : null,
+      contract: T.VERSION, confirmed_warnings: !!(r && r.warnings.length), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
+      status: "submitted", created_ms: Date.now() };
+    // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.
+    ref.get().then(function (snap) { return snap.exists ? null : ref.set(doc); }).then(function () {
+      localPending = { id: id, at: Date.now(), text: text };
+      ui = freshUi(c ? c.context_id : null); ls("datapad.draft", ""); saveUi(); phase = ""; render(); notifyGM(id);
+    }, function (e) { phase = ""; render(); setMsg("Not saved (" + (e && e.code || "error") + "). Your turn is still here; try again."); });
   }
+
+  function notifyGM(id) {
+    if (!view.processor) { notifyState[id] = { ok: false, code: "no_processor" }; render(); return; }
+    if (!mcpNs) { notifyState[id] = { ok: false, code: "mcp_unavailable" }; render(); return; }
+    notifyState[id] = { state: "sending" }; render();
+    mcpNs.callTool(view.processor.server, "fire_trigger", { trigger_id: view.processor.trigger_id, text: JSON.stringify({ campaign_id: view.campaign_id, action_id: id }) })
+      .then(function () { notifyState[id] = { ok: true, at: Date.now() }; render(); },
+            function (e) { notifyState[id] = { ok: false, code: (e && e.code) || "error" }; render(); });
+  }
+
   Array.prototype.forEach.call(document.querySelectorAll("#tabbar button"), function (b) {
     b.addEventListener("click", function () {
       $("app").setAttribute("data-tab", b.getAttribute("data-t"));
@@ -288,6 +725,7 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
 
   /* ---------- data: subscribe once ---------- */
   var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
+  setInterval(function () { if (activeAction()) render(); }, 30000);  // refresh "processing for N min" labels only while a turn is out
   function start(db) {
     dbRef = db; status = "live";
     db.doc("view/state").onSnapshot(function (snap) {
@@ -295,13 +733,15 @@ details p { margin: 4px 0 0; font-size: 13px; color: var(--dim); }
       render();
     }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
     db.collection("actions").orderBy("created_ms", "desc").limit(10).onSnapshot(function (q) {
-      actions = q.docs.map(function (d) { var x = Object.assign({}, d.data()); x._id = d.id; return x; });
+      actions = q.docs.map(function (d) { var x = Object.assign({}, d.data()); x._id = d.id; return x; })
+        .filter(function (a) { return !view || !view.campaign_id || (a.campaign_id || "starwars_litrpg") === view.campaign_id; });
       render();
     }, function () {});
   }
   render();
   if (window.claude && window.claude.use) {
     window.claude.use("db").then(function (db) { if (db) start(db); else { status = "unavailable"; clearTimeout(timer); render(); } }, function () { status = "unavailable"; render(); });
+    window.claude.use("mcp").then(function (m) { mcpNs = m; render(); }, function () { mcpNs = null; });
   } else { status = "unavailable"; render(); }
 })();
 </script>

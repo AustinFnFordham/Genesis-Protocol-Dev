@@ -6,7 +6,7 @@ ledger file (records/events.jsonl, via the ledger's own player_view) and the
 player-visible character runtime. Never reads hidden/. The artifact mirrors this;
 it never writes it. Usage: export_state.py [--out FILE]
 """
-import argparse, json, sys
+import argparse, json, re, sys
 from pathlib import Path
 import yaml
 
@@ -89,8 +89,28 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     turn_context = None
     if tc_idx is not None and all(e["kind"] in PRESENT for e in ev[tc_idx + 1:]):
         turn_context = dict(ev[tc_idx]["details"]); turn_context["context_id"] = ev[tc_idx]["event_id"]
+    # Dice shown for the latest resolved turn: public roll log entries cited by events after the
+    # last player declaration (the public log never stores DCs).
+    rolls = []
+    try:
+        led = la._ledger()
+        rdir = Path(campaign_dir) if campaign_dir else Path(la.CAMPAIGN_DIR)
+        log = {r["roll_id"]: r for r in led.read_jsonl(rdir / "records" / "roll_log.jsonl")}
+        last_decl = max((i for i, e in enumerate(ev) if e["kind"] == "player_declaration"), default=None)
+        if last_decl is not None:
+            for e in ev[last_decl:]:
+                for rid in e.get("roll_ids") or []:
+                    r = log.get(rid)
+                    if r and rid not in [x["roll_id"] for x in rolls]:
+                        purpose = re.sub(r"^\[[^\]]+\]\s*", "", r.get("purpose", ""))
+                        kept = [str(k) for d in r.get("dice", []) for k in d.get("kept", [])]
+                        summ = r.get("summary") or (f'{r.get("formula")} [{", ".join(kept)}]' + (f' {r["modifiers"]:+d}' if r.get("modifiers") else "") + f' = {r.get("final_total")}' + (" (natural 20)" if r.get("nat20") else " (natural 1)" if r.get("nat1") else ""))
+                        rolls.append({"roll_id": rid, "purpose": purpose, "summary": summ, "by": r.get("requested_by")})
+    except Exception:  # noqa: BLE001 - dice display is best-effort; the ledger stays authoritative
+        rolls = []
     return {
         "campaign_id": campaign_id or "starwars_litrpg",
+        "rolls": rolls,
         "turn_context": turn_context,
         "revision": len(ev_all), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
         "scene": {"title": scene.get("title"), "location": scene.get("location"), "time": last.get("world_time"),

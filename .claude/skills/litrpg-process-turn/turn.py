@@ -135,6 +135,8 @@ def cmd_export(a):
     e = run_entry(a.campaign)
     st = state(e)
     st["artifact_url"] = e["artifact_url"]
+    proc = json.loads(REGISTRY.read_text(encoding="utf-8")).get("processor")
+    st["processor"] = {"server": proc["server"], "trigger_id": proc["trigger_id"]} if proc and e["status"] == "active" else None
     Path(a.out).write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps({"out": a.out, "revision": st["revision"], "ledger_head": st["ledger_head"], "has_turn_context": bool(st["turn_context"])}))
 

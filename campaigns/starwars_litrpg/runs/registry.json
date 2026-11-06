@@ -3,10 +3,10 @@
  "runs": {
   "starwars_litrpg": {
    "dir": "campaigns/starwars_litrpg",
-   "artifact_url": "https://claude.ai/artifact/6QTsY4UwYyQFMQMgzydCre",
+   "artifact_url": null,
    "status": "archived_uat",
    "canon": true,
-   "note": "Original Hask Meadow run (Aero died twice); kept as UAT evidence. Never processed again."
+   "note": "Original Hask Meadow run (Aero died twice); kept as UAT evidence. Never processed again. Its Datapad now shows run 2; run-1 action rows remain in that database, filtered out by campaign id."
   },
   "sandbox": {
    "dir": "campaigns/starwars_litrpg/runs/sandbox",
@@ -14,6 +14,19 @@
    "status": "active",
    "canon": false,
    "note": "Non-canon round-trip test harness."
+  },
+  "hask_meadow_r2": {
+   "dir": "campaigns/starwars_litrpg/runs/hask_meadow_r2",
+   "artifact_url": "https://claude.ai/artifact/6QTsY4UwYyQFMQMgzydCre",
+   "status": "active",
+   "canon": true,
+   "note": "Fresh Hask Meadow run (restart). Turn 1 awaits Aero's declaration."
   }
+ },
+ "processor": {
+  "server": "Claude Code Remote",
+  "tool": "fire_trigger",
+  "trigger_id": "trig_011svPGdUcPjEghbaSmrNFKF",
+  "note": "Poke-only scheduled task 'Genesis Datapad turn processor'. Firing starts a fresh cloud GM session that runs .claude/skills/litrpg-process-turn."
  }
 }

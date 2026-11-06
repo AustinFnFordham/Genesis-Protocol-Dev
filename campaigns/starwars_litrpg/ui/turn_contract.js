@@ -108,10 +108,12 @@
     // 3. action economy
     var extraObjects = Math.max(0, objs.length - (b.object_interaction == null ? 1 : b.object_interaction));
     if (extraObjects) { actionCount += extraObjects; actLabels.push("a second object interaction"); }
-    if (actionCount > (b.action == null ? 1 : b.action))
+    var combat = ctx.mode === "combat";  // outside combat there is no action economy: beats happen in sequence
+    if (!combat && actionCount > 1) info.push({ code: "SEQUENCE", message: "Outside combat these happen one after another; the GM resolves the time they take." });
+    if (combat && actionCount > (b.action == null ? 1 : b.action))
       err("ACTION_CONFLICT", joinAnd(actLabels) + (actionCount === 2 ? " both require" : " all require") + " your primary action, so you cannot use " + (actionCount === 2 ? "both" : "them all") +
         " this turn unless another feature grants you an additional action.");
-    if (bonus.length > (b.bonus_action == null ? 1 : b.bonus_action)) err("BONUS_CONFLICT", "You have one bonus action this turn.");
+    if (combat && bonus.length > (b.bonus_action == null ? 1 : b.bonus_action)) err("BONUS_CONFLICT", "You have one bonus action this turn.");
     bonus.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "bonus_action") err("NOT_BONUS", o.label + " is not a bonus action."); });
     actions.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "action") err("NOT_ACTION", o.label + " is not a primary action."); });
 
@@ -142,7 +144,7 @@
     var disengage = actions.some(function (a) { var o = byId(opts, a.option); return o && o.suppresses_opportunity_attacks; });
     var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
     if (decl.movement && !mv) err("UNKNOWN_MOVE", "That movement is not available here.");
-    if (mv && mv.feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
+    if (combat && mv && mv.feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
       err("DISTANCE", mv.label + " is about " + mv.feet + " ft; you can move " + (b.movement_ft * (dash ? 2 : 1)) + " ft this turn" + (dash ? "" : " (Dash would double it)") + ".");
     if (mv && mv.blocked_by && mv.blocked_by.length) warn("PATH", mv.label + ": the way passes " + joinAnd(names(ctx, mv.blocked_by)) + "; you may have to go around or stop short.");
 
@@ -166,10 +168,10 @@
     if (decl.speech && decl.speech.text) preview.push({ step: "speech", text: "Say: “" + decl.speech.text + "”" + (speechAction ? " (extended, uses your action)" : " (free)") });
     objs.forEach(function (oid, i) { var o = byId(ctx.objects, oid); if (o) preview.push({ step: "object", text: o.label + (i === 0 ? " (free object interaction)" : " (uses your action)") }); });
     var moveFirst = mv && mv.distance_after && actions.some(function (a) { return a.target && mv.distance_after[a.target] != null; });
-    if (mv && moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet ? " (~" + mv.feet + " ft)" : "") });
+    if (mv && moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet && !/\d\s*(ft|m)\b/.test(mv.label) ? " (~" + mv.feet + " ft)" : "") });
     actions.forEach(function (a) { var o = byId(opts, a.option); if (o) preview.push({ step: "action", text: o.label + (a.target ? " → " + names(ctx, [a.target])[0] : "") + (a.trigger ? " (trigger: " + a.trigger + ")" : "") }); });
     bonus.forEach(function (a) { var o = byId(opts, a.option); if (o) preview.push({ step: "bonus_action", text: o.label }); });
-    if (mv && !moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet ? " (~" + mv.feet + " ft)" : "") });
+    if (mv && !moveFirst) preview.push({ step: "movement", text: mv.label + (mv.feet && !/\d\s*(ft|m)\b/.test(mv.label) ? " (~" + mv.feet + " ft)" : "") });
     (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
 
     var used = { action: Math.min(actionCount, 9), bonus_action: bonus.length, movement_ft: mv ? mv.feet : 0, object_interaction: Math.min(objs.length, 1), reaction: reservesReaction ? 1 : 0 };
