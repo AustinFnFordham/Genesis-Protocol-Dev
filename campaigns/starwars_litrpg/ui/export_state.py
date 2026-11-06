@@ -85,7 +85,7 @@ def build(ev=None):
             "passive": {"perception": sheet["senses"]["passive_perception"], "insight": sheet["senses"]["passive_insight"]},
             "conditions": conditions, "skills": skills,
             "languages": sheet["proficiencies"]["languages"],
-            "powers": [{"name": p["name"], "cost": p["cost"], "effect": p["exact_effect"]} for p in sheet["powers"]],
+            "powers": [{"name": p["name"], "cost": p["cost"], "effect": p["exact_effect"] + (" Range: " + p["range"] + "." if p.get("range") else "")} for p in sheet["powers"]],
             "features": [{"name": f["name"], "kind": f["action_type"],
                           "effect": f["exact_effect"] if isinstance(f["exact_effect"], str) else " ".join(map(str, f["exact_effect"].values() if isinstance(f["exact_effect"], dict) else f["exact_effect"]))}
                          for f in sheet["features"]],
