@@ -63,6 +63,8 @@ def build(ev=None):
     hp_max = dfn["maximum_hp"]
     hp_now = max(0, min(hp_max, dfn["current_hp"] + sum(e["details"].get("delta", 0) for e in ev
                  if e["kind"] == "hp_change" and e["details"].get("target") == ACTIVE_ACTOR)))
+    cond_ev = [e for e in ev if e["kind"] == "condition_change" and e["details"].get("target") == ACTIVE_ACTOR]
+    conditions = cond_ev[-1]["details"].get("conditions", []) if cond_ev else dfn.get("conditions", [])
     roster = build_roster(ev, idn["name"], f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}')
     return {
         "revision": len(ev), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
@@ -81,7 +83,7 @@ def build(ev=None):
             "ac": dfn["armor_class"], "speed": mov["speed"], "initiative": mov["initiative"],
             "scores": {k[:3].upper(): [v, ab["modifiers"][k]] for k, v in ab["scores"].items()},
             "passive": {"perception": sheet["senses"]["passive_perception"], "insight": sheet["senses"]["passive_insight"]},
-            "conditions": dfn.get("conditions", []), "skills": skills,
+            "conditions": conditions, "skills": skills,
             "languages": sheet["proficiencies"]["languages"],
             "powers": [{"name": p["name"], "cost": p["cost"], "effect": p["exact_effect"]} for p in sheet["powers"]],
             "features": [{"name": f["name"], "kind": f["action_type"],

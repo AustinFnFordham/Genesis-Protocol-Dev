@@ -36,6 +36,11 @@ def test_formulas():
         except ValueError: continue
         raise AssertionError(bad)
 
+def test_advantage_allows_flat_modifier():
+    dice, alt, total, mods, _ = roll.do_roll("1d20+4", "disadvantage", roll.mulberry(5))
+    assert mods == 4 and alt is not None and total == dice[0]["kept"][0]
+
+
 def test_advantage_picks_higher_and_only_single_d20():
     r = roll.mulberry(3)
     dice, alt, total, _, _ = roll.do_roll("1d20", "advantage", r)

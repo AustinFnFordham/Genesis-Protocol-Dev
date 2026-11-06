@@ -62,7 +62,9 @@ def parse(formula):
 
 def do_roll(formula, mode, rand):
     terms = parse(formula)
-    first_d20 = len(terms) == 1 and terms[0][0] == "dice" and terms[0][2:4] == (1, 20)
+    dice_terms = [t for t in terms if t[0] == "dice"]
+    # one 1d20 (any flat modifiers allowed, e.g. 1d20+4); advantage/disadvantage never applies to other dice
+    first_d20 = len(dice_terms) == 1 and dice_terms[0][1] == 1 and dice_terms[0][2:4] == (1, 20) and dice_terms[0][4] is None
     if mode != "normal" and not first_d20:
         raise ValueError("advantage/disadvantage only applies to a single 1d20")
     dice_out, alt, total, mods = [], None, 0, 0
