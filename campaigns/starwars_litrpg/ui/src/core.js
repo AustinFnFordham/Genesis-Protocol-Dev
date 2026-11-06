@@ -47,6 +47,8 @@
       '<div class="kv"><span>Initiative</span><span>+' + c.initiative + '</span></div>' +
       '<div class="kv"><span>Passive Perception / Insight</span><span>' + c.passive.perception + " / " + c.passive.insight + "</span></div>" +
       '<div class="kv"><span>Conditions</span><span>' + (c.conditions.length ? esc(c.conditions.join(", ")) : "none") + "</span></div>" +
+      (v.continuity ? '<div class="kv"><span>Protagonist Continuity</span><span>' + esc(v.continuity.status === "active" ? "protected" : v.continuity.status) + (v.continuity.marks ? " · " + v.continuity.marks + " mark" + (v.continuity.marks > 1 ? "s" : "") : "") + "</span></div>" +
+        (v.continuity.status === "expiring" ? '<div class="note msg-warn">Protection ends at the end of your next long rest. After that, death is permanent.</div>' : "") : "") +
       '<div class="scores">' + sc + "</div></div>" +
       '<div class="panel"><h2>Skills</h2><div class="tags">' + c.skills.map(function (s) { return '<span style="font-style:normal;font-family:var(--f-data);font-size:12px">' + esc(s.name) + " " + (s.mod >= 0 ? "+" : "") + s.mod + "</span>"; }).join("") + "</div>" +
       '<div class="note" style="margin-top:8px">Languages: ' + esc(c.languages.join(", ")) + "</div></div>" +
@@ -73,5 +75,5 @@
     return selector(v) + '<div class="panel"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul></div>" +
       '<div class="panel"><h2>Discoveries</h2><div class="note">' + disc.length + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
-      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
+      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>' + renderUsage(v);
   }

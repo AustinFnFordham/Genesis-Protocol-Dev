@@ -1,38 +1,47 @@
-# Protagonist Continuity — PROPOSED (not in force)
+# Protagonist Continuity — campaign rule, IN FORCE (provisional)
 
-Status: **proposed 2026-11-06, awaiting the owner's approval.** Until approval is recorded in `DESIGN_DECISIONS.md` and `continuity_rule.json` says `"status": "approved"`, the standard death rules apply. Tool: `creator/continuity.py` (dry-run only while proposed). Test E: `creator/test_continuity.py`.
+Owner ruling 2026-11-06 (17:46): approved provisionally, non-System version, with modifications. **Scope: this Star Wars LitRPG campaign only (Hask Meadow run 2 onward). Not a universal Genesis rule.** Machine form: `creator/continuity_rule.json`. Tool: `creator/continuity.py`. Test E: `creator/test_continuity.py`.
 
-## Why
-The first Hask Meadow run ended the protagonist's story before chapter one. The dice were right; the campaign shape was wrong. This rule protects the **story**, not the character's body: Aero can lose, bleed, be dragged off and lose his saber. During the opening he cannot die.
+## Purpose
+Protect the continuity of the story during the opening, not the character's body. Real rolls, damage and defeats all stand. A protected character who would die survives through a consequential continuation, and the consequences are serious, cumulative and grounded in the rules and the ledger.
 
-## The rule (smallest coherent version)
-**Who:** main-party player characters with validated sheets (Aero now).
+## Who and when
+- **Protected:** main-party player characters with validated sheets (Aero now).
+- **Window:** from the start of run 2 until **both** the Hask Meadow arc is complete **and** the character has reached level 3 (whichever happens later).
+- **Transition to normal mortality (explicit):** when both conditions are met, the GM commits a public `continuity_expiring` event and the Datapad shows: *"Protagonist Continuity ends at the end of your next long rest. After that, death is permanent."* Protection holds until that long rest ends and never lapses mid-encounter. Then the GM commits `continuity_expired`. From then on charter rule 8 applies in full: three failed death saves, massive damage or an instant-death effect kill.
+- **During the window, a protected character cannot permanently die.** The death saves are not a bluff: successes still stabilize normally (no defeat, no cost); failures decide *when* a defeat lands.
 
-**Protected phase:** from the start of the campaign until the earlier of Aero reaching level 3 or the close of the Hask Meadow arc. **During the protected phase, a protected character cannot permanently die.** That is stated plainly; the death saves are not a bluff.
+## Trigger
+A protected character **would die**: a third failed death save, damage at 0 HP equal to or above maximum HP, an instant-death effect, or a hostile finishing a helpless character.
 
-**Trigger (mechanical, nothing else):** a protected character *would* die: a third failed death save, damage at 0 HP equal to or above maximum HP, or an instant-death effect.
+## Effect
+1. **Nothing is rewritten.** Every committed attack, roll, damage, drag and lost item stands. No roll is repeated.
+2. **The character lives**: 0 HP, unconscious, stable. They regain 1 HP after 1d4 hours (rolled) unless a cost or the scene says otherwise. Stable is not safe: the world keeps acting on its own schedule.
+3. **Coherent survival path.** Why the character is still alive must follow from the world, chosen in this order:
+   1. Established hidden truth about what these hostiles do with a downed foe (used directly, no roll).
+   2. Otherwise a die over the *eligible* paths, written down before rolling:
+      - **Taken**: a committed event shows them moving or holding the character. They wake where they were taken.
+      - **Interrupted**: an already-established actor was already heading here (a committed event or plan, never invented on the spot).
+      - **Left for dead**: always eligible. The hostiles believe the body finished and move on.
 
-**Effect: Spared.**
-1. Every committed event stands: the hits, the damage, the drag, the dropped gear, the rolls. Nothing is re-rolled or rewritten.
-2. The character is stable at 0 HP, unconscious. They wake per the normal rule (1 HP after 1d4 hours, rolled). The world keeps moving on its schedule meanwhile.
-3. The GM commits a public `continuity_invoked` event, then applies **costs** (below) and adds one **Mark**.
-4. No ally, item or escape is invented. Whatever happens next must follow from established events, hidden truth, or a GM table fixed before rolling and logged `gm_only`. A creature's motives are not canonized just to explain the survival.
+   The chosen path governs what the hostiles do next. Further harm in the **same defeat** (before the character regains consciousness) adds one grievous wound per further would-die moment, at most two per defeat. It never kills.
+4. **Defeat Marks and costs (cumulative, escalating, no auto-termination).** Each defeat adds one Mark. Mark *n* applies *n* costs (as many as are eligible), rolled from the eligible list. Earlier costs persist.
 
-**Costs.** Only *eligible* costs can be chosen, and each must cite the ledger events that make it possible. One is rolled from the eligible list (die size = number of eligible costs).
-| Cost | Eligible when | Mechanical effect |
-|---|---|---|
-| Lasting wound | the killing harm was physical damage | a `lasting_injury` on the damaged part: disadvantage on checks using it, or −10 ft speed for a leg, until treated (Medicine DC 15 in a safe place) and two long rests |
-| Lost equipment | an item was dropped, taken or broken in the ledger | that item stays where the ledger left it; recovering it is a goal, not a given |
-| Taken / relocated | a committed event shows the character being moved or held by an actor | the character wakes where those actors took them; where, if undecided, comes from a table fixed beforehand that fits established facts |
-| Exhaustion | always | two levels of exhaustion; one recovers per long rest |
-| Escalation | a hostile actor with an active plan exists | that actor's next scheduled move happens sooner or stronger (one step), logged `gm_only` |
+   | Cost | Eligible when | Effect |
+   |---|---|---|
+   | Lasting wound | the defeating harm was physical | `lasting_injury` on the damaged part: disadvantage on checks using it (−10 ft speed for a leg) until treated (Medicine DC 15 in a safe place) and two long rests. **From Mark 2: grievous** (see below). |
+   | Lost equipment | an item was dropped, taken or broken in the ledger | stays where the ledger left it; recovering it is a goal |
+   | Exhaustion | always | two levels of exhaustion (SW5e condition), one recovers per long rest; capped at level 5 while protected |
+   | Escalation | a hostile actor has an active plan | that actor's next scheduled move comes one step sooner or stronger (logged `gm_only`) |
 
-**Marks and expiry.**
-- 1st invocation: one cost. 2nd: two costs. 3rd: three costs, **and the protected phase ends at once.**
-- After the protected phase, death is permanent again (charter rule 8). Marks never reset during the phase.
+   - **Grievous wound** (Mark 2+ lasting wounds, Mark 3+ always one extra, same-defeat extra harm): as a lasting wound, but it persists until bacta-tank treatment at a real medical facility or a cybernetic replacement. Both are established Star Wars technology, not System lore.
+   - Marks never reset during the window, and the protection never ends early. Each defeat costs more than the last.
+5. **Records.** The GM commits `continuity_invoked` (public), one `continuity_cost` per cost, any `lasting_injury` events, the survival path (`gm_decision` with the table), and the new conditions. Narration follows `NARRATIVE_SPEC.md`: the loss is shown, not softened.
 
-## Variant (needs a separate canon decision)
-*System-attributed survival.* The tally shard keeps its scorer alive, and each Mark becomes a debt the System can call in later. This would canonize a new System capability, so it is **not** part of the default proposal.
+## What it never does
+Invent System lore, an ally, an item or an escape. Change a roll. Claim the character escaped unharmed. Reveal or rewrite a hostile's hidden purpose.
 
-## Hask Meadow dry run (Test E, run 1 evidence, not canon)
-Aero failed his third death save while the pack dragged him into the trees (evt_0084; pack table evt_0079 = drag); his lightsaber lay by the fence (evt_0087). Under this rule: Aero is Spared, stable at 0 HP. Eligible costs: lasting wound (evt_0076 bite), lost equipment (evt_0087), taken (evt_0079), exhaustion, escalation (evt_0005 pack hunting plan). The next scene would open when Aero wakes, 1d4 hours later, wherever the established drag ended, with whatever the GM's pre-fixed table says about that place. The mystery continues because of the loss.
+## Hask Meadow dry run (Test E, run-1 evidence, not canon)
+Aero's third failed death save came while the pack dragged him into the trees (evt_0084; pack table evt_0079 = drag; saber left by the fence evt_0087).
+- **Under this rule:** Mark 1. The survival path would be "Taken" (evidence evt_0079) or "Left for dead", by a die. One cost would be rolled from lasting wound (evt_0076), lost equipment (evt_0087), exhaustion and escalation (evt_0005).
+- **Next scene:** Aero wakes 1d4 hours later where the path puts him, hurt, without his saber. The mystery continues because of the loss.

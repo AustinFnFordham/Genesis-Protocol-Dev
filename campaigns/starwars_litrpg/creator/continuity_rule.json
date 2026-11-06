@@ -1,11 +1,17 @@
 {
  "rule": "protagonist_continuity",
- "version": 1,
- "status": "proposed",
+ "version": 2,
+ "status": "approved_provisional",
+ "approved": "owner ruling 2026-11-06 17:46 (non-System version, with modifications)",
+ "scope": "campaign: starwars_litrpg, Hask Meadow run 2 onward; not a universal Genesis rule",
  "protected_characters": ["aero"],
- "protected_phase": {"ends_at_level": 3, "ends_with_arc": "hask_meadow", "ended": false},
- "costs_per_mark": [1, 2, 3],
- "phase_ends_after_marks": 3,
+ "window": {"arc": "hask_meadow", "min_level": 3, "require_both": true,
+            "transition": "continuity_expiring when both are met; protection holds until the end of the next long rest and never lapses mid-encounter; then continuity_expired"},
+ "costs": "mark n applies n eligible costs, cumulative",
+ "grievous_from_mark": 2,
+ "extra_grievous_from_mark": 3,
+ "same_defeat_extra_cap": 2,
+ "exhaustion_cap_while_protected": 5,
  "wake": "1d4 hours, 1 HP",
  "doc": "creator/PROTAGONIST_CONTINUITY.md"
 }

@@ -108,7 +108,19 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                         rolls.append({"roll_id": rid, "purpose": purpose, "summary": summ, "by": r.get("requested_by")})
     except Exception:  # noqa: BLE001 - dice display is best-effort; the ledger stays authoritative
         rolls = []
+    # Protagonist Continuity status (campaign rule) from the rule file + public events.
+    continuity = None
+    try:
+        rule = json.loads((Path(__file__).resolve().parents[1] / "creator" / "continuity_rule.json").read_text(encoding="utf-8"))
+        if rule["status"].startswith("approved") and (campaign_id or "starwars_litrpg") != "starwars_litrpg":
+            kinds = [e["kind"] for e in ev if (e.get("details") or {}).get("target") in (None, ACTIVE_ACTOR)]
+            continuity = {"status": "expired" if "continuity_expired" in kinds else "expiring" if "continuity_expiring" in kinds else "active",
+                          "marks": sum(1 for e in ev if e["kind"] == "continuity_invoked" and e["details"].get("target") == ACTIVE_ACTOR),
+                          "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"}
+    except Exception:  # noqa: BLE001
+        continuity = None
     return {
+        "continuity": continuity,
         "campaign_id": campaign_id or "starwars_litrpg",
         "rolls": rolls,
         "turn_context": turn_context,

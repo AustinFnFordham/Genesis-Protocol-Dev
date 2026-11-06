@@ -1,9 +1,9 @@
 # GM ledger — Hask Meadow, run 2 (hidden: spoilers)
 
 **Restart of run 1** (`campaigns/starwars_litrpg`, kept as UAT evidence; Aero died twice there). Same premise, same hidden truth, same setup results (run-1 rolls roll_t0_1..3, carried over, not re-rolled).
-- Nothing that happened in run 1 happened here. Neither Aero nor any NPC knows run-1 events. Run-1 GM decisions made during play (positions, the pack-behavior tables, the provisional dog stat block, Biscuit's location rolls) are NOT carried; decide again when they matter.
-- Rules in force: charter, `creator/TURN_CONTRACT.md`, `creator/NARRATIVE_SPEC.md`. Protagonist Continuity is PROPOSED only (standard death rules) until the owner approves it.
-- Open owner decision (UAT-0028): encounter balance for a level-1 protagonist against the pack. Until decided, the dogs' engagement follows the pack's role (lure, isolate, take) and is resolved honestly by dice.
+- Nothing that happened in run 1 happened here. Neither Aero nor any NPC knows run-1 events. Run-1 in-play decisions (positions, pack-behavior tables, Biscuit's location rolls) are NOT carried. EXCEPTION by owner ruling 2026-11-06 17:46: the pack's established capabilities (provisional stat block, verbatim voice replay) and the five-dog treeline premise ARE carried; see hidden/PACK_PROFILE.md.
+- Rules in force: charter, `creator/TURN_CONTRACT.md`, `creator/NARRATIVE_SPEC.md`. Protagonist Continuity v2 is IN FORCE provisionally for this campaign (creator/PROTAGONIST_CONTINUITY.md).
+- Encounter balance (owner ruling 2026-11-06): no weakening for Aero's level; coherent tactics and counterplay per hidden/PACK_PROFILE.md.
 
 ---
 ## Setup (rolled 2026-11-05; tables fixed BEFORE rolling)

@@ -1,5 +1,5 @@
   /* ===================== Turn composer (turn-contract/1) ===================== */
-  var T = window.GenesisTurn, mcpNs = null, phase = "", notifyState = {};
+  var T = window.GenesisTurn, mcpNs = null, phase = "", notifyState = {}, usage = [];
   function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
   function freshUi(ctxId, keepWrite) {
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "",
@@ -92,7 +92,8 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      budget(c, r) + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
+      budget(c, r) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole turn in your own words. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
         '<div class="note">Read as: ' + esc(r.preview.map(function (p) { return p.text; }).join(" → ") || "nothing matched yet") + "</div>";
@@ -165,6 +166,14 @@
     }).join("");
   }
 
+  function renderUsage(v) {
+    var mine = usage.filter(function (u) { return u.campaign_id === v.campaign_id; });
+    if (!mine.length) return "";
+    var mins = mine.reduce(function (t, u) { return t + Math.max(0, (u.finished_ms || u.started_ms) - u.started_ms); }, 0) / 60000;
+    var by = {}; mine.forEach(function (u) { by[u.outcome] = (by[u.outcome] || 0) + 1; });
+    return '<div class="panel"><h2>Cloud GM usage</h2><div class="kv"><span>Sessions (latest 50)</span><span>' + mine.length + '</span></div><div class="kv"><span>Total run time</span><span>' + mins.toFixed(1) + ' min</span></div>' +
+      '<div class="note" style="margin-top:6px">' + Object.keys(by).map(function (k) { return esc(k.replace("_", " ")) + " " + by[k]; }).join(" · ") + "</div></div>";
+  }
   function renderDice(v) {
     if (!v.rolls || !v.rolls.length) return "";
     return '<div class="panel"><h2>Dice · last turn</h2><ul class="plain dice">' + v.rolls.map(function (r) { return "<li><div>" + esc(r.purpose) + '</div><div class="kv"><span class="note">' + esc(r.by === "gm" ? "GM" : "You") + "</span><span>" + esc(r.summary) + "</span></div></li>"; }).join("") + "</ul></div>";
@@ -291,6 +300,9 @@
       if (snap.exists) { view = snap.data(); clearTimeout(timer); }
       render();
     }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
+    db.collection("usage").orderBy("started_ms", "desc").limit(50).onSnapshot(function (q) {
+      usage = q.docs.map(function (d) { return d.data(); }); render();
+    }, function () {});
     db.collection("actions").orderBy("created_ms", "desc").limit(10).onSnapshot(function (q) {
       actions = q.docs.map(function (d) { var x = Object.assign({}, d.data()); x._id = d.id; return x; })
         .filter(function (a) { return !view || !view.campaign_id || (a.campaign_id || "starwars_litrpg") === view.campaign_id; });

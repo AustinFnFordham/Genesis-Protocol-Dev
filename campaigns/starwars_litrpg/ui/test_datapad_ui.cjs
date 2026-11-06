@@ -118,6 +118,15 @@ function ok(cond, name, extra) { if (cond) console.log("ok", name); else { failu
   await page2.selectOption(".col.left .member-sel", "varon"); await page2.waitForTimeout(100);
   ok(/Viewing only/.test(await page2.locator(".col.left").innerText()) && /Aero/.test(await page2.locator(".composer h2").first().innerText()), "viewing Varon keeps Aero as the actor");
 
+  // usage accounting, continuity status and fair-warning notes are visible
+  await page2.evaluate(() => { const v = window.__store["view/state"]; v.continuity = { status: "active", marks: 1 }; v.turn_context.notes = ["The grass is long enough to hide something lying flat."];
+    window.__store["usage/r1"] = { campaign_id: v.campaign_id, outcome: "committed", started_ms: Date.now() - 120000, finished_ms: Date.now() }; window.__notify(); });
+  await page2.waitForTimeout(150);
+  await page2.selectOption(".col.left .member-sel", "aero"); await page2.waitForTimeout(100);
+  ok(/Cloud GM usage[\s\S]*Sessions[\s\S]*1[\s\S]*2\.0 min/i.test(await page2.locator(".col.right").innerText()), "cloud usage shown");
+  ok(/Protagonist Continuity\s*protected · 1 mark/i.test(await page2.locator(".col.left").innerText()), "continuity status shown");
+  ok(/What you notice[\s\S]*hide something lying flat/i.test(await page2.locator(".composer").innerText()), "fair-warning notes shown");
+
   // mobile layout
   // The published skeleton adds a viewport meta; locally we emulate the phone layout viewport directly.
   const m = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true });
