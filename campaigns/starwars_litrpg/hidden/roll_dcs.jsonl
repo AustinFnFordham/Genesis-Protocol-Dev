@@ -12,3 +12,12 @@
 {"roll_id": "roll_t3_24", "dc": 13, "outcome": "success"}
 {"roll_id": "roll_t3_25", "dc": 13, "outcome": "success"}
 {"roll_id": "roll_t3_29", "dc": 10, "outcome": "failure"}
+{"roll_id": "roll_t4_30", "dc": 12, "outcome": "failure"}
+{"roll_id": "roll_t4_31", "dc": 12, "outcome": "success"}
+{"roll_id": "roll_t4_33", "dc": 13, "outcome": "failure"}
+{"roll_id": "roll_t4_34", "dc": 13, "outcome": "success"}
+{"roll_id": "roll_t4_37", "dc": 10, "outcome": "success"}
+{"roll_id": "roll_t4_38", "dc": 10, "outcome": "success"}
+{"roll_id": "roll_t4_39", "dc": 10, "outcome": "failure"}
+{"roll_id": "roll_t4_40", "dc": 10, "outcome": "failure"}
+{"roll_id": "roll_t4_41", "dc": 10, "outcome": "failure"}
