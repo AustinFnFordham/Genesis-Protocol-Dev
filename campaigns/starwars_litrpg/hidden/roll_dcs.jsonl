@@ -1,2 +1,7 @@
 {"roll_id": "roll_t1_4", "dc": 12, "outcome": "failure"}
 {"roll_id": "roll_t1_5", "dc": 13, "outcome": "success"}
+{"roll_id": "roll_t2_8", "dc": 14, "outcome": "failure"}
+{"roll_id": "roll_t2_11", "dc": 13, "outcome": "success"}
+{"roll_id": "roll_t2_12", "dc": 13, "outcome": "failure"}
+{"roll_id": "roll_t2_14", "dc": 11, "outcome": "failure"}
+{"roll_id": "roll_t2_15", "dc": 10, "outcome": "success"}

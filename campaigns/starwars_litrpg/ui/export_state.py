@@ -59,6 +59,10 @@ def build(ev=None):
     journal = [{"event_id": e["event_id"], "time": e["world_time"], "kind": e["kind"],
                 "knowledge": e["knowledge_type"], "text": e["summary"]} for e in ev if e["kind"] not in NON_JOURNAL]
     skills = [{"name": k.replace("_", " "), "mod": v["modifier"]} for k, v in sheet["proficiencies"]["skills"].items()]
+    # Ledger overlay: the sheet runtime is static, so Aero's current HP is max + sum of public hp_change deltas (clamped).
+    hp_max = dfn["maximum_hp"]
+    hp_now = max(0, min(hp_max, dfn["current_hp"] + sum(e["details"].get("delta", 0) for e in ev
+                 if e["kind"] == "hp_change" and e["details"].get("target") == ACTIVE_ACTOR)))
     roster = build_roster(ev, idn["name"], f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}')
     return {
         "revision": len(ev), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
@@ -72,7 +76,7 @@ def build(ev=None):
         "character": {
             "name": idn["name"], "line": f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}',
             "level": idn["level"],
-            "hp": [dfn["current_hp"], dfn["maximum_hp"]], "strain": [dfn["current_strain"], dfn["maximum_strain"]],
+            "hp": [hp_now, hp_max], "strain": [dfn["current_strain"], dfn["maximum_strain"]],
             "force": [res["current_force_points"], res["maximum_force_points"]],
             "ac": dfn["armor_class"], "speed": mov["speed"], "initiative": mov["initiative"],
             "scores": {k[:3].upper(): [v, ab["modifiers"][k]] for k, v in ab["scores"].items()},
