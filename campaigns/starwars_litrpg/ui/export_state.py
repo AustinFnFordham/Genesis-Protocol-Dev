@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "api_bridge"))
 import litrpg_adapter as la  # noqa: E402
 
 SHEET = ROOT / "api_bridge" / "gm" / "aero_character_runtime.yml"
-NON_JOURNAL = {"gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
+NON_JOURNAL = {"ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
 ACTIVE_ACTOR = "aero"
 
 
@@ -43,17 +43,25 @@ def member_journal(ev, mid):
 
 
 def build(ev=None):
-    ev = la.player_events() if ev is None else ev
+    ev_all = la.player_events() if ev is None else ev
+    # Owner/GM rulings can void earlier events (append-only: the ledger keeps them, the live view ignores them).
+    voided = {v for e in ev_all if e["kind"] == "ruling_void" for v in e["details"].get("voids", [])}
+    ev = [e for e in ev_all if e["event_id"] not in voided]
     sheet = yaml.safe_load(SHEET.read_text(encoding="utf-8"))["character_runtime"]
     idn, dfn, res, mov = sheet["identity"], sheet["defenses"], sheet["resources"], sheet["movement"]
     ab = sheet["abilities"]
     scene = next((e["details"] for e in reversed(ev) if e["kind"] == "scene_state"), {})
     sugg = next((e["details"].get("items", []) for e in reversed(ev) if e["kind"] == "gm_suggestions"), [])
-    last = ev[-1] if ev else {}
+    last = ev_all[-1] if ev_all else {}
     feed = []
     for e in ev:
         if e["kind"] == "gm_narration":
             feed.append({"who": "gm", "event_id": e["event_id"], "time": e["world_time"], "text": e["details"].get("text", e["summary"])})
+        elif e["kind"] == "ruling_void":
+            # the page renders only *italics*; flatten markdown headings/bullets from ruling text
+            t = e["details"].get("text", e["summary"]).replace("**", "")
+            t = "\n".join(("\u2022 " + ln[2:]) if ln.startswith("- ") else ln for ln in t.split("\n"))
+            feed.append({"who": "gm", "event_id": e["event_id"], "time": e["world_time"], "text": t})
         elif e["kind"] == "player_declaration":
             feed.append({"who": "player", "event_id": e["event_id"], "time": e["world_time"], "text": e["details"].get("text", e["summary"])})
     journal = [{"event_id": e["event_id"], "time": e["world_time"], "kind": e["kind"],
@@ -67,7 +75,7 @@ def build(ev=None):
     conditions = cond_ev[-1]["details"].get("conditions", []) if cond_ev else dfn.get("conditions", [])
     roster = build_roster(ev, idn["name"], f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}')
     return {
-        "revision": len(ev), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
+        "revision": len(ev_all), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
         "scene": {"title": scene.get("title"), "location": scene.get("location"), "time": last.get("world_time"),
                   "atmosphere": scene.get("atmosphere", [])},
         "feed": feed, "journal": journal, "suggestions": sugg, "objectives": [],
