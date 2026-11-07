@@ -93,6 +93,7 @@ def transcript_stats(since_ms):
         return {"session": sid}
     first = None
     pending, tool_ms, calls, last = {}, 0, 0, None
+    tok, seen = {"model_calls": 0, "output_tokens": 0, "cache_read_tokens": 0, "cache_write_tokens": 0, "input_tokens": 0}, set()
     for line in open(paths[0]):
         try:
             e = json.loads(line)
@@ -107,6 +108,15 @@ def transcript_stats(since_ms):
         if since_ms and t < since_ms:
             continue
         last = t
+        msg = e.get("message") or {}
+        u, mid = msg.get("usage"), msg.get("id")
+        if e.get("type") == "assistant" and u and mid not in seen:
+            seen.add(mid)
+            tok["model_calls"] += 1
+            tok["output_tokens"] += u.get("output_tokens", 0) or 0
+            tok["cache_read_tokens"] += u.get("cache_read_input_tokens", 0) or 0
+            tok["cache_write_tokens"] += u.get("cache_creation_input_tokens", 0) or 0
+            tok["input_tokens"] += u.get("input_tokens", 0) or 0
         content = (e.get("message") or {}).get("content")
         if not isinstance(content, list):
             continue
@@ -119,6 +129,7 @@ def transcript_stats(since_ms):
     out = {"session": sid, "session_first_message_ms": first}
     if since_ms and last:
         out.update({"tool_calls": calls, "tool_ms": tool_ms, "model_ms": max(0, last - since_ms - tool_ms)})
+        out.update(tok)
     return out
 
 
@@ -157,7 +168,8 @@ def timings(run, submit_ms):
         "earlier_passes_in_session": [r for r in runs if r != run][:5],
         "marks": m,
     }
-    for k in ("tool_calls", "tool_ms", "model_ms"):
+    for k in ("tool_calls", "tool_ms", "model_ms", "model_calls", "output_tokens", "cache_read_tokens",
+              "cache_write_tokens", "input_tokens"):
         if k in ts:
             t[k] = ts[k]
     return t, ts.get("session")
