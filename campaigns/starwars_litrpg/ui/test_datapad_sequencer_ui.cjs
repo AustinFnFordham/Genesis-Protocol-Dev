@@ -161,12 +161,47 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   ok(!GM.leak_markers.some(m => all5.includes(m)), "no hidden simulation detail reaches the page", GM.leak_markers.filter(m => all5.includes(m)));
   if (shotDir) await p5.screenshot({ path: shotDir + "/s3_interrupted_phone.png", fullPage: true });
   const pr2 = T.planProgress(S1F, CTX, { completed: ["s1", "s2", "s3"], interrupted: "s4", stop_kind: "consequential", reason: "Wick grabs your sleeve: a lamp is coming up the lane." });
-  const st6 = JSON.parse(JSON.stringify(state)); st6.turn_context = Object.assign({}, CTX, { context_id: "fx_after_cons", pending_steps: pr2.pending_steps, plan_result: pr2.plan_result }); st6.revision += 6;
+  const st6 = JSON.parse(JSON.stringify(state)); st6.turn_context = Object.assign(JSON.parse(JSON.stringify(CTX)), { context_id: "fx_after_cons", pending_steps: pr2.pending_steps, plan_result: pr2.plan_result,
+    // committed after s1-s3: blaster holstered, Aero at the cart
+    hands: { right: CTX.hands.right, left: null }, state_flags: ["saber_ignited"], position_label: "at the welding cart" });
+  st6.turn_context.visible.forEach(v => { const d = { wick: 5, shed_door: 35, welding_cart: 0, middle_silo: 10, grange: 300 }; if (d[v.id] != null) v.distance_ft = d[v.id]; }); st6.revision += 6;
   const p6 = await open({ width: 390, height: 844 }, st6);
   ok(/Stopped: something needs your decision/.test(await p6.locator(".interrupt").innerText()) && await p6.locator(".plan li.step").count() === 0, "pending steps are shown, never loaded on their own");
   await p6.click("#continuePending"); await p6.waitForTimeout(100);
   const n6 = await p6.locator(".plan li.step").count(), seq6 = await p6.locator(".seqcard").count();
   ok(n6 === pr2.pending_steps.length && /continued/i.test(await p6.locator(".plan").innerText()) && seq6 === 4, "Continue loads them as authorized steps in their sequences", [n6, seq6]);
+
+  // Continue is an explicit authorization bound to the current context; a newer context drops it
+  await p6.click("#submitTurn"); await p6.waitForTimeout(300);
+  const cdoc = await p6.evaluate(() => { const k = Object.keys(window.__store).find(k => k.startsWith("actions/")); return k && window.__store[k]; });
+  const cs = cdoc ? cdoc.declaration.steps : [];
+  ok(cs.length === 13 && cs.every(x => x.pending && x.authorized && x.authorized_ctx === "fx_after_cons") && cs[0].status === "interrupted", "continued steps are submitted authorized against the current context", cs.slice(0, 2));
+  const p8 = await open({ width: 390, height: 844 }, st6);
+  await p8.click("#continuePending"); await p8.waitForTimeout(80);
+  await p8.click('[data-pal="action:search_dark"]'); await p8.waitForTimeout(60);
+  await p8.evaluate(() => { const v = window.__store["view/state"]; v.revision += 1; v.turn_context = Object.assign({}, v.turn_context, { context_id: "fx_newer", pending_steps: [], plan_result: null }); window.__notify(); });
+  await p8.waitForTimeout(200);
+  const t8 = await p8.locator(".plan").innerText();
+  ok(/scene changed while you were planning/.test(t8) && await p8.locator(".plan li.step").count() === 1 && /Search around/.test(t8), "a newer context drops the old authorization but keeps the player's own new steps", t8.slice(0, 300));
+
+  // status vocabulary: paused, not attempted, blocked, cancelled are told apart
+  const S2 = { actor: "aero", steps: [{ id: "a1", seq: 0, type: "object", option: "holster_blaster" }, { id: "a2", seq: 0, type: "speech", text: "Is something shut in there?" },
+    { id: "b1", seq: 0, type: "branch", otherwise: "stop", cases: [{ when: "Wick confirms something is trapped inside", steps: [], after: "stop" }] }, { id: "a3", seq: 1, type: "action", option: "cut_chain" }] };
+  const pc = T.planProgress(S2, CTX, { completed: ["a1", "a2"], stop_kind: "condition", reason: "Wick doesn't know." });
+  const pb = T.planProgress(S1F, CTX, { completed: ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10"], stop_kind: "prerequisite", reason: "The chain held.", blocked: ["s11", "s15"], cancelled: ["s12"] });
+  const st9 = JSON.parse(JSON.stringify(state)); st9.turn_context = Object.assign({}, CTX, { context_id: "fx_blocked", pending_steps: pb.pending_steps, plan_result: pb.plan_result }); st9.revision += 9;
+  const p9 = await open({ width: 390, height: 844 }, st9);
+  const t9 = await p9.locator(".interrupt").innerText();
+  ok(/Stopped: a step did not work out/.test(t9) && /Not attempted yet[\s\S]*Let go of the handcart/.test(t9) && /Blocked: what it needed did not happen[\s\S]*Open the shed door/.test(t9) && /Cancelled by what happened[\s\S]*Draw the blaster/.test(t9), "blocked, cancelled and not-attempted are shown apart", t9);
+  await p9.click("#continuePending"); await p9.waitForTimeout(80);
+  const t9b = await p9.locator(".plan").innerText();
+  ok(!/Open the shed door/.test(t9b) && !/Draw the blaster/.test(t9b) && /Let go of the handcart/.test(t9b), "Continue offers only steps that can still happen", t9b.slice(0, 400));
+  const st10 = JSON.parse(JSON.stringify(state)); st10.turn_context = Object.assign({}, CTX, { context_id: "fx_paused", pending_steps: pc.pending_steps, plan_result: pc.plan_result }); st10.revision += 10;
+  const p10 = await open({ width: 390, height: 844 }, st10);
+  ok(/Paused: waiting on your decision[\s\S]*Decision/.test(await p10.locator(".interrupt").innerText()) && /Not attempted yet[\s\S]*Cut the shed/.test(await p10.locator(".interrupt").innerText()), "a paused decision is shown apart from steps not reached");
+  // no guarantee language anywhere in the builder
+  const words = (await page.locator(".composer").innerText()) + (await p9.locator(".composer").innerText());
+  ok(!/\b(will succeed|guaranteed|certain to|sure to|will work|chance|likely|\d+\s*%)\b/i.test(words), "legal choices never read as guaranteed outcomes");
 
   // ----- phone layout -----
   const sw = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -178,7 +213,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   const sticky = await p7.evaluate(() => getComputedStyle(document.getElementById("submitBar")).position);
   ok(sticky === "sticky", "submit bar stays reachable on phone", sticky);
 
-  for (const p of [page, p2, p3, p4, p5, p6, p7]) ok(p.errors.length === 0, "no page errors", p.errors);
+  for (const p of [page, p2, p3, p4, p5, p6, p7, p8, p9, p10]) ok(p.errors.length === 0, "no page errors", p.errors);
   await browser.close();
   console.log(fails ? fails + " failed" : "all passed");
   process.exit(fails ? 1 : 0);

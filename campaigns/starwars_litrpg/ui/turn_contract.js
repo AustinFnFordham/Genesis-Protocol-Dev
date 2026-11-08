@@ -27,7 +27,7 @@
  *   objects[]/options[].takes_hands (n, the item is then held), .at (visible id where it is used),
  *   .reach_ft (default 5 for `at`), pending_steps: [steps] left from a halted sequence.
  *   contract 3: objects[].frees_item (frees whichever hand holds that item), options/objects/moves .grants/.removes
- *   (planned flags, applied in step order), .unless [flags that make it pointless], .risk (visible risk text), movement[].ends_at, position_label,
+ *   (planned flags, applied in step order), .unless [flags that make it pointless], .at_free (no place needed), .risk (visible risk text), movement[].ends_at, position_label,
  *   plan_result {stop_kind, reason, completed, pending, invalidated}, pending_steps[].status.
  */
 (function (root, factory) {
@@ -214,7 +214,7 @@
    * State is tracked in step order: hands, position, flags (grants/removes of objects, moves and
    * actions; an action's grants are its INTENDED result, so later steps that depend on it are only
    * planned, never promised). Nothing here reads hidden state or predicts a roll. */
-  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "INVALIDATED"];
+  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
   function shortLabel(t) { return String(t || "").split(/\s*[:(;,]\s*|\s+—\s+/)[0].trim(); }
   function placeOf(m, ctx) {
     if (m.ends_at) return m.ends_at;
@@ -266,11 +266,14 @@
       if ((s.type === "action" || s.type === "bonus_action") && !byId(opts, s.option)) err("UNKNOWN_OPTION", "\"" + s.option + "\" is not something " + (ctx.actor_name || ctx.actor) + " can do right now.", ex);
       if (s.type === "object" && !byId(ctx.objects, s.option)) err("UNKNOWN_OBJECT", "\"" + s.option + "\" is not an available object interaction.", ex);
       if (s.type === "move" && !byId(ctx.movement, s.option)) err("UNKNOWN_MOVE", "That movement is not available here.", ex);
-      if (s.status === "invalidated") err("INVALIDATED", "This step was cancelled by what happened (" + (s.reason || "the plan was interrupted") + "). It cannot be continued; choose again.", ex);
+      if (s.pending && s.status && CONTINUABLE.indexOf(s.status) < 0) err("NOT_CONTINUABLE", "This step was " + s.status + " by what happened" + (s.reason ? " (" + s.reason + ")" : "") + ". It cannot be continued; choose again from what Aero sees now.", ex);
+      if (s.pending && s.status === "suspended" && combat) err("SUSPENDED", "This step is set aside until the fight is over.", ex);
+      if (s.pending && s.authorized && ctx.context_id && s.authorized_ctx && s.authorized_ctx !== ctx.context_id)
+        err("PENDING_STALE", "This step was authorized against an earlier moment. The scene has moved on: choose \"Continue these steps\" again so it is checked against what Aero sees now.", ex);
     });
 
     // pending steps (left over from a halted sequence) run only when the player authorizes them again
-    var unauth = steps.filter(function (s) { return s.pending && !s.authorized && s.status !== "invalidated"; });
+    var unauth = steps.filter(function (s) { return s.pending && !s.authorized && (!s.status || CONTINUABLE.indexOf(s.status) >= 0); });
     if (unauth.length) err("PENDING_UNAUTHORIZED", unauth.length + " step" + (unauth.length > 1 ? "s were" : " was") + " left over from an interrupted sequence. Choose \"Continue these steps\" (or rewrite them) to authorize them again.");
 
     // speech: brief speech is free; extended or check-based social actions use the action
@@ -519,7 +522,7 @@
       if (s.type === "branch") (s.cases || []).forEach(function (c) { (c.steps || []).forEach(function (x) { if (out[x.id].status === "ok") out[x.id].status = "case"; }); });
       if (firstHalt >= 0 && i > firstHalt) flat([s]).forEach(function (x) { out[x.id].status = "waits"; });
       if (i === firstHalt) out[s.id].status = s.type === "branch" ? "branch" : "waits";
-      if (s.status === "invalidated") out[s.id].status = "invalidated";
+      if (s.pending && s.status && CONTINUABLE.indexOf(s.status) < 0) out[s.id].status = "invalidated";
     });
     v.warnings.forEach(function (w) { var o = w.step_id && out[w.step_id]; if (!o) return; o.messages.push(w.message); if (o.status === "ok" || o.status === "case") o.status = /^GM_/.test(w.code) ? "gm" : "risky"; });
     v.errors.forEach(function (e) {
@@ -574,51 +577,96 @@
   }
 
   /* ---------- plan progress (GM side): the one shape for a partially executed plan ----------
-   * outcome = { completed: [step ids, in order], interrupted: id|null, stop_kind, reason, branches: {id: case index|"otherwise"},
-   *             invalidated: [ids] (prerequisite stops: steps that depended on what failed) }
-   * Returns the public plan_progress details and the pending_steps / plan_result for the next turn_context.
-   * Pending steps never resume on their own; a combat stop invalidates the rest (not carried into combat). */
+   * outcome = { completed: [step ids, in order], interrupted: id|null, stop_kind, reason,
+   *             branches: {branch id: case index|"otherwise"},
+   *             blocked: [ids]    steps that cannot happen because something they needed did not happen (a failed cut),
+   *             cancelled: [ids]  steps the changed circumstances make pointless (named by the GM, with the reason),
+   *             suspended: [ids]  combat only: intentions set aside until the fight ends (the rest are cancelled) }
+   * Step statuses: completed · interrupted (in progress when it happened) · paused (the decision point it stopped at)
+   * · unattempted (not reached) · blocked · cancelled · suspended · skipped (an untaken branch case).
+   * Only interrupted, paused, unattempted and (outside combat) suspended steps can be continued, and only when the
+   * player authorizes them again against the latest turn context. A consequential stop leaves the rest unattempted
+   * unless the GM names steps the new circumstances cancel. */
   var STOP_KINDS = ["consequential", "mechanical", "prerequisite", "condition", "combat", "complete"];
+  var CONTINUABLE = ["interrupted", "paused", "unattempted", "suspended", "pending"];
   function planProgress(declIn, ctx, outcome) {
     var decl = normalize(declIn, ctx), o = outcome || {}, kind = o.stop_kind, problems = [];
     if (kind === "incidental") problems.push("An incidental event is not a stop: log it and continue the plan.");
     else if (STOP_KINDS.indexOf(kind) < 0) problems.push("Unknown stop_kind " + JSON.stringify(kind) + ".");
-    var br = o.branches || {}, path = [], skipped = [], blockedAt = null;
-    for (var i = 0; i < decl.steps.length && blockedAt === null; i++) {
+    var br = o.branches || {}, path = [], skipped = [], haltAt = null;
+    for (var i = 0; i < decl.steps.length && haltAt === null; i++) {
       var s = decl.steps[i];
       if (s.type !== "branch") { path.push(s); continue; }
       var ch = br[s.id];
       (s.cases || []).forEach(function (c, k) { if (ch !== k) skipped = skipped.concat(flat(c.steps || []).map(function (x) { return x.id; })); });
-      if (ch === undefined) { blockedAt = s; break; }
-      if (ch === "otherwise") { if (s.otherwise !== "continue") { blockedAt = s; if (kind !== "condition" && kind !== "combat") problems.push("Branch " + s.id + " has no settled case and stops the plan; stop_kind must be \"condition\"."); } continue; }
+      if (ch === undefined) { haltAt = { step: s, index: i }; break; }
+      if (ch === "otherwise") { if (s.otherwise !== "continue") haltAt = { step: s, index: i, settled: true }; continue; }
       var c = (s.cases || [])[ch];
-      if (!c) { problems.push("Branch " + s.id + " has no case " + ch + "."); blockedAt = s; break; }
+      if (!c) { problems.push("Branch " + s.id + " has no case " + ch + "."); haltAt = { step: s, index: i }; break; }
       path = path.concat(c.steps || []);
-      if (c.after === "stop") { blockedAt = { id: s.id + ":after", stop_only: true }; }
+      if (c.after === "stop") haltAt = { step: s, index: i, after: true };
     }
     var ids = path.map(function (s) { return s.id; }), done = o.completed || [];
     for (var j = 0; j < done.length; j++) if (ids[j] !== done[j]) { problems.push("completed must be the first " + done.length + " steps of the executed path, in order (step " + (j + 1) + " is " + ids[j] + ", got " + done[j] + ")."); break; }
     var restSteps = path.slice(done.length), interrupted = o.interrupted || null;
     if (interrupted && (!restSteps.length || restSteps[0].id !== interrupted)) problems.push("interrupted must be the step right after the completed ones.");
-    if (kind === "complete" && (restSteps.length || blockedAt && !blockedAt.stop_only)) problems.push("stop_kind \"complete\" but steps remain.");
-    if (blockedAt && !blockedAt.stop_only && done.length === path.length && kind !== "condition" && kind !== "combat" && kind !== "complete") problems.push("The plan reached an unsettled branch; stop_kind must be \"condition\".");
-    if (problems.length) return { ok: false, problems: problems };
-    var inv = o.invalidated || [], pending = [], invalid = [];
+    var reachedHalt = haltAt && done.length === path.length;
+    if (kind === "complete" && (restSteps.length || (haltAt && !haltAt.after && !haltAt.settled))) problems.push("stop_kind \"complete\" but steps remain (or a decision is unsettled).");
+    if (reachedHalt && !haltAt.after && !haltAt.settled && ["condition", "combat", "consequential", "mechanical"].indexOf(kind) < 0) problems.push("The plan reached an unsettled decision; stop_kind must be \"condition\" (missing information is never a yes).");
     var remaining = restSteps.slice();
-    if (blockedAt && !blockedAt.stop_only) { var bi = decl.steps.indexOf(blockedAt); remaining = remaining.concat(decl.steps.slice(bi)); }
-    else if (blockedAt && blockedAt.stop_only) { var bj = decl.steps.indexOf(byId(decl.steps, blockedAt.id.split(":")[0])); remaining = remaining.concat(decl.steps.slice(bj + 1)); }
-    remaining.forEach(function (s) {
-      var x = clone(s); delete x.authorized; x.pending = true;
+    if (haltAt) remaining = remaining.concat(decl.steps.slice(haltAt.after ? haltAt.index + 1 : haltAt.index));
+    var remIds = remaining.map(function (s) { return s.id; });
+    var blocked = (o.blocked || []).concat(o.invalidated || []), cancelled = o.cancelled || [], suspended = o.suspended || [];
+    blocked.concat(cancelled, suspended).forEach(function (id) { if (remIds.indexOf(id) < 0) problems.push("Step " + id + " is not among the steps that did not happen."); });
+    if (suspended.length && kind !== "combat") problems.push("Only a combat stop suspends steps.");
+    if (kind === "complete" && (blocked.length || cancelled.length)) problems.push("A complete plan has nothing blocked or cancelled.");
+    if (problems.length) return { ok: false, problems: problems };
+    var out = { interrupted: [], paused: [], unattempted: [], blocked: [], cancelled: [], suspended: [] }, steps = [];
+    remaining.forEach(function (s, k) {
+      var x = clone(s), st;
+      delete x.authorized; delete x.authorized_ctx; x.pending = true;
       if (s.id === interrupted) x.interrupted = true;
-      if (kind === "combat" || inv.indexOf(s.id) >= 0) { x.status = "invalidated"; x.reason = kind === "combat" ? "initiative began" : "what it depended on did not happen"; invalid.push(x); }
-      else { x.status = s.id === interrupted ? "interrupted" : "pending"; pending.push(x); }
+      if (blocked.indexOf(s.id) >= 0) { st = "blocked"; x.reason = o.reason ? "it needed something that did not happen" : ""; }
+      else if (kind === "combat") { st = suspended.indexOf(s.id) >= 0 ? "suspended" : "cancelled"; x.reason = "initiative began"; }
+      else if (cancelled.indexOf(s.id) >= 0) { st = "cancelled"; x.reason = "the situation changed"; }
+      else if (s.id === interrupted) st = "interrupted";
+      else if (k === 0 && kind === "condition" && !interrupted) st = "paused";
+      else if (haltAt && !haltAt.after && s === haltAt.step) st = "paused";
+      else st = "unattempted";
+      x.status = st; out[st].push(s.id); steps.push(x);
     });
-    var all = pending.concat(invalid).sort(function (a, b) { return remaining.map(function (s) { return s.id; }).indexOf(a.id) - remaining.map(function (s) { return s.id; }).indexOf(b.id); });
+    var counts = { completed: done.length }; Object.keys(out).forEach(function (k) { counts[k] = out[k].length; });
     return { ok: true,
-      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted: interrupted, pending: pending.map(function (s) { return s.id; }), invalidated: invalid.map(function (s) { return s.id; }),
-                       skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
-      pending_steps: all, plan_result: { stop_kind: kind, reason: String(o.reason || ""), completed: done.length, pending: pending.length, invalidated: invalid.length } };
+      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted: out.interrupted, paused: out.paused, unattempted: out.unattempted,
+                       blocked: out.blocked, cancelled: out.cancelled, suspended: out.suspended, skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
+      pending_steps: steps, plan_result: Object.assign({ stop_kind: kind, reason: String(o.reason || "") }, counts) };
   }
+
+  /* ---------- context lint (GM side, before publishing a turn context) ----------
+   * Warns when the player-visible context is too thin for reliable checks, so the GM publishes it or the
+   * builder defers that check to the GM ("the GM checks"); flags fields that look like hidden numbers. */
+  function contextLint(ctx) {
+    var out = [], acts = (ctx.options || []).concat(ctx.objects || []);
+    function w(code, level, msg) { out.push({ code: code, level: level, message: msg }); }
+    if (!ctx.hands && acts.some(function (o) { return o.takes_hands || o.needs_hands || o.frees_hand || o.frees_item; }))
+      w("NO_HANDS", "warn", "Hand occupancy is not published; hand checks are deferred to the GM.");
+    if (!ctx.hands) w("HANDS_UNKNOWN", "info", "No hands published: the Datapad shows \u201cthe GM checks\u201d.");
+    if (!ctx.position_label) w("NO_POSITION", "info", "No position_label: the committed strip omits Aero's position.");
+    var vis = ctx.visible || [];
+    acts.forEach(function (o) {
+      if (o.at && !byId(vis, o.at)) w("UNKNOWN_AT", "warn", o.label + ": `at` names " + o.at + ", which is not visible.");
+      if (o.at || o.at_free) return;  // at_free: the GM states it can be done from where Aero is (looking, a held item)
+      var named = findAliases((o.label || "") + " " + (o.aliases || []).join(" "), vis).filter(function (id) { var v = byId(vis, id); return v && v.distance_ft > 5; });
+      if (named.length) w("NO_AT", "warn", o.label + " names " + names(ctx, named)[0] + " (~" + byId(vis, named[0]).distance_ft + " ft) but has no `at`; its position check is deferred to the GM.");
+    });
+    var bad = /^(dc|ac|hp|hp_max|hit_points|armor_class|stealth|save_dc|hidden|gm_.*|secret.*)$/i;
+    (function scan(x, at) {
+      if (Array.isArray(x)) x.forEach(function (y, i) { scan(y, at + "[" + i + "]"); });
+      else if (x && typeof x === "object") Object.keys(x).forEach(function (k) { if (bad.test(k) && at.indexOf("resources") < 0) w("LEAK_SUSPECT", "error", at + "." + k + " looks like a hidden number; the turn context must stay player-visible."); scan(x[k], at + "." + k); });
+    })(ctx, "turn_context");
+    return out;
+  }
+
   function describe(decl, ctx) {
     var parts = [];
     decl.actions.forEach(function (a) { var o = byId(ctx.options, a.option); if (o) parts.push(o.label); });
@@ -653,7 +701,7 @@
   }
 
   return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, normalize: normalize, validate: validate, summary: summary, haltAt: haltAt, classify: classify,
-           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, STOP_KINDS: STOP_KINDS };
+           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, contextLint: contextLint, STOP_KINDS: STOP_KINDS, CONTINUABLE: CONTINUABLE };
 });
 
 /* node CLI: node turn_contract.js validate <decl.json|-> <ctx.json>   |   parse "<text>" <ctx.json> */
@@ -677,6 +725,10 @@ if (typeof require !== "undefined" && typeof module !== "undefined" && require.m
   } else if (argv[0] === "status") {  // per-step status of a declaration
     var ds = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8")), vs = T.validate(ds, ctx);
     process.stdout.write(JSON.stringify({ validation: vs, status: T.stepStatus(vs) }, null, 1) + "\n");
+  } else if (argv[0] === "lintctx") {  // node turn_contract.js lintctx - <ctx>
+    var lw = T.contextLint(ctx);
+    process.stdout.write(JSON.stringify({ ok: !lw.some(function (x) { return x.level === "error"; }), findings: lw }, null, 1) + "\n");
+    process.exit(lw.some(function (x) { return x.level === "error"; }) ? 3 : 0);
   } else if (argv[0] === "progress") {  // node turn_contract.js progress <decl|-> <ctx> <outcome.json>
     var dp = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8"));
     var pr = T.planProgress(dp, ctx, JSON.parse(fs.readFileSync(argv[3], "utf8")));

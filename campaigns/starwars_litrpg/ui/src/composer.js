@@ -81,7 +81,7 @@
     if (x.kind) st.kind = x.kind;
     if (x.type === "action" || x.type === "bonus_action") { st.target = x.target || null; st.trigger = x.trigger || null; }
     if (x.condition && x.condition.text && x.condition.text.trim()) st.condition = { text: x.condition.text.trim() };
-    if (x.pending) { st.pending = true; if (x.authorized) st.authorized = true; }
+    if (x.pending) { st.pending = true; if (x.status) st.status = x.status; if (x.authorized) { st.authorized = true; if (typeof x.authorized_ctx === "string") st.authorized_ctx = x.authorized_ctx; } }
     if (x.type === "branch") {
       st.cases = (x.cases || []).map(function (k) { return { when: String(k.when || "").trim(), after: k.after === "stop" ? "stop" : "continue", steps: (k.steps || []).map(cleanStep) }; });
       st.otherwise = x.otherwise === "continue" ? "continue" : "stop";
@@ -115,10 +115,11 @@
   function newId() { return "s" + (ui.sel.nextId++); }
   function fromDecl(st, seqMap, authorize) {
     var x = { id: newId(), seq: seqMap(st.seq || 0), type: st.type };
+    if (st.status) x.status = st.status;
     ["option", "text", "kind", "target", "trigger"].forEach(function (k) { if (st[k] != null) x[k] = st[k]; });
     if (st.type === "speech" && st.option) delete x.text;
     if (st.condition) x.condition = { text: st.condition.text };
-    if (st.pending) { x.pending = true; if (authorize) x.authorized = true; }
+    if (st.pending) { x.pending = true; if (authorize) { x.authorized = true; x.authorized_ctx = authorize; } }
     if (st.type === "branch") { x.otherwise = st.otherwise; x.cases = (st.cases || []).map(function (k) { return { when: k.when || "", after: k.after || "continue", steps: (k.steps || []).map(function (y) { return fromDecl(y, function () { return x.seq; }, authorize); }) }; }); }
     return x;
   }
@@ -130,7 +131,7 @@
       n.steps.forEach(function (st) { if (seqs.indexOf(st.seq || 0) < 0) seqs.push(st.seq || 0); });
       seqs.sort(function (a, b) { return a - b; });
       var map = function (q) { return Math.max(0, seqs.indexOf(q)); };
-      n.steps.filter(function (st) { return st.status !== "invalidated"; }).forEach(function (st) { s.steps.push(fromDecl(st, map, authorize)); });
+      n.steps.filter(function (st) { return !st.status || T.CONTINUABLE.indexOf(st.status) >= 0; }).forEach(function (st) { s.steps.push(fromDecl(st, map, authorize ? c.context_id || true : false)); });
       if (n.steps.some(function (st) { return st.type === "free" && st.text && !st.kind; })) s.steps.forEach(function (x) { if (x.type === "free" && !x.kind) x.kind = "custom"; });
       s.nseq = Math.max(1, seqs.length); s.labels = []; for (var i = 0; i < s.nseq; i++) s.labels.push((d.sequences && d.sequences[seqs[i]] && d.sequences[seqs[i]].label) || "");
       s.reactions = (d.reactions || []).slice(); s.active = { seq: s.nseq - 1 };
@@ -192,7 +193,7 @@
 
   /* ---------- scene plan ---------- */
   var ICON = { ok: "✓", risky: "⚠", fix: "✕", waits: "⏸", gm: "✎", "case": "↳", branch: "⑂", invalidated: "⊘" };
-  var STXT = { ok: "possible", risky: "possible, with a risk", fix: "needs fixing", waits: "waits for your decision", gm: "the GM adjudicates", "case": "only in this case", branch: "decision point", invalidated: "cancelled" };
+  var STXT = { ok: "can be attempted", risky: "possible, with a risk", fix: "needs fixing", waits: "waits for your decision", gm: "the GM adjudicates", "case": "only in this case", branch: "decision point", invalidated: "cancelled" };
   var PICO = { ok: "+", risky: "⚠", needs_step: "↪", needs_choice: "?", not_here: "⊘", unknown: "+" };
   var PTXT = { ok: "", risky: "possible, with a risk", needs_step: "needs a step first", needs_choice: "needs your choice", not_here: "not possible here", unknown: "the GM checks" };
   function itemName(h) { return h ? String(h.item || h.label || "something").replace(/_/g, " ") : "free"; }
@@ -202,7 +203,9 @@
     parts.push(c.hands ? "right: " + (c.hands.right ? (c.hands.right.label || itemName(c.hands.right)) : "free") + " · left: " + (c.hands.left ? (c.hands.left.label || itemName(c.hands.left)) : "free") : "hands: the GM checks");
     if (c.position_label) parts.push(c.position_label);
     var fl = (c.state_flags || []).map(function (f) { return flagName(c, f); }); if (fl.length) parts.push(fl.join(", "));
-    return '<div class="now" role="status"><span class="pill ok">Now · committed</span> <span>' + esc(parts.join(" · ")) + "</span></div>";
+    var lint = []; try { lint = T.contextLint(c).filter(function (f) { return f.level === "warn"; }); } catch (e) {}
+    return '<div class="now" role="status"><span class="pill ok">Now · committed</span> <span>' + esc(parts.join(" · ")) + "</span></div>" +
+      (lint.length ? '<div class="note deferred">Some checks are left to the GM for this moment: ' + esc(lint.map(function (f) { return f.code === "NO_HANDS" ? "what Aero holds" : f.code === "NO_AT" ? "where some actions can be done" : "a detail of the scene"; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ")) + ". The Datapad will not guess them.</div>" : "");
   }
   function plannedLine(c, x, prev, cur) {
     if (!cur) return "";
@@ -303,33 +306,44 @@
     var where = w.branch ? (function () { var f = locate(w.branch), k = f.list[f.index].cases[w["case"]]; return (w["case"] ? "Else if " : "If ") + (k.when || "…") + " (Sequence " + ((f.list[f.index].seq || 0) + 1) + ")"; })()
       : "Sequence " + (w.seq + 1) + (s.labels[w.seq] ? " · " + s.labels[w.seq] : "");
     function used(id) { var n = 0; T.flat(s.steps).forEach(function (x) { if (x.type === "speech" && x.option === id) n++; }); return n; }
-    function grp(title, items) { return items.length ? '<div class="palgrp"><h3>' + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
+    function grp(title, items, id) { return items.length ? '<div class="palgrp"' + (id ? ' id="' + id + '"' : "") + "><h3>" + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
     var acts = (c.options || []).filter(function (o) { return o.slot === "action"; }), bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-    var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" +
+    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
+    var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" + nav +
+      '<div class="note added" id="lastAdded" role="status" aria-live="polite">' + esc(ui.lastAdded || "") + "</div>" +
       '<div class="note">Everything Aero could try right now. Greyed-out choices say what is missing at that point in your plan; nothing is added unless you tap it.</div>' +
-      grp("Say", (c.dialogue || []).map(function (dl) { return palBtn("speech:" + dl.id, "“" + dl.text + "”", dl.approach + (dl.extended ? " · extended" : ""), { status: "ok" }, used(dl.id)); })) +
+      grp("Say", (c.dialogue || []).map(function (dl) { return palBtn("speech:" + dl.id, "“" + dl.text + "”", dl.approach + (dl.extended ? " · extended" : ""), { status: "ok" }, used(dl.id)); }), "pg_say") +
       '<div class="ed"><label for="w_say">Your own line (line breaks are kept)</label><textarea id="w_say" rows="2" placeholder="What Aero says">' + esc(s.sayDraft) + '</textarea><button class="btn" id="addSay">Add line</button></div>' +
-      grp("Do", acts.map(function (o) { return palBtn("action:" + o.id, o.label, o.detail, by["action:" + o.id]); })) +
+      grp("Do", acts.map(function (o) { return palBtn("action:" + o.id, o.label, o.detail, by["action:" + o.id]); }), "pg_do") +
       grp("Quick (bonus)", bon.map(function (o) { return palBtn("bonus_action:" + o.id, o.label, o.detail, by["bonus_action:" + o.id]); })) +
-      grp("Go", (c.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return palBtn("move:" + m.id, m.label, m.feet ? "~" + m.feet + " ft" : "", by["move:" + m.id]); })) +
-      grp("Handle", (c.objects || []).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); })) +
-      '<div class="ed"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Load the torch and both bottles onto the handcart">' + esc(s.actDraft) + '</textarea><button class="btn" id="addAct">Add action</button></div>' +
+      grp("Go", (c.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return palBtn("move:" + m.id, m.label, m.feet ? "~" + m.feet + " ft" : "", by["move:" + m.id]); }), "pg_go") +
+      grp("Handle", (c.objects || []).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); }), "pg_handle") +
+      '<div class="ed" id="pg_custom"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Load the torch and both bottles onto the handcart">' + esc(s.actDraft) + '</textarea><button class="btn" id="addAct">Add action</button></div>' +
       (w.branch ? "" : '<button class="btn" id="addBranch">Add a decision (if / else if / otherwise)</button>');
     return h + "</fieldset>";
   }
   var STOPTXT = { combat: "Interrupted: initiative has begun", consequential: "Stopped: something needs your decision", mechanical: "Stopped by what happened",
-                  prerequisite: "Stopped: a step did not work out", condition: "Waiting on your decision", complete: "Plan complete" };
+                  prerequisite: "Stopped: a step did not work out", condition: "Paused: waiting on your decision", complete: "Plan complete" };
+  /* What happened to the plan, in the player's terms. Statuses come from planProgress (GM side):
+     interrupted · paused · unattempted · suspended can be continued (after a new, explicit authorization);
+     blocked · cancelled cannot. */
+  var GROUPS = [["interrupted", "Interrupted while it was happening", true], ["paused", "Paused: waiting on your decision", true], ["unattempted", "Not attempted yet", true],
+                ["pending", "Not done yet", true], ["suspended", "Set aside until the fight is over", true], ["blocked", "Blocked: what it needed did not happen", false], ["cancelled", "Cancelled by what happened", false], ["invalidated", "Cancelled by what happened", false]];
+  function continuable(c, x) { var st = x.status || "pending"; return T.CONTINUABLE.indexOf(st) >= 0 && !(st === "suspended" && !sceneMode(c)); }
   function renderPending(c) {
     var ps = c.pending_steps || [], pr = c.plan_result || null;
     if (!ps.length && !(pr && pr.stop_kind && pr.stop_kind !== "complete")) return "";
-    var live = ps.filter(function (x) { return x.status !== "invalidated"; }), dead = ps.filter(function (x) { return x.status === "invalidated"; });
-    function lbl(x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" && x.text ? "Say: “" + x.text + "”" : x.type === "free" ? x.text : stepLabel(c, x)); }
+    function lbl(x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" && x.text ? "Say: “" + x.text + "”" : x.type === "free" ? "Try: " + x.text : stepLabel(c, x)); }
     var h = '<div class="check warn interrupt" style="margin-top:8px"><b>' + esc(pr ? (STOPTXT[pr.stop_kind] || "Not done yet") : "Not done yet") + "</b>" + (c.pending_reason || (pr && pr.reason) ? "<div>" + esc(c.pending_reason || pr.reason) + "</div>" : "");
     if (pr && pr.completed) h += '<div class="note">' + pr.completed + " step" + (pr.completed > 1 ? "s" : "") + " of your plan happened and are in the story.</div>";
-    if (live.length) h += '<div class="note"><b>Not done yet</b></div><ol>' + live.map(function (x) { return "<li>" + esc(lbl(x)) + (x.status === "interrupted" ? ' <span class="tag">interrupted</span>' : "") + "</li>"; }).join("") + "</ol>";
-    if (dead.length) h += '<div class="note"><b>Cancelled by what happened</b> (these cannot be continued)</div><ol class="dead">' + dead.map(function (x) { return "<li>" + esc(lbl(x)) + "</li>"; }).join("") + "</ol>";
-    if (live.length) h += sceneMode(c) ? '<button class="btn" id="continuePending">Continue these steps</button><div class="note">They run only if you submit them again.</div>'
-                                       : '<div class="note">Initiative has started. These are not carried over; choose your combat turn.</div>';
+    GROUPS.forEach(function (g) {
+      var xs = ps.filter(function (x) { return (x.status || "pending") === g[0]; });
+      if (!xs.length) return;
+      h += '<div class="note grp-' + g[0] + '"><b>' + g[1] + "</b>" + (g[2] ? "" : " (these cannot be continued)") + '</div><ol class="' + (g[2] ? "live" : "dead") + '">' + xs.map(function (x) { return "<li>" + esc(lbl(x)) + "</li>"; }).join("") + "</ol>";
+    });
+    var can = ps.filter(function (x) { return continuable(c, x); });
+    if (can.length) h += sceneMode(c) ? '<button class="btn" id="continuePending">Continue these steps</button><div class="note">Nothing resumes on its own. Continue puts them back in your plan, checked against what Aero sees now; they run only if you submit again.</div>'
+                                      : '<div class="note">Initiative has started. Choose your combat turn; set-aside steps can be continued once the fight is over.</div>';
     return h + "</div>";
   }
   function combatAvail(c) {  // per option, with the current action/move taken out (a radio replaces it)
@@ -514,7 +528,7 @@
 
   /* ---------- interaction ---------- */
   function setMsg(t) { var m = $("msg"); if (m) m.textContent = t; }
-  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; saveUi(); render(); }
+  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; saveUi(); render(); ui.lastAdded = ""; }
   function sortSeq() {
     var L = ui.sel.steps.map(function (x, i) { return [x, i]; });
     L.sort(function (a, b) { return (a[0].seq || 0) - (b[0].seq || 0) || a[1] - b[1]; });
@@ -537,6 +551,8 @@
   function addAtActive(st) {
     var w = activeWhere(ui.sel), out = T.insertStep(ui.sel.steps, w, st);
     ui.sel.steps = out;
+    var c = ctxOf(view), where = w.branch ? "this decision" : "Sequence " + (w.seq + 1);
+    ui.lastAdded = "Added to " + where + ": " + (c ? stepLabel(c, st) : st.type) + ".";
   }
   function bindCenter() {
     function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
@@ -607,7 +623,7 @@
     for (var q = 0; q < (ui.sel.nseq || 1); q++) (function (q) { on("w_lbl_" + q, "input", soft(function (v) { ui.sel.labels[q] = v; })); })(q);
     on("w_say", "input", function (e) { ui.sel.sayDraft = e.target.value; autoGrow(e.target); saveUi(); });
     on("w_act", "input", function (e) { ui.sel.actDraft = e.target.value; autoGrow(e.target); saveUi(); });
-    on("continuePending", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration({ actor: c.actor, steps: (c.pending_steps || []).filter(function (x) { return x.status !== "invalidated"; }) }, c, true); render(); } });
+    on("continuePending", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration({ actor: c.actor, steps: (c.pending_steps || []).filter(function (x) { return continuable(c, x); }) }, c, true); render(); } });
     on("editAsSteps", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration(T.parseFreeform(ui.write, c), c, false); render(); } });
     on("w_own", "input", soft(function (x) { ui.sel.own = x; }));
     on("w_trigger", "input", soft(function (x) { ui.sel.trigger = x; }));

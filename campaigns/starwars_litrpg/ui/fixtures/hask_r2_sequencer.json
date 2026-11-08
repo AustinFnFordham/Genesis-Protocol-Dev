@@ -185,7 +185,8 @@
    "aliases": [
     "study the silo",
     "look at the welds"
-   ]
+   ],
+   "at_free": true
   },
   {
    "id": "search_dark",
@@ -245,7 +246,8 @@
    ],
    "requires": [
     "cart_in_hand"
-   ]
+   ],
+   "at_free": true
   },
   {
    "id": "deactivate_saber",

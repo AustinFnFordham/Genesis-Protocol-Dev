@@ -211,14 +211,14 @@ def test_S2_missing_information_is_never_confirmation():
     bad = progress(S2, {"completed": ["a1", "a2"], "stop_kind": "complete", "reason": ""})
     assert not bad["ok"]
     stop = progress(S2, {"completed": ["a1", "a2"], "stop_kind": "condition", "reason": "Wick does not know what is inside."})
-    assert stop["ok"] and stop["plan_progress"]["pending"] == ["b1", "a3", "a4"], stop
-    assert stop["pending_steps"][0]["type"] == "branch" and all(x["status"] == "pending" for x in stop["pending_steps"])
+    assert stop["ok"] and stop["plan_progress"]["paused"] == ["b1"] and stop["plan_progress"]["unattempted"] == ["a3", "a4"], stop
+    assert stop["pending_steps"][0]["type"] == "branch" and [x["status"] for x in stop["pending_steps"]] == ["paused", "unattempted", "unattempted"]
     # a settled case: "credible information" was committed, so the cut and the rest run
     go = progress(S2, {"completed": ["a1", "a2", "b1s", "a3", "a4"], "branches": {"b1": 1}, "stop_kind": "complete", "reason": ""})
     assert go["ok"] and go["plan_progress"]["skipped"] == [] and not go["pending_steps"], go
     # "trapped" was confirmed: no cut, then stop and ask (the player's own instruction)
     trapped = progress(S2, {"completed": ["a1", "a2"], "branches": {"b1": 0}, "stop_kind": "condition", "reason": "Wick says someone is shut inside."})
-    assert trapped["ok"] and trapped["plan_progress"]["pending"] == ["a3", "a4"] and trapped["plan_progress"]["skipped"] == ["b1s"], trapped
+    assert trapped["ok"] and trapped["plan_progress"]["paused"] == ["a3"] and trapped["plan_progress"]["unattempted"] == ["a4"] and trapped["plan_progress"]["skipped"] == ["b1s"], trapped
 
 
 # ---------- S3: unexpected interruption, partial prefix, entry into combat ----------
@@ -228,23 +228,63 @@ def test_S3_hidden_mastiff_interrupts_and_combat_invalidates_the_rest():
                             "reason": "Something burst out of the dark behind you and lunged; it went past you through the open door."})
     assert r["ok"], r
     pp = r["plan_progress"]
-    assert pp["completed"] == done and pp["interrupted"] == "s12" and pp["invalidated"] == ["s12", "s13", "s14", "s15"] and pp["pending"] == []
-    assert all(x["status"] == "invalidated" for x in r["pending_steps"]) and r["pending_steps"][0]["interrupted"]
-    assert r["plan_result"] == {"stop_kind": "combat", "reason": pp["reason"], "completed": 12, "pending": 0, "invalidated": 4}
-    # invalidated steps can never be run again, even if a client marks them authorized
+    assert pp["completed"] == done and pp["cancelled"] == ["s12", "s13", "s14", "s15"] and pp["unattempted"] == [] and pp["interrupted"] == []
+    assert all(x["status"] == "cancelled" for x in r["pending_steps"]) and r["pending_steps"][0]["interrupted"]
+    assert r["plan_result"]["completed"] == 12 and r["plan_result"]["cancelled"] == 4 and r["plan_result"]["unattempted"] == 0
+    # cancelled steps can never be run again, even if a client marks them authorized
     again = [dict(x, authorized=True) for x in r["pending_steps"]]
     v = validate(plan(*again))
-    assert "INVALIDATED" in codes(v) and not v["legal"]
+    assert "NOT_CONTINUABLE" in codes(v) and not v["legal"]
 
 
 def test_consequential_stop_leaves_pending_steps_that_need_reauthorization():
     r = progress(S1_FIXED, {"completed": ["s1", "s2", "s3"], "interrupted": "s4", "stop_kind": "consequential",
                             "reason": "Wick grabs your sleeve: someone is coming up the lane with a lamp."})
-    assert r["ok"] and r["plan_progress"]["pending"][0] == "s4" and r["pending_steps"][0]["status"] == "interrupted"
+    assert r["ok"] and r["plan_progress"]["interrupted"] == ["s4"] and r["pending_steps"][0]["status"] == "interrupted"
+    assert r["plan_progress"]["cancelled"] == [] and len(r["plan_progress"]["unattempted"]) == 12, "a consequential stop does not cancel the rest"
     v = validate(plan(*r["pending_steps"]))
     assert "PENDING_UNAUTHORIZED" in codes(v)
     ok = validate(plan(*[dict(x, authorized=True) for x in r["pending_steps"]]))
     assert "PENDING_UNAUTHORIZED" not in codes(ok)
+
+
+def test_status_vocabulary_is_distinct_and_combat_can_suspend():
+    done = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s10b", "s11"]
+    r = progress(S1_FIXED, {"completed": done, "interrupted": "s12", "stop_kind": "combat", "reason": "Initiative.", "suspended": ["s13"]})
+    st = {x["id"]: x["status"] for x in r["pending_steps"]}
+    assert st == {"s12": "cancelled", "s13": "suspended", "s14": "cancelled", "s15": "cancelled"}, st
+    combat = json.loads(CTX.read_text()); combat["mode"] = "combat"; combat["context_id"] = "c1"
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(combat, f)
+    sus = [dict(x, authorized=True, authorized_ctx="c1") for x in r["pending_steps"] if x["status"] == "suspended"]
+    assert "SUSPENDED" in codes(validate(plan(*sus), ctx=f.name)), "suspended intentions wait until the fight is over"
+    scene_ok = validate(plan(*[dict(x, authorized_ctx="fixture_sequencer") for x in sus]))
+    assert "SUSPENDED" not in codes(scene_ok) and "NOT_CONTINUABLE" not in codes(scene_ok)
+
+
+def test_continue_requires_authorization_against_the_latest_context():
+    r = progress(S1_FIXED, {"completed": ["s1", "s2", "s3"], "interrupted": "s4", "stop_kind": "consequential", "reason": "Wick stops you."})
+    stale = [dict(x, authorized=True, authorized_ctx="an_older_context") for x in r["pending_steps"]]
+    assert "PENDING_STALE" in codes(validate(plan(*stale)))
+    fresh = [dict(x, authorized=True, authorized_ctx="fixture_sequencer") for x in r["pending_steps"]]
+    v = validate(plan(*fresh))
+    assert "PENDING_STALE" not in codes(v) and "PENDING_UNAUTHORIZED" not in codes(v)
+
+
+def test_context_lint_warns_and_defers_instead_of_guessing():
+    ctx = json.loads(CTX.read_text())
+    ok = node("lintctx", "-", str(CTX))
+    assert ok["ok"] and not [f for f in ok["findings"] if f["level"] != "info"], ok
+    thin = copy.deepcopy(ctx); thin.pop("hands"); [o.pop("at", None) for o in thin["options"]]
+    thin["visible"][2]["hp"] = 12
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(thin, f)
+    r = node("lintctx", "-", f.name)
+    c = {x["code"] for x in r["findings"]}
+    assert {"NO_HANDS", "NO_AT", "LEAK_SUSPECT"} <= c and not r["ok"], r
+    # with hands missing, hand checks are deferred (no false refusal), never guessed
+    v = validate(plan(st("x", 0, "action", option="open_door")), ctx=f.name)
+    assert "HANDS" not in codes(v)
 
 
 def test_partial_prefix_rules():
@@ -252,9 +292,11 @@ def test_partial_prefix_rules():
     assert not progress(S1_FIXED, {"completed": ["s1"], "stop_kind": "incidental", "reason": "a dog barks far off"})["ok"]  # not a stop
     assert not progress(S1_FIXED, {"completed": ["s1"], "stop_kind": "complete", "reason": ""})["ok"]
     assert not progress(S1_FIXED, {"completed": ["s1"], "interrupted": "s3", "stop_kind": "mechanical", "reason": ""})["ok"]
-    pre = progress(S1_FIXED, {"completed": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9"], "interrupted": "s10",
-                              "stop_kind": "prerequisite", "reason": "The chain held.", "invalidated": ["s11", "s12", "s15"]})
-    assert pre["ok"] and pre["plan_progress"]["invalidated"] == ["s11", "s12", "s15"] and pre["plan_progress"]["pending"] == ["s10", "s10b", "s13", "s14"], pre
+    pre = progress(S1_FIXED, {"completed": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10"],
+                              "stop_kind": "prerequisite", "reason": "The chain held.", "blocked": ["s11", "s15"]})
+    assert pre["ok"] and pre["plan_progress"]["blocked"] == ["s11", "s15"] and pre["plan_progress"]["unattempted"] == ["s10b", "s12", "s13", "s14"], pre
+    assert not progress(S1_FIXED, {"completed": ["s1"], "stop_kind": "consequential", "reason": "", "suspended": ["s2"]})["ok"], "only combat suspends"
+    assert not progress(S1_FIXED, {"completed": ["s1"], "stop_kind": "consequential", "reason": "", "cancelled": ["s1"]})["ok"], "a completed step cannot be cancelled"
 
 
 def test_uneventful_plan_is_one_pass_with_nothing_pending():
