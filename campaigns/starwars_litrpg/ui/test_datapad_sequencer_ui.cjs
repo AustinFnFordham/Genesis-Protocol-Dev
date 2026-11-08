@@ -94,7 +94,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   const t2 = async sel => { await p2.click(sel); await p2.waitForTimeout(40); };
   await t2('[data-pal="object:holster_blaster"]'); await t2('[data-pal="move:to_cart"]'); await t2("#addSeq"); await t2('[data-pal="action:inspect_cart"]');
   const ids = await p2.evaluate(() => [...document.querySelectorAll(".plan li.step")].map(li => li.getAttribute("data-sid")));
-  await t2(`[data-down="${ids[1]}"]`);  // the move crosses into sequence 2, after nothing: it becomes its first step
+  await t2(`[data-open="${ids[1]}"]`); await t2(`[data-down="${ids[1]}"]`);  // the move crosses into sequence 2, after nothing: it becomes its first step
   let seqs = await p2.evaluate(() => [...document.querySelectorAll(".seqcard")].map(s => s.querySelectorAll("li.step").length));
   ok(JSON.stringify(seqs) === "[1,2]", "↓ on the last step of a sequence moves it to the next one", seqs);
   await t2(`[data-down="${ids[1]}"]`);  // now after the inspection: the inspection loses its move

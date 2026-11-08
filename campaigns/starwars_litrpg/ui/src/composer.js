@@ -229,8 +229,9 @@
   }
   function stepRow(c, s, x, stat, tr, nested) {
     var st = stat[x.id] || { status: "ok", messages: [] }, p = tr.prev[x.id] || tr.now, cur = tr.at[x.id];
-    var h = '<li class="step st-' + st.status + '" data-sid="' + esc(x.id) + '"><div class="srow"><span class="ico" title="' + STXT[st.status] + '" aria-label="' + STXT[st.status] + '">' + ICON[st.status] + '</span><span class="lbl' + (x.type === "speech" || x.type === "free" ? " verb" : "") + '">' + esc(stepLabel(c, x)) +
-      (x.pending ? ' <span class="tag">' + (x.authorized ? "continued" : "left over") + "</span>" : "") + (x.condition ? ' <span class="tag">only if</span>' : "") + "</span></div>";
+    var open = ui.openStep === x.id;
+    var h = '<li class="step st-' + st.status + (open ? " open" : "") + '" data-sid="' + esc(x.id) + '"><div class="srow" data-open="' + esc(x.id) + '" role="button" tabindex="0" aria-expanded="' + open + '" aria-label="' + esc(stepLabel(c, x)) + ': show controls"><span class="ico" title="' + STXT[st.status] + '" aria-label="' + STXT[st.status] + '">' + ICON[st.status] + '</span><span class="lbl' + (x.type === "speech" || x.type === "free" ? " verb" : "") + '">' + esc(stepLabel(c, x)) +
+      (x.pending ? ' <span class="tag">' + (x.authorized ? "continued" : "left over") + "</span>" : "") + (x.condition ? ' <span class="tag">only if</span>' : "") + '</span><span class="more" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></div>";
     if (x.type !== "branch") h += plannedLine(c, x, p, cur);
     if (st.messages.length && st.status !== "ok") h += st.messages.map(function (m) { return '<div class="' + (st.status === "fix" ? "msg-err" : st.status === "risky" ? "msg-warn" : "note") + '">' + esc(m) + "</div>"; }).join("");
     if (st.status === "fix" && (st.suggest_steps || []).length) {
@@ -241,7 +242,8 @@
       }).join("") + "</div>";
     }
     if (st.status === "fix" && st.resolution === "needs_choice") h += '<div class="row"><button class="btn mini pre" data-how="' + esc(stepLabel(c, x)) + '">Say how (custom action)</button></div>';
-    if (x.condition) h += '<input class="txt" id="w_cond_' + esc(x.id) + '" placeholder="Only if… (the GM stops here and asks unless Aero already knows)" value="' + esc(x.condition.text || "") + '">';
+    if (x.condition && !open && x.condition.text) h += '<div class="note cond">Only if ' + esc(x.condition.text) + "</div>";
+    if (x.condition) h += '<input class="txt cond-in" id="w_cond_' + esc(x.id) + '" placeholder="Only if… (the GM stops here and asks unless Aero already knows)" value="' + esc(x.condition.text || "") + '">';
     var o = (x.type === "action" || x.type === "bonus_action") && byId(c.options, x.option);
     if (o && o.needs_target) h += '<select class="txt" id="w_tgt_' + esc(x.id) + '" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (x.target === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
     if (x.type === "branch") h += branchBody(c, s, x, stat, tr);
@@ -272,7 +274,7 @@
   }
   function renderPlan(c, s, r, stat) {
     var tr = traceMaps(c, r), haltId = (r.halts || []).length && r.steps[r.halts[0]] ? r.steps[r.halts[0]].id : null;
-    var h = '<div class="plan" aria-label="Your plan">';
+    var h = '<div class="plan" id="planTop" aria-label="Your plan">';
     if (ui.carried) h += '<div class="check warn"><b>The scene changed while you were planning.</b><div>Your steps are kept and re-checked against what Aero sees now. Steps that no longer fit are marked.</div></div>';
     for (var q = 0; q < s.nseq; q++) {
       var on = !s.active.branch && s.active.seq === q, rows = s.steps.filter(function (x) { return (x.seq || 0) === q; });
@@ -308,7 +310,7 @@
     function used(id) { var n = 0; T.flat(s.steps).forEach(function (x) { if (x.type === "speech" && x.option === id) n++; }); return n; }
     function grp(title, items, id) { return items.length ? '<div class="palgrp"' + (id ? ' id="' + id + '"' : "") + "><h3>" + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
     var acts = (c.options || []).filter(function (o) { return o.slot === "action"; }), bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
+    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["↑ Plan", "planTop"], ["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
     var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" + nav +
       '<div class="note added" id="lastAdded" role="status" aria-live="polite">' + esc(ui.lastAdded || "") + "</div>" +
       '<div class="note">Everything Aero could try right now. Greyed-out choices say what is missing at that point in your plan; nothing is added unless you tap it.</div>' +
@@ -408,7 +410,8 @@
   }
   function submitBar(r, stat, busy) {
     var n = fixCount(r, stat), ok = canSubmitNow(r, busy) && !phase;
-    return (n ? '<button class="btn" id="jumpFix">' + n + " to fix ↑</button>" : "") +
+    var scene = sceneMode(ctxOf(view)) && ui.mode !== "write";
+    return (n ? '<button class="btn" id="jumpFix">' + n + " to fix ↑</button>" : "") + (scene ? '<a class="btn only-phone" href="#palette" id="jumpAdd">+ Add</a>' : "") +
       '<button class="btn primary" id="submitTurn"' + (ok ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : sceneMode(ctxOf(view)) ? "Submit plan" : "Submit turn") + "</button>" +
       '<button class="btn" id="clearTurn"' + (busy ? " disabled" : "") + '>Clear</button><span class="note" id="msg"></span>';
   }
@@ -600,8 +603,12 @@
       ui.sel.steps.forEach(function (x) { if ((x.seq || 0) > q) x.seq--; });
       ui.sel.labels.splice(q, 1); ui.sel.nseq--; ui.sel.active = { seq: Math.min(q, ui.sel.nseq - 1) }; changed();
     });
-    click("data-up", function (id) { moveStep(id, -1); changed(); });
-    click("data-down", function (id) { moveStep(id, 1); changed(); });
+    each("[data-open]", function (el) {
+      function tog() { var id = el.getAttribute("data-open"); ui.openStep = ui.openStep === id ? null : id; saveUi(); render(); }
+      el.addEventListener("click", tog); el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); } });
+    });
+    click("data-up", function (id) { ui.openStep = id; moveStep(id, -1); changed(); var el = document.querySelector('[data-sid="' + id + '"]'); if (el) el.scrollIntoView({ block: "center" }); });
+    click("data-down", function (id) { ui.openStep = id; moveStep(id, 1); changed(); var el = document.querySelector('[data-sid="' + id + '"]'); if (el) el.scrollIntoView({ block: "center" }); });
     click("data-del", function (id) {
       var f = locate(id); if (!f) return; var x = f.list.splice(f.index, 1)[0];
       if (ui.sel.active.branch === id) ui.sel.active = { seq: x.seq || 0 }; changed();
@@ -686,8 +693,13 @@
     if (jumpObs) jumpObs.disconnect();
     if (!last) { btn.hidden = true; return; }
     if (!("IntersectionObserver" in window)) { btn.hidden = false; return; }
-    jumpObs = new IntersectionObserver(function (es) { btn.hidden = es[es.length - 1].isIntersecting; });
-    jumpObs.observe(last);
+    // hidden while the newest entry is on screen, and while the turn builder is (it would cover palette buttons)
+    var seen = { last: false, comp: false }, comp = document.querySelector(".composer");
+    jumpObs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.target === last) seen.last = e.isIntersecting; else seen.comp = e.isIntersecting; });
+      btn.hidden = seen.last || seen.comp;
+    });
+    jumpObs.observe(last); if (comp) jumpObs.observe(comp);
   }
   (function () {
     var btn = $("jumpNew"); if (!btn) return;
