@@ -1,11 +1,11 @@
-  /* ===================== Turn composer (turn-contract/1) ===================== */
+  /* ===================== Turn composer (turn-contract/2: combat slots, scene steps) ===================== */
   var T = window.GenesisTurn, mcpNs = null, phase = "", notifyState = {}, usage = [];
   function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
   function freshUi(ctxId, keepWrite) {
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "",
-             sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [] } };
+             sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [] } };
   }
-  var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) return x; } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
+  var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) { x.sel.steps = x.sel.steps || []; return x; } } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
   function saveUi() { ls("datapad.ui", JSON.stringify(ui)); }
   function ctxOf(v) { return v && v.turn_context ? v.turn_context : null; }
   function syncCtx() {
@@ -22,11 +22,34 @@
   }
   function pendingAction() { return activeAction(); }
 
+  function sceneMode(c) { return c && c.mode !== "combat"; }
+  function stepLabel(c, st) {
+    if (st.type === "say") return "Say the line chosen above";
+    var o = st.type === "move" ? byId(c.movement, st.option) : st.type === "object" ? byId(c.objects, st.option) : byId(c.options, st.option);
+    return o ? o.label : st.option;
+  }
   function declaration(c) {
     if (ui.mode === "write") return T.parseFreeform(ui.write, c);
     var d = T.emptyDecl(c), s = ui.sel;
     if (s.dialogue === "own" && s.own.trim()) d.speech = { option: null, text: s.own.trim(), approach: "freeform", extended: false };
     else { var dl = byId(c.dialogue, s.dialogue); if (dl) d.speech = { option: dl.id, text: dl.text, approach: dl.approach, extended: !!dl.extended }; }
+    if (sceneMode(c)) {  // scene: an ordered list of steps in the player's order; no action economy
+      var sp = d.speech ? { type: "speech", text: d.speech.text, option: d.speech.option, approach: d.speech.approach, extended: d.speech.extended } : null, out = [];
+      if (sp && !(s.steps || []).some(function (x) { return x.type === "say"; })) out.push(sp);
+      (s.steps || []).forEach(function (x) {
+        if (x.type === "say") { if (sp) out.push(sp); return; }
+        var st = { type: x.type, option: x.option };
+        if (x.type === "action" || x.type === "bonus_action") { st.target = x.target || null; st.trigger = x.trigger || null; }
+        if (x.condition && x.condition.text && x.condition.text.trim()) st.condition = { text: x.condition.text.trim() };
+        if (x.pending) { st.pending = true; if (x.authorized) st.authorized = true; }
+        out.push(st);
+      });
+      d.steps = out;
+      if (!out.some(function (x) { return x.type === "move"; }) && byId(c.movement, "hold")) d.movement = { option: "hold" };
+      d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
+      if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
+      return T.normalize(d, c);
+    }
     if (s.action) {
       var op = byId(c.options, s.action);
       d.actions = [{ option: s.action, target: op && op.needs_target ? (s.target[s.action] || null) : null,
@@ -39,8 +62,23 @@
     if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
     return d;
   }
-  function loadDeclaration(d, c) {
+  function loadDeclaration(d, c, authorize) {
     var s = freshUi(c.context_id).sel;
+    if (sceneMode(c)) {
+      var n = T.normalize(d, c), spoken = false;
+      n.steps.forEach(function (st) {
+        if (st.type === "speech") { if (!spoken) { spoken = true; if (st.option && byId(c.dialogue, st.option)) s.dialogue = st.option; else { s.dialogue = "own"; s.own = st.text || ""; } if (s.steps.length) s.steps.push({ type: "say" }); } return; }
+        if (st.type === "free") return;
+        var x = { type: st.type, option: st.option };
+        if (st.target) x.target = st.target; if (st.trigger) x.trigger = st.trigger;
+        if (st.condition) x.condition = { text: st.condition.text };
+        if (st.pending) { x.pending = true; if (authorize) x.authorized = true; }
+        s.steps.push(x);
+      });
+      s.reactions = (d.reactions || []).slice();
+      ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (n.unmapped || []).join(" "); saveUi();
+      return;
+    }
     if (d.speech) { if (d.speech.option && byId(c.dialogue, d.speech.option)) s.dialogue = d.speech.option; else { s.dialogue = "own"; s.own = d.speech.text || ""; } }
     if (d.actions && d.actions[0]) { s.action = d.actions[0].option; if (d.actions[0].target) s.target[s.action] = d.actions[0].target; s.trigger = d.actions[0].trigger || ""; }
     if (d.bonus_actions && d.bonus_actions[0]) s.bonus = d.bonus_actions[0].option;
@@ -61,7 +99,7 @@
     return '<label class="opt"><input type="checkbox" value="' + esc(value) + '" data-c="' + group + '"' + (checked ? " checked" : "") + '><span class="lbl">' + esc(label) + (small ? "<small>" + esc(small) + "</small>" : "") + "</span></label>";
   }
   function budget(c, r) {
-    if (c.mode !== "combat") return '<div class="note">Scene: no initiative. Say and do what you like; the GM applies the rules where they matter.</div>';
+    if (c.mode !== "combat") return '<div class="note">Scene: no initiative and no action economy. Add steps in the order Aero does them; the GM resolves them in that order and stops when something needs your decision. Hands, gear, distance and time still apply.</div>';
     var b = c.budget || {}, u = r.used;
     function p(name, used, txt) { return '<span class="pill ' + (used ? "used" : "ok") + '">' + name + ": " + txt + "</span>"; }
     return '<div class="budget">' + p("Action", u.action >= (b.action || 1), u.action >= (b.action || 1) ? "Used" : "Available") +
@@ -84,6 +122,44 @@
     return h + "</div>";
   }
 
+  /* Scene mode: an ordered list of steps (no action economy). Every step is still checked for
+     hands, position and requirements; a step can carry an "only if" condition, which the GM never
+     decides for Aero: it stops there and asks. */
+  function renderSteps(c, s) {
+    var st = s.steps || [], h = '<fieldset class="grp"><legend>Steps, in order</legend>';
+    if (!st.length) h += '<div class="note">No steps yet. Add what Aero does, in order. Talking alone needs no step.</div>';
+    h += '<ol class="steps">' + st.map(function (x, i) {
+      var tag = x.pending ? (x.authorized ? " · continued" : " · left over") : "";
+      var r = '<li><div class="row" style="justify-content:space-between;gap:6px"><span class="lbl">' + esc(stepLabel(c, x)) + (tag ? ' <span class="tag">' + esc(tag.slice(3)) + "</span>" : "") + "</span><span>" +
+        '<button class="btn mini" data-step-up="' + i + '" aria-label="Move step ' + (i + 1) + ' up"' + (i === 0 ? " disabled" : "") + ">↑</button>" +
+        '<button class="btn mini" data-step-down="' + i + '" aria-label="Move step ' + (i + 1) + ' down"' + (i === st.length - 1 ? " disabled" : "") + ">↓</button>" +
+        (x.type !== "say" ? '<button class="btn mini" data-step-cond="' + i + '" aria-pressed="' + !!x.condition + '" aria-label="Only if, for step ' + (i + 1) + '">if…</button>' : "") +
+        '<button class="btn mini" data-step-del="' + i + '" aria-label="Remove step ' + (i + 1) + '">✕</button></span></div>';
+      if (x.condition) r += '<input class="txt" id="w_cond_' + i + '" placeholder="Only if… (the GM stops here and asks unless Aero already knows)" value="' + esc(x.condition.text || "") + '">';
+      var o = byId(c.options, x.option);
+      if (o && o.needs_target) r += '<select class="txt" id="w_steptarget_' + i + '" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (x.target === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
+      return r + "</li>";
+    }).join("") + "</ol>";
+    function og(label, type, list) { return list.length ? '<optgroup label="' + label + '">' + list.map(function (o) { return '<option value="' + type + ":" + esc(o.id) + '">' + esc(o.label) + "</option>"; }).join("") + "</optgroup>" : ""; }
+    h += '<div class="row" style="gap:6px;margin-top:6px"><select class="txt" id="w_addstep" aria-label="Add a step" style="flex:1;min-width:0"><option value="">Add a step…</option>' +
+      og("Do", "action", (c.options || []).filter(function (o) { return o.slot === "action"; })) +
+      og("Quick (bonus)", "bonus_action", (c.options || []).filter(function (o) { return o.slot === "bonus_action"; })) +
+      og("Go", "move", (c.movement || []).filter(function (m) { return m.id !== "hold"; })) +
+      og("Handle", "object", c.objects || []) +
+      ((s.dialogue !== "silent" && !st.some(function (x) { return x.type === "say"; })) ? '<optgroup label="Speech"><option value="say:say">Say the line chosen above, at this point</option></optgroup>' : "") +
+      '</select><button class="btn" id="addStep">Add</button></div>';
+    return h + "</fieldset>";
+  }
+  function renderPending(c) {
+    var ps = c.pending_steps || [];
+    if (!ps.length) return "";
+    var labels = ps.map(function (x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" ? "Say: “" + x.text + "”" : x.type === "free" ? x.text : stepLabel(c, x)); });
+    return '<div class="check warn" style="margin-top:8px"><b>Not done yet</b>' + (c.pending_reason ? "<div>" + esc(c.pending_reason) + "</div>" : "") +
+      "<ol>" + labels.map(function (l) { return "<li>" + esc(l) + "</li>"; }).join("") + "</ol>" +
+      (sceneMode(c) ? '<button class="btn" id="continuePending">Continue these steps</button><div class="note">They run only if you submit them again.</div>'
+                    : '<div class="note">Initiative has started. These are not carried over; choose your combat turn.</div>') + "</div>";
+  }
+
   function renderTurn(v) {
     var c = ctxOf(v), busy = activeAction();
     if (!c) return renderLegacy(v, busy);
@@ -92,7 +168,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      budget(c, r) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole turn in your own words. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -101,6 +177,8 @@
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
+      if (sceneMode(c)) h += renderSteps(c, s);
+      else {
       h += '<fieldset class="grp"><legend>Primary action</legend>' + radio("action", "", !s.action, "No action") +
         (c.options || []).filter(function (o) { return o.slot === "action"; }).map(function (o) {
           var tag = (o.requires || []).length ? "needs " + o.requires.map(function (q) { return (c.flag_labels || {})[q] || q; }).join(", ") : "";
@@ -116,6 +194,7 @@
         return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk);
       }).join("") + "</fieldset>";
       if ((c.objects || []).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      }
       if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
       h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
@@ -158,6 +237,9 @@
       if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
       if (a.status === "needs_revision" && a.review) {
         h += '<div class="note msg-err">' + esc(a.review.summary || "") + "</div>";
+        var rmsg = function (x) { return typeof x === "string" ? x : (x && x.message) || ""; };
+        (a.review.errors || []).forEach(function (x) { h += '<div class="msg-err">' + esc(rmsg(x)) + "</div>"; });
+        (a.review.warnings || []).forEach(function (x) { h += '<div class="msg-warn">' + esc(rmsg(x)) + "</div>"; });
         if ((a.review.alternatives || []).length) h += '<div class="sugg">' + a.review.alternatives.map(function (x, i) { return '<button class="chip" data-ralt="' + esc(a._id) + ":" + i + '">' + esc(x.label) + "</button>"; }).join("") + "</div>";
         h += '<div class="note">No dice were rolled. Revise and submit again.</div>';
       }
@@ -172,7 +254,25 @@
     var mins = mine.reduce(function (t, u) { return t + Math.max(0, (u.finished_ms || u.started_ms) - u.started_ms); }, 0) / 60000;
     var by = {}; mine.forEach(function (u) { by[u.outcome] = (by[u.outcome] || 0) + 1; });
     return '<div class="panel"><h2>Cloud GM usage</h2><div class="kv"><span>Sessions (latest 50)</span><span>' + mine.length + '</span></div><div class="kv"><span>Total run time</span><span>' + mins.toFixed(1) + ' min</span></div>' +
-      '<div class="note" style="margin-top:6px">' + Object.keys(by).map(function (k) { return esc(k.replace("_", " ")) + " " + by[k]; }).join(" · ") + "</div></div>";
+      '<div class="note" style="margin-top:6px">' + Object.keys(by).map(function (k) { return esc(k.replace("_", " ")) + " " + by[k]; }).join(" · ") + "</div>" + renderPerf(mine) + "</div>";
+  }
+  /* Read-only performance view from the processor's own usage records (measured marks; nothing is
+     written and no model is called). Not authoritative: marks are taken at the next shell call. */
+  var PHASES = [["1_submit_to_worker_start_ms", "Submit → GM start"], ["2_session_init_ms", "Session start"], ["4a_lock_and_claim_ms", "Lock + claim"],
+    ["3_context_loading_ms", "Reading + thinking"], ["4_preflight_and_rules_ms", "Preflight + rules"], ["5_dice_ms", "Dice"], ["6_ledger_ms", "Ledger"],
+    ["7_narration_ms", "Narration"], ["9_git_sync_ms", "Git push"], ["8_projection_ms", "Datapad update"], ["submit_to_visible_ms", "Submit → visible"]];
+  function renderPerf(mine) {
+    var done = mine.filter(function (u) { return u.outcome === "committed" && u.timings; }).sort(function (a, b) { return b.started_ms - a.started_ms; }).slice(0, 10);
+    if (!done.length) return "";
+    function sec(ms) { return ms == null ? "—" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s"; }
+    function med(k) { var v = done.map(function (u) { return u.timings[k]; }).filter(function (x) { return typeof x === "number"; }).sort(function (a, b) { return a - b; });
+      return v.length ? (v.length % 2 ? v[(v.length - 1) / 2] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2) : null; }
+    var last = done[0].timings;
+    return '<details class="perf" style="margin-top:8px"><summary>Turn timing · last ' + sec(last.submit_to_visible_ms) + " · median " + sec(med("submit_to_visible_ms")) + "</summary>" +
+      '<table class="kvt"><thead><tr><th>Phase</th><th>Last</th><th>Median (' + done.length + ")</th></tr></thead><tbody>" +
+      PHASES.map(function (p) { return "<tr><td>" + esc(p[1]) + "</td><td>" + sec(last[p[0]]) + "</td><td>" + sec(med(p[0])) + "</td></tr>"; }).join("") + "</tbody></table>" +
+      '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
+      "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
   function renderDice(v) {
     if (!v.rolls || !v.rolls.length) return "";
@@ -215,6 +315,7 @@
   function changed() { ui.confirmed = false; ui.draftId = ""; saveUi(); render(); }
   function bindCenter() {
     function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+    var deb = null;
     Array.prototype.forEach.call(document.querySelectorAll("[data-mode]"), function (b) { b.addEventListener("click", function () { ui.mode = b.getAttribute("data-mode"); changed(); }); });
     Array.prototype.forEach.call(document.querySelectorAll("input[data-g]"), function (el) {
       el.addEventListener("change", function () { ui.sel[el.getAttribute("data-g")] = el.value; changed(); });
@@ -226,7 +327,21 @@
       });
     });
     on("w_target", "change", function () { ui.sel.target[ui.sel.action] = $("w_target").value; changed(); });
-    var deb = null;
+    on("addStep", "click", function () {
+      var v = $("w_addstep") && $("w_addstep").value; if (!v) return;
+      var k = v.indexOf(":"), t = v.slice(0, k), id = v.slice(k + 1);
+      ui.sel.steps = (ui.sel.steps || []).concat([t === "say" ? { type: "say" } : { type: t, option: id }]); changed();
+    });
+    function stepBtn(attr, fn) { Array.prototype.forEach.call(document.querySelectorAll("[" + attr + "]"), function (b) { b.addEventListener("click", function () { fn(+b.getAttribute(attr)); changed(); }); }); }
+    stepBtn("data-step-del", function (i) { ui.sel.steps.splice(i, 1); });
+    stepBtn("data-step-up", function (i) { if (i > 0) ui.sel.steps.splice(i - 1, 0, ui.sel.steps.splice(i, 1)[0]); });
+    stepBtn("data-step-down", function (i) { if (i < ui.sel.steps.length - 1) ui.sel.steps.splice(i + 1, 0, ui.sel.steps.splice(i, 1)[0]); });
+    stepBtn("data-step-cond", function (i) { var x = ui.sel.steps[i]; if (x.condition) delete x.condition; else x.condition = { text: "" }; });
+    (ui.sel.steps || []).forEach(function (x, i) {
+      on("w_cond_" + i, "input", function (e) { x.condition = { text: e.target.value }; ui.confirmed = false; ui.draftId = ""; clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); });
+      on("w_steptarget_" + i, "change", function (e) { x.target = e.target.value || null; changed(); });
+    });
+    on("continuePending", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration({ actor: c.actor, steps: c.pending_steps }, c, true); render(); } });
     function typed(set) { return function (e) { set(e.target.value); ui.confirmed = false; ui.draftId = ""; autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); }; }
     on("w_own", "input", typed(function (x) { ui.sel.own = x; }));
     on("w_trigger", "input", typed(function (x) { ui.sel.trigger = x; }));

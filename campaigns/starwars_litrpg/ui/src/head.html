@@ -118,7 +118,12 @@ fieldset[disabled] { opacity: .6; }
 .opt:hover { background: var(--panel-2); }
 .opt input { margin: 3px 0 0; accent-color: var(--accent); width: 18px; height: 18px; flex: 0 0 auto; }
 .opt .lbl { min-width: 0; } .opt .lbl small { display: block; color: var(--dim); font-size: 12px; }
-.opt .tag { font: 500 10px var(--f-data); letter-spacing: .06em; text-transform: uppercase; color: var(--amber); }
+table.kvt { width: 100%; border-collapse: collapse; font: 12px var(--f-data); margin-top: 6px; } table.kvt th, table.kvt td { text-align: left; padding: 3px 4px; border-bottom: 1px solid var(--line); } table.kvt td + td, table.kvt th + th { text-align: right; }
+.perf summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; }
+.btn.mini { min-height: 40px; min-width: 40px; padding: 4px 8px; margin-left: 4px; }
+.btn.mini[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); }
+ol.steps { margin: 4px 0 0; padding-left: 22px; } ol.steps li { padding: 4px 0; border-bottom: 1px solid var(--line); }
+ol.steps .tag, .opt .tag { font: 500 10px var(--f-data); letter-spacing: .06em; text-transform: uppercase; color: var(--amber); }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
 .seg button { background: none; border: 0; min-height: 36px; padding: 4px 14px; font: 500 12px var(--f-ui); letter-spacing: .08em; text-transform: uppercase; }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
