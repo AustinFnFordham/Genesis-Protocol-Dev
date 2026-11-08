@@ -637,7 +637,7 @@
     });
     var counts = { completed: done.length }; Object.keys(out).forEach(function (k) { counts[k] = out[k].length; });
     return { ok: true,
-      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted: out.interrupted, paused: out.paused, unattempted: out.unattempted,
+      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted_step: interrupted, interrupted: out.interrupted, paused: out.paused, unattempted: out.unattempted,
                        blocked: out.blocked, cancelled: out.cancelled, suspended: out.suspended, skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
       pending_steps: steps, plan_result: Object.assign({ stop_kind: kind, reason: String(o.reason || "") }, counts) };
   }
