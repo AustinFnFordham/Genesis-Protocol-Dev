@@ -30,7 +30,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   // palette reach: how far below the top of the composer the first choice sits, and section chips
   const comp = await page.locator(".composer").boundingBox(), first = await page.locator(".palbtn").first().boundingBox();
   report.palette_offset_px = Math.round(first.y - comp.y);
-  ok(await page.locator(".palnav a").count() === 6, "palette has section chips (Plan / Say / Do / Go / Handle / Custom)");
+  ok(await page.locator(".palnav a").count() === 7, "palette has section chips (Plan / Say / Do / Go / Handle / Gear / Custom)");
   await page.locator('.palnav a[href="#pg_go"]').scrollIntoViewIfNeeded(); await page.tap('.palnav a[href="#pg_go"]'); await page.waitForTimeout(300);
   const go = await page.locator("#pg_go").boundingBox();
   ok(go.y >= -2 && go.y < vh / 2, "section chip jumps to that part of the palette", go.y);
@@ -59,7 +59,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   if (shotDir) await page.screenshot({ path: shotDir + "/iphone_s1_built.png" });
 
   // inputs never trigger iOS zoom (font-size >= 16px)
-  const small = await page.evaluate(() => [...document.querySelectorAll(".composer input, .composer textarea, .composer select")].filter(e => e.offsetParent && parseFloat(getComputedStyle(e).fontSize) < 16).map(e => e.id || e.className));
+  const small = await page.evaluate(() => [...document.querySelectorAll(".composer input:not([type=checkbox]):not([type=radio]), .composer textarea, .composer select")].filter(e => e.offsetParent && parseFloat(getComputedStyle(e).fontSize) < 16).map(e => e.id || e.className));
   ok(small.length === 0, "every text field is at least 16px (iOS does not zoom on focus)", small);
   // the plan stays compact and both ends are one tap apart
   ok(await page.locator("#jumpAdd").isVisible(), "the sticky bar has “+ Add”, which jumps to the palette");

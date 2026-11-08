@@ -1,5 +1,5 @@
 {
- "_note": "TEST FIXTURE, non-canonical. Owner's four-sequence example (2026-11-08) at the dig crew's shed, derived from the player-visible Hask Meadow run-2 contexts evt_0296/evt_0310 with contract-3 fields (hands, at, grants, requires, risk, frees_item, ends_at, position_label). Not campaign state. Contains NO hidden information.",
+ "_note": "TEST FIXTURE, non-canonical. Owner's four-sequence example (2026-11-08) at the dig crew's shed, derived from the player-visible Hask Meadow run-2 contexts evt_0296/evt_0310 with contract-3 fields (hands, at, grants, requires, risk, frees_item, ends_at, position_label). Not campaign state. Contains NO hidden information. Equipment derived from the authoritative sheet (ui/equipment.py) with the blade and blaster in hand.",
  "context_id": "fixture_sequencer",
  "actor": "aero",
  "actor_name": "Aero",
@@ -405,5 +405,209 @@
   "You are at the chained door of the dig crew's shed, blade lit in your right hand, blaster in your left. Wick is at your shoulder with the lantern.",
   "Blade and lantern light reach about 10-20 ft; past that it is dark. You have no darkvision.",
   "Cutting or forcing the chain will make light and noise."
+ ],
+ "equipment": [
+  {
+   "id": "lightsaber",
+   "label": "the indigo lightsaber",
+   "state": "held",
+   "home_state": "holstered",
+   "home": "left hip for right-hand draw",
+   "where": "left hip for right-hand draw",
+   "hands": 1,
+   "active_when": "saber_ignited",
+   "aliases": [
+    "lightsaber",
+    "saber",
+    "blade"
+   ],
+   "established": [
+    "energy blade, range 5 feet",
+    "lit: light source"
+   ]
+  },
+  {
+   "id": "blaster",
+   "label": "the blaster pistol",
+   "state": "held",
+   "home_state": "holstered",
+   "home": "right hip for left-hand draw",
+   "where": "right hip for left-hand draw",
+   "hands": 1,
+   "aliases": [
+    "blaster",
+    "pistol"
+   ]
+  },
+  {
+   "id": "robes",
+   "label": "robes and synthweave mantle",
+   "state": "worn",
+   "fixed": true,
+   "aliases": [
+    "robes",
+    "mantle"
+   ]
+  },
+  {
+   "id": "security_kit",
+   "label": "security Kit",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "Enables physical-security Technology checks at +3; no blanket advantage and no double proficiency.",
+   "aliases": [
+    "security kit"
+   ]
+  },
+  {
+   "id": "meditation_kit",
+   "label": "meditation Kit",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "Once per long rest during an uninterrupted short rest, restore up to 2 spent Force Points.",
+   "aliases": [
+    "meditation kit"
+   ]
+  },
+  {
+   "id": "backpack",
+   "label": "backpack",
+   "state": "worn",
+   "home_state": "worn",
+   "home": "on Aero's back",
+   "where": "on Aero's back",
+   "quantity": 1,
+   "note": "mundane storage",
+   "aliases": [
+    "backpack"
+   ],
+   "hands": 2
+  },
+  {
+   "id": "bedroll",
+   "label": "bedroll",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "mundane sleeping equipment",
+   "aliases": [
+    "bedroll"
+   ]
+  },
+  {
+   "id": "compact_mess_kit",
+   "label": "compact mess kit",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "mundane eating and cooking equipment",
+   "aliases": [
+    "compact mess kit"
+   ]
+  },
+  {
+   "id": "ration_pack",
+   "label": "ration pack",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 10,
+   "note": "one ordinary field ration each",
+   "aliases": [
+    "ration pack"
+   ]
+  },
+  {
+   "id": "canteen",
+   "label": "canteen",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "mundane water container",
+   "aliases": [
+    "canteen"
+   ]
+  },
+  {
+   "id": "compact_jedi_glowrod",
+   "label": "compact Jedi glowrod",
+   "state": "attached",
+   "home_state": "attached",
+   "home": "belt clip",
+   "where": "belt clip",
+   "quantity": 1,
+   "note": "adjustable cool-white illumination with magnetic belt clip; no automatic combat benefit",
+   "aliases": [
+    "compact jedi glowrod"
+   ]
+  },
+  {
+   "id": "syntherope",
+   "label": "syntherope",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "50 feet of mundane utility rope",
+   "aliases": [
+    "syntherope",
+    "synthrope",
+    "syntherope",
+    "rope"
+   ]
+  },
+  {
+   "id": "basic_fire_starting_tool",
+   "label": "basic fire-starting tool",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "ordinary fire-starting where conditions permit",
+   "aliases": [
+    "basic fire-starting tool"
+   ]
+  },
+  {
+   "id": "personal_comlink",
+   "label": "personal comlink",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 1,
+   "note": "ordinary communications where networks permit",
+   "aliases": [
+    "personal comlink"
+   ]
+  },
+  {
+   "id": "blaster_ammunition",
+   "label": "blaster ammunition",
+   "state": "stored",
+   "home_state": "stored",
+   "home": "backpack",
+   "where": "backpack",
+   "quantity": 50,
+   "note": "50 total shots; pistol capacity 12",
+   "aliases": [
+    "blaster ammunition"
+   ]
+  }
  ]
 }

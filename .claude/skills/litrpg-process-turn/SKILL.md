@@ -70,6 +70,24 @@ A `turn-contract/3` declaration is a plan: steps with ids, grouped by `seq` into
 - **Continue.** Continued steps arrive `authorized` with `authorized_ctx`; the validator refuses stale ones (`PENDING_STALE`) and steps that
   were blocked or cancelled (`NOT_CONTINUABLE`). Resolve them like any other plan.
 
+## 3c. Improvised equipment and creative problem-solving (branch only; NOT live until approved)
+Constrain what is impossible, ask about what is underspecified, adjudicate what is uncertain. No separate crafting engine.
+- **Gear comes from the record.** Publish `turn_context.equipment_from_ledger: true`: `export_state` derives `equipment` from the character
+  sheet plus committed `equipment_change` / `item_created` / `item_consumed` / `item_destroyed` events and hand snapshots
+  (states: held, holstered, worn, stored, attached, transported, placed, dropped). Hands are not carrying capacity. Never grant gear,
+  materials, powers, capacity or proficiency that the record does not have; `carry`/`bulk` appear only when a rule or the sheet states them.
+- **A custom step** may carry `method`, `uses` (Aero's items), `targets` (visible things), `hands`, `equipment_changes` and `creates`.
+  Resolve it as separate questions, each committed on its own:
+  1. *Capability*: can these tools and materials do this at all, under established Star Wars physics and Genesis mechanics
+     (a lit lightsaber cuts and melts most metals; its tip can tack-fuse a thin seam with care)? If not, say so and stop (no roll).
+  2. *Construction*: time taken (rounds or minutes) and a check only if failure is meaningful, with the sheet's real proficiencies
+     (none assumed). Each round or minute of work is a point where the world can act (detection, attacks, arrivals).
+  3. *Effectiveness*: what the result can and cannot do. Record its limits; test durability when something stresses it, never assume it.
+- **Persist**: `equipment_change {item, to, where, at}` for every declared move of gear; `item_created {id, label, state, where, made_from,
+  limits}` only when construction succeeded; `environment_change {target, change, limits}` for modifications such as a welded seam
+  (hidden numbers, e.g. the strength the weld resists, go in a `gm_only` ruling). An interrupted construction creates nothing (state
+  what partial work exists in the narration and, if it matters later, as `environment_change` with `limits: "unfinished"`).
+
 ## 4. Narrate, make it durable, then publish
 1. Write narration to `/tmp/narr.txt` per NARRATIVE_SPEC (high-intensity horror where earned; injuries match committed damage; perspective rules). Run `turn.py lint <campaign_id> /tmp/narr.txt` and fix until it passes.
 2. Commit `gm_narration` (details `{text}`), `scene_state`, then a fresh public `turn_context` (TURN_CONTRACT §2, only what Aero can perceive) with idem `<action_id>:ctx`. The context must give:

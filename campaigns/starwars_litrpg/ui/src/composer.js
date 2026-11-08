@@ -23,7 +23,13 @@
   }
   var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) { upgradeSel(x.sel); return x; } } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
   function saveUi() { ls("datapad.ui", JSON.stringify(ui)); }
-  function ctxOf(v) { return v && v.turn_context ? v.turn_context : null; }
+  var eqCache = { src: null, out: null };
+  function ctxOf(v) {  // gear interactions (take out / put away / set down) are derived from the record's equipment
+    var c = v && v.turn_context ? v.turn_context : null;
+    if (!c) return null;
+    if (eqCache.src !== c) { eqCache.src = c; try { eqCache.out = T.withEquipment(c); } catch (e) { eqCache.out = c; } }
+    return eqCache.out;
+  }
   /* A new turn context never throws away a plan in progress: the steps are kept and re-checked against
      what Aero sees now (steps that no longer fit are marked). Left-over steps of the old context are dropped:
      the GM republishes them when they still apply. */
@@ -79,6 +85,9 @@
     if (x.option) st.option = x.option;
     if (x.text != null) st.text = x.text;
     if (x.kind) st.kind = x.kind;
+    ["method", "hands", "reach_ft"].forEach(function (k) { if (x[k] != null && x[k] !== "") st[k] = x[k]; });
+    ["uses", "targets", "equipment_changes"].forEach(function (k) { if (x[k] && x[k].length) st[k] = x[k].slice(); });
+    if (x.creates && x.creates.label) st.creates = { label: x.creates.label, state: x.creates.state || "placed" };
     if (x.type === "action" || x.type === "bonus_action") { st.target = x.target || null; st.trigger = x.trigger || null; }
     if (x.condition && x.condition.text && x.condition.text.trim()) st.condition = { text: x.condition.text.trim() };
     if (x.pending) { st.pending = true; if (x.status) st.status = x.status; if (x.authorized) { st.authorized = true; if (typeof x.authorized_ctx === "string") st.authorized_ctx = x.authorized_ctx; } }
@@ -116,7 +125,7 @@
   function fromDecl(st, seqMap, authorize) {
     var x = { id: newId(), seq: seqMap(st.seq || 0), type: st.type };
     if (st.status) x.status = st.status;
-    ["option", "text", "kind", "target", "trigger"].forEach(function (k) { if (st[k] != null) x[k] = st[k]; });
+    ["option", "text", "kind", "target", "trigger", "method", "hands", "uses", "targets", "equipment_changes", "creates"].forEach(function (k) { if (st[k] != null) x[k] = JSON.parse(JSON.stringify(st[k])); });
     if (st.type === "speech" && st.option) delete x.text;
     if (st.condition) x.condition = { text: st.condition.text };
     if (st.pending) { x.pending = true; if (authorize) { x.authorized = true; x.authorized_ctx = authorize; } }
@@ -203,9 +212,30 @@
     parts.push(c.hands ? "right: " + (c.hands.right ? (c.hands.right.label || itemName(c.hands.right)) : "free") + " · left: " + (c.hands.left ? (c.hands.left.label || itemName(c.hands.left)) : "free") : "hands: the GM checks");
     if (c.position_label) parts.push(c.position_label);
     var fl = (c.state_flags || []).map(function (f) { return flagName(c, f); }); if (fl.length) parts.push(fl.join(", "));
+    if ((c.equipment || []).length) {
+      var g = c.equipment.filter(function (e) { return !e.fixed && ["holstered", "attached", "transported", "placed", "dropped"].indexOf(e.state) >= 0; }).map(function (e) { return e.label + " (" + (STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "") + (e.uncertain ? ", unconfirmed" : "") + ")"; });
+      var packed = c.equipment.filter(function (e) { return e.state === "stored"; }).length;
+      parts.push("gear: " + (g.length ? g.join("; ") : "nothing loose") + (packed ? "; " + packed + " items packed" : ""));
+    }
     var lint = []; try { lint = T.contextLint(c).filter(function (f) { return f.level === "warn"; }); } catch (e) {}
     return '<div class="now" role="status"><span class="pill ok">Now · committed</span> <span>' + esc(parts.join(" · ")) + "</span></div>" +
       (lint.length ? '<div class="note deferred">Some checks are left to the GM for this moment: ' + esc(lint.map(function (f) { return f.code === "NO_HANDS" ? "what Aero holds" : f.code === "NO_AT" ? "where some actions can be done" : "a detail of the scene"; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ")) + ". The Datapad will not guess them.</div>" : "");
+  }
+  function eqLabel(c, id) {
+    var e = byId(c.equipment, id); if (e) return e.label;
+    if (/^made_/.test(id)) { var f = locate(id.slice(5)); var x = f && f.list[f.index]; if (x && x.creates && x.creates.label) return x.creates.label; }
+    return String(id).replace(/_/g, " ");
+  }
+  var STATEWORD = { held: "in hand", holstered: "holstered", worn: "worn", stored: "packed", attached: "attached", transported: "carried along", placed: "set down", dropped: "dropped" };
+  function customMeta(c, x) {
+    var parts = [];
+    if (x.method) parts.push("how: " + x.method);
+    if ((x.uses || []).length) parts.push("using " + x.uses.map(function (id) { return eqLabel(c, id); }).join(", "));
+    if ((x.targets || []).length) parts.push("on " + x.targets.map(function (id) { var v = byId(c.visible, id); return v ? (v.short || v.label) : id; }).join(", "));
+    if (x.hands != null && x.hands !== "") parts.push(x.hands + " hand" + (+x.hands === 1 ? "" : "s"));
+    (x.equipment_changes || []).forEach(function (ch) { parts.push(eqLabel(c, ch.item) + " → " + (STATEWORD[ch.to] || ch.to)); });
+    if (x.creates && x.creates.label) parts.push("makes " + x.creates.label + " (" + (STATEWORD[x.creates.state] || x.creates.state) + ", if it works)");
+    return parts.length ? '<div class="note meta">' + esc(parts.join(" · ")) + "</div>" : "";
   }
   function plannedLine(c, x, prev, cur) {
     if (!cur) return "";
@@ -217,6 +247,17 @@
     var attempt = x.type === "action" || x.type === "bonus_action";
     if (add.length) parts.push(add.map(function (f) { return flagName(c, f); }).join(", ") + (attempt ? " (if it works)" : ""));
     if (rem.length) parts.push("no longer " + rem.map(function (f) { return flagName(c, f); }).join(", "));
+    if (cur.equipment) {
+      var pe = prev.equipment || {}; if (!prev.equipment) (c.equipment || []).forEach(function (e) { pe[e.id] = e.state; });
+      Object.keys(cur.equipment).forEach(function (k) {
+        if (pe[k] === cur.equipment[k]) return;
+        var st = cur.equipment[k], planned = /\*$/.test(st); st = st.replace(/\*$/, "");
+        if (/^eq_|^(right|left)$/.test(k)) return;
+        if (cur.hands && st === "held" && pe[k] !== undefined) return;  // already shown as a hand change
+        parts.push(eqLabel(c, k) + ": " + (STATEWORD[st] || st) + (planned ? " (if it works)" : ""));
+      });
+    }
+    if (cur.load != null && prev.load !== cur.load && c.carry && cur.load > c.carry.capacity) parts.push("load " + cur.load + "/" + c.carry.capacity);
     return parts.length ? '<div class="planned">Planned: ' + esc(parts.join(" · ")) + "</div>" : "";
   }
   function locate(id, list, parent, k) {
@@ -232,6 +273,7 @@
     var open = ui.openStep === x.id;
     var h = '<li class="step st-' + st.status + (open ? " open" : "") + '" data-sid="' + esc(x.id) + '"><div class="srow" data-open="' + esc(x.id) + '" role="button" tabindex="0" aria-expanded="' + open + '" aria-label="' + esc(stepLabel(c, x)) + ': show controls"><span class="ico" title="' + STXT[st.status] + '" aria-label="' + STXT[st.status] + '">' + ICON[st.status] + '</span><span class="lbl' + (x.type === "speech" || x.type === "free" ? " verb" : "") + '">' + esc(stepLabel(c, x)) +
       (x.pending ? ' <span class="tag">' + (x.authorized ? "continued" : "left over") + "</span>" : "") + (x.condition ? ' <span class="tag">only if</span>' : "") + '</span><span class="more" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></div>";
+    if (x.type === "free") h += customMeta(c, x);
     if (x.type !== "branch") h += plannedLine(c, x, p, cur);
     if (st.messages.length && st.status !== "ok") h += st.messages.map(function (m) { return '<div class="' + (st.status === "fix" ? "msg-err" : st.status === "risky" ? "msg-warn" : "note") + '">' + esc(m) + "</div>"; }).join("");
     if (st.status === "fix" && (st.suggest_steps || []).length) {
@@ -302,6 +344,29 @@
     if (stt === "needs_choice") h += '<button class="btn mini pre" data-how="' + esc(label) + '">Say how (custom action)</button>';
     return h + "</div>";
   }
+  function customEditor(c, s) {
+    var d = s.actX || {}, gear = (c.equipment || []).filter(function (e) { return !e.fixed; });
+    var h = '<div class="ed" id="pg_custom"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Tie the syntherope into a harness so the torch and bottles ride on my back">' + esc(s.actDraft) + "</textarea>" +
+      '<details class="howto"' + (d.open ? " open" : "") + ' id="actHow"><summary>Method, tools and result (optional)</summary>' +
+      '<label for="w_how">How Aero does it</label><textarea id="w_how" rows="1" placeholder="e.g. a sling over both shoulders, bottles lashed back to back">' + esc(d.method || "") + "</textarea>";
+    if (gear.length) h += '<div class="note">Using (only what Aero has):</div><div class="usegrid">' + gear.map(function (e) {
+      var on = (d.uses || []).indexOf(e.id) >= 0;
+      return '<label class="opt"><input type="checkbox" data-use="' + esc(e.id) + '"' + (on ? " checked" : "") + '><span class="lbl">' + esc(e.label) + "<small>" + esc((STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "")) + "</small></span></label>" +
+        (on ? '<select class="txt" data-after-use="' + esc(e.id) + '" aria-label="Afterwards, ' + esc(e.label) + '"><option value="">afterwards: no change</option>' + ["held", "worn", "attached", "stored", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + (d.after && d.after[e.id] === st ? " selected" : "") + ">afterwards: " + STATEWORD[st] + "</option>"; }).join("") + "</select>" : "");
+    }).join("") + "</div>";
+    h += '<label for="w_on">On / at</label><select class="txt" id="w_on"><option value="">(nothing in particular)</option>' + (c.visible || []).map(function (v) { return '<option value="' + esc(v.id) + '"' + (d.target === v.id ? " selected" : "") + ">" + esc(v.label) + "</option>"; }).join("") + "</select>" +
+      '<label for="w_hands">Hands it needs</label><select class="txt" id="w_hands"><option value="">let the builder work it out</option>' + [0, 1, 2].map(function (n) { return '<option value="' + n + '"' + (String(d.hands) === String(n) ? " selected" : "") + ">" + n + "</option>"; }).join("") + "</select>" +
+      '<label for="w_makes">Makes, if it works</label><input class="txt" id="w_makes" placeholder="e.g. a rope harness" value="' + esc(d.makes || "") + '">' +
+      '<select class="txt" id="w_makes_state" aria-label="Where the result ends up">' + ["worn", "attached", "held", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + ((d.makes_state || "worn") === st ? " selected" : "") + ">it ends up " + STATEWORD[st] + "</option>"; }).join("") + "</select>" +
+      '<div class="note">The GM decides whether the method works, how long it takes and whether the result holds. Nothing is assumed.</div></details>' +
+      '<button class="btn" id="addAct">Add action</button></div>';
+    return h;
+  }
+  function gearGroup(c, by) {  // Aero's own gear, at this point of the plan: only what can actually be done with it
+    var items = (c.objects || []).filter(function (o) { var a = by["object:" + o.id]; return o.gear && (!a || a.status !== "not_here"); });
+    if (!items.length) return "";
+    return '<details class="palgrp" id="pg_gear"' + (ui.gearOpen ? " open" : "") + '><summary><h3 style="display:inline">Gear (' + items.length + ')</h3></summary><div class="palgrid">' + items.map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); }).join("") + "</div></details>";
+  }
   function renderPalette(c, s, d) {
     var w = activeWhere(s), av = safeAvail(d, c, w), by = {};
     av.forEach(function (a) { by[a.type + ":" + a.option] = a; });
@@ -310,7 +375,7 @@
     function used(id) { var n = 0; T.flat(s.steps).forEach(function (x) { if (x.type === "speech" && x.option === id) n++; }); return n; }
     function grp(title, items, id) { return items.length ? '<div class="palgrp"' + (id ? ' id="' + id + '"' : "") + "><h3>" + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
     var acts = (c.options || []).filter(function (o) { return o.slot === "action"; }), bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["↑ Plan", "planTop"], ["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
+    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["↑ Plan", "planTop"], ["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Gear", "pg_gear"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
     var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" + nav +
       '<div class="note added" id="lastAdded" role="status" aria-live="polite">' + esc(ui.lastAdded || "") + "</div>" +
       '<div class="note">Everything Aero could try right now. Greyed-out choices say what is missing at that point in your plan; nothing is added unless you tap it.</div>' +
@@ -319,8 +384,9 @@
       grp("Do", acts.map(function (o) { return palBtn("action:" + o.id, o.label, o.detail, by["action:" + o.id]); }), "pg_do") +
       grp("Quick (bonus)", bon.map(function (o) { return palBtn("bonus_action:" + o.id, o.label, o.detail, by["bonus_action:" + o.id]); })) +
       grp("Go", (c.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return palBtn("move:" + m.id, m.label, m.feet ? "~" + m.feet + " ft" : "", by["move:" + m.id]); }), "pg_go") +
-      grp("Handle", (c.objects || []).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); }), "pg_handle") +
-      '<div class="ed" id="pg_custom"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Load the torch and both bottles onto the handcart">' + esc(s.actDraft) + '</textarea><button class="btn" id="addAct">Add action</button></div>' +
+      grp("Handle", (c.objects || []).filter(function (o) { return !o.gear; }).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); }), "pg_handle") +
+      gearGroup(c, by) +
+      customEditor(c, s) +
       (w.branch ? "" : '<button class="btn" id="addBranch">Add a decision (if / else if / otherwise)</button>');
     return h + "</fieldset>";
   }
@@ -589,7 +655,28 @@
       saveUi(); render(); var t = $("w_act"); if (t) { t.focus(); try { t.setSelectionRange(t.value.length, t.value.length); } catch (x) {} t.scrollIntoView({ block: "center" }); }
     });
     on("addSay", "click", function () { var t = $("w_say") ? $("w_say").value : ""; if (!t.trim()) return; addAtActive({ id: newId(), type: "speech", text: t.replace(/\s+$/, "") }); ui.sel.sayDraft = ""; changed(); });
-    on("addAct", "click", function () { var t = $("w_act") ? $("w_act").value : ""; if (!t.trim()) return; addAtActive({ id: newId(), type: "free", text: t.replace(/\s+$/, ""), kind: "custom" }); ui.sel.actDraft = ""; changed(); });
+    on("addAct", "click", function () {
+      var t = $("w_act") ? $("w_act").value : ""; if (!t.trim()) return;
+      var d = ui.sel.actX || {}, st = { id: newId(), type: "free", text: t.replace(/\s+$/, ""), kind: "custom" };
+      if (d.method && d.method.trim()) st.method = d.method.replace(/\s+$/, "");
+      if ((d.uses || []).length) st.uses = d.uses.slice();
+      if (d.target) st.targets = [d.target];
+      if (d.hands !== undefined && d.hands !== "") st.hands = +d.hands;
+      var ch = Object.keys(d.after || {}).filter(function (k) { return d.after[k] && (d.uses || []).indexOf(k) >= 0; }).map(function (k) { return { item: k, to: d.after[k] }; });
+      if (ch.length) st.equipment_changes = ch;
+      if (d.makes && d.makes.trim()) st.creates = { label: d.makes.trim(), state: d.makes_state || "worn" };
+      addAtActive(st); ui.sel.actDraft = ""; ui.sel.actX = {}; changed();
+    });
+    function actx() { ui.sel.actX = ui.sel.actX || {}; return ui.sel.actX; }
+    on("actHow", "toggle", function (e) { actx().open = e.target.open; saveUi(); });
+    on("pg_gear", "toggle", function (e) { ui.gearOpen = e.target.open; saveUi(); });
+    on("w_how", "input", function (e) { actx().method = e.target.value; autoGrow(e.target); saveUi(); });
+    on("w_makes", "input", function (e) { actx().makes = e.target.value; saveUi(); });
+    on("w_makes_state", "change", function (e) { actx().makes_state = e.target.value; saveUi(); });
+    on("w_on", "change", function (e) { actx().target = e.target.value; saveUi(); });
+    on("w_hands", "change", function (e) { actx().hands = e.target.value; saveUi(); });
+    each("[data-use]", function (el) { el.addEventListener("change", function () { var x = actx(), id = el.getAttribute("data-use"); x.uses = (x.uses || []).filter(function (u) { return u !== id; }); if (el.checked) x.uses.push(id); x.open = true; saveUi(); render(); }); });
+    each("[data-after-use]", function (el) { el.addEventListener("change", function () { var x = actx(); x.after = x.after || {}; x.after[el.getAttribute("data-after-use")] = el.value; saveUi(); }); });
     on("addBranch", "click", function () {
       var b = { id: newId(), type: "branch", otherwise: "stop", cases: [{ when: "", after: "continue", steps: [] }] };
       addAtActive(b); ui.sel.active = { branch: b.id, "case": 0 }; changed();

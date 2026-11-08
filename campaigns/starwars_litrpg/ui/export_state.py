@@ -91,6 +91,9 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     turn_context = None
     if tc_idx is not None and all(e["kind"] in PRESENT for e in ev[tc_idx + 1:]):
         turn_context = dict(ev[tc_idx]["details"]); turn_context["context_id"] = ev[tc_idx]["event_id"]
+        if turn_context.get("equipment_from_ledger"):  # contract 3: gear whereabouts from the sheet + committed events, never typed by hand
+            import equipment as _eqm
+            turn_context["equipment"] = _eqm.derive(ev)
     # Dice shown for the latest resolved turn: public roll log entries cited by events after the
     # last player declaration (the public log never stores DCs).
     rolls = []

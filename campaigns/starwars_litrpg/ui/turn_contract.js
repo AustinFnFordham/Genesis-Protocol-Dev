@@ -60,7 +60,7 @@
    * judgment, but must run the same validator on its reading. */
   var MOTION = /\b(go|goes|walk|walks|head|heads|move|moves|run|runs|return|returns|back to|cross|crosses|step|steps|climb|climbs|come back)\b/i;
   var COND = /\b(if|unless|only if|depending on|in case|provided that|as long as|whether)\b/i;
-  var ITEM = /\b(take|takes|grab|grabs|pick up|picks up|carry|carries|bring|brings|pocket|stow|loot|put (?:it|them) in)\b/i;
+  var ITEM = /\b(take|takes|grab|grabs|pick up|picks up|carry|carries|bring|brings|pocket|stow|loot|put (?:it|them) in|throw|throws|use|uses|using|with my|tie|ties|lash|lashes|weld|welds)\b/i;
   var POWER = /\b(force (?:push|pull|choke|lightning|jump|speed|wave|throw|grip|crush|heal|persuade|stasis|barrier|sense)|mind trick|use the force)\b/i;
   function classify(text) {
     var t = String(text || "");
@@ -117,7 +117,14 @@
         matchesIn(c.text, ctx.objects, "object"),
         matchesIn(c.text, ctx.reactions, "reaction")), c.text);
       var cond = COND.test(c.text) ? { text: c.text.trim() } : null;
-      if (!ms.length) { steps.push({ type: "free", text: c.text.trim(), kind: classify(c.text) }); return; }
+      if (!ms.length) {
+        var fs = { type: "free", text: c.text.trim(), kind: classify(c.text) };
+        // free text naming Aero's own gear: link it so its whereabouts are checked; the GM still reads the method
+        var gear = findAliases(c.text, ctx.equipment || []);
+        if (gear.length) { fs.uses = gear; fs.parsed = true; fs.kind = "custom"; }
+        if (cond) fs.condition = cond;
+        steps.push(fs); return;
+      }
       ms.forEach(function (h) {
         if (h.kind === "reaction") { d.reactions.push(h.id); return; }
         var st = { type: h.kind, option: h.id };
@@ -281,6 +288,8 @@
     var actionCount = actions.length + (speechAction ? 1 : 0);
     var actLabels = actions.map(function (a) { var o = byId(opts, a.option); return o ? o.label : a.option; });
     if (speechAction) actLabels.push("an extended social action");
+    var customs = steps.filter(function (s) { return s.type === "free" && (s.kind === "custom" || s.method || (s.uses || []).length); });
+    if (combat && customs.length) { actionCount += customs.length; customs.forEach(function () { actLabels.push("a custom action"); }); }
 
     // 3. action economy (combat only)
     var extraObjects = Math.max(0, objs.length - (b.object_interaction == null ? 1 : b.object_interaction));
@@ -312,10 +321,17 @@
     var hands = ctx.hands && typeof ctx.hands === "object" ? clone(ctx.hands) : null;
     var here = {}; (ctx.visible || []).forEach(function (v) { here[v.id] = v.distance_ft; });
     var pos = ctx.position_label || null;
+    // equipment (contract 3): where each established item is, step by step. Only items in ctx.equipment exist;
+    // nothing is ever granted. Held / holstered / worn / stored / attached / transported / placed / dropped.
+    var eq = {}; (ctx.equipment || []).forEach(function (e) { eq[e.id] = clone(e); });
+    var CARRIED = ["held", "holstered", "worn", "stored", "attached"];
+    function eqName(id) { var e = eq[id]; return e ? (e.label || id.replace(/_/g, " ")) : id.replace(/_/g, " "); }
+    function flagName(f) { return ctx.flag_labels && ctx.flag_labels[f] || f.replace(/_/g, " "); }
+    function eqSnap() { var o = {}; Object.keys(eq).forEach(function (k) { o[k] = eq[k].state + (eq[k].planned ? "*" : ""); }); return o; }
     function heldText() { return ["right", "left"].map(function (h) { return hands[h] ? "your " + h + " hand holds " + (hands[h].label || hands[h].item || hands[h]) : "your " + h + " hand is free"; }).join(" and "); }
     function freeCount() { return ["right", "left"].filter(function (h) { return !hands[h]; }).length; }
     function freers(from) {
-      return (ctx.objects || []).filter(function (o) { return (o.frees_hand && hands[o.frees_hand]) || (o.frees_item && holding(o.frees_item)); })
+      return (ctx.objects || []).filter(function (o) { return ((o.frees_hand && hands[o.frees_hand]) || (o.frees_item && holding(o.frees_item))) && !(o.unless_active && flags.indexOf(o.unless_active) >= 0) && !(o.gear && o.to_state === "placed" && (ctx.objects || []).some(function (x) { return x.id === "eq_stow:" + o.frees_item; })); })
         .filter(function (o) { return !steps.slice(0, from).some(function (s) { return s.type === "object" && s.option === o.id; }); }).map(function (o) { return o.id; });
     }
     function holding(item) { return ['right', 'left'].filter(function (h) { return hands[h] && hands[h].item === item; })[0] || null; }
@@ -330,13 +346,79 @@
       (o.grants || []).forEach(function (f) { if (flags.indexOf(f) < 0) flags.push(f); });
       (o.removes || []).forEach(function (f) { flags = flags.filter(function (x) { return x !== f; }); });
     }
-    function snap(s) { trace.push({ step_id: s.id, hands: hands ? clone(hands) : null, position: pos, flags: flags.slice() }); }
+    function snap(s) {
+      var load = null;
+      if (ctx.carry && ctx.carry.capacity != null) {
+        load = Object.keys(eq).reduce(function (t, k) { var e = eq[k]; return t + (CARRIED.indexOf(e.state) >= 0 && e.bulk != null ? e.bulk * (e.quantity || 1) : 0); }, 0);
+        if (load > ctx.carry.capacity && !s.__enc) warn("ENCUMBERED", "At that point Aero would carry about " + load + " of " + ctx.carry.capacity + " " + (ctx.carry.unit || "bulk") + ". Moving that loaded can be slow or unsafe; the GM adjudicates.", { step: steps.indexOf(s), step_id: s.id, advisory: true });
+      }
+      trace.push({ step_id: s.id, hands: hands ? clone(hands) : null, position: pos, flags: flags.slice(), equipment: (ctx.equipment ? eqSnap() : null), load: load });
+    }
+    function takeHand(item, label, n) { ["right", "left"].forEach(function (h) { if (n > 0 && !hands[h]) { hands[h] = { item: item, label: label }; n--; } }); }
+    /* Improvised / custom steps with a declared method, tools (uses), targets, equipment changes or a result (creates).
+       The builder constrains what is impossible (an item Aero does not have), asks about what is underspecified (no free
+       hand and no method, a tool still in the pack, a target out of reach) and leaves the uncertain to the GM: whether the
+       method works, how long it takes, whether the result holds. A created item exists only as "planned" until the GM
+       commits it; later steps that use it depend on that. */
+    function customStep(s, i) {
+      var ex = { step: i, step_id: s.id }, how = !!String(s.method || "").trim() || !!s.parsed;
+      function ask(code, msg, extra) { if (how) warn("GM_" + code, msg + " The GM adjudicates the method you described.", { step: i, step_id: s.id, advisory: true }); else err(code, msg, Object.assign({ step: i, step_id: s.id }, extra || {})); }
+      (s.uses || []).forEach(function (id) {
+        var e = eq[id];
+        if (!e) { err("UNKNOWN_ITEM", "“" + String(id).replace(/_/g, " ") + "” is not part of Aero's established equipment. The GM never adds gear that is not in the record.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
+        if (e.planned) warn("GM_DEPENDS", eqName(id) + " exists only if an earlier step works; the GM resolves that first.", { step: i, step_id: s.id, advisory: true });
+        var movesIt = (s.equipment_changes || []).some(function (ch) { return ch.item === id; });
+        if (["holstered", "stored", "worn", "attached"].indexOf(e.state) >= 0 && !e.usable_in_place && !e.planned && !movesIt) {
+          var take = byId(ctx.objects, "eq_take:" + id);
+          ask("ACCESS", eqName(id) + " is " + e.state + (e.where ? " (" + e.where + ")" : "") + " at that point. Take it out first, or say how Aero uses it where it is.",
+              { resolution: take ? "add_step" : "needs_choice", suggest: take ? [take.id] : [], suggest_steps: take ? [{ type: "object", option: take.id }] : [] });
+        }
+        if ((e.state === "placed" || e.state === "dropped") && e.at && here[e.at] != null && here[e.at] > 5) ask("POSITION", eqName(id) + " lies " + (e.where || "") + " about " + here[e.at] + " ft away at that point.");
+        if (e.state === "transported" && e.at && here[e.at] != null && here[e.at] > 5) ask("POSITION", eqName(id) + " is on " + names(ctx, [e.at])[0] + ", about " + here[e.at] + " ft away at that point.");
+        if (e.active_when && flags.indexOf(e.active_when) < 0) {
+          var pv = providers(e.active_when);
+          ask("REQUIRES", eqName(id) + " needs " + flagName(e.active_when) + " for that.", { resolution: pv.length ? "add_step" : "needs_choice", suggest: pv.map(function (p) { return p.option; }), suggest_steps: pv });
+        }
+      });
+      (s.targets || []).forEach(function (vid) {
+        var v = byId(ctx.visible, vid), reach = s.reach_ft != null ? s.reach_ft : 5;
+        if (!v) { err("TARGET", "“" + vid + "” is not something Aero can see right now.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
+        if (here[vid] != null && here[vid] > reach) {
+          var mv2 = (ctx.movement || []).filter(function (m) { return m.distance_after && m.distance_after[vid] != null && m.distance_after[vid] <= reach; }).map(function (m) { return m.id; });
+          ask("POSITION", v.label + " is about " + here[vid] + " ft away at that point.", { resolution: mv2.length ? "add_step" : "needs_choice", suggest: mv2, suggest_steps: mv2.map(function (id) { return { type: "move", option: id }; }) });
+        }
+      });
+      if (hands) {
+        var need = s.hands != null ? +s.hands : ((s.uses || []).length || (s.equipment_changes || []).length ? 1 : 0);
+        var usable = freeCount() + ["right", "left"].filter(function (h) { return hands[h] && (s.uses || []).indexOf(hands[h].item) >= 0; }).length;
+        if (need > usable) {
+          var f = freers(i).filter(function (oid) { var ob = byId(ctx.objects, oid); return !(ob && (s.uses || []).indexOf(ob.frees_item) >= 0); });
+          ask("HANDS", "This needs " + need + " hand" + (need > 1 ? "s" : "") + "; at that point " + heldText() + ".",
+              { resolution: f.length ? "add_step" : "needs_choice", suggest: f, suggest_steps: f.map(function (id) { return { type: "object", option: id }; }) });
+        }
+      }
+      (s.equipment_changes || []).forEach(function (ch) {
+        var e = eq[ch.item];
+        if (!e) { err("UNKNOWN_ITEM", "“" + String(ch.item).replace(/_/g, " ") + "” is not part of Aero's established equipment.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
+        if (hands && e.state === "held" && ch.to !== "held") { var h0 = holding(ch.item); if (h0) hands[h0] = null; }
+        if (hands && ch.to === "held" && e.state !== "held") takeHand(ch.item, "the " + eqName(ch.item), e.hands == null ? 1 : e.hands);
+        e.state = ch.to; if (ch.where) e.where = ch.where; if (ch.at) e.at = ch.at;
+      });
+      if (s.creates && String(s.creates.label || "").trim()) {
+        var nid = s.creates.id || ("made_" + s.id);
+        eq[nid] = { id: nid, label: s.creates.label, state: s.creates.state || "placed", where: s.creates.where || "", planned: true, from_step: s.id };
+        info.push({ code: "IMPROVISED", message: "“" + s.creates.label + "” would exist only if the GM rules the method works. Whether it can be made, how long it takes, and whether it holds are separate questions; nothing is assumed durable." });
+      }
+    }
     steps.forEach(function (s, i) {
       var ex = { step: i, step_id: s.id };
       if (s.type === "move") {
         var m = byId(ctx.movement, s.option);
         if (m) { if (m.distance_after) for (var k in here) here[k] = m.distance_after[k] != null ? m.distance_after[k] : null; pos = placeOf(m, ctx) || pos; applyFlags(m); }
         snap(s); return;
+      }
+      if (s.type === "free" && (s.method || (s.uses || []).length || (s.targets || []).length || (s.equipment_changes || []).length || s.creates)) {
+        customStep(s, i); snap(s); return;
       }
       if (s.type === "free") {  // custom steps: the GM adjudicates; report what is visible at that point
         var t = String(s.text || ""), kinds = kindsOf(t);
@@ -387,6 +469,17 @@
         err("POSITION", o.label + ": " + names(ctx, [o.at])[0] + " is about " + here[o.at] + " ft away at that point. " + (reach.length ? "Add a move there first." : "There is no listed way to reach it from here."),
             { step: i, step_id: s.id, resolution: reach.length ? "add_step" : "not_possible_here", suggest: reach, suggest_steps: reach.map(function (id) { return { type: "move", option: id }; }) });
       }
+      if (o.item && eq[o.item] && o.to_state === "held") {
+        var ei = eq[o.item];
+        if (ei.state === "held") err("ALREADY", o.label + ": at that point it is already in Aero's hand.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+        else if ((ei.state === "placed" || ei.state === "dropped") && !o.at) err("ACCESS", o.label + ": at that point it is " + ei.state + (ei.where ? " " + ei.where : "") + ", not on Aero.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+      }
+      if (o.unless_active && flags.indexOf(o.unless_active) >= 0) {
+        var offs = (ctx.objects || []).filter(function (x) { return (x.removes || []).indexOf(o.unless_active) >= 0; }).map(function (x) { return x.id; });
+        err("REQUIRES", o.label + ": it is still active at that point (" + flagName(o.unless_active) + "). Switch it off first.", { step: i, step_id: s.id, resolution: offs.length ? "add_step" : "not_possible_here", suggest: offs, suggest_steps: offs.map(function (id) { return { type: "object", option: id }; }) });
+      }
+      if (o.frees_item && eq[o.frees_item] && eq[o.frees_item].state !== "held")
+        err("ALREADY", o.label + ": at that point " + eqName(o.frees_item) + " is not in Aero's hand.", { step: i, step_id: s.id, resolution: "not_possible_here" });
       if (hands) {
         var need = (o.needs_hands || 0) + (o.takes_hands || 0);
         if (need > freeCount()) {
@@ -397,9 +490,11 @@
         } else if (o.takes_hands) {
           var n = o.takes_hands; ["right", "left"].forEach(function (h) { if (n > 0 && !hands[h]) { hands[h] = { item: o.item || o.id, label: o.item_label || (o.item ? "the " + String(o.item).replace(/_/g, " ") : o.label) }; n--; } });
         }
-        if (o.frees_hand && hands[o.frees_hand]) hands[o.frees_hand] = null;
+        if (o.frees_hand && hands[o.frees_hand]) { var fi = hands[o.frees_hand].item; if (eq[fi]) { eq[fi].state = o.to_state || eq[fi].home_state || "holstered"; } hands[o.frees_hand] = null; }
         if (o.frees_item && holding(o.frees_item)) hands[holding(o.frees_item)] = null;
       }
+      if (o.item && eq[o.item] && o.to_state) eq[o.item].state = o.to_state;
+      if (o.frees_item && eq[o.frees_item]) { eq[o.frees_item].state = o.to_state || "placed"; if (o.to_state === "placed") eq[o.frees_item].where = pos || "here"; }
       applyFlags(o);
       snap(s);
     });
@@ -458,7 +553,24 @@
   }
   function halting(steps) { var h = []; steps.forEach(function (s, i) { if ((s.condition && s.condition.text) || s.type === "branch") h.push(i); }); return h; }
 
+  /* Equipment interactions are derived from ctx.equipment (the record), so the palette always offers taking an item
+     out, putting it away or setting it down, without the GM listing each one. Objects the GM published for an item win. */
+  function withEquipment(ctx) {
+    if (!ctx || !Array.isArray(ctx.equipment) || ctx.__eq) return ctx;
+    var c = clone(ctx); c.__eq = true; c.objects = (c.objects || []).slice();
+    var covered = {}; c.objects.forEach(function (o) { [o.item, o.frees_item, o.equipment].forEach(function (x) { if (x) covered[x] = 1; }); });
+    c.equipment.forEach(function (e) {
+      if (covered[e.id] || e.fixed) return;
+      var nm = e.label || e.id.replace(/_/g, " "), hands = e.hands == null ? 1 : e.hands;
+      if (e.state !== "transported") c.objects.push({ id: "eq_take:" + e.id, label: (e.state === "holstered" ? "Draw " : "Take out ") + nm, takes_hands: hands, item: e.id, item_label: nm, to_state: "held", generated: true, gear: true,
+        detail: e.where ? "from " + e.where : "", at: (e.state === "placed" || e.state === "dropped") ? e.at : undefined });
+      c.objects.push({ id: "eq_stow:" + e.id, label: "Put away " + nm, frees_item: e.id, to_state: e.home_state || "stored", generated: true, gear: true, detail: e.home ? "to " + e.home : "", unless_active: e.active_when });
+      c.objects.push({ id: "eq_place:" + e.id, label: "Set " + nm + " down here", frees_item: e.id, to_state: "placed", generated: true, gear: true, unless_active: e.active_when });
+    });
+    return c;
+  }
   function validate(declIn, ctx) {
+    ctx = withEquipment(ctx);
     var decl = normalize(declIn, ctx), combat = ctx.mode === "combat";
     var ps = paths(decl.steps), errors = [], warnings = [], info = [], trace = {}, used = null, speechAction = false;
     if (ps.error) {
@@ -555,6 +667,7 @@
       (ctx.objects || []).map(function (o) { return { type: "object", option: o.id, label: o.label }; }));
   }
   function availability(declIn, ctx, where) {
+    ctx = withEquipment(ctx);
     var base = normalize(declIn, ctx), rb = validate(base, ctx);
     var baseGlobal = rb.errors.filter(function (e) { return !e.step_id; }).map(function (e) { return e.code; });
     return candidates(ctx).map(function (c) {
@@ -590,6 +703,7 @@
   var STOP_KINDS = ["consequential", "mechanical", "prerequisite", "condition", "combat", "complete"];
   var CONTINUABLE = ["interrupted", "paused", "unattempted", "suspended", "pending"];
   function planProgress(declIn, ctx, outcome) {
+    ctx = withEquipment(ctx);
     var decl = normalize(declIn, ctx), o = outcome || {}, kind = o.stop_kind, problems = [];
     if (kind === "incidental") problems.push("An incidental event is not a stop: log it and continue the plan.");
     else if (STOP_KINDS.indexOf(kind) < 0) problems.push("Unknown stop_kind " + JSON.stringify(kind) + ".");
@@ -701,7 +815,7 @@
   }
 
   return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, normalize: normalize, validate: validate, summary: summary, haltAt: haltAt, classify: classify,
-           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, contextLint: contextLint, STOP_KINDS: STOP_KINDS, CONTINUABLE: CONTINUABLE };
+           flat: flat, withEquipment: withEquipment, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, contextLint: contextLint, STOP_KINDS: STOP_KINDS, CONTINUABLE: CONTINUABLE };
 });
 
 /* node CLI: node turn_contract.js validate <decl.json|-> <ctx.json>   |   parse "<text>" <ctx.json> */

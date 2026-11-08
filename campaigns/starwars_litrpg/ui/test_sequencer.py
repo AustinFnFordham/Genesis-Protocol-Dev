@@ -44,7 +44,7 @@ def avail(decl, where=None, ctx=CTX):
     return {a["option"]: a for a in node(*args, stdin=json.dumps(decl))}
 
 
-def progress(decl, outcome, ctx=CTX):
+def progress(decl, outcome, ctx=CTX):  # noqa
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
         json.dump(outcome, f)
     return node("progress", "-", str(ctx), f.name, stdin=json.dumps(decl))
@@ -339,6 +339,130 @@ def test_contract2_and_1_declarations_still_validate():
            "bonus_actions": [], "movement": {"option": "hold"}, "objects": [], "reactions": [], "unmapped": []}
     v = validate(old)
     assert v["legal"] and v["steps"][0]["id"] == "k0" and v["contract"] == "turn-contract/3"
+
+
+# ---------- improvised equipment handling (owner 2026-11-08): S4 syntherope harness, S5 quick lightsaber weld ----------
+WELD = HERE / "fixtures" / "hask_r2_weld.json"
+HARNESS = dict(id="h4", seq=0, type="free", kind="custom",
+               text="Tie the syntherope into a harness and lash the torch and both gas bottles to my back",
+               method="bottles back to back, rope crossed over both shoulders and knotted at the waist",
+               uses=["syntherope"], targets=["welding_cart"], hands=2,
+               equipment_changes=[{"item": "syntherope", "to": "attached", "where": "the harness"}],
+               creates={"label": "rope harness carrying the torch and two gas bottles", "state": "worn"})
+
+
+def test_gear_is_derived_from_the_record_and_never_granted():
+    ctx = json.loads(CTX.read_text()); eq = {e["id"]: e for e in ctx["equipment"]}
+    assert eq["syntherope"]["state"] == "stored" and eq["lightsaber"]["state"] == "held" and eq["compact_jedi_glowrod"]["state"] == "attached"
+    v = validate(plan(st("g1", 0, "free", kind="custom", text="Throw my grappling hook over the silo", uses=["grappling_hook"], method="overhand")))
+    assert err_at(v, "g1", "UNKNOWN_ITEM") and not v["legal"], "an item Aero does not have is never granted"
+    v2 = node("parse", "Throw my grappling hook up onto the roof", str(CTX))["validation"]
+    assert v2["legal"] and "UNLISTED_ITEM" in codes(v2, "info"), "unlisted gear in free text is flagged for the GM, not invented"
+
+
+def test_S4_occupied_hands_are_not_exhausted_capacity():
+    base = [st("h1", 0, "object", option="holster_blaster"), st("h2", 0, "move", option="to_cart"), st("h3", 0, "object", option="eq_take:syntherope")]
+    a = avail(plan(*base[:2]), {"seq": 0})
+    assert a["eq_take:syntherope"]["status"] == "ok", a["eq_take:syntherope"]
+    a0 = avail(plan(), {"seq": 0})
+    assert a0["eq_take:syntherope"]["status"] == "needs_step" and a0["eq_take:syntherope"]["suggest"][0]["option"] == "holster_blaster", a0["eq_take:syntherope"]
+    # with a method the harness is the GM's call, not refused (the saber still fills the right hand)
+    v, s, full = status(plan(*base, dict(HARNESS)))
+    assert v["legal"], v["errors"]
+    w = {x["code"] for x in v["warnings"] if x.get("step_id") == "h4"}
+    assert "GM_HANDS" in w and s["h4"] == "gm", (w, s)
+    assert "IMPROVISED" in codes(v, "info")
+    tr = {t["step_id"]: t for t in v["trace"]}
+    assert tr["h3"]["equipment"]["syntherope"] == "held" and tr["h4"]["equipment"]["syntherope"] == "attached" and tr["h4"]["equipment"]["made_h4"] == "worn*"
+    # without a method and without free hands the builder asks instead of guessing
+    bare = dict(HARNESS); bare.pop("method")
+    v2 = validate(plan(*base, bare))
+    e = err_at(v2, "h4", "HANDS")
+    assert e and e[0]["resolution"] == "needs_choice", v2["errors"]
+    # switching the blade off and clipping it to the hip frees the hand: then nothing is left to ask
+    off = [st("h1b", 0, "object", option="deactivate_saber"), st("h1c", 0, "object", option="eq_stow:lightsaber")]
+    v3 = validate(plan(base[0], *off, *base[1:], bare))
+    assert v3["legal"] and not [x for x in v3["warnings"] if x.get("step_id") == "h4" and x["code"] == "GM_HANDS"], (v3["errors"], v3["warnings"])
+    # a lit blade cannot be clipped to the belt: switch it off first
+    v4 = validate(plan(st("x", 0, "object", option="eq_stow:lightsaber")))
+    assert err_at(v4, "x", "REQUIRES") and err_at(v4, "x", "REQUIRES")[0]["suggest"] == ["deactivate_saber"]
+
+
+def test_S4_stored_tools_and_far_targets_are_asked_about():
+    t = dict(id="k", seq=0, type="free", kind="custom", text="Lash the bottles with the syntherope", uses=["syntherope"], targets=["welding_cart"])
+    v = validate(plan(st("h1", 0, "object", option="holster_blaster"), t))
+    codes_k = {e["code"] for e in v["errors"] if e.get("step_id") == "k"}
+    assert {"ACCESS", "POSITION"} <= codes_k, v["errors"]
+    acc = err_at(v, "k", "ACCESS")[0]
+    assert acc["suggest"] == ["eq_take:syntherope"] and acc["resolution"] == "add_step"
+    # free text naming the rope links it, but the GM reads the method: advisory, never a refusal
+    r = node("parse", "Holster the blaster. Tie the syntherope around the bottles", str(CTX))["validation"]
+    assert r["legal"] and any(x["code"] == "GM_ACCESS" for x in r["warnings"]), r["warnings"]
+
+
+def test_S4_created_item_is_planned_until_committed_and_later_use_depends_on_it():
+    later = dict(id="h6", seq=1, type="free", kind="custom", text="Shrug the harness off by the shed door", uses=["made_h4"], hands=0,
+                 equipment_changes=[{"item": "made_h4", "to": "placed"}])
+    v = validate(plan(st("h1", 0, "object", option="holster_blaster"), st("h2", 0, "move", option="to_cart"), st("h3", 0, "object", option="eq_take:syntherope"),
+                      dict(HARNESS), st("h5", 1, "move", option="to_shed_door"), later))
+    assert v["legal"] and any(x["code"] == "GM_DEPENDS" and x["step_id"] == "h6" for x in v["warnings"]), v["warnings"]
+    # encumbrance only when the record states capacity and bulk; never invented
+    ctx = json.loads(CTX.read_text()); ctx["carry"] = {"capacity": 2, "unit": "bulk"}
+    for e in ctx["equipment"]:
+        if e["id"] in ("backpack", "syntherope"): e["bulk"] = 1
+        if e["id"] == "lightsaber": e["bulk"] = 1
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(ctx, f)
+    v2 = validate(plan(st("h1", 0, "object", option="holster_blaster")), ctx=f.name)
+    assert any(x["code"] == "ENCUMBERED" and x["advisory"] for x in v2["warnings"]), v2["warnings"]
+    assert not any(x["code"] == "ENCUMBERED" for x in validate(plan(st("h1", 0, "object", option="holster_blaster")))["warnings"])
+
+
+WELD_STEP = dict(id="w2", seq=0, type="free", kind="custom", text="Run the tip of the lit blade along the door seam to tack-weld it shut",
+                 method="short tacks along the latch side, then across the top hinge strap", uses=["lightsaber"], targets=["shed_door"],
+                 creates={"label": "tack-welded seam on the shed door", "state": "placed"})
+
+
+def test_S5_quick_lightsaber_weld_is_allowed_and_left_to_the_gm():
+    v, s, _ = status(plan(st("w1", 0, "action", option="shut_door"), dict(WELD_STEP)), ctx=WELD)
+    assert v["legal"] and s["w2"] == "gm" and "IMPROVISED" in codes(v, "info"), (v["errors"], s)
+    # the blade must be lit for it: switched off first, the builder asks (no method) or defers (method)
+    bare = dict(WELD_STEP); bare.pop("method")
+    v2 = validate(plan(st("w0", 0, "object", option="deactivate_saber"), st("w1", 0, "action", option="shut_door"), bare), ctx=WELD)
+    assert err_at(v2, "w2", "REQUIRES"), v2["errors"]
+    v3 = validate(plan(st("w0", 0, "object", option="deactivate_saber"), st("w1", 0, "action", option="shut_door"), dict(WELD_STEP)), ctx=WELD)
+    assert v3["legal"] and any(x["code"] == "GM_REQUIRES" for x in v3["warnings"])
+    # from 15 ft back the seam is out of reach: a move is offered
+    v4 = validate(plan(st("w1", 0, "move", option="back_off"), bare), ctx=WELD)
+    p = err_at(v4, "w2", "POSITION")
+    assert p and p[0]["suggest"] == ["hold"] or p and p[0]["resolution"] in ("add_step", "needs_choice"), v4["errors"]
+
+
+def test_S5_weld_in_combat_uses_the_action_and_can_be_interrupted():
+    weld = json.loads(WELD.read_text()); weld["mode"] = "combat"; weld["round"] = 1
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(weld, f)
+    v = validate(plan(st("w1", 0, "action", option="shut_door"), dict(WELD_STEP)), ctx=f.name)
+    assert "ACTION_CONFLICT" in codes(v), "a custom action costs the action in combat"
+    assert validate(plan(dict(WELD_STEP)), ctx=f.name)["legal"]
+    r = progress(plan(st("w1", 0, "action", option="shut_door"), dict(WELD_STEP), st("w3", 1, "action", option="brace_door")),
+                 {"completed": ["w1"], "interrupted": "w2", "stop_kind": "mechanical", "reason": "Something slams into the door from inside before the seam is done."}, ctx=WELD)
+    assert r["ok"] and r["pending_steps"][0]["status"] == "interrupted" and r["pending_steps"][0]["creates"]["label"].startswith("tack-welded"), r
+    assert "made_w2" not in json.dumps(r["plan_progress"]), "an interrupted construction creates nothing"
+
+
+def test_ledger_tracks_created_items_and_moves():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("eqm", HERE / "equipment.py"); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    ev = [{"event_id": "e1", "kind": "object_interaction", "details": {"hands": {"right": {"item": "lightsaber"}, "left": None}}},
+          {"event_id": "e2", "kind": "equipment_change", "details": {"item": "syntherope", "to": "attached", "where": "rope harness"}},
+          {"event_id": "e3", "kind": "item_created", "details": {"id": "rope_harness", "label": "rope harness with the torch and two bottles", "state": "worn",
+                                                                  "made_from": ["syntherope", "welding torch", "gas bottles"], "limits": "rides high; slips if Aero runs"}}]
+    eq = {e["id"]: e for e in m.derive(ev)}
+    assert eq["lightsaber"]["state"] == "held" and eq["syntherope"]["state"] == "attached" and eq["rope_harness"]["state"] == "worn" and eq["rope_harness"]["improvised"]
+    assert "grappling_hook" not in eq
+    eq2 = {e["id"]: e for e in m.derive(ev + [{"event_id": "e4", "kind": "item_destroyed", "details": {"item": "rope_harness"}}])}
+    assert "rope_harness" not in eq2
 
 
 if __name__ == "__main__":

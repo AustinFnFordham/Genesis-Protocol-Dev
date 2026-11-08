@@ -180,6 +180,11 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
 .chip.mini { flex: 0 0 auto; min-height: 44px; padding: 10px 14px; text-decoration: none; color: var(--fg); font-size: 13px; }
 .note.added { color: var(--good); min-height: 1em; } .note.deferred { color: var(--amber); }
 .palgrp, .plan { scroll-margin-top: 56px; }
+details.howto { border: 1px dashed var(--line); border-radius: 3px; padding: 6px 8px; display: grid; gap: 4px; }
+details.howto summary { min-height: 44px; display: flex; align-items: center; }
+details.howto textarea { width: 100%; min-height: 44px; resize: none; overflow-y: hidden; background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 8px 10px; font: 16px/1.45 var(--f-read); }
+.usegrid { display: grid; gap: 2px; } li.step .note.meta { margin-left: 30px; font-style: italic; }
+#pg_gear summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
 li.step .srow { cursor: pointer; min-height: 44px; align-items: center; }
 li.step .srow .lbl { flex: 1 1 auto; } li.step .srow .more { color: var(--dim); flex: 0 0 auto; padding: 0 4px; }
 li.step .note.cond { margin-left: 30px; color: var(--amber); }

@@ -203,6 +203,34 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   const words = (await page.locator(".composer").innerText()) + (await p9.locator(".composer").innerText());
   ok(!/\b(will succeed|guaranteed|certain to|sure to|will work|chance|likely|\d+\s*%)\b/i.test(words), "legal choices never read as guaranteed outcomes");
 
+  // ----- improvised equipment: gear from the record, custom method / tools / result (S4 harness) -----
+  const p11 = await open({ width: 390, height: 844 });
+  const t11 = async sel => { await p11.click(sel); await p11.waitForTimeout(50); };
+  ok(/gear: .*compact Jedi glowrod \(attached, belt clip\).*items packed/i.test(await p11.locator(".now").innerText()), "committed strip shows where Aero's gear is", await p11.locator(".now").innerText());
+  await t11("#pg_gear summary");
+  const rope = p11.locator('[data-pal="object:eq_take:syntherope"]');
+  ok(await rope.isDisabled() && /needs a step first/.test(await rope.innerText()), "taking out the rope with both hands full asks for a step first", await rope.innerText());
+  await t11('.pal:has([data-pal="object:eq_take:syntherope"]) [data-pre]');
+  ok(!(await rope.isDisabled()), "after holstering, the rope can be taken out");
+  await t11('[data-pal="move:to_cart"]'); await t11('[data-pal="object:eq_take:syntherope"]');
+  await p11.fill("#w_act", "Tie the syntherope into a harness and lash the torch and both gas bottles to my back");
+  await t11("#actHow summary");
+  await p11.fill("#w_how", "bottles back to back, rope crossed over both shoulders and knotted at the waist");
+  await p11.check('[data-use="syntherope"]'); await p11.waitForTimeout(80);
+  await p11.selectOption('[data-after-use="syntherope"]', "attached");
+  await p11.selectOption("#w_on", "welding_cart"); await p11.selectOption("#w_hands", "2");
+  await p11.fill("#w_makes", "rope harness carrying the torch and two gas bottles"); await p11.selectOption("#w_makes_state", "worn");
+  await t11("#addAct");
+  const plan11 = await p11.locator(".plan").innerText();
+  ok(/✎\s*Try: Tie the syntherope/.test(plan11) && /how: bottles back to back/.test(plan11) && /using syntherope/.test(plan11) && /makes rope harness carrying the torch and two gas bottles \(worn, if it works\)/.test(plan11), "custom step shows method, tools and intended result", plan11);
+  ok(/syntherope: in hand|left: syntherope/.test(plan11) && /rope harness carrying the torch and two gas bottles: worn \(if it works\)/.test(plan11), "planned gear changes are shown, the result only as planned", plan11);
+  ok(!(await p11.locator("#submitTurn").isDisabled()), "the improvised plan can be submitted for the GM to adjudicate");
+  await t11("#submitTurn"); await p11.waitForTimeout(300);
+  const hdoc = await p11.evaluate(() => { const k = Object.keys(window.__store).find(k => k.startsWith("actions/")); return k && window.__store[k]; });
+  const hs = hdoc && hdoc.declaration.steps.find(x => x.type === "free");
+  ok(hs && hs.method && hs.uses[0] === "syntherope" && hs.targets[0] === "welding_cart" && hs.hands === 2 && hs.equipment_changes[0].to === "attached" && hs.creates.state === "worn" &&
+     hs.text === "Tie the syntherope into a harness and lash the torch and both gas bottles to my back", "submitted step keeps the exact words, method, tools, changes and intended result", hs);
+
   // ----- phone layout -----
   const sw = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   ok(sw <= 0, "no horizontal scroll on phone", sw);
@@ -213,7 +241,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   const sticky = await p7.evaluate(() => getComputedStyle(document.getElementById("submitBar")).position);
   ok(sticky === "sticky", "submit bar stays reachable on phone", sticky);
 
-  for (const p of [page, p2, p3, p4, p5, p6, p7, p8, p9, p10]) ok(p.errors.length === 0, "no page errors", p.errors);
+  for (const p of [page, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11]) ok(p.errors.length === 0, "no page errors", p.errors);
   await browser.close();
   console.log(fails ? fails + " failed" : "all passed");
   process.exit(fails ? 1 : 0);
