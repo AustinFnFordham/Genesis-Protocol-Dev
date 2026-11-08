@@ -26,6 +26,9 @@
  *   objects[].frees_hand ("left"|"right"), objects[]/options[].needs_hands (n, momentary use),
  *   objects[]/options[].takes_hands (n, the item is then held), .at (visible id where it is used),
  *   .reach_ft (default 5 for `at`), pending_steps: [steps] left from a halted sequence.
+ *   contract 3: objects[].frees_item (frees whichever hand holds that item), options/objects/moves .grants/.removes
+ *   (planned flags, applied in step order), .unless [flags that make it pointless], .risk (visible risk text), movement[].ends_at, position_label,
+ *   plan_result {stop_kind, reason, completed, pending, invalidated}, pending_steps[].status.
  */
 (function (root, factory) {
   var api = factory();
@@ -33,7 +36,7 @@
   else root.GenesisTurn = api;
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
-  var VERSION = "turn-contract/2";  // reads turn-contract/1 declarations unchanged (no `steps`)
+  var VERSION = "turn-contract/3";  // reads turn-contract/1 (no `steps`) and /2 (no ids, seq or branches) unchanged
 
   function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
   function lc(s) { return String(s || "").toLowerCase(); }
@@ -157,20 +160,38 @@
     if (mv && !moveFirst) st.push({ type: "move", option: mv.id });
     return st;
   }
+  /* contract 3: every step has a stable `id` and a `seq` (the visual sequence it belongs to);
+     a `branch` step holds cases [{when, steps, after: "continue"|"stop"}] and `otherwise` ("stop"|"continue").
+     Ids are assigned once when missing (k0, k1, … and k3c0_0 inside a case) and never renumbered here. */
+  function flat(steps) { var o = []; (steps || []).forEach(function (s) { o.push(s); if (s.type === "branch") (s.cases || []).forEach(function (c) { o = o.concat(flat(c.steps || [])); }); }); return o; }
+  function assignIds(steps, prefix, used, seq) {
+    var cur = seq || 0;
+    steps.forEach(function (s, i) {
+      if (!s.id || used[s.id]) { var k = prefix + i; while (used[k]) k += "_"; s.id = k; }
+      used[s.id] = 1;
+      if (s.seq == null) s.seq = cur; else cur = s.seq;
+      if (s.type === "branch") { s.cases = s.cases || []; s.otherwise = s.otherwise === "continue" ? "continue" : "stop";
+        s.cases.forEach(function (c, k) { c.steps = c.steps || []; c.when = String(c.when || ""); assignIds(c.steps, s.id + "c" + k + "_", used, s.seq); }); }
+    });
+  }
+  function speechText(s, ctx) { if (s.text) return s.text; var dl = s.option && byId(ctx.dialogue, s.option); return dl ? dl.text : ""; }
   function normalize(decl, ctx) {
     var d = clone(decl);
     d.unmapped = (d.unmapped || []).slice(); d.reactions = (d.reactions || []).slice();
-    if (!d.steps || !d.steps.length) { d.steps = legacySteps(d, ctx); return d; }
-    var sp = d.steps.filter(function (s) { return s.type === "speech" && s.text; });
+    if (!d.steps || !d.steps.length) { d.steps = legacySteps(d, ctx); assignIds(d.steps, "k", {}); return d; }
+    assignIds(d.steps, "k", {});
+    flat(d.steps).forEach(function (s) { if (s.type === "speech" && !s.text) { s.text = speechText(s, ctx); var dl = s.option && byId(ctx.dialogue, s.option); if (dl) { s.approach = s.approach || dl.approach; s.extended = s.extended || !!dl.extended; } } });
+    var all = flat(d.steps).filter(function (s) { return s.type !== "branch"; });
+    var sp = all.filter(function (s) { return s.type === "speech" && s.text; });
     if (sp.length) d.speech = { option: sp.length === 1 ? (sp[0].option || null) : null, text: sp.map(function (s) { return s.text; }).join(" "),
                                 approach: sp.length === 1 ? (sp[0].approach || "freeform") : "freeform", extended: sp.some(function (s) { return !!s.extended; }) };
     else d.speech = null;
-    d.actions = d.steps.filter(function (s) { return s.type === "action"; }).map(function (s) { return { option: s.option, target: s.target || null, trigger: s.trigger || null }; });
-    d.bonus_actions = d.steps.filter(function (s) { return s.type === "bonus_action"; }).map(function (s) { return { option: s.option, target: s.target || null }; });
-    var mvs = d.steps.filter(function (s) { return s.type === "move"; });
+    d.actions = all.filter(function (s) { return s.type === "action"; }).map(function (s) { return { option: s.option, target: s.target || null, trigger: s.trigger || null }; });
+    d.bonus_actions = all.filter(function (s) { return s.type === "bonus_action"; }).map(function (s) { return { option: s.option, target: s.target || null }; });
+    var mvs = all.filter(function (s) { return s.type === "move"; });
     d.movement = mvs.length ? { option: mvs[0].option } : (d.movement && d.movement.option === "hold" ? d.movement : null);
-    d.objects = d.steps.filter(function (s) { return s.type === "object"; }).map(function (s) { return s.option; });
-    d.steps.filter(function (s) { return s.type === "free" && s.text; }).forEach(function (s) { if (d.unmapped.indexOf(s.text) < 0) d.unmapped.push(s.text); });
+    d.objects = all.filter(function (s) { return s.type === "object"; }).map(function (s) { return s.option; });
+    all.filter(function (s) { return s.type === "free" && s.text; }).forEach(function (s) { if (d.unmapped.indexOf(s.text) < 0) d.unmapped.push(s.text); });
     return d;
   }
 
@@ -185,14 +206,52 @@
              pending: d.steps.slice(i).map(function (s) { var x = clone(s); x.pending = true; delete x.authorized; return x; }) };
   }
 
-  /* ---------- preflight validation ---------- */
-  function validate(declIn, ctx) {
-    var errors = [], warnings = [], info = [], preview = [];
+  /* ---------- preflight validation ----------
+   * validateLinear checks ONE ordered path of steps. validate() expands branch steps into paths
+   * (one per case, plus "otherwise"), validates each path with the same rules and merges the
+   * verdicts: a step that fails on every path that reaches it is an error; one that fails only on
+   * some paths is an advisory BRANCH_DEPENDENT warning (the GM stops there in that case).
+   * State is tracked in step order: hands, position, flags (grants/removes of objects, moves and
+   * actions; an action's grants are its INTENDED result, so later steps that depend on it are only
+   * planned, never promised). Nothing here reads hidden state or predicts a roll. */
+  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "INVALIDATED"];
+  function shortLabel(t) { return String(t || "").split(/\s*[:(;,]\s*|\s+—\s+/)[0].trim(); }
+  function placeOf(m, ctx) {
+    if (m.ends_at) return m.ends_at;
+    var da = m.distance_after || {}, hit = null;
+    Object.keys(da).forEach(function (k) { if (!hit && da[k] === 0) { var v = byId(ctx.visible, k); if (v) hit = v.short || shortLabel(v.label); } });
+    return hit ? "at " + hit.charAt(0).toLowerCase() + hit.slice(1) : null;
+  }
+
+  function previewSteps(steps, ctx, combat, speechAction, state) {
+    var out = [], opts = ctx.options || [];
+    state = state || { objSeen: 0 };
+    steps.forEach(function (s) {
+      var pre = s.condition && s.condition.text ? "Only if " + s.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "";
+      if (s.type === "speech" && s.text) out.push({ step: "speech", id: s.id, text: pre + "Say: “" + s.text + "”" + (speechAction ? " (extended, uses your action)" : " (free)") });
+      else if (s.type === "object") { var o = byId(ctx.objects, s.option); if (o) { out.push({ step: "object", id: s.id, text: pre + o.label + (combat ? (state.objSeen === 0 ? " (free object interaction)" : " (uses your action)") : "") }); state.objSeen++; } }
+      else if (s.type === "move") { var m = byId(ctx.movement, s.option); if (m) out.push({ step: "movement", id: s.id, text: pre + m.label + (m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? " (~" + m.feet + " ft)" : "") }); }
+      else if (s.type === "action") { var a = byId(opts, s.option); if (a) out.push({ step: "action", id: s.id, text: pre + a.label + (s.target ? " → " + names(ctx, [s.target])[0] : "") + (s.trigger ? " (trigger: " + s.trigger + ")" : "") }); }
+      else if (s.type === "bonus_action") { var x = byId(opts, s.option); if (x) out.push({ step: "bonus_action", id: s.id, text: pre + x.label }); }
+      else if (s.type === "free" && s.text) out.push({ step: "free", id: s.id, text: pre + (s.kind === "custom" || s.custom ? "Try: " : "Also: ") + s.text });
+      else if (s.type === "branch") {
+        (s.cases || []).forEach(function (c, k) {
+          var inner = previewSteps(c.steps || [], ctx, combat, speechAction, state).map(function (p) { return p.text; });
+          out.push({ step: "branch", id: s.id, text: (k ? "Else if " : "If ") + (c.when || "…") + ": " + (inner.length ? inner.join("; ") : "do none of this") + (c.after === "stop" ? ", then stop and ask me" : "") });
+        });
+        out.push({ step: "branch", id: s.id, text: s.otherwise === "continue" ? "Otherwise: skip this and continue" : "Otherwise: stop and ask me" });
+      }
+    });
+    return out;
+  }
+
+  function validateLinear(decl, ctx) {
+    var errors = [], warnings = [], info = [], trace = [];
     var b = ctx.budget || {}, opts = ctx.options || [];
     var combat = ctx.mode === "combat";  // outside combat there is no action economy: steps happen in sequence
-    var decl = normalize(declIn, ctx), steps = decl.steps;
+    var steps = decl.steps;
     function err(code, msg, extra) { var e = { code: code, message: msg }; for (var k in extra || {}) e[k] = extra[k]; errors.push(e); }
-    function warn(code, msg) { warnings.push({ code: code, message: msg }); }
+    function warn(code, msg, extra) { var w = { code: code, message: msg }; for (var k in extra || {}) w[k] = extra[k]; warnings.push(w); }
 
     // 1-2. acting character
     if (decl.actor !== ctx.actor) err("ACTOR", "Only " + (ctx.actor_name || ctx.actor) + " can act this turn. Viewing another party member never grants control of them.");
@@ -200,16 +259,18 @@
       err("INCAPACITATED", (ctx.actor_name || ctx.actor) + " cannot act (" + ctx.actor_conditions.join(", ") + ").");
 
     var actions = decl.actions || [], bonus = decl.bonus_actions || [], objs = decl.objects || [];
-    var flags = (ctx.state_flags || []).slice();
-    objs.forEach(function (oid) { var o = byId(ctx.objects, oid); if (o) flags = flags.concat(o.grants || []); });
 
     // 4. capabilities exist
-    actions.concat(bonus).forEach(function (a) { if (!byId(opts, a.option)) err("UNKNOWN_OPTION", "\"" + a.option + "\" is not something " + (ctx.actor_name || ctx.actor) + " can do right now."); });
-    objs.forEach(function (oid) { if (!byId(ctx.objects, oid)) err("UNKNOWN_OBJECT", "\"" + oid + "\" is not an available object interaction."); });
-    steps.filter(function (s) { return s.type === "move"; }).forEach(function (s) { if (!byId(ctx.movement, s.option)) err("UNKNOWN_MOVE", "That movement is not available here."); });
+    steps.forEach(function (s, i) {
+      var ex = { step: i, step_id: s.id };
+      if ((s.type === "action" || s.type === "bonus_action") && !byId(opts, s.option)) err("UNKNOWN_OPTION", "\"" + s.option + "\" is not something " + (ctx.actor_name || ctx.actor) + " can do right now.", ex);
+      if (s.type === "object" && !byId(ctx.objects, s.option)) err("UNKNOWN_OBJECT", "\"" + s.option + "\" is not an available object interaction.", ex);
+      if (s.type === "move" && !byId(ctx.movement, s.option)) err("UNKNOWN_MOVE", "That movement is not available here.", ex);
+      if (s.status === "invalidated") err("INVALIDATED", "This step was cancelled by what happened (" + (s.reason || "the plan was interrupted") + "). It cannot be continued; choose again.", ex);
+    });
 
     // pending steps (left over from a halted sequence) run only when the player authorizes them again
-    var unauth = steps.filter(function (s) { return s.pending && !s.authorized; });
+    var unauth = steps.filter(function (s) { return s.pending && !s.authorized && s.status !== "invalidated"; });
     if (unauth.length) err("PENDING_UNAUTHORIZED", unauth.length + " step" + (unauth.length > 1 ? "s were" : " was") + " left over from an interrupted sequence. Choose \"Continue these steps\" (or rewrite them) to authorize them again.");
 
     // speech: brief speech is free; extended or check-based social actions use the action
@@ -230,29 +291,7 @@
     bonus.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "bonus_action") err("NOT_BONUS", o.label + " is not a bonus action."); });
     actions.forEach(function (a) { var o = byId(opts, a.option); if (o && o.slot !== "action") err("NOT_ACTION", o.label + " is not a primary action."); });
 
-    // 4-5. requirements, range, target, area
-    actions.concat(bonus).forEach(function (a) {
-      var o = byId(opts, a.option); if (!o) return;
-      (o.requires || []).forEach(function (r) { if (flags.indexOf(r) < 0) err("REQUIRES", o.label + " needs " + (ctx.flag_labels && ctx.flag_labels[r] || r) + " first."); });
-      if (o.needs_target) {
-        var t = byId(ctx.visible, a.target);
-        // movement may be split around the action, so the closest point of the declared moves counts
-        var dist = t ? t.distance_ft : null;
-        if (t) steps.forEach(function (s) { var m = s.type === "move" && byId(ctx.movement, s.option); if (m && m.distance_after && m.distance_after[t.id] != null) dist = Math.min(dist, m.distance_after[t.id]); });
-        if (!t) err("TARGET", o.label + " needs a visible target.");
-        else if (o.reach_ft != null && dist > o.reach_ft) err("RANGE", t.label + " is about " + dist + " ft away, beyond " + o.label + "'s reach of " + o.reach_ft + " ft.");
-      }
-      if (o.needs_trigger && !a.trigger) err("TRIGGER", o.label + " needs a trigger (for example, \"" + (o.default_trigger || "when a hostile moves into reach") + "\").");
-      if (o.area_ft != null) {
-        var inside = (ctx.visible || []).filter(function (v) { return v.distance_ft <= o.area_ft; }).map(function (v) { return v.label; });
-        var outside = (ctx.visible || []).filter(function (v) { return v.distance_ft > o.area_ft; }).map(function (v) { return v.label + " (~" + v.distance_ft + " ft)"; });
-        info.push({ code: "AREA", message: o.label + " (" + o.area_ft + "-ft radius) would reach: " + (inside.length ? joinAnd(inside) : "no one visible") + "." + (outside.length ? " Out of reach: " + joinAnd(outside) + "." : "") });
-      }
-      if (o.cost && o.cost.force_points && (ctx.resources || {}).force_points < o.cost.force_points) err("RESOURCE", o.label + " costs " + o.cost.force_points + " Force Points; you have " + ctx.resources.force_points + ".");
-      if (o.uses_left === 0) err("RESOURCE", o.label + " has no uses left.");
-    });
-
-    // 6. movement and geometry
+    // 6. movement totals
     var dash = actions.some(function (a) { var o = byId(opts, a.option); return o && o.doubles_movement; });
     var disengage = actions.some(function (a) { var o = byId(opts, a.option); return o && o.suppresses_opportunity_attacks; });
     var moves = steps.filter(function (s) { return s.type === "move"; }).map(function (s) { return byId(ctx.movement, s.option); }).filter(Boolean);
@@ -262,38 +301,104 @@
     if (combat && feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
       err("DISTANCE", (moves.length === 1 ? moves[0].label + " is about " : "Those moves add up to about ") + feet + " ft; you can move " + (b.movement_ft * (dash ? 2 : 1)) + " ft this turn" + (dash ? "" : " (Dash would double it)") + ".");
     if (!combat && moves.length > 1) info.push({ code: "MOVE_SEQUENCE", message: "Distances after the first move are measured by the GM from where that move ends." });
-    moves.forEach(function (m) { if (m.blocked_by && m.blocked_by.length) warn("PATH", m.label + ": the way passes " + joinAnd(names(ctx, m.blocked_by)) + "; you may have to go around or stop short."); });
+    steps.forEach(function (s, i) { var m = s.type === "move" && byId(ctx.movement, s.option); if (m && m.blocked_by && m.blocked_by.length) warn("PATH", m.label + ": the way passes " + joinAnd(names(ctx, m.blocked_by)) + "; you may have to go around or stop short.", { step: i, step_id: s.id }); });
 
-    // 6b. physical feasibility along the sequence (all modes): hands and position, when the GM has
-    // published them. A missing step is told apart from something that cannot be done here.
+    // 4-8 along the sequence: requirements, target/range, resources, position, hands, flags.
+    // A missing step is told apart from something that cannot be done here.
+    var flags = (ctx.state_flags || []).slice();
     var hands = ctx.hands && typeof ctx.hands === "object" ? clone(ctx.hands) : null;
     var here = {}; (ctx.visible || []).forEach(function (v) { here[v.id] = v.distance_ft; });
+    var pos = ctx.position_label || null;
     function heldText() { return ["right", "left"].map(function (h) { return hands[h] ? "your " + h + " hand holds " + (hands[h].label || hands[h].item || hands[h]) : "your " + h + " hand is free"; }).join(" and "); }
     function freeCount() { return ["right", "left"].filter(function (h) { return !hands[h]; }).length; }
     function freers(from) {
-      return (ctx.objects || []).filter(function (o) { return o.frees_hand && hands[o.frees_hand]; })
+      return (ctx.objects || []).filter(function (o) { return (o.frees_hand && hands[o.frees_hand]) || (o.frees_item && holding(o.frees_item)); })
         .filter(function (o) { return !steps.slice(0, from).some(function (s) { return s.type === "object" && s.option === o.id; }); }).map(function (o) { return o.id; });
     }
+    function holding(item) { return ['right', 'left'].filter(function (h) { return hands[h] && hands[h].item === item; })[0] || null; }
+    function providers(flag) {
+      var out = [];
+      (ctx.objects || []).forEach(function (o) { if ((o.grants || []).indexOf(flag) >= 0) out.push({ type: "object", option: o.id }); });
+      opts.forEach(function (o) { if ((o.grants || []).indexOf(flag) >= 0) out.push({ type: o.slot, option: o.id }); });
+      (ctx.movement || []).forEach(function (o) { if ((o.grants || []).indexOf(flag) >= 0) out.push({ type: "move", option: o.id }); });
+      return out;
+    }
+    function applyFlags(o) {
+      (o.grants || []).forEach(function (f) { if (flags.indexOf(f) < 0) flags.push(f); });
+      (o.removes || []).forEach(function (f) { flags = flags.filter(function (x) { return x !== f; }); });
+    }
+    function snap(s) { trace.push({ step_id: s.id, hands: hands ? clone(hands) : null, position: pos, flags: flags.slice() }); }
     steps.forEach(function (s, i) {
-      var o = s.type === "object" ? byId(ctx.objects, s.option) : (s.type === "action" || s.type === "bonus_action") ? byId(opts, s.option) : null;
-      if (s.type === "move") { var m = byId(ctx.movement, s.option); if (m && m.distance_after) for (var k in here) here[k] = m.distance_after[k] != null ? m.distance_after[k] : null; return; }
-      if (!o) return;
+      var ex = { step: i, step_id: s.id };
+      if (s.type === "move") {
+        var m = byId(ctx.movement, s.option);
+        if (m) { if (m.distance_after) for (var k in here) here[k] = m.distance_after[k] != null ? m.distance_after[k] : null; pos = placeOf(m, ctx) || pos; applyFlags(m); }
+        snap(s); return;
+      }
+      if (s.type === "free") {  // custom steps: the GM adjudicates; report what is visible at that point
+        var t = String(s.text || ""), kinds = kindsOf(t);
+        if (kinds.indexOf("item") >= 0 || s.kind === "item") {
+          if (hands && freeCount() === 0) warn("GM_HANDS", "“" + t.slice(0, 80) + "”: at that point " + heldText() + ". The GM will ask how Aero does it.", { step: i, step_id: s.id, advisory: true });
+          findAliases(t, ctx.visible).forEach(function (vid) {
+            if (here[vid] != null && here[vid] > 5) warn("GM_POSITION", "“" + t.slice(0, 80) + "”: " + names(ctx, [vid])[0] + " is about " + here[vid] + " ft away at that point. The GM stops there unless a move comes first.", { step: i, step_id: s.id, advisory: true });
+          });
+        }
+        snap(s); return;
+      }
+      var isAct = s.type === "action" || s.type === "bonus_action";
+      var o = s.type === "object" ? byId(ctx.objects, s.option) : isAct ? byId(opts, s.option) : null;
+      if (!o) { snap(s); return; }
+      (o.requires || []).forEach(function (r) {
+        if (flags.indexOf(r) >= 0) return;
+        if ((o.removes || []).indexOf(r) >= 0) {  // undoing something that is not there (holstering a holstered blaster)
+          err("ALREADY", o.label + ": at that point Aero does not have " + (ctx.flag_labels && ctx.flag_labels[r] || r.replace(/_/g, " ")) + ".", { step: i, step_id: s.id, resolution: "not_possible_here" });
+          return;
+        }
+        var pv = providers(r);
+        err("REQUIRES", o.label + " needs " + (ctx.flag_labels && ctx.flag_labels[r] || r.replace(/_/g, " ")) + " first.",
+            { step: i, step_id: s.id, resolution: pv.length ? "add_step" : "not_possible_here", suggest: pv.map(function (p) { return p.option; }), suggest_steps: pv });
+      });
+      (o.unless || []).forEach(function (r) {
+        if (flags.indexOf(r) >= 0) err("ALREADY", o.label + ": at that point Aero already has " + (ctx.flag_labels && ctx.flag_labels[r] || r.replace(/_/g, " ")) + ".", { step: i, step_id: s.id, resolution: "not_possible_here" });
+      });
+      if (isAct) {
+        if (o.needs_target) {
+          var tg = byId(ctx.visible, s.target), dist = tg ? (here[tg.id] != null ? here[tg.id] : tg.distance_ft) : null;
+          // in combat movement may be split around the action, so the closest point of the declared moves counts
+          if (tg && combat) steps.forEach(function (x) { var mm = x.type === "move" && byId(ctx.movement, x.option); if (mm && mm.distance_after && mm.distance_after[tg.id] != null) dist = Math.min(dist, mm.distance_after[tg.id]); });
+          if (!tg) err("TARGET", o.label + " needs a visible target.", ex);
+          else if (o.reach_ft != null && dist > o.reach_ft) err("RANGE", tg.label + " is about " + dist + " ft away, beyond " + o.label + "'s reach of " + o.reach_ft + " ft.", ex);
+        }
+        if (o.needs_trigger && !s.trigger) err("TRIGGER", o.label + " needs a trigger (for example, \"" + (o.default_trigger || "when a hostile moves into reach") + "\").", ex);
+        if (o.area_ft != null) {
+          var inside = (ctx.visible || []).filter(function (v) { return v.distance_ft <= o.area_ft; }).map(function (v) { return v.label; });
+          var outside = (ctx.visible || []).filter(function (v) { return v.distance_ft > o.area_ft; }).map(function (v) { return v.label + " (~" + v.distance_ft + " ft)"; });
+          info.push({ code: "AREA", message: o.label + " (" + o.area_ft + "-ft radius) would reach: " + (inside.length ? joinAnd(inside) : "no one visible") + "." + (outside.length ? " Out of reach: " + joinAnd(outside) + "." : "") });
+        }
+        if (o.cost && o.cost.force_points && (ctx.resources || {}).force_points < o.cost.force_points) err("RESOURCE", o.label + " costs " + o.cost.force_points + " Force Points; you have " + ctx.resources.force_points + ".", ex);
+        if (o.uses_left === 0) err("RESOURCE", o.label + " has no uses left.", ex);
+      }
+      if (o.risk) warn("RISK", o.label + ": " + o.risk, { step: i, step_id: s.id, advisory: !combat });
       if (o.at && here[o.at] != null && here[o.at] > (o.reach_ft != null ? o.reach_ft : 5)) {
         var reach = (ctx.movement || []).filter(function (m) { return m.distance_after && m.distance_after[o.at] != null && m.distance_after[o.at] <= (o.reach_ft != null ? o.reach_ft : 5); }).map(function (m) { return m.id; });
         err("POSITION", o.label + ": " + names(ctx, [o.at])[0] + " is about " + here[o.at] + " ft away at that point. " + (reach.length ? "Add a move there first." : "There is no listed way to reach it from here."),
-            { step: i, resolution: reach.length ? "add_step" : "not_possible_here", suggest: reach });
+            { step: i, step_id: s.id, resolution: reach.length ? "add_step" : "not_possible_here", suggest: reach, suggest_steps: reach.map(function (id) { return { type: "move", option: id }; }) });
       }
-      if (!hands) return;
-      var need = (o.needs_hands || 0) + (o.takes_hands || 0);
-      if (need > freeCount()) {
-        var f = freers(i);
-        err("HANDS", o.label + " needs " + need + " free hand" + (need > 1 ? "s" : "") + "; at that point " + heldText() + "." +
-            (f.length && f.length + freeCount() >= need ? " Free one first (for example: " + joinAnd(f.map(function (id) { return byId(ctx.objects, id).label.toLowerCase(); }), "or") + "), or say how Aero carries it." : " Nothing listed frees enough hands; say how Aero carries it or leave something behind."),
-            { step: i, resolution: f.length && f.length + freeCount() >= need ? "add_step" : "needs_choice", suggest: f });
-      } else if (o.takes_hands) {
-        var n = o.takes_hands; ["right", "left"].forEach(function (h) { if (n > 0 && !hands[h]) { hands[h] = { item: o.item || o.id, label: o.item_label || (o.item ? "the " + String(o.item).replace(/_/g, " ") : o.label) }; n--; } });
+      if (hands) {
+        var need = (o.needs_hands || 0) + (o.takes_hands || 0);
+        if (need > freeCount()) {
+          var f = freers(i), canFree = f.length && f.length + freeCount() >= need;
+          err("HANDS", o.label + " needs " + need + " free hand" + (need > 1 ? "s" : "") + "; at that point " + heldText() + "." +
+              (canFree ? " Free one first (for example: " + joinAnd(f.map(function (id) { return byId(ctx.objects, id).label.toLowerCase(); }), "or") + "), or say how Aero carries it." : " Nothing listed frees enough hands; say how Aero carries it or leave something behind."),
+              { step: i, step_id: s.id, resolution: canFree ? "add_step" : "needs_choice", suggest: f, suggest_steps: canFree ? f.map(function (id) { return { type: "object", option: id }; }) : [] });
+        } else if (o.takes_hands) {
+          var n = o.takes_hands; ["right", "left"].forEach(function (h) { if (n > 0 && !hands[h]) { hands[h] = { item: o.item || o.id, label: o.item_label || (o.item ? "the " + String(o.item).replace(/_/g, " ") : o.label) }; n--; } });
+        }
+        if (o.frees_hand && hands[o.frees_hand]) hands[o.frees_hand] = null;
+        if (o.frees_item && holding(o.frees_item)) hands[holding(o.frees_item)] = null;
       }
-      if (o.frees_hand && hands[o.frees_hand]) hands[o.frees_hand] = null;
+      applyFlags(o);
+      snap(s);
     });
 
     // 8. visible reaction and opportunity-attack risk (no hidden capability is consulted)
@@ -322,26 +427,198 @@
     if (kinds.power) info.push({ code: "UNLISTED_POWER", message: "“" + kinds.power[0].trim().slice(0, 120) + "” names a power that is not listed here. The GM checks Aero's sheet; a power he does not have is refused, not substituted." });
     if (kinds.other) info.push({ code: "UNMAPPED", message: "Part of this could not be matched to a listed option. The GM will interpret it and check it against these same rules before any roll." });
 
-    // 10. ordered preview: the player's order
-    var objSeen = 0;
-    steps.forEach(function (s) {
-      var pre = s.condition && s.condition.text ? "Only if " + s.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "";
-      if (s.type === "speech" && s.text) preview.push({ step: "speech", text: pre + "Say: “" + s.text + "”" + (speechAction ? " (extended, uses your action)" : " (free)") });
-      else if (s.type === "object") { var o = byId(ctx.objects, s.option); if (o) { preview.push({ step: "object", text: pre + o.label + (combat ? (objSeen === 0 ? " (free object interaction)" : " (uses your action)") : "") }); objSeen++; } }
-      else if (s.type === "move") { var m = byId(ctx.movement, s.option); if (m) preview.push({ step: "movement", text: pre + m.label + (m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? " (~" + m.feet + " ft)" : "") }); }
-      else if (s.type === "action") { var a = byId(opts, s.option); if (a) preview.push({ step: "action", text: pre + a.label + (s.target ? " → " + names(ctx, [s.target])[0] : "") + (s.trigger ? " (trigger: " + s.trigger + ")" : "") }); }
-      else if (s.type === "bonus_action") { var x = byId(opts, s.option); if (x) preview.push({ step: "bonus_action", text: pre + x.label }); }
-      else if (s.type === "free" && s.text) preview.push({ step: "free", text: "Also: " + s.text });
-    });
-    if (mv && mv.id === "hold" && !moves.length && steps.length) preview.push({ step: "movement", text: mv.label });
-    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
-
     var used = { action: Math.min(actionCount, 9), bonus_action: bonus.length, movement_ft: feet, object_interaction: Math.min(objs.length, 1), reaction: reservesReaction ? 1 : 0 };
-    var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
-    return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && warnings.length > 0,
-             errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives, steps: steps, halts: halts };
+    return { errors: errors, warnings: warnings, info: info, used: used, trace: trace, halts: halts, speechAction: speechAction };
   }
 
+  /* one path per branch case (plus "otherwise"); a path that stops at a branch ends there */
+  function paths(steps) {
+    var out = [{ steps: [], label: [], stopped: null, choice: {} }], nested = false;
+    for (var i = 0; i < steps.length; i++) {
+      var s = steps[i];
+      if (s.type !== "branch") { out.forEach(function (p) { if (!p.stopped) p.steps.push(s); }); continue; }
+      var next = [];
+      out.forEach(function (p) {
+        if (p.stopped) { next.push(p); return; }
+        (s.cases || []).forEach(function (c, k) {
+          if ((c.steps || []).some(function (x) { return x.type === "branch"; })) nested = true;
+          var ch = clone(p.choice); ch[s.id] = k;
+          next.push({ steps: p.steps.concat(c.steps || []), label: p.label.concat(["if " + (c.when || "…")]), stopped: c.after === "stop" ? s.id : null, choice: ch });
+        });
+        var co = clone(p.choice); co[s.id] = "otherwise";
+        next.push({ steps: p.steps.slice(), label: p.label.concat(["otherwise"]), stopped: s.otherwise === "continue" ? null : s.id, choice: co });
+      });
+      out = next;
+      if (out.length > 16) return { error: "TOO_MANY_BRANCHES" };
+    }
+    return nested ? { error: "NESTED_BRANCH" } : out;
+  }
+  function halting(steps) { var h = []; steps.forEach(function (s, i) { if ((s.condition && s.condition.text) || s.type === "branch") h.push(i); }); return h; }
+
+  function validate(declIn, ctx) {
+    var decl = normalize(declIn, ctx), combat = ctx.mode === "combat";
+    var ps = paths(decl.steps), errors = [], warnings = [], info = [], trace = {}, used = null, speechAction = false;
+    if (ps.error) {
+      errors.push({ code: ps.error, message: ps.error === "NESTED_BRANCH" ? "A branch cannot sit inside another branch. Put the second choice in its own step after it." : "Too many branches in one plan (more than 16 outcomes). Split it, or submit part of it." });
+      ps = [{ steps: decl.steps.filter(function (s) { return s.type !== "branch"; }), label: [], choice: {} }];
+    }
+    var containing = {}, results = ps.map(function (p) {
+      var d = normalize(Object.assign({}, decl, { steps: p.steps }), ctx);
+      p.steps.forEach(function (s) { containing[s.id] = (containing[s.id] || 0) + 1; });
+      return { p: p, r: validateLinear(d, ctx) };
+    });
+    var seenE = {}, seenW = {}, seenI = {};
+    results.forEach(function (x) {
+      x.r.trace.forEach(function (t) { if (!trace[t.step_id]) trace[t.step_id] = t; });
+      x.r.info.forEach(function (i) { if (!seenI[i.message]) { seenI[i.message] = 1; info.push(i); } });
+      x.r.warnings.forEach(function (w) { var k = w.code + "|" + (w.step_id || "") + "|" + w.message; if (!seenW[k]) { seenW[k] = 1; warnings.push(w); } });
+      if (!used) used = clone(x.r.used); else for (var k in used) used[k] = Math.max(used[k], x.r.used[k]);
+      speechAction = speechAction || x.r.speechAction;
+    });
+    var groups = {}, order = [];
+    results.forEach(function (x) {
+      var mine = {};
+      x.r.errors.forEach(function (e) {
+        var k = e.code + "|" + (e.step_id || "");
+        if (mine[k]) return; mine[k] = 1;
+        if (!groups[k]) { groups[k] = { e: e, n: 0, labels: [] }; order.push(k); }
+        groups[k].n++; groups[k].labels.push(x.p.label.join(", "));
+      });
+    });
+    order.forEach(function (k) {
+      var g = groups[k];
+      if (!g.e.step_id || ps.length === 1 || g.n >= (containing[g.e.step_id] || 1)) errors.push(g.e);
+      else warnings.push({ code: "BRANCH_DEPENDENT", message: "In the case “" + g.labels[0] + "”: " + g.e.message + " The GM stops there in that case.", step: g.e.step, step_id: g.e.step_id, advisory: true, cause: g.e.code });
+    });
+    flat(decl.steps).forEach(function (s, i) {
+      if (s.type !== "branch") return;
+      if (!(s.cases || []).length) errors.push({ code: "BRANCH_EMPTY", message: "A decision needs at least one “if”.", step_id: s.id });
+      (s.cases || []).forEach(function (c, k) { if (!String(c.when || "").trim()) errors.push({ code: "BRANCH_WHEN", message: "Say what Aero must hear or see for " + (k ? "“else if” " + k : "the “if”") + " of this decision.", step_id: s.id }); });
+      if (decl.steps.indexOf(s) < 0) errors.push({ code: "NESTED_BRANCH", message: "A decision cannot sit inside another decision.", step_id: s.id });
+    });
+    var halts = halting(decl.steps);
+    if (decl.steps.some(function (s) { return s.type === "branch"; }))
+      info.push({ code: "BRANCH", message: "At a branch the GM takes a case only when what Aero has seen or heard settles it. Missing information never counts as a yes; otherwise it does what you chose for “otherwise”." });
+    var preview = previewSteps(decl.steps, ctx, combat, speechAction);
+    var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
+    if (mv && mv.id === "hold" && !decl.steps.some(function (s) { return s.type === "move"; }) && decl.steps.length) preview.push({ step: "movement", text: mv.label });
+    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
+    var confirm = warnings.filter(function (w) { return !w.advisory; });
+    var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
+    return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,
+             errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives,
+             steps: decl.steps, halts: halts, trace: decl.steps.length ? flat(decl.steps).map(function (s) { return trace[s.id]; }).filter(Boolean) : [], paths: ps.length };
+  }
+
+  /* ---------- per-step status for the builder (from a validate() result; never a prediction) ---------- */
+  function stepStatus(v) {
+    var out = {}, top = v.steps || [], firstHalt = (v.halts || []).length ? v.halts[0] : -1;
+    function set(id, st) { out[id] = st; }
+    flat(top).forEach(function (s) { set(s.id, { status: s.type === "free" ? "gm" : "ok", messages: [] }); });
+    top.forEach(function (s, i) {
+      if (s.type === "branch") (s.cases || []).forEach(function (c) { (c.steps || []).forEach(function (x) { if (out[x.id].status === "ok") out[x.id].status = "case"; }); });
+      if (firstHalt >= 0 && i > firstHalt) flat([s]).forEach(function (x) { out[x.id].status = "waits"; });
+      if (i === firstHalt) out[s.id].status = s.type === "branch" ? "branch" : "waits";
+      if (s.status === "invalidated") out[s.id].status = "invalidated";
+    });
+    v.warnings.forEach(function (w) { var o = w.step_id && out[w.step_id]; if (!o) return; o.messages.push(w.message); if (o.status === "ok" || o.status === "case") o.status = /^GM_/.test(w.code) ? "gm" : "risky"; });
+    v.errors.forEach(function (e) {
+      var o = e.step_id && out[e.step_id]; if (!o) return;
+      if (o.status !== "fix") { o.status = "fix"; o.messages = []; }
+      o.messages.push(e.message);
+      if (!o.resolution || e.resolution === "not_possible_here" || (e.resolution === "needs_choice" && o.resolution === "add_step")) { o.resolution = e.resolution || "not_possible_here"; }
+      o.suggest_steps = (o.suggest_steps || []).concat(e.suggest_steps || []);
+    });
+    return out;
+  }
+
+  /* ---------- palette availability: validate the plan with each candidate inserted ---------- */
+  function insertStep(steps, where, step) {
+    steps = clone(steps || []);
+    if (where && where.branch) {
+      var b = byId(steps, where.branch);
+      if (b && b.type === "branch" && b.cases && b.cases[where.case]) { step.seq = b.seq; b.cases[where.case].steps = (b.cases[where.case].steps || []).concat([step]); return steps; }
+    }
+    var seq = where && where.seq != null ? where.seq : (steps.length ? steps[steps.length - 1].seq || 0 : 0), idx = 0;
+    step.seq = seq;
+    for (var i = steps.length - 1; i >= 0; i--) if ((steps[i].seq || 0) <= seq) { idx = i + 1; break; }
+    if (where && where.index != null) idx = Math.max(0, Math.min(where.index, steps.length));
+    steps.splice(idx, 0, step);
+    return steps;
+  }
+  function candidates(ctx) {
+    return [].concat((ctx.options || []).map(function (o) { return { type: o.slot === "bonus_action" ? "bonus_action" : "action", option: o.id, label: o.label }; }),
+      (ctx.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return { type: "move", option: m.id, label: m.label }; }),
+      (ctx.objects || []).map(function (o) { return { type: "object", option: o.id, label: o.label }; }));
+  }
+  function availability(declIn, ctx, where) {
+    var base = normalize(declIn, ctx), rb = validate(base, ctx);
+    var baseGlobal = rb.errors.filter(function (e) { return !e.step_id; }).map(function (e) { return e.code; });
+    return candidates(ctx).map(function (c) {
+      var st = { id: "__cand", type: c.type, option: c.option };
+      if (c.type === "action" || c.type === "bonus_action") { st.target = null; st.trigger = null; }
+      var d = clone(base); d.steps = insertStep(base.steps, where, st);
+      var r = validate(d, ctx);
+      var errs = r.errors.filter(function (e) { return (e.step_id === "__cand" || (!e.step_id && baseGlobal.indexOf(e.code) < 0)) && e.code !== "TARGET" && e.code !== "TRIGGER"; });
+      var warns = r.warnings.filter(function (w) { return w.step_id === "__cand"; });
+      var status = "ok";
+      if (errs.some(function (e) { return STOP_ERRORS.indexOf(e.code) >= 0 || e.resolution === "not_possible_here" || !e.resolution; })) status = "not_here";
+      else if (errs.some(function (e) { return e.resolution === "needs_choice"; })) status = "needs_choice";
+      else if (errs.length) status = "needs_step";
+      else if (warns.length) status = "risky";
+      var sugg = [], seen = {};
+      errs.forEach(function (e) { (e.suggest_steps || []).slice(0, 1).forEach(function (x) { var k = x.type + ":" + x.option; if (!seen[k]) { seen[k] = 1; var src = x.type === "move" ? byId(ctx.movement, x.option) : x.type === "object" ? byId(ctx.objects, x.option) : byId(ctx.options, x.option); sugg.push({ type: x.type, option: x.option, label: src ? src.label : x.option }); } }); });
+      return { type: c.type, option: c.option, label: c.label, status: status, codes: errs.map(function (e) { return e.code; }).concat(warns.map(function (w) { return w.code; })),
+               reasons: errs.map(function (e) { return e.message; }).concat(warns.map(function (w) { return w.message; })), suggest: status === "needs_step" ? sugg : [] };
+    });
+  }
+
+  /* ---------- plan progress (GM side): the one shape for a partially executed plan ----------
+   * outcome = { completed: [step ids, in order], interrupted: id|null, stop_kind, reason, branches: {id: case index|"otherwise"},
+   *             invalidated: [ids] (prerequisite stops: steps that depended on what failed) }
+   * Returns the public plan_progress details and the pending_steps / plan_result for the next turn_context.
+   * Pending steps never resume on their own; a combat stop invalidates the rest (not carried into combat). */
+  var STOP_KINDS = ["consequential", "mechanical", "prerequisite", "condition", "combat", "complete"];
+  function planProgress(declIn, ctx, outcome) {
+    var decl = normalize(declIn, ctx), o = outcome || {}, kind = o.stop_kind, problems = [];
+    if (kind === "incidental") problems.push("An incidental event is not a stop: log it and continue the plan.");
+    else if (STOP_KINDS.indexOf(kind) < 0) problems.push("Unknown stop_kind " + JSON.stringify(kind) + ".");
+    var br = o.branches || {}, path = [], skipped = [], blockedAt = null;
+    for (var i = 0; i < decl.steps.length && blockedAt === null; i++) {
+      var s = decl.steps[i];
+      if (s.type !== "branch") { path.push(s); continue; }
+      var ch = br[s.id];
+      (s.cases || []).forEach(function (c, k) { if (ch !== k) skipped = skipped.concat(flat(c.steps || []).map(function (x) { return x.id; })); });
+      if (ch === undefined) { blockedAt = s; break; }
+      if (ch === "otherwise") { if (s.otherwise !== "continue") { blockedAt = s; if (kind !== "condition" && kind !== "combat") problems.push("Branch " + s.id + " has no settled case and stops the plan; stop_kind must be \"condition\"."); } continue; }
+      var c = (s.cases || [])[ch];
+      if (!c) { problems.push("Branch " + s.id + " has no case " + ch + "."); blockedAt = s; break; }
+      path = path.concat(c.steps || []);
+      if (c.after === "stop") { blockedAt = { id: s.id + ":after", stop_only: true }; }
+    }
+    var ids = path.map(function (s) { return s.id; }), done = o.completed || [];
+    for (var j = 0; j < done.length; j++) if (ids[j] !== done[j]) { problems.push("completed must be the first " + done.length + " steps of the executed path, in order (step " + (j + 1) + " is " + ids[j] + ", got " + done[j] + ")."); break; }
+    var restSteps = path.slice(done.length), interrupted = o.interrupted || null;
+    if (interrupted && (!restSteps.length || restSteps[0].id !== interrupted)) problems.push("interrupted must be the step right after the completed ones.");
+    if (kind === "complete" && (restSteps.length || blockedAt && !blockedAt.stop_only)) problems.push("stop_kind \"complete\" but steps remain.");
+    if (blockedAt && !blockedAt.stop_only && done.length === path.length && kind !== "condition" && kind !== "combat" && kind !== "complete") problems.push("The plan reached an unsettled branch; stop_kind must be \"condition\".");
+    if (problems.length) return { ok: false, problems: problems };
+    var inv = o.invalidated || [], pending = [], invalid = [];
+    var remaining = restSteps.slice();
+    if (blockedAt && !blockedAt.stop_only) { var bi = decl.steps.indexOf(blockedAt); remaining = remaining.concat(decl.steps.slice(bi)); }
+    else if (blockedAt && blockedAt.stop_only) { var bj = decl.steps.indexOf(byId(decl.steps, blockedAt.id.split(":")[0])); remaining = remaining.concat(decl.steps.slice(bj + 1)); }
+    remaining.forEach(function (s) {
+      var x = clone(s); delete x.authorized; x.pending = true;
+      if (s.id === interrupted) x.interrupted = true;
+      if (kind === "combat" || inv.indexOf(s.id) >= 0) { x.status = "invalidated"; x.reason = kind === "combat" ? "initiative began" : "what it depended on did not happen"; invalid.push(x); }
+      else { x.status = s.id === interrupted ? "interrupted" : "pending"; pending.push(x); }
+    });
+    var all = pending.concat(invalid).sort(function (a, b) { return remaining.map(function (s) { return s.id; }).indexOf(a.id) - remaining.map(function (s) { return s.id; }).indexOf(b.id); });
+    return { ok: true,
+      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted: interrupted, pending: pending.map(function (s) { return s.id; }), invalidated: invalid.map(function (s) { return s.id; }),
+                       skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
+      pending_steps: all, plan_result: { stop_kind: kind, reason: String(o.reason || ""), completed: done.length, pending: pending.length, invalidated: invalid.length } };
+  }
   function describe(decl, ctx) {
     var parts = [];
     decl.actions.forEach(function (a) { var o = byId(ctx.options, a.option); if (o) parts.push(o.label); });
@@ -375,7 +652,8 @@
     return v.warnings.map(function (w) { return w.message; }).join(" ");
   }
 
-  return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, normalize: normalize, validate: validate, summary: summary, haltAt: haltAt, classify: classify };
+  return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, normalize: normalize, validate: validate, summary: summary, haltAt: haltAt, classify: classify,
+           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, STOP_KINDS: STOP_KINDS };
 });
 
 /* node CLI: node turn_contract.js validate <decl.json|-> <ctx.json>   |   parse "<text>" <ctx.json> */
@@ -393,5 +671,16 @@ if (typeof require !== "undefined" && typeof module !== "undefined" && require.m
   } else if (argv[0] === "halt") {  // node turn_contract.js halt <decl|-> <ctx> <step index> "<reason>"
     var dh = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8"));
     process.stdout.write(JSON.stringify(T.haltAt(dh, ctx, +argv[3], argv[4] || ""), null, 1) + "\n");
-  } else { process.stderr.write("usage: parse <text> <ctx> | validate <decl|-> <ctx> | halt <decl|-> <ctx> <index> <reason>\n"); process.exit(2); }
+  } else if (argv[0] === "availability") {  // node turn_contract.js availability <decl|-> <ctx> [<where json>]
+    var da = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8"));
+    process.stdout.write(JSON.stringify(T.availability(da, ctx, argv[3] ? JSON.parse(argv[3]) : null), null, 1) + "\n");
+  } else if (argv[0] === "status") {  // per-step status of a declaration
+    var ds = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8")), vs = T.validate(ds, ctx);
+    process.stdout.write(JSON.stringify({ validation: vs, status: T.stepStatus(vs) }, null, 1) + "\n");
+  } else if (argv[0] === "progress") {  // node turn_contract.js progress <decl|-> <ctx> <outcome.json>
+    var dp = JSON.parse(argv[1] === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(argv[1], "utf8"));
+    var pr = T.planProgress(dp, ctx, JSON.parse(fs.readFileSync(argv[3], "utf8")));
+    process.stdout.write(JSON.stringify(pr, null, 1) + "\n");
+    process.exit(pr.ok ? 0 : 3);
+  } else { process.stderr.write("usage: parse <text> <ctx> | validate <decl|-> <ctx> | halt <decl|-> <ctx> <index> <reason> | availability <decl|-> <ctx> [where] | status <decl|-> <ctx> | progress <decl|-> <ctx> <outcome>\n"); process.exit(2); }
 }

@@ -1,0 +1,139 @@
+{
+ "actor": "aero",
+ "source": "composer",
+ "freeform": "",
+ "speech": null,
+ "actions": [],
+ "bonus_actions": [],
+ "movement": null,
+ "objects": [],
+ "reactions": [],
+ "unmapped": [],
+ "sequences": [
+  {
+   "label": "Preparation and investigation"
+  },
+  {
+   "label": "Return to the barn"
+  },
+  {
+   "label": "Open the barn"
+  },
+  {
+   "label": "Prepare to enter"
+  }
+ ],
+ "steps": [
+  {
+   "id": "s1",
+   "seq": 0,
+   "type": "object",
+   "option": "holster_blaster"
+  },
+  {
+   "id": "s2",
+   "seq": 0,
+   "type": "speech",
+   "option": "d1"
+  },
+  {
+   "id": "s3",
+   "seq": 0,
+   "type": "move",
+   "option": "to_cart"
+  },
+  {
+   "id": "s4",
+   "seq": 0,
+   "type": "action",
+   "option": "inspect_cart",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s5",
+   "seq": 0,
+   "type": "free",
+   "text": "Load the torch and both gas bottles onto the handcart and strap them down",
+   "kind": "custom"
+  },
+  {
+   "id": "s6",
+   "seq": 0,
+   "type": "action",
+   "option": "push_cart",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s7",
+   "seq": 1,
+   "type": "move",
+   "option": "to_shed_door"
+  },
+  {
+   "id": "s8",
+   "seq": 1,
+   "type": "speech",
+   "option": "d2"
+  },
+  {
+   "id": "s9",
+   "seq": 2,
+   "type": "speech",
+   "text": "Wick, get the lantern ready.\nWhen the door opens, shine it inside, low and steady."
+  },
+  {
+   "id": "s10",
+   "seq": 2,
+   "type": "action",
+   "option": "cut_chain",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s10b",
+   "seq": 2,
+   "type": "object",
+   "option": "release_cart"
+  },
+  {
+   "id": "s11",
+   "seq": 2,
+   "type": "action",
+   "option": "open_door",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s12",
+   "seq": 2,
+   "type": "object",
+   "option": "draw_blaster"
+  },
+  {
+   "id": "s13",
+   "seq": 3,
+   "type": "action",
+   "option": "signal_wick",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s14",
+   "seq": 3,
+   "type": "action",
+   "option": "force_sense",
+   "target": null,
+   "trigger": null
+  },
+  {
+   "id": "s15",
+   "seq": 3,
+   "type": "action",
+   "option": "prepare_enter",
+   "target": null,
+   "trigger": null
+  }
+ ]
+}
