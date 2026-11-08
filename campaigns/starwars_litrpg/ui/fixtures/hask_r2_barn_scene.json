@@ -1,0 +1,414 @@
+{
+ "_note": "TEST FIXTURE, non-canonical. Derived from the player-visible Hask Meadow run-2 turn context evt_0286, with contract-2 fields (hands, frees_hand, takes_hands, at) and two take-objects added for regression tests. Not campaign state.",
+ "context_id": null,
+ "actor": "aero",
+ "actor_name": "Aero",
+ "actor_conditions": [],
+ "mode": "scene",
+ "round": null,
+ "budget": {
+  "action": 1,
+  "bonus_action": 1,
+  "reaction": 1,
+  "movement_ft": 30,
+  "object_interaction": 1
+ },
+ "speed_ft": 30,
+ "resources": {
+  "force_points": 3
+ },
+ "state_flags": [
+  "saber_ignited",
+  "blaster_drawn"
+ ],
+ "flag_labels": {
+  "saber_ignited": "an ignited lightsaber",
+  "blaster_drawn": "a drawn blaster pistol"
+ },
+ "dialogue": [
+  {
+   "id": "d1",
+   "approach": "empathetic",
+   "text": "I heard it too. I know what it sounds like to you. Stay with me anyway.",
+   "extended": false
+  },
+  {
+   "id": "d2",
+   "approach": "investigative",
+   "text": "Garrick's crew stopped digging. Why? Did anyone say what happened down there?",
+   "extended": false
+  },
+  {
+   "id": "d3",
+   "approach": "assertive",
+   "text": "Whose barn is this, and who has the key?",
+   "extended": false
+  },
+  {
+   "id": "d4",
+   "approach": "calming",
+   "text": "Breathe. It only says what it's heard. Keep the light up.",
+   "extended": false
+  },
+  {
+   "id": "d5",
+   "approach": "defiant",
+   "text": "Let it call. We're not walking down there blind.",
+   "extended": false
+  }
+ ],
+ "options": [
+  {
+   "id": "ask_wick",
+   "slot": "action",
+   "label": "Ask Wick something",
+   "detail": "he is at your shoulder with the open lantern",
+   "aliases": [
+    "ask wick",
+    "talk to wick"
+   ]
+  },
+  {
+   "id": "read_wick",
+   "slot": "action",
+   "label": "Read Wick through the Force",
+   "detail": "Wisdom (Insight); he is beside you",
+   "aliases": [
+    "read wick",
+    "sense wick"
+   ]
+  },
+  {
+   "id": "cut_chain",
+   "slot": "action",
+   "label": "Cut the barn's chain with the lightsaber",
+   "detail": "the blade is lit; cutting metal throws sparks and light",
+   "needs_target": false,
+   "aliases": [
+    "cut the chain",
+    "cut the lock",
+    "saber the lock"
+   ],
+   "at": "barn_door"
+  },
+  {
+   "id": "force_lock",
+   "slot": "action",
+   "label": "Force the padlock or the hasp",
+   "detail": "Strength (Athletics)",
+   "aliases": [
+    "force the lock",
+    "break the lock",
+    "force the door"
+   ]
+  },
+  {
+   "id": "search_cart",
+   "slot": "action",
+   "label": "Look over the welding cart by the left-hand silo",
+   "detail": "Intelligence (Investigation); about 35 ft away, at the edge of your light",
+   "aliases": [
+    "the cart",
+    "the welding cart",
+    "look at the cart"
+   ],
+   "at": "welding_cart",
+   "reach_ft": 5
+  },
+  {
+   "id": "study_silo",
+   "slot": "action",
+   "label": "Study the sealed door of Silo Three",
+   "detail": "Intelligence (Investigation); the bar, the welds and the slag; about 30 ft back",
+   "aliases": [
+    "study the silo",
+    "look at the welds",
+    "examine the silo",
+    "silo three"
+   ]
+  },
+  {
+   "id": "search_dark",
+   "slot": "action",
+   "label": "Search around by eye again",
+   "detail": "Wisdom (Perception); light reaches about 10-20 ft",
+   "aliases": [
+    "look around",
+    "search",
+    "scan"
+   ]
+  },
+  {
+   "id": "listen_trees",
+   "slot": "action",
+   "label": "Listen toward the strip of trees",
+   "detail": "Wisdom (Perception); the trees are about 1,700 ft away down the rise",
+   "aliases": [
+    "listen",
+    "listen to the trees"
+   ]
+  },
+  {
+   "id": "reopen_comm",
+   "slot": "action",
+   "label": "Open the comm channel again",
+   "detail": "the shuttle has lifted; who would answer is unknown",
+   "aliases": [
+    "open the comm",
+    "open the channel",
+    "call someone"
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "deactivate_saber",
+   "label": "Deactivate the indigo lightsaber",
+   "removes": [
+    "saber_ignited"
+   ],
+   "aliases": [
+    "deactivate",
+    "shut off",
+    "blade off"
+   ]
+  },
+  {
+   "id": "holster_blaster",
+   "label": "Holster the blaster pistol",
+   "removes": [
+    "blaster_drawn"
+   ],
+   "aliases": [
+    "holster"
+   ],
+   "frees_hand": "left"
+  },
+  {
+   "id": "close_lantern",
+   "label": "Tell Wick to close the lantern shutter",
+   "aliases": [
+    "close the lantern",
+    "shutter the lantern",
+    "lantern off"
+   ]
+  },
+  {
+   "id": "take_torch",
+   "label": "Take the welding torch from the cart",
+   "takes_hands": 1,
+   "at": "welding_cart",
+   "item": "welding_torch",
+   "aliases": [
+    "take the welding torch",
+    "take the torch",
+    "grab the welder",
+    "the welding torch"
+   ]
+  },
+  {
+   "id": "take_bottle_a",
+   "label": "Lift the first gas bottle off the cart",
+   "takes_hands": 1,
+   "at": "welding_cart",
+   "item": "gas_bottle",
+   "aliases": [
+    "the first gas bottle",
+    "first bottle"
+   ]
+  },
+  {
+   "id": "take_bottle_b",
+   "label": "Lift the second gas bottle off the cart",
+   "takes_hands": 1,
+   "at": "welding_cart",
+   "item": "gas_bottle",
+   "aliases": [
+    "the second gas bottle",
+    "second bottle"
+   ]
+  }
+ ],
+ "movement": [
+  {
+   "id": "hold",
+   "label": "Stay at the barn door",
+   "feet": 0,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "wick": 0,
+    "middle_silo": 30,
+    "grange_door": 280,
+    "trees": 1700,
+    "barn_door": 0,
+    "welding_cart": 35
+   }
+  },
+  {
+   "id": "to_other_barn",
+   "label": "Cross the lane to the other barn (~25 ft)",
+   "feet": 25,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "wick": 5,
+    "middle_silo": 30,
+    "grange_door": 280,
+    "trees": 1700,
+    "barn_door": 25,
+    "welding_cart": 40
+   },
+   "aliases": [
+    "the other barn",
+    "across the lane"
+   ]
+  },
+  {
+   "id": "to_silo_door",
+   "label": "Back to the door of Silo Three (~30 ft)",
+   "feet": 30,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "wick": 5,
+    "middle_silo": 0,
+    "grange_door": 300,
+    "trees": 1700,
+    "barn_door": 30,
+    "welding_cart": 5
+   },
+   "aliases": [
+    "to the silo",
+    "the middle silo",
+    "silo three"
+   ]
+  },
+  {
+   "id": "back_to_grange",
+   "label": "Down the lane to the Grange door (~280 ft)",
+   "feet": 280,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "wick": 280,
+    "middle_silo": 290,
+    "grange_door": 0,
+    "trees": 2000,
+    "barn_door": 280,
+    "welding_cart": 300
+   },
+   "aliases": [
+    "back to the grange",
+    "down the lane"
+   ]
+  },
+  {
+   "id": "toward_trees",
+   "label": "Down the rise toward the trees and the voice (~1,700 ft)",
+   "feet": 1700,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "wick": 1700,
+    "middle_silo": 1700,
+    "grange_door": 2000,
+    "trees": 0,
+    "barn_door": 1700,
+    "welding_cart": 1700
+   },
+   "aliases": [
+    "toward the voice",
+    "down the rise",
+    "to the trees"
+   ]
+  }
+ ],
+ "reactions": [],
+ "visible": [
+  {
+   "id": "wick",
+   "label": "Wick (at your shoulder, within reach, lantern open and raised)",
+   "distance_ft": 5,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "wick",
+    "the kid",
+    "the boy"
+   ]
+  },
+  {
+   "id": "barn_door",
+   "label": "The nearest barn's doors: hasp, heavy chain, padlock",
+   "distance_ft": 0,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "barn",
+    "the barn",
+    "the door",
+    "the lock"
+   ]
+  },
+  {
+   "id": "other_barn",
+   "label": "The other barn, across the lane, doors shut",
+   "distance_ft": 25,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "other barn"
+   ]
+  },
+  {
+   "id": "middle_silo",
+   "label": "Silo Three, the middle silo: barred, seam welded, grey slag on the gravel under it",
+   "distance_ft": 30,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "silo",
+    "silo three",
+    "middle silo"
+   ]
+  },
+  {
+   "id": "welding_cart",
+   "label": "A handcart with a welding torch and two gas bottles, against the left-hand silo",
+   "distance_ft": 35,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "cart",
+    "welding cart",
+    "torch"
+   ]
+  },
+  {
+   "id": "grange",
+   "label": "The Grange, down the lane: thin yellow lines at its shutters; the door shut and bolted",
+   "distance_ft": 280,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "grange",
+    "the hall"
+   ]
+  }
+ ],
+ "notes": [
+  "You are at the nearest barn beside the silos, blade lit in your right hand, blaster drawn in your left. Wick is at your shoulder, within reach, lantern raised.",
+  "The barn is chained and padlocked. Cutting or forcing it will make light and noise.",
+  "Wick says: the Warden is Marga Tolliver; her son Garrick is one of the six, with his mother; Silo Three was welded the day after the dogs went wrong; Garrick's crew had been digging under it all season, then stopped.",
+  "The woman's voice called once, faint, from the strip of trees about 1,700 ft down the rise: the same words as every time. Nothing else came.",
+  "Blade and lantern light reach about 10-20 ft; past that it is dark. You have no darkvision. Your lights can be seen from a long way off.",
+  "The comm channel is closed. The shuttle has gone; you have no ride.",
+  "The voice can repeat words it has heard, yours included, word for word."
+ ],
+ "hands": {
+  "right": {
+   "item": "lightsaber",
+   "label": "the lit lightsaber"
+  },
+  "left": {
+   "item": "blaster_pistol",
+   "label": "the blaster pistol"
+  }
+ }
+}
