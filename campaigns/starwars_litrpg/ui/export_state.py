@@ -64,6 +64,8 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     feed = []
     for e in ev:
         if e["kind"] == "gm_narration":
+            if not (e["details"] or {}).get("text"):
+                continue  # committed empty by a processing error and superseded (erratum); never show its summary as story
             feed.append({"who": "gm", "event_id": e["event_id"], "time": e["world_time"], "text": e["details"].get("text", e["summary"])})
         elif e["kind"] == "ruling_void":
             # the page renders only *italics*; flatten markdown headings/bullets from ruling text

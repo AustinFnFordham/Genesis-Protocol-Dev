@@ -96,7 +96,7 @@
       "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole turn in your own words. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
-        '<div class="note">Read as: ' + esc(r.preview.map(function (p) { return p.text; }).join(" → ") || "nothing matched yet") + "</div>";
+        '<div class="note" id="readAs">Read as: ' + esc(r.preview.map(function (p) { return p.text; }).join(" → ") || "nothing matched yet") + "</div>";
     } else {
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
@@ -119,7 +119,7 @@
       if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
       h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
-    h += "</fieldset>" + checkPanel(r);
+    h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
     var canSubmit = !busy && status === "live" && r.legal && (!r.warnings.length || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim());
     h += '<div class="row" style="margin-top:10px"><button class="btn primary" id="submitTurn"' + (canSubmit && !phase ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : "Submit turn") + "</button>" +
       '<button class="btn" id="clearTurn"' + dis + '>Clear</button><span class="note" id="msg"></span></div>' +
@@ -206,7 +206,8 @@
       el.addEventListener("change", function () { selId = el.value; ls("datapad.member", selId); render(); });
     });
     bindCenter();
-    if (keep && $(keep.id)) { var el = $(keep.id); el.focus(); try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
+    if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
+    watchNewest();
   }
 
   /* ---------- interaction ---------- */
@@ -226,17 +227,15 @@
     });
     on("w_target", "change", function () { ui.sel.target[ui.sel.action] = $("w_target").value; changed(); });
     var deb = null;
-    function typed(set) { return function (e) { set(e.target.value); ui.confirmed = false; ui.draftId = ""; saveUi(); clearTimeout(deb); deb = setTimeout(render, 350); }; }
+    function typed(set) { return function (e) { set(e.target.value); ui.confirmed = false; ui.draftId = ""; autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); }; }
     on("w_own", "input", typed(function (x) { ui.sel.own = x; }));
     on("w_trigger", "input", typed(function (x) { ui.sel.trigger = x; }));
     on("w_note", "input", typed(function (x) { ui.note = x; }));
     on("w_write", "input", typed(function (x) { ui.write = x; ls("datapad.draft", x); }));
-    on("confirmRisk", "change", function () { ui.confirmed = $("confirmRisk").checked; saveUi(); render(); });
+    bindLive();
+    Array.prototype.forEach.call(document.querySelectorAll(".composer textarea"), autoGrow);
     on("clearTurn", "click", function () { ui = freshUi(ui.ctxId); saveUi(); render(); });
     on("submitTurn", "click", submitTurn);
-    Array.prototype.forEach.call(document.querySelectorAll("[data-alt]"), function (b) {
-      b.addEventListener("click", function () { var r = window.__lastValidation; var a = r && r.alternatives[+b.getAttribute("data-alt")]; if (a) { loadDeclaration(a.declaration, ctxOf(view)); render(); } });
-    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-ralt]"), function (b) {
       b.addEventListener("click", function () {
         var p = b.getAttribute("data-ralt").split(":"), a = actions.filter(function (x) { return x._id === p[0]; })[0];
@@ -252,6 +251,55 @@
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-nudge]"), function (b) { b.addEventListener("click", function () { notifyGM(b.getAttribute("data-nudge")); }); });
   }
+
+  /* Live preflight while typing: update only the check panel, the "Read as" line and the Submit
+     button, so the text box is never rebuilt under the player's keyboard. */
+  function bindLive() {
+    var cr = $("confirmRisk"); if (cr) cr.addEventListener("change", function () { ui.confirmed = cr.checked; saveUi(); refreshLive(); });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-alt]"), function (b) {
+      b.addEventListener("click", function () { var r = window.__lastValidation; var a = r && r.alternatives[+b.getAttribute("data-alt")]; if (a) { loadDeclaration(a.declaration, ctxOf(view)); render(); } });
+    });
+  }
+  function refreshLive() {
+    var c = ctxOf(view), lc = $("liveCheck");
+    if (!c || !lc) { if (!c && $("submitTurn")) $("submitTurn").disabled = !!(activeAction() || !ui.write.trim() || status !== "live" || phase); return; }
+    var busy = activeAction(), d = declaration(c), r = T.validate(d, c);
+    window.__lastValidation = r;
+    lc.innerHTML = checkPanel(r);
+    var ra = $("readAs"); if (ra) ra.textContent = "Read as: " + (r.preview.map(function (p) { return p.text; }).join(" \u2192 ") || "nothing matched yet");
+    var canSubmit = !busy && status === "live" && r.legal && (!r.warnings.length || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim());
+    var sb = $("submitTurn"); if (sb) sb.disabled = !(canSubmit && !phase);
+    bindLive();
+  }
+  function autoGrow(el) {
+    if (!el || el.tagName !== "TEXTAREA") return;
+    var col = el.closest(".col"), y = col ? col.scrollTop : 0, wy = window.scrollY;
+    el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px";
+    el.style.overflowY = el.scrollHeight + 2 > el.clientHeight + 1 ? "auto" : "hidden";
+    if (col) col.scrollTop = y; window.scrollTo(window.scrollX, wy);
+  }
+
+  /* "Newest" button: jumps to the latest story entry; hidden while that entry is on screen. */
+  var jumpObs = null;
+  function watchNewest() {
+    var btn = $("jumpNew"), items = document.querySelectorAll("#colCenter .feed > div");
+    if (!btn) return;
+    var last = items[items.length - 1];
+    if (jumpObs) jumpObs.disconnect();
+    if (!last) { btn.hidden = true; return; }
+    if (!("IntersectionObserver" in window)) { btn.hidden = false; return; }
+    jumpObs = new IntersectionObserver(function (es) { btn.hidden = es[es.length - 1].isIntersecting; });
+    jumpObs.observe(last);
+  }
+  (function () {
+    var btn = $("jumpNew"); if (!btn) return;
+    btn.addEventListener("click", function () {
+      var items = document.querySelectorAll("#colCenter .feed > div"), last = items[items.length - 1];
+      if (!last) return;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      last.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+  })();
 
   function submitTurn() {
     var c = ctxOf(view), busy = activeAction();
