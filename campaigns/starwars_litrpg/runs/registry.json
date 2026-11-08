@@ -37,6 +37,22 @@
    "canon": false,
    "no_processor": true,
    "note": "Branch litrpg/turn-builder only. Non-canon scene-mode E2E (consequential stop, condition pause, Continue). Shares the preview artifact with sequencer_sandbox."
+  },
+  "sequencer_sandbox_c": {
+   "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_c",
+   "artifact_url": "https://claude.ai/artifact/NaiGHt84nvsswBbyXF9EX1",
+   "status": "active",
+   "canon": false,
+   "no_processor": true,
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: improvised carrying: the syntherope harness (S4). Shares the preview artifact."
+  },
+  "sequencer_sandbox_d": {
+   "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_d",
+   "artifact_url": "https://claude.ai/artifact/NaiGHt84nvsswBbyXF9EX1",
+   "status": "active",
+   "canon": false,
+   "no_processor": true,
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: the quick lightsaber weld (S5). Shares the preview artifact."
   }
  },
  "processor": {

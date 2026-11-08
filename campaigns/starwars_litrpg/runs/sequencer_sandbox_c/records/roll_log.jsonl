@@ -1,0 +1,1 @@
+{"roll_id": "roll_t1_1", "turn_no": 1, "requested_by": "aero", "purpose": "[amw8gtiazcaiqib] Aero: knot a load-bearing harness one-handed (Sleight of Hand)", "formula": "1d20+3", "mode": "disadvantage", "dice": [{"sign": 1, "sides": 20, "rolled": [14], "kept": [14]}], "alt_dice": [17], "raw_total": 14, "modifiers": 3, "final_total": 17, "nat20": false, "nat1": false}

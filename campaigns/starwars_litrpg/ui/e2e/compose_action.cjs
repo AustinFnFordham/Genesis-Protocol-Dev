@@ -28,6 +28,19 @@ const MOCK = fs.readFileSync(path.join(__dirname, "..", "test_datapad_ui.cjs"), 
     else if (k === "activecase") await p.click(`[data-act-case="${await bid()}:${a}"]`);
     else if (k === "other") await p.click(`[data-other="${await bid()}:${a}"]`);
     else if (k === "continue") await p.click("#continuePending");
+    else if (k === "custom") {  // {"text","method","uses":[..],"after":{"id":"state"},"on","hands","makes","makes_state"}: filled through the real editor
+      const c = JSON.parse(a);
+      await p.fill("#w_act", c.text.replace(/\\n/g, "\n"));
+      if (!(await p.locator("#actHow").evaluate(e => e.open))) await p.click("#actHow summary");
+      if (c.method) await p.fill("#w_how", c.method);
+      for (const u of c.uses || []) { await p.check(`[data-use="${u}"]`); await p.waitForTimeout(60); }
+      for (const [u, v] of Object.entries(c.after || {})) await p.selectOption(`[data-after-use="${u}"]`, v);
+      if (c.on) await p.selectOption("#w_on", c.on);
+      if (c.hands != null) await p.selectOption("#w_hands", String(c.hands));
+      if (c.makes) { await p.fill("#w_makes", c.makes); await p.selectOption("#w_makes_state", c.makes_state || "worn"); }
+      await p.click("#addAct");
+    }
+    else if (k === "gear") { if (!(await p.locator("#pg_gear").evaluate(e => e.open))) await p.click("#pg_gear summary"); }
     else if (k === "radio") { const [g, v] = r; await p.check(`input[data-g="${g}"][value="${v}"]`); }
     else if (k === "select") { const [id, v] = r; await p.selectOption("#" + id, v); }
     else if (k === "del") { const id = await sid(+a); await p.click(`[data-open="${id}"]`); await p.click(`[data-del="${id}"]`); }
