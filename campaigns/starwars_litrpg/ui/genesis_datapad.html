@@ -125,13 +125,13 @@ table.kvt { width: 100%; border-collapse: collapse; font: 12px var(--f-data); ma
 ol.steps { margin: 4px 0 0; padding-left: 22px; } ol.steps li { padding: 4px 0; border-bottom: 1px solid var(--line); }
 ol.steps .tag, .opt .tag { font: 500 10px var(--f-data); letter-spacing: .06em; text-transform: uppercase; color: var(--amber); }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
-.seg button { background: none; border: 0; min-height: 36px; padding: 4px 14px; font: 500 12px var(--f-ui); letter-spacing: .08em; text-transform: uppercase; }
+.seg button { background: none; border: 0; min-height: 44px; padding: 4px 14px; font: 500 12px var(--f-ui); letter-spacing: .08em; text-transform: uppercase; }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); }
 .check { border-left: 3px solid var(--good); padding: 8px 10px; background: var(--panel-2); border-radius: 3px; margin-top: 10px; display: grid; gap: 6px; font-size: 14px; }
 .check.bad { border-left-color: var(--bad); } .check.warn { border-left-color: var(--amber); }
 .check ol { margin: 0; padding-left: 20px; }
 .msg-err { color: var(--bad); } .msg-warn { color: var(--amber); }
-input.txt, select.txt { width: 100%; min-height: 40px; margin: 2px 0 6px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 3px; padding: 6px 10px; font: 15px var(--f-ui); }
+input.txt, select.txt { width: 100%; min-height: 44px; margin: 2px 0 6px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 3px; padding: 6px 10px; font: 16px var(--f-ui); } /* 16px: iOS does not zoom on focus */
 .dice li > div:first-child { font-size: 13px; }
 /* scene sequencer (contract 3) */
 .now { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; margin-top: 10px; font-size: 13px; }
@@ -175,6 +175,18 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
 .submitbar.sticky { position: sticky; bottom: 0; z-index: 3; background: var(--panel); border-top: 1px solid var(--line); padding: 8px 0; }
 @media (max-width: 960px) { .submitbar.sticky { bottom: calc(56px + env(safe-area-inset-bottom, 0px)); } }
 .interrupt ol.dead li { text-decoration: line-through; color: var(--dim); }
+.palnav { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; position: sticky; top: 0; z-index: 2; background: var(--panel); padding: 4px 0; }
+.palnav::-webkit-scrollbar { display: none; }
+.chip.mini { flex: 0 0 auto; min-height: 44px; padding: 10px 14px; text-decoration: none; color: var(--fg); font-size: 13px; }
+.note.added { color: var(--good); min-height: 1em; } .note.deferred { color: var(--amber); }
+.palgrp, .plan { scroll-margin-top: 56px; }
+li.step .srow { cursor: pointer; min-height: 44px; align-items: center; }
+li.step .srow .lbl { flex: 1 1 auto; } li.step .srow .more { color: var(--dim); flex: 0 0 auto; padding: 0 4px; }
+li.step .note.cond { margin-left: 30px; color: var(--amber); }
+.palbtn .lbl small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+a.btn { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+@media (min-width: 701px) { .only-phone { display: none !important; } }
+@media (max-width: 700px) { li.step:not(.open) > .ctl, li.step:not(.open) > input.cond-in { display: none; } }
 </style>
 
 <div class="app" id="app" data-tab="scene">
@@ -221,7 +233,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
  *   objects[]/options[].takes_hands (n, the item is then held), .at (visible id where it is used),
  *   .reach_ft (default 5 for `at`), pending_steps: [steps] left from a halted sequence.
  *   contract 3: objects[].frees_item (frees whichever hand holds that item), options/objects/moves .grants/.removes
- *   (planned flags, applied in step order), .unless [flags that make it pointless], .risk (visible risk text), movement[].ends_at, position_label,
+ *   (planned flags, applied in step order), .unless [flags that make it pointless], .at_free (no place needed), .risk (visible risk text), movement[].ends_at, position_label,
  *   plan_result {stop_kind, reason, completed, pending, invalidated}, pending_steps[].status.
  */
 (function (root, factory) {
@@ -408,7 +420,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
    * State is tracked in step order: hands, position, flags (grants/removes of objects, moves and
    * actions; an action's grants are its INTENDED result, so later steps that depend on it are only
    * planned, never promised). Nothing here reads hidden state or predicts a roll. */
-  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "INVALIDATED"];
+  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
   function shortLabel(t) { return String(t || "").split(/\s*[:(;,]\s*|\s+—\s+/)[0].trim(); }
   function placeOf(m, ctx) {
     if (m.ends_at) return m.ends_at;
@@ -460,11 +472,14 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
       if ((s.type === "action" || s.type === "bonus_action") && !byId(opts, s.option)) err("UNKNOWN_OPTION", "\"" + s.option + "\" is not something " + (ctx.actor_name || ctx.actor) + " can do right now.", ex);
       if (s.type === "object" && !byId(ctx.objects, s.option)) err("UNKNOWN_OBJECT", "\"" + s.option + "\" is not an available object interaction.", ex);
       if (s.type === "move" && !byId(ctx.movement, s.option)) err("UNKNOWN_MOVE", "That movement is not available here.", ex);
-      if (s.status === "invalidated") err("INVALIDATED", "This step was cancelled by what happened (" + (s.reason || "the plan was interrupted") + "). It cannot be continued; choose again.", ex);
+      if (s.pending && s.status && CONTINUABLE.indexOf(s.status) < 0) err("NOT_CONTINUABLE", "This step was " + s.status + " by what happened" + (s.reason ? " (" + s.reason + ")" : "") + ". It cannot be continued; choose again from what Aero sees now.", ex);
+      if (s.pending && s.status === "suspended" && combat) err("SUSPENDED", "This step is set aside until the fight is over.", ex);
+      if (s.pending && s.authorized && ctx.context_id && s.authorized_ctx && s.authorized_ctx !== ctx.context_id)
+        err("PENDING_STALE", "This step was authorized against an earlier moment. The scene has moved on: choose \"Continue these steps\" again so it is checked against what Aero sees now.", ex);
     });
 
     // pending steps (left over from a halted sequence) run only when the player authorizes them again
-    var unauth = steps.filter(function (s) { return s.pending && !s.authorized && s.status !== "invalidated"; });
+    var unauth = steps.filter(function (s) { return s.pending && !s.authorized && (!s.status || CONTINUABLE.indexOf(s.status) >= 0); });
     if (unauth.length) err("PENDING_UNAUTHORIZED", unauth.length + " step" + (unauth.length > 1 ? "s were" : " was") + " left over from an interrupted sequence. Choose \"Continue these steps\" (or rewrite them) to authorize them again.");
 
     // speech: brief speech is free; extended or check-based social actions use the action
@@ -713,7 +728,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
       if (s.type === "branch") (s.cases || []).forEach(function (c) { (c.steps || []).forEach(function (x) { if (out[x.id].status === "ok") out[x.id].status = "case"; }); });
       if (firstHalt >= 0 && i > firstHalt) flat([s]).forEach(function (x) { out[x.id].status = "waits"; });
       if (i === firstHalt) out[s.id].status = s.type === "branch" ? "branch" : "waits";
-      if (s.status === "invalidated") out[s.id].status = "invalidated";
+      if (s.pending && s.status && CONTINUABLE.indexOf(s.status) < 0) out[s.id].status = "invalidated";
     });
     v.warnings.forEach(function (w) { var o = w.step_id && out[w.step_id]; if (!o) return; o.messages.push(w.message); if (o.status === "ok" || o.status === "case") o.status = /^GM_/.test(w.code) ? "gm" : "risky"; });
     v.errors.forEach(function (e) {
@@ -768,51 +783,96 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   }
 
   /* ---------- plan progress (GM side): the one shape for a partially executed plan ----------
-   * outcome = { completed: [step ids, in order], interrupted: id|null, stop_kind, reason, branches: {id: case index|"otherwise"},
-   *             invalidated: [ids] (prerequisite stops: steps that depended on what failed) }
-   * Returns the public plan_progress details and the pending_steps / plan_result for the next turn_context.
-   * Pending steps never resume on their own; a combat stop invalidates the rest (not carried into combat). */
+   * outcome = { completed: [step ids, in order], interrupted: id|null, stop_kind, reason,
+   *             branches: {branch id: case index|"otherwise"},
+   *             blocked: [ids]    steps that cannot happen because something they needed did not happen (a failed cut),
+   *             cancelled: [ids]  steps the changed circumstances make pointless (named by the GM, with the reason),
+   *             suspended: [ids]  combat only: intentions set aside until the fight ends (the rest are cancelled) }
+   * Step statuses: completed · interrupted (in progress when it happened) · paused (the decision point it stopped at)
+   * · unattempted (not reached) · blocked · cancelled · suspended · skipped (an untaken branch case).
+   * Only interrupted, paused, unattempted and (outside combat) suspended steps can be continued, and only when the
+   * player authorizes them again against the latest turn context. A consequential stop leaves the rest unattempted
+   * unless the GM names steps the new circumstances cancel. */
   var STOP_KINDS = ["consequential", "mechanical", "prerequisite", "condition", "combat", "complete"];
+  var CONTINUABLE = ["interrupted", "paused", "unattempted", "suspended", "pending"];
   function planProgress(declIn, ctx, outcome) {
     var decl = normalize(declIn, ctx), o = outcome || {}, kind = o.stop_kind, problems = [];
     if (kind === "incidental") problems.push("An incidental event is not a stop: log it and continue the plan.");
     else if (STOP_KINDS.indexOf(kind) < 0) problems.push("Unknown stop_kind " + JSON.stringify(kind) + ".");
-    var br = o.branches || {}, path = [], skipped = [], blockedAt = null;
-    for (var i = 0; i < decl.steps.length && blockedAt === null; i++) {
+    var br = o.branches || {}, path = [], skipped = [], haltAt = null;
+    for (var i = 0; i < decl.steps.length && haltAt === null; i++) {
       var s = decl.steps[i];
       if (s.type !== "branch") { path.push(s); continue; }
       var ch = br[s.id];
       (s.cases || []).forEach(function (c, k) { if (ch !== k) skipped = skipped.concat(flat(c.steps || []).map(function (x) { return x.id; })); });
-      if (ch === undefined) { blockedAt = s; break; }
-      if (ch === "otherwise") { if (s.otherwise !== "continue") { blockedAt = s; if (kind !== "condition" && kind !== "combat") problems.push("Branch " + s.id + " has no settled case and stops the plan; stop_kind must be \"condition\"."); } continue; }
+      if (ch === undefined) { haltAt = { step: s, index: i }; break; }
+      if (ch === "otherwise") { if (s.otherwise !== "continue") haltAt = { step: s, index: i, settled: true }; continue; }
       var c = (s.cases || [])[ch];
-      if (!c) { problems.push("Branch " + s.id + " has no case " + ch + "."); blockedAt = s; break; }
+      if (!c) { problems.push("Branch " + s.id + " has no case " + ch + "."); haltAt = { step: s, index: i }; break; }
       path = path.concat(c.steps || []);
-      if (c.after === "stop") { blockedAt = { id: s.id + ":after", stop_only: true }; }
+      if (c.after === "stop") haltAt = { step: s, index: i, after: true };
     }
     var ids = path.map(function (s) { return s.id; }), done = o.completed || [];
     for (var j = 0; j < done.length; j++) if (ids[j] !== done[j]) { problems.push("completed must be the first " + done.length + " steps of the executed path, in order (step " + (j + 1) + " is " + ids[j] + ", got " + done[j] + ")."); break; }
     var restSteps = path.slice(done.length), interrupted = o.interrupted || null;
     if (interrupted && (!restSteps.length || restSteps[0].id !== interrupted)) problems.push("interrupted must be the step right after the completed ones.");
-    if (kind === "complete" && (restSteps.length || blockedAt && !blockedAt.stop_only)) problems.push("stop_kind \"complete\" but steps remain.");
-    if (blockedAt && !blockedAt.stop_only && done.length === path.length && kind !== "condition" && kind !== "combat" && kind !== "complete") problems.push("The plan reached an unsettled branch; stop_kind must be \"condition\".");
-    if (problems.length) return { ok: false, problems: problems };
-    var inv = o.invalidated || [], pending = [], invalid = [];
+    var reachedHalt = haltAt && done.length === path.length;
+    if (kind === "complete" && (restSteps.length || (haltAt && !haltAt.after && !haltAt.settled))) problems.push("stop_kind \"complete\" but steps remain (or a decision is unsettled).");
+    if (reachedHalt && !haltAt.after && !haltAt.settled && ["condition", "combat", "consequential", "mechanical"].indexOf(kind) < 0) problems.push("The plan reached an unsettled decision; stop_kind must be \"condition\" (missing information is never a yes).");
     var remaining = restSteps.slice();
-    if (blockedAt && !blockedAt.stop_only) { var bi = decl.steps.indexOf(blockedAt); remaining = remaining.concat(decl.steps.slice(bi)); }
-    else if (blockedAt && blockedAt.stop_only) { var bj = decl.steps.indexOf(byId(decl.steps, blockedAt.id.split(":")[0])); remaining = remaining.concat(decl.steps.slice(bj + 1)); }
-    remaining.forEach(function (s) {
-      var x = clone(s); delete x.authorized; x.pending = true;
+    if (haltAt) remaining = remaining.concat(decl.steps.slice(haltAt.after ? haltAt.index + 1 : haltAt.index));
+    var remIds = remaining.map(function (s) { return s.id; });
+    var blocked = (o.blocked || []).concat(o.invalidated || []), cancelled = o.cancelled || [], suspended = o.suspended || [];
+    blocked.concat(cancelled, suspended).forEach(function (id) { if (remIds.indexOf(id) < 0) problems.push("Step " + id + " is not among the steps that did not happen."); });
+    if (suspended.length && kind !== "combat") problems.push("Only a combat stop suspends steps.");
+    if (kind === "complete" && (blocked.length || cancelled.length)) problems.push("A complete plan has nothing blocked or cancelled.");
+    if (problems.length) return { ok: false, problems: problems };
+    var out = { interrupted: [], paused: [], unattempted: [], blocked: [], cancelled: [], suspended: [] }, steps = [];
+    remaining.forEach(function (s, k) {
+      var x = clone(s), st;
+      delete x.authorized; delete x.authorized_ctx; x.pending = true;
       if (s.id === interrupted) x.interrupted = true;
-      if (kind === "combat" || inv.indexOf(s.id) >= 0) { x.status = "invalidated"; x.reason = kind === "combat" ? "initiative began" : "what it depended on did not happen"; invalid.push(x); }
-      else { x.status = s.id === interrupted ? "interrupted" : "pending"; pending.push(x); }
+      if (blocked.indexOf(s.id) >= 0) { st = "blocked"; x.reason = o.reason ? "it needed something that did not happen" : ""; }
+      else if (kind === "combat") { st = suspended.indexOf(s.id) >= 0 ? "suspended" : "cancelled"; x.reason = "initiative began"; }
+      else if (cancelled.indexOf(s.id) >= 0) { st = "cancelled"; x.reason = "the situation changed"; }
+      else if (s.id === interrupted) st = "interrupted";
+      else if (k === 0 && kind === "condition" && !interrupted) st = "paused";
+      else if (haltAt && !haltAt.after && s === haltAt.step) st = "paused";
+      else st = "unattempted";
+      x.status = st; out[st].push(s.id); steps.push(x);
     });
-    var all = pending.concat(invalid).sort(function (a, b) { return remaining.map(function (s) { return s.id; }).indexOf(a.id) - remaining.map(function (s) { return s.id; }).indexOf(b.id); });
+    var counts = { completed: done.length }; Object.keys(out).forEach(function (k) { counts[k] = out[k].length; });
     return { ok: true,
-      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted: interrupted, pending: pending.map(function (s) { return s.id; }), invalidated: invalid.map(function (s) { return s.id; }),
-                       skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
-      pending_steps: all, plan_result: { stop_kind: kind, reason: String(o.reason || ""), completed: done.length, pending: pending.length, invalidated: invalid.length } };
+      plan_progress: { action_id: o.action_id || null, completed: done.slice(), interrupted_step: interrupted, interrupted: out.interrupted, paused: out.paused, unattempted: out.unattempted,
+                       blocked: out.blocked, cancelled: out.cancelled, suspended: out.suspended, skipped: skipped, branches: br, stop_kind: kind, reason: String(o.reason || "") },
+      pending_steps: steps, plan_result: Object.assign({ stop_kind: kind, reason: String(o.reason || "") }, counts) };
   }
+
+  /* ---------- context lint (GM side, before publishing a turn context) ----------
+   * Warns when the player-visible context is too thin for reliable checks, so the GM publishes it or the
+   * builder defers that check to the GM ("the GM checks"); flags fields that look like hidden numbers. */
+  function contextLint(ctx) {
+    var out = [], acts = (ctx.options || []).concat(ctx.objects || []);
+    function w(code, level, msg) { out.push({ code: code, level: level, message: msg }); }
+    if (!ctx.hands && acts.some(function (o) { return o.takes_hands || o.needs_hands || o.frees_hand || o.frees_item; }))
+      w("NO_HANDS", "warn", "Hand occupancy is not published; hand checks are deferred to the GM.");
+    if (!ctx.hands) w("HANDS_UNKNOWN", "info", "No hands published: the Datapad shows \u201cthe GM checks\u201d.");
+    if (!ctx.position_label) w("NO_POSITION", "info", "No position_label: the committed strip omits Aero's position.");
+    var vis = ctx.visible || [];
+    acts.forEach(function (o) {
+      if (o.at && !byId(vis, o.at)) w("UNKNOWN_AT", "warn", o.label + ": `at` names " + o.at + ", which is not visible.");
+      if (o.at || o.at_free) return;  // at_free: the GM states it can be done from where Aero is (looking, a held item)
+      var named = findAliases((o.label || "") + " " + (o.aliases || []).join(" "), vis).filter(function (id) { var v = byId(vis, id); return v && v.distance_ft > 5; });
+      if (named.length) w("NO_AT", "warn", o.label + " names " + names(ctx, named)[0] + " (~" + byId(vis, named[0]).distance_ft + " ft) but has no `at`; its position check is deferred to the GM.");
+    });
+    var bad = /^(dc|ac|hp|hp_max|hit_points|armor_class|stealth|save_dc|hidden|gm_.*|secret.*)$/i;
+    (function scan(x, at) {
+      if (Array.isArray(x)) x.forEach(function (y, i) { scan(y, at + "[" + i + "]"); });
+      else if (x && typeof x === "object") Object.keys(x).forEach(function (k) { if (bad.test(k) && at.indexOf("resources") < 0) w("LEAK_SUSPECT", "error", at + "." + k + " looks like a hidden number; the turn context must stay player-visible."); scan(x[k], at + "." + k); });
+    })(ctx, "turn_context");
+    return out;
+  }
+
   function describe(decl, ctx) {
     var parts = [];
     decl.actions.forEach(function (a) { var o = byId(ctx.options, a.option); if (o) parts.push(o.label); });
@@ -847,7 +907,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   }
 
   return { VERSION: VERSION, emptyDecl: emptyDecl, parseFreeform: parseFreeform, normalize: normalize, validate: validate, summary: summary, haltAt: haltAt, classify: classify,
-           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, STOP_KINDS: STOP_KINDS };
+           flat: flat, stepStatus: stepStatus, availability: availability, insertStep: insertStep, planProgress: planProgress, contextLint: contextLint, STOP_KINDS: STOP_KINDS, CONTINUABLE: CONTINUABLE };
 });
 
 
@@ -1015,7 +1075,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
     if (x.kind) st.kind = x.kind;
     if (x.type === "action" || x.type === "bonus_action") { st.target = x.target || null; st.trigger = x.trigger || null; }
     if (x.condition && x.condition.text && x.condition.text.trim()) st.condition = { text: x.condition.text.trim() };
-    if (x.pending) { st.pending = true; if (x.authorized) st.authorized = true; }
+    if (x.pending) { st.pending = true; if (x.status) st.status = x.status; if (x.authorized) { st.authorized = true; if (typeof x.authorized_ctx === "string") st.authorized_ctx = x.authorized_ctx; } }
     if (x.type === "branch") {
       st.cases = (x.cases || []).map(function (k) { return { when: String(k.when || "").trim(), after: k.after === "stop" ? "stop" : "continue", steps: (k.steps || []).map(cleanStep) }; });
       st.otherwise = x.otherwise === "continue" ? "continue" : "stop";
@@ -1049,10 +1109,11 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   function newId() { return "s" + (ui.sel.nextId++); }
   function fromDecl(st, seqMap, authorize) {
     var x = { id: newId(), seq: seqMap(st.seq || 0), type: st.type };
+    if (st.status) x.status = st.status;
     ["option", "text", "kind", "target", "trigger"].forEach(function (k) { if (st[k] != null) x[k] = st[k]; });
     if (st.type === "speech" && st.option) delete x.text;
     if (st.condition) x.condition = { text: st.condition.text };
-    if (st.pending) { x.pending = true; if (authorize) x.authorized = true; }
+    if (st.pending) { x.pending = true; if (authorize) { x.authorized = true; x.authorized_ctx = authorize; } }
     if (st.type === "branch") { x.otherwise = st.otherwise; x.cases = (st.cases || []).map(function (k) { return { when: k.when || "", after: k.after || "continue", steps: (k.steps || []).map(function (y) { return fromDecl(y, function () { return x.seq; }, authorize); }) }; }); }
     return x;
   }
@@ -1064,7 +1125,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
       n.steps.forEach(function (st) { if (seqs.indexOf(st.seq || 0) < 0) seqs.push(st.seq || 0); });
       seqs.sort(function (a, b) { return a - b; });
       var map = function (q) { return Math.max(0, seqs.indexOf(q)); };
-      n.steps.filter(function (st) { return st.status !== "invalidated"; }).forEach(function (st) { s.steps.push(fromDecl(st, map, authorize)); });
+      n.steps.filter(function (st) { return !st.status || T.CONTINUABLE.indexOf(st.status) >= 0; }).forEach(function (st) { s.steps.push(fromDecl(st, map, authorize ? c.context_id || true : false)); });
       if (n.steps.some(function (st) { return st.type === "free" && st.text && !st.kind; })) s.steps.forEach(function (x) { if (x.type === "free" && !x.kind) x.kind = "custom"; });
       s.nseq = Math.max(1, seqs.length); s.labels = []; for (var i = 0; i < s.nseq; i++) s.labels.push((d.sequences && d.sequences[seqs[i]] && d.sequences[seqs[i]].label) || "");
       s.reactions = (d.reactions || []).slice(); s.active = { seq: s.nseq - 1 };
@@ -1126,7 +1187,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
 
   /* ---------- scene plan ---------- */
   var ICON = { ok: "✓", risky: "⚠", fix: "✕", waits: "⏸", gm: "✎", "case": "↳", branch: "⑂", invalidated: "⊘" };
-  var STXT = { ok: "possible", risky: "possible, with a risk", fix: "needs fixing", waits: "waits for your decision", gm: "the GM adjudicates", "case": "only in this case", branch: "decision point", invalidated: "cancelled" };
+  var STXT = { ok: "can be attempted", risky: "possible, with a risk", fix: "needs fixing", waits: "waits for your decision", gm: "the GM adjudicates", "case": "only in this case", branch: "decision point", invalidated: "cancelled" };
   var PICO = { ok: "+", risky: "⚠", needs_step: "↪", needs_choice: "?", not_here: "⊘", unknown: "+" };
   var PTXT = { ok: "", risky: "possible, with a risk", needs_step: "needs a step first", needs_choice: "needs your choice", not_here: "not possible here", unknown: "the GM checks" };
   function itemName(h) { return h ? String(h.item || h.label || "something").replace(/_/g, " ") : "free"; }
@@ -1136,7 +1197,9 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
     parts.push(c.hands ? "right: " + (c.hands.right ? (c.hands.right.label || itemName(c.hands.right)) : "free") + " · left: " + (c.hands.left ? (c.hands.left.label || itemName(c.hands.left)) : "free") : "hands: the GM checks");
     if (c.position_label) parts.push(c.position_label);
     var fl = (c.state_flags || []).map(function (f) { return flagName(c, f); }); if (fl.length) parts.push(fl.join(", "));
-    return '<div class="now" role="status"><span class="pill ok">Now · committed</span> <span>' + esc(parts.join(" · ")) + "</span></div>";
+    var lint = []; try { lint = T.contextLint(c).filter(function (f) { return f.level === "warn"; }); } catch (e) {}
+    return '<div class="now" role="status"><span class="pill ok">Now · committed</span> <span>' + esc(parts.join(" · ")) + "</span></div>" +
+      (lint.length ? '<div class="note deferred">Some checks are left to the GM for this moment: ' + esc(lint.map(function (f) { return f.code === "NO_HANDS" ? "what Aero holds" : f.code === "NO_AT" ? "where some actions can be done" : "a detail of the scene"; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ")) + ". The Datapad will not guess them.</div>" : "");
   }
   function plannedLine(c, x, prev, cur) {
     if (!cur) return "";
@@ -1160,8 +1223,9 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   }
   function stepRow(c, s, x, stat, tr, nested) {
     var st = stat[x.id] || { status: "ok", messages: [] }, p = tr.prev[x.id] || tr.now, cur = tr.at[x.id];
-    var h = '<li class="step st-' + st.status + '" data-sid="' + esc(x.id) + '"><div class="srow"><span class="ico" title="' + STXT[st.status] + '" aria-label="' + STXT[st.status] + '">' + ICON[st.status] + '</span><span class="lbl' + (x.type === "speech" || x.type === "free" ? " verb" : "") + '">' + esc(stepLabel(c, x)) +
-      (x.pending ? ' <span class="tag">' + (x.authorized ? "continued" : "left over") + "</span>" : "") + (x.condition ? ' <span class="tag">only if</span>' : "") + "</span></div>";
+    var open = ui.openStep === x.id;
+    var h = '<li class="step st-' + st.status + (open ? " open" : "") + '" data-sid="' + esc(x.id) + '"><div class="srow" data-open="' + esc(x.id) + '" role="button" tabindex="0" aria-expanded="' + open + '" aria-label="' + esc(stepLabel(c, x)) + ': show controls"><span class="ico" title="' + STXT[st.status] + '" aria-label="' + STXT[st.status] + '">' + ICON[st.status] + '</span><span class="lbl' + (x.type === "speech" || x.type === "free" ? " verb" : "") + '">' + esc(stepLabel(c, x)) +
+      (x.pending ? ' <span class="tag">' + (x.authorized ? "continued" : "left over") + "</span>" : "") + (x.condition ? ' <span class="tag">only if</span>' : "") + '</span><span class="more" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></div>";
     if (x.type !== "branch") h += plannedLine(c, x, p, cur);
     if (st.messages.length && st.status !== "ok") h += st.messages.map(function (m) { return '<div class="' + (st.status === "fix" ? "msg-err" : st.status === "risky" ? "msg-warn" : "note") + '">' + esc(m) + "</div>"; }).join("");
     if (st.status === "fix" && (st.suggest_steps || []).length) {
@@ -1172,7 +1236,8 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
       }).join("") + "</div>";
     }
     if (st.status === "fix" && st.resolution === "needs_choice") h += '<div class="row"><button class="btn mini pre" data-how="' + esc(stepLabel(c, x)) + '">Say how (custom action)</button></div>';
-    if (x.condition) h += '<input class="txt" id="w_cond_' + esc(x.id) + '" placeholder="Only if… (the GM stops here and asks unless Aero already knows)" value="' + esc(x.condition.text || "") + '">';
+    if (x.condition && !open && x.condition.text) h += '<div class="note cond">Only if ' + esc(x.condition.text) + "</div>";
+    if (x.condition) h += '<input class="txt cond-in" id="w_cond_' + esc(x.id) + '" placeholder="Only if… (the GM stops here and asks unless Aero already knows)" value="' + esc(x.condition.text || "") + '">';
     var o = (x.type === "action" || x.type === "bonus_action") && byId(c.options, x.option);
     if (o && o.needs_target) h += '<select class="txt" id="w_tgt_' + esc(x.id) + '" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (x.target === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
     if (x.type === "branch") h += branchBody(c, s, x, stat, tr);
@@ -1203,7 +1268,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   }
   function renderPlan(c, s, r, stat) {
     var tr = traceMaps(c, r), haltId = (r.halts || []).length && r.steps[r.halts[0]] ? r.steps[r.halts[0]].id : null;
-    var h = '<div class="plan" aria-label="Your plan">';
+    var h = '<div class="plan" id="planTop" aria-label="Your plan">';
     if (ui.carried) h += '<div class="check warn"><b>The scene changed while you were planning.</b><div>Your steps are kept and re-checked against what Aero sees now. Steps that no longer fit are marked.</div></div>';
     for (var q = 0; q < s.nseq; q++) {
       var on = !s.active.branch && s.active.seq === q, rows = s.steps.filter(function (x) { return (x.seq || 0) === q; });
@@ -1237,33 +1302,44 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
     var where = w.branch ? (function () { var f = locate(w.branch), k = f.list[f.index].cases[w["case"]]; return (w["case"] ? "Else if " : "If ") + (k.when || "…") + " (Sequence " + ((f.list[f.index].seq || 0) + 1) + ")"; })()
       : "Sequence " + (w.seq + 1) + (s.labels[w.seq] ? " · " + s.labels[w.seq] : "");
     function used(id) { var n = 0; T.flat(s.steps).forEach(function (x) { if (x.type === "speech" && x.option === id) n++; }); return n; }
-    function grp(title, items) { return items.length ? '<div class="palgrp"><h3>' + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
+    function grp(title, items, id) { return items.length ? '<div class="palgrp"' + (id ? ' id="' + id + '"' : "") + "><h3>" + title + '</h3><div class="palgrid">' + items.join("") + "</div></div>" : ""; }
     var acts = (c.options || []).filter(function (o) { return o.slot === "action"; }), bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-    var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" +
+    var nav = '<nav class="palnav" aria-label="Palette sections">' + [["↑ Plan", "planTop"], ["Say", "pg_say"], ["Do", "pg_do"], ["Go", "pg_go"], ["Handle", "pg_handle"], ["Custom", "pg_custom"]].map(function (x) { return '<a class="chip mini" href="#' + x[1] + '">' + x[0] + "</a>"; }).join("") + "</nav>";
+    var h = '<fieldset class="grp palette" id="palette"><legend>Add to: ' + esc(where) + "</legend>" + nav +
+      '<div class="note added" id="lastAdded" role="status" aria-live="polite">' + esc(ui.lastAdded || "") + "</div>" +
       '<div class="note">Everything Aero could try right now. Greyed-out choices say what is missing at that point in your plan; nothing is added unless you tap it.</div>' +
-      grp("Say", (c.dialogue || []).map(function (dl) { return palBtn("speech:" + dl.id, "“" + dl.text + "”", dl.approach + (dl.extended ? " · extended" : ""), { status: "ok" }, used(dl.id)); })) +
+      grp("Say", (c.dialogue || []).map(function (dl) { return palBtn("speech:" + dl.id, "“" + dl.text + "”", dl.approach + (dl.extended ? " · extended" : ""), { status: "ok" }, used(dl.id)); }), "pg_say") +
       '<div class="ed"><label for="w_say">Your own line (line breaks are kept)</label><textarea id="w_say" rows="2" placeholder="What Aero says">' + esc(s.sayDraft) + '</textarea><button class="btn" id="addSay">Add line</button></div>' +
-      grp("Do", acts.map(function (o) { return palBtn("action:" + o.id, o.label, o.detail, by["action:" + o.id]); })) +
+      grp("Do", acts.map(function (o) { return palBtn("action:" + o.id, o.label, o.detail, by["action:" + o.id]); }), "pg_do") +
       grp("Quick (bonus)", bon.map(function (o) { return palBtn("bonus_action:" + o.id, o.label, o.detail, by["bonus_action:" + o.id]); })) +
-      grp("Go", (c.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return palBtn("move:" + m.id, m.label, m.feet ? "~" + m.feet + " ft" : "", by["move:" + m.id]); })) +
-      grp("Handle", (c.objects || []).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); })) +
-      '<div class="ed"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Load the torch and both bottles onto the handcart">' + esc(s.actDraft) + '</textarea><button class="btn" id="addAct">Add action</button></div>' +
+      grp("Go", (c.movement || []).filter(function (m) { return m.id !== "hold"; }).map(function (m) { return palBtn("move:" + m.id, m.label, m.feet ? "~" + m.feet + " ft" : "", by["move:" + m.id]); }), "pg_go") +
+      grp("Handle", (c.objects || []).map(function (o) { return palBtn("object:" + o.id, o.label, o.detail, by["object:" + o.id]); }), "pg_handle") +
+      '<div class="ed" id="pg_custom"><label for="w_act">Custom action (anything the list does not cover; your exact words go to the GM)</label><textarea id="w_act" rows="2" placeholder="e.g. Load the torch and both bottles onto the handcart">' + esc(s.actDraft) + '</textarea><button class="btn" id="addAct">Add action</button></div>' +
       (w.branch ? "" : '<button class="btn" id="addBranch">Add a decision (if / else if / otherwise)</button>');
     return h + "</fieldset>";
   }
   var STOPTXT = { combat: "Interrupted: initiative has begun", consequential: "Stopped: something needs your decision", mechanical: "Stopped by what happened",
-                  prerequisite: "Stopped: a step did not work out", condition: "Waiting on your decision", complete: "Plan complete" };
+                  prerequisite: "Stopped: a step did not work out", condition: "Paused: waiting on your decision", complete: "Plan complete" };
+  /* What happened to the plan, in the player's terms. Statuses come from planProgress (GM side):
+     interrupted · paused · unattempted · suspended can be continued (after a new, explicit authorization);
+     blocked · cancelled cannot. */
+  var GROUPS = [["interrupted", "Interrupted while it was happening", true], ["paused", "Paused: waiting on your decision", true], ["unattempted", "Not attempted yet", true],
+                ["pending", "Not done yet", true], ["suspended", "Set aside until the fight is over", true], ["blocked", "Blocked: what it needed did not happen", false], ["cancelled", "Cancelled by what happened", false], ["invalidated", "Cancelled by what happened", false]];
+  function continuable(c, x) { var st = x.status || "pending"; return T.CONTINUABLE.indexOf(st) >= 0 && !(st === "suspended" && !sceneMode(c)); }
   function renderPending(c) {
     var ps = c.pending_steps || [], pr = c.plan_result || null;
     if (!ps.length && !(pr && pr.stop_kind && pr.stop_kind !== "complete")) return "";
-    var live = ps.filter(function (x) { return x.status !== "invalidated"; }), dead = ps.filter(function (x) { return x.status === "invalidated"; });
-    function lbl(x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" && x.text ? "Say: “" + x.text + "”" : x.type === "free" ? x.text : stepLabel(c, x)); }
+    function lbl(x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" && x.text ? "Say: “" + x.text + "”" : x.type === "free" ? "Try: " + x.text : stepLabel(c, x)); }
     var h = '<div class="check warn interrupt" style="margin-top:8px"><b>' + esc(pr ? (STOPTXT[pr.stop_kind] || "Not done yet") : "Not done yet") + "</b>" + (c.pending_reason || (pr && pr.reason) ? "<div>" + esc(c.pending_reason || pr.reason) + "</div>" : "");
     if (pr && pr.completed) h += '<div class="note">' + pr.completed + " step" + (pr.completed > 1 ? "s" : "") + " of your plan happened and are in the story.</div>";
-    if (live.length) h += '<div class="note"><b>Not done yet</b></div><ol>' + live.map(function (x) { return "<li>" + esc(lbl(x)) + (x.status === "interrupted" ? ' <span class="tag">interrupted</span>' : "") + "</li>"; }).join("") + "</ol>";
-    if (dead.length) h += '<div class="note"><b>Cancelled by what happened</b> (these cannot be continued)</div><ol class="dead">' + dead.map(function (x) { return "<li>" + esc(lbl(x)) + "</li>"; }).join("") + "</ol>";
-    if (live.length) h += sceneMode(c) ? '<button class="btn" id="continuePending">Continue these steps</button><div class="note">They run only if you submit them again.</div>'
-                                       : '<div class="note">Initiative has started. These are not carried over; choose your combat turn.</div>';
+    GROUPS.forEach(function (g) {
+      var xs = ps.filter(function (x) { return (x.status || "pending") === g[0]; });
+      if (!xs.length) return;
+      h += '<div class="note grp-' + g[0] + '"><b>' + g[1] + "</b>" + (g[2] ? "" : " (these cannot be continued)") + '</div><ol class="' + (g[2] ? "live" : "dead") + '">' + xs.map(function (x) { return "<li>" + esc(lbl(x)) + "</li>"; }).join("") + "</ol>";
+    });
+    var can = ps.filter(function (x) { return continuable(c, x); });
+    if (can.length) h += sceneMode(c) ? '<button class="btn" id="continuePending">Continue these steps</button><div class="note">Nothing resumes on its own. Continue puts them back in your plan, checked against what Aero sees now; they run only if you submit again.</div>'
+                                      : '<div class="note">Initiative has started. Choose your combat turn; set-aside steps can be continued once the fight is over.</div>';
     return h + "</div>";
   }
   function combatAvail(c) {  // per option, with the current action/move taken out (a radio replaces it)
@@ -1328,7 +1404,8 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   }
   function submitBar(r, stat, busy) {
     var n = fixCount(r, stat), ok = canSubmitNow(r, busy) && !phase;
-    return (n ? '<button class="btn" id="jumpFix">' + n + " to fix ↑</button>" : "") +
+    var scene = sceneMode(ctxOf(view)) && ui.mode !== "write";
+    return (n ? '<button class="btn" id="jumpFix">' + n + " to fix ↑</button>" : "") + (scene ? '<a class="btn only-phone" href="#palette" id="jumpAdd">+ Add</a>' : "") +
       '<button class="btn primary" id="submitTurn"' + (ok ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : sceneMode(ctxOf(view)) ? "Submit plan" : "Submit turn") + "</button>" +
       '<button class="btn" id="clearTurn"' + (busy ? " disabled" : "") + '>Clear</button><span class="note" id="msg"></span>';
   }
@@ -1448,7 +1525,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
 
   /* ---------- interaction ---------- */
   function setMsg(t) { var m = $("msg"); if (m) m.textContent = t; }
-  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; saveUi(); render(); }
+  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; saveUi(); render(); ui.lastAdded = ""; }
   function sortSeq() {
     var L = ui.sel.steps.map(function (x, i) { return [x, i]; });
     L.sort(function (a, b) { return (a[0].seq || 0) - (b[0].seq || 0) || a[1] - b[1]; });
@@ -1471,6 +1548,8 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
   function addAtActive(st) {
     var w = activeWhere(ui.sel), out = T.insertStep(ui.sel.steps, w, st);
     ui.sel.steps = out;
+    var c = ctxOf(view), where = w.branch ? "this decision" : "Sequence " + (w.seq + 1);
+    ui.lastAdded = "Added to " + where + ": " + (c ? stepLabel(c, st) : st.type) + ".";
   }
   function bindCenter() {
     function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
@@ -1518,8 +1597,12 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
       ui.sel.steps.forEach(function (x) { if ((x.seq || 0) > q) x.seq--; });
       ui.sel.labels.splice(q, 1); ui.sel.nseq--; ui.sel.active = { seq: Math.min(q, ui.sel.nseq - 1) }; changed();
     });
-    click("data-up", function (id) { moveStep(id, -1); changed(); });
-    click("data-down", function (id) { moveStep(id, 1); changed(); });
+    each("[data-open]", function (el) {
+      function tog() { var id = el.getAttribute("data-open"); ui.openStep = ui.openStep === id ? null : id; saveUi(); render(); }
+      el.addEventListener("click", tog); el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); } });
+    });
+    click("data-up", function (id) { ui.openStep = id; moveStep(id, -1); changed(); var el = document.querySelector('[data-sid="' + id + '"]'); if (el) el.scrollIntoView({ block: "center" }); });
+    click("data-down", function (id) { ui.openStep = id; moveStep(id, 1); changed(); var el = document.querySelector('[data-sid="' + id + '"]'); if (el) el.scrollIntoView({ block: "center" }); });
     click("data-del", function (id) {
       var f = locate(id); if (!f) return; var x = f.list.splice(f.index, 1)[0];
       if (ui.sel.active.branch === id) ui.sel.active = { seq: x.seq || 0 }; changed();
@@ -1541,7 +1624,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
     for (var q = 0; q < (ui.sel.nseq || 1); q++) (function (q) { on("w_lbl_" + q, "input", soft(function (v) { ui.sel.labels[q] = v; })); })(q);
     on("w_say", "input", function (e) { ui.sel.sayDraft = e.target.value; autoGrow(e.target); saveUi(); });
     on("w_act", "input", function (e) { ui.sel.actDraft = e.target.value; autoGrow(e.target); saveUi(); });
-    on("continuePending", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration({ actor: c.actor, steps: (c.pending_steps || []).filter(function (x) { return x.status !== "invalidated"; }) }, c, true); render(); } });
+    on("continuePending", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration({ actor: c.actor, steps: (c.pending_steps || []).filter(function (x) { return continuable(c, x); }) }, c, true); render(); } });
     on("editAsSteps", "click", function () { var c = ctxOf(view); if (c) { loadDeclaration(T.parseFreeform(ui.write, c), c, false); render(); } });
     on("w_own", "input", soft(function (x) { ui.sel.own = x; }));
     on("w_trigger", "input", soft(function (x) { ui.sel.trigger = x; }));
@@ -1604,8 +1687,13 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
     if (jumpObs) jumpObs.disconnect();
     if (!last) { btn.hidden = true; return; }
     if (!("IntersectionObserver" in window)) { btn.hidden = false; return; }
-    jumpObs = new IntersectionObserver(function (es) { btn.hidden = es[es.length - 1].isIntersecting; });
-    jumpObs.observe(last);
+    // hidden while the newest entry is on screen, and while the turn builder is (it would cover palette buttons)
+    var seen = { last: false, comp: false }, comp = document.querySelector(".composer");
+    jumpObs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.target === last) seen.last = e.isIntersecting; else seen.comp = e.isIntersecting; });
+      btn.hidden = seen.last || seen.comp;
+    });
+    jumpObs.observe(last); if (comp) jumpObs.observe(comp);
   }
   (function () {
     var btn = $("jumpNew"); if (!btn) return;
