@@ -21,6 +21,7 @@ Phases, in runbook order (mark each at the start of the next shell call after it
   narration_done narration, scene_state and turn_context committed, validate passed
   git_done       push succeeded
   projected      view/state written
+  review_written needs_revision review written to the action row (rejection passes only)
 Durations are reported for the nine owner-requested categories. Session-level numbers
 (delivery time, model vs tool time, passes in this session) come from this session's
 own transcript, read for timestamps only.
@@ -164,6 +165,7 @@ def timings(run, submit_ms):
         "8_projection_ms": span(m, "git_done", "projected"),
         "9_git_sync_ms": span(m, "narration_done", "git_done"),
         "submit_to_visible_ms": (m["projected"] - submit_ms) if ("projected" in m and submit_ms) else None,
+        "submit_to_review_ms": (m["review_written"] - submit_ms) if ("review_written" in m and submit_ms) else None,
         "pass_in_session": (runs.index(run) + 1) if run in runs else None,
         "earlier_passes_in_session": [r for r in runs if r != run][:5],
         "marks": m,
