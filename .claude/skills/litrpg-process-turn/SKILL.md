@@ -47,6 +47,29 @@ Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/G
 - Undecided hidden facts: decide with a table fixed before rolling, record it `gm_only`. Never reveal or canonize a hidden purpose just to resolve one turn.
 - **Protagonist Continuity (in force for run 2):** when a protected character would die, run `python3 campaigns/starwars_litrpg/creator/continuity.py propose --campaign <dir> --target aero --level <level>`. Roll the survival die (if any) and the cost dice it names with the dice skill (`[<action_id>] Continuity ...`), rerolling duplicate costs. Run it again with `--path-roll N --cost-rolls N ...`, then commit the `events_to_commit` it returns (idem `<action_id>:cont<n>`). Run `continuity.py status` after level-ups and arc completion; when `next_step` says so, commit `continuity_expiring` and say so in the narration.
 
+## 3b. Contract-3 plans (branch `litrpg/turn-builder` only; NOT live until the owner approves)
+A `turn-contract/3` declaration is a plan: steps with ids, grouped by `seq` into sequences, possibly with `branch` steps.
+- **One pass.** Resolve every step in order across all sequences in this firing. A sequence boundary is not a pause.
+- **The world keeps moving.** Between steps, run the hidden simulation from committed `gm_only` events (npc plans, positions,
+  causal triggers such as light and noise). Check detection when conditions change (a creature closes in, light or noise is made, Aero uses
+  Perception), not on a timer. Everything hidden stays `gm_only`; rolls carry no DCs in their purpose.
+- **Branches.** Take a case only when committed events settle its `when`. Missing information is never a yes: an unsettled branch stops
+  the plan (`condition`) unless the player chose "otherwise: continue". A case with `after: "stop"` stops after its steps.
+- **Stops** (`stop_kind`): `incidental` is not a stop (continue). `consequential` (the premise changed): the rest stay unattempted unless you name
+  `cancelled` steps the new circumstances make pointless. `mechanical`: resolve by the rules, stop when the player is needed. `prerequisite`:
+  the failed step is completed (it was attempted); list the steps that needed it as `blocked`. `condition`: stop at that step (paused).
+  `combat` (initiative): the remaining steps are cancelled (or `suspended`, if they still make sense after the fight); the combat economy
+  applies from the next turn. `complete`: nothing remains.
+- **Persist.** After the last consequence event: write `/tmp/outcome.json` `{action_id, completed: [ids], interrupted, stop_kind, reason
+  (player-perceivable only), branches, blocked, cancelled, suspended}` and run `turn.py progress <campaign_id> /tmp/action.json /tmp/outcome.json`.
+  It refuses inconsistent outcomes (not a prefix, incidental as a stop, complete with steps left). Commit its `plan_progress` as a public
+  `plan_progress` event (idem `<action_id>:plan`). The new `turn_context` carries its `plan_result` and `pending_steps` (with their statuses).
+- **Context safeguards.** Before committing a `turn_context`, run `turn.py lintctx <campaign_id> /tmp/ctx.json`. `LEAK_SUSPECT` must be fixed.
+  Publish `hands`, `at` and `position_label` only from committed events (the brief's typed `aero.hands` when available); when unsure, omit
+  them: the Datapad then shows "the GM checks". Never invent a fact to make a check pass.
+- **Continue.** Continued steps arrive `authorized` with `authorized_ctx`; the validator refuses stale ones (`PENDING_STALE`) and steps that
+  were blocked or cancelled (`NOT_CONTINUABLE`). Resolve them like any other plan.
+
 ## 4. Narrate, make it durable, then publish
 1. Write narration to `/tmp/narr.txt` per NARRATIVE_SPEC (high-intensity horror where earned; injuries match committed damage; perspective rules). Run `turn.py lint <campaign_id> /tmp/narr.txt` and fix until it passes.
 2. Commit `gm_narration` (details `{text}`), `scene_state`, then a fresh public `turn_context` (TURN_CONTRACT §2, only what Aero can perceive) with idem `<action_id>:ctx`. The context must give:

@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "api_bridge"))
 import litrpg_adapter as la  # noqa: E402
 
 SHEET = ROOT / "api_bridge" / "gm" / "aero_character_runtime.yml"
-NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
+NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left", "plan_progress"}
 ACTIVE_ACTOR = "aero"
 
 

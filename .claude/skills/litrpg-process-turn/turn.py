@@ -6,6 +6,8 @@
   turn.py recover  <campaign_id> <action_id>           ledger state for an action: none | partial | complete
   turn.py lint     <campaign_id> <narration.txt> [--target aero]   horror-narration integrity (Test F)
   turn.py export   <campaign_id> --out FILE            player-visible view/state for the Datapad
+  turn.py progress <campaign_id> <action.json> <outcome.json>   contract-3 plan progress against the published context
+  turn.py lintctx  <campaign_id> <ctx.json>            context lint before publishing a turn_context (warn / defer, never guess)
 
 Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error.
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
@@ -94,7 +96,7 @@ def cmd_check(a):
         v = out["validation"]
         if not v["legal"]:
             out["verdict"] = "needs_revision"
-        elif v["warnings"] and not act.get("confirmed_warnings"):
+        elif v.get("needs_confirmation", bool(v["warnings"])) and not act.get("confirmed_warnings"):  # contract 3: advisory scene risks need no tick
             out.update(verdict="needs_revision", reason="Known risks were not confirmed by the player.")
         else:
             out["verdict"] = "legal"
@@ -136,9 +138,25 @@ def cmd_export(a):
     st = state(e)
     st["artifact_url"] = e["artifact_url"]
     proc = json.loads(REGISTRY.read_text(encoding="utf-8")).get("processor")
-    st["processor"] = {"server": proc["server"], "trigger_id": proc["trigger_id"]} if proc and e["status"] == "active" else None
+    # a run marked "no_processor" (sandbox previews) never gets a GM-start link, whatever the registry's processor is
+    st["processor"] = {"server": proc["server"], "trigger_id": proc["trigger_id"]} if proc and e["status"] == "active" and not e.get("no_processor") else None
     Path(a.out).write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps({"out": a.out, "revision": st["revision"], "ledger_head": st["ledger_head"], "has_turn_context": bool(st["turn_context"])}))
+
+
+def cmd_progress(a):
+    e = run_entry(a.campaign); st = state(e)
+    act = json.loads(Path(a.action).read_text(encoding="utf-8")); act = act.get("data", act)
+    tmp = Path("/tmp") / f"ctx_progress_{e['id']}.json"; tmp.write_text(json.dumps(st["turn_context"] or {}), encoding="utf-8")
+    p = subprocess.run(["node", str(UI / "turn_contract.js"), "progress", "-", str(tmp), a.outcome], input=json.dumps(act["declaration"]), capture_output=True, text=True)
+    print(p.stdout.strip() or p.stderr.strip())
+    return 0 if p.returncode == 0 else 3
+
+
+def cmd_lintctx(a):
+    p = subprocess.run(["node", str(UI / "turn_contract.js"), "lintctx", "-", a.ctx], capture_output=True, text=True)
+    print(p.stdout.strip() or p.stderr.strip())
+    return 0 if p.returncode == 0 else 3
 
 
 def main():
@@ -148,8 +166,11 @@ def main():
     s = sub.add_parser("recover"); s.add_argument("campaign"); s.add_argument("action_id")
     s = sub.add_parser("lint"); s.add_argument("campaign"); s.add_argument("narration"); s.add_argument("--target", default="aero")
     s = sub.add_parser("export"); s.add_argument("campaign"); s.add_argument("--out", required=True)
+    s = sub.add_parser("progress"); s.add_argument("campaign"); s.add_argument("action"); s.add_argument("outcome")
+    s = sub.add_parser("lintctx"); s.add_argument("campaign"); s.add_argument("ctx")
     a = ap.parse_args()
-    return {"info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export}[a.cmd](a) or 0
+    return {"info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export,
+            "progress": cmd_progress, "lintctx": cmd_lintctx}[a.cmd](a) or 0
 
 
 if __name__ == "__main__":
