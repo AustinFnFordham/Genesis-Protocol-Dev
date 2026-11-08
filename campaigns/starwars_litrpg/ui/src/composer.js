@@ -213,7 +213,7 @@
     if (c.position_label) parts.push(c.position_label);
     var fl = (c.state_flags || []).map(function (f) { return flagName(c, f); }); if (fl.length) parts.push(fl.join(", "));
     if ((c.equipment || []).length) {
-      var g = c.equipment.filter(function (e) { return !e.fixed && ["holstered", "attached", "transported", "placed", "dropped"].indexOf(e.state) >= 0; }).map(function (e) { return e.label + " (" + (STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "") + (e.uncertain ? ", unconfirmed" : "") + ")"; });
+      var g = c.equipment.filter(function (e) { return !e.fixed && (["holstered", "attached", "transported", "placed", "dropped"].indexOf(e.state) >= 0 || (e.state === "worn" && e.improvised)); }).map(function (e) { return e.label + " (" + (STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "") + (e.uncertain ? ", unconfirmed" : "") + ")"; });
       var packed = c.equipment.filter(function (e) { return e.state === "stored"; }).length;
       parts.push("gear: " + (g.length ? g.join("; ") : "nothing loose") + (packed ? "; " + packed + " items packed" : ""));
     }
@@ -403,7 +403,7 @@
     if (!ps.length && !(pr && pr.stop_kind && pr.stop_kind !== "complete")) return "";
     function lbl(x) { return (x.condition && x.condition.text ? "Only if " + x.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "") + (x.type === "speech" && x.text ? "Say: “" + x.text + "”" : x.type === "free" ? "Try: " + x.text : stepLabel(c, x)); }
     var h = '<div class="check warn interrupt" style="margin-top:8px"><b>' + esc(pr ? (STOPTXT[pr.stop_kind] || "Not done yet") : "Not done yet") + "</b>" + (c.pending_reason || (pr && pr.reason) ? "<div>" + esc(c.pending_reason || pr.reason) + "</div>" : "");
-    if (pr && pr.completed) h += '<div class="note">' + pr.completed + " step" + (pr.completed > 1 ? "s" : "") + " of your plan happened and are in the story.</div>";
+    if (pr && pr.completed) h += '<div class="note">' + (pr.completed > 1 ? pr.completed + " steps of your plan happened and are" : "1 step of your plan happened and is") + " in the story.</div>";
     GROUPS.forEach(function (g) {
       var xs = ps.filter(function (x) { return (x.status || "pending") === g[0]; });
       if (!xs.length) return;

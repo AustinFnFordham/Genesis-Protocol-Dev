@@ -84,10 +84,10 @@ def apply_events(items, events):
                 item = (v.get("item") if isinstance(v, dict) else v) if v else None
                 item = HAND_ALIASES.get(item, item)
                 if item in by:
-                    by[item]["state"] = "held"; held.add(item); by[item].pop("uncertain", None)
+                    by[item]["state"] = "held"; by[item]["where"] = h + " hand"; held.add(item); by[item].pop("uncertain", None)
             for e in items:
                 if e["state"] == "held" and e["id"] not in held:
-                    e["state"] = e.get("home_state", "stored"); e["uncertain"] = True
+                    e["state"] = e.get("home_state", "stored"); e["where"] = e.get("home", ""); e["uncertain"] = True
     return items
 
 
