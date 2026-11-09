@@ -233,7 +233,7 @@
     if ((x.uses || []).length) parts.push("using " + x.uses.map(function (id) { return eqLabel(c, id); }).join(", "));
     if ((x.targets || []).length) parts.push("on " + x.targets.map(function (id) { var v = byId(c.visible, id); return v ? (v.short || v.label) : id; }).join(", "));
     if (x.hands != null && x.hands !== "") parts.push(x.hands + " hand" + (+x.hands === 1 ? "" : "s"));
-    (x.equipment_changes || []).forEach(function (ch) { parts.push(eqLabel(c, ch.item) + " → " + (STATEWORD[ch.to] || ch.to)); });
+    (x.equipment_changes || []).forEach(function (ch) { parts.push(eqLabel(c, ch.item) + " → " + (ch.in ? "into " + eqLabel(c, ch.in) : (STATEWORD[ch.to] || ch.to))); });
     if (x.creates && x.creates.label) parts.push("makes " + x.creates.label + " (" + (STATEWORD[x.creates.state] || x.creates.state) + ", if it works)");
     return parts.length ? '<div class="note meta">' + esc(parts.join(" · ")) + "</div>" : "";
   }
@@ -352,7 +352,8 @@
     if (gear.length) h += '<div class="note">Using (only what Aero has):</div><div class="usegrid">' + gear.map(function (e) {
       var on = (d.uses || []).indexOf(e.id) >= 0;
       return '<label class="opt"><input type="checkbox" data-use="' + esc(e.id) + '"' + (on ? " checked" : "") + '><span class="lbl">' + esc(e.label) + "<small>" + esc((STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "")) + "</small></span></label>" +
-        (on ? '<select class="txt" data-after-use="' + esc(e.id) + '" aria-label="Afterwards, ' + esc(e.label) + '"><option value="">afterwards: no change</option>' + ["held", "worn", "attached", "stored", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + (d.after && d.after[e.id] === st ? " selected" : "") + ">afterwards: " + STATEWORD[st] + "</option>"; }).join("") + "</select>" : "");
+        (on ? '<select class="txt" data-after-use="' + esc(e.id) + '" aria-label="Afterwards, ' + esc(e.label) + '"><option value="">afterwards: no change</option>' + ["held", "worn", "attached", "stored", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + (d.after && d.after[e.id] === st ? " selected" : "") + ">afterwards: " + STATEWORD[st] + "</option>"; }).join("") +
+          gear.filter(function (b) { return b.capacity && b.id !== e.id; }).map(function (b) { var v = "in:" + b.id; return '<option value="' + esc(v) + '"' + (d.after && d.after[e.id] === v ? " selected" : "") + ">afterwards: into " + esc(b.label) + "</option>"; }).join("") + "</select>" : "");
     }).join("") + "</div>";
     h += '<label for="w_on">On / at</label><select class="txt" id="w_on"><option value="">(nothing in particular)</option>' + (c.visible || []).map(function (v) { return '<option value="' + esc(v.id) + '"' + (d.target === v.id ? " selected" : "") + ">" + esc(v.label) + "</option>"; }).join("") + "</select>" +
       '<label for="w_hands">Hands it needs</label><select class="txt" id="w_hands"><option value="">let the builder work it out</option>' + [0, 1, 2].map(function (n) { return '<option value="' + n + '"' + (String(d.hands) === String(n) ? " selected" : "") + ">" + n + "</option>"; }).join("") + "</select>" +
@@ -662,7 +663,8 @@
       if ((d.uses || []).length) st.uses = d.uses.slice();
       if (d.target) st.targets = [d.target];
       if (d.hands !== undefined && d.hands !== "") st.hands = +d.hands;
-      var ch = Object.keys(d.after || {}).filter(function (k) { return d.after[k] && (d.uses || []).indexOf(k) >= 0; }).map(function (k) { return { item: k, to: d.after[k] }; });
+      var ch = Object.keys(d.after || {}).filter(function (k) { return d.after[k] && (d.uses || []).indexOf(k) >= 0; }).map(function (k) {
+        var v = d.after[k]; return /^in:/.test(v) ? { item: k, to: "attached", in: v.slice(3) } : { item: k, to: v }; });
       if (ch.length) st.equipment_changes = ch;
       if (d.makes && d.makes.trim()) st.creates = { label: d.makes.trim(), state: d.makes_state || "worn" };
       addAtActive(st); ui.sel.actDraft = ""; ui.sel.actX = {}; changed();
