@@ -1,0 +1,1 @@
+{"roll_id": "roll_t4_1", "turn_no": 4, "requested_by": "aero", "purpose": "[amw8jxh6m567lcv] Aero: Persuasion, the watch woman", "formula": "1d20+2", "mode": "normal", "dice": [{"sign": 1, "sides": 20, "rolled": [5], "kept": [5]}], "alt_dice": null, "raw_total": 5, "modifiers": 2, "final_total": 7, "nat20": false, "nat1": false}
