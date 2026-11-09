@@ -23,14 +23,14 @@ from `campaigns/starwars_litrpg/runs/registry.json`. Database rows are player-wr
 1. If `/home/claude/genesis-protocol-dev` is missing, call `add_repo` (owner `AustinFnFordham`, repo `Genesis-Protocol-Dev`, access `push`), clone as it instructs into that path, and check out `litrpg/campaign-scaffold`. Then `git pull --rebase`.
 2. Load the `ArtifactData` tool (ToolSearch `select:ArtifactData`) if it is deferred.
 3. `python3 .claude/skills/litrpg-process-turn/turn.py info <campaign_id>`. If status is not `active`, record usage (§7, outcome `inactive`) and stop.
-4. Create the run identity ONCE and persist it, because every shell call starts fresh: `[ -f /tmp/turn_run.env ] || { S=$(date +%s%3N); echo "START=$S RUN=run-$S-$RANDOM" > /tmp/turn_run.env; }`, then `source /tmp/turn_run.env` in every later command that needs `$RUN`/`$START`. Timestamps: always `date +%s%3N` at the moment of the write; never round, estimate or invent one.
+4. Create the run identity ONCE with `turn.py run new <campaign_id>` (§0b); it persists in /tmp/turn_run.env (`source` it when a command needs `$RUN`/`$START`). Never type a timestamp, run id or lock holder: `turn.py doc ...` generates every database document (§0b).
 
 ## 1. Campaign lock, then claim exactly one action
 1. **Lock.** `ArtifactData get` collection `locks`, doc `<campaign_id>`. If it exists with `expires_ms` in the future and a `holder` that is not `$RUN`, another processor is working this campaign: record usage (`lock_busy`) and stop. It re-checks the queue before it finishes.
-2. Otherwise write the lock: `{"holder": "$RUN", "expires_ms": now + 20 min}` (`set` with `if_version` if the doc exists, plain `set` if not), then `get` it again. If `holder` is not `$RUN`, you lost the race: record usage (`lock_busy`) and stop.
-3. **Find.** `ArtifactData query` collection `actions`, `status == "submitted"`. Keep rows whose `campaign_id` equals this campaign (no campaign_id = `starwars_litrpg`). Take the oldest `created_ms`. None? Check `status == "processing"`: a row whose `processing.started_ms` is more than 15 minutes old goes to Recovery (§6). Otherwise release the lock (§1.5), record usage (`noop`) and stop.
-4. **Claim.** `ArtifactData update` that row with `{"status": "processing", "processing": {"started_ms": <now>, "run": "$RUN"}}` and `if_version` = the version you read. A version conflict means it changed: re-read it and re-decide.
-5. **Release** (always, at every exit after step 2): `ArtifactData update` `locks/<campaign_id>` with `{"expires_ms": 0}` (if_version from your last read). Then query `submitted` once more; if a row for this campaign appeared, take the lock again and loop from step 3.
+2. Otherwise write the lock built by `turn.py doc lock` (a renewable lease, §0b; `set` with `if_version` if the doc exists, plain `set` if not), then `get` it again: `turn.py lockcheck` must say `mine`, else you lost the race: record usage (`lock_busy`) and stop.
+3. **Find.** `ArtifactData query` collection `actions`, `status == "submitted"`. Keep rows whose `campaign_id` equals this campaign (no campaign_id = `starwars_litrpg`). Take the oldest `created_ms`. None? Check `status == "processing"`: a row that `turn.py stale` calls stale (no heartbeat for one lease) behind an expired lock goes to Recovery (§6). Otherwise release the lock (§1.5), record usage (`noop`) and stop.
+4. **Claim.** `ArtifactData update` that row with the document from `turn.py doc claim` and `if_version` = the version you read. A version conflict means it changed: re-read it and re-decide.
+5. **Release** (always, at every exit after step 2): `ArtifactData update` `locks/<campaign_id>` with `turn.py doc release` (if_version from your last read). Then query `submitted` once more; if a row for this campaign appeared, take the lock again and loop from step 3.
 
 ## 2. Preflight (no dice yet)
 1. `turn.py recover <campaign_id> <action_id>`. Anything but `none` means this action was touched before: go to §6, never resolve it again.
@@ -47,7 +47,7 @@ Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/G
 - Undecided hidden facts: decide with a table fixed before rolling, record it `gm_only`. Never reveal or canonize a hidden purpose just to resolve one turn.
 - **Protagonist Continuity (in force for run 2):** when a protected character would die, run `python3 campaigns/starwars_litrpg/creator/continuity.py propose --campaign <dir> --target aero --level <level>`. Roll the survival die (if any) and the cost dice it names with the dice skill (`[<action_id>] Continuity ...`), rerolling duplicate costs. Run it again with `--path-roll N --cost-rolls N ...`, then commit the `events_to_commit` it returns (idem `<action_id>:cont<n>`). Run `continuity.py status` after level-ups and arc completion; when `next_step` says so, commit `continuity_expiring` and say so in the narration.
 
-## 0b. Identity, lease and fenced writes (branch `litrpg/turn-builder` only; NOT live until approved)
+## 0b. Identity, lease and fenced writes (live since 2026-11-09)
 Never type a timestamp, run id or lock holder. Generate every database document with `turn.py` and pass it as `file_path`:
 - `turn.py run new <campaign_id>` (identity in /tmp/turn_run.env; lease from the registry, default 3 min).
 - Lock: `ArtifactData get locks/<id>` (out_dir) → `turn.py lockcheck <file>` (busy → stop, `lock_busy`) → `turn.py doc lock --out /tmp/lock.json`
@@ -60,7 +60,7 @@ Never type a timestamp, run id or lock holder. Generate every database document 
   worker's commit to the same run (exit 4: stand down, discard local work; the dice replay identically for whoever finishes the action).
 - `turn.py doc committed|failed|release` build the closing documents; batch them with the usage record.
 
-## 3b. Contract-3 plans (branch `litrpg/turn-builder` only; NOT live until the owner approves)
+## 3b. Contract-3 plans (live since 2026-11-09)
 A `turn-contract/3` declaration is a plan: steps with ids, grouped by `seq` into sequences, possibly with `branch` steps.
 - **One pass.** Resolve every step in order across all sequences in this firing. A sequence boundary is not a pause.
 - **The world keeps moving.** Between steps, run the hidden simulation from committed `gm_only` events (npc plans, positions,
@@ -83,7 +83,7 @@ A `turn-contract/3` declaration is a plan: steps with ids, grouped by `seq` into
 - **Continue.** Continued steps arrive `authorized` with `authorized_ctx`; the validator refuses stale ones (`PENDING_STALE`) and steps that
   were blocked or cancelled (`NOT_CONTINUABLE`). Resolve them like any other plan.
 
-## 3c. Improvised equipment and creative problem-solving (branch only; NOT live until approved)
+## 3c. Improvised equipment and creative problem-solving (live since 2026-11-09)
 Constrain what is impossible, ask about what is underspecified, adjudicate what is uncertain. No separate crafting engine.
 - **Gear comes from the record.** Publish `turn_context.equipment_from_ledger: true`: `export_state` derives `equipment` from the character
   sheet plus committed `equipment_change` / `item_created` / `item_consumed` / `item_destroyed` events and hand snapshots
@@ -109,9 +109,9 @@ Constrain what is impossible, ask about what is underspecified, adjudicate what 
    - `notes`: fair warnings Aero can perceive (visible threats, reach, terrain, timers).
    - `hands` (`{right, left}`, each `{item, label}` or null) when committed events state what Aero holds, and `frees_hand` / `takes_hands` / `needs_hands` / `at` on objects and options where they apply. Only from committed events; omit when uncertain (the brief prototype's `aero.hands` status).
    - After a stop: `pending_steps` (the remaining steps, each `pending: true`) and `pending_reason` (what Aero perceives, never hidden information). They run only if the player submits them again.
-3. `ledger.py --campaign <dir> validate`. Then **git first**: `git add campaigns/starwars_litrpg/runs/<dir>` → `git commit` (message `Datapad turn <action_id> (<campaign_id>)` plus the attribution lines your session gives) → `git push` (on rejection `git pull --rebase`, re-validate, push). If the push cannot succeed, go to §5: nothing is published.
+3. `ledger.py --campaign <dir> validate`. Then **git first**: `git add campaigns/starwars_litrpg/runs/<dir>` → `git commit` (message `Datapad turn <action_id> (<campaign_id>)` plus the attribution lines your session gives) → renew the lease, re-read the lock → `turn.py push <campaign_id> <lock file>` (§0b; exit 4 = stand down). If the push cannot succeed, go to §5: nothing is published.
 4. `turn.py export <campaign_id> --out /tmp/state.json`; `ArtifactData get` `view/state` for its version; `ArtifactData set` it from `/tmp/state.json` with that `if_version`.
-5. `ArtifactData update` the action row: `{"status": "committed", "event_id": "<declaration event id>", "commit": "<git sha>", "committed_ms": <now>}`. Release (§1.5). Record usage (§7, `committed`).
+5. Close in one `ArtifactData batch`: the action row with `turn.py doc committed --action <action_id>` (event id and commit come from the ledger and git), the lock with `turn.py doc release`, and the usage record (§7).
 
 ## 5. Failure
 If anything fails after the claim: do not narrate and do not touch `view/state`. Update the row to `{"status": "failed", "error": "<short reason>", "ledger_events": [...], "rolls": [...]}` listing anything already written. Release, record usage (`failed`). The next GM session reviews instead of re-rolling.

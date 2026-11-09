@@ -27,7 +27,10 @@ def test_players_own_roll_is_full_but_without_hidden_dc_outcome():
     assert p["summary"] == "1d20-1 [6]-1 = 5" and not p.get("redacted")
 
 def test_sandbox_exports_carry_no_enemy_modifiers():
-    for run in ("sequencer_sandbox", "sequencer_sandbox_d"):
+    # The sandbox runs live only on the development branch; the live branch checks Hask Meadow's own record.
+    runs = [r for r in ("sequencer_sandbox", "sequencer_sandbox_d", "hask_meadow_r2") if (es.ROOT / "campaigns" / "starwars_litrpg" / "runs" / r).is_dir()]
+    assert runs
+    for run in runs:
         d = es.build(campaign_dir=es.ROOT / "campaigns" / "starwars_litrpg" / "runs" / run, campaign_id=run)
         for r in d["rolls"]:
             if r["by"] != "aero":
