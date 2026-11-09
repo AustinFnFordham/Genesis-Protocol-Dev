@@ -529,6 +529,16 @@
           (byId(opts, "disengage") ? " Disengage would prevent them, but uses your action." : ""));
       }
     }
+    // a reaction prompt (the GM stopped at a trigger during someone else's moment): only a reaction, or declining, is possible
+    if (ctx.reaction_prompt) {
+      var rp = ctx.reaction_prompt;
+      if (steps.some(function (s) { return s.type !== "speech" || (s.text && s.text.length > 80); }))
+        err("REACTION_ONLY", "It is not your turn: " + (rp.trigger || "something is happening") + ". You can only choose a reaction now (or none).");
+      (decl.reactions || []).forEach(function (r) { if ((rp.options || []).indexOf(r) < 0) err("REACTION_NOT_OFFERED", "That reaction does not fit what is happening right now."); });
+      if ((decl.reactions || []).length > 1) err("ONE_REACTION", "You have one reaction.");
+      if (!(decl.reactions || []).length && !decl.reaction_decline) err("REACTION_CHOICE", "Choose a reaction or decline it.");
+      if (b.reaction === 0 && (decl.reactions || []).length) err("REACTION_USED", "Your reaction is already spent this round.");
+    }
     // reactions: one per round; Ready reserves it
     var reservesReaction = actions.some(function (a) { var o = byId(opts, a.option); return o && o.uses_reaction_when_triggered; });
     (decl.reactions || []).forEach(function (r) { if (!byId(ctx.reactions, r)) err("UNKNOWN_REACTION", "\"" + r + "\" is not an available reaction."); });
@@ -638,7 +648,8 @@
     var preview = previewSteps(decl.steps, ctx, combat, speechAction);
     var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
     if (mv && mv.id === "hold" && !decl.steps.some(function (s) { return s.type === "move"; }) && decl.steps.length) preview.push({ step: "movement", text: mv.label });
-    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
+    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: (ctx.reaction_prompt ? "Now: " : "If " + x.trigger + ": ") + x.label }); });
+    if (ctx.reaction_prompt && decl.reaction_decline) preview.push({ step: "reaction", text: "Do not react" });
     var confirm = warnings.filter(function (w) { return !w.advisory; });
     var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
     return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,

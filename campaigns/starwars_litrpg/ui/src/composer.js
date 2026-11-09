@@ -107,6 +107,7 @@
       d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
       return T.normalize(d, c);
     }
+    if (c.reaction_prompt) { d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); }).slice(0, 1); if (s.declineReaction) d.reaction_decline = true; d.movement = null; return d; }
     if (s.dialogue === "own" && s.own.trim()) d.speech = { option: null, text: s.own.trim(), approach: "freeform", extended: false };
     else { var dl = byId(c.dialogue, s.dialogue); if (dl) d.speech = { option: dl.id, text: dl.text, approach: dl.approach, extended: !!dl.extended }; }
     if (s.action) {
@@ -439,8 +440,10 @@
       h += renderPlan(c, s, r, stat) + renderPalette(c, s, d);
       if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
     } else {
-      var ca = combatAvail(c);
+      var ca = c.reaction_prompt ? {} : combatAvail(c);
+      if (c.reaction_prompt) h += "<!-- reaction prompt: slot builder hidden -->";
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
+      if (!c.reaction_prompt) {
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -458,9 +461,15 @@
         var risk = c.mode === "combat" && (m.leaves_reach_of || []).length ? "opportunity attack risk" : "", w = m.id === "hold" ? [false, ""] : why("move:" + m.id);
         return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk, w[0], w[1]);
       }).join("") + "</fieldset>";
-      if ((c.objects || []).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
-      if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
-      h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
+      if ((c.objects || []).filter(function (o) { return !o.gear; }).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      }
+      if (c.reaction_prompt) {
+        var rp = c.reaction_prompt;
+        h += '<fieldset class="grp reactnow"><legend>Reaction needed now</legend><div class="check warn"><b>' + esc(rp.trigger || "Something is happening") + "</b>" + (rp.detail ? "<div>" + esc(rp.detail) + "</div>" : "") + '<div class="note">It is not your turn. Choose one reaction, or none; the GM resolves it under the rules.</div></div>' +
+          (c.reactions || []).filter(function (o) { return (rp.options || []).indexOf(o.id) >= 0; }).map(function (o) { return radio("reactnow", o.id, s.reactions[0] === o.id, o.label, o.detail || ""); }).join("") +
+          radio("reactnow", "__none", !!s.declineReaction, "Do not react") + "</fieldset>";
+      } else if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
+      if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
     h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
     h += '<div class="submitbar' + (scene ? " sticky" : "") + '" id="submitBar">' + submitBar(r, stat, busy) + "</div>" +
@@ -631,7 +640,11 @@
     var deb = null;
     function soft(fn) { return function (e) { fn(e.target.value); ui.confirmed = false; ui.draftId = ""; autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); }; }
     each("[data-mode]", function (b) { b.addEventListener("click", function () { ui.mode = b.getAttribute("data-mode"); changed(); }); });
-    each("input[data-g]", function (el) { el.addEventListener("change", function () { ui.sel[el.getAttribute("data-g")] = el.value; changed(); }); });
+    each("input[data-g]", function (el) { el.addEventListener("change", function () {
+      var g = el.getAttribute("data-g");
+      if (g === "reactnow") { ui.sel.declineReaction = el.value === "__none"; ui.sel.reactions = el.value === "__none" ? [] : [el.value]; }
+      else ui.sel[g] = el.value;
+      changed(); }); });
     each("input[data-c]", function (el) {
       el.addEventListener("change", function () {
         var g = el.getAttribute("data-c"), list = ui.sel[g].filter(function (x) { return x !== el.value; });

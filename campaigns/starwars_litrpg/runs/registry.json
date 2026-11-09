@@ -66,6 +66,15 @@
    "no_processor": true,
    "lease_ms": 120000,
    "note": "Branch litrpg/turn-builder only. Non-canon E2E: successful lightsaber weld, its limits and a durability challenge."
+  },
+  "sequencer_sandbox_f": {
+   "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_f",
+   "artifact_url": "https://claude.ai/artifact/NaiGHt84nvsswBbyXF9EX1",
+   "status": "active",
+   "canon": false,
+   "no_processor": true,
+   "lease_ms": 120000,
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: player reactions when a hidden threat interrupts a plan."
   }
  },
  "processor": {

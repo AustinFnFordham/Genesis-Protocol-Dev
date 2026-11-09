@@ -218,6 +218,12 @@ def cmd_doc(a):
     elif k == "heartbeat":
         doc = {"processing": {"started_ms": env.get("CLAIM_MS", t), "heartbeat_ms": t, "run": env["RUN"]}}
     elif k == "committed":
+        if not a.event and a.action:  # the declaration event id comes from the ledger, never typed
+            e = run_entry(env["CAMPAIGN"]); led = export_state.la._ledger()
+            mine = [x for x in led.load_all(e["path"]) if x.get("idempotency_key") == a.action + ":1" and x["kind"] == "player_declaration"]
+            if not mine:
+                sys.exit("no committed player_declaration for " + a.action)
+            a.event = mine[0]["event_id"]
         doc = {"status": "committed", "event_id": a.event, "commit": a.commit or subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=REPO).stdout.strip(), "committed_ms": t}
         if a.recovered: doc["recovered"] = True
     elif k == "failed":
@@ -278,7 +284,7 @@ def main():
     s = sub.add_parser("lintctx"); s.add_argument("campaign"); s.add_argument("ctx")
     s = sub.add_parser("run"); s.add_argument("what", choices=["new"]); s.add_argument("campaign")
     s = sub.add_parser("doc"); s.add_argument("kind"); s.add_argument("--out", required=True); s.add_argument("--event"); s.add_argument("--commit")
-    s.add_argument("--error"); s.add_argument("--events", nargs="*"); s.add_argument("--rolls", nargs="*"); s.add_argument("--recovered", action="store_true")
+    s.add_argument("--error"); s.add_argument("--events", nargs="*"); s.add_argument("--rolls", nargs="*"); s.add_argument("--recovered", action="store_true"); s.add_argument("--action")
     s = sub.add_parser("lockcheck"); s.add_argument("lock")
     s = sub.add_parser("stale"); s.add_argument("row")
     s = sub.add_parser("push"); s.add_argument("campaign"); s.add_argument("lock")
