@@ -1,8 +1,10 @@
-# Composite Turn Contract (turn-contract/2)
+# Composite Turn Contract (turn-contract/3)
 
 Owner-requested 2026-11-06 (Experience Contract, Parts III–V). Implementation: `ui/turn_contract.js` (single source, used by the Datapad preview and by the GM processor under node). Tests: `ui/test_turn_contract.py`, `ui/test_scene_sequencing.py` (regression cases 1–10), `ui/test_datapad_ui.cjs`, `ui/test_datapad_scene_ui.cjs`.
 
 Contract 2 (2026-11-08, owner request: tell physical impossibility apart from legitimate sequential narrative actions) adds the ordered `steps` list, hand and position checks, conditions and pending steps. It reads contract-1 declarations unchanged.
+
+Contract 3 (2026-11-09, owner-approved for live: the cinematic scene sequencer) adds sequences, branches, plan progress statuses, Continue, reaction prompts and improvised equipment (§4c). It reads contract-1 and contract-2 declarations unchanged; everything in §1–§6 still holds.
 
 This supersedes charter rule 1's "no menus unless asked": the owner asked. Free text stays first-class and goes through the same validator.
 
@@ -56,6 +58,15 @@ Free text is parsed into the same shape (aliases published with each option). Ev
 - Pending steps never run on their own. They run only when the player submits them again ("Continue these steps" marks them `authorized`); an unauthorized pending step is a preflight error.
 - When initiative starts, the sequence ends. Remaining steps are not carried over; the combat budget applies from the next turn.
 - GM rejections (`needs_revision` after a legal preflight) use codes: `HANDS`, `CARRY_METHOD`, `POSITION`, `CONDITION_UNRESOLVED`, `UNKNOWN_ITEM`, `UNKNOWN_POWER`, as `{code, message}`; the Datapad shows every reason.
+
+## 4c. Sequencer plans (contract 3)
+- **Plan shape.** Steps carry an `id` and a `seq` (sequence index); `sequences: [{label}]` names the visual groups. A sequence boundary is not a pause: the GM resolves the whole plan in one pass. Custom steps (`type: free`) may carry `method`, `uses` (Aero's items), `targets` (visible ids), `hands`, `equipment_changes` and `creates`; the validator checks them against the record, and the GM adjudicates them.
+- **Branches.** A `branch` step has `cases: [{when, steps, after: continue|stop}]` and `otherwise: stop|continue`. The validator checks every path. The GM takes a case only when committed events settle its `when`. Missing information is never a yes: with `otherwise: stop` the plan stops there and asks.
+- **Stops and statuses.** The GM records `plan_progress` with one `stop_kind`: `complete`, `consequential`, `mechanical`, `prerequisite`, `condition` or `combat` (`incidental` is not a stop). Each step ends as completed, interrupted, paused, unattempted, blocked, cancelled, suspended (combat only, when it still makes sense afterwards) or skipped (an untaken branch case). Paused, interrupted, unattempted and suspended steps come back as `pending_steps`; blocked and cancelled ones do not.
+- **Continue.** "Continue these steps" resubmits pending steps as `authorized` with `authorized_ctx` (the context they were authorized against). A stale authorization is `PENDING_STALE`; a blocked or cancelled step is `NOT_CONTINUABLE`.
+- **Reactions.** A declared reaction is a standing instruction. When an undeclared reaction applies, the GM does not choose it: the plan stops at the trigger with the effect pending, and `turn_context.reaction_prompt {trigger, detail, options}` asks the player. Only an offered reaction or declining can be submitted then (`REACTION_ONLY`, `REACTION_NOT_OFFERED`, `REACTION_CHOICE`, `ONE_REACTION`, `REACTION_USED`). A surprised character has no reaction.
+- **Equipment from the record.** With `turn_context.equipment_from_ledger: true`, the Datapad derives gear from the sheet plus committed `equipment_change`, `item_created`, `item_updated`, `item_consumed` and `item_destroyed` events. States: held, holstered, worn, stored, attached, transported, placed, dropped. Hands are not carrying capacity. Carriers state `capacity`, `bulk`, `access` time and `effects` (speed, noise) only when the GM has ruled them; the validator then refuses overfilling (`CAPACITY`) and flags access time (`TIME` in combat, `TAKES_TIME` in a scene) and slowing (`SLOWED`). Nothing is granted that the record does not hold.
+- **What the player sees of dice.** Aero's own rolls show dice, modifier and total. Every other roll shows only its purpose and total. GM tables and unperceived checks (`--by gm_hidden`) are not shown.
 
 ## 5. Dialogue
 A chosen line is the player's declaration of speech. The listener answers from their own state, knowledge and relationships. A chosen approach never changes Aero's morality, alignment or personality by itself (AMD evaluates established acts, not labels).

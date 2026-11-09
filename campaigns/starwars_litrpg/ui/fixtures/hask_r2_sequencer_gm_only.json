@@ -1,0 +1,32 @@
+{
+ "_note": "TEST FIXTURE, non-canonical, GM-ONLY. Hidden simulation for the Mastiff interruption scenario (S3). None of these strings may ever reach a turn context, a validator output or the Datapad.",
+ "hidden": [
+  {
+   "id": "gm_mastiff_7f3a",
+   "kind": "npc_plan",
+   "visibility": "gm_only",
+   "text": "Hidden Mastiff (gm_mastiff_7f3a) stalking from the reeds, 60 ft north-east, Stealth +4."
+  },
+  {
+   "id": "gm_roll_7f3a",
+   "kind": "roll",
+   "visibility": "gm_only",
+   "text": "Mastiff Stealth 11 vs passive Perception 14: detected when the chain is cut."
+  },
+  {
+   "id": "gm_dc_7f3a",
+   "kind": "ruling",
+   "visibility": "gm_only",
+   "text": "Dodge resolved: Mastiff bite +5 vs AC 15, roll 9: miss. DC 13 Dexterity not used."
+  }
+ ],
+ "leak_markers": [
+  "gm_mastiff_7f3a",
+  "Mastiff",
+  "mastiff",
+  "Stealth 11",
+  "+5 vs AC",
+  "DC 13",
+  "reeds, 60 ft"
+ ]
+}

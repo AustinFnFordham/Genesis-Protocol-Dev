@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "api_bridge"))
 import litrpg_adapter as la  # noqa: E402
 
 SHEET = ROOT / "api_bridge" / "gm" / "aero_character_runtime.yml"
-NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left"}
+NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left", "plan_progress"}
 ACTIVE_ACTOR = "aero"
 
 
@@ -46,6 +46,25 @@ def public_events(campaign_dir):
     """Player-visible events of any campaign run directory (records/ only; hidden/ is never opened)."""
     m = la._ledger()
     return m.player_view(m.read_jsonl(Path(campaign_dir) / "records" / "events.jsonl"))
+
+
+PLAYER_ROLLERS = {"aero", "player"}
+
+
+def public_roll(r, rid, purpose, kept):
+    """What the Datapad may show of a roll. The player's own rolls show dice, modifier and total; anything rolled for
+    another actor (enemies, NPCs, the world, or the GM on anyone's behalf) shows only its purpose and total: no formula,
+    no modifier, no die faces, no natural 20/1 and no success/failure (which would reveal a hidden DC or AC).
+    Rolls requested --by gm_hidden (GM tables, unperceived stealth, hidden NPC choices) are not shown at all.
+    The full roll stays in the authoritative roll log (records/roll_log.jsonl) and the GM's DC ledger."""
+    who = r.get("requested_by") or ""
+    if who.startswith("gm_hidden"):  # GM tables, hidden NPC decisions, stealth the player has not perceived: never shown
+        return None
+    if who in PLAYER_ROLLERS:
+        summ = r.get("summary") or (f'{r.get("formula")} [{", ".join(kept)}]' + (f' {r["modifiers"]:+d}' if r.get("modifiers") else "") + f' = {r.get("final_total")}' + (" (natural 20)" if r.get("nat20") else " (natural 1)" if r.get("nat1") else ""))
+        summ = re.sub(r"\s*\((success|failure)\)\s*$", "", summ)
+        return {"roll_id": rid, "purpose": purpose, "summary": summ, "by": who}
+    return {"roll_id": rid, "purpose": purpose, "summary": f'total {r.get("final_total")}', "by": "gm", "redacted": True}
 
 
 def build(ev=None, campaign_dir=None, campaign_id=None):
@@ -91,6 +110,9 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     turn_context = None
     if tc_idx is not None and all(e["kind"] in PRESENT for e in ev[tc_idx + 1:]):
         turn_context = dict(ev[tc_idx]["details"]); turn_context["context_id"] = ev[tc_idx]["event_id"]
+        if turn_context.get("equipment_from_ledger"):  # contract 3: gear whereabouts from the sheet + committed events, never typed by hand
+            import equipment as _eqm
+            turn_context["equipment"] = _eqm.derive(ev)
     # Dice shown for the latest resolved turn: public roll log entries cited by events after the
     # last player declaration (the public log never stores DCs).
     rolls = []
@@ -106,8 +128,9 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                     if r and rid not in [x["roll_id"] for x in rolls]:
                         purpose = re.sub(r"^\[[^\]]+\]\s*", "", r.get("purpose", ""))
                         kept = [str(k) for d in r.get("dice", []) for k in d.get("kept", [])]
-                        summ = r.get("summary") or (f'{r.get("formula")} [{", ".join(kept)}]' + (f' {r["modifiers"]:+d}' if r.get("modifiers") else "") + f' = {r.get("final_total")}' + (" (natural 20)" if r.get("nat20") else " (natural 1)" if r.get("nat1") else ""))
-                        rolls.append({"roll_id": rid, "purpose": purpose, "summary": summ, "by": r.get("requested_by")})
+                        pr = public_roll(r, rid, purpose, kept)
+                        if pr:
+                            rolls.append(pr)
     except Exception:  # noqa: BLE001 - dice display is best-effort; the ledger stays authoritative
         rolls = []
     # Protagonist Continuity status (campaign rule) from the rule file + public events.

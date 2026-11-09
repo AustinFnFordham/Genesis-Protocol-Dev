@@ -1,0 +1,65 @@
+{
+ "_doc": "Datapad environments. ONE built file (ui/genesis_datapad.html, from build_datapad.py) is published to every environment; only the artifact URL, database and processor wiring differ. Live is updated in place (same URL) only with owner approval; tests and previews go to stage.",
+ "built_file": "campaigns/starwars_litrpg/ui/genesis_datapad.html",
+ "environments": {
+  "live": {
+   "artifact_url": "https://claude.ai/artifact/6QTsY4UwYyQFMQMgzydCre",
+   "campaigns": [
+    "hask_meadow_r2"
+   ],
+   "processor": "scheduled task (registry.json processor block)",
+   "capabilities": {
+    "db": {
+     "rules": [
+      {
+       "path": "view",
+       "read": "view",
+       "write": "owner"
+      },
+      {
+       "path": "actions",
+       "read": "view",
+       "write": "interact"
+      },
+      {
+       "path": "locks",
+       "read": "view",
+       "write": "owner"
+      },
+      {
+       "path": "usage",
+       "read": "view",
+       "write": "owner"
+      }
+     ]
+    },
+    "mcp": {
+     "servers": [
+      {
+       "server": "Claude Code Remote",
+       "tools": [
+        "fire_trigger"
+       ]
+      }
+     ]
+    }
+   },
+   "publish": "owner approval required"
+  },
+  "stage": {
+   "artifact_url": "https://claude.ai/artifact/NaiGHt84nvsswBbyXF9EX1",
+   "campaigns": [
+    "sequencer_sandbox*"
+   ],
+   "processor": "none (no_processor); a session drives the real processor flow by hand",
+   "capabilities": {
+    "db": "same rules as live; no mcp"
+   },
+   "publish": "free; non-canon"
+  }
+ },
+ "rollback": {
+  "git_tag": "pre-sequencer-live",
+  "note": "republish the previous built file to the live URL, then git revert the merge; never force-push"
+ }
+}
