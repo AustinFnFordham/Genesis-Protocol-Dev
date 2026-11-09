@@ -231,6 +231,21 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   ok(hs && hs.method && hs.uses[0] === "syntherope" && hs.targets[0] === "welding_cart" && hs.hands === 2 && hs.equipment_changes[0].to === "attached" && hs.creates.state === "worn" &&
      hs.text === "Tie the syntherope into a harness and lash the torch and both gas bottles to my back", "submitted step keeps the exact words, method, tools, changes and intended result", hs);
 
+  // ----- reaction prompt: a hidden threat interrupted; only a reaction (or none) can be chosen -----
+  const st12 = JSON.parse(JSON.stringify(state)); st12.revision += 12;
+  st12.turn_context = Object.assign(JSON.parse(JSON.stringify(CTX)), { context_id: "fx_prompt", mode: "combat", round: 1,
+    budget: { action: 1, bonus_action: 1, reaction: 1, movement_ft: 30, object_interaction: 1 },
+    reactions: [{ id: "saber_deflect", label: "Lightsaber Deflect", trigger: "hit by a ranged energy attack you can see", detail: "reduce the damage by 1d10+2" }],
+    reaction_prompt: { trigger: "A blaster bolt from the catwalk is hitting you: 10 energy damage if you do nothing.", options: ["saber_deflect"] } });
+  const p12 = await open({ width: 390, height: 844 }, st12);
+  const c12 = await p12.locator(".composer").innerText();
+  ok(/Reaction needed now/i.test(c12) && /10 energy damage if you do nothing/.test(c12) && await p12.locator("fieldset.grp legend", { hasText: "Primary action" }).count() === 0, "reaction prompt replaces the turn builder", c12.slice(0, 400));
+  ok(await p12.locator("#submitTurn").isDisabled(), "a choice is required (react or not)");
+  await p12.check('input[data-g="reactnow"][value="saber_deflect"]'); await p12.waitForTimeout(80);
+  await p12.click("#submitTurn"); await p12.waitForTimeout(300);
+  const rdoc = await p12.evaluate(() => { const k = Object.keys(window.__store).find(k => k.startsWith("actions/")); return k && window.__store[k]; });
+  ok(rdoc && JSON.stringify(rdoc.declaration.reactions) === '["saber_deflect"]' && !(rdoc.declaration.actions || []).length, "the submitted answer is the reaction only", rdoc && rdoc.declaration);
+
   // ----- phone layout -----
   const sw = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   ok(sw <= 0, "no horizontal scroll on phone", sw);
@@ -241,7 +256,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { fails++; co
   const sticky = await p7.evaluate(() => getComputedStyle(document.getElementById("submitBar")).position);
   ok(sticky === "sticky", "submit bar stays reachable on phone", sticky);
 
-  for (const p of [page, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11]) ok(p.errors.length === 0, "no page errors", p.errors);
+  for (const p of [page, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) ok(p.errors.length === 0, "no page errors", p.errors);
   await browser.close();
   console.log(fails ? fails + " failed" : "all passed");
   process.exit(fails ? 1 : 0);

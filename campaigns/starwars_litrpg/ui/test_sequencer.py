@@ -508,6 +508,28 @@ def test_harness_contents_take_time_and_slow_aero():
     assert d and "20 ft" in d[0]["message"] and "rope harness: -10 ft" in d[0]["message"], v5["errors"]
 
 
+# ---------- hardening item 6: reactions when a hidden threat interrupts ----------
+def prompt_ctx():
+    c = json.loads(COMBAT.read_text())
+    c["reactions"] = [{"id": "saber_deflect", "label": "Lightsaber Deflect", "trigger": "hit by a ranged energy attack you can see", "requires": ["saber_ignited"]},
+                      {"id": "sentinel_balance", "label": "Sentinel Balance", "trigger": "after failing a Dexterity or Charisma save"}]
+    c["reaction_prompt"] = {"trigger": "A blaster bolt is hitting you", "options": ["saber_deflect"]}
+    f = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False); json.dump(c, f); f.close()
+    return f.name, c
+
+
+def test_reaction_prompt_allows_only_an_offered_reaction_or_declining():
+    path, c = prompt_ctx()
+    ok_ = validate({"actor": "aero", "reactions": ["saber_deflect"], "actions": [], "bonus_actions": [], "objects": []}, ctx=path)
+    assert ok_["legal"] and any("Now: Lightsaber Deflect" in p["text"] for p in ok_["preview"]), ok_
+    dec = validate({"actor": "aero", "reactions": [], "reaction_decline": True}, ctx=path)
+    assert dec["legal"] and any(p["text"] == "Do not react" for p in dec["preview"])
+    assert "REACTION_CHOICE" in codes(validate({"actor": "aero", "reactions": []}, ctx=path))
+    assert "REACTION_NOT_OFFERED" in codes(validate({"actor": "aero", "reactions": ["sentinel_balance"]}, ctx=path))
+    act = [o["id"] for o in c["options"] if o["slot"] == "action"][0]
+    assert "REACTION_ONLY" in codes(validate(plan(st("x", 0, "action", option=act, target=None)), ctx=path)), "it is not Aero's turn"
+
+
 if __name__ == "__main__":
     import sys
     fails = 0

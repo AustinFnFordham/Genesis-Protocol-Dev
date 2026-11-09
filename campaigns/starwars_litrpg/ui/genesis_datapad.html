@@ -432,7 +432,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
    * State is tracked in step order: hands, position, flags (grants/removes of objects, moves and
    * actions; an action's grants are its INTENDED result, so later steps that depend on it are only
    * planned, never promised). Nothing here reads hidden state or predicts a roll. */
-  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
+  var CARRIED0 = ["held", "holstered", "worn", "stored", "attached"];
+  var STOP_ERRORS = ["CAPACITY", "TIME", "UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
   function shortLabel(t) { return String(t || "").split(/\s*[:(;,]\s*|\s+—\s+/)[0].trim(); }
   function placeOf(m, ctx) {
     if (m.ends_at) return m.ends_at;
@@ -521,8 +522,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
     if (decl.movement && !mv && !moves.length) err("UNKNOWN_MOVE", "That movement is not available here.");
     var feet = moves.reduce(function (t, m) { return t + (m.feet || 0); }, 0);
-    if (combat && feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
-      err("DISTANCE", (moves.length === 1 ? moves[0].label + " is about " : "Those moves add up to about ") + feet + " ft; you can move " + (b.movement_ft * (dash ? 2 : 1)) + " ft this turn" + (dash ? "" : " (Dash would double it)") + ".");
+    // worn or carried loads with a stated speed effect (e.g. a harness of gas bottles) slow Aero; only what the record states
+    var slow = (ctx.equipment || []).filter(function (e) { return CARRIED0.indexOf(e.state) >= 0 && e.effects && e.effects.speed_ft; });
+    var speedMod = slow.reduce(function (t, e) { return t + e.effects.speed_ft; }, 0);
+    var baseMove = (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) + speedMod;
+    if (combat && feet > baseMove * (dash ? 2 : 1))
+      err("DISTANCE", (moves.length === 1 ? moves[0].label + " is about " : "Those moves add up to about ") + feet + " ft; you can move " + (baseMove * (dash ? 2 : 1)) + " ft this turn" + (speedMod ? " (" + slow.map(function (e) { return e.label; }).join(", ") + ": " + speedMod + " ft)" : "") + (dash ? "" : " (Dash would double it)") + ".");
+    if (!combat && slow.length && moves.length) info.push({ code: "SLOWED", message: joinAnd(slow.map(function (e) { return e.label; })) + " slows Aero (" + speedMod + " ft of speed)" + (slow.some(function (e) { return e.effects.noisy; }) ? " and is noisy" : "") + ". The GM accounts for the time and the noise." });
     if (!combat && moves.length > 1) info.push({ code: "MOVE_SEQUENCE", message: "Distances after the first move are measured by the GM from where that move ends." });
     steps.forEach(function (s, i) { var m = s.type === "move" && byId(ctx.movement, s.option); if (m && m.blocked_by && m.blocked_by.length) warn("PATH", m.label + ": the way passes " + joinAnd(names(ctx, m.blocked_by)) + "; you may have to go around or stop short.", { step: i, step_id: s.id }); });
 
@@ -612,6 +618,16 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
         var e = eq[ch.item];
         if (!e) { err("UNKNOWN_ITEM", "“" + String(ch.item).replace(/_/g, " ") + "” is not part of Aero's established equipment.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
         if (hands && e.state === "held" && ch.to !== "held") { var h0 = holding(ch.item); if (h0) hands[h0] = null; }
+        if (ch.in) {  // putting it into a container: never beyond what the record says it holds
+          var box = eq[ch.in];
+          if (!box) { err("UNKNOWN_ITEM", "“" + String(ch.in).replace(/_/g, " ") + "” is not part of Aero's equipment.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
+          var inside = Object.keys(eq).filter(function (k) { return eq[k].in === ch.in && k !== ch.item; }).map(function (k) { return eq[k]; });
+          var cap = box.capacity || {};
+          if (cap.slots == null && cap.max_bulk == null) err("CAPACITY", eqName(ch.in) + " has no stated room for more; the GM has to rule what it can hold before anything is added.", { step: i, step_id: s.id, resolution: "needs_choice" });
+          else if (cap.slots != null && inside.length + 1 > cap.slots) err("CAPACITY", eqName(ch.in) + " is full at that point (" + inside.length + " of " + cap.slots + " places used): " + inside.map(function (x) { return x.label; }).join(", ") + ".", { step: i, step_id: s.id, resolution: "not_possible_here" });
+          else if (cap.max_bulk != null && inside.reduce(function (t, x) { return t + (x.bulk || 0); }, 0) + (e.bulk || 0) > cap.max_bulk) err("CAPACITY", eqName(ch.in) + " cannot take " + eqName(ch.item) + ": that would be more than it can carry.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+          e.in = ch.in; e.where = box.label;
+        } else if (e.in && ch.to !== "attached") { delete e.in; }
         if (hands && ch.to === "held" && e.state !== "held") takeHand(ch.item, "the " + eqName(ch.item), e.hands == null ? 1 : e.hands);
         e.state = ch.to; if (ch.where) e.where = ch.where; if (ch.at) e.at = ch.at;
       });
@@ -680,6 +696,10 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
         err("POSITION", o.label + ": " + names(ctx, [o.at])[0] + " is about " + here[o.at] + " ft away at that point. " + (reach.length ? "Add a move there first." : "There is no listed way to reach it from here."),
             { step: i, step_id: s.id, resolution: reach.length ? "add_step" : "not_possible_here", suggest: reach, suggest_steps: reach.map(function (id) { return { type: "move", option: id }; }) });
       }
+      if (o.from_container && o.access_rounds > 1) {
+        if (combat) err("TIME", o.label + " takes about " + o.access_rounds + " rounds (" + (eq[o.item] && eq[o.item].access || "unstrapping") + "); it cannot be done within one turn.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+        else info.push({ code: "TAKES_TIME", message: o.label + ": " + (eq[o.item] && eq[o.item].access || "takes a while") + ". The world keeps moving while Aero works." });
+      }
       if (o.item && eq[o.item] && o.to_state === "held") {
         var ei = eq[o.item];
         if (ei.state === "held") err("ALREADY", o.label + ": at that point it is already in Aero's hand.", { step: i, step_id: s.id, resolution: "not_possible_here" });
@@ -704,7 +724,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
         if (o.frees_hand && hands[o.frees_hand]) { var fi = hands[o.frees_hand].item; if (eq[fi]) { eq[fi].state = o.to_state || eq[fi].home_state || "holstered"; } hands[o.frees_hand] = null; }
         if (o.frees_item && holding(o.frees_item)) hands[holding(o.frees_item)] = null;
       }
-      if (o.item && eq[o.item] && o.to_state) eq[o.item].state = o.to_state;
+      if (o.item && eq[o.item] && o.to_state) { eq[o.item].state = o.to_state; if (o.to_state === "held") delete eq[o.item].in; }
       if (o.frees_item && eq[o.frees_item]) { eq[o.frees_item].state = o.to_state || "placed"; if (o.to_state === "placed") eq[o.frees_item].where = pos || "here"; }
       applyFlags(o);
       snap(s);
@@ -719,6 +739,16 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
           (prone.length ? " " + (prone.length === 1 ? "One of them is" : "Some are") + " currently prone, but prone does not automatically prevent an opportunity attack." : "") +
           (byId(opts, "disengage") ? " Disengage would prevent them, but uses your action." : ""));
       }
+    }
+    // a reaction prompt (the GM stopped at a trigger during someone else's moment): only a reaction, or declining, is possible
+    if (ctx.reaction_prompt) {
+      var rp = ctx.reaction_prompt;
+      if (steps.some(function (s) { return s.type !== "speech" || (s.text && s.text.length > 80); }))
+        err("REACTION_ONLY", "It is not your turn: " + (rp.trigger || "something is happening") + ". You can only choose a reaction now (or none).");
+      (decl.reactions || []).forEach(function (r) { if ((rp.options || []).indexOf(r) < 0) err("REACTION_NOT_OFFERED", "That reaction does not fit what is happening right now."); });
+      if ((decl.reactions || []).length > 1) err("ONE_REACTION", "You have one reaction.");
+      if (!(decl.reactions || []).length && !decl.reaction_decline) err("REACTION_CHOICE", "Choose a reaction or decline it.");
+      if (b.reaction === 0 && (decl.reactions || []).length) err("REACTION_USED", "Your reaction is already spent this round.");
     }
     // reactions: one per round; Ready reserves it
     var reservesReaction = actions.some(function (a) { var o = byId(opts, a.option); return o && o.uses_reaction_when_triggered; });
@@ -773,8 +803,9 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     c.equipment.forEach(function (e) {
       if (covered[e.id] || e.fixed) return;
       var nm = e.label || e.id.replace(/_/g, " "), hands = e.hands == null ? 1 : e.hands;
-      if (e.state !== "transported") c.objects.push({ id: "eq_take:" + e.id, label: (e.state === "holstered" ? "Draw " : "Take out ") + nm, takes_hands: hands, item: e.id, item_label: nm, to_state: "held", generated: true, gear: true,
-        detail: e.where ? "from " + e.where : "", at: (e.state === "placed" || e.state === "dropped") ? e.at : undefined });
+      var cont = e.in && byId(c.equipment, e.in);
+      if (e.state !== "transported") c.objects.push({ id: "eq_take:" + e.id, label: cont ? "Take " + nm + " off " + cont.label : (e.state === "holstered" ? "Draw " : "Take out ") + nm, takes_hands: hands, item: e.id, item_label: nm, to_state: "held", generated: true, gear: true,
+        detail: (e.where ? "from " + e.where : "") + (e.access ? " · " + e.access : ""), at: (e.state === "placed" || e.state === "dropped") ? e.at : undefined, access_rounds: e.access_rounds, from_container: e.in });
       c.objects.push({ id: "eq_stow:" + e.id, label: "Put away " + nm, frees_item: e.id, to_state: e.home_state || "stored", generated: true, gear: true, detail: e.home ? "to " + e.home : "", unless_active: e.active_when });
       c.objects.push({ id: "eq_place:" + e.id, label: "Set " + nm + " down here", frees_item: e.id, to_state: "placed", generated: true, gear: true, unless_active: e.active_when });
     });
@@ -828,7 +859,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var preview = previewSteps(decl.steps, ctx, combat, speechAction);
     var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
     if (mv && mv.id === "hold" && !decl.steps.some(function (s) { return s.type === "move"; }) && decl.steps.length) preview.push({ step: "movement", text: mv.label });
-    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: "If " + x.trigger + ": " + x.label }); });
+    (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: (ctx.reaction_prompt ? "Now: " : "If " + x.trigger + ": ") + x.label }); });
+    if (ctx.reaction_prompt && decl.reaction_decline) preview.push({ step: "reaction", text: "Do not react" });
     var confirm = warnings.filter(function (w) { return !w.advisory; });
     var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
     return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,
@@ -1220,6 +1252,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
       return T.normalize(d, c);
     }
+    if (c.reaction_prompt) { d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); }).slice(0, 1); if (s.declineReaction) d.reaction_decline = true; d.movement = null; return d; }
     if (s.dialogue === "own" && s.own.trim()) d.speech = { option: null, text: s.own.trim(), approach: "freeform", extended: false };
     else { var dl = byId(c.dialogue, s.dialogue); if (dl) d.speech = { option: dl.id, text: dl.text, approach: dl.approach, extended: !!dl.extended }; }
     if (s.action) {
@@ -1346,7 +1379,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     if ((x.uses || []).length) parts.push("using " + x.uses.map(function (id) { return eqLabel(c, id); }).join(", "));
     if ((x.targets || []).length) parts.push("on " + x.targets.map(function (id) { var v = byId(c.visible, id); return v ? (v.short || v.label) : id; }).join(", "));
     if (x.hands != null && x.hands !== "") parts.push(x.hands + " hand" + (+x.hands === 1 ? "" : "s"));
-    (x.equipment_changes || []).forEach(function (ch) { parts.push(eqLabel(c, ch.item) + " → " + (STATEWORD[ch.to] || ch.to)); });
+    (x.equipment_changes || []).forEach(function (ch) { parts.push(eqLabel(c, ch.item) + " → " + (ch.in ? "into " + eqLabel(c, ch.in) : (STATEWORD[ch.to] || ch.to))); });
     if (x.creates && x.creates.label) parts.push("makes " + x.creates.label + " (" + (STATEWORD[x.creates.state] || x.creates.state) + ", if it works)");
     return parts.length ? '<div class="note meta">' + esc(parts.join(" · ")) + "</div>" : "";
   }
@@ -1465,7 +1498,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     if (gear.length) h += '<div class="note">Using (only what Aero has):</div><div class="usegrid">' + gear.map(function (e) {
       var on = (d.uses || []).indexOf(e.id) >= 0;
       return '<label class="opt"><input type="checkbox" data-use="' + esc(e.id) + '"' + (on ? " checked" : "") + '><span class="lbl">' + esc(e.label) + "<small>" + esc((STATEWORD[e.state] || e.state) + (e.where ? ", " + e.where : "")) + "</small></span></label>" +
-        (on ? '<select class="txt" data-after-use="' + esc(e.id) + '" aria-label="Afterwards, ' + esc(e.label) + '"><option value="">afterwards: no change</option>' + ["held", "worn", "attached", "stored", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + (d.after && d.after[e.id] === st ? " selected" : "") + ">afterwards: " + STATEWORD[st] + "</option>"; }).join("") + "</select>" : "");
+        (on ? '<select class="txt" data-after-use="' + esc(e.id) + '" aria-label="Afterwards, ' + esc(e.label) + '"><option value="">afterwards: no change</option>' + ["held", "worn", "attached", "stored", "placed", "transported"].map(function (st) { return '<option value="' + st + '"' + (d.after && d.after[e.id] === st ? " selected" : "") + ">afterwards: " + STATEWORD[st] + "</option>"; }).join("") +
+          gear.filter(function (b) { return b.capacity && b.id !== e.id; }).map(function (b) { var v = "in:" + b.id; return '<option value="' + esc(v) + '"' + (d.after && d.after[e.id] === v ? " selected" : "") + ">afterwards: into " + esc(b.label) + "</option>"; }).join("") + "</select>" : "");
     }).join("") + "</div>";
     h += '<label for="w_on">On / at</label><select class="txt" id="w_on"><option value="">(nothing in particular)</option>' + (c.visible || []).map(function (v) { return '<option value="' + esc(v.id) + '"' + (d.target === v.id ? " selected" : "") + ">" + esc(v.label) + "</option>"; }).join("") + "</select>" +
       '<label for="w_hands">Hands it needs</label><select class="txt" id="w_hands"><option value="">let the builder work it out</option>' + [0, 1, 2].map(function (n) { return '<option value="' + n + '"' + (String(d.hands) === String(n) ? " selected" : "") + ">" + n + "</option>"; }).join("") + "</select>" +
@@ -1551,8 +1585,10 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       h += renderPlan(c, s, r, stat) + renderPalette(c, s, d);
       if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
     } else {
-      var ca = combatAvail(c);
+      var ca = c.reaction_prompt ? {} : combatAvail(c);
+      if (c.reaction_prompt) h += "<!-- reaction prompt: slot builder hidden -->";
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
+      if (!c.reaction_prompt) {
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -1570,9 +1606,15 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
         var risk = c.mode === "combat" && (m.leaves_reach_of || []).length ? "opportunity attack risk" : "", w = m.id === "hold" ? [false, ""] : why("move:" + m.id);
         return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk, w[0], w[1]);
       }).join("") + "</fieldset>";
-      if ((c.objects || []).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
-      if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
-      h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
+      if ((c.objects || []).filter(function (o) { return !o.gear; }).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      }
+      if (c.reaction_prompt) {
+        var rp = c.reaction_prompt;
+        h += '<fieldset class="grp reactnow"><legend>Reaction needed now</legend><div class="check warn"><b>' + esc(rp.trigger || "Something is happening") + "</b>" + (rp.detail ? "<div>" + esc(rp.detail) + "</div>" : "") + '<div class="note">It is not your turn. Choose one reaction, or none; the GM resolves it under the rules.</div></div>' +
+          (c.reactions || []).filter(function (o) { return (rp.options || []).indexOf(o.id) >= 0; }).map(function (o) { return radio("reactnow", o.id, s.reactions[0] === o.id, o.label, o.detail || ""); }).join("") +
+          radio("reactnow", "__none", !!s.declineReaction, "Do not react") + "</fieldset>";
+      } else if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
+      if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
     h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
     h += '<div class="submitbar' + (scene ? " sticky" : "") + '" id="submitBar">' + submitBar(r, stat, busy) + "</div>" +
@@ -1743,7 +1785,11 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var deb = null;
     function soft(fn) { return function (e) { fn(e.target.value); ui.confirmed = false; ui.draftId = ""; autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); }; }
     each("[data-mode]", function (b) { b.addEventListener("click", function () { ui.mode = b.getAttribute("data-mode"); changed(); }); });
-    each("input[data-g]", function (el) { el.addEventListener("change", function () { ui.sel[el.getAttribute("data-g")] = el.value; changed(); }); });
+    each("input[data-g]", function (el) { el.addEventListener("change", function () {
+      var g = el.getAttribute("data-g");
+      if (g === "reactnow") { ui.sel.declineReaction = el.value === "__none"; ui.sel.reactions = el.value === "__none" ? [] : [el.value]; }
+      else ui.sel[g] = el.value;
+      changed(); }); });
     each("input[data-c]", function (el) {
       el.addEventListener("change", function () {
         var g = el.getAttribute("data-c"), list = ui.sel[g].filter(function (x) { return x !== el.value; });
@@ -1775,7 +1821,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       if ((d.uses || []).length) st.uses = d.uses.slice();
       if (d.target) st.targets = [d.target];
       if (d.hands !== undefined && d.hands !== "") st.hands = +d.hands;
-      var ch = Object.keys(d.after || {}).filter(function (k) { return d.after[k] && (d.uses || []).indexOf(k) >= 0; }).map(function (k) { return { item: k, to: d.after[k] }; });
+      var ch = Object.keys(d.after || {}).filter(function (k) { return d.after[k] && (d.uses || []).indexOf(k) >= 0; }).map(function (k) {
+        var v = d.after[k]; return /^in:/.test(v) ? { item: k, to: "attached", in: v.slice(3) } : { item: k, to: v }; });
       if (ch.length) st.equipment_changes = ch;
       if (d.makes && d.makes.trim()) st.creates = { label: d.makes.trim(), state: d.makes_state || "worn" };
       addAtActive(st); ui.sel.actDraft = ""; ui.sel.actX = {}; changed();
