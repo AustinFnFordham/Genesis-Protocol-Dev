@@ -57,6 +57,15 @@
    "no_processor": true,
    "note": "Branch litrpg/turn-builder only. Non-canon E2E: the quick lightsaber weld (S5). Shares the preview artifact.",
    "lease_ms": 120000
+  },
+  "sequencer_sandbox_e": {
+   "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_e",
+   "artifact_url": "https://claude.ai/artifact/NaiGHt84nvsswBbyXF9EX1",
+   "status": "active",
+   "canon": false,
+   "no_processor": true,
+   "lease_ms": 120000,
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: successful lightsaber weld, its limits and a durability challenge."
   }
  },
  "processor": {
