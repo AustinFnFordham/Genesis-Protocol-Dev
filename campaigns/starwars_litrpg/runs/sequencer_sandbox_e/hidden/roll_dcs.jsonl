@@ -3,3 +3,5 @@
 {"roll_id": "roll_t1_6", "dc": 13, "outcome": "failure"}
 {"roll_id": "roll_t1_8", "dc": 13, "outcome": "success"}
 {"roll_id": "roll_t1_10", "dc": 13, "outcome": "success"}
+{"roll_id": "roll_t2_11", "dc": 15, "outcome": "failure"}
+{"roll_id": "roll_t2_13", "dc": 15, "outcome": "success"}
