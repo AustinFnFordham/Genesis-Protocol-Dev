@@ -28,7 +28,8 @@
    "status": "active",
    "canon": false,
    "no_processor": true,
-   "note": "Branch litrpg/turn-builder only. Non-canon end-to-end harness for the cinematic sequencer (turn-contract/3). No GM-start link; the live processor reads the campaign-scaffold registry, which does not list this run."
+   "note": "Branch litrpg/turn-builder only. Non-canon end-to-end harness for the cinematic sequencer (turn-contract/3). No GM-start link; the live processor reads the campaign-scaffold registry, which does not list this run.",
+   "lease_ms": 120000
   },
   "sequencer_sandbox_b": {
    "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_b",
@@ -36,7 +37,8 @@
    "status": "active",
    "canon": false,
    "no_processor": true,
-   "note": "Branch litrpg/turn-builder only. Non-canon scene-mode E2E (consequential stop, condition pause, Continue). Shares the preview artifact with sequencer_sandbox."
+   "note": "Branch litrpg/turn-builder only. Non-canon scene-mode E2E (consequential stop, condition pause, Continue). Shares the preview artifact with sequencer_sandbox.",
+   "lease_ms": 120000
   },
   "sequencer_sandbox_c": {
    "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_c",
@@ -44,7 +46,8 @@
    "status": "active",
    "canon": false,
    "no_processor": true,
-   "note": "Branch litrpg/turn-builder only. Non-canon E2E: improvised carrying: the syntherope harness (S4). Shares the preview artifact."
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: improvised carrying: the syntherope harness (S4). Shares the preview artifact.",
+   "lease_ms": 120000
   },
   "sequencer_sandbox_d": {
    "dir": "campaigns/starwars_litrpg/runs/sequencer_sandbox_d",
@@ -52,7 +55,8 @@
    "status": "active",
    "canon": false,
    "no_processor": true,
-   "note": "Branch litrpg/turn-builder only. Non-canon E2E: the quick lightsaber weld (S5). Shares the preview artifact."
+   "note": "Branch litrpg/turn-builder only. Non-canon E2E: the quick lightsaber weld (S5). Shares the preview artifact.",
+   "lease_ms": 120000
   }
  },
  "processor": {

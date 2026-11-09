@@ -8,6 +8,14 @@
   turn.py export   <campaign_id> --out FILE            player-visible view/state for the Datapad
   turn.py progress <campaign_id> <action.json> <outcome.json>   contract-3 plan progress against the published context
   turn.py lintctx  <campaign_id> <ctx.json>            context lint before publishing a turn_context (warn / defer, never guess)
+  turn.py run new  <campaign_id>                       new run identity in /tmp/turn_run.env (START, RUN, LEASE_MS); prints it
+  turn.py doc <kind> --out FILE [...]                  write an ArtifactData document from the run identity and the clock:
+                                                       lock | renew | release | claim | heartbeat | committed | failed
+  turn.py lockcheck <lock.json|none>                   free | mine | busy | expired (exit 3 only when busy)
+  turn.py stale    <action_row.json>                   is a processing row's worker gone? (lease, not a fixed 20 minutes)
+  turn.py push     <campaign_id> <lock.json>           fenced git push: only while this run holds the lease; never rebases over
+                                                       another worker's commit for the same run (exit 4: stand down)
+Identity, timestamps and lock holders are always generated here, never typed by hand.
 
 Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error.
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
@@ -159,6 +167,106 @@ def cmd_lintctx(a):
     return 0 if p.returncode == 0 else 3
 
 
+# ---------- run identity, lease and fenced writes (branch litrpg/turn-builder) ----------
+import os, secrets, time
+RUN_ENV = Path(os.environ.get("TURN_RUN_ENV", "/tmp/turn_run.env"))
+DEFAULT_LEASE_MS = 180000  # 3 min, renewed at every phase; recovery waits for the lease, not a fixed 20 minutes
+
+
+def now_ms():
+    return time.time_ns() // 1_000_000
+
+
+def run_env():
+    if not RUN_ENV.exists():
+        sys.exit("no run identity: run `turn.py run new <campaign_id>` first")
+    env = dict(kv.split("=", 1) for kv in RUN_ENV.read_text().split())
+    env["START"] = int(env["START"]); env["LEASE_MS"] = int(env.get("LEASE_MS", DEFAULT_LEASE_MS))
+    if "CLAIM_MS" in env: env["CLAIM_MS"] = int(env["CLAIM_MS"])
+    return env
+
+
+def save_env(env):
+    RUN_ENV.write_text(" ".join(f"{k}={v}" for k, v in env.items()) + "\n")
+
+
+def cmd_run(a):
+    e = run_entry(a.campaign)
+    start = now_ms()
+    env = {"START": start, "RUN": f"run-{start}-{secrets.token_hex(3)}", "CAMPAIGN": e["id"], "LEASE_MS": int(e.get("lease_ms", DEFAULT_LEASE_MS))}
+    save_env(env); print(json.dumps(env))
+
+
+def load_doc(path):
+    if path in (None, "none", "-") or not Path(path).exists():
+        return None
+    d = json.loads(Path(path).read_text(encoding="utf-8"))
+    return d.get("data", d)
+
+
+def cmd_doc(a):
+    env = run_env(); t = now_ms(); k = a.kind
+    if k == "lock":
+        doc = {"holder": env["RUN"], "expires_ms": t + env["LEASE_MS"], "acquired_ms": t}
+    elif k == "renew":
+        doc = {"holder": env["RUN"], "expires_ms": t + env["LEASE_MS"]}
+    elif k == "release":
+        doc = {"holder": env["RUN"], "expires_ms": 0, "released_ms": t}
+    elif k == "claim":
+        env["CLAIM_MS"] = t; save_env(env)
+        doc = {"status": "processing", "processing": {"started_ms": t, "heartbeat_ms": t, "run": env["RUN"]}}
+    elif k == "heartbeat":
+        doc = {"processing": {"started_ms": env.get("CLAIM_MS", t), "heartbeat_ms": t, "run": env["RUN"]}}
+    elif k == "committed":
+        doc = {"status": "committed", "event_id": a.event, "commit": a.commit or subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=REPO).stdout.strip(), "committed_ms": t}
+        if a.recovered: doc["recovered"] = True
+    elif k == "failed":
+        doc = {"status": "failed", "error": a.error or "processing failed", "ledger_events": a.events or [], "rolls": a.rolls or [], "failed_ms": t}
+    else:
+        sys.exit(f"unknown doc kind {k}")
+    Path(a.out).write_text(json.dumps(doc), encoding="utf-8")
+    print(json.dumps({"out": a.out, "doc": doc}))
+
+
+def cmd_lockcheck(a):
+    env = run_env(); lock = load_doc(a.lock); t = now_ms()
+    if not lock or not lock.get("holder"):
+        v = "free"
+    elif lock.get("holder") == env["RUN"]:
+        v = "mine" if lock.get("expires_ms", 0) > t else "expired"
+    else:
+        v = "busy" if lock.get("expires_ms", 0) > t else "expired"
+    out = {"verdict": v, "holder": (lock or {}).get("holder"), "expires_in_ms": (lock or {}).get("expires_ms", 0) - t, "now_ms": t}
+    print(json.dumps(out)); return 3 if v == "busy" else 0
+
+
+def cmd_stale(a):
+    env = run_env(); row = load_doc(a.row) or {}; t = now_ms()
+    p = row.get("processing") or {}
+    last = max(p.get("heartbeat_ms") or 0, p.get("started_ms") or 0)
+    stale = row.get("status") == "processing" and t - last > env["LEASE_MS"]
+    print(json.dumps({"stale": stale, "status": row.get("status"), "idle_ms": t - last if last else None, "lease_ms": env["LEASE_MS"], "worker": p.get("run")}))
+    return 0 if stale else 3
+
+
+def cmd_push(a):
+    """Fenced push. The caller has just re-read the lock (ArtifactData get) into <lock.json>."""
+    env = run_env(); e = run_entry(a.campaign); lock = load_doc(a.lock); t = now_ms()
+    if not lock or lock.get("holder") != env["RUN"] or lock.get("expires_ms", 0) <= t:
+        print(json.dumps({"pushed": False, "reason": "this run no longer holds the lease; stand down without pushing", "holder": (lock or {}).get("holder")})); return 4
+    branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture_output=True, text=True, cwd=REPO).stdout.strip()
+    p = subprocess.run(["git", "push", "origin", branch], capture_output=True, text=True, cwd=REPO)
+    if p.returncode == 0:
+        print(json.dumps({"pushed": True, "branch": branch})); return 0
+    subprocess.run(["git", "fetch", "origin", branch], capture_output=True, cwd=REPO)
+    theirs = subprocess.run(["git", "log", "--format=%H %s", f"HEAD..origin/{branch}", "--", e["dir"]], capture_output=True, text=True, cwd=REPO).stdout.strip()
+    if theirs:
+        print(json.dumps({"pushed": False, "reason": "another worker already wrote this run; stand down (do not rebase over it)", "their_commits": theirs.splitlines()})); return 4
+    r = subprocess.run(["git", "pull", "--rebase", "origin", branch], capture_output=True, text=True, cwd=REPO)
+    p = subprocess.run(["git", "push", "origin", branch], capture_output=True, text=True, cwd=REPO)
+    print(json.dumps({"pushed": p.returncode == 0, "rebased_over_other_runs": True, "stderr": p.stderr[-300:] if p.returncode else ""})); return 0 if p.returncode == 0 else 4
+
+
 def main():
     ap = argparse.ArgumentParser(); sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("info"); s.add_argument("campaign")
@@ -168,9 +276,16 @@ def main():
     s = sub.add_parser("export"); s.add_argument("campaign"); s.add_argument("--out", required=True)
     s = sub.add_parser("progress"); s.add_argument("campaign"); s.add_argument("action"); s.add_argument("outcome")
     s = sub.add_parser("lintctx"); s.add_argument("campaign"); s.add_argument("ctx")
+    s = sub.add_parser("run"); s.add_argument("what", choices=["new"]); s.add_argument("campaign")
+    s = sub.add_parser("doc"); s.add_argument("kind"); s.add_argument("--out", required=True); s.add_argument("--event"); s.add_argument("--commit")
+    s.add_argument("--error"); s.add_argument("--events", nargs="*"); s.add_argument("--rolls", nargs="*"); s.add_argument("--recovered", action="store_true")
+    s = sub.add_parser("lockcheck"); s.add_argument("lock")
+    s = sub.add_parser("stale"); s.add_argument("row")
+    s = sub.add_parser("push"); s.add_argument("campaign"); s.add_argument("lock")
     a = ap.parse_args()
     return {"info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export,
-            "progress": cmd_progress, "lintctx": cmd_lintctx}[a.cmd](a) or 0
+            "progress": cmd_progress, "lintctx": cmd_lintctx, "run": cmd_run, "doc": cmd_doc, "lockcheck": cmd_lockcheck, "stale": cmd_stale,
+            "push": cmd_push}[a.cmd](a) or 0
 
 
 if __name__ == "__main__":
