@@ -72,9 +72,16 @@ def apply_events(items, events):
         elif k == "item_created" and d.get("id"):
             e = {"id": d["id"], "label": d.get("label", d["id"]), "state": d.get("state", "placed"), "where": d.get("where", ""), "made_from": d.get("made_from", []),
                  "limits": d.get("limits", ""), "hands": d.get("hands", 1), "aliases": d.get("aliases", []), "evt": ev["event_id"], "improvised": True}
-            if d.get("at"):
-                e["at"] = d["at"]
+            for f in ("at", "bulk", "capacity", "access", "access_rounds", "effects"):
+                if d.get(f) is not None:
+                    e[f] = d[f]
             by[e["id"]] = e; items.append(e)
+            add_contents(e, d.get("contents") or [], by, items, ev["event_id"])
+        elif k == "item_updated" and d.get("id") in by:
+            e = by[d["id"]]
+            for f, v in (d.get("set") or {}).items():
+                e[f] = v
+            add_contents(e, d.get("contents") or [], by, items, ev["event_id"])
         elif k in ("item_consumed", "item_destroyed") and d.get("item") in by:
             items.remove(by.pop(d["item"]))
         elif isinstance(d.get("hands"), dict):
@@ -89,6 +96,25 @@ def apply_events(items, events):
                 if e["state"] == "held" and e["id"] not in held:
                     e["state"] = e.get("home_state", "stored"); e["where"] = e.get("home", ""); e["uncertain"] = True
     return items
+
+
+def add_contents(container, contents, by, items, evt):
+    """Things carried IN a container (a harness, a bag) are Aero's items too, attached to it, with its access time.
+    A container never holds more than its stated capacity; the validator enforces that for planned additions."""
+    for c in contents:
+        if not c.get("id"):
+            continue
+        e = by.get(c["id"]) or {"id": c["id"], "label": c.get("label", c["id"]), "aliases": c.get("aliases", []), "evt": evt}
+        e.update(state="attached", where=container["label"], **{"in": container["id"]})
+        for f in ("bulk", "hands", "label"):
+            if c.get(f) is not None:
+                e[f] = c[f]
+        if container.get("access"):
+            e["access"] = container["access"]
+        if container.get("access_rounds") is not None:
+            e["access_rounds"] = container["access_rounds"]
+        if c["id"] not in by:
+            by[c["id"]] = e; items.append(e)
 
 
 def derive(events, sheet=None):

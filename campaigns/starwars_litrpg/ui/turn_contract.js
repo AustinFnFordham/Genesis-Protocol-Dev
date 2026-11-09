@@ -221,7 +221,8 @@
    * State is tracked in step order: hands, position, flags (grants/removes of objects, moves and
    * actions; an action's grants are its INTENDED result, so later steps that depend on it are only
    * planned, never promised). Nothing here reads hidden state or predicts a roll. */
-  var STOP_ERRORS = ["UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
+  var CARRIED0 = ["held", "holstered", "worn", "stored", "attached"];
+  var STOP_ERRORS = ["CAPACITY", "TIME", "UNKNOWN_OPTION", "UNKNOWN_OBJECT", "UNKNOWN_MOVE", "RESOURCE", "ACTION_CONFLICT", "BONUS_CONFLICT", "DISTANCE", "NOT_BONUS", "NOT_ACTION", "INCAPACITATED", "ACTOR", "NOT_CONTINUABLE", "SUSPENDED", "PENDING_STALE"];
   function shortLabel(t) { return String(t || "").split(/\s*[:(;,]\s*|\s+—\s+/)[0].trim(); }
   function placeOf(m, ctx) {
     if (m.ends_at) return m.ends_at;
@@ -310,8 +311,13 @@
     var mv = decl.movement ? byId(ctx.movement, decl.movement.option) : null;
     if (decl.movement && !mv && !moves.length) err("UNKNOWN_MOVE", "That movement is not available here.");
     var feet = moves.reduce(function (t, m) { return t + (m.feet || 0); }, 0);
-    if (combat && feet > (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) * (dash ? 2 : 1))
-      err("DISTANCE", (moves.length === 1 ? moves[0].label + " is about " : "Those moves add up to about ") + feet + " ft; you can move " + (b.movement_ft * (dash ? 2 : 1)) + " ft this turn" + (dash ? "" : " (Dash would double it)") + ".");
+    // worn or carried loads with a stated speed effect (e.g. a harness of gas bottles) slow Aero; only what the record states
+    var slow = (ctx.equipment || []).filter(function (e) { return CARRIED0.indexOf(e.state) >= 0 && e.effects && e.effects.speed_ft; });
+    var speedMod = slow.reduce(function (t, e) { return t + e.effects.speed_ft; }, 0);
+    var baseMove = (b.movement_ft == null ? ctx.speed_ft : b.movement_ft) + speedMod;
+    if (combat && feet > baseMove * (dash ? 2 : 1))
+      err("DISTANCE", (moves.length === 1 ? moves[0].label + " is about " : "Those moves add up to about ") + feet + " ft; you can move " + (baseMove * (dash ? 2 : 1)) + " ft this turn" + (speedMod ? " (" + slow.map(function (e) { return e.label; }).join(", ") + ": " + speedMod + " ft)" : "") + (dash ? "" : " (Dash would double it)") + ".");
+    if (!combat && slow.length && moves.length) info.push({ code: "SLOWED", message: joinAnd(slow.map(function (e) { return e.label; })) + " slows Aero (" + speedMod + " ft of speed)" + (slow.some(function (e) { return e.effects.noisy; }) ? " and is noisy" : "") + ". The GM accounts for the time and the noise." });
     if (!combat && moves.length > 1) info.push({ code: "MOVE_SEQUENCE", message: "Distances after the first move are measured by the GM from where that move ends." });
     steps.forEach(function (s, i) { var m = s.type === "move" && byId(ctx.movement, s.option); if (m && m.blocked_by && m.blocked_by.length) warn("PATH", m.label + ": the way passes " + joinAnd(names(ctx, m.blocked_by)) + "; you may have to go around or stop short.", { step: i, step_id: s.id }); });
 
@@ -401,6 +407,16 @@
         var e = eq[ch.item];
         if (!e) { err("UNKNOWN_ITEM", "“" + String(ch.item).replace(/_/g, " ") + "” is not part of Aero's established equipment.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
         if (hands && e.state === "held" && ch.to !== "held") { var h0 = holding(ch.item); if (h0) hands[h0] = null; }
+        if (ch.in) {  // putting it into a container: never beyond what the record says it holds
+          var box = eq[ch.in];
+          if (!box) { err("UNKNOWN_ITEM", "“" + String(ch.in).replace(/_/g, " ") + "” is not part of Aero's equipment.", { step: i, step_id: s.id, resolution: "not_possible_here" }); return; }
+          var inside = Object.keys(eq).filter(function (k) { return eq[k].in === ch.in && k !== ch.item; }).map(function (k) { return eq[k]; });
+          var cap = box.capacity || {};
+          if (cap.slots == null && cap.max_bulk == null) err("CAPACITY", eqName(ch.in) + " has no stated room for more; the GM has to rule what it can hold before anything is added.", { step: i, step_id: s.id, resolution: "needs_choice" });
+          else if (cap.slots != null && inside.length + 1 > cap.slots) err("CAPACITY", eqName(ch.in) + " is full at that point (" + inside.length + " of " + cap.slots + " places used): " + inside.map(function (x) { return x.label; }).join(", ") + ".", { step: i, step_id: s.id, resolution: "not_possible_here" });
+          else if (cap.max_bulk != null && inside.reduce(function (t, x) { return t + (x.bulk || 0); }, 0) + (e.bulk || 0) > cap.max_bulk) err("CAPACITY", eqName(ch.in) + " cannot take " + eqName(ch.item) + ": that would be more than it can carry.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+          e.in = ch.in; e.where = box.label;
+        } else if (e.in && ch.to !== "attached") { delete e.in; }
         if (hands && ch.to === "held" && e.state !== "held") takeHand(ch.item, "the " + eqName(ch.item), e.hands == null ? 1 : e.hands);
         e.state = ch.to; if (ch.where) e.where = ch.where; if (ch.at) e.at = ch.at;
       });
@@ -469,6 +485,10 @@
         err("POSITION", o.label + ": " + names(ctx, [o.at])[0] + " is about " + here[o.at] + " ft away at that point. " + (reach.length ? "Add a move there first." : "There is no listed way to reach it from here."),
             { step: i, step_id: s.id, resolution: reach.length ? "add_step" : "not_possible_here", suggest: reach, suggest_steps: reach.map(function (id) { return { type: "move", option: id }; }) });
       }
+      if (o.from_container && o.access_rounds > 1) {
+        if (combat) err("TIME", o.label + " takes about " + o.access_rounds + " rounds (" + (eq[o.item] && eq[o.item].access || "unstrapping") + "); it cannot be done within one turn.", { step: i, step_id: s.id, resolution: "not_possible_here" });
+        else info.push({ code: "TAKES_TIME", message: o.label + ": " + (eq[o.item] && eq[o.item].access || "takes a while") + ". The world keeps moving while Aero works." });
+      }
       if (o.item && eq[o.item] && o.to_state === "held") {
         var ei = eq[o.item];
         if (ei.state === "held") err("ALREADY", o.label + ": at that point it is already in Aero's hand.", { step: i, step_id: s.id, resolution: "not_possible_here" });
@@ -493,7 +513,7 @@
         if (o.frees_hand && hands[o.frees_hand]) { var fi = hands[o.frees_hand].item; if (eq[fi]) { eq[fi].state = o.to_state || eq[fi].home_state || "holstered"; } hands[o.frees_hand] = null; }
         if (o.frees_item && holding(o.frees_item)) hands[holding(o.frees_item)] = null;
       }
-      if (o.item && eq[o.item] && o.to_state) eq[o.item].state = o.to_state;
+      if (o.item && eq[o.item] && o.to_state) { eq[o.item].state = o.to_state; if (o.to_state === "held") delete eq[o.item].in; }
       if (o.frees_item && eq[o.frees_item]) { eq[o.frees_item].state = o.to_state || "placed"; if (o.to_state === "placed") eq[o.frees_item].where = pos || "here"; }
       applyFlags(o);
       snap(s);
@@ -562,8 +582,9 @@
     c.equipment.forEach(function (e) {
       if (covered[e.id] || e.fixed) return;
       var nm = e.label || e.id.replace(/_/g, " "), hands = e.hands == null ? 1 : e.hands;
-      if (e.state !== "transported") c.objects.push({ id: "eq_take:" + e.id, label: (e.state === "holstered" ? "Draw " : "Take out ") + nm, takes_hands: hands, item: e.id, item_label: nm, to_state: "held", generated: true, gear: true,
-        detail: e.where ? "from " + e.where : "", at: (e.state === "placed" || e.state === "dropped") ? e.at : undefined });
+      var cont = e.in && byId(c.equipment, e.in);
+      if (e.state !== "transported") c.objects.push({ id: "eq_take:" + e.id, label: cont ? "Take " + nm + " off " + cont.label : (e.state === "holstered" ? "Draw " : "Take out ") + nm, takes_hands: hands, item: e.id, item_label: nm, to_state: "held", generated: true, gear: true,
+        detail: (e.where ? "from " + e.where : "") + (e.access ? " · " + e.access : ""), at: (e.state === "placed" || e.state === "dropped") ? e.at : undefined, access_rounds: e.access_rounds, from_container: e.in });
       c.objects.push({ id: "eq_stow:" + e.id, label: "Put away " + nm, frees_item: e.id, to_state: e.home_state || "stored", generated: true, gear: true, detail: e.home ? "to " + e.home : "", unless_active: e.active_when });
       c.objects.push({ id: "eq_place:" + e.id, label: "Set " + nm + " down here", frees_item: e.id, to_state: "placed", generated: true, gear: true, unless_active: e.active_when });
     });

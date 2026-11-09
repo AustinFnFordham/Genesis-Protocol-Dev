@@ -47,6 +47,19 @@ Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/G
 - Undecided hidden facts: decide with a table fixed before rolling, record it `gm_only`. Never reveal or canonize a hidden purpose just to resolve one turn.
 - **Protagonist Continuity (in force for run 2):** when a protected character would die, run `python3 campaigns/starwars_litrpg/creator/continuity.py propose --campaign <dir> --target aero --level <level>`. Roll the survival die (if any) and the cost dice it names with the dice skill (`[<action_id>] Continuity ...`), rerolling duplicate costs. Run it again with `--path-roll N --cost-rolls N ...`, then commit the `events_to_commit` it returns (idem `<action_id>:cont<n>`). Run `continuity.py status` after level-ups and arc completion; when `next_step` says so, commit `continuity_expiring` and say so in the narration.
 
+## 0b. Identity, lease and fenced writes (branch `litrpg/turn-builder` only; NOT live until approved)
+Never type a timestamp, run id or lock holder. Generate every database document with `turn.py` and pass it as `file_path`:
+- `turn.py run new <campaign_id>` (identity in /tmp/turn_run.env; lease from the registry, default 3 min).
+- Lock: `ArtifactData get locks/<id>` (out_dir) → `turn.py lockcheck <file>` (busy → stop, `lock_busy`) → `turn.py doc lock --out /tmp/lock.json`
+  → `set` with `if_version` → `get` again and `lockcheck` must say `mine`.
+- Claim: `turn.py doc claim --out /tmp/claim.json` → `update` with `if_version`. A row in `processing` is recoverable when
+  `turn.py stale <row file>` says stale (no heartbeat for one lease) and the lock check says expired: no fixed 20-minute wait.
+- Renew the lease (`turn.py doc renew` → `update` with `if_version`) after preflight, after the dice and right before the push; a version
+  conflict on renew means another worker took over: stop, write nothing more.
+- Push only with `turn.py push <campaign_id> <fresh lock file>`: it refuses when the lease is not ours and never rebases over another
+  worker's commit to the same run (exit 4: stand down, discard local work; the dice replay identically for whoever finishes the action).
+- `turn.py doc committed|failed|release` build the closing documents; batch them with the usage record.
+
 ## 3b. Contract-3 plans (branch `litrpg/turn-builder` only; NOT live until the owner approves)
 A `turn-contract/3` declaration is a plan: steps with ids, grouped by `seq` into sequences, possibly with `branch` steps.
 - **One pass.** Resolve every step in order across all sequences in this firing. A sequence boundary is not a pause.

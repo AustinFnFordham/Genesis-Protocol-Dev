@@ -465,6 +465,49 @@ def test_ledger_tracks_created_items_and_moves():
     assert "rope_harness" not in eq2
 
 
+# ---------- hardening item 5: a fabricated carrier keeps bulk, capacity, access and consequences ----------
+def harness_ctx(mode="scene"):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("eqm2", HERE / "equipment.py"); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    ev = [{"event_id": "e1", "kind": "object_interaction", "details": {"hands": {"right": {"item": "lightsaber"}, "left": None}}},
+          {"event_id": "e2", "kind": "equipment_change", "details": {"item": "syntherope", "to": "attached", "where": "rope harness"}},
+          {"event_id": "e3", "kind": "item_created", "details": {"id": "rope_harness", "label": "rope harness", "state": "worn", "where": "on Aero's back", "bulk": 2,
+              "capacity": {"slots": 3}, "access": "about a minute to unstrap one piece", "access_rounds": 10, "effects": {"speed_ft": -10, "noisy": True},
+              "contents": [{"id": "welding_torch", "label": "the welding torch", "bulk": 1}, {"id": "gas_bottle_1", "label": "a gas bottle", "bulk": 2, "hands": 2},
+                           {"id": "gas_bottle_2", "label": "the other gas bottle", "bulk": 2, "hands": 2}]}}]
+    ctx = json.loads(CTX.read_text()); ctx["equipment"] = m.derive(ev); ctx["hands"] = {"right": {"item": "lightsaber", "label": "the lit lightsaber"}, "left": None}
+    ctx["state_flags"] = ["saber_ignited"]; ctx["mode"] = mode
+    f = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False); json.dump(ctx, f); f.close()
+    return f.name
+
+
+def test_harness_is_not_an_unlimited_container():
+    ctx = harness_ctx()
+    add = dict(id="c1", seq=0, type="free", kind="custom", text="Stuff the canteen into the harness too", uses=["canteen"], method="wedge it between the bottles",
+               equipment_changes=[{"item": "canteen", "to": "attached", "in": "rope_harness"}])
+    v = validate(plan(add), ctx=ctx)
+    e = err_at(v, "c1", "CAPACITY")
+    assert e and e[0]["resolution"] == "not_possible_here" and "3 of 3" in e[0]["message"], v["errors"]
+    # taking a bottle off first makes room: the same addition is then allowed
+    v2 = validate(plan(st("c0", 0, "object", option="eq_take:gas_bottle_1"), dict(add, hands=1)), ctx=ctx)
+    assert not err_at(v2, "c1", "CAPACITY"), v2["errors"]
+
+
+def test_harness_contents_take_time_and_slow_aero():
+    ctx = harness_ctx()
+    v = validate(plan(st("t1", 0, "object", option="eq_take:welding_torch")), ctx=ctx)
+    assert "TAKES_TIME" in codes(v, "info") and v["legal"], v
+    v2 = validate(plan(st("m1", 0, "move", option="to_cart")), ctx=ctx)
+    assert "SLOWED" in codes(v2, "info") and "noisy" in [i for i in v2["info"] if i["code"] == "SLOWED"][0]["message"]
+    cctx = harness_ctx("combat")
+    v3 = validate(plan(st("t1", 0, "object", option="eq_take:welding_torch")), ctx=cctx)
+    assert err_at(v3, "t1", "TIME"), "a minute-long unstrap is not possible within one combat turn"
+    v4 = validate(json.loads(CTX.read_text()) and plan(st("m1", 0, "move", option="to_silo_door")), ctx=COMBAT)  # unrelated combat fixture still validates
+    v5 = validate(plan(st("m1", 0, "move", option="to_cart")), ctx=cctx)
+    d = [x for x in v5["errors"] if x["code"] == "DISTANCE"]
+    assert d and "20 ft" in d[0]["message"] and "rope harness: -10 ft" in d[0]["message"], v5["errors"]
+
+
 if __name__ == "__main__":
     import sys
     fails = 0
