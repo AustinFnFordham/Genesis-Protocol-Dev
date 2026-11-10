@@ -41,3 +41,20 @@ assert r["status"] == "complete" and r["rolls"], r
 c, r = run("recover", "sandbox", "nope")
 assert r["status"] == "none"
 print("ok recovery_classification")
+
+# Byte budget: view/state never exceeds its budget; the newest feed entry survives; omissions are recorded.
+sys.path.insert(0, str(TURN.parents[3] / "campaigns" / "starwars_litrpg" / "ui"))
+import export_state as xs  # noqa: E402
+big = {"revision": 1, "feed": [{"who": "gm", "event_id": f"evt_{i:04d}", "text": "\u00e9" * 3000} for i in range(100)],
+       "journal": [{"event_id": f"evt_{i:04d}", "text": "x" * 2000} for i in range(100)]}
+b = xs.bound(big, budget=60_000)
+assert xs.doc_bytes(b) <= 60_000 and b["history"]["bytes"] == xs.doc_bytes(b), b["history"]
+assert b["feed"][-1]["event_id"] == "evt_0099" and b["history"]["feed"]["omitted"] > 0 and b["history"]["journal"]["omitted"] > 0
+assert b["history"]["feed"]["shown"] + b["history"]["feed"]["omitted"] == 100
+small = xs.bound({"revision": 1, "feed": big["feed"][:2], "journal": []}, budget=60_000)
+assert small["history"]["feed"]["omitted"] == 0 and len(small["feed"]) == 2
+try:
+    xs.bound({"revision": 1, "pad": "y" * 70_000, "feed": [], "journal": []}, budget=60_000); assert False
+except ValueError:
+    pass
+print("ok state_byte_budget")

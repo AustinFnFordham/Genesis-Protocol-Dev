@@ -5,7 +5,8 @@
   turn.py check    <campaign_id> <action.json>         stale check + contract validation (no dice)
   turn.py recover  <campaign_id> <action_id>           ledger state for an action: none | partial | complete
   turn.py lint     <campaign_id> <narration.txt> [--target aero]   horror-narration integrity (Test F)
-  turn.py export   <campaign_id> --out FILE            player-visible view/state for the Datapad
+  turn.py export   <campaign_id> --out FILE            player-visible view/state for the Datapad, bounded to
+                                                       200,000 bytes (oldest feed/journal entries dropped; exit 5 if it cannot fit)
   turn.py progress <campaign_id> <action.json> <outcome.json>   contract-3 plan progress against the published context
   turn.py lintctx  <campaign_id> <ctx.json>            context lint before publishing a turn_context (warn / defer, never guess)
   turn.py run new  <campaign_id>                       new run identity in /tmp/turn_run.env (START, RUN, LEASE_MS); prints it
@@ -17,7 +18,7 @@
                                                        another worker's commit for the same run (exit 4: stand down)
 Identity, timestamps and lock holders are always generated here, never typed by hand.
 
-Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error.
+Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error, 5 export over the byte budget.
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
 dice skill, the ledger skill and the ArtifactData tool, in the order the runbook gives.
 """
@@ -148,8 +149,14 @@ def cmd_export(a):
     proc = json.loads(REGISTRY.read_text(encoding="utf-8")).get("processor")
     # a run marked "no_processor" (sandbox previews) never gets a GM-start link, whatever the registry's processor is
     st["processor"] = {"server": proc["server"], "trigger_id": proc["trigger_id"]} if proc and e["status"] == "active" and not e.get("no_processor") else None
+    try:  # byte budget checked before anything is written: the database refuses documents over 262,144 bytes
+        st = export_state.bound(st)
+    except ValueError as err:
+        print(json.dumps({"out": None, "error": str(err)})); return 5
     Path(a.out).write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(json.dumps({"out": a.out, "revision": st["revision"], "ledger_head": st["ledger_head"], "has_turn_context": bool(st["turn_context"])}))
+    h = st["history"]
+    print(json.dumps({"out": a.out, "revision": st["revision"], "ledger_head": st["ledger_head"], "has_turn_context": bool(st["turn_context"]),
+                      "bytes": h["bytes"], "budget": h["budget_bytes"], "feed_omitted": h["feed"]["omitted"], "journal_omitted": h["journal"]["omitted"]}))
 
 
 def cmd_progress(a):

@@ -181,6 +181,50 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     }
 
 
+# The Artifact database refuses any single document over 262,144 bytes of serialized UTF-8.
+# view/state is published under a smaller budget so one long scene cannot push it over.
+DOC_LIMIT = 262_144
+STATE_BUDGET = 200_000
+
+
+def doc_bytes(doc):
+    """Serialized size as the database measures it: compact JSON, UTF-8, non-ASCII kept as-is."""
+    return len(json.dumps(doc, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+
+
+def bound(st, budget=STATE_BUDGET):
+    """Fit view/state under `budget` bytes by dropping the oldest feed and journal entries (preview only:
+    the ledger keeps everything). Drops from whichever list is heavier; always keeps the newest feed entry.
+    Records what was left out in st["history"]. Raises ValueError if it still cannot fit."""
+    feed, jr = st["feed"], st["journal"]
+    fb = [doc_bytes(x) + 1 for x in feed]
+    jb = [doc_bytes(x) + 1 for x in jr]
+    marker = {"feed": {"total": len(feed), "shown": len(feed), "omitted": len(feed), "first_shown": "evt_00000"},
+              "journal": {"total": len(jr), "shown": len(jr), "omitted": len(jr), "first_shown": "evt_00000"},
+              "budget_bytes": budget, "bytes": budget}
+    base = doc_bytes({**st, "feed": [], "journal": [], "history": marker})
+    fi = ji = 0; fs = sum(fb); js = sum(jb)
+    while base + fs + js > budget:
+        can_f, can_j = fi < len(feed) - 1, ji < len(jr)
+        if not (can_f or can_j):
+            break
+        if can_f and (fs >= js or not can_j):
+            fs -= fb[fi]; fi += 1
+        else:
+            js -= jb[ji]; ji += 1
+    out = dict(st)
+    out["feed"], out["journal"] = feed[fi:], jr[ji:]
+    out["history"] = {
+        "feed": {"total": len(feed), "shown": len(feed) - fi, "omitted": fi, "first_shown": feed[fi]["event_id"] if fi < len(feed) else None},
+        "journal": {"total": len(jr), "shown": len(jr) - ji, "omitted": ji, "first_shown": jr[ji]["event_id"] if ji < len(jr) else None},
+        "budget_bytes": budget, "bytes": 0}
+    for _ in range(3):  # the count includes its own digits: settle to a fixed point
+        out["history"]["bytes"] = doc_bytes(out)
+    if out["history"]["bytes"] > budget or out["history"]["bytes"] > DOC_LIMIT:
+        raise ValueError(f"view/state is {out['history']['bytes']} bytes after trimming the feed and journal; budget {budget}")
+    return out
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--out")
     ap.add_argument("--campaign-dir", help="run directory with records/ (default: the original UAT run)")
