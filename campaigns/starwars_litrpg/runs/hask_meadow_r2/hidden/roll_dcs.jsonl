@@ -17,3 +17,6 @@
 {"roll_id": "roll_t16_55", "dc": 15, "outcome": "failure"}
 {"roll_id": "roll_t17_58", "dc": 15, "outcome": "success"}
 {"roll_id": "roll_t17_60", "dc": 15, "outcome": "failure"}
+{"roll_id": "roll_t29_116", "dc": 15, "outcome": "success"}
+{"roll_id": "roll_t29_122", "dc": 15, "outcome": "success"}
+{"roll_id": "roll_t29_125", "dc": 10, "outcome": "success"}
