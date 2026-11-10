@@ -5,6 +5,46 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } return ""; }
   var selId = ls("datapad.member") || "aero";
+  /* ---------- history: older narration and journal entries live in byte-bounded pages (view/feed-NNNN,
+     view/journal-NNNN) named by the snapshot's manifest; they are fetched only when the player asks. ---------- */
+  var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" } };
+  function evtNum(id) { var m = /(\d+)$/.exec(String(id || "")); return m ? +m[1] : 0; }
+  function histPages(v, kind) { var h = v.history && v.history[kind]; return (h && h.pages) || []; }
+  /* Entries older than the snapshot's preview. Never anything newer than the published revision:
+     a page can be written before the snapshot advances, and the player sees only complete revisions. */
+  function olderEntries(v, kind) {
+    var shown = {}, head = evtNum(v.ledger_head), seen = {};
+    (v[kind] || []).forEach(function (x) { shown[x.event_id] = 1; });
+    return hist[kind].loaded.filter(function (x) {
+      if (shown[x.event_id] || seen[x.event_id] || evtNum(x.event_id) > head) return false;
+      seen[x.event_id] = 1; return true;
+    }).sort(function (a, b) { return evtNum(a.event_id) - evtNum(b.event_id); });
+  }
+  function olderLeft(v, kind) {
+    var h = v.history && v.history[kind];
+    if (!h || !h.omitted || hist[kind].idx >= histPages(v, kind).length) return 0;
+    return Math.max(0, h.omitted - olderEntries(v, kind).length);
+  }
+  function olderButton(v, kind, label) {
+    var n = olderLeft(v, kind), st = hist[kind];
+    if (!n) return "";
+    return '<div class="row" style="margin:8px 0"><button class="btn" data-older="' + kind + '"' + (st.busy ? " disabled" : "") + ' style="min-height:44px">' +
+      (st.busy ? "Loading…" : esc(label) + " (" + n + " older)") + "</button>" + (st.err ? ' <span class="note msg-warn">' + esc(st.err) + "</span>" : "") + "</div>";
+  }
+  function loadOlder(kind, done) {
+    var st = hist[kind], pages = histPages(view, kind);
+    if (!dbRef || st.busy || st.idx >= pages.length) return;
+    var pg = pages[pages.length - 1 - st.idx], before = olderEntries(view, kind).length;
+    st.busy = true; st.err = ""; render();
+    dbRef.doc("view/" + pg.id).get().then(function (snap) {
+      st.busy = false;
+      if (!snap.exists) { st.err = "That part of the record is not available yet."; render(); return; }
+      st.loaded = st.loaded.concat((snap.data().entries || [])); st.idx++;
+      // a page that only repeats what is already on screen adds nothing: go one further back
+      if (olderEntries(view, kind).length === before && st.idx < pages.length) { loadOlder(kind, done); return; }
+      render(); if (done) done();
+    }, function (e) { st.busy = false; st.err = "Could not load (" + ((e && e.code) || "error") + "). Try again."; render(); });
+  }
   function roster(v) { return v.roster && v.roster.length ? v.roster : [{ id: "aero", name: v.character.name, line: v.character.line, role: "You", status: "Active", mechanics: "authoritative" }]; }
   function selected(v) { var r = roster(v); return r.filter(function (m) { return m.id === selId; })[0] || r[0]; }
   function isActor(v, m) { return m.id === (v.active_actor || "aero"); }
@@ -67,13 +107,14 @@
 
   function renderRecord(v) {
     var m = selected(v), own = isActor(v, m);
-    var jrn = own ? v.journal : ((v.member_journals || {})[m.id] || []);
+    var jrn = own ? olderEntries(v, "journal").concat(v.journal) : ((v.member_journals || {})[m.id] || []);
     var disc = jrn.filter(function (j) { return j.kind === "observation"; });
+    var discN = own && v.history && v.history.journal && v.history.journal.observations != null ? v.history.journal.observations : disc.length;
     var jr = jrn.slice().reverse().map(function (j) {
       return '<li><div class="row" style="justify-content:space-between"><span class="pill ' + esc(j.knowledge) + '">' + esc(j.knowledge) + '</span><span class="note">' + esc(j.time) + "</span></div><div style='margin-top:4px'>" + esc(j.text) + "</div></li>";
     }).join("");
-    return selector(v) + '<div class="panel"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul></div>" +
-      '<div class="panel"><h2>Discoveries</h2><div class="note">' + disc.length + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
+    return selector(v) + '<div class="panel"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
+      '<div class="panel"><h2>Discoveries</h2><div class="note">' + discN + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
       '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>' + renderUsage(v);
   }

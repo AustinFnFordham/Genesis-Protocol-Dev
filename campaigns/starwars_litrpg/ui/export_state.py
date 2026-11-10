@@ -182,9 +182,14 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
 
 
 # The Artifact database refuses any single document over 262,144 bytes of serialized UTF-8.
-# view/state is published under a smaller budget so one long scene cannot push it over.
+# Every published document is checked against a byte budget BEFORE it is written:
+#   view/state          the current snapshot: scene, character, composer context and a small recent preview
+#   view/feed-NNNN      narration history, byte-bounded pages, loaded by the page on demand
+#   view/journal-NNNN   journal history, byte-bounded pages
+# History grows by adding pages; the snapshot stays small. Built only from the public ledger.
 DOC_LIMIT = 262_144
-STATE_BUDGET = 200_000
+STATE_BUDGET = 96_000
+PAGE_BUDGET = 150_000
 
 
 def doc_bytes(doc):
@@ -192,17 +197,28 @@ def doc_bytes(doc):
     return len(json.dumps(doc, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
 
 
-def bound(st, budget=STATE_BUDGET):
+def bound(st, budget=STATE_BUDGET, extra=None):
     """Fit view/state under `budget` bytes by dropping the oldest feed and journal entries (preview only:
-    the ledger keeps everything). Drops from whichever list is heavier; always keeps the newest feed entry.
-    Records what was left out in st["history"]. Raises ValueError if it still cannot fit."""
+    the ledger and the history pages keep everything). Drops from whichever list is heavier; always keeps
+    the newest feed entry. Records what was left out in st["history"] (merged with `extra`, e.g. the page
+    manifest). Raises ValueError if it still cannot fit."""
+    extra = extra or {}
     feed, jr = st["feed"], st["journal"]
     fb = [doc_bytes(x) + 1 for x in feed]
     jb = [doc_bytes(x) + 1 for x in jr]
-    marker = {"feed": {"total": len(feed), "shown": len(feed), "omitted": len(feed), "first_shown": "evt_00000"},
-              "journal": {"total": len(jr), "shown": len(jr), "omitted": len(jr), "first_shown": "evt_00000"},
-              "budget_bytes": budget, "bytes": budget}
-    base = doc_bytes({**st, "feed": [], "journal": [], "history": marker})
+
+    def hist(fi, ji, nbytes):
+        h = {"feed": {"total": len(feed), "shown": len(feed) - fi, "omitted": fi, "first_shown": feed[fi]["event_id"] if fi < len(feed) else None},
+             "journal": {"total": len(jr), "shown": len(jr) - ji, "omitted": ji, "first_shown": jr[ji]["event_id"] if ji < len(jr) else None},
+             "budget_bytes": budget, "bytes": nbytes}
+        for k, v in extra.items():
+            if k in ("feed", "journal"):
+                h[k].update(v)
+            else:
+                h[k] = v
+        return h
+
+    base = doc_bytes({**st, "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
     fi = ji = 0; fs = sum(fb); js = sum(jb)
     while base + fs + js > budget:
         can_f, can_j = fi < len(feed) - 1, ji < len(jr)
@@ -214,15 +230,56 @@ def bound(st, budget=STATE_BUDGET):
             js -= jb[ji]; ji += 1
     out = dict(st)
     out["feed"], out["journal"] = feed[fi:], jr[ji:]
-    out["history"] = {
-        "feed": {"total": len(feed), "shown": len(feed) - fi, "omitted": fi, "first_shown": feed[fi]["event_id"] if fi < len(feed) else None},
-        "journal": {"total": len(jr), "shown": len(jr) - ji, "omitted": ji, "first_shown": jr[ji]["event_id"] if ji < len(jr) else None},
-        "budget_bytes": budget, "bytes": 0}
+    out["history"] = hist(fi, ji, 0)
     for _ in range(3):  # the count includes its own digits: settle to a fixed point
         out["history"]["bytes"] = doc_bytes(out)
     if out["history"]["bytes"] > budget or out["history"]["bytes"] > DOC_LIMIT:
         raise ValueError(f"view/state is {out['history']['bytes']} bytes after trimming the feed and journal; budget {budget}")
     return out
+
+
+def paginate(entries, kind, budget=PAGE_BUDGET):
+    """Split a history list into page documents, oldest first, each at most `budget` bytes. Deterministic:
+    appending entries never changes an earlier full page, so a retry writes the same documents."""
+    import hashlib
+    room = budget - 512  # page envelope (ids, counts, hash)
+    groups, cur, size = [], [], 0
+    for x in entries:
+        b = doc_bytes(x) + 1
+        if b > room:
+            raise ValueError(f"{kind} entry {x.get('event_id')} is {b} bytes; it cannot fit a {budget}-byte history page")
+        if cur and size + b > room:
+            groups.append(cur); cur, size = [], 0
+        cur.append(x); size += b
+    if cur:
+        groups.append(cur)
+    pages = []
+    for n, g in enumerate(groups, 1):
+        doc = {"kind": kind, "page": n, "id": f"{kind}-{n:04d}", "count": len(g), "first": g[0]["event_id"], "last": g[-1]["event_id"],
+               "hash": hashlib.sha256(json.dumps(g, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest()[:16], "entries": g}
+        if doc_bytes(doc) > budget:
+            raise ValueError(f"history page {doc['id']} is {doc_bytes(doc)} bytes; budget {budget}")
+        pages.append(doc)
+    return pages
+
+
+def publish_set(st, state_budget=STATE_BUDGET, page_budget=PAGE_BUDGET, published=None):
+    """The complete set of Datapad documents for one committed revision:
+    {"state": <view/state snapshot>, "pages": {doc_id: page document}}. Raises ValueError when any
+    document cannot meet its byte budget (nothing should be written then)."""
+    pages = {}
+    extra = {"revision": st["revision"], "page_budget_bytes": page_budget}
+    for kind in ("feed", "journal"):
+        ps = paginate(st[kind], kind, page_budget)
+        extra[kind] = {"pages": [{k: p[k] for k in ("id", "count", "first", "last", "hash")} for p in ps]}
+        for p in ps:
+            pages[p["id"]] = dict(p, campaign_id=st.get("campaign_id"))
+            if doc_bytes(pages[p["id"]]) > min(page_budget, DOC_LIMIT):
+                raise ValueError(f"history page {p['id']} is over its byte budget")
+    extra["journal"]["observations"] = sum(1 for j in st["journal"] if j.get("kind") == "observation")
+    if published:
+        extra["published"] = published
+    return {"state": bound(st, state_budget, extra), "pages": pages}
 
 
 if __name__ == "__main__":

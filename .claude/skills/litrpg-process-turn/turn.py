@@ -5,20 +5,24 @@
   turn.py check    <campaign_id> <action.json>         stale check + contract validation (no dice)
   turn.py recover  <campaign_id> <action_id>           ledger state for an action: none | partial | complete
   turn.py lint     <campaign_id> <narration.txt> [--target aero]   horror-narration integrity (Test F)
-  turn.py export   <campaign_id> --out FILE            player-visible view/state for the Datapad, bounded to
-                                                       200,000 bytes (oldest feed/journal entries dropped; exit 5 if it cannot fit)
+  turn.py export   <campaign_id> --out FILE [--budget N]   the view/state snapshot alone, under its byte budget (exit 5, nothing written, if it cannot fit)
+  turn.py publish  <campaign_id> --current <view_state.json|none> --outdir DIR
+                                                       plan the Datapad publication of the committed revision: history pages
+                                                       (view/feed-NNNN, view/journal-NNNN) then the view/state snapshot, every
+                                                       document under a byte budget; repeatable; exit 6 = stale or not pushed
   turn.py progress <campaign_id> <action.json> <outcome.json>   contract-3 plan progress against the published context
   turn.py lintctx  <campaign_id> <ctx.json>            context lint before publishing a turn_context (warn / defer, never guess)
   turn.py run new  <campaign_id>                       new run identity in /tmp/turn_run.env (START, RUN, LEASE_MS); prints it
   turn.py doc <kind> --out FILE [...]                  write an ArtifactData document from the run identity and the clock:
-                                                       lock | renew | release | claim | heartbeat | committed | failed
+                                                       lock | renew | release | claim | heartbeat | resolved | pubfail | committed | failed
   turn.py lockcheck <lock.json|none>                   free | mine | busy | expired (exit 3 only when busy)
   turn.py stale    <action_row.json>                   is a processing row's worker gone? (lease, not a fixed 20 minutes)
   turn.py push     <campaign_id> <lock.json>           fenced git push: only while this run holds the lease; never rebases over
                                                        another worker's commit for the same run (exit 4: stand down)
 Identity, timestamps and lock holders are always generated here, never typed by hand.
 
-Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error, 5 export over the byte budget.
+Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error, 5 a document over its byte budget,
+6 publish refused (stale, or not committed and pushed).
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
 dice skill, the ledger skill and the ArtifactData tool, in the order the runbook gives.
 """
@@ -142,21 +146,74 @@ def cmd_lint(a):
     return 0 if not problems else 3
 
 
-def cmd_export(a):
-    e = run_entry(a.campaign)
+def _git(*args):
+    return subprocess.run(["git", *args], capture_output=True, text=True, cwd=REPO)
+
+
+def _publish_state(e):
     st = state(e)
     st["artifact_url"] = e["artifact_url"]
     proc = json.loads(REGISTRY.read_text(encoding="utf-8")).get("processor")
     # a run marked "no_processor" (sandbox previews) never gets a GM-start link, whatever the registry's processor is
     st["processor"] = {"server": proc["server"], "trigger_id": proc["trigger_id"]} if proc and e["status"] == "active" and not e.get("no_processor") else None
+    return st
+
+
+def cmd_export(a):
+    """The view/state snapshot alone (preview, tests). The processor publishes with `turn.py publish`."""
+    e = run_entry(a.campaign)
     try:  # byte budget checked before anything is written: the database refuses documents over 262,144 bytes
-        st = export_state.bound(st)
+        st = export_state.publish_set(_publish_state(e), state_budget=a.budget or export_state.STATE_BUDGET)["state"]
     except ValueError as err:
         print(json.dumps({"out": None, "error": str(err)})); return 5
     Path(a.out).write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
     h = st["history"]
     print(json.dumps({"out": a.out, "revision": st["revision"], "ledger_head": st["ledger_head"], "has_turn_context": bool(st["turn_context"]),
                       "bytes": h["bytes"], "budget": h["budget_bytes"], "feed_omitted": h["feed"]["omitted"], "journal_omitted": h["journal"]["omitted"]}))
+
+
+def cmd_publish(a):
+    """Plan the Datapad publication of the committed revision. Independent of resolution and safe to repeat:
+    it reads only what git holds, writes files only, and names the ArtifactData writes in order
+    (history pages first, view/state last, so the player keeps the previous complete revision until the end).
+    Exit 5: a document cannot meet its byte budget. Exit 6: not a committed, pushed revision, or the Datapad
+    already shows a newer one (an old retry must never overwrite it)."""
+    e = run_entry(a.campaign); rel = str(e["path"].relative_to(REPO))
+    if _git("status", "--porcelain", "--", rel).stdout.strip():
+        print(json.dumps({"ok": False, "reason": "the run directory has uncommitted changes; publish only what git holds"})); return 6
+    branch = _git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
+    if not a.allow_unpushed and _git("merge-base", "--is-ancestor", "HEAD", "origin/" + branch).returncode != 0:
+        print(json.dumps({"ok": False, "reason": "HEAD is not on origin/" + branch + "; push first (git before Datapad)"})); return 6
+    commit = _git("log", "-1", "--format=%h", "--", rel).stdout.strip()
+    st = _publish_state(e)
+    try:
+        ps = export_state.publish_set(st, published={"revision": st["revision"], "ledger_head": st["ledger_head"], "commit": commit})
+    except ValueError as err:
+        print(json.dumps({"ok": False, "reason": str(err)})); return 5
+    cur = load_doc(a.current) or {}
+    if cur.get("campaign_id") in (None, e["id"]) and (cur.get("revision") or 0) > st["revision"]:
+        print(json.dumps({"ok": False, "reason": "the Datapad already shows a newer revision; this publish is stale", "published_revision": cur.get("revision"), "revision": st["revision"]})); return 6
+    have = {}
+    if cur.get("campaign_id") == e["id"]:
+        for kind in ("feed", "journal"):
+            for pg in ((cur.get("history") or {}).get(kind) or {}).get("pages") or []:
+                have[pg["id"]] = pg["hash"]
+    out = Path(a.outdir) / "view"; out.mkdir(parents=True, exist_ok=True)
+    for old in out.glob("*.json"):
+        old.unlink()
+    writes = []
+    for pid, doc in ps["pages"].items():
+        if have.get(pid) == doc["hash"]:
+            continue  # already published with exactly this content under the current manifest
+        f = out / (pid + ".json"); f.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+        writes.append({"collection": "view", "doc_id": pid, "file": str(f), "bytes": export_state.doc_bytes(doc)})
+    snap = ps["state"]; same = cur.get("campaign_id") == e["id"] and cur.get("revision") == snap["revision"] and (cur.get("history") or {}) == snap["history"] and not writes
+    f = out / "state.json"; f.write_text(json.dumps(snap, ensure_ascii=False), encoding="utf-8")
+    h = snap["history"]
+    print(json.dumps({"ok": True, "revision": snap["revision"], "ledger_head": snap["ledger_head"], "commit": commit, "already_published": same,
+                      "pages": writes, "state": {"collection": "view", "doc_id": "state", "file": str(f), "bytes": h["bytes"], "budget": h["budget_bytes"]},
+                      "preview": {"feed": h["feed"]["shown"], "journal": h["journal"]["shown"]},
+                      "order": "write every page (if_version when it exists), then view/state with the if_version you read"}, indent=1))
 
 
 def cmd_progress(a):
@@ -224,15 +281,23 @@ def cmd_doc(a):
         doc = {"status": "processing", "processing": {"started_ms": t, "heartbeat_ms": t, "run": env["RUN"]}}
     elif k == "heartbeat":
         doc = {"processing": {"started_ms": env.get("CLAIM_MS", t), "heartbeat_ms": t, "run": env["RUN"]}}
-    elif k == "committed":
+    elif k in ("committed", "resolved"):
         if not a.event and a.action:  # the declaration event id comes from the ledger, never typed
             e = run_entry(env["CAMPAIGN"]); led = export_state.la._ledger()
             mine = [x for x in led.load_all(e["path"]) if x.get("idempotency_key") == a.action + ":1" and x["kind"] == "player_declaration"]
             if not mine:
                 sys.exit("no committed player_declaration for " + a.action)
             a.event = mine[0]["event_id"]
-        doc = {"status": "committed", "event_id": a.event, "commit": a.commit or subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=REPO).stdout.strip(), "committed_ms": t}
-        if a.recovered: doc["recovered"] = True
+        commit = a.commit or subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=REPO).stdout.strip()
+        if k == "resolved":  # resolution is durable in git; the Datapad has not been advanced yet
+            doc = {"status": "resolved", "event_id": a.event, "commit": commit, "resolved_ms": t,
+                   "publication": {"status": "pending", "last_error": None}}
+        else:
+            doc = {"status": "committed", "event_id": a.event, "commit": commit, "committed_ms": t,
+                   "publication": {"status": "published", "revision": a.revision, "published_ms": t, "last_error": None}}
+            if a.recovered: doc["recovered"] = True
+    elif k == "pubfail":  # the turn stays resolved; only the publication is pending
+        doc = {"status": "resolved", "publication": {"status": "pending", "last_error": a.error or "publication failed", "failed_ms": t}}
     elif k == "failed":
         doc = {"status": "failed", "error": a.error or "processing failed", "ledger_events": a.events or [], "rolls": a.rolls or [], "failed_ms": t}
     else:
@@ -286,18 +351,19 @@ def main():
     s = sub.add_parser("check"); s.add_argument("campaign"); s.add_argument("action")
     s = sub.add_parser("recover"); s.add_argument("campaign"); s.add_argument("action_id")
     s = sub.add_parser("lint"); s.add_argument("campaign"); s.add_argument("narration"); s.add_argument("--target", default="aero")
-    s = sub.add_parser("export"); s.add_argument("campaign"); s.add_argument("--out", required=True)
+    s = sub.add_parser("export"); s.add_argument("campaign"); s.add_argument("--out", required=True); s.add_argument("--budget", type=int)
+    s = sub.add_parser("publish"); s.add_argument("campaign"); s.add_argument("--current", default="none"); s.add_argument("--outdir", required=True); s.add_argument("--allow-unpushed", action="store_true")
     s = sub.add_parser("progress"); s.add_argument("campaign"); s.add_argument("action"); s.add_argument("outcome")
     s = sub.add_parser("lintctx"); s.add_argument("campaign"); s.add_argument("ctx")
     s = sub.add_parser("run"); s.add_argument("what", choices=["new"]); s.add_argument("campaign")
     s = sub.add_parser("doc"); s.add_argument("kind"); s.add_argument("--out", required=True); s.add_argument("--event"); s.add_argument("--commit")
-    s.add_argument("--error"); s.add_argument("--events", nargs="*"); s.add_argument("--rolls", nargs="*"); s.add_argument("--recovered", action="store_true"); s.add_argument("--action")
+    s.add_argument("--error"); s.add_argument("--events", nargs="*"); s.add_argument("--rolls", nargs="*"); s.add_argument("--recovered", action="store_true"); s.add_argument("--action"); s.add_argument("--revision", type=int)
     s = sub.add_parser("lockcheck"); s.add_argument("lock")
     s = sub.add_parser("stale"); s.add_argument("row")
     s = sub.add_parser("push"); s.add_argument("campaign"); s.add_argument("lock")
     a = ap.parse_args()
     return {"info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export,
-            "progress": cmd_progress, "lintctx": cmd_lintctx, "run": cmd_run, "doc": cmd_doc, "lockcheck": cmd_lockcheck, "stale": cmd_stale,
+            "publish": cmd_publish, "progress": cmd_progress, "lintctx": cmd_lintctx, "run": cmd_run, "doc": cmd_doc, "lockcheck": cmd_lockcheck, "stale": cmd_stale,
             "push": cmd_push}[a.cmd](a) or 0
 
 

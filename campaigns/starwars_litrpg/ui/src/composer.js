@@ -45,7 +45,7 @@
   }
   var localPending = null;  // a turn this device just saved, until the store's listener reports it
   function activeAction() {
-    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing"; })[0];
+    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved"; })[0];
     if (real) return real;
     if (localPending && Date.now() - localPending.at < 20000 && !actions.some(function (a) { return a._id === localPending.id; }))
       return { _id: localPending.id, status: "submitted", text: localPending.text };
@@ -521,12 +521,12 @@
   function renderActions() {
     if (!actions.length) return "";
     return actions.slice(0, 3).map(function (a) {
-      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
+      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
         needs_revision: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Needs revision</span>', failed: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Failed</span>', clarify: '<span class="pill pend">Needs revision</span>' };
       var h = '<div class="act"><div class="row">' + (pills[a.status] || '<span class="pill">' + esc(a.status) + "</span>");
       if (a.status === "submitted") h += ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button> <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Start GM</button>';
       var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
-      if (stuck || a.status === "failed") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
+      if (stuck || a.status === "failed" || a.status === "resolved") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
       h += "</div><q>" + esc(a.text) + "</q>";
       if (a.status === "submitted") h += notifyLine(a);
       if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
@@ -538,6 +538,8 @@
         if ((a.review.alternatives || []).length) h += '<div class="sugg">' + a.review.alternatives.map(function (x, i) { return '<button class="chip" data-ralt="' + esc(a._id) + ":" + i + '">' + esc(x.label) + "</button>"; }).join("") + "</div>";
         h += '<div class="note">No dice were rolled. Revise and submit again.</div>';
       }
+      if (a.status === "resolved") h += '<div class="note">The GM resolved this turn and it is saved in the record' + (a.commit ? " (" + esc(String(a.commit).slice(0, 7)) + ")" : "") + ". The Datapad has not been updated yet, so you still see the scene before it. Retry is safe: nothing is rolled again." +
+        (a.publication && a.publication.last_error ? '<div class="msg-warn">' + esc(a.publication.last_error) + "</div>" : "") + "</div>";
       if (a.status === "failed") h += '<div class="note msg-err">' + esc(a.error || "Processing failed. Nothing was narrated.") + "</div>";
       return h + "</div>";
     }).join("");
@@ -576,13 +578,13 @@
 
   function renderCenter(v) {
     var s = v.scene;
-    var feed = v.feed.map(function (f) {
-      return '<div class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
+    var feed = olderEntries(v, "feed").concat(v.feed).map(function (f) {
+      return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
-      '<div class="panel"><h2>Narrative</h2><div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
       renderDice(v) + renderTurn(v);
   }
 
@@ -751,6 +753,16 @@
         var id = b.getAttribute("data-wd"), a = actions.filter(function (x) { return x._id === id; })[0];
         if (!a || a.status !== "submitted") { setMsg("Already picked up by the GM."); return; }
         dbRef.doc("actions/" + id).delete().catch(function (e) { setMsg("Could not withdraw: " + (e && e.code || "error")); });
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-older]"), function (b) {
+      b.addEventListener("click", function () {
+        var kind = b.getAttribute("data-older"), first = kind === "feed" ? document.querySelector("#colCenter .feed > div[data-eid]") : null;
+        var eid = first && first.getAttribute("data-eid");
+        loadOlder(kind, function () {  // keep the reader where they were: the entry that was first stays in view
+          var el = eid && document.querySelector('#colCenter .feed > div[data-eid="' + eid + '"]');
+          if (el && el.scrollIntoView) el.scrollIntoView({ block: "start" });
+        });
       });
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-nudge]"), function (b) { b.addEventListener("click", function () { notifyGM(b.getAttribute("data-nudge")); }); });
