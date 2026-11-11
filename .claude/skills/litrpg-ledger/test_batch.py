@@ -65,3 +65,38 @@ with tempfile.TemporaryDirectory() as temporary:
         else:
             raise AssertionError(mutate)
 print("PASS batch ordering, causal refs, visibility, crash recovery, replay, stale and lease rejection")
+
+# A second process holding the writer lock is rejected, without accepting a journal.
+import subprocess
+with tempfile.TemporaryDirectory() as temporary:
+    camp, lock, request = fixture(temporary)
+    holder = subprocess.Popen([sys.executable, "-c",
+        "import fcntl,sys; f=open(sys.argv[1],'a'); fcntl.flock(f,fcntl.LOCK_EX); print('ready',flush=True); sys.stdin.read()",
+        str(camp/"hidden/.ledger_writer.lock")], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    try:
+        assert holder.stdout.readline().strip() == "ready"
+        try:
+            batch.apply(camp, request, lock, "worker", ledger)
+        except ValueError as error:
+            assert "local lock" in str(error)
+        else:
+            raise AssertionError("concurrent writer accepted")
+        assert not (camp/"hidden/ledger_batch_pending.json").exists()
+    finally:
+        holder.communicate("")
+        assert holder.returncode == 0
+
+# A torn append is resumed byte-for-byte rather than truncated or rewritten.
+with tempfile.TemporaryDirectory() as temporary:
+    camp, lock, request = fixture(temporary)
+    try:
+        batch.apply(camp, request, lock, "worker", ledger, after_stream=lambda _: (_ for _ in ()).throw(RuntimeError()))
+    except RuntimeError:
+        pass
+    accepted = json.loads((camp/"hidden/ledger_batch_pending.json").read_text())
+    tail = accepted["streams"]["hidden/events.jsonl"]["tail"].encode()
+    (camp/"hidden/events.jsonl").write_bytes(tail[:17])
+    batch.apply(camp, request, lock, "worker", ledger)
+    assert (camp/"hidden/events.jsonl").read_bytes() == tail
+    assert not ledger.validate_all(camp)[1]
+print("PASS separate-process writer rejection and torn-byte append recovery")

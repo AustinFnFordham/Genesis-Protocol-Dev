@@ -13,6 +13,7 @@ Event ids share one sequence (evt_0001...). caused_by may only reference EARLIER
 """
 import argparse, json, os, re, sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CAMPAIGN = ROOT / "campaigns" / "starwars_litrpg"
@@ -27,17 +28,25 @@ def paths(camp):
 
 
 def read_jsonl(p):
-    if p.name == "events.jsonl" and (p.parent.parent / "hidden/ledger_batch_pending.json").exists():
-        raise ValueError("ledger batch is incomplete; resume its accepted request before reading")
-    if not p.exists():
-        return []
-    return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+    def read():
+        if p.name == "events.jsonl" and (p.parent.parent / "hidden/ledger_batch_pending.json").exists():
+            raise ValueError("ledger batch is incomplete; resume its accepted request before reading")
+        if not p.exists():
+            return []
+        return [json.loads(line) for line in p.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if p.name == "events.jsonl":
+        from batch import reader_lock
+        with reader_lock(p.parent.parent):
+            return read()
+    return read()
 
 
 def load_all(camp):
-    pub, hid, _, _ = paths(camp)
-    events = read_jsonl(pub) + read_jsonl(hid)
-    return sorted(events, key=lambda e: int(ID_RE.match(e["event_id"]).group(1)))
+    from batch import reader_lock
+    with reader_lock(camp):
+        pub, hid, _, _ = paths(camp)
+        events = read_jsonl(pub) + read_jsonl(hid)
+        return sorted(events, key=lambda e: int(ID_RE.match(e["event_id"]).group(1)))
 
 
 MORAL_FACETS = {"intent", "intent_source", "action", "knowledge", "foreseeability", "control",

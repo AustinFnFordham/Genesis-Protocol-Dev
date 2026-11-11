@@ -8,6 +8,9 @@ import json
 import os
 from pathlib import Path
 import time
+import threading
+
+_held = threading.local()
 
 @contextmanager
 def writer_lock(campaign):
@@ -19,6 +22,30 @@ def writer_lock(campaign):
             fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise ValueError("another ledger writer holds the local lock")
+        owners = getattr(_held, "campaigns", set())
+        _held.campaigns = owners | {str(campaign.resolve())}
+        try:
+            yield
+        finally:
+            _held.campaigns = owners
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
+@contextmanager
+def reader_lock(campaign):
+    import fcntl
+    key = str(campaign.resolve())
+    if key in getattr(_held, "campaigns", set()):
+        yield
+        return
+    path = campaign / "hidden/.ledger_writer.lock"
+    if not path.exists():
+        yield
+        if path.exists():
+            raise ValueError("ledger writer appeared while reading; retry the read")
+        return
+    with path.open("r") as handle:
+        fcntl.flock(handle, fcntl.LOCK_SH)
         try:
             yield
         finally:
@@ -137,6 +164,7 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
                 handle.write(remaining)
                 handle.flush()
                 os.fsync(handle.fileno())
+            sync_directory(path.parent)
             if after_stream:
                 after_stream(relative)
         durable_json(receipt, {"fingerprint": fingerprint, "result": plan["result"]})
