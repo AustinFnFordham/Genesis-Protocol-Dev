@@ -13,6 +13,8 @@ STAGES = ("claimed", "context", "rules", "dice", "ledger", "narration", "publish
 
 def patch(row, lock, run, stage, now=None):
     now = time.time_ns() // 1_000_000 if now is None else now
+    if type(now) is not int or now < 0:
+        raise ValueError("worker timestamp must be a nonnegative integer")
     row, lock = row.get("data", row), lock.get("data", lock)
     if lock.get("holder") != run or lock.get("expires_ms", 0) <= now:
         raise ValueError("progress requires the active worker lease")
@@ -25,6 +27,10 @@ def patch(row, lock, run, stage, now=None):
         raise ValueError("complete requires published state")
     same = previous.get("run") == run
     old = previous.get("stage") if same else None
+    if same:
+        heartbeat = previous.get("heartbeat_ms")
+        if type(heartbeat) is not int or now < heartbeat:
+            raise ValueError("worker clock moved backwards; keep the newer progress row")
     if old and STAGES.index(stage) < STAGES.index(old):
         raise ValueError("stage cannot move backwards within a worker run")
     stages = dict(previous.get("stages", {})) if same else {}
