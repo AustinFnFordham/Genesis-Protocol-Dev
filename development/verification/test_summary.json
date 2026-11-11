@@ -1,0 +1,23 @@
+{
+  "python_regression_scripts": 16,
+  "browser_suites": [
+    "base composer",
+    "cinematic sequencer",
+    "scene composer",
+    "emulated iPhone",
+    "paginated publication and history",
+    "player experience including optional plan review"
+  ],
+  "all_passed": true,
+  "brief_verified_heads": 874,
+  "brief_player_leaks": 0,
+  "production_deployed": false,
+  "native_windows_tested": false,
+  "real_ios_safari_tested": false,
+  "protected_paths_diff": "empty against 7ac860a",
+  "limits": [
+    "Worker row CAS and Artifact operations were exercised through local mocks only",
+    "Provider read/refresh uses independent client processes, not live model-provider adjudication",
+    "Campaign Genesis remains a draft CLI and original-rules reference mode"
+  ]
+}

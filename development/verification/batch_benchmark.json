@@ -1,0 +1,12 @@
+{
+  "events_per_workload": 20,
+  "repeats": 5,
+  "equivalent_events": true,
+  "single_median_ms": 804.45,
+  "batch_median_ms": 41.55,
+  "process_invocations": {
+    "single": 20,
+    "batch": 1
+  },
+  "limits": "Local CLI wall time, not measured remote tool latency. No dice requests in either workload."
+}

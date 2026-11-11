@@ -1,61 +1,23 @@
-# Consolidated development status
+# Consolidated implementation status
 
-This development increment starts at a31251790597e9ca1c3140b4ebdd2d937571a9f3 on
-dev/dice-history-gm-brief. No live branch or Artifact publication is part of it.
+Continued from 7ac860a4dce5e75777ab808f1b2c97ff8cbe3f66 on
+dev/dice-history-gm-brief-cc9cfc5. The restored acceptance criteria supersede the
+earlier missing-prompt limitation. Implementation and tests are isolated. Nothing
+in this increment is deployed to the live Claude worker, database or Artifact.
 
-| Requirement | Status | Evidence or outstanding work |
+| Increment | Implemented and tested in development | Remaining or untested |
 | --- | --- | --- |
-| Player dice history | Implemented in development | Publicly referenced rolls, deduplicated by roll ID, existing redaction policy, paginated history and Journal loading |
-| Independent RNG verification | Implemented | JavaScript reference stream replays recorded rolls and checks state cursor and roll count, synthetic distribution diagnostic |
-| Compact GM brief | Implemented as opt-in development CLI | Selectively ported e167ce2, checkpoint payload checked against replay, bounded history previews with retrieval IDs, full typed fields preserved |
-| Shared provider refresh | Partial | Provider-neutral JSON through turn.py brief, expected-head rejection, player and GM audiences. Automatic provider wiring remains unimplemented |
-| Batched ledger events / processing indicator | Unimplemented | Existing append-only ledger and processor behavior retained. Requires an isolated batch/recovery increment |
-| Scene simplification / Journal chapters / turn repair | Unimplemented | Existing implementation inspected. No chapter taxonomy or repair transaction behavior inferred from the short retrieved brief |
-| Aero–Wick relationship evidence | Partial existing prototype | Compact entity histories retain sourced observations. No relationship score, intent, or canonical change inferred |
-| SID-001 Q15 | Provisional design only | Pre-seeded causal worldbuilding with evidence-gated expansion. No runtime algorithm or certification |
-| SID-001 Q16 | Provisional design only | Layered/adaptive foundation discussed. No finalized runtime algorithm or certification |
-| Campaign Genesis | Unimplemented | Requires full consolidated acceptance criteria and a separate isolated increment |
-| Live Claude workflow | Untested | Generated HTML is local development output. No database write, merge, or Artifact republish |
+| Readiness | 84KB snapshot target, 96KB ceiling, complete paginated history; future original/alternate/selected advantage faces with unchanged draw stream | Native Windows execution and live publication |
+| A. Ledger batch | Ordered drafts, generated IDs, earlier-batch causal references, worker lease and expected head/revision, durable acceptance journal, read barrier, exact byte recovery and receipts | Remote lease CAS workflow and hostile writers bypassing the ledger API are not certified |
+| B. Processing | Worker-authored stage patch generator, actual timestamps, elapsed and stage duration, stalled worker/retry/publication states, expandable timings near builder and Journal | Requires worker execution of the updated runbook; no live worker/database phase updates exercised |
+| C. Scene / Journal | Latest GM narration in Scene; paginated Previous Turns, extractive five-turn Chapters, Events, Objectives, Performance; void-driven rebuilds | Chapters are deterministic excerpts, not model-authored summaries. Real iOS Safari untested |
+| D. Contest / repair | Separate dispute request UI; intent/rules/unfavorable categories; declaration and step provenance; dependency closure; explicit adjudication; append-only void/replacement batch using prior rolls | Applying repairs is limited to marked sandbox copies. Legacy missing provenance and broader later-turn dependency issues require GM mapping |
+| Relationships | Public observations and six separate evidence dimensions; 176 sourced interaction records at baseline; no hidden-intent inference or recruitment promise | Current ledger has no explicit typed dimension evidence. Psychological ratings and recruitment logic are not implemented |
+| SID Q15/Q16 | Provisional decisions and unique ownership boundaries documented | No runtime certification or canonical promotion |
+| Campaign Genesis | Isolated CLI accepts era, preferences, worldbuilding choices, canonical endpoints, conditional Chaos templates; validates resolution and connectivity | No playable chronology/card-deck engine, automatic lore certification or canonical promotion |
+| Before the Fall | Original user document recovered and fingerprinted, original mechanics preserved as source reference; optional mode binds an unchanged rules file | Card-outcome deck is absent from the source document; chronology execution is not certified |
+| Provider interoperability | Two independent client processes read and refresh the same public revision; revision fingerprints and proposed adjudication/commit boundary documented | No Claude/ChatGPT/Gemini adjudication interchangeability claim; external provider and remote commit adapters remain untested |
 
-The prior conversation retrieval supplied the milestone list and Q15/Q16 summaries,
-but did not return the full original Consolidated Development & Gameplay Improvement
-Brief. Exact design acceptance criteria for the remaining gameplay/UI work are
-therefore unavailable in this handoff. This increment does not certify that brief
-as complete.
-
-## Compact brief usage
-
-Run from the repository root.
-
-```sh
-python -B .claude/skills/litrpg-process-turn/turn.py brief sandbox --compact --audience gm --out /tmp/gm-brief.json
-python -B .claude/skills/litrpg-process-turn/turn.py brief sandbox --compact --audience player
-python -B .claude/skills/litrpg-dice/audit_rng.py campaigns/starwars_litrpg/runs/sandbox
-python -B development/benchmark_brief.py
-```
-
-GM briefs and checkpoints contain private information. They are never routed
-through player exports. A cached reducer checkpoint is verified against a replay
-of its prefix; it does not currently accelerate disk validation. Compact previews
-bound the history text, with every omitted event still available through
-brief.py history. The campaign-specific prototype aliases and fields remain
-explicit limitations, especially for other campaigns.
-
-The prototype's player projection is now reduced independently from public
-events, so hidden typed hands, flags or presentation events cannot overwrite the
-player bundle. Internal table provenance in public summary text is removed at the
-presentation boundary. Historical source events remain authoritative and intact.
-
-## Publication compatibility
-
-The state remains at most 96,000 bytes and history pages at most 150,000 bytes.
-Dice history is loaded on demand, using the same page manifest and pages-first,
-snapshot-last publication plan. New snapshots have an additive dice_history
-manifest. Older snapshots without it remain supported. Player rolls show raw
-total, formula, explicit modifier, mode and final total. Existing NPC redaction
-is preserved and hidden rolls are omitted. Existing advantage logs can lose the
-original first face when the alternate wins; this increment preserves those logs
-and does not claim to restore unavailable historical faces.
-
-Local browser coverage used Chromium at a 390-by-844 viewport. It does not
-constitute an iPhone or deployed Claude Artifact test.
+Read CONSOLIDATED_IMPLEMENTATION.md for measurements, test commands, file mapping
+and commit references. Verification JSON contains aggregate data, not hidden
+campaign prose or the campaign dice seed.
