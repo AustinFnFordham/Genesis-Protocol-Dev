@@ -27,6 +27,8 @@ def paths(camp):
 
 
 def read_jsonl(p):
+    if p.name == "events.jsonl" and (p.parent.parent / "hidden/ledger_batch_pending.json").exists():
+        raise ValueError("ledger batch is incomplete; resume its accepted request before reading")
     if not p.exists():
         return []
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -141,7 +143,7 @@ def validate_all(camp):
     return events, problems
 
 
-def cmd_add(a, camp):
+def _cmd_add(a, camp):
     pub, hid, rolls, dice = paths(camp)
     events, problems = validate_all(camp)
     if problems:
@@ -179,6 +181,12 @@ def cmd_add(a, camp):
         f.write(json.dumps(e) + "\n")
     print(json.dumps({"status": "committed", "event": e}))
     return 0
+
+
+def cmd_add(a, camp):
+    from batch import writer_lock
+    with writer_lock(camp):
+        return _cmd_add(a, camp)
 
 
 def player_view(events):
@@ -220,10 +228,20 @@ def main(argv=None):
     s.add_argument("--roll", nargs="*"); s.add_argument("--tag", nargs="*")
     s.add_argument("--details", help="JSON object of structured details (required shape for moral_evaluation)")
     s.add_argument("--idem"); s.add_argument("--session", type=int, default=1); s.add_argument("--turn", type=int)
+    b = sub.add_parser("batch")
+    b.add_argument("request", type=Path); b.add_argument("--lock", required=True); b.add_argument("--run", required=True)
     sub.add_parser("validate")
     w = sub.add_parser("show"); w.add_argument("--as", dest="as_", choices=["player", "gm"], default="player"); w.add_argument("--session", type=int)
     a = ap.parse_args(argv)
     camp = Path(a.campaign)
+    if a.cmd == "batch":
+        from batch import apply
+        try:
+            print(json.dumps(apply(camp, json.loads(a.request.read_text()), a.lock, a.run, sys.modules[__name__])))
+            return 0
+        except (ValueError, OSError) as error:
+            print(json.dumps({"status": "rejected", "reason": str(error)}))
+            return 3
     if a.cmd == "add":
         return cmd_add(a, camp)
     if a.cmd == "show":
