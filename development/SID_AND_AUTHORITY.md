@@ -28,6 +28,8 @@ The campaign-genesis CLI composes candidate edges from player-selected typed
 templates and read-only canonical registry endpoints. It checks endpoint resolution,
 relationship types and graph connectivity. Era text and proposed motives require
 further lore review. Before the Fall mode fingerprints and references the supplied
-original rules file without reimplementing its mechanics. The original executable
-ruleset is not present among the inspected sources; this prototype does not execute
-the chronology game. No existing Before the Fall content is modified.
+original rules file without reimplementing its mechanics. The original BeforeTheFall(1).docx was recovered from Library and pinned by identity
+and SHA-256 in campaign_genesis/before_fall_source.json. Its card order, resources,
+project rules, renown and scorn remain unchanged. The document does not include
+the actual card-outcome deck. This prototype references the original rules and
+does not execute the full chronology game. No existing Before the Fall content is modified.
