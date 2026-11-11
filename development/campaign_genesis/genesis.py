@@ -11,7 +11,7 @@ RELATIONSHIPS = {"synergy", "antagonism", "inhibition", "catalysis", "dependency
                  "contamination", "compatibility", "incompatibility", "trigger", "counter"}
 
 
-def foundation(request, registry, before_fall=None):
+def foundation(request, registry, before_fall=None, source_manifest=None):
     if not isinstance(request.get("era"), str) or not request["era"].strip():
         raise ValueError("select an era")
     if not isinstance(request.get("preferences"), dict) or not isinstance(request.get("worldbuilding"), dict):
@@ -57,8 +57,13 @@ def foundation(request, registry, before_fall=None):
         if before_fall is None:
             raise ValueError("Before the Fall mode requires the original rules document; no substitute algorithm is generated")
         raw = Path(before_fall).read_bytes()
+        pinned = source_manifest or json.loads(Path(__file__).with_name("before_fall_source.json").read_text())
+        actual_hash = hashlib.sha256(raw).hexdigest()
+        if pinned.get("source", {}).get("sha256") != actual_hash:
+            raise ValueError("Before the Fall rules differ from the pinned original source")
         chronicle = {"mode": "original_rules_passthrough", "source": str(before_fall),
-                     "sha256": hashlib.sha256(raw).hexdigest(), "mechanics_modified": False}
+                     "sha256": actual_hash, "mechanics_modified": False,
+                     "source_identity": pinned["source"]}
     return {"schema": "campaign-genesis-draft/1", "status": "proposed", "era": request["era"],
             "era_certification": "requires source validation", "preferences": request["preferences"],
             "worldbuilding": request["worldbuilding"], "entities": list(entities.values()), "relationships": edges,

@@ -1,5 +1,6 @@
 """Isolated acceptance tests for progress, projections, contest and draft foundations."""
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -149,8 +150,11 @@ def test_foundation():
         rules = Path(root) / "original-rules.txt"
         rules.write_bytes(b"Unmodified original mechanics")
         before = rules.read_bytes()
-        result = genesis.foundation({**request,"before_the_fall":True}, path, rules)
+        pin = {"source": {"sha256": hashlib.sha256(before).hexdigest()}}
+        result = genesis.foundation({**request,"before_the_fall":True}, path, rules, pin)
         assert rules.read_bytes() == before and result["chronology"]["mechanics_modified"] is False
+        rules.write_bytes(before + b"changed")
+        rejects(lambda: genesis.foundation({**request,"before_the_fall":True}, path, rules, pin))
 
 if __name__ == "__main__":
     for test in (test_progress, test_optional_review, test_projections, test_repair, test_foundation):
