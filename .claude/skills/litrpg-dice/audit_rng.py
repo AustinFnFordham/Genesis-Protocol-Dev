@@ -46,6 +46,11 @@ def audit(campaign, samples=100000):
         draws = iter(reference((state["seed"] ^ (turn * 0x9E3779B9)) & 0xFFFFFFFF, count))
         for row in rows:
             dice, alt, total, modifiers, single = roll.do_roll(row["formula"], row["mode"], lambda: next(draws))
+            # Legacy rows predate original-face retention. Compare only recorded fields.
+            recorded_dice = row.get("dice", [])
+            for index, die in enumerate(dice):
+                if index < len(recorded_dice) and "original" not in recorded_dice[index]:
+                    die.pop("original", None)
             expected = {"dice": dice, "alt_dice": alt, "raw_total": total, "modifiers": modifiers,
                         "final_total": total + modifiers, "nat20": single and dice[0]["rolled"][0] == 20,
                         "nat1": single and dice[0]["rolled"][0] == 1}

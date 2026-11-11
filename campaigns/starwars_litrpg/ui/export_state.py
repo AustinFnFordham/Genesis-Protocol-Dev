@@ -241,6 +241,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     the ledger and the history pages keep everything). Drops from whichever list is heavier; always keeps
     the newest feed entry. Records what was left out in st["history"] (merged with `extra`, e.g. the page
     manifest). Raises ValueError if it still cannot fit."""
+    target = budget - min(12_000, budget // 8)
     extra = extra or {}
     feed, jr = st["feed"], st["journal"]
     dice = st.get("dice_history", [])
@@ -250,7 +251,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     def hist(fi, ji, nbytes):
         h = {"feed": {"total": len(feed), "shown": len(feed) - fi, "omitted": fi, "first_shown": feed[fi]["event_id"] if fi < len(feed) else None},
              "journal": {"total": len(jr), "shown": len(jr) - ji, "omitted": ji, "first_shown": jr[ji]["event_id"] if ji < len(jr) else None},
-             "budget_bytes": budget, "bytes": nbytes}
+             "budget_bytes": budget, "target_bytes": target, "bytes": nbytes}
         for k, v in extra.items():
             if k in ("feed", "journal"):
                 h[k].update(v)
@@ -261,7 +262,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
 
     base = doc_bytes({**st, "dice_history": [], "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
     fi = ji = 0; fs = sum(fb); js = sum(jb)
-    while base + fs + js > budget:
+    while base + fs + js > target:
         can_f, can_j = fi < len(feed) - 1, ji < len(jr)
         if not (can_f or can_j):
             break
@@ -275,8 +276,8 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     out["history"] = hist(fi, ji, 0)
     for _ in range(3):  # the count includes its own digits: settle to a fixed point
         out["history"]["bytes"] = doc_bytes(out)
-    if out["history"]["bytes"] > budget or out["history"]["bytes"] > DOC_LIMIT:
-        raise ValueError(f"view/state is {out['history']['bytes']} bytes after trimming the feed and journal; budget {budget}")
+    if out["history"]["bytes"] > target or out["history"]["bytes"] > DOC_LIMIT:
+        raise ValueError(f"view/state is {out['history']['bytes']} bytes after trimming the feed and journal; target {target} (ceiling {budget})")
     return out
 
 
