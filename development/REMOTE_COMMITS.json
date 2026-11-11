@@ -1,0 +1,91 @@
+{
+  "base": "7ac860a4dce5e75777ab808f1b2c97ff8cbe3f66",
+  "branch": "dev/dice-history-gm-brief-cc9cfc5",
+  "commits": [
+    {
+      "local": "dca6f7af597383d94f73de3e5cb70760b1ebb59e",
+      "remote": "c831fbb96dd858d83724ed4af8270018ed103267",
+      "subject": "Reserve snapshot margin and retain original advantage faces"
+    },
+    {
+      "local": "060b64eb6bd6cfd4e57a7720ade3753d95128420",
+      "remote": "01c6be1a840d1b1227ef6929f59c169b49dfd869",
+      "subject": "Add ordered ledger batches with durable recovery and lease fencing"
+    },
+    {
+      "local": "bba872c00ccd6a10cc40ef1e24428a7eebf086fb",
+      "remote": "d9c104e03a8d96388fc1c1fb8f748665aaea084a",
+      "subject": "Fence ledger readers during recoverable batch writes"
+    },
+    {
+      "local": "457a32b24a285d4f7f4c20f3e5d6d11f27d5b01e",
+      "remote": "dec428b835026e248ee3d5b27acf01c620c4bbf1",
+      "subject": "Expose worker-authored turn stages and live elapsed timings"
+    },
+    {
+      "local": "d4ee5d413f41de62eb2f10c4ee751777cc65f27b",
+      "remote": "0fffa4c2e3b5daa265c8bb71f7855af20cdb1a90",
+      "subject": "Separate current Scene from paginated Journal and derived chapters"
+    },
+    {
+      "local": "e0303b2d8fe6f0e8652e721ee4f8de14bc6a89ff",
+      "remote": "4c4abd1f5abfad06bf6e13748c95cf9f9319442e",
+      "subject": "Add contest requests and adjudicated append-only repair planning"
+    },
+    {
+      "local": "eed54337b7297533b5d129bb8468df5ee63f09dd",
+      "remote": "198b4f7ef4d5095e053e8901916347ef4b351510",
+      "subject": "Project relationship evidence and record provisional SID ownership"
+    },
+    {
+      "local": "de43673b2cc0f8eef09b8b5090a8b314a2daa5b1",
+      "remote": "fa59d4a488498ff8cd5f8aef967d6884b703abed",
+      "subject": "Prototype canonical-endpoint campaign composition and public client refresh"
+    },
+    {
+      "local": "d2e75706c5c61e182ba24799578e7be3be74bf60",
+      "remote": "76e3bbd1fbf604aec46d8c21d3c35c52b9f9b3c2",
+      "subject": "Recheck the worker lease at batch acceptance and completion"
+    },
+    {
+      "local": "8b552295382378819758131f658854ecc1dbb20d",
+      "remote": "e08e142f363ac56cf002ee81e627707ef65a0746",
+      "subject": "Keep legacy readers portable while locking ledger batches"
+    },
+    {
+      "local": "4ef4fdf2a8a8113db51a809b2ba3240204754563",
+      "remote": "aa2a1b8e89ac58a59f6743aeff59c37a598785f2",
+      "subject": "Pin original Before the Fall source and preservation constraints"
+    },
+    {
+      "local": "31fe84f4feb0bf904931235534457bc67856846c",
+      "remote": "7e3fcf61e5e0baaa62a9132fd8366d8ed0bf179f",
+      "subject": "Preserve legacy contest requests and verify dice survive batch recovery"
+    },
+    {
+      "local": "eab27c6e5e00f7e289f2e2ce1fe5d6610d6de2c5",
+      "remote": "475d02407eee1165caa13930cd18ac6ffc85edf6",
+      "subject": "Add optional pre-roll review bound to the exact player plan"
+    },
+    {
+      "local": "f1100144ef47f390a078fb6adc2daa3173f85387",
+      "remote": "4ccb86c68ac7fd00b51c5f050a1dce4f882a094b",
+      "subject": "Validate batch envelopes and time optional plan review accurately"
+    },
+    {
+      "local": "157403a4d413d758e3614f35537984efdbe0ef92",
+      "remote": "eecacff10f7bcd63e74fd1f16b83bbd4566000bb",
+      "subject": "Record consolidated acceptance tests, measurements and remaining release criteria"
+    },
+    {
+      "local": "f4bb1e15de10a7b0172637b43714372b6a760815",
+      "remote": "3a9e81a9be573bab64cebb38772912adb20bdcab",
+      "subject": "Require the pinned original rules hash for Before the Fall mode"
+    },
+    {
+      "local": "122551dc32ad3ef36311657fa22abaeb74de97c0",
+      "remote": "66dc09f255bec4402e116755e593db5218e3c9e6",
+      "subject": "Exercise campaign draft composition with canonical endpoints and original rules"
+    }
+  ]
+}

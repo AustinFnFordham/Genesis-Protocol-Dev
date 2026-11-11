@@ -19,5 +19,7 @@
     "Worker row CAS and Artifact operations were exercised through local mocks only",
     "Provider read/refresh uses independent client processes, not live model-provider adjudication",
     "Campaign Genesis remains a draft CLI and original-rules reference mode"
-  ]
+  ],
+  "actual_registry_and_original_rules_tested": true,
+  "optional_plan_approval_and_revision_tested": true
 }

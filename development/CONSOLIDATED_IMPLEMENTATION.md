@@ -42,6 +42,8 @@ maps them to the equivalent published GitHub commits with identical trees.
 | Original rules provenance | 4ef4fdf | campaign_genesis/before_fall_source.json |
 | Legacy contest support and dice preservation | 31fe84f | ledger/repair.py, composer.js, ledger/test_batch.py |
 | Optional pre-roll review | eab27c6 | process-turn/plan_review.py, SKILL.md, composer.js |
+| Enforce original-rules hash | f4bb1e1 | campaign_genesis/genesis.py and foundation acceptance tests |
+| Actual source/endpoint test | 122551d | campaign_genesis/example_request.json and foundation_source_test.json |
 
 Skill paths above are under .claude/skills/litrpg-*, and UI paths are under
 campaigns/starwars_litrpg/ui/. Generated genesis_datapad.html is rebuilt from
@@ -112,9 +114,10 @@ review. Prepared possibilities never force a future plot outcome.
 
 BeforeTheFall(1).docx was recovered from Library and its original 30,045 bytes
 fingerprinted. The source manifest preserves card suit order, ending card,
-resource tiers, projects, telescope effects and renown/scorn constraints. This
-increment does not alter the original source or invent the missing card-outcome
-deck. The chronology game itself is not implemented here.
+resource tiers, projects, telescope effects and renown/scorn constraints. The actual registry endpoints and original source hash were exercised together
+in a candidate draft test. A different rules file is rejected by the default
+Before the Fall interface. This increment does not alter the original source or
+invent the missing card-outcome deck. The chronology game itself is not implemented here.
 
 The public client interoperability test demonstrates read/refresh compatibility.
 Actual provider adjudication, remote authentication and cross-provider commit

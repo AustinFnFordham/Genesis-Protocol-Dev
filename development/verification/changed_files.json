@@ -18,9 +18,11 @@
   "campaigns/starwars_litrpg/ui/test_datapad_ui.cjs",
   "development/CONSOLIDATED_IMPLEMENTATION.md",
   "development/DESIGN_STATUS.md",
+  "development/REMOTE_COMMITS.json",
   "development/SID_AND_AUTHORITY.md",
   "development/benchmark_batch.py",
   "development/campaign_genesis/before_fall_source.json",
+  "development/campaign_genesis/example_request.json",
   "development/campaign_genesis/genesis.py",
   "development/interop/INTERFACES.md",
   "development/interop/public_client.py",
@@ -34,5 +36,7 @@
   "development/verification/brief_verify_followup.json",
   "development/verification/changed_files.json",
   "development/verification/followup_metrics.json",
-  "development/verification/rng_audit_followup.json"
+  "development/verification/foundation_source_test.json",
+  "development/verification/rng_audit_followup.json",
+  "development/verification/test_summary.json"
 ]
