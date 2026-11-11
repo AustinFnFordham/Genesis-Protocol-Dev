@@ -15,7 +15,7 @@
     Object.keys(hist).forEach(function (kind) { hist[kind] = { loaded: [], idx: 0, busy: false, err: "" }; });
   }
   var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" }, dice_history: { loaded: [], idx: 0, busy: false, err: "" } };
-  ["chapters", "events"].forEach(function (kind) {
+  ["chapters", "events", "relationship_evidence"].forEach(function (kind) {
     hist[kind] = { loaded: [], idx: 0, busy: false, err: "" };
   });
   function evtNum(id) { var m = /(\d+)$/.exec(String(id || "")); return m ? +m[1] : 0; }
@@ -149,7 +149,7 @@
       return '<li><div class="row" style="justify-content:space-between"><span class="pill ' + esc(j.knowledge) + '">' + esc(j.knowledge) + '</span><span class="note">' + esc(j.time) + "</span></div><div style='margin-top:4px'>" + esc(j.text) + "</div></li>";
     }).join("");
     return selector(v) + (own ? renderPrevious(v) + renderProjection(v, "chapters", "Chapters") +
-      renderProjection(v, "events", "Events") + renderProjection(v, "Shared experiences") +
+      renderProjection(v, "events", "Events") + renderProjection(v, "relationship_evidence", "Shared experiences") +
       '<details open class="panel"><summary>Performance</summary>' + renderProgress(v) + renderUsage(v) + '</details>' +
       renderDiceHistory(v) : "") + '<div class="panel" id="journalEntries"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
       '<div class="panel"><h2>Discoveries</h2><div class="note">' + discN + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +

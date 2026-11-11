@@ -43,3 +43,27 @@ def project(events):
             "objectives": [item["label"] for item in objectives.values()],
             "objective_sources": objectives, "completed_turns": len(turns)}
 
+
+def relationships(events, actor="aero", companion="wick"):
+    if any(event["visibility"] == "gm_only" for event in events):
+        raise ValueError("private event passed to relationship projection")
+    dimensions = {key: [] for key in DIMENSIONS}
+    experiences = []
+    for event in events:
+        details = event.get("details", {})
+        # Text locates observations. It never assigns a psychological dimension.
+        visible_text = (event["summary"] + " " + str(details)).lower()
+        if companion in visible_text and event["kind"] in ("dialogue", "npc_dialogue", "npc_reaction", "observation",
+                                                          "player_declaration", "npc_action", "action_resolved"):
+            experiences.append({"event_id": event["event_id"], "observation": event["summary"],
+                                "knowledge": event["knowledge_type"]})
+        evidence = details.get("relationship_evidence")
+        if isinstance(evidence, dict) and {evidence.get("source"), evidence.get("target")} == {actor, companion}:
+            dimension = evidence.get("dimension")
+            if dimension in dimensions and isinstance(evidence.get("observation"), str):
+                dimensions[dimension].append({"event_id": event["event_id"], "observation": evidence["observation"],
+                                              "knowledge": event["knowledge_type"], "inferred_intent": False})
+    return {"subjects": [actor, companion], "dimensions": dimensions, "shared_experiences": experiences,
+            "conclusion": {"text": f"{len(experiences)} player-visible interaction records are available.",
+                           "sources": [entry["event_id"] for entry in experiences]},
+            "recruitment": "undetermined", "derived": True}

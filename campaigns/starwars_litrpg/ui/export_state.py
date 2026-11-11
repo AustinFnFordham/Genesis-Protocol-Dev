@@ -178,6 +178,9 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                                     **({"text": player_text(event["details"]["text"])} if event["kind"] == "gm_narration" and event.get("details", {}).get("text") else {})))
                            for event in ev]
     derived = projections.project(presentation_events)
+    relationship = projections.relationships(presentation_events)
+    relationship_rows = [{"event_id": row["event_id"], "text": row["observation"], "knowledge": row["knowledge"]}
+                         for row in relationship["shared_experiences"]]
     # Protagonist Continuity status (campaign rule) from the rule file + public events.
     continuity = None
     try:
@@ -207,6 +210,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                   "atmosphere": scene.get("atmosphere", [])},
         "feed": feed, "journal": journal, "suggestions": sugg, "objectives": derived["objectives"],
         "objective_sources": derived["objective_sources"], "chapters": derived["chapters"], "events": derived["events"],
+        "relationship_evidence": relationship_rows,
         "active_actor": ACTIVE_ACTOR,
         "roster": roster,
         "member_journals": {m["id"]: member_journal(ev, m["id"]) for m in roster if m["id"] != ACTIVE_ACTOR},
@@ -260,7 +264,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     extra = extra or {}
     feed, jr = st["feed"], st["journal"]
     dice = st.get("dice_history", [])
-    paginated = ("dice_history", "chapters", "events")
+    paginated = ("dice_history", "chapters", "events", "relationship_evidence")
     fb = [doc_bytes(x) + 1 for x in feed]
     jb = [doc_bytes(x) + 1 for x in jr]
 
@@ -331,7 +335,7 @@ def publish_set(st, state_budget=STATE_BUDGET, page_budget=PAGE_BUDGET, publishe
     document cannot meet its byte budget (nothing should be written then)."""
     pages = {}
     extra = {"revision": st["revision"], "page_budget_bytes": page_budget}
-    for kind in ("feed", "journal", "dice_history", "chapters", "events"):
+    for kind in ("feed", "journal", "dice_history", "chapters", "events", "relationship_evidence"):
         ps = paginate(st.get(kind, []), kind, page_budget)
         extra[kind] = {"pages": [{k: p[k] for k in ("id", "count", "first", "last", "hash")} for p in ps]}
         for p in ps:
