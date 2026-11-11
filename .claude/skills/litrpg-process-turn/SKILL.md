@@ -144,3 +144,37 @@ Measurement, never authority: a mark can never block, change or fail a turn (`ti
 - `run_start` right after §0.4. If this session already finished an earlier pass (its usage record is written, e.g. a default "sandbox" pass before the appended campaign text arrived), that pass is over: start the new pass with a fresh identity (`rm -f /tmp/turn_run.env` before §0.4) so the two passes are counted separately. Within one pass the identity is still created once.
 - Then, in order: `claimed` (after the claim write), `preflight_done` (check verdict known), `review_written` (rejection passes only, after the review write), `context_loaded` (reading done), `rules_done` (tables/interpretation committed, before the first roll), `dice_done` (after the last roll), `ledger_done` (last consequence event committed), `narration_done` (turn_context committed, validate passed), `git_done` (push succeeded), `projected` (view/state written, after its history pages). Skip marks for phases that did not happen.
 - §7 usage record: build it with `python3 .claude/skills/litrpg-process-turn/timing.py usage --campaign <id> --outcome <outcome> [--action <id> --submit-ms <row created_ms>] --rolls n --events n --out /tmp/usage.json`, then `ArtifactData set` `usage/$RUN` with `file_path` `/tmp/usage.json`. It carries the §7 fields plus `session` and `timings`.
+
+## Development progress and ordered event batches
+
+When this development increment is explicitly promoted, report stages from actual
+worker boundaries using progress.py. Read the current action and lease, generate
+a patch with row/lease/run/stage and --out, then update that same action with its
+if_version. Use claimed → context → rules → dice → ledger → narration → publishing.
+Use complete only after the publication status is published. Include these patches
+in the existing heartbeat or ArtifactData batch, avoiding separate progress-only
+round trips. Do not advance a stage before the corresponding work starts. A new
+worker run resets stage durations; prior usage records retain attempt timings.
+
+For an already adjudicated ordered group of consequences, ledger.py batch accepts
+a request containing batch_id, expected_head, expected_revision and complete event
+drafts. Pass the freshly read worker lock and the run identity. '$1' causal refs
+refer to earlier events in that batch. Keep the accepted request for recovery.
+A pending batch gates ledger readers. Resume that same request before recovering
+or publishing the turn. The batch never rolls dice and never declares the turn
+complete. Existing narration, validation, git push and publication checks still
+apply. Do not use this command against the live campaign during development.
+
+Before rolling an action that has a pending dispute with review_before_roll=true,
+read that dispute and perform the requested plan review. Do not roll until the
+player has accepted the interpretation. Other turns retain the normal direct flow.
+
+Disputes are requests, never adjudications. Run repair.py against an isolated copy
+to identify the original declaration, disputed step, dependent event closure and
+affected rolls. If no event states that step's provenance, obtain GM adjudication
+rather than guessing a causal link. Unfavorable valid outcomes receive explanation,
+not replacement rolls. An approved correction requires rule sources, reason,
+matching request hash and current ledger head, then an append-only batch of void
+and replacement events using the already committed dice. Preserve the original
+declaration. Validate and republish from the corrected ledger through the normal
+protocol so derived summaries rebuild.

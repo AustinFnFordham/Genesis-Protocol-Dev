@@ -571,6 +571,21 @@
       '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
       "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
+  function renderContest(v) {
+    var declaration = v.contest_declaration || v.feed.slice().reverse().filter(function (entry) { return entry.who === "player"; })[0];
+    if (!declaration) return "";
+    return '<details class="panel"><summary>This isn’t what I meant</summary>' +
+      '<label>Reason <select id="contestCategory"><option value="intent">My intention was misunderstood</option>' +
+      '<option value="rules">A rule was applied incorrectly</option><option value="unfavorable">The outcome was unfavorable</option></select></label>' +
+      '<label>Disputed step <select id="contestStep">' + (declaration.steps || []).map(function (step) {
+        return '<option value="' + esc(step.id) + '">' + esc(step.label) + '</option>';
+      }).join("") + '</select></label>' +
+      '<label>What needs review <textarea id="contestText"></textarea></label>' +
+      '<label><input id="reviewBeforeRoll" type="checkbox"> Request plan review before the next roll</label>' +
+      '<button class="btn" id="sendContest" data-declaration="' + esc(declaration.event_id) + '">Request adjudication</button>' +
+      '<div class="note" id="contestStatus">A review preserves your declaration and recorded dice.</div></details>';
+  }
+
   function renderProgress(v) {
     var a = activeAction() || actions[0];
     if (!a) return "";
@@ -611,7 +626,7 @@
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
       '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      renderDice(v) + renderProgress(v) + renderTurn(v);
+      renderDice(v) + renderProgress(v) + renderTurn(v) + renderContest(v);
   }
 
   function render() {
@@ -627,6 +642,19 @@
     $("colCenter").innerHTML = renderCenter(view);
     Array.prototype.forEach.call(document.querySelectorAll(".member-sel"), function (el) {
       el.addEventListener("change", function () { selId = el.value; ls("datapad.member", selId); render(); });
+    });
+    var contestButton = $("sendContest");
+    if (contestButton) contestButton.addEventListener("click", function () {
+      var text = $("contestText").value.trim();
+      if (!text || !$("contestStep").value.trim()) { $("contestStatus").textContent = "Identify the step and describe the issue."; return; }
+      contestButton.disabled = true;
+      var id = "contest_" + Date.now().toString(36) + Math.random().toString(36).slice(2);
+      dbRef.doc("disputes/" + id).set({ category: $("contestCategory").value, declaration_event: contestButton.getAttribute("data-declaration"),
+        step_id: $("contestStep").value.trim(), explanation: text, campaign_id: view.campaign_id,
+        based_on_revision: view.revision, ledger_head: view.ledger_head, review_before_roll: $("reviewBeforeRoll").checked,
+        status: "awaiting_adjudication", created_ms: Date.now() }).then(function () {
+          $("contestStatus").textContent = "Review requested. Your declaration and dice are preserved.";
+        }, function () { contestButton.disabled = false; $("contestStatus").textContent = "Could not save the request. Try again."; });
     });
     bindCenter();
     if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
