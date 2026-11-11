@@ -110,6 +110,8 @@ def lease_valid(lock, run):
 
 def apply(campaign, request, lock, run, ledger, after_stream=None):
     """Append one prevalidated batch; retries finish the exact accepted bytes."""
+    if not isinstance(request, dict) or type(request.get("expected_revision")) is not int:
+        raise ValueError("batch request requires an integer expected_revision")
     lease_valid(lock, run)
     batch_id = request.get("batch_id", "")
     if not isinstance(batch_id, str) or not batch_id or len(batch_id) > 100:
@@ -146,6 +148,12 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
             accepted = []
             seq = int(head.split("_")[1]) if head else 0
             for index, draft in enumerate(drafts, 1):
+                if not isinstance(draft, dict):
+                    raise ValueError("batch event must be an object")
+                if any(not isinstance(draft.get(key, []), list) or
+                       any(not isinstance(value, str) for value in draft.get(key, []))
+                       for key in ("caused_by", "roll_ids")):
+                    raise ValueError("batch causal and roll references must be lists of strings")
                 event = dict(draft)
                 event["event_id"] = f"evt_{seq + index:04d}"
                 event["idempotency_key"] = f"batch:{batch_id}:{index}"

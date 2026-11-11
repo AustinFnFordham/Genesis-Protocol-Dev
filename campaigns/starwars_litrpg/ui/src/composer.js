@@ -606,7 +606,8 @@
       a.status === "needs_revision" ? "Needs revision" : a.status === "needs_plan_approval" ? "Awaiting plan approval" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
     function durationSince(timestamp) { return (Math.max(0, now - timestamp) / 1000).toFixed(1) + " s"; }
     var elapsed = p.started_ms ? durationSince(p.started_ms) : "awaiting worker";
-    var duration = p.stage_started_ms ? durationSince(p.stage_started_ms) : "not reported";
+    var stageStart = a.status === "needs_plan_approval" && a.review_plan ? a.review_plan.created_ms : p.stage_started_ms;
+    var duration = stageStart ? durationSince(stageStart) : "not reported";
     var stale = a.status === "processing" && p.heartbeat_ms && now - p.heartbeat_ms > (p.lease_ms || 180000);
     var marks = p.stages || {}, keys = ["claimed", "context", "rules", "dice", "ledger", "narration", "publishing", "complete"];
     var detail = keys.filter(function (k) { return typeof marks[k] === "number"; }).map(function (k) {
