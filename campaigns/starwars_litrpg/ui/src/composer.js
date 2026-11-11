@@ -45,7 +45,7 @@
   }
   var localPending = null;  // a turn this device just saved, until the store's listener reports it
   function activeAction() {
-    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved"; })[0];
+    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved" || a.status === "needs_plan_approval"; })[0];
     if (real) return real;
     if (localPending && Date.now() - localPending.at < 20000 && !actions.some(function (a) { return a._id === localPending.id; }))
       return { _id: localPending.id, status: "submitted", text: localPending.text };
@@ -521,13 +521,18 @@
   function renderActions() {
     if (!actions.length) return "";
     return actions.slice(0, 3).map(function (a) {
-      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
+      var pills = { needs_plan_approval: '<span class="pill pend">Review your plan</span>', submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
         needs_revision: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Needs revision</span>', failed: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Failed</span>', clarify: '<span class="pill pend">Needs revision</span>' };
       var h = '<div class="act"><div class="row">' + (pills[a.status] || '<span class="pill">' + esc(a.status) + "</span>");
       if (a.status === "submitted") h += ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button> <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Start GM</button>';
       var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
       if (stuck || a.status === "failed" || a.status === "resolved") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
       h += "</div><q>" + esc(a.text) + "</q>";
+      if (a.status === "needs_plan_approval" && a.review_plan) {
+        h += '<ol>' + (a.review_plan.summary || []).map(function (line) { return '<li>' + esc(line) + '</li>'; }).join("") +
+          '</ol><button class="btn" data-approve-plan="' + esc(a._id) + '">Approve this plan</button> ' +
+          '<button class="btn" data-revise-plan="' + esc(a._id) + '">Revise</button>';
+      }
       if (a.status === "submitted") h += notifyLine(a);
       if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
       if (a.status === "needs_revision" && a.review) {
@@ -571,6 +576,12 @@
       '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
       "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
+  function renderPlanReview() {
+    return '<label class="note"><input type="checkbox" id="requestPlanReview"' +
+      (ui.reviewBeforeRoll ? " checked" : "") + (activeAction() ? " disabled" : "") +
+      '> Review my plan before rolling</label>';
+  }
+
   function renderContest(v) {
     var declaration = v.contest_declaration || v.feed.slice().reverse().filter(function (entry) { return entry.who === "player"; })[0];
     if (!declaration) return "";
@@ -592,7 +603,7 @@
     var p = a.processing || {}, now = a.committed_ms || a.failed_ms || (p.stages || {}).complete || Date.now();
     var stage = a.status === "submitted" ? "Submitted" : a.status === "resolved" ? "Publishing" :
       a.status === "committed" ? "Complete" : a.status === "failed" ? "Failed" :
-      a.status === "needs_revision" ? "Needs revision" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
+      a.status === "needs_revision" ? "Needs revision" : a.status === "needs_plan_approval" ? "Awaiting plan approval" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
     function durationSince(timestamp) { return (Math.max(0, now - timestamp) / 1000).toFixed(1) + " s"; }
     var elapsed = p.started_ms ? durationSince(p.started_ms) : "awaiting worker";
     var duration = p.stage_started_ms ? durationSince(p.stage_started_ms) : "not reported";
@@ -626,7 +637,7 @@
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
       '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      renderDice(v) + renderProgress(v) + renderTurn(v) + renderContest(v);
+      renderDice(v) + renderProgress(v) + renderPlanReview() + renderTurn(v) + renderContest(v);
   }
 
   function render() {
@@ -655,6 +666,42 @@
         status: "awaiting_adjudication", created_ms: Date.now() }).then(function () {
           $("contestStatus").textContent = "Review requested. Your declaration and dice are preserved.";
         }, function () { contestButton.disabled = false; $("contestStatus").textContent = "Could not save the request. Try again."; });
+    });
+    var planReview = $("requestPlanReview");
+    if (planReview) planReview.addEventListener("change", function () { ui.reviewBeforeRoll = planReview.checked; saveUi(); });
+    document.querySelectorAll("[data-approve-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-approve-plan");
+        button.disabled = true;
+        dbRef.doc("actions/" + id).get().then(function (snapshot) {
+          var action = snapshot.data(), review = action.review_plan;
+          if (action.status !== "needs_plan_approval" || !review || action.based_on_revision !== view.revision || action.ledger_head !== view.ledger_head) {
+            throw Error("The scene or plan changed. Review it again.");
+          }
+          var ref = dbRef.doc("plan_approvals/" + id);
+          return ref.get().then(function (existing) {
+            if (existing.exists) return;
+            return ref.set({ decision: "approved", action_id: id, campaign_id: action.campaign_id,
+              review_id: review.review_id, based_on_revision: action.based_on_revision, ledger_head: action.ledger_head });
+          });
+        }).then(function () { notifyGM(id); }, function (error) { button.disabled = false; setMsg(error.message || "Could not approve the plan."); });
+      });
+    });
+    document.querySelectorAll("[data-revise-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-revise-plan");
+        var action = actions.filter(function (row) { return row._id === id; })[0];
+        if (!action || action.status !== "needs_plan_approval" || !action.review_plan) return;
+        dbRef.doc("plan_revisions/" + id).set({action_id: id, campaign_id: action.campaign_id,
+          review_id: action.review_plan.review_id, based_on_revision: action.based_on_revision,
+          ledger_head: action.ledger_head}).then(function () {
+            if (ctxOf(view)) loadDeclaration(action.declaration, ctxOf(view));
+            render();
+            setMsg("Revision requested. The worker will release this plan before a new submission.");
+            notifyGM(id);
+        });
+
+      });
     });
     bindCenter();
     if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
@@ -905,6 +952,7 @@
     var doc = { text: text, declaration: d, source: c ? (ui.mode === "write" ? "freeform" : "composer") : "freeform", actor: view.active_actor || "aero",
       campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, context_id: c ? c.context_id : null,
       contract: T.VERSION, confirmed_warnings: !!(r && r.needs_confirmation), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
+      request_plan_review: ui.reviewBeforeRoll === true,
       preflight: r ? { legal: r.legal, crashed: !!r.crashed, codes: r.errors.map(function (e) { return e.code; }).concat(r.warnings.map(function (w) { return w.code; })) } : null,
       status: "submitted", created_ms: Date.now() };
     // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.

@@ -178,3 +178,20 @@ matching request hash and current ledger head, then an append-only batch of void
 and replacement events using the already committed dice. Preserve the original
 declaration. Validate and republish from the corrected ledger through the normal
 protocol so derived summaries rebuild.
+
+For a submitted action with request_plan_review=true, run the normal validator
+first. Before any dice, use plan_review.create(action, validation, action_id) to
+generate the worker-authored needs_plan_approval patch and apply it with the
+action row version. Release the worker lease while awaiting the player.
+
+When the player approves, the Datapad writes plan_approvals/<action_id> and nudges
+the worker. After the normal submitted queue check, also query needs_plan_approval
+actions. Read the matching approval and require plan_review.approved(...) plus
+the current scene revision/head before claiming that action with if_version.
+A changed declaration, scene or review ID requires a new review. A player who
+chooses Revise writes plan_revisions/<action_id> and edits a draft. Read revision
+requests before approval/claim. Only withdraw the original action with if_version
+while it is still needs_plan_approval and its review_id, head and revision match.
+Never withdraw an already processing turn; explain the decision boundary instead.
+Preserve the original declaration and never resolve the abandoned plan. Preserve both
+declarations. Unrequested plan review never pauses the normal direct flow.
