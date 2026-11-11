@@ -571,6 +571,32 @@
       '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
       "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
+  function renderProgress(v) {
+    var a = activeAction() || actions[0];
+    if (!a) return "";
+    var p = a.processing || {}, now = a.committed_ms || a.failed_ms || (p.stages || {}).complete || Date.now();
+    var stage = a.status === "submitted" ? "Submitted" : a.status === "resolved" ? "Publishing" :
+      a.status === "committed" ? "Complete" : a.status === "failed" ? "Failed" :
+      a.status === "needs_revision" ? "Needs revision" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
+    function durationSince(timestamp) { return (Math.max(0, now - timestamp) / 1000).toFixed(1) + " s"; }
+    var elapsed = p.started_ms ? durationSince(p.started_ms) : "awaiting worker";
+    var duration = p.stage_started_ms ? durationSince(p.stage_started_ms) : "not reported";
+    var stale = a.status === "processing" && p.heartbeat_ms && now - p.heartbeat_ms > (p.lease_ms || 180000);
+    var marks = p.stages || {}, keys = ["claimed", "context", "rules", "dice", "ledger", "narration", "publishing", "complete"];
+    var detail = keys.filter(function (k) { return typeof marks[k] === "number"; }).map(function (k) {
+      var later = keys.slice(keys.indexOf(k) + 1).map(function (x) { return marks[x]; }).filter(function (x) { return typeof x === "number"; })[0];
+      return "<li>" + esc(k) + " · " + ((Math.max(0, (later || now) - marks[k])) / 1000).toFixed(1) + " s</li>";
+    }).join("");
+    var labels = ["Submitted", "Claimed", "Context", "Rules", "Dice", "Ledger", "Narration", "Publishing", "Complete"];
+    var stages = '<div class="tags">' + labels.map(function (label) {
+      return '<span' + (label === stage ? ' aria-current="step"' : '') + '>' + esc(label) + '</span>';
+    }).join("") + '</div>';
+    return '<div class="panel" data-turn-progress aria-live="polite"><h2>Turn progress · ' + esc(stage) + '</h2>' + stages + '<div class="note">Elapsed ' +
+      esc(elapsed) + ' · current stage ' + esc(duration) + (stale ? ' · worker heartbeat overdue; retry available' : '') +
+      (a.status === "resolved" ? ' · resolution saved; publication pending' : '') +
+       '</div>' + (stale || a.status === "resolved" ? '<button class="btn" data-progress-retry="' + esc(a._id) + '">Retry worker</button>' : '') + '<details><summary>Phase timings</summary><ol>' + detail + '</ol></details></div>';
+  }
+
   function renderDice(v) {
     if (!v.rolls || !v.rolls.length) return "";
     return '<div class="panel"><h2>Dice · last turn</h2><ul class="plain dice">' + v.rolls.map(function (r) { return "<li><div>" + esc(r.purpose) + '</div><div class="kv"><span class="note">' + esc(r.by === "gm" ? "GM" : "You") + "</span><span>" + esc(r.summary) + "</span></div></li>"; }).join("") + "</ul></div>";
@@ -585,7 +611,7 @@
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
       '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      renderDice(v) + renderTurn(v);
+      renderDice(v) + renderProgress(v) + renderTurn(v);
   }
 
   function render() {
@@ -879,7 +905,20 @@
 
   /* ---------- data: subscribe once ---------- */
   var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
-  setInterval(function () { if (activeAction()) render(); }, 30000);  // refresh "processing for N min" labels only while a turn is out
+  setInterval(function () {
+    if (!view || !activeAction()) return;
+    document.querySelectorAll("[data-turn-progress]").forEach(function (element) {
+      var expanded = element.querySelector("details").open;
+      var holder = document.createElement("div");
+      holder.innerHTML = renderProgress(view);
+      var next = holder.firstElementChild;
+      if (next) { next.querySelector("details").open = expanded; element.replaceWith(next); }
+    });
+  }, 1000);
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-progress-retry]");
+    if (button) notifyGM(button.getAttribute("data-progress-retry"));
+  });  // refresh "processing for N min" labels only while a turn is out
   function start(db) {
     dbRef = db; status = "live";
     db.doc("view/state").onSnapshot(function (snap) {
