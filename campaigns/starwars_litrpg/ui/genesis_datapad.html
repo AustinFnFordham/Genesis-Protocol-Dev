@@ -1801,9 +1801,9 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     return '<details class="panel"><summary>This isn’t what I meant</summary>' +
       '<label>Reason <select id="contestCategory"><option value="intent">My intention was misunderstood</option>' +
       '<option value="rules">A rule was applied incorrectly</option><option value="unfavorable">The outcome was unfavorable</option></select></label>' +
-      '<label>Disputed step <select id="contestStep">' + (declaration.steps || []).map(function (step) {
+      (declaration.steps && declaration.steps.length ? '<label>Disputed step <select id="contestStep">' + declaration.steps.map(function (step) {
         return '<option value="' + esc(step.id) + '">' + esc(step.label) + '</option>';
-      }).join("") + '</select></label>' +
+      }).join("") + '</select></label>' : '<label>Disputed action <input id="contestStep" placeholder="Describe the action in this legacy declaration"></label>') +
       '<label>What needs review <textarea id="contestText"></textarea></label>' +
       '<label><input id="reviewBeforeRoll" type="checkbox"> Request plan review before the next roll</label>' +
       '<button class="btn" id="sendContest" data-declaration="' + esc(declaration.event_id) + '">Request adjudication</button>' +

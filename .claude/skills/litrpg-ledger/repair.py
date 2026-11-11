@@ -28,6 +28,9 @@ def plan(campaign, request):
                 "declaration": declaration["event_id"], "affected": [], "rolls": []}
     step = request.get("step_id")
     steps = declaration.get("details", {}).get("declaration", {}).get("steps", [])
+    if not steps or any(not entry.get("id") for entry in steps):
+        return {"status": "needs_adjudication", "reason": "The legacy declaration has no stable step IDs. The GM must map the disputed action first.",
+                "declaration": declaration["event_id"], "affected": [], "rolls": []}
     if step not in {entry["id"] for entry in steps}:
         raise ValueError("disputed step is not in the original declaration")
     # Restrict initial matches to the original action's region in the event stream.

@@ -13,6 +13,9 @@ import batch
 def fixture(root):
     root = Path(root)
     (root / "hidden").mkdir()
+    (root / "records").mkdir()
+    (root / "hidden/dice_state.json").write_text(json.dumps({"seed": 17, "turn_no": 1, "draws_used": 1, "roll_count": 1}))
+    (root / "records/roll_log.jsonl").write_text(json.dumps({"roll_id": "roll_existing"})+"\n")
     lock = root / "lease.json"
     lock.write_text(json.dumps({"holder": "worker", "expires_ms": int(time.time()*1000)+60000}))
     events = []
@@ -26,6 +29,8 @@ def fixture(root):
 
 with tempfile.TemporaryDirectory() as temporary:
     camp, lock, request = fixture(temporary)
+    dice_before = (camp / "hidden/dice_state.json").read_bytes()
+    rolls_before = (camp / "records/roll_log.jsonl").read_bytes()
     seen = []
     def crash(relative):
         seen.append(relative)
@@ -44,6 +49,8 @@ with tempfile.TemporaryDirectory() as temporary:
         raise AssertionError("partial batch was readable")
     result = batch.apply(camp, request, lock, "worker", ledger)
     assert result["revision"] == 12
+    assert (camp / "hidden/dice_state.json").read_bytes() == dice_before
+    assert (camp / "records/roll_log.jsonl").read_bytes() == rolls_before
     assert batch.apply(camp, request, lock, "worker", ledger) == result
     events, problems = ledger.validate_all(camp)
     assert not problems and len(events) == 12
