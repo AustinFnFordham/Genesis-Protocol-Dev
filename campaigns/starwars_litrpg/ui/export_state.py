@@ -42,6 +42,12 @@ def campaign_features(actor, campaign_id=None):
     return out
 
 
+def player_text(text):
+    """Remove internal table provenance from presentation, retaining ledger originals."""
+    text = re.sub(r"\s*\([^)]*\btable\s+evt_\d+[^)]*\)", "", str(text))
+    return re.sub(r"evt_\d+", "[event reference]", text)
+
+
 def build_roster(ev, aero_name, aero_line):
     """Roster = Aero (default, the active actor) + members whose public ledger events say they joined.
     A runtime file existing never adds anyone. Mechanics are shown only for Aero's authoritative runtime;
@@ -86,7 +92,11 @@ def public_roll(r, rid, purpose, kept):
     if who in PLAYER_ROLLERS:
         summ = r.get("summary") or (f'{r.get("formula")} [{", ".join(kept)}]' + (f' {r["modifiers"]:+d}' if r.get("modifiers") else "") + f' = {r.get("final_total")}' + (" (natural 20)" if r.get("nat20") else " (natural 1)" if r.get("nat1") else ""))
         summ = re.sub(r"\s*\((success|failure)\)\s*$", "", summ)
-        return {"roll_id": rid, "purpose": purpose, "summary": summ, "by": who}
+        return {"roll_id": rid, "purpose": purpose, "summary": summ, "by": who,
+                "formula": r.get("formula"), "mode": r.get("mode", "normal"),
+                "dice": r.get("dice", []), "alternate": r.get("alt_dice"),
+                "raw_total": r.get("raw_total"), "modifier": r.get("modifiers"),
+                "total": r.get("final_total")}
     return {"roll_id": rid, "purpose": purpose, "summary": f'total {r.get("final_total")}', "by": "gm", "redacted": True}
 
 
@@ -117,7 +127,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         elif e["kind"] == "player_declaration":
             feed.append({"who": "player", "event_id": e["event_id"], "time": e["world_time"], "text": e["details"].get("text", e["summary"])})
     journal = [{"event_id": e["event_id"], "time": e["world_time"], "kind": e["kind"],
-                "knowledge": e["knowledge_type"], "text": e["summary"]} for e in ev if e["kind"] not in NON_JOURNAL]
+                "knowledge": e["knowledge_type"], "text": player_text(e["summary"])} for e in ev if e["kind"] not in NON_JOURNAL]
     skills = [{"name": k.replace("_", " "), "mod": v["modifier"]} for k, v in sheet["proficiencies"]["skills"].items()]
     # Ledger overlay: the sheet runtime is static, so Aero's current HP is max + sum of public hp_change deltas (clamped).
     hp_max = dfn["maximum_hp"]
@@ -136,26 +146,31 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         if turn_context.get("equipment_from_ledger"):  # contract 3: gear whereabouts from the sheet + committed events, never typed by hand
             import equipment as _eqm
             turn_context["equipment"] = _eqm.derive(ev)
-    # Dice shown for the latest resolved turn: public roll log entries cited by events after the
-    # last player declaration (the public log never stores DCs).
+    # Only committed public references can authorize a roll projection. Never open hidden/.
+    rdir = Path(campaign_dir) if campaign_dir else Path(la.CAMPAIGN_DIR)
+    log = {r["roll_id"]: r for r in la._ledger().read_jsonl(rdir / "records" / "roll_log.jsonl")}
+    dice_history, seen_rolls = [], set()
+    last_decl = next((e["event_id"] for e in reversed(ev) if e["kind"] == "player_declaration"), None)
     rolls = []
-    try:
-        led = la._ledger()
-        rdir = Path(campaign_dir) if campaign_dir else Path(la.CAMPAIGN_DIR)
-        log = {r["roll_id"]: r for r in led.read_jsonl(rdir / "records" / "roll_log.jsonl")}
-        last_decl = max((i for i, e in enumerate(ev) if e["kind"] == "player_declaration"), default=None)
-        if last_decl is not None:
-            for e in ev[last_decl:]:
-                for rid in e.get("roll_ids") or []:
-                    r = log.get(rid)
-                    if r and rid not in [x["roll_id"] for x in rolls]:
-                        purpose = re.sub(r"^\[[^\]]+\]\s*", "", r.get("purpose", ""))
-                        kept = [str(k) for d in r.get("dice", []) for k in d.get("kept", [])]
-                        pr = public_roll(r, rid, purpose, kept)
-                        if pr:
-                            rolls.append(pr)
-    except Exception:  # noqa: BLE001 - dice display is best-effort; the ledger stays authoritative
-        rolls = []
+    current = False
+    for e in ev:
+        if e["event_id"] == last_decl:
+            current = True
+        for rid in e.get("roll_ids") or []:
+            r = log.get(rid)
+            if not r:
+                continue
+            purpose = re.sub(r"^\[[^\]]+\]\s*", "", r.get("purpose", ""))
+            kept = [str(k) for d in r.get("dice", []) for k in d.get("kept", [])]
+            pr = public_roll(r, rid, purpose, kept)
+            if not pr:
+                continue
+            if current and not any(x["roll_id"] == rid for x in rolls):
+                rolls.append(pr)
+            if rid in seen_rolls:
+                continue
+            seen_rolls.add(rid)
+            dice_history.append(dict(pr, event_id=e["event_id"], time=e["world_time"], turn_no=r.get("turn_no")))
     # Protagonist Continuity status (campaign rule) from the rule file + public events.
     continuity = None
     try:
@@ -171,6 +186,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         "continuity": continuity,
         "campaign_id": campaign_id or "starwars_litrpg",
         "rolls": rolls,
+        "dice_history": dice_history,
         "turn_context": turn_context,
         "revision": len(ev_all), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
         "scene": {"title": scene.get("title"), "location": scene.get("location"), "time": last.get("world_time"),
@@ -227,6 +243,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     manifest). Raises ValueError if it still cannot fit."""
     extra = extra or {}
     feed, jr = st["feed"], st["journal"]
+    dice = st.get("dice_history", [])
     fb = [doc_bytes(x) + 1 for x in feed]
     jb = [doc_bytes(x) + 1 for x in jr]
 
@@ -239,9 +256,10 @@ def bound(st, budget=STATE_BUDGET, extra=None):
                 h[k].update(v)
             else:
                 h[k] = v
+        h["dice_history"] = {"total": len(dice), "shown": 0, "omitted": len(dice), **extra.get("dice_history", {})}
         return h
 
-    base = doc_bytes({**st, "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
+    base = doc_bytes({**st, "dice_history": [], "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
     fi = ji = 0; fs = sum(fb); js = sum(jb)
     while base + fs + js > budget:
         can_f, can_j = fi < len(feed) - 1, ji < len(jr)
@@ -252,6 +270,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
         else:
             js -= jb[ji]; ji += 1
     out = dict(st)
+    out["dice_history"] = []
     out["feed"], out["journal"] = feed[fi:], jr[ji:]
     out["history"] = hist(fi, ji, 0)
     for _ in range(3):  # the count includes its own digits: settle to a fixed point
@@ -292,8 +311,8 @@ def publish_set(st, state_budget=STATE_BUDGET, page_budget=PAGE_BUDGET, publishe
     document cannot meet its byte budget (nothing should be written then)."""
     pages = {}
     extra = {"revision": st["revision"], "page_budget_bytes": page_budget}
-    for kind in ("feed", "journal"):
-        ps = paginate(st[kind], kind, page_budget)
+    for kind in ("feed", "journal", "dice_history"):
+        ps = paginate(st.get(kind, []), kind, page_budget)
         extra[kind] = {"pages": [{k: p[k] for k in ("id", "count", "first", "last", "hash")} for p in ps]}
         for p in ps:
             pages[p["id"]] = dict(p, campaign_id=st.get("campaign_id"))

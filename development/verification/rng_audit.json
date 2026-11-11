@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "records": 225,
+  "verified": 225,
+  "problems": [],
+  "sample": {
+    "seed": "fixed synthetic seed",
+    "count": 100000,
+    "mean_d20": 10.50343,
+    "histogram": {
+      "1": 4905,
+      "2": 4974,
+      "3": 5109,
+      "4": 4953,
+      "5": 5016,
+      "6": 5060,
+      "7": 4985,
+      "8": 5123,
+      "9": 4822,
+      "10": 5047,
+      "11": 4995,
+      "12": 4993,
+      "13": 4977,
+      "14": 5078,
+      "15": 4980,
+      "16": 4983,
+      "17": 4957,
+      "18": 4996,
+      "19": 5055,
+      "20": 4992
+    },
+    "chi_square": 17.8448
+  },
+  "limits": "Checks deterministic replay, not unpredictability. Missing historical draws invalidate replay certification. Flat modifiers apply after raw dice."
+}

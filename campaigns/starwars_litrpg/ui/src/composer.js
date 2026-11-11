@@ -883,7 +883,7 @@
   function start(db) {
     dbRef = db; status = "live";
     db.doc("view/state").onSnapshot(function (snap) {
-      if (snap.exists) { view = snap.data(); clearTimeout(timer); }
+      if (snap.exists) { refreshHistory(snap.data()); view = snap.data(); clearTimeout(timer); }
       render();
     }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
     db.collection("usage").orderBy("started_ms", "desc").limit(50).onSnapshot(function (q) {
