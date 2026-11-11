@@ -1,0 +1,24 @@
+{
+  "brief": {
+    "head": "evt_0874",
+    "events": 874,
+    "full_bundle_bytes": 147604,
+    "compact_bundle_bytes": 41598,
+    "reduction_percent": 71.82,
+    "full_replay_median_ms": 199.8,
+    "verified_checkpoint_ms": 220.47,
+    "same_fields": true
+  },
+  "batch": {
+    "events_per_workload": 20,
+    "repeats": 5,
+    "equivalent_events": true,
+    "single_median_ms": 951.14,
+    "batch_median_ms": 58.11,
+    "process_invocations": {
+      "single": 20,
+      "batch": 1
+    }
+  },
+  "limits": "Local CLI wall time under concurrent test load; no model token, remote latency or live turn speed claim."
+}
