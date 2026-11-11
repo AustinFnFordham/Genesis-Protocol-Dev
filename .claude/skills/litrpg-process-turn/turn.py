@@ -26,7 +26,7 @@ Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error, 5 
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
 dice skill, the ledger skill and the ArtifactData tool, in the order the runbook gives.
 """
-import argparse, json, re, subprocess, sys
+import argparse, json, re, subprocess, sys, tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
@@ -60,18 +60,20 @@ def state(entry):
 
 
 def node_validate(decl, ctx):
-    tmp = Path("/tmp") / f"ctx_{abs(hash(json.dumps(ctx, sort_keys=True)))}.json"
-    tmp.write_text(json.dumps(ctx), encoding="utf-8")
-    p = subprocess.run(["node", str(UI / "turn_contract.js"), "validate", "-", str(tmp)], input=json.dumps(decl), capture_output=True, text=True)
+    with tempfile.TemporaryDirectory(prefix="genesis-contract-") as directory:
+        tmp = Path(directory) / "context.json"
+        tmp.write_text(json.dumps(ctx), encoding="utf-8")
+        p = subprocess.run(["node", str(UI / "turn_contract.js"), "validate", "-", str(tmp)], input=json.dumps(decl), capture_output=True, text=True)
     if p.returncode not in (0, 3):
         raise RuntimeError(p.stderr)
     return json.loads(p.stdout)
 
 
 def node_parse(text, ctx):
-    tmp = Path("/tmp") / f"ctx_{abs(hash(json.dumps(ctx, sort_keys=True)))}.json"
-    tmp.write_text(json.dumps(ctx), encoding="utf-8")
-    p = subprocess.run(["node", str(UI / "turn_contract.js"), "parse", text, str(tmp)], capture_output=True, text=True)
+    with tempfile.TemporaryDirectory(prefix="genesis-contract-") as directory:
+        tmp = Path(directory) / "context.json"
+        tmp.write_text(json.dumps(ctx), encoding="utf-8")
+        p = subprocess.run(["node", str(UI / "turn_contract.js"), "parse", text, str(tmp)], capture_output=True, text=True)
     if p.returncode != 0:
         raise RuntimeError(p.stderr)
     return json.loads(p.stdout)
@@ -96,6 +98,10 @@ def cmd_check(a):
     elif act.get("based_on_revision") != st["revision"]:
         out.update(verdict="needs_revision", reason="The story moved on after this action was written (revision "
                    f"{act.get('based_on_revision')} vs {st['revision']}). Review the latest scene and resubmit.")
+    elif "ledger_head" in act and act["ledger_head"] != st["ledger_head"]:
+        out.update(verdict="needs_revision", reason="The declaration's ledger head does not match the current public snapshot. Review the latest scene and resubmit.")
+    elif "context_id" in act and act["context_id"] != (st["turn_context"] or {}).get("context_id"):
+        out.update(verdict="needs_revision", reason="The declaration's turn context does not match the current scene. Review the latest scene and resubmit.")
     elif not st["turn_context"]:
         out.update(verdict="gm_judgment", reason="No turn context is published; the GM interprets the text freely under the charter.")
     else:
