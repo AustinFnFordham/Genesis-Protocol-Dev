@@ -171,6 +171,13 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                 continue
             seen_rolls.add(rid)
             dice_history.append(dict(pr, event_id=e["event_id"], time=e["world_time"], turn_no=r.get("turn_no")))
+    import projections
+    # Presentation summaries may contain internal table references even in old public rows.
+    presentation_events = [dict(event, summary=player_text(event["summary"]),
+                                details=dict(event.get("details", {}),
+                                    **({"text": player_text(event["details"]["text"])} if event["kind"] == "gm_narration" and event.get("details", {}).get("text") else {})))
+                           for event in ev]
+    derived = projections.project(presentation_events)
     # Protagonist Continuity status (campaign rule) from the rule file + public events.
     continuity = None
     try:
@@ -182,7 +189,14 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
                           "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"}
     except Exception:  # noqa: BLE001
         continuity = None
+    declaration_event = next((event for event in reversed(ev) if event["kind"] == "player_declaration"), None)
+    contest = None
+    if declaration_event:
+        contest = {"event_id": declaration_event["event_id"],
+                   "steps": [{"id": step["id"], "label": str(step.get("text") or step.get("option") or step["type"])[:160]}
+                             for step in declaration_event.get("details", {}).get("declaration", {}).get("steps", []) if step.get("id")]}
     return {
+        "contest_declaration": contest,
         "continuity": continuity,
         "campaign_id": campaign_id or "starwars_litrpg",
         "rolls": rolls,
@@ -191,7 +205,8 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         "revision": len(ev_all), "ledger_head": last.get("event_id"), "turn_no": last.get("turn_no", 0),
         "scene": {"title": scene.get("title"), "location": scene.get("location"), "time": last.get("world_time"),
                   "atmosphere": scene.get("atmosphere", [])},
-        "feed": feed, "journal": journal, "suggestions": sugg, "objectives": [],
+        "feed": feed, "journal": journal, "suggestions": sugg, "objectives": derived["objectives"],
+        "objective_sources": derived["objective_sources"], "chapters": derived["chapters"], "events": derived["events"],
         "active_actor": ACTIVE_ACTOR,
         "roster": roster,
         "member_journals": {m["id"]: member_journal(ev, m["id"]) for m in roster if m["id"] != ACTIVE_ACTOR},
@@ -245,6 +260,7 @@ def bound(st, budget=STATE_BUDGET, extra=None):
     extra = extra or {}
     feed, jr = st["feed"], st["journal"]
     dice = st.get("dice_history", [])
+    paginated = ("dice_history", "chapters", "events")
     fb = [doc_bytes(x) + 1 for x in feed]
     jb = [doc_bytes(x) + 1 for x in jr]
 
@@ -257,10 +273,12 @@ def bound(st, budget=STATE_BUDGET, extra=None):
                 h[k].update(v)
             else:
                 h[k] = v
-        h["dice_history"] = {"total": len(dice), "shown": 0, "omitted": len(dice), **extra.get("dice_history", {})}
+        for kind in paginated:
+            count = len(st.get(kind, []))
+            h[kind] = {"total": count, "shown": 0, "omitted": count, **extra.get(kind, {})}
         return h
 
-    base = doc_bytes({**st, "dice_history": [], "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
+    base = doc_bytes({**st, **{kind: [] for kind in paginated}, "feed": [], "journal": [], "history": hist(0, 0, budget)}) + 64  # room for digits that change
     fi = ji = 0; fs = sum(fb); js = sum(jb)
     while base + fs + js > target:
         can_f, can_j = fi < len(feed) - 1, ji < len(jr)
@@ -271,7 +289,8 @@ def bound(st, budget=STATE_BUDGET, extra=None):
         else:
             js -= jb[ji]; ji += 1
     out = dict(st)
-    out["dice_history"] = []
+    for kind in paginated:
+        out[kind] = []
     out["feed"], out["journal"] = feed[fi:], jr[ji:]
     out["history"] = hist(fi, ji, 0)
     for _ in range(3):  # the count includes its own digits: settle to a fixed point
@@ -312,7 +331,7 @@ def publish_set(st, state_budget=STATE_BUDGET, page_budget=PAGE_BUDGET, publishe
     document cannot meet its byte budget (nothing should be written then)."""
     pages = {}
     extra = {"revision": st["revision"], "page_budget_bytes": page_budget}
-    for kind in ("feed", "journal", "dice_history"):
+    for kind in ("feed", "journal", "dice_history", "chapters", "events"):
         ps = paginate(st.get(kind, []), kind, page_budget)
         extra[kind] = {"pages": [{k: p[k] for k in ("id", "count", "first", "last", "hash")} for p in ps]}
         for p in ps:

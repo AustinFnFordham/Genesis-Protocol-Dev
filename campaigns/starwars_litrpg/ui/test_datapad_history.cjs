@@ -33,13 +33,15 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { failures++;
   await page.waitForSelector("#colCenter .feed > div");
   const h = state.history;
   ok(Buffer.byteLength(JSON.stringify(state)) <= h.budget_bytes, "snapshot is under its byte budget");
-  ok(await page.locator("#colCenter .feed > div").count() === state.feed.length, "only the preview is rendered at first");
+  ok(await page.locator("#colCenter .feed > div").count() === 1, "Scene renders only the latest complete GM narration");
+  await page.locator("summary", { hasText: "Previous Turns" }).click();
+  ok(await page.locator("#colRight .previous-history > div").count() === state.feed.length, "Journal starts with the bounded preview");
   ok((await page.evaluate(() => window.__gets)).every(p => !/feed-|journal-/.test(p)), "no history page is fetched until asked");
   const btn = page.locator('[data-older="feed"]');
   ok(await btn.count() === 1 && new RegExp("\\(" + h.feed.omitted + " older\\)").test(await btn.innerText()), "load-earlier shows how many are older", await btn.innerText().catch(() => ""));
-  const firstBefore = await page.locator("#colCenter .feed > div").first().getAttribute("data-eid");
-  await btn.click(); await page.waitForTimeout(300);
-  const ids = await page.locator("#colCenter .feed > div").evaluateAll(els => els.map(e => e.getAttribute("data-eid")));
+  const firstBefore = await page.locator("#colRight .previous-history > div").first().getAttribute("data-eid");
+  for (let i = 0; i < 20 && await btn.count(); i++) { await btn.click(); await page.waitForTimeout(80); }
+  const ids = await page.locator("#colRight .previous-history > div").evaluateAll(els => els.map(e => e.getAttribute("data-eid")));
   ok(ids.length === h.feed.total && new Set(ids).size === ids.length, "after loading, every entry appears exactly once", ids.length + " of " + h.feed.total);
   ok(ids.join() === ids.slice().sort().join() && ids[ids.length - 1] === state.feed[state.feed.length - 1].event_id, "entries stay in story order, newest last");
   ok(ids.indexOf(firstBefore) === h.feed.omitted, "the earlier entries are placed before the preview");
@@ -49,11 +51,11 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { failures++;
   ok(await jb.count() === 1, "journal offers earlier entries");
   ok(new RegExp("^\\s*" + h.journal.observations + " observed").test(await page.locator(".panel", { hasText: "Discoveries" }).last().locator(".note").innerText()), "discoveries count comes from the full record, not the preview");
   await jb.click(); await page.waitForTimeout(300);
-  ok(await page.locator("#colRight .panel").filter({ hasText: "Journal" }).first().locator("ul.plain > li").count() === h.journal.total, "journal shows the full record after loading");
+  ok(await page.locator("#journalEntries ul.plain > li").count() === h.journal.total, "journal shows the full record after loading");
   // a page written ahead of the snapshot never shows entries newer than the published revision
   await page.evaluate(() => { const s = window.__store; s["view/feed-0001"].entries.push({ who: "gm", event_id: "evt_9999", time: "later", text: "NOT YET PUBLISHED" }); });
-  await page.reload(); await page.waitForSelector('[data-older="feed"]'); await page.click('[data-older="feed"]'); await page.waitForTimeout(300);
-  ok(!/NOT YET PUBLISHED/.test(await page.locator("#colCenter").innerText()), "entries beyond the published revision stay hidden");
+  await page.reload(); await page.locator("summary", { hasText: "Previous Turns" }).click(); await page.waitForSelector('[data-older="feed"]'); await page.click('[data-older="feed"]'); await page.waitForTimeout(300);
+  ok(!/NOT YET PUBLISHED/.test(await page.locator("#colRight .previous-history").innerText()), "entries beyond the published revision stay hidden");
   // resolution and publication are separate
   await page.evaluate(cid => { window.__store["actions/a1"] = { status: "resolved", text: "I wait.", campaign_id: cid, created_ms: Date.now(), commit: "c3a2054abc", publication: { status: "pending", last_error: "view/state write refused" } }; window.__notify(); }, state.campaign_id);
   await page.waitForTimeout(200);
@@ -64,7 +66,7 @@ function ok(c, name, extra) { if (c) console.log("ok", name); else { failures++;
   // an older snapshot without a manifest still renders (page and data roll out independently)
   await page.evaluate(() => { const s = window.__store["view/state"]; delete s.history; window.__notify(); });
   await page.waitForTimeout(200);
-  ok(await page.locator("#colCenter .feed > div").count() > 0 && await page.locator("[data-older]").count() === 0, "a snapshot without history still renders");
+  ok(await page.locator("#colRight .previous-history > div").count() > 0 && await page.locator("[data-older]").count() === 0, "a snapshot without history still renders");
   ok(errors.length === 0, "no page errors", errors.join(" | "));
   await browser.close();
   console.log(failures ? "FAILED " + failures : "all ok");

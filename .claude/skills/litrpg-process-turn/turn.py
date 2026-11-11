@@ -195,7 +195,7 @@ def cmd_publish(a):
         print(json.dumps({"ok": False, "reason": "the Datapad already shows a newer revision; this publish is stale", "published_revision": cur.get("revision"), "revision": st["revision"]})); return 6
     have = {}
     if cur.get("campaign_id") == e["id"]:
-        for kind in ("feed", "journal", "dice_history"):
+        for kind in ("feed", "journal", "dice_history", "chapters", "events"):
             for pg in ((cur.get("history") or {}).get(kind) or {}).get("pages") or []:
                 have[pg["id"]] = pg["hash"]
     out = Path(a.outdir) / "view"; out.mkdir(parents=True, exist_ok=True)

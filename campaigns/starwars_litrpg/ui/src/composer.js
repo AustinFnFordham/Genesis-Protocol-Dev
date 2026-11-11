@@ -604,13 +604,13 @@
 
   function renderCenter(v) {
     var s = v.scene;
-    var feed = olderEntries(v, "feed").concat(v.feed).map(function (f) {
+    var feed = v.feed.filter(function (f) { return f.who === "gm"; }).slice(-1).map(function (f) {
       return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
-      '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
       renderDice(v) + renderProgress(v) + renderTurn(v);
   }
 

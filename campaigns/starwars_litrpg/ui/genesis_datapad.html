@@ -1081,6 +1081,9 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     Object.keys(hist).forEach(function (kind) { hist[kind] = { loaded: [], idx: 0, busy: false, err: "" }; });
   }
   var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" }, dice_history: { loaded: [], idx: 0, busy: false, err: "" } };
+  ["chapters", "events"].forEach(function (kind) {
+    hist[kind] = { loaded: [], idx: 0, busy: false, err: "" };
+  });
   function evtNum(id) { var m = /(\d+)$/.exec(String(id || "")); return m ? +m[1] : 0; }
   function histPages(v, kind) { var h = v.history && v.history[kind]; return (h && h.pages) || []; }
   /* Entries older than the snapshot's preview. Never anything newer than the published revision:
@@ -1187,6 +1190,22 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     }).join("") + '</ul>' + olderButton(v, "dice_history", "Load earlier rolls") + '</div>';
   }
 
+  function renderProjection(v, kind, title) {
+    var rows = olderEntries(v, kind).concat(v[kind] || []);
+    return '<details class="panel"><summary>' + esc(title) + '</summary><ul class="plain">' +
+      rows.slice().reverse().map(function (row) {
+        return '<li><b>' + esc(row.title || row.event_id) + '</b><div>' + esc(row.text) + '</div>' +
+          (row.sources ? '<div class="note">Sources ' + row.sources.map(esc).join(", ") + '</div>' : '') + '</li>';
+      }).join("") + '</ul>' + olderButton(v, kind, "Load " + title.toLowerCase()) + '</details>';
+  }
+  function renderPrevious(v) {
+    var rows = olderEntries(v, "feed").concat(v.feed);
+    return '<details class="panel"><summary>Previous Turns</summary>' + olderButton(v, "feed", "Load earlier narrative") +
+      '<div class="feed previous-history">' + rows.map(function (row) {
+        return '<div data-eid="' + esc(row.event_id) + '"><b>' + esc(row.who === "player" ? "Aero" : "Narrator") + '</b>' + paras(row.text) + '</div>';
+      }).join("") + '</div></details>';
+  }
+
   function renderRecord(v) {
     var m = selected(v), own = isActor(v, m);
     var jrn = own ? olderEntries(v, "journal").concat(v.journal) : ((v.member_journals || {})[m.id] || []);
@@ -1195,10 +1214,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var jr = jrn.slice().reverse().map(function (j) {
       return '<li><div class="row" style="justify-content:space-between"><span class="pill ' + esc(j.knowledge) + '">' + esc(j.knowledge) + '</span><span class="note">' + esc(j.time) + "</span></div><div style='margin-top:4px'>" + esc(j.text) + "</div></li>";
     }).join("");
-    return selector(v) + (own ? renderDiceHistory(v) : "") + '<div class="panel"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
+    return selector(v) + (own ? renderPrevious(v) + renderProjection(v, "chapters", "Chapters") +
+      renderProjection(v, "events", "Events") + renderProjection(v, "Shared experiences") +
+      '<details open class="panel"><summary>Performance</summary>' + renderProgress(v) + renderUsage(v) + '</details>' +
+      renderDiceHistory(v) : "") + '<div class="panel" id="journalEntries"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
       '<div class="panel"><h2>Discoveries</h2><div class="note">' + discN + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
-      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>' + renderUsage(v);
+      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
   }
   /* ===================== Turn composer (turn-contract/3) =====================
      Combat: slot builder with the full action economy (unavailable choices disabled with their reason).
@@ -1806,13 +1828,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
 
   function renderCenter(v) {
     var s = v.scene;
-    var feed = olderEntries(v, "feed").concat(v.feed).map(function (f) {
+    var feed = v.feed.filter(function (f) { return f.who === "gm"; }).slice(-1).map(function (f) {
       return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
-      '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
       renderDice(v) + renderProgress(v) + renderTurn(v);
   }
 
