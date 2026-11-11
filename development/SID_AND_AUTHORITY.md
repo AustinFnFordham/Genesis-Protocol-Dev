@@ -13,7 +13,7 @@ Unvalidated hypotheses remain draft content.
 | Owner | Owns | Relationship projection may read |
 | --- | --- | --- |
 | Soul | Individual identity, psychology, motives and interpretations | Explicit public statements and observable actions, without converting them to hidden intent |
-| SID | Campaign foundations, era constraints and inherited history | Validated chronology and prepared possibilities |
+| SID | Existing SID-owned runtime fields; Q15/Q16 remain provisional design metadata in this increment | Validated chronology and prepared possibilities |
 | AMD | Moral evaluation of intent, knowledge, control and consequences | Existing moral_evaluation facets, without inferring PC intent |
 | Chaos | Typed interactions and conditional causal connections | Registry endpoints and proposed relationships, without committing domain effects |
 | Authority / ledger | Validated commits, provenance, visibility and revisions | Accepted public evidence only |

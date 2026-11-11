@@ -145,6 +145,7 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
                     "result": {"status": "committed", "batch_id": batch_id,
                                "events": [event["event_id"] for event in accepted],
                                "head": accepted[-1]["event_id"], "revision": len(events)+len(accepted)}}
+            lease_valid(lock, run)
             durable_json(pending, plan)
         lease_valid(lock, run)
         # Prove both files are exact prefixes before resuming either stream.
@@ -167,6 +168,7 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
             sync_directory(path.parent)
             if after_stream:
                 after_stream(relative)
+        lease_valid(lock, run)
         durable_json(receipt, {"fingerprint": fingerprint, "result": plan["result"]})
         pending.unlink()
         sync_directory(pending.parent)
