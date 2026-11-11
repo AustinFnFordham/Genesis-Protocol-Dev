@@ -12,15 +12,38 @@ import threading
 
 _held = threading.local()
 
+def acquire(handle, exclusive, blocking):
+    if os.name == "nt":
+        import msvcrt
+        if exclusive and os.fstat(handle.fileno()).st_size == 0:
+            handle.write(b"\0")
+            handle.flush()
+        handle.seek(0)
+        mode = (msvcrt.LK_LOCK if blocking else msvcrt.LK_NBLCK) if exclusive else msvcrt.LK_RLCK
+        msvcrt.locking(handle.fileno(), mode, 1)
+    else:
+        import fcntl
+        fcntl.flock(handle, (fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH) | (0 if blocking else fcntl.LOCK_NB))
+
+
+def release(handle):
+    if os.name == "nt":
+        import msvcrt
+        handle.seek(0)
+        msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+    else:
+        import fcntl
+        fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 @contextmanager
 def writer_lock(campaign):
-    import fcntl
     directory = campaign / "hidden"
     directory.mkdir(parents=True, exist_ok=True)
-    with (directory / ".ledger_writer.lock").open("a") as handle:
+    with (directory / ".ledger_writer.lock").open("a+b") as handle:
         try:
-            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
+            acquire(handle, exclusive=True, blocking=False)
+        except (BlockingIOError, OSError):
             raise ValueError("another ledger writer holds the local lock")
         owners = getattr(_held, "campaigns", set())
         _held.campaigns = owners | {str(campaign.resolve())}
@@ -28,14 +51,13 @@ def writer_lock(campaign):
             yield
         finally:
             _held.campaigns = owners
-            fcntl.flock(handle, fcntl.LOCK_UN)
+            release(handle)
 
 
 @contextmanager
 def reader_lock(campaign):
-    import fcntl
     key = str(campaign.resolve())
-    if key in getattr(_held, "campaigns", set()):
+    if key in getattr(_held, "campaigns", set()) or key in getattr(_held, "readers", set()):
         yield
         return
     path = campaign / "hidden/.ledger_writer.lock"
@@ -44,12 +66,15 @@ def reader_lock(campaign):
         if path.exists():
             raise ValueError("ledger writer appeared while reading; retry the read")
         return
-    with path.open("r") as handle:
-        fcntl.flock(handle, fcntl.LOCK_SH)
+    with path.open("r+b" if os.name == "nt" else "rb") as handle:
+        acquire(handle, exclusive=False, blocking=True)
+        readers = getattr(_held, "readers", set())
+        _held.readers = readers | {key}
         try:
             yield
         finally:
-            fcntl.flock(handle, fcntl.LOCK_UN)
+            _held.readers = readers
+            release(handle)
 
 
 def digest(value):
@@ -67,6 +92,8 @@ def durable_json(path, data):
 
 
 def sync_directory(directory):
+    if os.name == "nt":
+        return  # Windows has no portable directory fsync; file data is still flushed.
     fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY)
     try:
         os.fsync(fd)
