@@ -1,0 +1,30 @@
+{
+ "rule": "jedi_fundamentals_minor_telekinesis",
+ "version": 1,
+ "status": "approved_provisional",
+ "approved": "owner ruling 2026-11-11",
+ "scope": "campaign: starwars_litrpg, Hask Meadow run 2 onward; not a universal Genesis rule; not a Force power",
+ "doc": "creator/JEDI_FUNDAMENTALS.md",
+ "qualification": "completed formal Jedi training established by the record (Jedi Knight or above on a validated sheet, or an owner ruling naming an equivalent) AND an explicit entry in granted_to; Force sensitivity alone never qualifies",
+ "granted_to": [
+  {"character": "aero",
+   "evidence": ["api_bridge/gm/aero_character_runtime.yml identity.current_rank: Newly Knighted Jedi", "council_ruling: knighthood legitimate"],
+   "granted_by": "owner ruling 2026-11-11"}
+ ],
+ "limits": {
+  "objects_at_once": 1,
+  "target": "visible, unattended object (not held, worn or carried by a creature; not fixed in place)",
+  "max_weight_lb": 10,
+  "range_ft": 30,
+  "force_point_cost": 0,
+  "out_of_combat": "no roll unless meaningful uncertainty exists",
+  "in_combat": "uses the action",
+  "never": ["damage", "moving or restraining a creature", "disarming or taking attended objects", "intercepting projectiles", "substituting for an unlearned combat Force power"]
+ },
+ "not_granted": ["power_force_pull", "power_force_push"],
+ "feature": {
+  "name": "Jedi Fundamentals: Minor Telekinesis",
+  "action_type": "campaign ruling (provisional) · action in combat",
+  "exact_effect": "Gently lift, reposition, retrieve or manipulate one visible, unattended object of 10 lb or less within 30 ft. No Force Points. Outside combat, no roll unless the outcome is uncertain; in combat it uses your action. It cannot deal damage, move or disarm a creature, take anything held or worn, stop a projectile, or stand in for a Force power you have not learned. It is not Force Push or Force Pull."
+ }
+}

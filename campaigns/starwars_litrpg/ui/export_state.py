@@ -17,6 +17,29 @@ import litrpg_adapter as la  # noqa: E402
 SHEET = ROOT / "api_bridge" / "gm" / "aero_character_runtime.yml"
 NON_JOURNAL = {"turn_context", "ruling_void", "gm_narration", "scene_state", "gm_suggestions", "player_declaration", "party_joined", "party_left", "plan_progress"}
 ACTIVE_ACTOR = "aero"
+CAMPAIGN_FEATURE_RULES = ["jedi_fundamentals.json"]
+
+
+def campaign_features(actor, campaign_id=None):
+    """Campaign-scoped features granted by an explicit recorded exception (creator/<rule>.json):
+    only for characters named in `granted_to`, only while the rule is approved, and never for
+    the run-1 archive. The shared character sheet is not modified by a campaign ruling."""
+    out = []
+    if (campaign_id or "starwars_litrpg") == "starwars_litrpg":
+        return out
+    for name in CAMPAIGN_FEATURE_RULES:
+        try:
+            rule = json.loads((Path(__file__).resolve().parents[1] / "creator" / name).read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001 - a missing or broken rule file grants nothing
+            continue
+        if not str(rule.get("status", "")).startswith("approved"):
+            continue
+        if not any(g.get("character") == actor for g in rule.get("granted_to", [])):
+            continue
+        f = rule.get("feature") or {}
+        if f.get("name") and f.get("exact_effect"):
+            out.append({"name": f["name"], "kind": f.get("action_type", "campaign ruling"), "effect": f["exact_effect"]})
+    return out
 
 
 def build_roster(ev, aero_name, aero_line):
@@ -170,7 +193,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
             "powers": [{"name": p["name"], "cost": p["cost"], "effect": p["exact_effect"] + (" Range: " + p["range"] + "." if p.get("range") else "")} for p in sheet["powers"]],
             "features": [{"name": f["name"], "kind": f["action_type"],
                           "effect": f["exact_effect"] if isinstance(f["exact_effect"], str) else " ".join(map(str, f["exact_effect"].values() if isinstance(f["exact_effect"], dict) else f["exact_effect"]))}
-                         for f in sheet["features"]],
+                         for f in sheet["features"]] + campaign_features(ACTIVE_ACTOR, campaign_id),
             "weapons": [{"name": w["name"], "attack": w["attack_bonus"],
                          "damage": w["damage"] if isinstance(w["damage"], str) else " / ".join(f"{v}" for v in w["damage"].values())}
                         for w in sheet["equipment"]["weapons"]],
