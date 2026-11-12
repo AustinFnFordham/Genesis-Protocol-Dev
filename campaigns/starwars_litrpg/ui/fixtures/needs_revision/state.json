@@ -1,0 +1,1171 @@
+{
+ "campaign_id": "hask_meadow_r2",
+ "revision": 992,
+ "ledger_head": "evt_1249",
+ "turn_no": 61,
+ "active_actor": "aero",
+ "turn_context": {
+  "actor": "aero",
+  "actor_conditions": [],
+  "actor_name": "Aero",
+  "budget": {
+   "action": 0,
+   "bonus_action": 1,
+   "movement_ft": 30,
+   "object_interaction": 1,
+   "reaction": 1
+  },
+  "context_id": "evt_1249",
+  "dialogue": [
+   {
+    "approach": "calming",
+    "extended": false,
+    "id": "d1",
+    "text": "Steady, Wick. Hold it there. Don't fire through the wood."
+   },
+   {
+    "approach": "warning",
+    "extended": false,
+    "id": "d2",
+    "text": "Back up two steps. If it comes through, it comes through to me first."
+   },
+   {
+    "approach": "assertive",
+    "extended": false,
+    "id": "d3",
+    "text": "Light on the hatch. Keep it there."
+   },
+   {
+    "approach": "empathetic",
+    "extended": false,
+    "id": "d4",
+    "text": "You're all right. Breathe. It's still on the other side."
+   },
+   {
+    "approach": "defiant",
+    "extended": false,
+    "id": "d5",
+    "text": "(to the hatch) Still there? Good. So am I."
+   }
+  ],
+  "equipment": [
+   {
+    "active_when": "saber_ignited",
+    "aliases": [
+     "lightsaber",
+     "saber",
+     "blade"
+    ],
+    "at": "hatch",
+    "established": [
+     "energy blade, range 5 feet",
+     "lit: light source"
+    ],
+    "evt": "evt_1241",
+    "hands": 1,
+    "home": "left hip for right-hand draw",
+    "home_state": "holstered",
+    "id": "lightsaber",
+    "label": "the indigo lightsaber",
+    "state": "held",
+    "where": "right hand"
+   },
+   {
+    "aliases": [
+     "blaster",
+     "pistol"
+    ],
+    "at": "wick",
+    "evt": "evt_1175",
+    "hands": 1,
+    "home": "right hip for left-hand draw",
+    "home_state": "holstered",
+    "id": "blaster",
+    "label": "the blaster pistol",
+    "state": "placed",
+    "where": "drawn, in Wick's right hand, held low, muzzle at the boards"
+   },
+   {
+    "aliases": [
+     "robes",
+     "mantle"
+    ],
+    "fixed": true,
+    "id": "robes",
+    "label": "robes and synthweave mantle",
+    "state": "worn"
+   },
+   {
+    "aliases": [
+     "security kit"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "security_kit",
+    "label": "security Kit",
+    "note": "Enables physical-security Technology checks at +3; no blanket advantage and no double proficiency.",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "meditation kit"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "meditation_kit",
+    "label": "meditation Kit",
+    "note": "Once per long rest during an uninterrupted short rest, restore up to 2 spent Force Points.",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "backpack"
+    ],
+    "hands": 2,
+    "home": "on Aero's back",
+    "home_state": "worn",
+    "id": "backpack",
+    "label": "backpack",
+    "note": "mundane storage",
+    "quantity": 1,
+    "state": "worn",
+    "where": "on Aero's back"
+   },
+   {
+    "aliases": [
+     "bedroll"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "bedroll",
+    "label": "bedroll",
+    "note": "mundane sleeping equipment",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "compact mess kit"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "compact_mess_kit",
+    "label": "compact mess kit",
+    "note": "mundane eating and cooking equipment",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "ration pack"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "ration_pack",
+    "label": "ration pack",
+    "note": "one ordinary field ration each",
+    "quantity": 8,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "canteen"
+    ],
+    "at": "workbench",
+    "evt": "evt_0804",
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "canteen",
+    "label": "canteen",
+    "note": "mundane water container",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "compact jedi glowrod"
+    ],
+    "at": "switch_box",
+    "evt": "evt_0552",
+    "home": "belt clip",
+    "home_state": "attached",
+    "id": "compact_jedi_glowrod",
+    "label": "compact Jedi glowrod",
+    "note": "adjustable cool-white illumination with magnetic belt clip; no automatic combat benefit",
+    "quantity": 1,
+    "state": "attached",
+    "where": "inside the glowrod lamp"
+   },
+   {
+    "aliases": [
+     "syntherope",
+     "synthrope",
+     "syntherope",
+     "rope"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "syntherope",
+    "label": "syntherope",
+    "note": "50 feet of mundane utility rope",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "basic fire-starting tool"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "basic_fire_starting_tool",
+    "label": "basic fire-starting tool",
+    "note": "ordinary fire-starting where conditions permit",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "personal comlink"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "personal_comlink",
+    "label": "personal comlink",
+    "note": "ordinary communications where networks permit",
+    "quantity": 1,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "blaster ammunition"
+    ],
+    "home": "backpack",
+    "home_state": "stored",
+    "id": "blaster_ammunition",
+    "label": "blaster ammunition",
+    "note": "50 total shots; pistol capacity 12",
+    "quantity": 50,
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "datapad",
+     "the datapad",
+     "work datapad"
+    ],
+    "at": "barn_door",
+    "evt": "evt_0508",
+    "hands": 1,
+    "id": "work_datapad",
+    "improvised": true,
+    "label": "the crew work datapad",
+    "limits": "found on the dig crew's workbench, not made; powered off; contents unread",
+    "made_from": [],
+    "state": "stored",
+    "where": "backpack"
+   },
+   {
+    "aliases": [
+     "knife",
+     "the knife",
+     "utility knife",
+     "folding knife"
+    ],
+    "at": "cot",
+    "evt": "evt_0534",
+    "hands": 1,
+    "id": "utility_knife",
+    "improvised": true,
+    "label": "a heavy folding utility knife",
+    "limits": "found in the dig crew lockers, not made; an ordinary heavy work knife; folded",
+    "made_from": [],
+    "state": "stored",
+    "where": "robe pocket"
+   },
+   {
+    "aliases": [
+     "coveralls",
+     "the coveralls",
+     "pell's coveralls",
+     "gloves"
+    ],
+    "at": "workbench",
+    "evt": "evt_0627",
+    "hands": 1,
+    "id": "wick_coveralls",
+    "improvised": true,
+    "label": "PELL's work coveralls and gloves",
+    "limits": "found in the crew lockers, not made; ordinary work clothing, no armour value; keeps off cold and scrapes, not teeth; long in the leg and wide for Wick",
+    "made_from": [],
+    "state": "placed",
+    "where": "worn by Wick over his clothes"
+   },
+   {
+    "aliases": [
+     "lamp",
+     "hand lamp",
+     "glowrod lamp"
+    ],
+    "at": "door",
+    "evt": "evt_1157",
+    "hands": 1,
+    "id": "glowrod_lamp",
+    "improvised": true,
+    "label": "the hand lamp with the glowrod inside",
+    "limits": "the lamp's own switch does nothing; to switch the light on or off, unscrew the lens and use the glowrod's own switch, a few seconds; the same light as the glowrod, thrown forward as a beam",
+    "made_from": [
+     "hand_lamp",
+     "compact_jedi_glowrod"
+    ],
+    "state": "dropped",
+    "where": "on its side on the boards at the foot of the small door, 40 ft up the floor, lit, lens cracked, beam along the boards"
+   },
+   {
+    "aliases": [
+     "cell",
+     "flat cell",
+     "lamp cell"
+    ],
+    "at": "cot",
+    "evt": "evt_0640",
+    "hands": 1,
+    "id": "flat_cell",
+    "improvised": true,
+    "label": "the hand lamp's flat cell",
+    "limits": "found in the crew hand lamp, not made; flat; it holds no charge",
+    "made_from": [],
+    "state": "stored",
+    "where": "robe pocket"
+   },
+   {
+    "aliases": [
+     "gloves",
+     "work gloves"
+    ],
+    "at": "cot",
+    "evt": "evt_0641",
+    "hands": 1,
+    "id": "work_gloves",
+    "improvised": true,
+    "label": "three pairs of crew work gloves",
+    "limits": "found on the crew cot, not made; ordinary heavy cloth work gloves; keep off cold and scrapes, not teeth",
+    "made_from": [],
+    "state": "stored",
+    "where": "robe pockets"
+   },
+   {
+    "aliases": [
+     "rake",
+     "the rake"
+    ],
+    "at": "hatch",
+    "evt": "evt_1235",
+    "hands": 2,
+    "id": "rake",
+    "improvised": true,
+    "label": "the grain rake",
+    "limits": "found lying across the drying floor walkway, not made; an ordinary long-handled grain rake",
+    "made_from": [],
+    "state": "placed",
+    "where": "on the boards at Aero's feet, at the foot of the far-end hatch"
+   }
+  ],
+  "equipment_from_ledger": true,
+  "flag_labels": {
+   "saber_ignited": "an ignited lightsaber"
+  },
+  "hands": {
+   "left": null,
+   "right": {
+    "item": "lightsaber",
+    "label": "the indigo lightsaber, lit, its blade through the hatch"
+   }
+  },
+  "mode": "combat",
+  "movement": [
+   {
+    "distance_after": {
+     "cart_door": 80,
+     "cold_lantern": 100,
+     "door": 120,
+     "hatch": 0,
+     "lamp": 120,
+     "light_end": 60,
+     "switch_box": 120,
+     "wall": 90,
+     "wick": 0
+    },
+    "feet": 0,
+    "id": "hold",
+    "label": "Stay where you are, at the hatch",
+    "leaves_reach_of": []
+   },
+   {
+    "aliases": [
+     "step back",
+     "back off",
+     "back away"
+    ],
+    "distance_after": {
+     "cart_door": 70,
+     "cold_lantern": 90,
+     "door": 110,
+     "hatch": 10,
+     "lamp": 110,
+     "light_end": 50,
+     "switch_box": 110,
+     "wall": 80,
+     "wick": 0
+    },
+    "feet": 10,
+    "id": "step_back",
+    "label": "Step back from the hatch, along the walkway (~10 ft)",
+    "leaves_reach_of": []
+   },
+   {
+    "aliases": [
+     "back up",
+     "back up the walkway",
+     "30 ft back"
+    ],
+    "distance_after": {
+     "cart_door": 50,
+     "cold_lantern": 70,
+     "door": 90,
+     "hatch": 30,
+     "lamp": 90,
+     "light_end": 30,
+     "switch_box": 90,
+     "wall": 60,
+     "wick": 0
+    },
+    "feet": 30,
+    "id": "to_thirty",
+    "label": "Back up the walkway, about 30 ft, still in the dark half",
+    "leaves_reach_of": []
+   }
+  ],
+  "notes": [
+   "Combat, round 1, your turn. Initiative: you 21, the drover-dogs 7. When your turn ends, theirs comes.",
+   "Your action this turn is spent: the stroke through the hatch missed. Your bonus action, your movement (30 ft), one object interaction and your reaction remain. Speech is free.",
+   "One of them lies against the outside of the hatch at your knee, on the other side of the planks. Your blade went through where you judged its head to be and met nothing. You heard a sharp hitch of breath, close. It has not moved off that you can hear. You cannot see it.",
+   "The indigo lightsaber is lit in your right hand, the blade run out through a slot it burned in the hatch planks low by the sill. The slot's edges are charred and smoking; no flame. The hatch is shut and bolted from inside, the bolt home. Your left hand is free; the rake is on the boards at your feet.",
+   "Wick is just behind you, his lantern up, your blaster lifted toward the hatch past your left side. You told him not to fire unless you are threatened. He has never fired a blaster. Your holster is empty.",
+   "Beyond the left wall: one lies still about 60 ft back up the floor, out in the grass; the other was last near the cart door. One lies against the outside of the small door, 120 ft up the floor, by your lamp. The small door is held only by a hook in an eye.",
+   "The voices outside repeat words they have heard, word for word, in the voice that said them: yours, and Wick's.",
+   "The voice down the rise calls every few minutes, the same words. It is due again any moment.",
+   "In your robe pockets: the folding knife (folded), the flat cell, three pairs of work gloves. In your backpack: the canteen, the dead datapad, eight rations. The comm at your collar is closed.",
+   "It is just over three hours since the sun went down. It will not be light for about twelve hours."
+  ],
+  "objects": [
+   {
+    "aliases": [
+     "pull the blade back",
+     "withdraw the blade",
+     "pull it out"
+    ],
+    "at": "hatch",
+    "detail": "the lit blade comes back out of the hatch the way it went in; it stays lit in your right hand",
+    "id": "withdraw_blade",
+    "label": "Draw the blade back in through the slot"
+   },
+   {
+    "aliases": [
+     "switch off the saber",
+     "deactivate",
+     "turn off the saber"
+    ],
+    "at": "hatch",
+    "detail": "the blade vanishes; the unlit hilt stays in your right hand",
+    "id": "deactivate_saber",
+    "label": "Deactivate the indigo lightsaber"
+   },
+   {
+    "aliases": [
+     "pick up the rake",
+     "take the rake",
+     "the rake"
+    ],
+    "detail": "on the boards at your feet; a long two-handed tool: your right hand holds the lit saber",
+    "id": "pick_up_rake",
+    "label": "Pick up the rake",
+    "needs_hands": 2
+   }
+  ],
+  "options": [
+   {
+    "aliases": [
+     "listen at the hatch",
+     "ear to the hatch",
+     "listen"
+    ],
+    "at": "hatch",
+    "detail": "Wisdom (Perception); in combat it takes your action, and this turn's is spent; the hatch is at your knee, your blade through it; one of them lies against the outside at the sill",
+    "id": "listen_at_hatch",
+    "label": "Listen at the hatch, to the outside",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "examine the hatch",
+     "check the hatch",
+     "the bolt"
+    ],
+    "at": "hatch",
+    "detail": "Intelligence (Investigation); takes your action (spent this turn); at your knee; shut and bolted from inside, a slot burned through its planks low by the sill",
+    "id": "examine_hatch",
+    "label": "Examine the hatch and its bolt",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "ask wick",
+     "talk to wick"
+    ],
+    "detail": "speech is free; a longer exchange takes your action; he stands just behind you, his lantern up in his left hand, your blaster lifted toward the hatch past your left side",
+    "id": "ask_wick",
+    "label": "Ask Wick something",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "read wick",
+     "sense wick"
+    ],
+    "detail": "Wisdom (Insight), takes your action (spent this turn); he is just behind you",
+    "id": "read_wick",
+    "label": "Read Wick through the Force",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "ask for the blaster",
+     "blaster back"
+    ],
+    "detail": "it is in his right hand, lifted toward the hatch; whether he gives it is up to him; your left hand is free",
+    "id": "ask_blaster_back",
+    "label": "Ask Wick for the blaster back",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "look around",
+     "look back",
+     "perception",
+     "look up the floor"
+    ],
+    "detail": "Wisdom (Perception); takes your action (spent this turn); you stand in the dark half, in Wick's lantern light and the blade's; the strips' light begins 60 ft back up the floor",
+    "id": "look_up_floor",
+    "label": "Look and listen around the floor",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "telekinesis",
+     "with the force",
+     "lift it with the force",
+     "move it with the force",
+     "pull it to me"
+    ],
+    "detail": "Jedi Fundamentals: takes your action (spent this turn); one thing in sight, unattended and at rest, 10 lb or less, within 30 ft; no Force Points; not a creature, nothing held or worn, never a thing in the air; your lamp is 120 ft off, out of reach",
+    "id": "minor_telekinesis",
+    "label": "Move a small loose thing with the Force",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "open the comm",
+     "comm on",
+     "reopen the comm"
+    ],
+    "detail": "the comm at your collar is closed; opened on the general hailing channel, everything you say aloud goes out over it; it is short-range",
+    "id": "open_comm",
+    "label": "Open the comm channel again",
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "strike again",
+     "stab again",
+     "cut through the hatch"
+    ],
+    "at": "hatch",
+    "detail": "a lightsaber attack; takes your action, which is spent this turn; you cannot see what is on the other side",
+    "id": "strike_through_hatch",
+    "label": "Strike again through the hatch",
+    "needs_hands": 1,
+    "slot": "action"
+   },
+   {
+    "aliases": [
+     "unbolt the hatch",
+     "draw the bolt",
+     "open the hatch"
+    ],
+    "at": "hatch",
+    "detail": "at your knee; your left hand is free; one of them lies against the outside of this hatch, at the sill",
+    "id": "unbolt_hatch",
+    "label": "Draw the bolt (unbolt the hatch)",
+    "needs_hands": 1,
+    "slot": "action"
+   }
+  ],
+  "plan_result": {
+   "blocked": 0,
+   "cancelled": 0,
+   "completed": 5,
+   "interrupted": 0,
+   "paused": 0,
+   "reason": "The blade is lit through the hatch and the fight has begun. It is still your turn: your action is spent (the stroke through the hatch missed); your bonus action, your movement, an object interaction and your reaction remain.",
+   "stop_kind": "combat",
+   "suspended": 0,
+   "unattempted": 0
+  },
+  "position_label": "standing bent low at the foot of the far-end hatch, 120 ft in from the small end door, in the dark half; the indigo lightsaber lit in your right hand, its blade run out through a slot it burned in the hatch planks low by the sill; left hand free; the rake on the boards at your feet; one of them lying against the outside of the hatch; Wick just behind you, his lantern up, your blaster lifted toward the hatch",
+  "reactions": [],
+  "resources": {
+   "force_points": 3
+  },
+  "round": 1,
+  "speed_ft": 30,
+  "state_flags": [
+   "saber_ignited"
+  ],
+  "visible": [
+   {
+    "aliases": [
+     "wick",
+     "the kid",
+     "the boy"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "wick",
+    "label": "Wick, standing just behind you, in PELL's coveralls and gloves; his open lantern up in his left hand; your blaster in his right, lifted off the boards, its muzzle on the hatch past your left side. He has not fired. His breath comes held and short."
+   },
+   {
+    "aliases": [
+     "the one at the hatch",
+     "at the hatch",
+     "outside the hatch",
+     "it"
+    ],
+    "conditions": [],
+    "distance_ft": 3,
+    "hostile": false,
+    "id": "at_hatch",
+    "label": "Outside the hatch, at your knee: one of them, lying against the hatch boards at the sill, unseen. Your blade went through the planks at the place you judged its head to be and met nothing. A sharp hitch of breath on the other side, close; then nothing. It has not moved off that you can hear. Earlier, from out there, something said 'Mum?' in Wick's voice."
+   },
+   {
+    "aliases": [
+     "hatch",
+     "the hatch",
+     "far hatch",
+     "far end"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "hatch",
+    "label": "The far-end hatch at your knee, about 3 ft square, planked, at floor level in the far end wall: shut and bolted from inside, the bolt home. Your blade runs out through a slot it burned in the planks low by the sill; the slot's edges char and smoke. One of them lies against the outside of it."
+   },
+   {
+    "aliases": [
+     "rake",
+     "the rake"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "rake",
+    "label": "The rake, lying along the walkway at your feet"
+   },
+   {
+    "aliases": [
+     "prints",
+     "boot prints",
+     "footprints",
+     "tracks"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "prints",
+    "label": "The line of boot prints in the grain dust, running down the whole floor from the spill at her lantern to the sill of this hatch at your feet and stopping there, nothing coming back; an even walking stride; a small work boot, a woman's size, a ridged farm-boot sole. They run over sound boards all the way."
+   },
+   {
+    "aliases": [
+     "walkway",
+     "the walkway",
+     "boards",
+     "posts",
+     "dead strips"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "walkway",
+    "label": "The board walkway running the length of the floor: you tested it end to end with the rake: every board knocks dead and solid, spiked down onto heavy sleepers on a hard floor; no space under it. Here in the dark half only Wick's lantern lights it; the strips' white light begins 60 ft back up the floor"
+   },
+   {
+    "aliases": [
+     "beds",
+     "drying beds",
+     "grain",
+     "the grain"
+    ],
+    "conditions": [],
+    "distance_ft": 0,
+    "hostile": false,
+    "id": "drying_beds",
+    "label": "Rows of low slatted drying beds either side of the walkway, grain spread level in them, undisturbed; each a slatted tray over a shallow closed air box, a hand deep, fed by a sheet-metal duct from the right-hand wall; nothing bigger than a rat could get in"
+   },
+   {
+    "aliases": [
+     "outside",
+     "the breathing",
+     "the grass",
+     "them",
+     "the wall",
+     "beyond the wall"
+    ],
+    "conditions": [],
+    "distance_ft": 60,
+    "hostile": false,
+    "id": "outside_cart",
+    "label": "Beyond the left wall: one of the two out there lies still in the grass about 60 ft back up the floor from you; the other was last near the cart door. Neither has made a sound since the call. Earlier, from out there, your own laugh and your own words: 'Wick, these dogs really are stupid. What was the name of the worthless leader? Sprinkles? Cupcake?'"
+   },
+   {
+    "aliases": [
+     "cart door",
+     "cart doors",
+     "the bar",
+     "double door",
+     "bar"
+    ],
+    "conditions": [],
+    "distance_ft": 80,
+    "hostile": false,
+    "id": "cart_door",
+    "label": "The wide double cart door in the left wall, 80 ft back up the floor: two plank leaves on iron strap hinges, shut, an iron ring pull on each; the heavy squared timber bar across both leaves, home in both iron brackets. Barred from inside."
+   },
+   {
+    "aliases": [
+     "dark lantern",
+     "cold lantern",
+     "her lantern",
+     "the other lantern",
+     "half-raked bed"
+    ],
+    "conditions": [],
+    "distance_ft": 100,
+    "hostile": false,
+    "id": "cold_lantern",
+    "label": "100 ft back up the walkway, in the white light: her hooded lantern with the blue tape on its handle, upright on the boards, out and cold, burned dry where it stands; beside it the bed raked level in even strokes to about halfway, rough past that, grain spilled onto the walkway. "
+   },
+   {
+    "aliases": [
+     "door",
+     "the door",
+     "small door",
+     "hook",
+     "latch"
+    ],
+    "conditions": [],
+    "distance_ft": 120,
+    "hostile": false,
+    "id": "door",
+    "label": "The small door in the end wall, 120 ft up the floor, shut and latched from inside: the hook in its eye. Your lamp lies lit at its foot. One of them lies against the other side of it."
+   },
+   {
+    "aliases": [
+     "the one at the door",
+     "at the door",
+     "outside the door",
+     "it"
+    ],
+    "conditions": [],
+    "distance_ft": 120,
+    "hostile": false,
+    "id": "at_door",
+    "label": "Outside the small door, 120 ft up the floor: one of them, lying against the door at its foot, unseen. You have heard nothing from it since it lay down."
+   },
+   {
+    "aliases": [
+     "lamp",
+     "the lamp",
+     "glowrod lamp"
+    ],
+    "conditions": [],
+    "distance_ft": 120,
+    "hostile": false,
+    "id": "lamp",
+    "label": "Your lamp, lit, on its side on the boards at the foot of the small door, 120 ft up the floor; its light a small patch on the boards far off. Whatever lies outside that door is a foot from it, on the other side of the planks."
+   },
+   {
+    "aliases": [
+     "switch box",
+     "switch",
+     "the lights"
+    ],
+    "conditions": [],
+    "distance_ft": 120,
+    "hostile": false,
+    "id": "switch_box",
+    "label": "The switch box on the frame by the small door, 120 ft up the floor, its switch thrown; the strips lit over the near half of the floor"
+   },
+   {
+    "aliases": [
+     "fan",
+     "fans",
+     "ducts",
+     "machinery"
+    ],
+    "conditions": [],
+    "distance_ft": 15,
+    "hostile": false,
+    "id": "ducts",
+    "label": "The fan housing and sheet-metal ducts along the right-hand wall, silent; branch ducts run in under each bed"
+   }
+  ]
+ },
+ "scene": {
+  "atmosphere": [
+   "night, just over three hours after dusk; cold; no darkvision",
+   "inside the long barn, on the drying floor: one long boarded room about 30 ft wide, about 120 ft long",
+   "at the foot of the far-end hatch, in the dark half, in Wick's lantern light and the blade's indigo light",
+   "the blade lit through a slot burned in the hatch planks low by the sill; charred wood smoking; the hatch shut and bolted",
+   "one of them lies against the outside of the hatch; the stroke missed; a hitch of breath, then nothing",
+   "combat: round 1, Aero has the initiative",
+   "beyond the left wall one lies still in the grass; one lies against the small door 120 ft up the floor"
+  ],
+  "location": "Hask Meadow, Dovrenn",
+  "time": "Day 1, dusk",
+  "title": "The Drying Floor"
+ },
+ "character": {
+  "ac": 13,
+  "armor": {
+   "ac": 13,
+   "name": "Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle"
+  },
+  "conditions": [],
+  "credits": 50,
+  "features": [
+   {
+    "effect": "Proficient with unarmed strikes; may use Dexterity for their attack and damage rolls.",
+    "kind": "passive",
+    "name": "Martial Arts Training"
+   },
+   {
+    "effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents.",
+    "kind": "passive",
+    "name": "Combat Discipline"
+   },
+   {
+    "effect": "Advantage on Insight checks to read emotions during combat. Once per short rest, after a meaningful brief sparring match, advantage on one Charisma check.",
+    "kind": "passive or free action",
+    "name": "Combat Communication"
+   },
+   {
+    "effect": "May sense significant Force disturbances without automatically learning identity, location, or explanation. As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment.",
+    "kind": "passive or action",
+    "name": "Force Connection"
+   },
+   {
+    "effect": "Add 1d4 to the failed saving throw, potentially turning it into a success.",
+    "kind": "reaction",
+    "name": "Sentinel Balance"
+   },
+   {
+    "effect": "Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection attack against one visible creature within 30 feet; on a hit it deals the original attack's rolled damage without adding Dexterity.",
+    "kind": "reaction",
+    "name": "Lightsaber Deflect - Tier 1"
+   },
+   {
+    "effect": "Knows Master Taron's last confirmed region and how to identify or locate established Jedi safe houses and trusted contacts. Reasonably available contacts may offer guidance, basic information, or temporary shelter.",
+    "kind": "narrative or social",
+    "name": "Former Master and Jedi Network"
+   },
+   {
+    "effect": "With a free hand, make a Dexterity-based martial check at +5 against the target's Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled and its speed becomes 0.",
+    "kind": "special melee attack",
+    "name": "Echani Grappling Training"
+   },
+   {
+    "effect": "Gently lift, reposition, retrieve or manipulate one visible, unattended object of 10 lb or less within 30 ft. No Force Points. Outside combat, no roll unless the outcome is uncertain; in combat it uses your action. It cannot deal damage, move or disarm a creature, take anything held or worn, stop a projectile, or stand in for a Force power you have not learned. It is not Force Push or Force Pull.",
+    "kind": "campaign ruling (provisional) \u00b7 action in combat",
+    "name": "Jedi Fundamentals: Minor Telekinesis"
+   }
+  ],
+  "force": [
+   3,
+   3
+  ],
+  "hp": [
+   11,
+   11
+  ],
+  "initiative": 3,
+  "inventory": [
+   {
+    "item": "Security Kit",
+    "qty": 1
+   },
+   {
+    "item": "Meditation Kit",
+    "qty": 1
+   },
+   {
+    "item": "Backpack",
+    "qty": 1
+   },
+   {
+    "item": "Bedroll",
+    "qty": 1
+   },
+   {
+    "item": "Compact mess kit",
+    "qty": 1
+   },
+   {
+    "item": "Ration pack",
+    "qty": 10
+   },
+   {
+    "item": "Canteen",
+    "qty": 1
+   },
+   {
+    "item": "Compact Jedi glowrod",
+    "qty": 1
+   },
+   {
+    "item": "Syntherope",
+    "qty": 1
+   },
+   {
+    "item": "Basic fire-starting tool",
+    "qty": 1
+   },
+   {
+    "item": "Personal comlink",
+    "qty": 1
+   },
+   {
+    "item": "Blaster ammunition",
+    "qty": 50
+   }
+  ],
+  "languages": [
+   "Galactic Basic",
+   "Echani",
+   "Sith"
+  ],
+  "level": 1,
+  "line": "Echani Sentinel \u00b7 Jedi \u00b7 Newly Knighted Jedi",
+  "name": "Aeleron \"Aero\" Do'ordo",
+  "passive": {
+   "insight": 14,
+   "perception": 14
+  },
+  "powers": [
+   {
+    "cost": "0 Force Points",
+    "effect": "Choose one visible creature. Aero has advantage on his next attack against it. The effect ends after that attack, if concentration breaks, if the target becomes invalid, or after 1 minute. Range: 30 feet.",
+    "name": "Battle Insight"
+   },
+   {
+    "cost": "0 Force Points",
+    "effect": "Every other creature in the radius, including allies, makes a Dexterity save against DC 12. Failure deals 1d4 force damage and knocks the creature prone; success causes neither. Aero is unaffected. Range: 5-foot radius centered on Aero.",
+    "name": "Burst"
+   }
+  ],
+  "scores": {
+   "CHA": [
+    14,
+    2
+   ],
+   "CON": [
+    12,
+    1
+   ],
+   "DEX": [
+    16,
+    3
+   ],
+   "INT": [
+    12,
+    1
+   ],
+   "STR": [
+    8,
+    -1
+   ],
+   "WIS": [
+    14,
+    2
+   ]
+  },
+  "skills": [
+   {
+    "mod": 4,
+    "name": "insight"
+   },
+   {
+    "mod": 4,
+    "name": "persuasion"
+   },
+   {
+    "mod": 3,
+    "name": "technology"
+   },
+   {
+    "mod": 4,
+    "name": "intimidation"
+   },
+   {
+    "mod": 4,
+    "name": "perception"
+   }
+  ],
+  "speed": "30 feet",
+  "strain": [
+   12,
+   12
+  ],
+  "weapons": [
+   {
+    "attack": 5,
+    "damage": "1d8+3 / 1d10+3",
+    "name": "Taron-forged Modular Indigo Lightsaber"
+   },
+   {
+    "attack": 5,
+    "damage": "1d6+3",
+    "name": "Standard Blaster Pistol"
+   },
+   {
+    "attack": 5,
+    "damage": "1d4+3",
+    "name": "Unarmed Strike"
+   }
+  ]
+ },
+ "roster": [
+  {
+   "id": "aero",
+   "joined_event": null,
+   "line": "Echani Sentinel \u00b7 Jedi \u00b7 Newly Knighted Jedi",
+   "mechanics": "authoritative",
+   "name": "Aeleron \"Aero\" Do'ordo",
+   "note": "",
+   "role": "You",
+   "status": "Active"
+  }
+ ],
+ "party": [
+  {
+   "name": "Aeleron \"Aero\" Do'ordo",
+   "role": "You",
+   "status": "Active"
+  }
+ ],
+ "objectives": [],
+ "suggestions": [],
+ "processor": {
+  "server": "Claude Code Remote",
+  "trigger_id": "trig_011svPGdUcPjEghbaSmrNFKF"
+ },
+ "continuity": {
+  "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest",
+  "marks": 0,
+  "status": "active"
+ },
+ "history": {
+  "budget_bytes": 96000,
+  "bytes": 95259,
+  "feed": {
+   "first_shown": "evt_1085",
+   "omitted": 105,
+   "pages": [
+    {
+     "count": 84,
+     "first": "evt_0009",
+     "hash": "87ccb87c4f8d5c41",
+     "id": "feed-0001",
+     "last": "evt_0846"
+    },
+    {
+     "count": 40,
+     "first": "evt_0870",
+     "hash": "2ad0343db54a77a4",
+     "id": "feed-0002",
+     "last": "evt_1247"
+    }
+   ],
+   "shown": 19,
+   "total": 124
+  },
+  "journal": {
+   "first_shown": "evt_1011",
+   "observations": 20,
+   "omitted": 575,
+   "pages": [
+    {
+     "count": 549,
+     "first": "evt_0006",
+     "hash": "51aa9cc3bcc6a351",
+     "id": "journal-0001",
+     "last": "evt_0953"
+    },
+    {
+     "count": 145,
+     "first": "evt_0954",
+     "hash": "24434de2a45b2538",
+     "id": "journal-0002",
+     "last": "evt_1244"
+    }
+   ],
+   "shown": 119,
+   "total": 694
+  },
+  "page_budget_bytes": 150000,
+  "published": {
+   "commit": "366dccc",
+   "ledger_head": "evt_1249",
+   "revision": 992
+  },
+  "revision": 992
+ },
+ "member_journals": {},
+ "feed": [
+  {
+   "event_id": "evt_1232",
+   "text": "Sequence 1: Try: I quietly set the rake down; Try: I sneakily loose my saber hilt from the clip; Try: I look at Wick and signal to get ready, not making a sound; Try: I push the emitter of my lightsaber roughly where I think the dogs head is; Try: I push the button and ignite the saber through the hatch, ensuring I do not loose the bolt holding the hatch shut.",
+   "time": "Day 1, dusk",
+   "who": "player"
+  },
+  {
+   "event_id": "evt_1247",
+   "text": "The far end of the drying floor is Wick's lantern and nothing else: thirty feet of yellow light on bare boards, the hatch at your feet, the end wall going up into the dark. The strips' white glow starts sixty feet back up the walkway. The small door, and your lamp lying lit at its foot, are a hundred and twenty feet behind you. On the other side of the hatch planks, close enough to touch if the wood were not there, one of them lies against the boards at the sill.\n\nYou lower the rake. The head finds the boards without a knock, the long handle follows, and it lies along the walkway at your feet. Your right hand goes to your left hip. The clip lets the hilt go with the smallest catch of metal, and the hilt comes up cold and unlit in your palm.\n\nBehind you, Wick sees your signal in his own light. His jaw sets. He plants his feet in the oversized coveralls and lifts the blaster's muzzle off the boards until it points at the hatch past your left side, held out in his right hand, the lantern still high in his left. His finger stays where you told him to keep it. He makes no sound.\n\nYou bend low to the hatch, slow. The emitter touches wood low by the sill, a hand's width clear of the bolt, at the place where you heard it snuffle and settle. Through the boards, nothing changes.\n\nYou press the switch.\n\nThe blade goes through the hatch the way it goes through air. A snap-hiss, the hum climbing to its note, and the wood simply parts around the indigo light: a slot burned clean through the planks, its edges blackening at once, smoke curling up off the char in a thin grey thread. Indigo light spills out under the sill and through the cut, onto grass you cannot see. The blade runs on into the dark outside.\n\nIt meets nothing. No weight drags at the hilt, no hiss of burning hair, nothing but the steady thrum in your fist and the bitter smell of scorched wood filling the space under the end wall.\n\nOn the other side, inches from the boards, a sharp hitch of breath. Then nothing. No yelp, no scrabble of claws. The weight against the hatch is still there, and so is the silence it holds, listening.\n\nThe bolt sits home in its keeper. The hatch is shut. Behind you Wick's lantern shakes once and steadies, the blaster's muzzle on the hatch, his breath held. Somewhere out past the left wall the long grass is quiet. The call down the rise is due any moment, and it has not come.\n",
+   "time": "Day 1, dusk",
+   "who": "gm"
+  }
+ ],
+ "journal": [],
+ "rolls": []
+}

@@ -430,7 +430,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -476,8 +476,14 @@
       (busy ? '<div class="note">One turn at a time: the current one is with the GM.</div>' : "") + renderActions() + "</div>";
     return h;
   }
+  function renderAlt(busy) {
+    if (!ui.alt) return "";
+    return '<div class="check" id="altBanner" style="margin-top:8px" aria-live="polite"><b>GM option loaded</b><div>' + esc(ui.alt.label) + "</div>" +
+      '<div class="note">It is filled in below. Submit it as it is, or change anything first. It is checked against the rules like any other turn.</div>' +
+      '<div class="row"><button class="btn primary" id="submitAlt"' + (busy || phase ? " disabled" : "") + '>Submit this option</button><button class="btn" id="discardAlt">Discard</button><span class="note" id="altMsg"></span></div></div>';
+  }
   function canSubmitNow(r, busy) {
-    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim());
+    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt);
   }
   function fixCount(r, stat) {
     var n = r.errors.filter(function (e) { return !e.step_id; }).length;
@@ -535,8 +541,10 @@
         var rmsg = function (x) { return typeof x === "string" ? x : (x && x.message) || ""; };
         (a.review.errors || []).forEach(function (x) { h += '<div class="msg-err">' + esc(rmsg(x)) + "</div>"; });
         (a.review.warnings || []).forEach(function (x) { h += '<div class="msg-warn">' + esc(rmsg(x)) + "</div>"; });
-        if ((a.review.alternatives || []).length) h += '<div class="sugg">' + a.review.alternatives.map(function (x, i) { return '<button class="chip" data-ralt="' + esc(a._id) + ":" + i + '">' + esc(x.label) + "</button>"; }).join("") + "</div>";
-        h += '<div class="note">No dice were rolled. Revise and submit again.</div>';
+        var cur = ctxOf(view), fresh = !a.context_id || (cur && a.context_id === cur.context_id);
+        if ((a.review.alternatives || []).length) h += (fresh ? '<div class="note">Tap an option to load it into your turn:</div>' : "") + '<div class="sugg">' + a.review.alternatives.map(function (x, i) {
+          return '<button class="chip" data-ralt="' + esc(a._id) + ":" + i + '"' + (fresh && x.declaration ? "" : " disabled") + ">" + esc(x.label) + "</button>"; }).join("") + "</div>";
+        h += '<div class="note">' + (fresh ? "No dice were rolled. Choose an option above or revise and submit again." : "No dice were rolled. These options were for an earlier moment in the scene; plan from what you see now.") + "</div>";
       }
       if (a.status === "resolved") h += '<div class="note">The GM resolved this turn and it is saved in the record' + (a.commit ? " (" + esc(String(a.commit).slice(0, 7)) + ")" : "") + ". The Datapad has not been updated yet, so you still see the scene before it. Retry is safe: nothing is rolled again." +
         (a.publication && a.publication.last_error ? '<div class="msg-warn">' + esc(a.publication.last_error) + "</div>" : "") + "</div>";
@@ -609,7 +617,7 @@
 
   /* ---------- interaction ---------- */
   function setMsg(t) { var m = $("msg"); if (m) m.textContent = t; }
-  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; saveUi(); render(); ui.lastAdded = ""; }
+  function changed() { ui.confirmed = false; ui.draftId = ""; ui.carried = false; ui.alt = null; saveUi(); render(); ui.lastAdded = ""; }
   function sortSeq() {
     var L = ui.sel.steps.map(function (x, i) { return [x, i]; });
     L.sort(function (a, b) { return (a[0].seq || 0) - (b[0].seq || 0) || a[1] - b[1]; });
@@ -745,9 +753,21 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-ralt]"), function (b) {
       b.addEventListener("click", function () {
         var p = b.getAttribute("data-ralt").split(":"), a = actions.filter(function (x) { return x._id === p[0]; })[0];
-        var alt = a && a.review && a.review.alternatives[+p[1]]; if (alt && ctxOf(view)) { loadDeclaration(alt.declaration, ctxOf(view)); render(); }
+        var alt = a && a.review && a.review.alternatives[+p[1]], c = ctxOf(view);
+        if (!alt || !alt.declaration || !c) return;
+        loadDeclaration(alt.declaration, c);
+        ui.alt = { of: a._id, index: +p[1], label: alt.label || "GM option" }; saveUi(); render();
+        var go = function () { var el = $("altBanner"); if (el && el.scrollIntoView) el.scrollIntoView({ block: "start" }); };
+        go(); setTimeout(go, 60);  // again after layout settles (sticky bars, tab bar)
       });
     });
+    on("submitAlt", "click", function () {
+      var c = ctxOf(view), r = c ? safeValidate(declaration(c), c) : null, m = $("altMsg");
+      if (r && !r.legal) { if (m) m.textContent = "This option does not pass the rules check as loaded. See the check below."; return; }
+      if (r && r.needs_confirmation && !ui.confirmed) { if (m) m.textContent = "Confirm the listed risks below first, then submit."; return; }
+      submitTurn();
+    });
+    on("discardAlt", "click", function () { ui = freshUi(ui.ctxId, ui.write); saveUi(); render(); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-wd]"), function (b) {
       b.addEventListener("click", function () {
         var id = b.getAttribute("data-wd"), a = actions.filter(function (x) { return x._id === id; })[0];
@@ -831,6 +851,7 @@
     var d = c ? declaration(c) : null, r = c ? safeValidate(d, c) : null;
     if (c && (!r.legal || (r.needs_confirmation && !ui.confirmed))) return;
     var text = c ? turnText(d, r) : ui.write.trim();
+    if (ui.alt) text = "GM option chosen: " + ui.alt.label + (text ? "\n" + text : "");
     if (!text) return;
     phase = "validating"; render();
     var seenRev = view.revision, seenHead = view.ledger_head;
@@ -853,6 +874,7 @@
       contract: T.VERSION, confirmed_warnings: !!(r && r.needs_confirmation), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
       preflight: r ? { legal: r.legal, crashed: !!r.crashed, codes: r.errors.map(function (e) { return e.code; }).concat(r.warnings.map(function (w) { return w.code; })) } : null,
       status: "submitted", created_ms: Date.now() };
+    if (ui.alt) doc.gm_alternative = { of_action: ui.alt.of, index: ui.alt.index, label: ui.alt.label };
     // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.
     ref.get().then(function (snap) { return snap.exists ? null : ref.set(doc); }).then(function () {
       localPending = { id: id, at: Date.now(), text: text };

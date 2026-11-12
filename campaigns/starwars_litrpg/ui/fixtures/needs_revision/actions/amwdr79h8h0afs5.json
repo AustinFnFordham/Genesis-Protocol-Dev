@@ -1,0 +1,100 @@
+{
+ "actor": "aero",
+ "based_on_revision": 992,
+ "campaign_id": "hask_meadow_r2",
+ "confirmed_warnings": false,
+ "context_id": "evt_1249",
+ "contract": "turn-contract/3",
+ "created_ms": 1794500393660,
+ "declaration": {
+  "actions": [
+   {
+    "option": "strike_through_hatch",
+    "target": null,
+    "trigger": null
+   }
+  ],
+  "actor": "aero",
+  "bonus_actions": [],
+  "freeform": "Lightsaber is slid through the wall melting it away atttempting to cut it's head off. The action happens in my proper turn order",
+  "movement": {
+   "option": "hold"
+  },
+  "objects": [],
+  "reactions": [],
+  "source": "composer",
+  "speech": null,
+  "unmapped": [
+   "Lightsaber is slid through the wall melting it away atttempting to cut it's head off. The action happens in my proper turn order"
+  ]
+ },
+ "ledger_head": "evt_1249",
+ "preflight": {
+  "codes": [],
+  "crashed": true,
+  "legal": true
+ },
+ "processing": {
+  "heartbeat_ms": 1794500439122,
+  "run": "run-1794500418752-670eb3",
+  "started_ms": 1794500439122
+ },
+ "review": {
+  "alternatives": [
+   {
+    "declaration": {
+     "actions": [],
+     "actor": "aero",
+     "bonus_actions": [],
+     "freeform": "",
+     "movement": {
+      "option": "hold"
+     },
+     "objects": [],
+     "reactions": [],
+     "source": "composer",
+     "speech": null,
+     "unmapped": []
+    },
+    "label": "End your turn here: hold at the hatch, the blade kept through the slot. On your next turn (round 2) declare the strike through the hatch."
+   },
+   {
+    "declaration": {
+     "actions": [],
+     "actor": "aero",
+     "bonus_actions": [],
+     "freeform": "",
+     "movement": {
+      "option": "hold"
+     },
+     "objects": [
+      "withdraw_blade"
+     ],
+     "reactions": [],
+     "source": "composer",
+     "speech": null,
+     "unmapped": []
+    },
+    "label": "Draw the blade back in through the slot and end your turn; declare your round-2 action then."
+   }
+  ],
+  "errors": [
+   {
+    "code": "ACTION_SPENT",
+    "message": "Round 1: your action is spent (the stroke through the hatch, a miss). Striking again is an attack and takes an action, which you will have on your next turn, not this one."
+   },
+   {
+    "code": "NEXT_TURN",
+    "message": "A declaration covers your current turn only. An action for your next turn is declared on that turn, after the pack's turn has played out, so you can see what changed first."
+   }
+  ],
+  "summary": "Your action for round 1 is already spent: the first stroke through the hatch missed. A second stroke can only come on your next turn, so it cannot be resolved in this submission. End your turn now (the pack acts at initiative 7), then declare the strike on your round-2 turn. No dice were rolled.",
+  "warnings": [
+   "The automatic rules check could not build alternatives for this declaration (a checker fault on a spent-action attack); the GM wrote these by hand and checked each one."
+  ]
+ },
+ "source": "composer",
+ "status": "needs_revision",
+ "text": ". Also: Lightsaber is slid through the wall melting it away atttempting to cut it's head off. The action happens in my proper turn order",
+ "warnings": []
+}

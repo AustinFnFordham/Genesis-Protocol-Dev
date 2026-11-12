@@ -1,0 +1,103 @@
+{
+ "actor": "aero",
+ "based_on_revision": 992,
+ "campaign_id": "hask_meadow_r2",
+ "confirmed_warnings": false,
+ "context_id": "evt_1249",
+ "contract": "turn-contract/3",
+ "created_ms": 1794495169852,
+ "declaration": {
+  "actions": [],
+  "actor": "aero",
+  "bonus_actions": [],
+  "freeform": "Lightning fast: I drag, saber still protruding through the wall, in the direction of the sharp hitch of breath, attempting to decapitate the dog before it has a chance to disengage.",
+  "movement": {
+   "option": "hold"
+  },
+  "objects": [],
+  "reactions": [],
+  "source": "composer",
+  "speech": null,
+  "unmapped": [
+   "Lightning fast: I drag, saber still protruding through the wall, in the direction of the sharp hitch of breath, attempting to decapitate the dog before it has a chance to disengage."
+  ]
+ },
+ "ledger_head": "evt_1249",
+ "preflight": {
+  "codes": [],
+  "crashed": false,
+  "legal": true
+ },
+ "processing": {
+  "heartbeat_ms": 1794495217553,
+  "run": "run-1794495197735-a386ee",
+  "started_ms": 1794495217553
+ },
+ "review": {
+  "alternatives": [
+   {
+    "declaration": {
+     "actions": [],
+     "actor": "aero",
+     "bonus_actions": [],
+     "movement": {
+      "option": "hold"
+     },
+     "objects": [],
+     "reactions": [],
+     "source": "composer",
+     "speech": null
+    },
+    "label": "Hold where you are with the blade through the hatch and end your turn"
+   },
+   {
+    "declaration": {
+     "actions": [],
+     "actor": "aero",
+     "bonus_actions": [],
+     "movement": {
+      "option": "hold"
+     },
+     "objects": [
+      "withdraw_blade"
+     ],
+     "reactions": [],
+     "source": "composer",
+     "speech": null
+    },
+    "label": "Draw the blade back in through the slot (object interaction) and hold at the hatch"
+   },
+   {
+    "declaration": {
+     "actions": [],
+     "actor": "aero",
+     "bonus_actions": [],
+     "movement": {
+      "option": "step_back"
+     },
+     "objects": [
+      "withdraw_blade"
+     ],
+     "reactions": [],
+     "source": "composer",
+     "speech": null
+    },
+    "label": "Draw the blade back in through the slot and step back about 10 ft along the walkway"
+   }
+  ],
+  "errors": [
+   {
+    "code": "ACTION_CONFLICT",
+    "message": "A lightsaber attack (the dragging cut toward the sound) requires your action, which you spent on the stroke through the hatch this turn. Your bonus action, movement (30 ft), one object interaction, your reaction and speech remain."
+   }
+  ],
+  "summary": "Dragging the blade through the planks toward the breath to take its head is a lightsaber attack, and an attack takes your action. Your action this turn is already spent: the stroke through the hatch missed. Nothing in your training gives you a second attack as a bonus action, so this cannot be done until your next turn. No dice were rolled.",
+  "warnings": [
+   "The blade still runs out through the slot in the hatch. Whatever lies against the outside is on the other side of the planks, at your knee, and its turn comes when yours ends."
+  ]
+ },
+ "source": "composer",
+ "status": "needs_revision",
+ "text": ". Also: Lightning fast: I drag, saber still protruding through the wall, in the direction of the sharp hitch of breath, attempting to decapitate the dog before it has a chance to disengage.",
+ "warnings": []
+}

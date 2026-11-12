@@ -73,3 +73,6 @@ A chosen line is the player's declaration of speech. The listener answers from t
 
 ## 6. Submission states
 `draft → validating → submitted → processing → committed`, or `needs_revision` (legal conflict or stale state; no dice rolled) or `failed` (processing error; nothing narrated). Action ids are minted once per draft, so retries and double taps write the same document. The processor claims an action exactly once (versioned write) and processes only actions made against the current ledger revision.
+
+## GM options after "Needs revision" (2026-11-12)
+A `needs_revision` review carries `alternatives [{label, declaration}]`. In the Datapad each is a button: tapping one loads its declaration into the composer, shows a "GM option loaded" banner with **Submit this option** and **Discard**, and scrolls to it. The submitted action carries `gm_alternative {of_action, index, label}` and its text starts `GM option chosen:`. An option may legitimately add nothing visible (for example "End your turn": no action, movement `hold`); it is still submittable, and in combat it ends the turn. Options written for an earlier turn context are shown disabled. The same preflight applies as to any turn.
