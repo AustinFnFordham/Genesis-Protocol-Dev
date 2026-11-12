@@ -1,0 +1,12 @@
+{
+  "head": "evt_1168",
+  "events": 1168,
+  "ledger_bytes": 2043264,
+  "full_bundle_bytes": 190574,
+  "compact_bundle_bytes": 48087,
+  "compact_vs_full_reduction_percent": 74.77,
+  "full_replay_median_ms": 191.67,
+  "verified_checkpoint_ms": 198.74,
+  "same_fields": true,
+  "limits": "Timing is local; bytes are not model token measurements. Checkpoint payload verification replays the prefix; no runtime speedup claimed."
+}

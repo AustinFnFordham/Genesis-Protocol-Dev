@@ -1073,17 +1073,29 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
   var selId = ls("datapad.member") || "aero";
   /* ---------- history: older narration and journal entries live in byte-bounded pages (view/feed-NNNN,
      view/journal-NNNN) named by the snapshot's manifest; they are fetched only when the player asks. ---------- */
-  var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" } };
+  var historyGeneration = 0;
+  function refreshHistory(next) {
+    var previous = view || {};
+    if (previous.campaign_id === next.campaign_id && JSON.stringify(previous.history) === JSON.stringify(next.history)) return;
+    historyGeneration++;
+    Object.keys(hist).forEach(function (kind) { hist[kind] = { loaded: [], idx: 0, busy: false, err: "" }; });
+  }
+  var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" }, dice_history: { loaded: [], idx: 0, busy: false, err: "" } };
+  var journalExpanded = { performance: true };
+  function journalSection(kind) { return '<details class="panel" data-journal-section="' + kind + '"' + (journalExpanded[kind] ? ' open' : '') + '>'; }
+  ["chapters", "events", "relationship_evidence"].forEach(function (kind) {
+    hist[kind] = { loaded: [], idx: 0, busy: false, err: "" };
+  });
   function evtNum(id) { var m = /(\d+)$/.exec(String(id || "")); return m ? +m[1] : 0; }
   function histPages(v, kind) { var h = v.history && v.history[kind]; return (h && h.pages) || []; }
   /* Entries older than the snapshot's preview. Never anything newer than the published revision:
      a page can be written before the snapshot advances, and the player sees only complete revisions. */
   function olderEntries(v, kind) {
     var shown = {}, head = evtNum(v.ledger_head), seen = {};
-    (v[kind] || []).forEach(function (x) { shown[x.event_id] = 1; });
+    (v[kind] || []).forEach(function (x) { shown[x.roll_id || x.event_id] = 1; });
     return hist[kind].loaded.filter(function (x) {
-      if (shown[x.event_id] || seen[x.event_id] || evtNum(x.event_id) > head) return false;
-      seen[x.event_id] = 1; return true;
+      if (shown[x.roll_id || x.event_id] || seen[x.roll_id || x.event_id] || evtNum(x.event_id) > head) return false;
+      seen[x.roll_id || x.event_id] = 1; return true;
     }).sort(function (a, b) { return evtNum(a.event_id) - evtNum(b.event_id); });
   }
   function olderLeft(v, kind) {
@@ -1100,16 +1112,17 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
   function loadOlder(kind, done) {
     var st = hist[kind], pages = histPages(view, kind);
     if (!dbRef || st.busy || st.idx >= pages.length) return;
-    var pg = pages[pages.length - 1 - st.idx], before = olderEntries(view, kind).length;
+    var pg = pages[pages.length - 1 - st.idx], before = olderEntries(view, kind).length, generation = historyGeneration;
     st.busy = true; st.err = ""; render();
     dbRef.doc("view/" + pg.id).get().then(function (snap) {
+      if (generation !== historyGeneration) return;
       st.busy = false;
       if (!snap.exists) { st.err = "That part of the record is not available yet."; render(); return; }
       st.loaded = st.loaded.concat((snap.data().entries || [])); st.idx++;
       // a page that only repeats what is already on screen adds nothing: go one further back
       if (olderEntries(view, kind).length === before && st.idx < pages.length) { loadOlder(kind, done); return; }
       render(); if (done) done();
-    }, function (e) { st.busy = false; st.err = "Could not load (" + ((e && e.code) || "error") + "). Try again."; render(); });
+    }, function (e) { if (generation !== historyGeneration) return; st.busy = false; st.err = "Could not load (" + ((e && e.code) || "error") + "). Try again."; render(); });
   }
   function roster(v) { return v.roster && v.roster.length ? v.roster : [{ id: "aero", name: v.character.name, line: v.character.line, role: "You", status: "Active", mechanics: "authoritative" }]; }
   function selected(v) { var r = roster(v); return r.filter(function (m) { return m.id === selId; })[0] || r[0]; }
@@ -1171,6 +1184,30 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       '<div class="panel"><h2>Inventory</h2><ul class="plain">' + c.inventory.map(function (i) { return '<li class="kv"><span>' + esc(i.item) + "</span><span>×" + i.qty + "</span></li>"; }).join("") + '</ul><div class="kv" style="margin-top:8px"><span>Credits</span><span>' + c.credits + "</span></div></div>";
   }
 
+  function renderDiceHistory(v) {
+    var rows = olderEntries(v, "dice_history").concat(v.dice_history || []);
+    return '<div class="panel"><h2>Dice history</h2><ul class="plain">' + rows.slice().reverse().map(function (r) {
+      return '<li><b>' + esc(r.purpose) + '</b><div>' + esc(r.summary) + '</div><div class="note">' +
+        esc(r.roll_id) + ' · ' + esc(r.time) + '</div></li>';
+    }).join("") + '</ul>' + olderButton(v, "dice_history", "Load earlier rolls") + '</div>';
+  }
+
+  function renderProjection(v, kind, title) {
+    var rows = olderEntries(v, kind).concat(v[kind] || []);
+    return journalSection(kind) + '<summary>' + esc(title) + '</summary><ul class="plain">' +
+      rows.slice().reverse().map(function (row) {
+        return '<li><b>' + esc(row.title || row.event_id) + '</b><div>' + esc(row.text) + '</div>' +
+          (row.sources ? '<div class="note">Sources ' + row.sources.map(esc).join(", ") + '</div>' : '') + '</li>';
+      }).join("") + '</ul>' + olderButton(v, kind, "Load " + title.toLowerCase()) + '</details>';
+  }
+  function renderPrevious(v) {
+    var rows = olderEntries(v, "feed").concat(v.feed);
+    return journalSection("feed") + '<summary>Previous Turns</summary>' + olderButton(v, "feed", "Load earlier narrative") +
+      '<div class="feed previous-history">' + rows.map(function (row) {
+        return '<div data-eid="' + esc(row.event_id) + '"><b>' + esc(row.who === "player" ? "Aero" : "Narrator") + '</b>' + paras(row.text) + '</div>';
+      }).join("") + '</div></details>';
+  }
+
   function renderRecord(v) {
     var m = selected(v), own = isActor(v, m);
     var jrn = own ? olderEntries(v, "journal").concat(v.journal) : ((v.member_journals || {})[m.id] || []);
@@ -1179,10 +1216,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var jr = jrn.slice().reverse().map(function (j) {
       return '<li><div class="row" style="justify-content:space-between"><span class="pill ' + esc(j.knowledge) + '">' + esc(j.knowledge) + '</span><span class="note">' + esc(j.time) + "</span></div><div style='margin-top:4px'>" + esc(j.text) + "</div></li>";
     }).join("");
-    return selector(v) + '<div class="panel"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
+    return selector(v) + (own ? renderPrevious(v) + renderProjection(v, "chapters", "Chapters") +
+      renderProjection(v, "events", "Events") + renderProjection(v, "relationship_evidence", "Shared experiences") +
+      journalSection("performance") + '<summary>Performance</summary>' + renderProgress(v) + renderUsage(v) + '</details>' +
+      renderDiceHistory(v) : "") + '<div class="panel" id="journalEntries"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
       '<div class="panel"><h2>Discoveries</h2><div class="note">' + discN + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
-      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>' + renderUsage(v);
+      '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
   }
   /* ===================== Turn composer (turn-contract/3) =====================
      Combat: slot builder with the full action economy (unavailable choices disabled with their reason).
@@ -1193,6 +1233,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
   function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
   function freshUi(ctxId, keepWrite) {
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "", carried: false,
+             temperature: "regular", narrativeConsequences: false,
              sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [],
                     nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "" } };
   }
@@ -1231,7 +1272,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
   }
   var localPending = null;  // a turn this device just saved, until the store's listener reports it
   function activeAction() {
-    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved"; })[0];
+    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved" || a.status === "needs_plan_approval"; })[0];
     if (real) return real;
     if (localPending && Date.now() - localPending.at < 20000 && !actions.some(function (a) { return a._id === localPending.id; }))
       return { _id: localPending.id, status: "submitted", text: localPending.text };
@@ -1616,7 +1657,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -1677,6 +1718,20 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       '<button class="btn primary" id="submitTurn"' + (ok ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : sceneMode(ctxOf(view)) ? "Submit plan" : "Submit turn") + "</button>" +
       '<button class="btn" id="clearTurn"' + (busy ? " disabled" : "") + '>Clear</button><span class="note" id="msg"></span>';
   }
+  function resolutionSettings(v) {
+    var enabled = v.experimental_resolution && v.experimental_resolution.enabled === true;
+    return { temperature: enabled && ["regular", "heroic", "legendary"].indexOf(ui.temperature) >= 0 ? ui.temperature : "regular",
+      narrative_consequences: !!(enabled && ui.narrativeConsequences) };
+  }
+  function renderResolutionControls(v, busy) {
+    if (!v.experimental_resolution || !v.experimental_resolution.enabled) return "";
+    var s = resolutionSettings(v);
+    return '<fieldset class="grp"' + (busy ? " disabled" : "") + '><legend>Experimental resolution · this turn</legend><div style="display:flex;gap:12px;flex-wrap:wrap">' +
+      '<label style="flex:1;min-width:130px">Dice Temperature<select class="txt" id="diceTemperature" aria-label="Dice Temperature">' +
+      ["regular", "heroic", "legendary"].map(function (x) { return '<option value="' + x + '"' + (s.temperature === x ? " selected" : "") + '>' + x[0].toUpperCase() + x.slice(1) + "</option>"; }).join("") + '</select></label>' +
+      '<label style="flex:1;min-width:130px">Narrative Consequences<select class="txt" id="narrativeConsequences" aria-label="Narrative Consequences"><option value="off"' + (!s.narrative_consequences ? " selected" : "") + '>Off</option><option value="on"' + (s.narrative_consequences ? " selected" : "") + '>On</option></select></label></div>' +
+      '<div class="note">Applies to eligible player d20 rolls for this turn. Ordinary costs and consequences remain. Narrative points authorize no effect by themselves.</div></fieldset>';
+  }
   function readAsSteps(c, r, stat) { return '<div id="readAsSteps">' + readAsInner(c, r, stat) + "</div>"; }
   function readAsInner(c, r, stat) {
     if (!r.steps || !r.steps.length) return "";
@@ -1707,13 +1762,19 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
   function renderActions() {
     if (!actions.length) return "";
     return actions.slice(0, 3).map(function (a) {
-      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
+      var pills = { needs_plan_approval: '<span class="pill pend">Review your plan</span>', submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
         needs_revision: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Needs revision</span>', failed: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Failed</span>', clarify: '<span class="pill pend">Needs revision</span>' };
       var h = '<div class="act"><div class="row">' + (pills[a.status] || '<span class="pill">' + esc(a.status) + "</span>");
       if (a.status === "submitted") h += ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button> <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Start GM</button>';
       var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
       if (stuck || a.status === "failed" || a.status === "resolved") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
       h += "</div><q>" + esc(a.text) + "</q>";
+      if (a.resolution_settings) h += '<div class="note">Dice: ' + esc(a.resolution_settings.temperature) + ' · Narrative Consequences: ' + (a.resolution_settings.narrative_consequences === true ? "On" : "Off") + '</div>';
+      if (a.status === "needs_plan_approval" && a.review_plan) {
+        h += '<ol>' + (a.review_plan.summary || []).map(function (line) { return '<li>' + esc(line) + '</li>'; }).join("") +
+          '</ol><button class="btn" data-approve-plan="' + esc(a._id) + '">Approve this plan</button> ' +
+          '<button class="btn" data-revise-plan="' + esc(a._id) + '">Revise</button>';
+      }
       if (a.status === "submitted") h += notifyLine(a);
       if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
       if (a.status === "needs_revision" && a.review) {
@@ -1757,6 +1818,54 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
       "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
+  function renderPlanReview() {
+    return '<label class="note"><input type="checkbox" id="requestPlanReview"' +
+      (ui.reviewBeforeRoll ? " checked" : "") + (activeAction() ? " disabled" : "") +
+      '> Review my plan before rolling</label>';
+  }
+
+  function renderContest(v) {
+    var declaration = v.contest_declaration || v.feed.slice().reverse().filter(function (entry) { return entry.who === "player"; })[0];
+    if (!declaration) return "";
+    return '<details class="panel"><summary>This isn’t what I meant</summary>' +
+      '<label>Reason <select id="contestCategory"><option value="intent">My intention was misunderstood</option>' +
+      '<option value="rules">A rule was applied incorrectly</option><option value="unfavorable">The outcome was unfavorable</option></select></label>' +
+      (declaration.steps && declaration.steps.length ? '<label>Disputed step <select id="contestStep">' + declaration.steps.map(function (step) {
+        return '<option value="' + esc(step.id) + '">' + esc(step.label) + '</option>';
+      }).join("") + '</select></label>' : '<label>Disputed action <input id="contestStep" placeholder="Describe the action in this legacy declaration"></label>') +
+      '<label>What needs review <textarea id="contestText"></textarea></label>' +
+      '<label><input id="reviewBeforeRoll" type="checkbox"> Request plan review before the next roll</label>' +
+      '<button class="btn" id="sendContest" data-declaration="' + esc(declaration.event_id) + '">Request adjudication</button>' +
+      '<div class="note" id="contestStatus">A review preserves your declaration and recorded dice.</div></details>';
+  }
+
+  function renderProgress(v) {
+    var a = activeAction() || actions[0];
+    if (!a) return "";
+    var p = a.processing || {}, now = a.committed_ms || a.failed_ms || (p.stages || {}).complete || Date.now();
+    var stage = a.status === "submitted" ? "Submitted" : a.status === "resolved" ? "Publishing" :
+      a.status === "committed" ? "Complete" : a.status === "failed" ? "Failed" :
+      a.status === "needs_revision" ? "Needs revision" : a.status === "needs_plan_approval" ? "Awaiting plan approval" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
+    function durationSince(timestamp) { return (Math.max(0, now - timestamp) / 1000).toFixed(1) + " s"; }
+    var elapsed = p.started_ms ? durationSince(p.started_ms) : "awaiting worker";
+    var stageStart = a.status === "needs_plan_approval" && a.review_plan ? a.review_plan.created_ms : p.stage_started_ms;
+    var duration = stageStart ? durationSince(stageStart) : "not reported";
+    var stale = a.status === "processing" && p.heartbeat_ms && now - p.heartbeat_ms > (p.lease_ms || 180000);
+    var marks = p.stages || {}, keys = ["claimed", "context", "rules", "dice", "ledger", "narration", "publishing", "complete"];
+    var detail = keys.filter(function (k) { return typeof marks[k] === "number"; }).map(function (k) {
+      var later = keys.slice(keys.indexOf(k) + 1).map(function (x) { return marks[x]; }).filter(function (x) { return typeof x === "number"; })[0];
+      return "<li>" + esc(k) + " · " + ((Math.max(0, (later || now) - marks[k])) / 1000).toFixed(1) + " s</li>";
+    }).join("");
+    var labels = ["Submitted", "Claimed", "Context", "Rules", "Dice", "Ledger", "Narration", "Publishing", "Complete"];
+    var stages = '<div class="tags">' + labels.map(function (label) {
+      return '<span' + (label === stage ? ' aria-current="step"' : '') + '>' + esc(label) + '</span>';
+    }).join("") + '</div>';
+    return '<div class="panel" data-turn-progress aria-live="polite"><h2>Turn progress · ' + esc(stage) + '</h2>' + stages + '<div class="note">Elapsed ' +
+      esc(elapsed) + ' · current stage ' + esc(duration) + (stale ? ' · worker heartbeat overdue; retry available' : '') +
+      (a.status === "resolved" ? ' · resolution saved; publication pending' : '') +
+       '</div>' + (stale || a.status === "resolved" ? '<button class="btn" data-progress-retry="' + esc(a._id) + '">Retry worker</button>' : '') + '<details><summary>Phase timings</summary><ol>' + detail + '</ol></details></div>';
+  }
+
   function renderDice(v) {
     if (!v.rolls || !v.rolls.length) return "";
     return '<div class="panel"><h2>Dice · last turn</h2><ul class="plain dice">' + v.rolls.map(function (r) { return "<li><div>" + esc(r.purpose) + '</div><div class="kv"><span class="note">' + esc(r.by === "gm" ? "GM" : "You") + "</span><span>" + esc(r.summary) + "</span></div></li>"; }).join("") + "</ul></div>";
@@ -1764,14 +1873,14 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
 
   function renderCenter(v) {
     var s = v.scene;
-    var feed = olderEntries(v, "feed").concat(v.feed).map(function (f) {
+    var feed = v.feed.filter(function (f) { return f.who === "gm"; }).slice(-1).map(function (f) {
       return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
-      '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      renderDice(v) + renderTurn(v);
+      '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      renderDice(v) + renderProgress(v) + renderPlanReview() + renderTurn(v) + renderContest(v);
   }
 
   function render() {
@@ -1787,6 +1896,55 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     $("colCenter").innerHTML = renderCenter(view);
     Array.prototype.forEach.call(document.querySelectorAll(".member-sel"), function (el) {
       el.addEventListener("change", function () { selId = el.value; ls("datapad.member", selId); render(); });
+    });
+    var contestButton = $("sendContest");
+    if (contestButton) contestButton.addEventListener("click", function () {
+      var text = $("contestText").value.trim();
+      if (!text || !$("contestStep").value.trim()) { $("contestStatus").textContent = "Identify the step and describe the issue."; return; }
+      contestButton.disabled = true;
+      var id = "contest_" + Date.now().toString(36) + Math.random().toString(36).slice(2);
+      dbRef.doc("disputes/" + id).set({ category: $("contestCategory").value, declaration_event: contestButton.getAttribute("data-declaration"),
+        step_id: $("contestStep").value.trim(), explanation: text, campaign_id: view.campaign_id,
+        based_on_revision: view.revision, ledger_head: view.ledger_head, review_before_roll: $("reviewBeforeRoll").checked,
+        status: "awaiting_adjudication", created_ms: Date.now() }).then(function () {
+          $("contestStatus").textContent = "Review requested. Your declaration and dice are preserved.";
+        }, function () { contestButton.disabled = false; $("contestStatus").textContent = "Could not save the request. Try again."; });
+    });
+    var planReview = $("requestPlanReview");
+    if (planReview) planReview.addEventListener("change", function () { ui.reviewBeforeRoll = planReview.checked; saveUi(); });
+    document.querySelectorAll("[data-approve-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-approve-plan");
+        button.disabled = true;
+        dbRef.doc("actions/" + id).get().then(function (snapshot) {
+          var action = snapshot.data(), review = action.review_plan;
+          if (action.status !== "needs_plan_approval" || !review || action.based_on_revision !== view.revision || action.ledger_head !== view.ledger_head) {
+            throw Error("The scene or plan changed. Review it again.");
+          }
+          var ref = dbRef.doc("plan_approvals/" + id);
+          return ref.get().then(function (existing) {
+            if (existing.exists) return;
+            return ref.set({ decision: "approved", action_id: id, campaign_id: action.campaign_id,
+              review_id: review.review_id, based_on_revision: action.based_on_revision, ledger_head: action.ledger_head });
+          });
+        }).then(function () { notifyGM(id); }, function (error) { button.disabled = false; setMsg(error.message || "Could not approve the plan."); });
+      });
+    });
+    document.querySelectorAll("[data-revise-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-revise-plan");
+        var action = actions.filter(function (row) { return row._id === id; })[0];
+        if (!action || action.status !== "needs_plan_approval" || !action.review_plan) return;
+        dbRef.doc("plan_revisions/" + id).set({action_id: id, campaign_id: action.campaign_id,
+          review_id: action.review_plan.review_id, based_on_revision: action.based_on_revision,
+          ledger_head: action.ledger_head}).then(function () {
+            if (ctxOf(view)) loadDeclaration(action.declaration, ctxOf(view));
+            render();
+            setMsg("Revision requested. The worker will release this plan before a new submission.");
+            notifyGM(id);
+        });
+
+      });
     });
     bindCenter();
     if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
@@ -1926,8 +2084,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     on("w_trigger", "input", soft(function (x) { ui.sel.trigger = x; }));
     on("w_note", "input", soft(function (x) { ui.note = x; }));
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
+    on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
+    on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     bindLive();
     each(".composer textarea", autoGrow);
+    each("[data-journal-section]", function (element) {
+      element.addEventListener("toggle", function () { if (element.isConnected) journalExpanded[element.getAttribute("data-journal-section")] = element.open; });
+    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-ralt]"), function (b) {
       b.addEventListener("click", function () {
         var p = b.getAttribute("data-ralt").split(":"), a = actions.filter(function (x) { return x._id === p[0]; })[0];
@@ -2018,6 +2181,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     if (c && (!r.legal || (r.needs_confirmation && !ui.confirmed))) return;
     var text = c ? turnText(d, r) : ui.write.trim();
     if (!text) return;
+    var selectedResolution = resolutionSettings(view);
     phase = "validating"; render();
     var seenRev = view.revision, seenHead = view.ledger_head;
     // The store may have moved on since this plan was checked: re-read it first and never submit against an old scene.
@@ -2028,15 +2192,17 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
         setMsg("The scene moved on (revision " + seenRev + " → " + cur.revision + "). Your plan is kept and re-checked; review it and submit again.");
         return;
       }
-      saveAction(c, d, r, text);
-    }, function () { saveAction(c, d, r, text); });
+      saveAction(c, d, r, text, selectedResolution);
+    }, function () { saveAction(c, d, r, text, selectedResolution); });
   }
-  function saveAction(c, d, r, text) {
+  function saveAction(c, d, r, text, selectedResolution) {
     if (!ui.draftId) { ui.draftId = "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); saveUi(); }
     var id = ui.draftId, ref = dbRef.doc("actions/" + id);
     var doc = { text: text, declaration: d, source: c ? (ui.mode === "write" ? "freeform" : "composer") : "freeform", actor: view.active_actor || "aero",
       campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, context_id: c ? c.context_id : null,
       contract: T.VERSION, confirmed_warnings: !!(r && r.needs_confirmation), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
+      request_plan_review: ui.reviewBeforeRoll === true,
+      resolution_settings: selectedResolution,
       preflight: r ? { legal: r.legal, crashed: !!r.crashed, codes: r.errors.map(function (e) { return e.code; }).concat(r.warnings.map(function (w) { return w.code; })) } : null,
       status: "submitted", created_ms: Date.now() };
     // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.
@@ -2065,11 +2231,24 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
 
   /* ---------- data: subscribe once ---------- */
   var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
-  setInterval(function () { if (activeAction()) render(); }, 30000);  // refresh "processing for N min" labels only while a turn is out
+  setInterval(function () {
+    if (!view || !activeAction()) return;
+    document.querySelectorAll("[data-turn-progress]").forEach(function (element) {
+      var expanded = element.querySelector("details").open;
+      var holder = document.createElement("div");
+      holder.innerHTML = renderProgress(view);
+      var next = holder.firstElementChild;
+      if (next) { next.querySelector("details").open = expanded; element.replaceWith(next); }
+    });
+  }, 1000);
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-progress-retry]");
+    if (button) notifyGM(button.getAttribute("data-progress-retry"));
+  });  // refresh "processing for N min" labels only while a turn is out
   function start(db) {
     dbRef = db; status = "live";
     db.doc("view/state").onSnapshot(function (snap) {
-      if (snap.exists) { view = snap.data(); clearTimeout(timer); }
+      if (snap.exists) { refreshHistory(snap.data()); view = snap.data(); clearTimeout(timer); }
       render();
     }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
     db.collection("usage").orderBy("started_ms", "desc").limit(50).onSnapshot(function (q) {

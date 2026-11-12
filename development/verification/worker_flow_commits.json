@@ -1,0 +1,26 @@
+{
+  "base": "056b7ba69dedc7379ab95a62673d1052ffcf5811",
+  "branch": "dev/worker-flow-verification-056b7ba",
+  "commits": [
+    {
+      "local": "4d0ebbaefac038356e7013a6243cf2d046b0766d",
+      "remote": "f3371dd73b940e73e1c7dfbb55bf56ea3b15bdbe",
+      "subject": "Reject progress updates older than the latest worker heartbeat"
+    },
+    {
+      "local": "42a002e71549b84ad468f98dea5ed56e8fa5713e",
+      "remote": "97507dd54ceb06ad33f8697cdfe050e75d218d34",
+      "subject": "Fence supplied action heads and contexts while preserving legacy clients"
+    },
+    {
+      "local": "c9cd5ec88cfd515296154c0825974e05ac37e542",
+      "remote": "c43d1c8fa7b67845c8ac013b5bfad227068fdd6a",
+      "subject": "Exercise interrupted sandbox turn and snapshot publication with real Genesis modules"
+    },
+    {
+      "local": "8d359e66f0ed7e8ecef5e146eda33675afbc9810",
+      "remote": "2f2012ba01ab31f4425ef6819a5d3959b5018a3e",
+      "subject": "Record worker integration evidence and remaining release gates"
+    }
+  ]
+}

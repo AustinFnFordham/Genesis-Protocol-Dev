@@ -1,0 +1,11 @@
+{
+  "live_base": "acd961c0620a762086afcb978be1e76293f1b328",
+  "protected_files": 55,
+  "source_hash": "9b923856282e434e208e11dbabdb7385e14a8f11b9e3a23e1700b9ce60ce40f0",
+  "candidate_working_copy_hash": "9b923856282e434e208e11dbabdb7385e14a8f11b9e3a23e1700b9ce60ce40f0",
+  "identical": true,
+  "untracked_protected_files": false,
+  "live_worker_invoked": false,
+  "live_database_accessed": false,
+  "deployed": false
+}

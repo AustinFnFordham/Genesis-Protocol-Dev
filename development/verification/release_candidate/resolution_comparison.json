@@ -1,0 +1,145 @@
+{
+  "same_ordinary_draws_across_all_six": true,
+  "seed_exported": false,
+  "workloads": [
+    {
+      "temperature": "regular",
+      "narrative_consequences": false,
+      "scenes": 6,
+      "mechanical_successes": 1,
+      "narrative_outcomes": {
+        "advantage": 0,
+        "threat": 0,
+        "neutral": 0,
+        "off": 6
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1689.34,
+      "context_retrieval_ms": 195.58,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20274
+    },
+    {
+      "temperature": "regular",
+      "narrative_consequences": true,
+      "scenes": 6,
+      "mechanical_successes": 1,
+      "narrative_outcomes": {
+        "advantage": 2,
+        "threat": 4,
+        "neutral": 0,
+        "off": 0
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1875.1,
+      "context_retrieval_ms": 205.81,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20330
+    },
+    {
+      "temperature": "heroic",
+      "narrative_consequences": false,
+      "scenes": 6,
+      "mechanical_successes": 3,
+      "narrative_outcomes": {
+        "advantage": 0,
+        "threat": 0,
+        "neutral": 0,
+        "off": 6
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1848.31,
+      "context_retrieval_ms": 226.83,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20276
+    },
+    {
+      "temperature": "heroic",
+      "narrative_consequences": true,
+      "scenes": 6,
+      "mechanical_successes": 3,
+      "narrative_outcomes": {
+        "advantage": 2,
+        "threat": 4,
+        "neutral": 0,
+        "off": 0
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1806.6,
+      "context_retrieval_ms": 184.08,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20332
+    },
+    {
+      "temperature": "legendary",
+      "narrative_consequences": false,
+      "scenes": 6,
+      "mechanical_successes": 6,
+      "narrative_outcomes": {
+        "advantage": 0,
+        "threat": 0,
+        "neutral": 0,
+        "off": 6
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1883.16,
+      "context_retrieval_ms": 188.61,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20285
+    },
+    {
+      "temperature": "legendary",
+      "narrative_consequences": true,
+      "scenes": 6,
+      "mechanical_successes": 6,
+      "narrative_outcomes": {
+        "advantage": 2,
+        "threat": 4,
+        "neutral": 0,
+        "off": 0
+      },
+      "eligible_effects": 0,
+      "committed_effects": 0,
+      "decision_points": 6,
+      "public_revision": 59,
+      "public_scene_progression": "six completed public inspection turns; pending pickup preserved",
+      "local_total_ms": 1694.34,
+      "context_retrieval_ms": 186.16,
+      "model_calls": 0,
+      "tokens": null,
+      "publication": "local document generation only",
+      "snapshot_bytes": 20341
+    }
+  ],
+  "limits": "Scripted diagnostic workloads, not remote staging, model-latency or entertainment quality evidence. Private margins and targets omitted."
+}

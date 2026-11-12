@@ -1,0 +1,43 @@
+{
+  "branch": "rc/experimental-resolution-acd961c",
+  "live_base": "acd961c0620a762086afcb978be1e76293f1b328",
+  "method": "Existing live base tree plus code, tests and report entries only; no campaign or shared-character write entries",
+  "prepared_increment_commits": [
+    {
+      "local": "601333d0a37c87edaf66ca191f3f57e72a3349f6",
+      "remote": "ca620d51b4f98e1046ab4c5ad1164db804cdc615",
+      "tree": "9b7c578a8b1d97de1158443a70696bfe1cc0ef22",
+      "subject": "Assemble isolated release candidate from current live HEAD and tested development"
+    },
+    {
+      "local": "1039f1f288ee0daa402e7fe920fedac129246f36",
+      "remote": "6235d15ea3846ad19fd05783dec37f50fd8d525c",
+      "tree": "42ce4ec1a010ee8f89c8aaf9fcca105b03ace871",
+      "subject": "Add sandbox-only deterministic dual-axis resolution and recoverable dice transactions"
+    },
+    {
+      "local": "b945fd478727184eb102404e3f5451311a2b7ded",
+      "remote": "925361bead9bf64557e186d0618a198555b65153",
+      "tree": "38a67e0890aa0cbdb0e459b03467a438d5260b5b",
+      "subject": "Add gated per-turn resolution controls and retain Journal expansion during pagination"
+    },
+    {
+      "local": "cf3628be7c84e3195be2058aa192ccfcdfffab67",
+      "remote": "abfcff15d8a6499dbe1f4c27b5b1198d2e2d0345",
+      "tree": "4b0ee9c514623c3d779e9c34c5df8c433ddb9f32",
+      "subject": "Prevent renamed retry keys from rerolling an accepted sequencer step"
+    },
+    {
+      "local": "00533ada8aada9bad1c86e0b73142dc290fd47cf",
+      "remote": "8b3c26379aed5063679f283b687bcbdfce5fdad5",
+      "tree": "3ddb3477faa85ab4ab95a07c06794fc05179fbf0",
+      "subject": "Document candidate evidence, failed legacy crash gate, release hold and rollback"
+    }
+  ],
+  "later_local_commits_in_final_assembly": [
+    "51cd32bbb0e5fc73bc0f23425d22d74f11c67c3c",
+    "e21839ddc54df9801dc273aab5484135829424a5",
+    "cd7ea73"
+  ],
+  "note": "Final assembly commit is the published branch HEAD. Its complete source tree must match the final tested local tree before the ref update."
+}
