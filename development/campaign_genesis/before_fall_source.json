@@ -1,0 +1,96 @@
+{
+  "source": {
+    "library_file_id": "libfile_f90a2f1346c081918da3a138cc0a94a1",
+    "filename": "BeforeTheFall(1).docx",
+    "sha256": "fe4827b964f1e34a4b4558686f3d72a13d9e849f506401afa2f92609b24e8475",
+    "bytes": 30045
+  },
+  "status": "source-pinned reference, not a replacement ruleset",
+  "resource_states": [
+    "abundant",
+    "customary",
+    "scarce"
+  ],
+  "initialization": {
+    "resource_selection_rounds": 2,
+    "initial_abundant_resources": 2,
+    "initial_scarce_resources": 2,
+    "map_marking_rounds_up_to": 4
+  },
+  "projects": {
+    "typical_weeks": [
+      1,
+      6
+    ],
+    "pitch_in_requires_discussion": true,
+    "pitch_in_min_project_weeks_exclusive": 5,
+    "pitch_in_reduction_weeks_per_faction": 2,
+    "pitch_in_floor_weeks": 1,
+    "renown_advance_weeks": 1
+  },
+  "renown": {
+    "project_completion_gain": 1,
+    "normal_cap": 6,
+    "cancels_nonpermanent_scorn": true
+  },
+  "scorn": {
+    "sabotage_threshold": 3,
+    "replacement_faction_permanent_scorn": 3,
+    "replacement_faction_hidden_motivations": 2,
+    "six_scorn_reveals_hidden_motivations": 1
+  },
+  "harvesting": {
+    "temporary_abundance_max_weeks": 6,
+    "then": "customary or scarce according to use"
+  },
+  "telescope": {
+    "anomaly_or_planet_discovery_pauses_own_projects_this_week": true,
+    "new_planet_resources": [
+      "abundant",
+      "scarce"
+    ]
+  },
+  "cards": {
+    "suit_order": [
+      "hearts",
+      "diamonds",
+      "clubs",
+      "spades"
+    ],
+    "jokers_per_season": 1,
+    "draw_again_after_joker": true,
+    "joker_options": [
+      "finish a project early",
+      "two actions this turn"
+    ],
+    "unused_joker_end_options": {
+      "renown_gain": 2,
+      "scorn_removal": 1
+    },
+    "ending_card": "king of spades",
+    "card_outcomes_per_card": 2
+  },
+  "sources": {
+    "initialization": [
+      1
+    ],
+    "factions_sabotage": [
+      2,
+      3
+    ],
+    "projects_actions": [
+      3,
+      4
+    ],
+    "cards_and_end": [
+      4
+    ]
+  },
+  "unprovided_assets": [
+    "the actual card outcome text/deck is not included in this document"
+  ],
+  "interpretation_limits": [
+    "no ordering algorithm is supplied for ambiguous simultaneous token effects",
+    "this manifest does not replace the original document"
+  ]
+}

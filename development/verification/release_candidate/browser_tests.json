@@ -1,0 +1,41 @@
+{
+  "suites": [
+    {
+      "suite": "campaigns/starwars_litrpg/ui/test_datapad_ui.cjs",
+      "passed": true,
+      "elapsed_ms": 7779.8
+    },
+    {
+      "suite": "campaigns/starwars_litrpg/ui/test_datapad_sequencer_ui.cjs",
+      "passed": true,
+      "elapsed_ms": 12974.92
+    },
+    {
+      "suite": "campaigns/starwars_litrpg/ui/test_datapad_scene_ui.cjs",
+      "passed": true,
+      "elapsed_ms": 5582.7
+    },
+    {
+      "suite": "campaigns/starwars_litrpg/ui/test_datapad_iphone.cjs",
+      "passed": true,
+      "elapsed_ms": 7824.89
+    },
+    {
+      "suite": "campaigns/starwars_litrpg/ui/test_datapad_history.cjs",
+      "passed": true,
+      "elapsed_ms": 2834.77
+    },
+    {
+      "suite": "development/test_player_experience.cjs",
+      "passed": true,
+      "elapsed_ms": 3070.17
+    },
+    {
+      "suite": "development/experimental_resolution/test_controls.cjs",
+      "passed": true,
+      "elapsed_ms": 1628.99
+    }
+  ],
+  "real_mobile_safari": false,
+  "all_passed": true
+}

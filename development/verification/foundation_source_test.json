@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "canonical_endpoints_resolved": 2,
+  "candidate_relationships": 1,
+  "original_rules_hash_matches": true,
+  "canonical_promotions": 0,
+  "chronology_engine_exercised": false
+}

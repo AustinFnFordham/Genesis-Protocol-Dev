@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "stages": [
+    "claimed",
+    "context",
+    "rules",
+    "dice",
+    "ledger",
+    "narration",
+    "publishing",
+    "complete"
+  ],
+  "elapsed_ms": 262,
+  "stage_durations_ms": {
+    "claimed": 3,
+    "context": 70,
+    "rules": 121,
+    "dice": 5,
+    "ledger": 15,
+    "narration": 24,
+    "publishing": 24
+  },
+  "public_revision_before": 35,
+  "public_revision_after": 39,
+  "state_bytes": 16613,
+  "pages": 5,
+  "source_campaign_files_unchanged": true,
+  "ledger_retry_dice_unchanged": true,
+  "pending_steps_preserved": true,
+  "transport": "disposable SQLite CAS test double",
+  "adjudication": "scripted sandbox fixture",
+  "production_deployed": false,
+  "live_worker_tested": false
+}

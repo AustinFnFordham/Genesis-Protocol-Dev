@@ -90,7 +90,7 @@ function ok(cond, name, extra) { if (cond) console.log("ok", name); else { failu
     v.revision += 3; v.feed.push({ who: "gm", event_id: "evt_0098", time: "Day 1, dusk", text: "The ring of force hits the dogs." }); v.turn_context = Object.assign({}, v.turn_context, { context_id: "evt_0100" });
     v.rolls = [{ roll_id: "roll_x", purpose: "Dog A: Dexterity save vs Burst", summary: "1d20+2 [8] +2 = 10", by: "gm" }]; window.__notify(); }, acts[0]);
   await page.waitForTimeout(150);
-  ok(/Committed/i.test(await page.locator(".act").first().innerText()) && /ring of force/.test(await page.locator(".feed").innerText()), "committed result and narration appear without a chat message");
+  ok(/Committed/i.test(await page.locator(".act").first().innerText()) && /ring of force/.test(await page.locator("#colCenter .feed").innerText()), "committed result and narration appear without a chat message");
   ok(await page.locator(".dice li").count() === 1, "dice for the turn are listed");
   ok(!(await page.locator('input[data-g="action"][value="burst"]').isChecked()), "new turn context starts a fresh composer");
 
@@ -99,7 +99,7 @@ function ok(cond, name, extra) { if (cond) console.log("ok", name); else { failu
   const page2 = await ctx.newPage();
   await page2.addInitScript(({ mock, st }) => { window.__store = st; eval(mock); }, { mock: MOCK, st: store });
   await page2.goto(url); await page2.waitForSelector(".act");
-  ok(/Committed/i.test(await page2.locator(".act").first().innerText()) && /ring of force/.test(await page2.locator(".feed").innerText()), "reopened page shows the actual committed state");
+  ok(/Committed/i.test(await page2.locator(".act").first().innerText()) && /ring of force/.test(await page2.locator("#colCenter .feed").innerText()), "reopened page shows the actual committed state");
 
   // needs_revision from the processor shows alternatives and no dice
   await page2.evaluate(() => { window.__store["actions/b2"] = { text: "x", status: "needs_revision", created_ms: Date.now(), campaign_id: window.__store["view/state"].campaign_id, review: { summary: "Burst and Ready both require your primary action.", alternatives: [{ label: "Burst + hold position", declaration: { actor: "aero", actions: [{ option: "burst" }], objects: [], reactions: [], movement: { option: "hold" } } }] } }; window.__notify(); });

@@ -1,0 +1,23 @@
+[
+  {
+    "suite": "campaigns/starwars_litrpg/ui/test_datapad_history.cjs",
+    "passed": true,
+    "elapsed_ms": null,
+    "live_base": "acd961c",
+    "final_recheck": "PASS in separately observed run after removing the single-page test assumption",
+    "initial_passed": false
+  },
+  {
+    "suite": "development/test_player_experience.cjs",
+    "passed": true,
+    "elapsed_ms": 3023.66,
+    "live_base": "acd961c"
+  },
+  {
+    "suite": "campaigns/starwars_litrpg/ui/test_datapad_history.cjs",
+    "passed": true,
+    "live_base": "7845e4c",
+    "evidence": "observed final complete paginated feed and Journal test passed",
+    "elapsed_ms": null
+  }
+]

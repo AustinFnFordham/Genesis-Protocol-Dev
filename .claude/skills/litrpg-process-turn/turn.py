@@ -26,7 +26,7 @@ Exit codes: 0 ok, 3 needs revision / lint failure, 2 usage or registry error, 5 
 Nothing here rolls dice, writes the ledger, or touches the Artifact database; those stay with the
 dice skill, the ledger skill and the ArtifactData tool, in the order the runbook gives.
 """
-import argparse, json, re, subprocess, sys
+import argparse, json, re, subprocess, sys, tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
@@ -60,18 +60,20 @@ def state(entry):
 
 
 def node_validate(decl, ctx):
-    tmp = Path("/tmp") / f"ctx_{abs(hash(json.dumps(ctx, sort_keys=True)))}.json"
-    tmp.write_text(json.dumps(ctx), encoding="utf-8")
-    p = subprocess.run(["node", str(UI / "turn_contract.js"), "validate", "-", str(tmp)], input=json.dumps(decl), capture_output=True, text=True)
+    with tempfile.TemporaryDirectory(prefix="genesis-contract-") as directory:
+        tmp = Path(directory) / "context.json"
+        tmp.write_text(json.dumps(ctx), encoding="utf-8")
+        p = subprocess.run(["node", str(UI / "turn_contract.js"), "validate", "-", str(tmp)], input=json.dumps(decl), capture_output=True, text=True)
     if p.returncode not in (0, 3):
         raise RuntimeError(p.stderr)
     return json.loads(p.stdout)
 
 
 def node_parse(text, ctx):
-    tmp = Path("/tmp") / f"ctx_{abs(hash(json.dumps(ctx, sort_keys=True)))}.json"
-    tmp.write_text(json.dumps(ctx), encoding="utf-8")
-    p = subprocess.run(["node", str(UI / "turn_contract.js"), "parse", text, str(tmp)], capture_output=True, text=True)
+    with tempfile.TemporaryDirectory(prefix="genesis-contract-") as directory:
+        tmp = Path(directory) / "context.json"
+        tmp.write_text(json.dumps(ctx), encoding="utf-8")
+        p = subprocess.run(["node", str(UI / "turn_contract.js"), "parse", text, str(tmp)], capture_output=True, text=True)
     if p.returncode != 0:
         raise RuntimeError(p.stderr)
     return json.loads(p.stdout)
@@ -89,13 +91,25 @@ def cmd_check(a):
         print(json.dumps({"verdict": "failed", "reason": f"campaign {e['id']} is {e['status']}; it is not processed"})); return 3
     act = json.loads(Path(a.action).read_text(encoding="utf-8"))
     act = act.get("data", act)  # accept a raw ArtifactData document or its data
+    sys.path.insert(0, str(REPO / "development/experimental_resolution"))
+    import policy as resolution_policy
+    try:
+        resolution_policy.settings(act)
+    except ValueError as error:
+        print(json.dumps({"verdict": "needs_revision", "reason": str(error)})); return 3
     st = state(e)
     out = {"campaign_id": e["id"], "current_revision": st["revision"], "based_on_revision": act.get("based_on_revision")}
-    if act.get("campaign_id") not in (None, e["id"]):
+    if resolution_policy.settings(act) != resolution_policy.DEFAULT and not st.get("experimental_resolution", {}).get("enabled"):
+        out.update(verdict="needs_revision", reason="Experimental resolution is not enabled for this campaign.")
+    elif act.get("campaign_id") not in (None, e["id"]):
         out.update(verdict="needs_revision", reason=f"action belongs to campaign {act.get('campaign_id')}")
     elif act.get("based_on_revision") != st["revision"]:
         out.update(verdict="needs_revision", reason="The story moved on after this action was written (revision "
                    f"{act.get('based_on_revision')} vs {st['revision']}). Review the latest scene and resubmit.")
+    elif "ledger_head" in act and act["ledger_head"] != st["ledger_head"]:
+        out.update(verdict="needs_revision", reason="The declaration's ledger head does not match the current public snapshot. Review the latest scene and resubmit.")
+    elif "context_id" in act and act["context_id"] != (st["turn_context"] or {}).get("context_id"):
+        out.update(verdict="needs_revision", reason="The declaration's turn context does not match the current scene. Review the latest scene and resubmit.")
     elif not st["turn_context"]:
         out.update(verdict="gm_judgment", reason="No turn context is published; the GM interprets the text freely under the charter.")
     else:
@@ -195,7 +209,7 @@ def cmd_publish(a):
         print(json.dumps({"ok": False, "reason": "the Datapad already shows a newer revision; this publish is stale", "published_revision": cur.get("revision"), "revision": st["revision"]})); return 6
     have = {}
     if cur.get("campaign_id") == e["id"]:
-        for kind in ("feed", "journal"):
+        for kind in ("feed", "journal", "dice_history", "chapters", "events", "relationship_evidence"):
             for pg in ((cur.get("history") or {}).get(kind) or {}).get("pages") or []:
                 have[pg["id"]] = pg["hash"]
     out = Path(a.outdir) / "view"; out.mkdir(parents=True, exist_ok=True)
@@ -345,8 +359,20 @@ def cmd_push(a):
     print(json.dumps({"pushed": p.returncode == 0, "rebased_over_other_runs": True, "stderr": p.stderr[-300:] if p.returncode else ""})); return 0 if p.returncode == 0 else 4
 
 
+def cmd_brief(a):
+    import brief
+    try:
+        return brief.cmd_brief(a)
+    except brief.Rejected as error:
+        print(json.dumps({"verdict": "rejected", "reason": str(error)}))
+        return 3
+
+
 def main():
     ap = argparse.ArgumentParser(); sub = ap.add_subparsers(dest="cmd", required=True)
+    s = sub.add_parser("brief"); s.add_argument("campaign")
+    s.add_argument("--head"); s.add_argument("--expect-head"); s.add_argument("--audience", choices=["gm", "player"], default="gm")
+    s.add_argument("--checkpoint"); s.add_argument("--save-checkpoint"); s.add_argument("--out"); s.add_argument("--compact", action="store_true")
     s = sub.add_parser("info"); s.add_argument("campaign")
     s = sub.add_parser("check"); s.add_argument("campaign"); s.add_argument("action")
     s = sub.add_parser("recover"); s.add_argument("campaign"); s.add_argument("action_id")
@@ -362,7 +388,7 @@ def main():
     s = sub.add_parser("stale"); s.add_argument("row")
     s = sub.add_parser("push"); s.add_argument("campaign"); s.add_argument("lock")
     a = ap.parse_args()
-    return {"info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export,
+    return {"brief": cmd_brief, "info": cmd_info, "check": cmd_check, "recover": cmd_recover, "lint": cmd_lint, "export": cmd_export,
             "publish": cmd_publish, "progress": cmd_progress, "lintctx": cmd_lintctx, "run": cmd_run, "doc": cmd_doc, "lockcheck": cmd_lockcheck, "stale": cmd_stale,
             "push": cmd_push}[a.cmd](a) or 0
 

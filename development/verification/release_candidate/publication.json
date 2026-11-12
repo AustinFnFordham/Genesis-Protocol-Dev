@@ -1,0 +1,9 @@
+{
+  "revision": 945,
+  "ledger_head": "evt_1186",
+  "snapshot_bytes": 82780,
+  "ceiling": 96000,
+  "headroom": 13220,
+  "pages": 8,
+  "all_pages_within_budget": true
+}

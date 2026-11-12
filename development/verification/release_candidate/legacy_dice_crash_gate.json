@@ -1,0 +1,7 @@
+{
+  "legacy_cli_crash_atomicity": "FAIL",
+  "failure": "public roll append can precede cursor replacement",
+  "experimental_adapter_rejects_divergence": true,
+  "legacy_cli_modified": false,
+  "live_campaign_exercised": false
+}
