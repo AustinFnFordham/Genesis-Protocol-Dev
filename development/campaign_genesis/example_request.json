@@ -1,0 +1,15 @@
+{
+  "era": "Old Republic (selection pending lore validation)",
+  "preferences": {"tone": "investigation", "prepared_outcomes": false},
+  "worldbuilding": {"starting_focus": "a Jedi's inherited equipment", "status": "proposed"},
+  "entities": ["iteminst_aero_jedi_robes_001", "iteminst_aero_lightsaber_001"],
+  "connections": [
+    {
+      "source": "iteminst_aero_jedi_robes_001",
+      "target": "iteminst_aero_lightsaber_001",
+      "type": "compatibility",
+      "condition": "If both are lawfully carried in the chosen campaign, review their combined use under the applicable equipment rules."
+    }
+  ],
+  "before_the_fall": true
+}

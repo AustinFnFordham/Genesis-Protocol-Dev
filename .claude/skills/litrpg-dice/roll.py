@@ -74,13 +74,14 @@ def do_roll(formula, mode, rand):
             continue
         _, sign, count, sides, keep = t
         faces = [1 + int(rand() * sides) for _ in range(count)]
+        original = faces[:]
         if mode != "normal":
             alt = [1 + int(rand() * sides) for _ in range(count)]
             faces = [(max if mode == "advantage" else min)(faces[0], alt[0])]
         kept = faces
         if keep:
             kept = sorted(faces, reverse=(keep[0] == "kh"))[:keep[1]]
-        dice_out.append({"sign": sign, "sides": sides, "rolled": faces, "kept": kept})
+        dice_out.append({"sign": sign, "sides": sides, "rolled": faces, "kept": kept, "original": original})
         total += sign * sum(kept)
     return dice_out, alt, total, mods, first_d20
 

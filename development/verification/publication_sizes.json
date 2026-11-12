@@ -1,0 +1,25 @@
+{
+  "revision": 705,
+  "visible_rolls": 169,
+  "state_bytes": 95920,
+  "state_budget": 96000,
+  "page_budget": 150000,
+  "pages": {
+    "feed-0001": {
+      "bytes": 149592,
+      "entries": 84
+    },
+    "feed-0002": {
+      "bytes": 4373,
+      "entries": 1
+    },
+    "journal-0001": {
+      "bytes": 131902,
+      "entries": 504
+    },
+    "dice_history-0001": {
+      "bytes": 37597,
+      "entries": 169
+    }
+  }
+}

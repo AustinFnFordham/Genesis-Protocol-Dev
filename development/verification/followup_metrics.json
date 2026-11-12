@@ -1,0 +1,48 @@
+{
+  "base_commit": "7ac860a4dce5e75777ab808f1b2c97ff8cbe3f66",
+  "revision": 705,
+  "snapshot_bytes": 82173,
+  "snapshot_ceiling": 96000,
+  "snapshot_headroom": 13827,
+  "page_ceiling": 150000,
+  "pages": {
+    "feed-0001": {
+      "bytes": 149592,
+      "entries": 84
+    },
+    "feed-0002": {
+      "bytes": 4373,
+      "entries": 1
+    },
+    "journal-0001": {
+      "bytes": 131902,
+      "entries": 504
+    },
+    "dice_history-0001": {
+      "bytes": 37597,
+      "entries": 169
+    },
+    "chapters-0001": {
+      "bytes": 13559,
+      "entries": 8
+    },
+    "events-0001": {
+      "bytes": 20243,
+      "entries": 67
+    },
+    "relationship_evidence-0001": {
+      "bytes": 43428,
+      "entries": 176
+    }
+  },
+  "chapters": 8,
+  "shared_interaction_records": 176,
+  "explicit_relationship_dimension_records": {
+    "trust": 0,
+    "respect": 0,
+    "fear": 0,
+    "reliance": 0,
+    "obligation": 0,
+    "affection": 0
+  }
+}

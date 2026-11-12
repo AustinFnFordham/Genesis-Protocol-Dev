@@ -45,7 +45,7 @@
   }
   var localPending = null;  // a turn this device just saved, until the store's listener reports it
   function activeAction() {
-    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved"; })[0];
+    var real = actions.filter(function (a) { return a.status === "submitted" || a.status === "processing" || a.status === "resolved" || a.status === "needs_plan_approval"; })[0];
     if (real) return real;
     if (localPending && Date.now() - localPending.at < 20000 && !actions.some(function (a) { return a._id === localPending.id; }))
       return { _id: localPending.id, status: "submitted", text: localPending.text };
@@ -521,13 +521,18 @@
   function renderActions() {
     if (!actions.length) return "";
     return actions.slice(0, 3).map(function (a) {
-      var pills = { submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
+      var pills = { needs_plan_approval: '<span class="pill pend">Review your plan</span>', submitted: '<span class="pill pend">Submitted</span>', processing: '<span class="pill pend">Processing</span>', resolved: '<span class="pill pend">Resolved · Publication pending</span>', committed: '<span class="pill ok">Committed' + (a.event_id ? " · " + esc(a.event_id) : "") + "</span>",
         needs_revision: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Needs revision</span>', failed: '<span class="pill" style="color:var(--bad);border-color:var(--bad)">Failed</span>', clarify: '<span class="pill pend">Needs revision</span>' };
       var h = '<div class="act"><div class="row">' + (pills[a.status] || '<span class="pill">' + esc(a.status) + "</span>");
       if (a.status === "submitted") h += ' <button class="btn" data-wd="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Withdraw</button> <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Start GM</button>';
       var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
       if (stuck || a.status === "failed" || a.status === "resolved") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
       h += "</div><q>" + esc(a.text) + "</q>";
+      if (a.status === "needs_plan_approval" && a.review_plan) {
+        h += '<ol>' + (a.review_plan.summary || []).map(function (line) { return '<li>' + esc(line) + '</li>'; }).join("") +
+          '</ol><button class="btn" data-approve-plan="' + esc(a._id) + '">Approve this plan</button> ' +
+          '<button class="btn" data-revise-plan="' + esc(a._id) + '">Revise</button>';
+      }
       if (a.status === "submitted") h += notifyLine(a);
       if (a.status === "processing") h += '<div class="note">' + (stuck ? "Taking longer than expected. Retry is safe: the GM never resolves a turn twice." : "The GM is resolving this turn" + (a.processing ? " (" + ago(a.processing.started_ms) + ")" : "") + ". Nothing is part of the story until it is committed.") + "</div>";
       if (a.status === "needs_revision" && a.review) {
@@ -571,6 +576,54 @@
       '<div class="note">' + (typeof last.model_ms === "number" ? "Last turn: model " + sec(last.model_ms) + ", tools " + sec(last.tool_ms) + ", " + (last.model_calls || 0) + " model calls, " + (last.tool_calls || 0) + " tool calls, " + Math.round((last.output_tokens || 0) / 1000) + "K output tokens. " : "") +
       "Measured by the GM worker; phases absorb the thinking before each mark. Read-only, not part of the story.</div></details>";
   }
+  function renderPlanReview() {
+    return '<label class="note"><input type="checkbox" id="requestPlanReview"' +
+      (ui.reviewBeforeRoll ? " checked" : "") + (activeAction() ? " disabled" : "") +
+      '> Review my plan before rolling</label>';
+  }
+
+  function renderContest(v) {
+    var declaration = v.contest_declaration || v.feed.slice().reverse().filter(function (entry) { return entry.who === "player"; })[0];
+    if (!declaration) return "";
+    return '<details class="panel"><summary>This isn’t what I meant</summary>' +
+      '<label>Reason <select id="contestCategory"><option value="intent">My intention was misunderstood</option>' +
+      '<option value="rules">A rule was applied incorrectly</option><option value="unfavorable">The outcome was unfavorable</option></select></label>' +
+      (declaration.steps && declaration.steps.length ? '<label>Disputed step <select id="contestStep">' + declaration.steps.map(function (step) {
+        return '<option value="' + esc(step.id) + '">' + esc(step.label) + '</option>';
+      }).join("") + '</select></label>' : '<label>Disputed action <input id="contestStep" placeholder="Describe the action in this legacy declaration"></label>') +
+      '<label>What needs review <textarea id="contestText"></textarea></label>' +
+      '<label><input id="reviewBeforeRoll" type="checkbox"> Request plan review before the next roll</label>' +
+      '<button class="btn" id="sendContest" data-declaration="' + esc(declaration.event_id) + '">Request adjudication</button>' +
+      '<div class="note" id="contestStatus">A review preserves your declaration and recorded dice.</div></details>';
+  }
+
+  function renderProgress(v) {
+    var a = activeAction() || actions[0];
+    if (!a) return "";
+    var p = a.processing || {}, now = a.committed_ms || a.failed_ms || (p.stages || {}).complete || Date.now();
+    var stage = a.status === "submitted" ? "Submitted" : a.status === "resolved" ? "Publishing" :
+      a.status === "committed" ? "Complete" : a.status === "failed" ? "Failed" :
+      a.status === "needs_revision" ? "Needs revision" : a.status === "needs_plan_approval" ? "Awaiting plan approval" : p.stage ? p.stage.charAt(0).toUpperCase() + p.stage.slice(1) : "Claimed";
+    function durationSince(timestamp) { return (Math.max(0, now - timestamp) / 1000).toFixed(1) + " s"; }
+    var elapsed = p.started_ms ? durationSince(p.started_ms) : "awaiting worker";
+    var stageStart = a.status === "needs_plan_approval" && a.review_plan ? a.review_plan.created_ms : p.stage_started_ms;
+    var duration = stageStart ? durationSince(stageStart) : "not reported";
+    var stale = a.status === "processing" && p.heartbeat_ms && now - p.heartbeat_ms > (p.lease_ms || 180000);
+    var marks = p.stages || {}, keys = ["claimed", "context", "rules", "dice", "ledger", "narration", "publishing", "complete"];
+    var detail = keys.filter(function (k) { return typeof marks[k] === "number"; }).map(function (k) {
+      var later = keys.slice(keys.indexOf(k) + 1).map(function (x) { return marks[x]; }).filter(function (x) { return typeof x === "number"; })[0];
+      return "<li>" + esc(k) + " · " + ((Math.max(0, (later || now) - marks[k])) / 1000).toFixed(1) + " s</li>";
+    }).join("");
+    var labels = ["Submitted", "Claimed", "Context", "Rules", "Dice", "Ledger", "Narration", "Publishing", "Complete"];
+    var stages = '<div class="tags">' + labels.map(function (label) {
+      return '<span' + (label === stage ? ' aria-current="step"' : '') + '>' + esc(label) + '</span>';
+    }).join("") + '</div>';
+    return '<div class="panel" data-turn-progress aria-live="polite"><h2>Turn progress · ' + esc(stage) + '</h2>' + stages + '<div class="note">Elapsed ' +
+      esc(elapsed) + ' · current stage ' + esc(duration) + (stale ? ' · worker heartbeat overdue; retry available' : '') +
+      (a.status === "resolved" ? ' · resolution saved; publication pending' : '') +
+       '</div>' + (stale || a.status === "resolved" ? '<button class="btn" data-progress-retry="' + esc(a._id) + '">Retry worker</button>' : '') + '<details><summary>Phase timings</summary><ol>' + detail + '</ol></details></div>';
+  }
+
   function renderDice(v) {
     if (!v.rolls || !v.rolls.length) return "";
     return '<div class="panel"><h2>Dice · last turn</h2><ul class="plain dice">' + v.rolls.map(function (r) { return "<li><div>" + esc(r.purpose) + '</div><div class="kv"><span class="note">' + esc(r.by === "gm" ? "GM" : "You") + "</span><span>" + esc(r.summary) + "</span></div></li>"; }).join("") + "</ul></div>";
@@ -578,14 +631,14 @@
 
   function renderCenter(v) {
     var s = v.scene;
-    var feed = olderEntries(v, "feed").concat(v.feed).map(function (f) {
+    var feed = v.feed.filter(function (f) { return f.who === "gm"; }).slice(-1).map(function (f) {
       return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
     return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
-      '<div class="panel"><h2>Narrative</h2>' + olderButton(v, "feed", "Load earlier narrative") + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
-      renderDice(v) + renderTurn(v);
+      '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
+      renderDice(v) + renderProgress(v) + renderPlanReview() + renderTurn(v) + renderContest(v);
   }
 
   function render() {
@@ -601,6 +654,55 @@
     $("colCenter").innerHTML = renderCenter(view);
     Array.prototype.forEach.call(document.querySelectorAll(".member-sel"), function (el) {
       el.addEventListener("change", function () { selId = el.value; ls("datapad.member", selId); render(); });
+    });
+    var contestButton = $("sendContest");
+    if (contestButton) contestButton.addEventListener("click", function () {
+      var text = $("contestText").value.trim();
+      if (!text || !$("contestStep").value.trim()) { $("contestStatus").textContent = "Identify the step and describe the issue."; return; }
+      contestButton.disabled = true;
+      var id = "contest_" + Date.now().toString(36) + Math.random().toString(36).slice(2);
+      dbRef.doc("disputes/" + id).set({ category: $("contestCategory").value, declaration_event: contestButton.getAttribute("data-declaration"),
+        step_id: $("contestStep").value.trim(), explanation: text, campaign_id: view.campaign_id,
+        based_on_revision: view.revision, ledger_head: view.ledger_head, review_before_roll: $("reviewBeforeRoll").checked,
+        status: "awaiting_adjudication", created_ms: Date.now() }).then(function () {
+          $("contestStatus").textContent = "Review requested. Your declaration and dice are preserved.";
+        }, function () { contestButton.disabled = false; $("contestStatus").textContent = "Could not save the request. Try again."; });
+    });
+    var planReview = $("requestPlanReview");
+    if (planReview) planReview.addEventListener("change", function () { ui.reviewBeforeRoll = planReview.checked; saveUi(); });
+    document.querySelectorAll("[data-approve-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-approve-plan");
+        button.disabled = true;
+        dbRef.doc("actions/" + id).get().then(function (snapshot) {
+          var action = snapshot.data(), review = action.review_plan;
+          if (action.status !== "needs_plan_approval" || !review || action.based_on_revision !== view.revision || action.ledger_head !== view.ledger_head) {
+            throw Error("The scene or plan changed. Review it again.");
+          }
+          var ref = dbRef.doc("plan_approvals/" + id);
+          return ref.get().then(function (existing) {
+            if (existing.exists) return;
+            return ref.set({ decision: "approved", action_id: id, campaign_id: action.campaign_id,
+              review_id: review.review_id, based_on_revision: action.based_on_revision, ledger_head: action.ledger_head });
+          });
+        }).then(function () { notifyGM(id); }, function (error) { button.disabled = false; setMsg(error.message || "Could not approve the plan."); });
+      });
+    });
+    document.querySelectorAll("[data-revise-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = button.getAttribute("data-revise-plan");
+        var action = actions.filter(function (row) { return row._id === id; })[0];
+        if (!action || action.status !== "needs_plan_approval" || !action.review_plan) return;
+        dbRef.doc("plan_revisions/" + id).set({action_id: id, campaign_id: action.campaign_id,
+          review_id: action.review_plan.review_id, based_on_revision: action.based_on_revision,
+          ledger_head: action.ledger_head}).then(function () {
+            if (ctxOf(view)) loadDeclaration(action.declaration, ctxOf(view));
+            render();
+            setMsg("Revision requested. The worker will release this plan before a new submission.");
+            notifyGM(id);
+        });
+
+      });
     });
     bindCenter();
     if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
@@ -851,6 +953,7 @@
     var doc = { text: text, declaration: d, source: c ? (ui.mode === "write" ? "freeform" : "composer") : "freeform", actor: view.active_actor || "aero",
       campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, context_id: c ? c.context_id : null,
       contract: T.VERSION, confirmed_warnings: !!(r && r.needs_confirmation), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
+      request_plan_review: ui.reviewBeforeRoll === true,
       preflight: r ? { legal: r.legal, crashed: !!r.crashed, codes: r.errors.map(function (e) { return e.code; }).concat(r.warnings.map(function (w) { return w.code; })) } : null,
       status: "submitted", created_ms: Date.now() };
     // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.
@@ -879,11 +982,24 @@
 
   /* ---------- data: subscribe once ---------- */
   var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
-  setInterval(function () { if (activeAction()) render(); }, 30000);  // refresh "processing for N min" labels only while a turn is out
+  setInterval(function () {
+    if (!view || !activeAction()) return;
+    document.querySelectorAll("[data-turn-progress]").forEach(function (element) {
+      var expanded = element.querySelector("details").open;
+      var holder = document.createElement("div");
+      holder.innerHTML = renderProgress(view);
+      var next = holder.firstElementChild;
+      if (next) { next.querySelector("details").open = expanded; element.replaceWith(next); }
+    });
+  }, 1000);
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-progress-retry]");
+    if (button) notifyGM(button.getAttribute("data-progress-retry"));
+  });  // refresh "processing for N min" labels only while a turn is out
   function start(db) {
     dbRef = db; status = "live";
     db.doc("view/state").onSnapshot(function (snap) {
-      if (snap.exists) { view = snap.data(); clearTimeout(timer); }
+      if (snap.exists) { refreshHistory(snap.data()); view = snap.data(); clearTimeout(timer); }
       render();
     }, function (e) { status = "error"; err = "Store error: " + (e && e.code); render(); });
     db.collection("usage").orderBy("started_ms", "desc").limit(50).onSnapshot(function (q) {
