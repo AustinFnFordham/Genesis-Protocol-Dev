@@ -20,11 +20,13 @@ import argparse, copy, hashlib, importlib.util, json, re, subprocess, sys, time,
 from pathlib import Path
 
 SCHEMA = "genesis-brief/0.1"
-REDUCER = "reduce/0.3"
+REDUCER = "reduce/0.4"
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 REGISTRY = REPO / "campaigns" / "starwars_litrpg" / "runs" / "registry.json"
 SHEET = REPO / "api_bridge" / "gm" / "aero_character_runtime.yml"
+sys.path.insert(0, str(REPO / "development/experimental_resolution"))
+import policy as resolution_policy
 ID = re.compile(r"^evt_(\d+)$")
 PRESENT = {"gm_narration", "scene_state", "turn_context", "gm_suggestions"}
 JOURNAL_SKIP = PRESENT | {"player_declaration", "ruling_void", "party_joined", "party_left"}
@@ -83,6 +85,7 @@ def empty(campaign):
     return {"schema": SCHEMA, "reducer": REDUCER, "campaign": campaign, "head": None, "events": 0, "public": 0,
             "chain": "0" * 64, "public_head": None, "turn_no": 0, "world_time": None, "last_action": None, "voided": [],
             "flags_obj": [], "flags_obj_evt": None, "turn_context": None, "scene": None, "narration": None,
+            "resolution_settings": dict(resolution_policy.DEFAULT),
             "hands": None, "hand_touch_after": [], "position": None, "comm": None,
             "clock_ruddick": None, "clock_mentions_after": [], "hp_delta": 0, "conditions": None, "cond_evt": None,
             "npc_public": {}, "plans": {}, "positions_refs": [], "replay_refs": [], "standing": [], "tables": [],
@@ -113,6 +116,7 @@ def reduce(s, e, public_projection=False):
         s["voided"] += d.get("voids", [])
     if k == "player_declaration":
         s["last_action"] = {"action_id": d.get("action_id"), "evt": eid}; s["rolls"] = []
+        s["resolution_settings"] = resolution_policy.settings(d)
     if not hid:
         s["rolls"] += [r for r in e.get("roll_ids") or [] if r not in s["rolls"]]
     # typed: equipment flags from object interactions (grants/removes)
@@ -310,6 +314,7 @@ def bundle(s, entry, audience, sheet, validation):
         "scene": s["scene"], "turn_context": tc or None,
         "last_narration": s["narration"],
         "last_rolls": s["rolls"],
+        "resolution_settings": s["resolution_settings"],
         "journal_recent": [line(j["id"]) + [j["k"]] for j in journal[-12:]],
         "journal_reports_beliefs": [line(j["id"]) + [j["k"], j["known_to"]] for j in journal if j["k"] in ("report", "belief")],
         "entity_history": ent_hist,
@@ -352,7 +357,7 @@ def load_sheet():
     return yaml.safe_load(SHEET.read_text(encoding="utf-8"))["character_runtime"]
 
 
-def build(entry, head=None, audience="gm", checkpoint=None):
+def build(entry, head=None, audience="gm", checkpoint=None, action=None):
     t0 = time.perf_counter()
     led = ledger_mod()
     _, problems = led.validate_all(Path(entry["path"]))
@@ -387,6 +392,12 @@ def build(entry, head=None, audience="gm", checkpoint=None):
         s = fold(empty(entry["id"]), ev)
     sheet = load_sheet()
     b = bundle(s, entry, audience, sheet, {"valid": not problems, "problems": len(problems)})
+    if action is not None:
+        public = s.get("_player", empty(entry["id"]))
+        if (action.get("campaign_id") != entry["id"] or action.get("based_on_revision") != public["public"] or
+            action.get("ledger_head") != public["public_head"]):
+            raise Rejected("submitted action does not match the authoritative public revision")
+        b["submitted_resolution_settings"] = resolution_policy.settings(action)
     b["meta"]["build"] = {"mode": mode, "ms": round((time.perf_counter() - t0) * 1000, 1)}
     return s, b
 
@@ -394,7 +405,8 @@ def build(entry, head=None, audience="gm", checkpoint=None):
 # ------------------------------------------------------------------ commands
 def cmd_brief(a):
     entry = run_entry(a.campaign)
-    s, b = build(entry, a.head, a.audience, a.checkpoint)
+    action = json.loads(Path(a.action).read_text()) if getattr(a, "action", None) else None
+    s, b = build(entry, a.head, a.audience, a.checkpoint, action=action)
     if a.expect_head and a.expect_head != s["head"]:
         print(json.dumps({"verdict": "stale", "expected_head": a.expect_head, "ledger_head": s["head"]})); return 3
     if a.save_checkpoint:
@@ -514,6 +526,7 @@ def main():
     ap = argparse.ArgumentParser(); sp = ap.add_subparsers(dest="cmd", required=True)
     b = sp.add_parser("brief"); b.add_argument("campaign"); b.add_argument("--head"); b.add_argument("--audience", choices=["gm", "player"], default="gm")
     b.add_argument("--compact", action="store_true"); b.add_argument("--expect-head"); b.add_argument("--checkpoint"); b.add_argument("--save-checkpoint"); b.add_argument("--out")
+    b.add_argument("--action", help="optional submitted action; binds per-turn resolution settings to its public revision")
     h = sp.add_parser("history"); h.add_argument("campaign"); h.add_argument("ids", nargs="+"); h.add_argument("--audience", choices=["gm", "player"], default="gm")
     v = sp.add_parser("verify"); v.add_argument("campaign")
     a = ap.parse_args()

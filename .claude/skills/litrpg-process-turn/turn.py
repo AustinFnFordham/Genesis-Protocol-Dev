@@ -91,9 +91,17 @@ def cmd_check(a):
         print(json.dumps({"verdict": "failed", "reason": f"campaign {e['id']} is {e['status']}; it is not processed"})); return 3
     act = json.loads(Path(a.action).read_text(encoding="utf-8"))
     act = act.get("data", act)  # accept a raw ArtifactData document or its data
+    sys.path.insert(0, str(REPO / "development/experimental_resolution"))
+    import policy as resolution_policy
+    try:
+        resolution_policy.settings(act)
+    except ValueError as error:
+        print(json.dumps({"verdict": "needs_revision", "reason": str(error)})); return 3
     st = state(e)
     out = {"campaign_id": e["id"], "current_revision": st["revision"], "based_on_revision": act.get("based_on_revision")}
-    if act.get("campaign_id") not in (None, e["id"]):
+    if resolution_policy.settings(act) != resolution_policy.DEFAULT and not st.get("experimental_resolution", {}).get("enabled"):
+        out.update(verdict="needs_revision", reason="Experimental resolution is not enabled for this campaign.")
+    elif act.get("campaign_id") not in (None, e["id"]):
         out.update(verdict="needs_revision", reason=f"action belongs to campaign {act.get('campaign_id')}")
     elif act.get("based_on_revision") != st["revision"]:
         out.update(verdict="needs_revision", reason="The story moved on after this action was written (revision "

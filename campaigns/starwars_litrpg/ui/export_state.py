@@ -92,11 +92,26 @@ def public_roll(r, rid, purpose, kept):
     if who in PLAYER_ROLLERS:
         summ = r.get("summary") or (f'{r.get("formula")} [{", ".join(kept)}]' + (f' {r["modifiers"]:+d}' if r.get("modifiers") else "") + f' = {r.get("final_total")}' + (" (natural 20)" if r.get("nat20") else " (natural 1)" if r.get("nat1") else ""))
         summ = re.sub(r"\s*\((success|failure)\)\s*$", "", summ)
-        return {"roll_id": rid, "purpose": purpose, "summary": summ, "by": who,
+        out = {"roll_id": rid, "purpose": purpose, "summary": summ, "by": who,
                 "formula": r.get("formula"), "mode": r.get("mode", "normal"),
                 "dice": r.get("dice", []), "alternate": r.get("alt_dice"),
                 "raw_total": r.get("raw_total"), "modifier": r.get("modifiers"),
                 "total": r.get("final_total")}
+        if r.get("resolution"):
+            sys.path.insert(0, str(ROOT / "development/experimental_resolution"))
+            import policy as _resolution_policy
+            safe = _resolution_policy.public_resolution(r["resolution"])
+            out["resolution"] = safe
+            if safe["eligible"]:
+                roll = safe["roll"]
+                out["total"] = roll["total"]
+                out["summary"] = f"{roll['temperature'].title()} · raw {roll['selected_raw_d20']} → {roll['effective_d20']} {roll['modifier']:+d} = {roll['total']}"
+                if roll.get("other_dice_total"):
+                    out["summary"] = f"{roll['temperature'].title()} · raw {roll['selected_raw_d20']} → {roll['effective_d20']} {roll['modifier']:+d} + other dice {roll['other_dice_total']} = {roll['total']}"
+                if safe["narrative"]:
+                    axis = safe["narrative"]
+                    out["summary"] += f" · {axis['advantage']} Advantage / {axis['threat']} Threat"
+        return out
     return {"roll_id": rid, "purpose": purpose, "summary": f'total {r.get("final_total")}', "by": "gm", "redacted": True}
 
 
@@ -198,7 +213,14 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         contest = {"event_id": declaration_event["event_id"],
                    "steps": [{"id": step["id"], "label": str(step.get("text") or step.get("option") or step["type"])[:160]}
                              for step in declaration_event.get("details", {}).get("declaration", {}).get("steps", []) if step.get("id")]}
+    experimental = {}
+    config_path = rdir / "experimental_resolution.json"
+    if config_path.exists():
+        config = json.loads(config_path.read_text())
+        if config.get("enabled") is True and config.get("canonical") is False and config.get("campaign_id") == campaign_id:
+            experimental["experimental_resolution"] = {"enabled": True, "schema": "genesis-experimental-resolution/1"}
     return {
+        **experimental,
         "contest_declaration": contest,
         "continuity": continuity,
         "campaign_id": campaign_id or "starwars_litrpg",

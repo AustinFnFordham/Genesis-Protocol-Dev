@@ -4,6 +4,10 @@ import hashlib
 import json
 import secrets
 import time
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "development/experimental_resolution"))
+import policy as resolution_policy
 
 
 def fingerprint(declaration):
@@ -16,6 +20,7 @@ def create(action, validation, action_id):
     return {"status": "needs_plan_approval", "review_plan": {
         "review_id": secrets.token_hex(16), "action_id": action_id,
         "declaration_hash": fingerprint(action["declaration"]),
+        "resolution_settings": resolution_policy.settings(action),
         "based_on_revision": action["based_on_revision"], "ledger_head": action["ledger_head"],
         "summary": [entry["text"] for entry in validation.get("preview", [])],
         "created_ms": time.time_ns() // 1_000_000}}
@@ -29,6 +34,7 @@ def approved(action, approval, action_id):
             approval.get("review_id") == review.get("review_id") and bool(review.get("review_id")) and
             approval.get("based_on_revision") == review.get("based_on_revision") == action.get("based_on_revision") and
             approval.get("ledger_head") == review.get("ledger_head") == action.get("ledger_head") and
+            review.get("resolution_settings", resolution_policy.DEFAULT) == resolution_policy.settings(action) and
             review.get("declaration_hash") == fingerprint(action["declaration"]))
 
 

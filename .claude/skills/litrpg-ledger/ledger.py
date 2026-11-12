@@ -29,12 +29,14 @@ def paths(camp):
 
 def read_jsonl(p):
     def read():
+        if (p.parent.parent / "hidden/experimental_dice_pending.json").exists():
+            raise ValueError("experimental dice transaction is incomplete; recover its accepted request before reading")
         if p.name == "events.jsonl" and (p.parent.parent / "hidden/ledger_batch_pending.json").exists():
             raise ValueError("ledger batch is incomplete; resume its accepted request before reading")
         if not p.exists():
             return []
         return [json.loads(line) for line in p.read_text(encoding="utf-8").splitlines() if line.strip()]
-    if p.name == "events.jsonl":
+    if p.name in ("events.jsonl", "roll_log.jsonl"):
         from batch import reader_lock
         with reader_lock(p.parent.parent):
             return read()
@@ -122,6 +124,13 @@ def validate_event(e, by_id, roll_ids):
         errs.append("details must be an object")
     elif e["kind"] == "moral_evaluation":
         errs += validate_moral(e, d, by_id)
+    if isinstance(d, dict) and e["kind"] == "player_declaration" and "resolution_settings" in d:
+        sys.path.insert(0, str(ROOT / "development/experimental_resolution"))
+        import policy as resolution_policy
+        try:
+            resolution_policy.settings(d)
+        except ValueError as error:
+            errs.append(str(error))
     return errs
 
 
