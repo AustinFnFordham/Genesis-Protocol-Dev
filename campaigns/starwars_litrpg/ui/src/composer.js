@@ -7,6 +7,7 @@
   function byId(list, id) { for (var i = 0; i < (list || []).length; i++) if (list[i].id === id) return list[i]; return null; }
   function freshUi(ctxId, keepWrite) {
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "", carried: false,
+             temperature: "regular", narrativeConsequences: false,
              sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [],
                     nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "" } };
   }
@@ -430,7 +431,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + budget(c, r) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -491,6 +492,20 @@
       '<button class="btn primary" id="submitTurn"' + (ok ? "" : " disabled") + ">" + (phase === "validating" ? "Submitting…" : sceneMode(ctxOf(view)) ? "Submit plan" : "Submit turn") + "</button>" +
       '<button class="btn" id="clearTurn"' + (busy ? " disabled" : "") + '>Clear</button><span class="note" id="msg"></span>';
   }
+  function resolutionSettings(v) {
+    var enabled = v.experimental_resolution && v.experimental_resolution.enabled === true;
+    return { temperature: enabled && ["regular", "heroic", "legendary"].indexOf(ui.temperature) >= 0 ? ui.temperature : "regular",
+      narrative_consequences: !!(enabled && ui.narrativeConsequences) };
+  }
+  function renderResolutionControls(v, busy) {
+    if (!v.experimental_resolution || !v.experimental_resolution.enabled) return "";
+    var s = resolutionSettings(v);
+    return '<fieldset class="grp"' + (busy ? " disabled" : "") + '><legend>Experimental resolution · this turn</legend><div style="display:flex;gap:12px;flex-wrap:wrap">' +
+      '<label style="flex:1;min-width:130px">Dice Temperature<select class="txt" id="diceTemperature" aria-label="Dice Temperature">' +
+      ["regular", "heroic", "legendary"].map(function (x) { return '<option value="' + x + '"' + (s.temperature === x ? " selected" : "") + '>' + x[0].toUpperCase() + x.slice(1) + "</option>"; }).join("") + '</select></label>' +
+      '<label style="flex:1;min-width:130px">Narrative Consequences<select class="txt" id="narrativeConsequences" aria-label="Narrative Consequences"><option value="off"' + (!s.narrative_consequences ? " selected" : "") + '>Off</option><option value="on"' + (s.narrative_consequences ? " selected" : "") + '>On</option></select></label></div>' +
+      '<div class="note">Applies to eligible player d20 rolls for this turn. Ordinary costs and consequences remain. Narrative points authorize no effect by themselves.</div></fieldset>';
+  }
   function readAsSteps(c, r, stat) { return '<div id="readAsSteps">' + readAsInner(c, r, stat) + "</div>"; }
   function readAsInner(c, r, stat) {
     if (!r.steps || !r.steps.length) return "";
@@ -528,6 +543,7 @@
       var stuck = a.status === "processing" && a.processing && Date.now() - a.processing.started_ms > 15 * 60000;
       if (stuck || a.status === "failed" || a.status === "resolved") h += ' <button class="btn" data-nudge="' + esc(a._id) + '" style="min-height:32px;padding:2px 10px">Retry</button>';
       h += "</div><q>" + esc(a.text) + "</q>";
+      if (a.resolution_settings) h += '<div class="note">Dice: ' + esc(a.resolution_settings.temperature) + ' · Narrative Consequences: ' + (a.resolution_settings.narrative_consequences === true ? "On" : "Off") + '</div>';
       if (a.status === "needs_plan_approval" && a.review_plan) {
         h += '<ol>' + (a.review_plan.summary || []).map(function (line) { return '<li>' + esc(line) + '</li>'; }).join("") +
           '</ol><button class="btn" data-approve-plan="' + esc(a._id) + '">Approve this plan</button> ' +
@@ -842,8 +858,13 @@
     on("w_trigger", "input", soft(function (x) { ui.sel.trigger = x; }));
     on("w_note", "input", soft(function (x) { ui.note = x; }));
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
+    on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
+    on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     bindLive();
     each(".composer textarea", autoGrow);
+    each("[data-journal-section]", function (element) {
+      element.addEventListener("toggle", function () { if (element.isConnected) journalExpanded[element.getAttribute("data-journal-section")] = element.open; });
+    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-ralt]"), function (b) {
       b.addEventListener("click", function () {
         var p = b.getAttribute("data-ralt").split(":"), a = actions.filter(function (x) { return x._id === p[0]; })[0];
@@ -934,6 +955,7 @@
     if (c && (!r.legal || (r.needs_confirmation && !ui.confirmed))) return;
     var text = c ? turnText(d, r) : ui.write.trim();
     if (!text) return;
+    var selectedResolution = resolutionSettings(view);
     phase = "validating"; render();
     var seenRev = view.revision, seenHead = view.ledger_head;
     // The store may have moved on since this plan was checked: re-read it first and never submit against an old scene.
@@ -944,16 +966,17 @@
         setMsg("The scene moved on (revision " + seenRev + " → " + cur.revision + "). Your plan is kept and re-checked; review it and submit again.");
         return;
       }
-      saveAction(c, d, r, text);
-    }, function () { saveAction(c, d, r, text); });
+      saveAction(c, d, r, text, selectedResolution);
+    }, function () { saveAction(c, d, r, text, selectedResolution); });
   }
-  function saveAction(c, d, r, text) {
+  function saveAction(c, d, r, text, selectedResolution) {
     if (!ui.draftId) { ui.draftId = "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); saveUi(); }
     var id = ui.draftId, ref = dbRef.doc("actions/" + id);
     var doc = { text: text, declaration: d, source: c ? (ui.mode === "write" ? "freeform" : "composer") : "freeform", actor: view.active_actor || "aero",
       campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, context_id: c ? c.context_id : null,
       contract: T.VERSION, confirmed_warnings: !!(r && r.needs_confirmation), warnings: r ? r.warnings.map(function (w) { return w.message; }) : [],
       request_plan_review: ui.reviewBeforeRoll === true,
+      resolution_settings: selectedResolution,
       preflight: r ? { legal: r.legal, crashed: !!r.crashed, codes: r.errors.map(function (e) { return e.code; }).concat(r.warnings.map(function (w) { return w.code; })) } : null,
       status: "submitted", created_ms: Date.now() };
     // Idempotent create: the id is minted once per draft; if a retry finds the document, it is never overwritten.

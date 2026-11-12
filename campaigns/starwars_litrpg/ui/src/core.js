@@ -15,6 +15,8 @@
     Object.keys(hist).forEach(function (kind) { hist[kind] = { loaded: [], idx: 0, busy: false, err: "" }; });
   }
   var hist = { feed: { loaded: [], idx: 0, busy: false, err: "" }, journal: { loaded: [], idx: 0, busy: false, err: "" }, dice_history: { loaded: [], idx: 0, busy: false, err: "" } };
+  var journalExpanded = { performance: true };
+  function journalSection(kind) { return '<details class="panel" data-journal-section="' + kind + '"' + (journalExpanded[kind] ? ' open' : '') + '>'; }
   ["chapters", "events", "relationship_evidence"].forEach(function (kind) {
     hist[kind] = { loaded: [], idx: 0, busy: false, err: "" };
   });
@@ -126,7 +128,7 @@
 
   function renderProjection(v, kind, title) {
     var rows = olderEntries(v, kind).concat(v[kind] || []);
-    return '<details class="panel"><summary>' + esc(title) + '</summary><ul class="plain">' +
+    return journalSection(kind) + '<summary>' + esc(title) + '</summary><ul class="plain">' +
       rows.slice().reverse().map(function (row) {
         return '<li><b>' + esc(row.title || row.event_id) + '</b><div>' + esc(row.text) + '</div>' +
           (row.sources ? '<div class="note">Sources ' + row.sources.map(esc).join(", ") + '</div>' : '') + '</li>';
@@ -134,7 +136,7 @@
   }
   function renderPrevious(v) {
     var rows = olderEntries(v, "feed").concat(v.feed);
-    return '<details class="panel"><summary>Previous Turns</summary>' + olderButton(v, "feed", "Load earlier narrative") +
+    return journalSection("feed") + '<summary>Previous Turns</summary>' + olderButton(v, "feed", "Load earlier narrative") +
       '<div class="feed previous-history">' + rows.map(function (row) {
         return '<div data-eid="' + esc(row.event_id) + '"><b>' + esc(row.who === "player" ? "Aero" : "Narrator") + '</b>' + paras(row.text) + '</div>';
       }).join("") + '</div></details>';
@@ -150,7 +152,7 @@
     }).join("");
     return selector(v) + (own ? renderPrevious(v) + renderProjection(v, "chapters", "Chapters") +
       renderProjection(v, "events", "Events") + renderProjection(v, "relationship_evidence", "Shared experiences") +
-      '<details open class="panel"><summary>Performance</summary>' + renderProgress(v) + renderUsage(v) + '</details>' +
+      journalSection("performance") + '<summary>Performance</summary>' + renderProgress(v) + renderUsage(v) + '</details>' +
       renderDiceHistory(v) : "") + '<div class="panel" id="journalEntries"><h2>Journal' + (own ? "" : " · " + esc(m.name)) + '</h2><ul class="plain">' + (jr || '<li class="empty">Nothing recorded about ' + esc(m.name) + " yet.</li>") + "</ul>" + (own ? olderButton(v, "journal", "Load earlier entries") : "") + "</div>" +
       '<div class="panel"><h2>Discoveries</h2><div class="note">' + discN + " observed so far. Marked <b>report</b> means what Aero perceived, not confirmed truth.</div></div>" +
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
