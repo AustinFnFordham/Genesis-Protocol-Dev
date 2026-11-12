@@ -139,6 +139,8 @@ class ExecutionTests(unittest.TestCase):
                     saved = {str(p.relative_to(camp)): p.read_bytes() for p in camp.rglob("*") if p.is_file()}
                     self.assertEqual(result, engine.execute(camp, "same-action", action, request))
                     self.assertEqual(saved, {str(p.relative_to(camp)): p.read_bytes() for p in camp.rglob("*") if p.is_file()})
+                    with self.assertRaises(ValueError):
+                        engine.execute(camp, "same-action", action, dict(request, roll_key="renamed-retry"))
                     changed = copy.deepcopy(action)
                     changed["resolution_settings"]["temperature"] = "legendary" if temperature != "legendary" else "heroic"
                     with self.assertRaises(ValueError):
@@ -154,7 +156,7 @@ class ExecutionTests(unittest.TestCase):
         action = action_for(self.campaign, "legendary", True)
         for i, (actor, kind, formula) in enumerate((("npc","attack","1d20+3"),("gm_hidden_table","check","1d20"),("aero","damage","2d6+3"),("aero","damage","1d20"))):
             request = dict(request_for(str(i)), requested_by=actor, kind=kind, formula=formula)
-            result = engine.execute(self.campaign, "isolation", action, request)
+            result = engine.execute(self.campaign, f"isolation-{i}", action, request)
             self.assertFalse(result["resolution"]["eligible"])
             self.assertEqual(result["resolution"]["roll"]["total"], result["roll"]["final_total"])
             self.assertIsNone(result["resolution"]["narrative"])

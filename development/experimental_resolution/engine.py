@@ -176,6 +176,11 @@ def execute(campaign, action_id, action, request, after_write=None):
         value = {"action_hash": fingerprint(identity(action)), "campaign_id": action["campaign_id"]}
         if binding.exists() and json.loads(binding.read_text()) != value:
             raise ValueError("immutable action or selected resolution settings changed")
+        slot = bindings / ("slot-"+fingerprint([action_id, request.get("step_id"), request.get("kind"),
+                                               request.get("requested_by", action.get("actor"))])+".json")
+        slot_value = {"request_hash":request_hash}
+        if slot.exists() and json.loads(slot.read_text()) != slot_value:
+            raise ValueError("this step/actor/roll-kind already has an accepted roll; a new key cannot reroll it")
         receipt = receipts / (key+".json")
         if receipt.exists() and not pending.exists():
             done = json.loads(receipt.read_text())
@@ -190,6 +195,8 @@ def execute(campaign, action_id, action, request, after_write=None):
             plan = generate(campaign, action_id, action, request, config)
             if not binding.exists():
                 batch.durable_json(binding, value)
+            if not slot.exists():
+                batch.durable_json(slot, slot_value)
             plan["fingerprint"] = request_hash
             batch.durable_json(pending, plan)
             checkpoint("accepted")
