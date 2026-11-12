@@ -46,8 +46,9 @@ def resolve(raw_record, selected, kind, player_controlled, target=None, narrativ
     """
     dice = raw_record["dice"]
     d20_terms = [d for d in dice if d["sides"] == 20]
+    single_d20 = len(d20_terms) == 1 and d20_terms[0]["sign"] == 1 and len(d20_terms[0]["rolled"]) == 1
     eligible = (player_controlled is True and kind in ("check", "attack", "save") and
-                len(d20_terms) == 1 and d20_terms[0]["sign"] == 1 and len(d20_terms[0]["rolled"]) == 1)
+                single_d20)
     die = d20_terms[0] if eligible else None
     temperature = selected["temperature"] if eligible else "regular"
     raw = die["rolled"][0] if eligible else None
@@ -55,8 +56,9 @@ def resolve(raw_record, selected, kind, player_controlled, target=None, narrativ
     total = raw_record["final_total"]+transformed-raw if eligible else raw_record["final_total"]
     if target is not None and type(target) is not int:
         raise ValueError("target must be integer or null")
-    auto_miss = eligible and kind == "attack" and raw == 1 and temperature == "regular"
-    critical = eligible and kind == "attack" and raw == 20
+    attack_face = d20_terms[0]["rolled"][0] if single_d20 and kind == "attack" else None
+    auto_miss = attack_face == 1 and temperature == "regular"
+    critical = attack_face == 20
     task = None
     if target is not None:
         margin = total-target

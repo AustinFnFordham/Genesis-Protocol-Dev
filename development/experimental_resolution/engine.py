@@ -136,6 +136,7 @@ def generate(campaign, action_id, action, request, config):
         resolution["narrative_stream"] = {"domain": "genesis:narrative:v1", "algorithm": "mulberry32",
                                           "request": request["roll_key"], "draw_index": 0}
     record["resolution"] = policy.public_resolution(resolution)
+    record["resolution_provenance"] = {"action_id":action_id,"step_id":request["step_id"],"roll_key":request["roll_key"]}
     logs = {"records/roll_log.jsonl": record,
             "hidden/experimental_resolution_log.jsonl": {"roll_id": record["roll_id"], "action_id": action_id,
                 "ordinary_draw_start": state["draws_used"]-used, "ordinary_draw_end": state["draws_used"],

@@ -144,7 +144,8 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
                 raise ValueError("a batch requires 1 to 100 ordered events")
             by_id = {event["event_id"]: event for event in events}
             idempotencies = {event.get("idempotency_key") for event in events}
-            rolls = {row["roll_id"] for row in ledger.read_jsonl(campaign / "records/roll_log.jsonl")}
+            roll_records = {row["roll_id"]:row for row in ledger.read_jsonl(campaign / "records/roll_log.jsonl")}
+            rolls = set(roll_records)
             accepted = []
             seq = int(head.split("_")[1]) if head else 0
             for index, draft in enumerate(drafts, 1):
@@ -163,7 +164,7 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
                                       for ref in event.get("caused_by", [])]
                 if event["idempotency_key"] in idempotencies:
                     raise ValueError("batch provenance already exists without a receipt")
-                problems = ledger.validate_event(event, by_id, rolls)
+                problems = ledger.validate_event(event, by_id, rolls, roll_records)
                 if problems:
                     raise ValueError("invalid batch event: " + "; ".join(problems))
                 by_id[event["event_id"]] = event

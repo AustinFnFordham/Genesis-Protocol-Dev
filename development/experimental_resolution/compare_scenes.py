@@ -36,7 +36,7 @@ def complete_turn(campaign, action_id, action, result, narrative_text, after_str
     public = policy.public_resolution(result["resolution"])
     drafts = [event("player_declaration", action["text"], {"action_id":action_id,"text":action["text"],
         "declaration":action["declaration"],"resolution_settings":policy.settings(action)}),
-        event("skill_check", "Aero studies the remote's visible housing", {"skill":"technology","resolution":public},
+        event("skill_check", "Aero studies the remote's visible housing", {"skill":"technology","step_id":result["roll"]["resolution_provenance"]["step_id"],"resolution":public},
               causes=["$1"],rolls=[result["roll"]["roll_id"]]),
         event("gm_ruling", "PRIVATE_RESOLUTION_CANARY", {"resolution":result["resolution"]}, "gm_only", ["$2"]),
         event("gm_narration", "Inspection ends at a player decision", {"text":narrative_text}, causes=["$2"]),

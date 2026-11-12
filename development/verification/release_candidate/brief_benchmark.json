@@ -5,8 +5,8 @@
   "full_bundle_bytes": 193882,
   "compact_bundle_bytes": 49666,
   "compact_vs_full_reduction_percent": 74.38,
-  "full_replay_median_ms": 194.51,
-  "verified_checkpoint_ms": 213.47,
+  "full_replay_median_ms": 233.51,
+  "verified_checkpoint_ms": 260.2,
   "same_fields": true,
   "limits": "Timing is local; bytes are not model token measurements. Checkpoint payload verification replays the prefix; no runtime speedup claimed."
 }

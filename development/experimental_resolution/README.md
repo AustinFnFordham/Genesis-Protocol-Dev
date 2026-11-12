@@ -105,6 +105,8 @@ The current candidate creates none of those markers in source campaigns.
    resolution, authorized consequences, narration and next context. Preserve
    pending steps. Use `policy.public_resolution()` for public event details.
    Keep private calculations and evidence in a hidden event or execution record.
+   Ledger validation binds public resolution metadata to the immutable roll,
+   original declaration settings and step. NPC/GM metadata is kept private.
 7. Follow the existing committed-and-pushed publication protocol: all bounded
    history pages first, snapshot last under CAS. Do not call progress Complete
    until actual remote publication succeeds. Keep publication-pending separate

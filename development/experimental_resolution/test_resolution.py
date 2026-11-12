@@ -91,6 +91,18 @@ class PolicyTests(unittest.TestCase):
         out = policy.resolve(record(10), {"temperature":"regular","narrative_consequences":False}, "check", True, 20, 6)
         self.assertIsNone(out["narrative"])
 
+    def test_npc_attack_critical_rules_remain_regular(self):
+        for temperature in policy.TEMPERATURES:
+            selected = {"temperature":temperature,"narrative_consequences":True}
+            one = policy.resolve(record(1), selected, "attack", False, 1)
+            twenty = policy.resolve(record(20), selected, "attack", False, 100)
+            self.assertFalse(one["eligible"])
+            self.assertTrue(one["roll"]["automatic_attack_miss"])
+            self.assertEqual(one["task"]["result"], "failure")
+            self.assertEqual(twenty["task"]["result"], "success")
+            self.assertTrue(twenty["roll"]["attack_critical"])
+            self.assertIsNone(twenty["narrative"])
+
     def test_no_automatic_causal_commit(self):
         out = policy.resolve(record(10), {"temperature":"regular","narrative_consequences":True}, "check", True, 10, 6)
         candidate = {"effect_id":"known_effect", "rule_source":"test_domain_rule", "event_ids":["evt_0001"], "axis":"advantage", "cost":1}
@@ -195,6 +207,32 @@ class ExecutionTests(unittest.TestCase):
         entry = {"path":self.campaign, "id":action["campaign_id"], "dir":str(self.campaign.relative_to(engine.ROOT))}
         _, bundle = brief.build(entry, action=action)
         self.assertEqual(brief.compact(bundle)["submitted_resolution_settings"], action["resolution_settings"])
+
+    def test_public_ledger_result_cannot_rewrite_roll_or_declaration(self):
+        from compare_scenes import complete_turn
+        action = action_for(self.campaign, "heroic", True)
+        result = engine.execute(self.campaign, "bound-result", action, request_for())
+        source = engine.ledger.load_all(self.campaign)
+        def event(kind, details, causes=None, rolls=None):
+            return {"session":1,"turn_no":1,"world_time":"test","kind":kind,"summary":"test","actor":"aero", "visibility":"player", "knowledge_type":"fact","known_to":[],"caused_by":causes or [],"roll_ids":rolls or [],"details":details}
+        declaration = event("player_declaration", {"action_id":"bound-result","declaration":action["declaration"],"resolution_settings":action["resolution_settings"]})
+        resolved = event("skill_check", {"step_id":"inspect","resolution":policy.public_resolution(result["resolution"])}, ["$1"], [result["roll"]["roll_id"]])
+        lease = self.campaign/"hidden/test_lease.json"
+        import time
+        lease.write_text(json.dumps({"holder":"test","expires_ms":time.time_ns()//1_000_000+60000}))
+        before = (self.campaign/"records/events.jsonl").read_bytes()
+        for change in ("total", "private", "settings", "step"):
+            drafts = copy.deepcopy([declaration, resolved])
+            if change == "total":drafts[1]["details"]["resolution"]["roll"]["total"] += 1
+            if change == "private":drafts[1]["details"]["resolution"]["task"] = {"target":99173}
+            if change == "settings":drafts[0]["details"]["resolution_settings"]["temperature"] = "legendary"
+            if change == "step":drafts[1]["details"]["step_id"] = "invented"
+            request = {"batch_id":"tamper-"+change,"expected_head":source[-1]["event_id"],"expected_revision":len(source),"events":drafts}
+            with self.assertRaises(ValueError):
+                engine.batch.apply(self.campaign, request, lease, "test", engine.ledger)
+            self.assertEqual((self.campaign/"records/events.jsonl").read_bytes(), before)
+        complete_turn(self.campaign, "bound-result", action, result, "The inspection ends with the pickup still pending.")
+        self.assertFalse(engine.ledger.validate_all(self.campaign)[1])
 
     def test_scene_mode_changes_preserve_history_and_private_boundaries(self):
         from compare_scenes import complete_turn

@@ -39,6 +39,7 @@ Local refs below are mapped to equivalent published trees in
 | `51cd32b` | Incorporate the two newer live turns unchanged. |
 | `e21839d` | Exercise all Journal pages against the larger live record. |
 | `01c7293` | Preserve the final observed live turn without modifying its records. |
+| `c5b48d1` | Preserve ordinary NPC natural-face outcomes and validate public resolution provenance against immutable roll/declaration records. |
 
 The exact changed-file list and aggregate results are under
 `development/verification/release_candidate/`. Original source data, seeds, private
@@ -49,7 +50,7 @@ GM prose and credentials are not included in those evidence files.
 | Gate | Status | Evidence / limitation |
 | --- | --- | --- |
 | Preserve current Hask Meadow, registry and shared character definitions | PASS locally | Empty Git diff against the live base for all `campaigns/starwars_litrpg/runs/`, all `api_bridge/gm/`, and `ui/turn_contract.js`. |
-| Experimental mapping, eligibility, criticals, degree bands and independent d6 | PASS locally | 17 experimental test cases, including all 20 faces, all 400 advantage pairs in both directions, mixed-dice isolation and every degree boundary. |
+| Experimental mapping, eligibility, criticals, degree bands and independent d6 | PASS locally | 19 experimental test cases, including all 20 faces, all 400 advantage pairs in both directions, mixed-dice isolation and every degree boundary. |
 | Retry/replay and dice partial-write recovery | PASS for new adapter | Real subprocess termination at seven transaction boundaries, torn append and partial state-temporary recovery, independent ordinary replay and separate-axis replay. |
 | Unmodified legacy dice CLI crash atomicity | FAIL | Process termination after public append leaves its cursor behind. Adapter refuses divergence. Legacy CLI itself remains unchanged and is not certified safe for interrupted retry. |
 | Existing Python regressions | PASS | 20 scripts including the experimental suite; earlier dice, validator, security, ledger, brief, sequencer and public-client coverage retained. |
@@ -72,7 +73,7 @@ passes without bypassing visibility checks.
 
 For the same 1,186-event workload, full GM bundle: **193,882 bytes**; compact:
 **49,666 bytes**, **74.38% smaller**, with identical field projection. Local full
-replay median: **194.51 ms**; verified checkpoint: **213.47 ms**. Checkpoint
+replay median: **233.51 ms**; verified checkpoint: **260.20 ms**. Checkpoint
 verification still replays its prefix; no speedup is claimed. These figures are
 not token counts, provider latency or a comparison with an equivalent live turn.
 
@@ -107,6 +108,11 @@ retrieval, snapshot sizes and zero scripted-model-call counts are in
   roll-plan contract. A new key is not permission to reroll.
 - Legacy interrupted rolls and once-only `--advance-turn` recovery need a
   reviewed integration path. No automatic legacy-state repair is performed.
+- Public resolution records are checked against the authoritative roll, original
+  declaration, settings and step. Private numeric fields and NPC/GM resolution
+  metadata cannot be committed through this public metadata lane. New experimental
+  mechanic corrections need a reviewed append-only correction-record contract;
+  the original roll record itself cannot be edited. Existing legacy repair tests pass.
 - Native Windows, live remote failure injection, provider authentication,
   actual model-usage telemetry and mobile Safari remain untested.
 

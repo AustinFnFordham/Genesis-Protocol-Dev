@@ -91,7 +91,51 @@ def validate_moral(e, d, by_id):
     return errs
 
 
-def validate_event(e, by_id, roll_ids):
+def validate_resolution_event(e, by_id, records):
+    """An experimental public result must exactly match its immutable roll record."""
+    value = e.get("details", {}).get("resolution")
+    if e.get("visibility") == "gm_only" or not isinstance(value, dict) or value.get("schema") != "genesis-experimental-resolution/1":
+        return []
+    sys.path.insert(0, str(ROOT / "development/experimental_resolution"))
+    import policy
+    ids = e.get("roll_ids", [])
+    if len(ids) != 1 or not records or ids[0] not in records:
+        return ["experimental public resolution requires one authoritative roll record"]
+    raw = records[ids[0]]
+    try:
+        if value != policy.public_resolution(value) or value != policy.public_resolution(raw["resolution"]):
+            return ["experimental public resolution differs from the authoritative roll or exposes private fields"]
+        origin = raw["resolution_provenance"]
+        if e["details"].get("step_id") != origin["step_id"]:
+            return ["experimental resolution step provenance differs"]
+        todo, seen = list(e.get("caused_by", [])), set()
+        while todo:
+            eid = todo.pop()
+            if eid in seen or eid not in by_id:
+                continue
+            seen.add(eid)
+            parent = by_id[eid]
+            details = parent.get("details", {})
+            if parent["kind"] == "player_declaration" and details.get("action_id") == origin["action_id"]:
+                if raw.get("requested_by") != details.get("declaration", {}).get("actor") or e.get("actor") != raw.get("requested_by"):
+                    return ["only the player's own roll may carry public experimental resolution metadata; NPC/GM metadata stays private"]
+                if policy.settings(details) != value["settings"]:
+                    return ["experimental resolution settings differ from the original declaration"]
+                steps = list(details.get("declaration", {}).get("steps", []))
+                while steps:
+                    step = steps.pop()
+                    if step.get("id") == origin["step_id"]:
+                        return []
+                    for case in step.get("cases", []):
+                        steps.extend(case.get("steps", []))
+                return ["experimental roll step is absent from the original declaration"]
+            todo.extend(parent.get("caused_by", []))
+        return ["experimental resolution has no matching causal player declaration"]
+    except (ValueError, KeyError, TypeError):
+        return ["invalid experimental resolution record"]
+
+
+def validate_event(e, by_id, roll_ids, roll_records=None):
     errs = []
     for k in REQUIRED:
         if k not in e:
@@ -131,12 +175,15 @@ def validate_event(e, by_id, roll_ids):
             resolution_policy.settings(d)
         except ValueError as error:
             errs.append(str(error))
+    if isinstance(d, dict):
+        errs += validate_resolution_event(e, by_id, roll_records)
     return errs
 
 
 def validate_all(camp):
     _, _, rolls, _ = paths(camp)
-    roll_ids = {r["roll_id"] for r in read_jsonl(rolls)}
+    roll_records = {r["roll_id"]: r for r in read_jsonl(rolls)}
+    roll_ids = set(roll_records)
     events = load_all(camp)
     by_id, problems, seen_idem = {}, [], {}
     all_ids = {e.get("event_id"): e for e in events}   # so a forward reference reads "not earlier", not "unresolved"
@@ -150,7 +197,7 @@ def validate_all(camp):
     for e in events:
         if e.get("event_id") in by_id:
             problems.append((e["event_id"], "duplicate event_id"))
-        for msg in validate_event(e, all_ids, roll_ids):
+        for msg in validate_event(e, all_ids, roll_ids, roll_records):
             problems.append((e.get("event_id"), msg))
         k = e.get("idempotency_key")
         if k:
@@ -188,8 +235,9 @@ def _cmd_add(a, camp):
         "roll_ids": a.roll or [], "tags": a.tag or [], "details": details, "idempotency_key": a.idem,
     }
     by_id = {x["event_id"]: x for x in events}
-    roll_ids = {r["roll_id"] for r in read_jsonl(rolls)}
-    errs = validate_event(e, by_id, roll_ids)
+    roll_records = {r["roll_id"]:r for r in read_jsonl(rolls)}
+    roll_ids = set(roll_records)
+    errs = validate_event(e, by_id, roll_ids, roll_records)
     if errs:
         print(json.dumps({"error": "invalid event", "problems": errs}), file=sys.stderr)
         return 2

@@ -9,7 +9,7 @@
   "legacy_dice_cli_crash_atomicity": "FAIL",
   "experimental_dice_transaction_recovery": "PASS_LOCAL",
   "python_scripts_passed": 20,
-  "experimental_test_cases": 17,
+  "experimental_test_cases": 19,
   "browser_suites_passed": 7,
   "brief_heads_verified": 1186,
   "detected_player_leaks": 0,
@@ -18,5 +18,7 @@
   "snapshot_headroom": 13220,
   "deployed": false,
   "approval_required_after_remaining_gates": true,
-  "live_base": "7845e4c4d03a45946930c497ba5274a57a3de17c"
+  "live_base": "7845e4c4d03a45946930c497ba5274a57a3de17c",
+  "public_resolution_roll_provenance_guard": "PASS_LOCAL",
+  "ordinary_npc_critical_policy": "PASS_LOCAL"
 }

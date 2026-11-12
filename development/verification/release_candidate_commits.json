@@ -38,7 +38,8 @@
     "51cd32bbb0e5fc73bc0f23425d22d74f11c67c3c",
     "e21839ddc54df9801dc273aab5484135829424a5",
     "cd7ea73",
-    "01c72939b73d3649810fb2a46e6fae25430febc1"
+    "01c72939b73d3649810fb2a46e6fae25430febc1",
+    "c5b48d13a84d3f786d675c73ead7eff24b1cb065"
   ],
   "note": "Final assembly commit is the published branch HEAD. Its complete source tree must match the final tested local tree before the ref update."
 }
