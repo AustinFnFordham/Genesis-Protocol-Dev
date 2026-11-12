@@ -1,0 +1,21 @@
+{
+  "decision": "HOLD",
+  "remote_queue_cas_lease_publication": "NOT_RUN_STAGING_TARGET_REQUIRED",
+  "remote_gm_generated_turn": "NOT_RUN",
+  "real_mobile_safari": "NOT_RUN",
+  "provider_usage_tokens": null,
+  "provider_latency_ms": null,
+  "provider_model_calls_measured": null,
+  "legacy_dice_cli_crash_atomicity": "FAIL",
+  "experimental_dice_transaction_recovery": "PASS_LOCAL",
+  "python_scripts_passed": 20,
+  "experimental_test_cases": 17,
+  "browser_suites_passed": 7,
+  "brief_heads_verified": 1127,
+  "detected_player_leaks": 0,
+  "snapshot_bytes": 83816,
+  "snapshot_ceiling": 96000,
+  "snapshot_headroom": 12184,
+  "deployed": false,
+  "approval_required_after_remaining_gates": true
+}

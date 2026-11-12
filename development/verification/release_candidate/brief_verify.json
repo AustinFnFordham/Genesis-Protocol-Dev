@@ -1,0 +1,28 @@
+{
+ "campaign_id": "hask_meadow_r2",
+ "events": 1127,
+ "checks": {
+  "incremental_equals_full_replay": {
+   "heads_checked": 1127,
+   "mismatches": [],
+   "ms": 60781
+  },
+  "rejections": {
+   "duplicate": "rejected: out of order or duplicate: evt_1124 after evt_1124",
+   "out_of_order": "rejected: out of order or duplicate: evt_1127 after evt_1124",
+   "bad_start": "rejected: out of order: evt_0006 applied to an empty state",
+   "tampered_checkpoint": "full_replay (checkpoint state does not match replay)",
+   "checkpoint_ahead_of_ledger": "rejected: checkpoint head evt_1127 is ahead of the ledger head evt_1126",
+   "valid_checkpoint": "incremental from evt_1124"
+  },
+  "leaks": {
+   "heads_checked": 1127,
+   "player_leaks": [],
+   "leak_count": 0,
+   "canary_in_player": false,
+   "canary_in_gm": true
+  },
+  "history_refuses_hidden_to_player": true
+ },
+ "ok": true
+}
