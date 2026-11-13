@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "data": {
+  "action_id": "shared-0002",
+  "status": "submitted",
+  "created_ms": 1794613454830,
+  "source": "composer",
+  "contract": "turn-contract/3",
+  "confirmed_warnings": false,
+  "actor": "aero",
+  "campaign_id": "shared-1",
+  "based_on_revision": 40,
+  "ledger_head": "evt_0043",
+  "context_id": "evt_0043",
+  "declaration": {
+   "actor": "aero",
+   "source": "freeform",
+   "freeform": "Touch the remote's housing to test it",
+   "speech": null,
+   "actions": [
+    {
+     "option": "touch_remote",
+     "target": null,
+     "trigger": null
+    }
+   ],
+   "bonus_actions": [],
+   "movement": null,
+   "objects": [],
+   "reactions": [],
+   "unmapped": [],
+   "steps": [
+    {
+     "type": "action",
+     "option": "touch_remote",
+     "target": null,
+     "trigger": null,
+     "id": "k0",
+     "seq": 0
+    }
+   ]
+  },
+  "text": "Touch the remote's housing to test it",
+  "resolution_settings": {
+   "temperature": "regular",
+   "narrative_consequences": false
+  },
+  "gm": {
+   "provider": "gpt-session",
+   "route": [
+    {
+     "provider": "gpt-session",
+     "by": "player",
+     "at_ms": 1794613454830
+    }
+   ]
+  }
+ }
+}
