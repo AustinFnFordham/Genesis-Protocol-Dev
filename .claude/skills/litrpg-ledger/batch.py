@@ -123,6 +123,9 @@ def apply(campaign, request, lock, run, ledger, after_stream=None):
     receipts.mkdir(parents=True, exist_ok=True)
     receipt = receipts / (key + ".json")
     with writer_lock(campaign):
+        if any((campaign / "hidden" / name).exists() for name in
+               ("legacy_dice_pending.json", "experimental_dice_pending.json")):
+            raise ValueError("recover the accepted dice request before committing a batch")
         if receipt.exists() and not pending.exists():
             done = json.loads(receipt.read_text())
             if done["fingerprint"] != fingerprint:

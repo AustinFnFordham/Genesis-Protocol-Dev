@@ -1,0 +1,20 @@
+{
+  "base": "f241ea6ef6e470b83d412ac3cbc25907b144ace5",
+  "protected_pathspecs": [
+    "campaigns/",
+    "api_bridge/gm/",
+    "ui/",
+    "app/",
+    "Contracts/",
+    "schemas/"
+  ],
+  "changed_protected_files": [],
+  "unchanged_core_functions": [
+    "mulberry",
+    "parse",
+    "do_roll"
+  ],
+  "source_run_mutations": false,
+  "remote_campaign_mutations": false,
+  "deployed": false
+}

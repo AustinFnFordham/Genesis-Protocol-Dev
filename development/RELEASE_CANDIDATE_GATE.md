@@ -1,5 +1,11 @@
 # Release candidate gate — HOLD
 
+Follow-up: `dev/legacy-dice-recovery-f241ea6` continues this frozen candidate.
+The legacy CLI recovery milestone now passes locally, including partial writes
+and keyed once-only turn advance. See `LEGACY_DICE_RECOVERY.md` and
+`verification/legacy_dice_recovery/`. The original evidence below remains the
+record for `f241ea6`; remote staging, provider usage and Safari gates remain open.
+
 Branch: `rc/experimental-resolution-acd961c`.
 Final frozen live base: `7845e4c4d03a45946930c497ba5274a57a3de17c`.
 Development incorporated: `8f6a641b4a062031da52838b20e6a2d7b3f47119`.

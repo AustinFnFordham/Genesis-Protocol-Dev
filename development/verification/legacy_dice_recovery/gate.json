@@ -1,0 +1,23 @@
+{
+  "decision": "HOLD",
+  "milestone": "legacy dice CLI crash recovery",
+  "status": "PASS_LOCAL",
+  "legacy_pending_recovery": "PASS_LOCAL",
+  "keyed_completed_roll_retry": "PASS_LOCAL",
+  "keyed_once_only_turn_advance": "PASS_LOCAL",
+  "unkeyed_completed_response_retry": "NOT_IDEMPOTENT_USE_REQUEST_ID",
+  "historical_unjournaled_divergence": "MANUAL_RECONCILIATION_REQUIRED",
+  "python_scripts_passed": 21,
+  "legacy_recovery_test_cases": 11,
+  "legacy_process_terminations": 22,
+  "experimental_test_cases": 19,
+  "remote_queue_cas_lease_publication": "NOT_RUN_STAGING_TARGET_REQUIRED",
+  "remote_gm_generated_turn": "NOT_RUN",
+  "provider_usage_tokens": null,
+  "provider_latency_ms": null,
+  "provider_model_calls_measured": null,
+  "real_mobile_safari": "NOT_RUN",
+  "browser_suites_this_increment": "NOT_RERUN_NO_FRONTEND_CHANGES",
+  "live_campaign_exercised": false,
+  "deployed": false
+}

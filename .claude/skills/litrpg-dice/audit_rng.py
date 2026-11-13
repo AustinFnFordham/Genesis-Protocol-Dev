@@ -33,6 +33,15 @@ def reference(seed, count):
 
 
 def audit(campaign, samples=100000):
+    from transactions import batch
+    with batch.reader_lock(campaign):
+        if any((campaign / "hidden" / name).exists() for name in
+               ("legacy_dice_pending.json", "experimental_dice_pending.json")):
+            raise ValueError("recover the accepted dice transaction before auditing")
+        return _audit(campaign, samples)
+
+
+def _audit(campaign, samples):
     state = json.loads((campaign / "hidden/dice_state.json").read_text())
     records = [json.loads(line) for line in (campaign / "records/roll_log.jsonl").read_text().splitlines() if line.strip()]
     problems, verified, groups = [], 0, {}

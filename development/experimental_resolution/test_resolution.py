@@ -296,20 +296,22 @@ class ExecutionTests(unittest.TestCase):
         self.assertTrue(audit.audit(self.campaign, samples=1000)["ok"])
         self.assertFalse((self.campaign/"hidden/dice_state.experimental.tmp").exists())
 
-    def test_legacy_cli_interruption_is_detected_not_silently_repaired(self):
-        # Characterize the unmodified legacy CLI. Its public append precedes
-        # cursor replacement; this is an intentionally failing RELEASE gate.
-        before = json.loads((self.campaign/"hidden/dice_state.json").read_text())
-        code = "import sys,os;sys.path.insert(0,sys.argv[1]);import roll;original=roll.append\ndef interrupted(path,rec):\n original(path,rec)\n os._exit(78)\nroll.append=interrupted;roll.main(['1d20','--campaign',sys.argv[2]])"
-        result = subprocess.run([sys.executable,"-B","-c",code,str(engine.ROOT/".claude/skills/litrpg-dice"),str(self.campaign)])
+    def test_legacy_cli_pending_blocks_experiment_then_recovers_without_reroll(self):
+        code = "import sys,os;sys.path.insert(0,sys.argv[1]);import roll;roll.main(['1d20','--request-id','legacy-check','--campaign',sys.argv[2]],after_write=lambda p:os._exit(78) if p=='append:records/roll_log.jsonl' else None)"
+        result = subprocess.run([sys.executable,"-B","-c",code,str(engine.ROOT/".claude/skills/litrpg-dice"),str(self.campaign)],capture_output=True,text=True)
         self.assertEqual(result.returncode, 78)
-        self.assertEqual(json.loads((self.campaign/"hidden/dice_state.json").read_text()), before)
         with self.assertRaises(ValueError):
-            engine.execute(self.campaign, "refuse-legacy-cursor", action_for(self.campaign), request_for())
-        self.assertFalse(audit.audit(self.campaign, samples=1000)["ok"])
-        (QA/"legacy_dice_crash_gate.json").write_text(json.dumps({"legacy_cli_crash_atomicity":"FAIL",
-            "failure":"public roll append can precede cursor replacement", "experimental_adapter_rejects_divergence":True,
-            "legacy_cli_modified":False,"live_campaign_exercised":False},indent=2)+"\n")
+            engine.export_state.build(campaign_dir=self.campaign)
+        marker = json.loads((self.campaign/"experimental_resolution.json").read_text())
+        with self.assertRaisesRegex(ValueError, "legacy dice"):
+            engine.execute(self.campaign, "refuse-pending", {"campaign_id":marker["campaign_id"]}, request_for())
+        retry = subprocess.run([sys.executable,"-B",str(engine.ROOT/".claude/skills/litrpg-dice/roll.py"),
+                                "1d20","--request-id","legacy-check","--campaign",str(self.campaign)],capture_output=True,text=True)
+        self.assertEqual(retry.returncode, 0, retry.stderr)
+        self.assertTrue(audit.audit(self.campaign, samples=1000)["ok"])
+        action = action_for(self.campaign)
+        engine.execute(self.campaign, "after-legacy-recovery", action, request_for())
+        self.assertTrue(audit.audit(self.campaign, samples=1000)["ok"])
 
 
 if __name__ == "__main__":

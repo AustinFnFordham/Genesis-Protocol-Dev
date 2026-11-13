@@ -1,0 +1,115 @@
+{
+  "baseline": "f241ea6ef6e470b83d412ac3cbc25907b144ace5",
+  "scripts": [
+    {
+      "path": ".claude/skills/litrpg-dice/test_roll.py",
+      "passed": true,
+      "elapsed_ms": 607.09
+    },
+    {
+      "path": ".claude/skills/litrpg-dice/test_audit_rng.py",
+      "passed": true,
+      "elapsed_ms": 284.44
+    },
+    {
+      "path": ".claude/skills/litrpg-ledger/test_ledger.py",
+      "passed": true,
+      "elapsed_ms": 885.02
+    },
+    {
+      "path": ".claude/skills/litrpg-ledger/test_batch.py",
+      "passed": true,
+      "elapsed_ms": 81.92
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_brief.py",
+      "passed": true,
+      "elapsed_ms": 154.32
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_brief_checkpoint.py",
+      "passed": true,
+      "elapsed_ms": 270.18
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_turn.py",
+      "passed": true,
+      "elapsed_ms": 1013.01
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_dice_display.py",
+      "passed": true,
+      "elapsed_ms": 113.54
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_dice_history.py",
+      "passed": true,
+      "elapsed_ms": 148.55
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_turn_contract.py",
+      "passed": true,
+      "elapsed_ms": 731.18
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_sequencer.py",
+      "passed": true,
+      "elapsed_ms": 5489.65
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_scene_sequencing.py",
+      "passed": true,
+      "elapsed_ms": 1697.61
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_campaign_features.py",
+      "passed": true,
+      "elapsed_ms": 129.91
+    },
+    {
+      "path": "development/test_readiness.py",
+      "passed": true,
+      "elapsed_ms": 147.38
+    },
+    {
+      "path": "development/test_increment_contracts.py",
+      "passed": true,
+      "elapsed_ms": 80.57
+    },
+    {
+      "path": "development/test_interop.py",
+      "passed": true,
+      "elapsed_ms": 336.13
+    },
+    {
+      "path": "development/test_worker_progress.py",
+      "passed": true,
+      "elapsed_ms": 59.84
+    },
+    {
+      "path": "development/test_action_fences.py",
+      "passed": true,
+      "elapsed_ms": 561.42
+    },
+    {
+      "path": "development/test_worker_roundtrip.py",
+      "passed": true,
+      "elapsed_ms": 698.33
+    },
+    {
+      "path": "development/experimental_resolution/test_resolution.py",
+      "passed": true,
+      "elapsed_ms": 9250.37
+    },
+    {
+      "path": "development/test_legacy_dice_recovery.py",
+      "passed": true,
+      "elapsed_ms": 3793.53
+    }
+  ],
+  "all_passed": true,
+  "legacy_recovery_test_cases": 11,
+  "experimental_test_cases": 19,
+  "live_campaign_exercised": false,
+  "deployed": false
+}
