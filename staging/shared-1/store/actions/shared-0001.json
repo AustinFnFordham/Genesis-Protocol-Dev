@@ -1,5 +1,5 @@
 {
- "version": 6,
+ "version": 7,
  "data": {
   "action_id": "shared-0001",
   "status": "resolved",
@@ -59,16 +59,17 @@
   "processing": {
    "run": "claude-s1",
    "started_ms": 1794613414781,
-   "heartbeat_ms": 1794613437105,
-   "lease_ms": 590802,
-   "stage": "narration",
-   "stage_started_ms": 1794613437105,
+   "heartbeat_ms": 1794613439053,
+   "lease_ms": 588854,
+   "stage": "publishing",
+   "stage_started_ms": 1794613439053,
    "stages": {
     "claimed": 1794613414781,
     "context": 1794613418945,
     "rules": 1794613425692,
     "ledger": 1794613432797,
-    "narration": 1794613437105
+    "narration": 1794613437105,
+    "publishing": 1794613439053
    }
   },
   "ledger_events": [
