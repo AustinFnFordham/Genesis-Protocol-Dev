@@ -169,6 +169,9 @@ def execute(campaign, action_id, action, request, after_write=None):
         if after_write:
             after_write(name)
     with batch.writer_lock(campaign):
+        if any((campaign / "hidden" / name).exists() for name in
+               ("dice_cli_pending.json", "legacy_dice_pending.json")):
+            raise ValueError("recover the accepted dice CLI transaction before rolling")
         if (campaign / "hidden/ledger_batch_pending.json").exists():
             raise ValueError("recover the accepted ledger batch before rolling")
         receipts.mkdir(exist_ok=True)

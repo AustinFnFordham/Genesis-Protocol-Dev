@@ -105,7 +105,7 @@ def append(path, rec):
         f.write(json.dumps(rec) + "\n")
 
 
-def main(argv=None):
+def main(argv=None, after_write=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("formula", nargs="?")
     ap.add_argument("--purpose", default="")
@@ -114,35 +114,54 @@ def main(argv=None):
     ap.add_argument("--dc", type=int, help="target number; stored in the hidden ledger only")
     ap.add_argument("--campaign", default=str(DEFAULT_CAMPAIGN))
     ap.add_argument("--advance-turn", action="store_true")
+    ap.add_argument("--request-id", help="stable operation ID; reuse unchanged for crash/response-loss retries")
+    ap.add_argument("--recover-pending", action="store_true", help="finish a pending operation without drawing again")
     a = ap.parse_args(argv)
 
+    if a.recover_pending and (a.formula or a.advance_turn or a.request_id or a.dc is not None
+                              or a.purpose or a.by != "gm" or a.mode != "normal"):
+        ap.error("--recover-pending takes only --campaign; it finishes the already accepted operation")
+    if not a.recover_pending and not a.advance_turn and not a.formula:
+        ap.error("formula required")
+    if a.advance_turn and (a.formula or a.dc is not None or a.purpose or a.by != "gm" or a.mode != "normal"):
+        ap.error("--advance-turn takes only --campaign and --request-id")
+    if a.request_id is not None and (not a.request_id.strip() or len(a.request_id) > 200):
+        ap.error("--request-id must be nonempty and at most 200 characters")
+    # Import inside main so pure roller users retain the same import contract.
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import dice_transaction
     camp = Path(a.campaign)
-    state_path = camp / "hidden" / "dice_state.json"
-    st = load_state(state_path)
+    request = {"request_id": a.request_id, "advance_turn": a.advance_turn,
+               "formula": a.formula, "mode": a.mode, "purpose": a.purpose, "by": a.by, "dc": a.dc}
+    def generate():
+        st = load_state(camp / "hidden/dice_state.json")
+        dice_transaction.validate_cursor(camp, st, parse)
+        return prepare(a, st)
+    try:
+        out = dice_transaction.execute(camp, request, generate, recover=a.recover_pending,
+                                       **({"after_write": after_write} if after_write else {}))
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        print(json.dumps({"error": str(error)}), file=sys.stderr)
+        return 2
+    print(json.dumps(out))
+    return 0
 
+
+def prepare(a, st):
+    """Build accepted bytes without mutating a log or cursor; RNG stays unchanged."""
     if a.advance_turn:
         st["turn_no"] += 1
         st["draws_used"] = 0
-        save_state(state_path, st)
-        print(json.dumps({"turn_no": st["turn_no"]}))
-        return 0
-    if not a.formula:
-        ap.error("formula required")
-
-    try:
-        parse(a.formula)
-        rand = mulberry((st["seed"] ^ (st["turn_no"] * 0x9E3779B9)) & 0xFFFFFFFF)
-        for _ in range(st["draws_used"]):      # resume this turn's stream where it left off
-            rand()
-        used = [0]
-        def counted():
-            used[0] += 1
-            return rand()
-        dice, alt, total, mods, single_d20 = do_roll(a.formula, a.mode, counted)
-    except ValueError as e:
-        print(json.dumps({"error": str(e)}), file=sys.stderr)
-        return 2
-
+        return st, {}, {"turn_no": st["turn_no"]}
+    parse(a.formula)
+    rand = mulberry((st["seed"] ^ (st["turn_no"] * 0x9E3779B9)) & 0xFFFFFFFF)
+    for _ in range(st["draws_used"]):      # resume this turn's stream where it left off
+        rand()
+    used = [0]
+    def counted():
+        used[0] += 1
+        return rand()
+    dice, alt, total, mods, single_d20 = do_roll(a.formula, a.mode, counted)
     st["draws_used"] += used[0]
     st["roll_count"] += 1
     final = total + mods
@@ -154,16 +173,14 @@ def main(argv=None):
         "raw_total": total, "modifiers": mods, "final_total": final,
         "nat20": nat == 20, "nat1": nat == 1,
     }
-    append(camp / "records" / "roll_log.jsonl", rec)
+    records = {"records/roll_log.jsonl": rec}
     out = dict(rec)
     if a.dc is not None:
         out["outcome"] = "success" if final >= a.dc else "failure"
-        append(camp / "hidden" / "roll_dcs.jsonl", {"roll_id": rec["roll_id"], "dc": a.dc, "outcome": out["outcome"]})
-    save_state(state_path, st)
+        records["hidden/roll_dcs.jsonl"] = {"roll_id": rec["roll_id"], "dc": a.dc, "outcome": out["outcome"]}
     shown = "+".join(str(d["kept"]) for d in dice)
     out["summary"] = f"{a.formula} {shown}{'%+d' % mods if mods else ''} = {final}" + (f" ({out['outcome']})" if a.dc is not None else "")
-    print(json.dumps(out))
-    return 0
+    return st, records, out
 
 
 if __name__ == "__main__":

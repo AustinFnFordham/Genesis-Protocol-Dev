@@ -1,0 +1,29 @@
+{
+  "scope": "disposable synthetic campaigns; true means a reproduced gap",
+  "results": [
+    {
+      "candidate": "a",
+      "audit_accepts_pending_transaction": false,
+      "batch_receipt_bypasses_pending_barrier": false,
+      "pending_recovery_overwrites_divergent_receipt": true,
+      "advance_accepts_torn_hidden_log": true,
+      "source": "97620de2e903c0c076a5ccf06720303c82366adb"
+    },
+    {
+      "candidate": "b",
+      "audit_accepts_pending_transaction": true,
+      "batch_receipt_bypasses_pending_barrier": true,
+      "pending_recovery_overwrites_divergent_receipt": true,
+      "advance_accepts_torn_hidden_log": false,
+      "source": "883308ea5c891f9540740c3bc84c263a9af2eb64"
+    },
+    {
+      "candidate": "canonical",
+      "audit_accepts_pending_transaction": false,
+      "batch_receipt_bypasses_pending_barrier": false,
+      "pending_recovery_overwrites_divergent_receipt": false,
+      "advance_accepts_torn_hidden_log": false,
+      "source": "working tree on f241ea6"
+    }
+  ]
+}

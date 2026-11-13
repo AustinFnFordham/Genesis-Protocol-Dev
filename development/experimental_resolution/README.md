@@ -122,12 +122,19 @@ A receipt is durable before clearing the pending barrier. Event/roll readers fai
 closed while a dice transaction is pending. Changed bytes require manual review;
 the engine never truncates a log, reseeds dice or silently reconciles a cursor.
 
-The legacy `roll.py` CLI is unchanged by this increment. A real process-kill test
-demonstrated that its public append can precede cursor replacement. That legacy
-path is not certified crash-safe. The new adapter detects such divergence and
-refuses a new roll. It does not retrospectively repair legacy interrupted rolls.
-The existing `--advance-turn` operation is also outside the new transaction;
-a remote worker must establish its once-only turn transition before promotion.
+The original frozen candidate demonstrated a legacy `roll.py` interruption
+between public append and cursor replacement. The canonical recovery follow-up
+now uses one versioned private write-ahead resolver for the CLI. Keyed roll and
+turn-advance retries return durable receipts; interrupted unkeyed operations
+require explicit `--recover-pending`. After its journal clears, an unkeyed command
+is a fresh operation. Remote workers must adopt stable operation IDs before
+promotion. Both writers share a lock and refuse each other's pending journals.
+
+The canonical resolver retains B's v1 format. A-format pending artifacts or a
+nonempty A receipt directory require the original compatible resolver or reviewed
+migration; they are not silently imported. Neither adapter retrospectively repairs
+older unjournaled divergence. See `development/DICE_RECOVERY_RECONCILIATION.md`
+for the one retry contract, comparison, tests and remaining HOLD gates.
 
 ## Tests
 

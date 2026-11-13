@@ -1,5 +1,21 @@
 # Release candidate gate — HOLD
 
+## Canonical dice-recovery follow-up
+
+`rc/canonical-dice-recovery-f241ea6` reconciles A (`97620de`) and B (`883308e`)
+on the frozen `f241ea6` base. Its local legacy recovery milestone passes under
+the explicit keyed/`--recover-pending` contract. All 21 Python scripts pass,
+including 30 recovery cases and 55 observed process terminations. Release remains
+**HOLD** for authorized remote staging verification.
+
+See [DICE_RECOVERY_RECONCILIATION.md](DICE_RECOVERY_RECONCILIATION.md) and
+`verification/dice_reconciliation/gate.json` for the current recovery contract
+and evidence. The original frozen-candidate report and measurements below,
+including its now-superseded legacy crash failure, remain historical evidence;
+they are not rewritten as newly run results.
+
+## Original frozen candidate evidence
+
 Branch: `rc/experimental-resolution-acd961c`.
 Final frozen live base: `7845e4c4d03a45946930c497ba5274a57a3de17c`.
 Development incorporated: `8f6a641b4a062031da52838b20e6a2d7b3f47119`.

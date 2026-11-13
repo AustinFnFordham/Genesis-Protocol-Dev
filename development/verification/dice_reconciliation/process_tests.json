@@ -1,0 +1,337 @@
+{
+  "test_cases": 30,
+  "passed": true,
+  "process_terminations": 55,
+  "terminations": [
+    {
+      "suite": "CandidateACoverage",
+      "point": "accepted",
+      "operation": "advance",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "state:temporary",
+      "operation": "advance",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "state:replaced",
+      "operation": "advance",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "receipt",
+      "operation": "advance",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "complete",
+      "operation": "advance",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "append:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "state:replaced",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "append:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "append:hidden/roll_dcs.jsonl",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "state:temporary",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "state:replaced",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "receipt",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "complete",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "partial:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 79
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "partial:hidden/roll_dcs.jsonl",
+      "operation": "roll",
+      "exit_code": 79
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "partial:hidden/dice_state.dice-cli.tmp",
+      "operation": "roll",
+      "exit_code": 79
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "partial:hidden/dice_cli_pending.tmp",
+      "operation": "roll",
+      "exit_code": 79
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "partial:receipt",
+      "operation": "roll",
+      "exit_code": 79
+    },
+    {
+      "suite": "CandidateACoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:partial",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:temporary",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:replaced",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "receipt",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "complete",
+      "operation": "advance",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:partial",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "partial:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "append:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "partial:hidden/roll_dcs.jsonl",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "append:hidden/roll_dcs.jsonl",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:partial",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:temporary",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "state:replaced",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "receipt",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "complete",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CandidateBCoverage",
+      "point": "append:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 71
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "accepted",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "state:replaced",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "partial:records/roll_log.jsonl",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "before-directory-sync:journal",
+      "operation": "roll",
+      "exit_code": 80
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "before-directory-sync:state",
+      "operation": "roll",
+      "exit_code": 80
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "before-directory-sync:receipt",
+      "operation": "roll",
+      "exit_code": 80
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "before-directory-sync:unlink",
+      "operation": "roll",
+      "exit_code": 80
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "receipt",
+      "operation": "roll",
+      "exit_code": 77
+    },
+    {
+      "suite": "CanonicalContractCoverage",
+      "point": "accepted",
+      "operation": "advance",
+      "exit_code": 77
+    }
+  ]
+}

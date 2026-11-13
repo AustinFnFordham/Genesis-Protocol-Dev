@@ -1,0 +1,65 @@
+{
+  "source_commit": "883308ea5c891f9540740c3bc84c263a9af2eb64",
+  "scope": "synthetic seed 99, no campaign data",
+  "plan": {
+    "version": 1,
+    "request": {
+      "request_id": "action-1:check",
+      "advance_turn": false,
+      "formula": "1d20+3",
+      "mode": "normal",
+      "purpose": "synthetic public check",
+      "by": "aero",
+      "dc": 10
+    },
+    "fingerprint": "f307c74bcebc8a306eca43cd48174758752bf69c5c70f4f26906e9e5accd0c8b",
+    "receipt_id": "action-1:check",
+    "streams": {
+      "records/roll_log.jsonl": {
+        "size": 0,
+        "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": "{\"roll_id\": \"roll_t0_1\", \"turn_no\": 0, \"requested_by\": \"aero\", \"purpose\": \"synthetic public check\", \"formula\": \"1d20+3\", \"mode\": \"normal\", \"dice\": [{\"sign\": 1, \"sides\": 20, \"rolled\": [6], \"kept\": [6], \"original\": [6]}], \"alt_dice\": null, \"raw_total\": 6, \"modifiers\": 3, \"final_total\": 9, \"nat20\": false, \"nat1\": false}\n"
+      },
+      "hidden/roll_dcs.jsonl": {
+        "size": 0,
+        "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": "{\"roll_id\": \"roll_t0_1\", \"dc\": 10, \"outcome\": \"failure\"}\n"
+      }
+    },
+    "state": {
+      "before": "{\"seed\": 99, \"turn_no\": 0, \"draws_used\": 0, \"roll_count\": 0}",
+      "after": "{\n \"seed\": 99,\n \"turn_no\": 0,\n \"draws_used\": 1,\n \"roll_count\": 1\n}"
+    },
+    "result": {
+      "roll_id": "roll_t0_1",
+      "turn_no": 0,
+      "requested_by": "aero",
+      "purpose": "synthetic public check",
+      "formula": "1d20+3",
+      "mode": "normal",
+      "dice": [
+        {
+          "sign": 1,
+          "sides": 20,
+          "rolled": [
+            6
+          ],
+          "kept": [
+            6
+          ],
+          "original": [
+            6
+          ]
+        }
+      ],
+      "alt_dice": null,
+      "raw_total": 6,
+      "modifiers": 3,
+      "final_total": 9,
+      "nat20": false,
+      "nat1": false,
+      "outcome": "failure",
+      "summary": "1d20+3 [6]+3 = 9 (failure)"
+    }
+  }
+}

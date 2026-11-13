@@ -296,20 +296,37 @@ class ExecutionTests(unittest.TestCase):
         self.assertTrue(audit.audit(self.campaign, samples=1000)["ok"])
         self.assertFalse((self.campaign/"hidden/dice_state.experimental.tmp").exists())
 
-    def test_legacy_cli_interruption_is_detected_not_silently_repaired(self):
-        # Characterize the unmodified legacy CLI. Its public append precedes
-        # cursor replacement; this is an intentionally failing RELEASE gate.
-        before = json.loads((self.campaign/"hidden/dice_state.json").read_text())
-        code = "import sys,os;sys.path.insert(0,sys.argv[1]);import roll;original=roll.append\ndef interrupted(path,rec):\n original(path,rec)\n os._exit(78)\nroll.append=interrupted;roll.main(['1d20','--campaign',sys.argv[2]])"
-        result = subprocess.run([sys.executable,"-B","-c",code,str(engine.ROOT/".claude/skills/litrpg-dice"),str(self.campaign)])
+    def test_legacy_cli_pending_blocks_adapter_until_exact_recovery(self):
+        action = action_for(self.campaign)
+        before = (self.campaign / "hidden/dice_state.json").read_bytes()
+        code = """import sys,os
+sys.path.insert(0,sys.argv[1])
+import roll,dice_transaction
+original=dice_transaction.execute
+def interrupted(*args, **kwargs):
+    return original(*args, **kwargs, after_write=lambda p:os._exit(78) if p=='append:records/roll_log.jsonl' else None)
+dice_transaction.execute=interrupted
+roll.main(['1d20','--request-id','adapter-interlock','--campaign',sys.argv[2]])
+"""
+        result = subprocess.run([sys.executable, "-B", "-c", code,
+                                 str(engine.ROOT / ".claude/skills/litrpg-dice"), str(self.campaign)])
         self.assertEqual(result.returncode, 78)
-        self.assertEqual(json.loads((self.campaign/"hidden/dice_state.json").read_text()), before)
-        with self.assertRaises(ValueError):
-            engine.execute(self.campaign, "refuse-legacy-cursor", action_for(self.campaign), request_for())
-        self.assertFalse(audit.audit(self.campaign, samples=1000)["ok"])
-        (QA/"legacy_dice_crash_gate.json").write_text(json.dumps({"legacy_cli_crash_atomicity":"FAIL",
-            "failure":"public roll append can precede cursor replacement", "experimental_adapter_rejects_divergence":True,
-            "legacy_cli_modified":False,"live_campaign_exercised":False},indent=2)+"\n")
+        self.assertEqual((self.campaign / "hidden/dice_state.json").read_bytes(), before)
+        pending = self.campaign / "hidden/dice_cli_pending.json"
+        accepted = json.loads(pending.read_text())["result"]
+        with self.assertRaisesRegex(ValueError, "dice CLI transaction"):
+            engine.execute(self.campaign, "blocked-adapter", action, request_for())
+        with self.assertRaisesRegex(ValueError, "dice transaction"):
+            engine.export_state.build(campaign_dir=self.campaign)
+        recovered = subprocess.run([sys.executable, "-B", str(engine.ROOT / ".claude/skills/litrpg-dice/roll.py"),
+                                   "1d20", "--request-id", "adapter-interlock", "--campaign", str(self.campaign)],
+                                  capture_output=True, text=True)
+        self.assertEqual(recovered.returncode, 0, recovered.stderr)
+        self.assertEqual(json.loads(recovered.stdout), accepted)
+        self.assertFalse(pending.exists())
+        engine.execute(self.campaign, "after-recovery", action_for(self.campaign), request_for())
+        self.assertTrue(audit.audit(self.campaign, samples=1000)["ok"])
+
 
 
 if __name__ == "__main__":
