@@ -1,0 +1,53 @@
+{
+ "version": 1,
+ "data": {
+  "action_id": "shared-0001",
+  "status": "submitted",
+  "created_ms": 1794613407721,
+  "source": "composer",
+  "contract": "turn-contract/3",
+  "confirmed_warnings": false,
+  "actor": "aero",
+  "campaign_id": "shared-1",
+  "based_on_revision": 35,
+  "ledger_head": "evt_0037",
+  "context_id": "evt_0037",
+  "declaration": {
+   "actor": "aero",
+   "source": "freeform",
+   "freeform": "Holster the blaster pistol",
+   "speech": null,
+   "actions": [],
+   "bonus_actions": [],
+   "movement": null,
+   "objects": [
+    "holster_blaster"
+   ],
+   "reactions": [],
+   "unmapped": [],
+   "steps": [
+    {
+     "type": "object",
+     "option": "holster_blaster",
+     "id": "k0",
+     "seq": 0
+    }
+   ]
+  },
+  "text": "Holster the blaster pistol",
+  "resolution_settings": {
+   "temperature": "regular",
+   "narrative_consequences": false
+  },
+  "gm": {
+   "provider": "claude-session",
+   "route": [
+    {
+     "provider": "claude-session",
+     "by": "player",
+     "at_ms": 1794613407721
+    }
+   ]
+  }
+ }
+}
