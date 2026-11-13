@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "chapters",
+  "page": 1,
+  "id": "chapters-0001",
+  "count": 1,
+  "first": "evt_0043",
+  "last": "evt_0043",
+  "hash": "2400a0790200537b",
+  "entries": [
+   {
+    "event_id": "evt_0043",
+    "title": "Turns 1–5",
+    "text": "NON-CANON TEST SIM. The disabled remote is swept away. A fresh one rises fifteen feet off, emitter glowing. *Round two. Begin when ready.* The fresh remote hangs fifteen feet ahead of you at chest height, dead centre over the grey deck, emitter glowing that lazy orange. Nothing between you and it. Your indigo blade is still lit in your right hand, humming low, throwing violet light across the plates at your feet. No You cross the deck toward it. Ten feet of grey plating, your boots loud on the metal in the quiet, the indigo blade still humming in your right hand and laying violet light across the floor ahead of you. The pistol hangs drawn in your left. Nothing moves anywhere in the sim room; \"Sim, hold the reset.\"\n\nTwo flat notes from somewhere overhead. The room stays exactly as it is: grey deck plating, the exit seam far behind you, and the remote five feet in front of your boots, dark where it fell.\n\nYou look it over without touching it. The blade's light lays vio You bring the pistol down and seat it in the holster. It goes home with a small, final click.\n\nYour left hand comes away empty. In your right the blade is still lit, its hum the only steady sound on the deck, its indigo light lying across the plating and the dark shell of the rem",
+    "sources": [
+     "evt_0005",
+     "evt_0011",
+     "evt_0013",
+     "evt_0014",
+     "evt_0016",
+     "evt_0017",
+     "evt_0020",
+     "evt_0022",
+     "evt_0023",
+     "evt_0025",
+     "evt_0027",
+     "evt_0028",
+     "evt_0035",
+     "evt_0037",
+     "evt_0038",
+     "evt_0041",
+     "evt_0043"
+    ],
+    "derived": true
+   }
+  ],
+  "campaign_id": "shared-1"
+ }
+}
