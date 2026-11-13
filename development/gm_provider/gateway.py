@@ -104,7 +104,14 @@ class Gateway:
         self.entry = {"id": campaign_id, "path": self.campaign, "dir": str(self.campaign)}
 
     # ------------------------------------------------------------------ helpers
+    def _refresh(self):
+        """A shared store brings this clone's campaign files up to the shared record before they are read."""
+        sync = getattr(self.store, "sync", None)
+        if sync:
+            sync()
+
     def _public(self):
+        self._refresh()
         return export_state.build(campaign_dir=self.campaign, campaign_id=self.id)
 
     def _marker(self):
@@ -118,6 +125,7 @@ class Gateway:
         return self.campaign / "hidden/provider_ops" / (digest(action_id) + ".json")
 
     def _op(self, action_id):
+        self._refresh()
         path = self._op_path(action_id)
         return json.loads(path.read_text()) if path.exists() else None
 
@@ -125,6 +133,14 @@ class Gateway:
         path = self._op_path(op["action_id"])
         path.parent.mkdir(parents=True, exist_ok=True)
         batch.durable_json(path, op)
+        self._checkpoint("operation " + op["action_id"])
+
+    def _checkpoint(self, what):
+        """Let a shared store make accepted private work (tables, dice receipts, the batch) durable for
+        every other session before anything else happens. A local store needs nothing."""
+        checkpoint = getattr(self.store, "checkpoint", None)
+        if checkpoint:
+            checkpoint(what)
 
     def _rows(self):
         out = []
@@ -279,8 +295,46 @@ class Gateway:
         out = {"action_id": action_id, "status": row["status"], "duplicate": duplicate, "provider": gm.get("provider"),
                "stage": row.get("processing", {}).get("stage"), "blocked": gm.get("blocked"), "review": row.get("review"),
                "error": row.get("error"), "published_revision": row.get("published_revision"),
-               "publication": row.get("publication")}
+               "publication": row.get("publication"), "mechanical": self.mechanical(action_id)}
         return {key: value for key, value in out.items() if value is not None}
+
+    def mechanical(self, action_id):
+        """What has been irrevocably accepted for this action, without any content. The campaign revision
+        does not move until the batch is committed, so it cannot tell a client or a recovering worker
+        whether tables were fixed or dice were rolled. This can. Safe for players: counts and flags only."""
+        op = self._op(action_id)
+        if not op:
+            return {"tables_fixed": False, "rolls_accepted": 0, "batch_accepted": False, "batch_committed": False, "fingerprint": None}
+        commit = op.get("commit") or {}
+        return {"tables_fixed": bool(op.get("tables")), "rolls_accepted": len(op.get("rolls") or {}),
+                "batch_accepted": bool(commit), "batch_committed": bool(commit.get("result")),
+                "fingerprint": digest([op["action_hash"], (op.get("tables") or {}).get("fingerprint"),
+                                       sorted((k, v["request_hash"], v["result"]["roll_id"]) for k, v in (op.get("rolls") or {}).items()),
+                                       commit.get("fingerprint")])[:16]}
+
+    def recovery(self):
+        """One authoritative answer to 'what is in flight and what may happen next' for any client or worker."""
+        item = self._in_flight()
+        try:
+            state = self._public()
+        except ValueError:      # an accepted dice request or ledger batch is mid-write: readers fail closed
+            state = {"revision": None, "ledger_head": None}
+        _, lock = self._lock()
+        out = {"campaign_id": self.id, "revision": state["revision"], "ledger_head": state["ledger_head"],
+               "record_mid_write": state["revision"] is None, "in_flight": None,
+               "lease": {"held": bool(lock and lock.get("holder") and lock.get("expires_ms", 0) > self.clock()),
+                         "provider": (lock or {}).get("provider") if lock and lock.get("holder") else None,
+                         "expires_in_ms": max(0, (lock or {}).get("expires_ms", 0) - self.clock()) if lock and lock.get("holder") else 0}}
+        if item:
+            row = item[2]
+            op = self._op(row["action_id"])
+            phase = self.phase(op, row) if row["status"] != "submitted" or op else "interpret"
+            out["in_flight"] = dict(self.action_status(row["action_id"]), phase=phase,
+                                    next={"interpret": "the routed provider interprets the declaration (a review is still possible)",
+                                          "resolve": "the routed provider continues from the accepted tables and rolls; nothing is rerolled or replaced",
+                                          "publish": "any run finishes the accepted batch and publishes; nothing is authored"}[phase],
+                                    reroute_allowed=row["status"] in ("submitted", "processing") and not out["lease"]["held"])
+        return out
 
     def reroute(self, action_id, provider, by="player"):
         """Explicitly hand an unfinished action to another provider. Refused while a lease is live."""
@@ -314,8 +368,13 @@ class Gateway:
         return self.action_status(action_id)
 
     # ------------------------------------------------------------------ provider side
-    def claim(self, provider, run):
-        """Take the lease and the in-flight action for `provider`. Returns the operation phase."""
+    def claim(self, provider, run, identity=None):
+        """Take the lease and the in-flight action for `provider`. Returns the operation phase.
+
+        `identity` is the run's own statement of what is reasoning: {kind: model-api | agent-session |
+        scripted, model, session, mock}. It is recorded with the operation and the committed ruling so a
+        scripted stand-in can never pass for a model. It is an attestation, not proof; the gateway cannot
+        verify which model a session is."""
         if not PROVIDER_ID.match(provider or "") or not isinstance(run, str) or not run:
             raise Refused("BAD_PROVIDER", "provider id and run id are required")
         now = self.clock()
@@ -342,7 +401,10 @@ class Gateway:
                   "runs": [], "tables": None, "rolls": {}, "commit": None}
         elif op["action_hash"] != digest(self._identity(row)):
             raise Refused("ACTION_CHANGED", "the queued action differs from the one this operation accepted; operator review required")
-        op["runs"].append({"provider": provider, "run": run, "at_ms": now, "took_over_at": self.phase(op, row)})
+        identity = identity if isinstance(identity, dict) else {}
+        attested = {"kind": str(identity.get("kind") or "unstated")[:40], "model": (str(identity["model"])[:120] if identity.get("model") else None),
+                    "session": (str(identity["session"])[:200] if identity.get("session") else None), "mock": bool(identity.get("mock"))}
+        op["runs"].append({"provider": provider, "run": run, "at_ms": now, "took_over_at": self.phase(op, row), "identity": attested})
         self._save_op(op)
         gm = dict(gm, runs=(gm.get("runs", []) + [{"provider": provider, "run": run, "at_ms": now}])[-20:])
         gm.pop("blocked", None)
@@ -600,7 +662,8 @@ class Gateway:
                 details["resolution_settings"] = policy.settings(row)
             drafts = [event("player_declaration", f"{row['actor']}'s declaration {action_id}", details, actor=row["actor"]),
                       event("gm_ruling", f"Tables fixed before rolling for {action_id}",
-                            dict(op["tables"]["value"], gm_provider={"committed_by": provider, "runs": [r["provider"] for r in op["runs"]]}),
+                            dict(op["tables"]["value"], gm_provider={"committed_by": provider, "runs": [r["provider"] for r in op["runs"]],
+                                                           "identities": [dict(r.get("identity") or {}, provider=r["provider"], run=r["run"]) for r in op["runs"]]}),
                             "gm_only", causes=["$1"])]
             for draft in proposal["events"]:
                 rolls = [op["rolls"][k]["result"]["roll_id"] for k in draft.get("roll_keys", [])]

@@ -32,7 +32,8 @@ def run_turn(gateway, provider, run=None, max_moves=16, max_rejections=3, interr
         gateway.block(action_id, provider.id, "PROVIDER_UNAVAILABLE", capability["reason"])
         return {"outcome": "blocked", "run": run, "action_id": action_id, "reason": capability["reason"]}
     try:
-        claim = gateway.claim(provider.id, run)
+        claim = gateway.claim(provider.id, run, {"kind": capability.get("kind"), "model": capability.get("model"),
+                                                "mock": capability.get("mock"), "session": None})
     except Refused as refusal:
         return {"outcome": {"PROVIDER_BUSY": "busy", "NOTHING_TO_DO": "nothing", "NOT_ROUTED_HERE": "not_routed"}.get(refusal.code, "refused"),
                 "run": run, "action_id": action_id, **refusal.as_dict()}

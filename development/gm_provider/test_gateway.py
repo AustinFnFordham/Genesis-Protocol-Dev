@@ -286,7 +286,10 @@ class Interchange(Base):
         with self.assertRaises(Refused):
             self.gw.fix_tables("gemini", "run-b", {"interpretation": "x"})          # lease released after commit
         ruling = [e for e in ledger.load_all(self.gw.campaign) if e["kind"] == "gm_ruling" and "gm_provider" in e.get("details", {})][-1]
-        self.assertEqual(ruling["details"]["gm_provider"], {"committed_by": "gemini", "runs": ["claude", "gemini"]})
+        provenance = ruling["details"]["gm_provider"]
+        self.assertEqual((provenance["committed_by"], provenance["runs"]), ("gemini", ["claude", "gemini"]))
+        self.assertEqual([(i["provider"], i["kind"], i["mock"]) for i in provenance["identities"]],
+                         [("claude", "scripted", True), ("gemini", "scripted", True)], "a scripted stand-in must be recorded as one")
         self.assertIn("claude private table", ruling["details"]["tables"])
         self.healthy()
 
@@ -500,6 +503,143 @@ class Interchange(Base):
         for name in providers:
             self.assertIn(f"PRIVATE_{name.upper()}_CANARY", hidden)
         self.assertIn("CANARY", json.dumps(self.gw._op(ids[0])) + hidden)      # it exists privately, so the check above is meaningful
+
+
+class RecoveryAfterRelease(Base):
+    """Giving the lease back at any point keeps what was accepted and never authorizes a reroll."""
+
+    def drive(self, provider, run, stop_before):
+        """Play the scripted GM by hand until just before `stop_before` (tables | rolls | commit)."""
+        self.gw.claim(provider, run, {"kind": "scripted", "mock": True})
+        gm = script(provider)
+        while True:
+            context = self.gw.context(provider, run)
+            move = gm.step(context)
+            if move["type"] == stop_before:
+                return move, context
+            if move["type"] == "tables":
+                self.gw.fix_tables(provider, run, move["tables"])
+            elif move["type"] == "rolls":
+                for request in move["rolls"]:
+                    self.gw.roll(provider, run, request)
+
+    def test_release_after_tables_fixed(self):
+        action, _ = self.act(INSPECT, provider="claude")
+        cursor = self.gw.public_state()["cursor"]
+        nothing = self.gw.mechanical(action["action_id"])
+        self.drive("claude", "run-a", "rolls")
+        self.gw.release("claude", "run-a", "handing over")
+        recovery = self.gw.recovery()
+        self.assertEqual(self.gw.public_state()["cursor"], cursor, "the revision does not move when tables are fixed")
+        mechanical = recovery["in_flight"]["mechanical"]
+        self.assertEqual((mechanical["tables_fixed"], mechanical["rolls_accepted"], mechanical["batch_accepted"]), (True, 0, False))
+        self.assertNotEqual(mechanical["fingerprint"], nothing["fingerprint"], "mechanical work must be visible although the revision is unchanged")
+        self.assertEqual((recovery["in_flight"]["phase"], recovery["lease"]["held"], recovery["in_flight"]["reroute_allowed"]), ("resolve", False, True))
+        self.gw.reroute(action["action_id"], "gpt")
+        self.gw.claim("gpt", "run-b")
+        context = self.gw.context("gpt", "run-b")
+        self.assertIn("claude private table", context["operation"]["tables"]["tables"])
+        for attempt, code in ((lambda: self.gw.fix_tables("gpt", "run-b", {"interpretation": "fresh start"}), "TABLES_FIXED"),
+                              (lambda: self.gw.review("gpt", "run-b", {"summary": "s", "errors": [{"code": "HANDS", "message": "m"}]}), "TOO_LATE_FOR_REVIEW")):
+            with self.assertRaises(Refused) as caught:
+                attempt()
+            self.assertEqual(caught.exception.code, code)
+        self.gw.release("gpt", "run-b")
+        self.assertEqual(self.gw.mechanical(action["action_id"])["fingerprint"], mechanical["fingerprint"], "a release changes nothing that was accepted")
+        self.gw.reroute(action["action_id"], "claude")
+        out = run_turn(self.gw, script("claude"))
+        self.assertEqual((out["outcome"], out["moves"]), ("committed", ["rolls", "commit"]))
+
+    def test_release_after_dice_accepted(self):
+        action, _ = self.act(INSPECT, provider="gemini")
+        cursor = self.gw.public_state()["cursor"]
+        self.drive("gemini", "run-a", "commit")
+        rolls = self.rolls_for(action["action_id"])
+        dice = (self.gw.campaign / "hidden/dice_state.json").read_bytes()
+        self.gw.release("gemini", "run-a")
+        self.assertEqual(self.gw.public_state()["cursor"], cursor, "the revision does not move when dice are accepted")
+        mechanical = self.gw.mechanical(action["action_id"])
+        self.assertEqual((mechanical["tables_fixed"], mechanical["rolls_accepted"]), (True, 1))
+        self.assertEqual(self.gw.action_status(action["action_id"])["mechanical"], mechanical)
+        for provider, run in (("claude", "run-b"), ("gpt", "run-c"), ("gemini", "run-d")):      # every later run, own or foreign
+            self.gw.reroute(action["action_id"], provider)
+            self.gw.claim(provider, run)
+            step = action["declaration"]["steps"][0]["id"]
+            again = self.gw.roll(provider, run, {"roll_key": "second-try", "step_id": step, "formula": "1d20+3", "kind": "check",
+                                                 "requested_by": "aero", "purpose": "Aero studies the remote again", "dc": 12})
+            self.assertTrue(again["replayed"])
+            self.assertEqual(again["result"]["roll_id"], rolls[0]["roll_id"])
+            self.gw.release(provider, run)
+        self.assertEqual(self.rolls_for(action["action_id"]), rolls)
+        self.assertEqual((self.gw.campaign / "hidden/dice_state.json").read_bytes(), dice)
+        self.assertEqual(self.gw.mechanical(action["action_id"]), mechanical)
+        out = run_turn(self.gw, script("gemini"))
+        self.assertEqual((out["outcome"], out["moves"]), ("committed", ["commit"]))
+        self.assertEqual(self.rolls_for(action["action_id"]), rolls)
+        self.healthy()
+
+    def test_release_after_ledger_batch_accepted(self):
+        action, _ = self.act(INSPECT, provider="gpt")
+        cursor = self.gw.public_state()["cursor"]
+        move, _ = self.drive("gpt", "run-a", "commit")
+        real = gateway_module.batch.apply
+        gateway_module.batch.apply = lambda c, r, l, run, led, after_stream=None: real(
+            c, r, l, run, led, after_stream=lambda _: (_ for _ in ()).throw(RuntimeError("power lost")))
+        try:
+            with self.assertRaises(RuntimeError):
+                self.gw.commit("gpt", "run-a", move["proposal"])
+        finally:
+            gateway_module.batch.apply = real
+        self.gw.release("gpt", "run-a", "stopping after a crash")
+        recovery = self.gw.recovery()
+        self.assertTrue(recovery["record_mid_write"])
+        mechanical = recovery["in_flight"]["mechanical"]
+        self.assertEqual((mechanical["batch_accepted"], mechanical["batch_committed"], recovery["in_flight"]["phase"]), (True, False, "publish"))
+        accepted = self.gw._op(action["action_id"])["commit"]["fingerprint"]
+        self.gw.reroute(action["action_id"], "gemini")
+        with self.assertRaises(Refused) as caught:
+            self.gw.claim("gemini", "run-b") and self.gw.fix_tables("gemini", "run-b", {"interpretation": "again"})
+        self.assertEqual(caught.exception.code, "ALREADY_COMMITTED")
+        with self.assertRaises(Refused) as caught:
+            self.gw.roll("gemini", "run-b", {"roll_key": "z", "formula": "1d20", "kind": "other", "requested_by": "gm", "purpose": "another die"})
+        self.assertEqual(caught.exception.code, "ALREADY_COMMITTED")
+        self.gw.release("gemini", "run-b")
+        out = run_turn(self.gw, script("gemini", lambda m, c: self.fail("an accepted batch is finished, not re-authored")))
+        self.assertEqual((out["outcome"], out["authored"]), ("committed", False))
+        self.assertEqual(self.gw._op(action["action_id"])["commit"]["fingerprint"], accepted)
+        self.assertTrue(self.narration().startswith("[gpt]"), "the committed text is the one the batch accepted")
+        self.assertGreater(self.gw.public_state()["cursor"]["revision"], cursor["revision"])
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 1)
+        self.healthy()
+
+    def test_publication_pending_needs_no_gm_and_survives_release(self):
+        action, _ = self.act(INSPECT, provider="claude")
+        real = self.gw.store.put
+        self.gw.store.put = lambda key, data, expected: (_ for _ in ()).throw(ValueError("snapshot refused")) if key == "view/state" else real(key, data, expected)
+        try:
+            self.assertEqual(run_turn(self.gw, script("claude"))["outcome"], "resolved_unpublished")
+        finally:
+            self.gw.store.put = real
+        recovery = self.gw.recovery()
+        self.assertEqual((recovery["in_flight"]["status"], recovery["in_flight"]["phase"], recovery["lease"]["held"]), ("resolved", "publish", False))
+        self.assertTrue(recovery["in_flight"]["mechanical"]["batch_committed"])
+        self.assertFalse(recovery["in_flight"]["reroute_allowed"])
+        with self.assertRaises(Refused) as caught:
+            self.gw.reroute(action["action_id"], "gpt")
+        self.assertEqual(caught.exception.code, "NOT_REROUTABLE")
+        head = ledger.load_all(self.gw.campaign)[-1]["event_id"]
+        self.gw.claim("gpt", "run-b")
+        for attempt in (lambda: self.gw.fix_tables("gpt", "run-b", {"interpretation": "again"}),
+                        lambda: self.gw.fail("gpt", "run-b", "give up")):
+            with self.assertRaises(Refused) as caught:
+                attempt()
+            self.assertEqual(caught.exception.code, "ALREADY_COMMITTED")
+        self.gw.release("gpt", "run-b")                                    # a release while publication is pending
+        self.assertEqual(self.gw.action_status(action["action_id"])["status"], "resolved")
+        self.assertEqual(run_turn(self.gw, script("gemini"))["outcome"], "committed")
+        self.assertEqual(ledger.load_all(self.gw.campaign)[-1]["event_id"], head)
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 1)
+        self.assertIsNone(self.gw.recovery()["in_flight"])
 
 
 class Settings(Base):

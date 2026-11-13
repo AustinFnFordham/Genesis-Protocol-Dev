@@ -8,7 +8,11 @@ Three separate concerns, three separate places:
   canonical record  the campaign directory in git. The store holds the queue, lease and the
                     published public pages, as the Datapad database does today.
 
-There is no GM endpoint. Nothing served here is built from hidden/ or from an operation record.
+Player routes carry nothing built from hidden/ or from an operation record. GM-session routes exist
+only when GENESIS_GM_TOKENS is set and are a transport for the same gateway calls gmctl makes: a
+session that can make HTTPS calls but cannot run a shell or git (a hosted assistant with an HTTP
+tool) is a GM provider through them. Each provider id has its own token; the player token is never
+accepted there and a GM token is never accepted on player routes.
 
   GET  /v1/health
   GET  /v1/providers
@@ -18,6 +22,11 @@ There is no GM endpoint. Nothing served here is built from hidden/ or from an op
   POST /v1/campaigns/{id}/actions                  the action envelope (see GEMINI_CONNECTION_CONTRACT.md)
   GET  /v1/campaigns/{id}/actions/{action_id}
   POST /v1/campaigns/{id}/actions/{action_id}/reroute   {"provider": "gpt"}
+  GET  /v1/campaigns/{id}/recovery                 what is in flight, what was accepted, what may happen next
+
+  POST /v1/gm/{id}/{provider}/claim                {"run", "model", "session"}      (GM token)
+  POST /v1/gm/{id}/{provider}/context|publish|release   {"run"}
+  POST /v1/gm/{id}/{provider}/tables|roll|review|commit {"run", "body": {...}}
 
 Run:  GENESIS_PLAYER_TOKEN=... python3 service.py serve --campaign DIR --id ID --store FILE [--port 8787] [--autorun]
       python3 service.py work --campaign DIR --id ID --store FILE         (one worker pass)
@@ -45,8 +54,9 @@ MAX_BODY = 262144
 
 
 class App:
-    def __init__(self, gateways, providers, token, origin=None, autorun=False):
+    def __init__(self, gateways, providers, token, origin=None, autorun=False, gm_tokens=None):
         self.gateways, self.providers, self.token, self.origin, self.autorun = gateways, providers, token, origin, autorun
+        self.gm_tokens = dict(gm_tokens or {})
         self.working = threading.Lock()
 
     def work(self):
@@ -84,6 +94,9 @@ class App:
             return 200, {"ok": True}
         if method == "GET" and path == "/v1/providers":
             return 200, {"providers": self.matrix()}
+        gm = re.match(r"^/v1/gm/([A-Za-z0-9_-]{1,64})/([a-z][a-z0-9_-]{1,39})/(claim|context|tables|roll|review|commit|publish|release)$", path)
+        if gm:
+            return self.gm(method, gm.group(1), gm.group(2), gm.group(3), headers, body)
         match = re.match(r"^/v1/campaigns/([A-Za-z0-9_-]{1,64})(/.*)?$", path)
         if not match:
             return 404, {"error": {"code": "NOT_FOUND", "message": "unknown path"}}
@@ -97,6 +110,8 @@ class App:
         try:
             if method == "GET" and rest == "/state":
                 return 200, gateway.public_state()
+            if method == "GET" and rest == "/recovery":
+                return 200, gateway.recovery()
             page = re.match(r"^/pages/([A-Za-z0-9_-]{1,64})$", rest)
             if method == "GET" and page:
                 return 200, gateway.page(page.group(1))
@@ -134,6 +149,33 @@ class App:
             return 409, {"error": {"code": "CONFLICT", "message": "changed concurrently; retry"}}
         except ValueError as error:
             return 503, {"error": {"code": "CAMPAIGN_BUSY", "message": "the record is mid-write; retry shortly"}}
+
+    def gm(self, method, campaign_id, provider, verb, headers, body):
+        """GM-session transport: the gmctl verbs over HTTPS for the one provider this token belongs to."""
+        expected = self.gm_tokens.get(provider)
+        supplied = headers.get("authorization", "")
+        if not expected or not hmac.compare_digest(supplied.encode(), ("Bearer " + expected).encode()):
+            return 401, {"error": {"code": "UNAUTHORIZED", "message": "GM session token for this provider required"}}
+        gateway = self.gateways.get(campaign_id)
+        if gateway is None or method != "POST":
+            return 404, {"error": {"code": "NOT_FOUND", "message": "unknown campaign or method"}}
+        try:
+            data = json.loads(body or b"{}")
+            run, payload = data.get("run"), data.get("body")
+            if not isinstance(run, str) or not run:
+                return 400, {"error": {"code": "BAD_RUN", "message": "run is required"}}
+            calls = {"claim": lambda: gateway.claim(provider, run, {"kind": "agent-session", "model": data.get("model"), "session": data.get("session"), "mock": False}),
+                     "context": lambda: gateway.context(provider, run), "publish": lambda: gateway.publish(provider, run),
+                     "release": lambda: gateway.release(provider, run, "released by the GM session"),
+                     "tables": lambda: gateway.fix_tables(provider, run, payload), "roll": lambda: gateway.roll(provider, run, payload),
+                     "review": lambda: gateway.review(provider, run, payload), "commit": lambda: gateway.commit(provider, run, payload)}
+            return 200, calls[verb]()
+        except json.JSONDecodeError:
+            return 400, {"error": {"code": "BAD_JSON", "message": "body must be JSON"}}
+        except Refused as refusal:
+            return STATUS.get(refusal.code, 409 if refusal.code in ("LEASE_LOST", "NOT_ROUTED_HERE", "TABLES_FIXED", "ALREADY_COMMITTED") else 400), refusal.as_dict()
+        except Conflict:
+            return 409, {"error": {"code": "CONFLICT", "message": "changed concurrently; re-read and continue"}}
 
     def known(self, provider):
         if provider not in self.providers:
@@ -179,11 +221,19 @@ def handler(app):
 
 def build(args, env=None):
     env = os.environ if env is None else env
-    gateway = Gateway(args.campaign, args.id, SqliteStore(args.store))
+    if getattr(args, "shared", None):
+        import staging
+        gateway = staging.open_shared(args.shared)
+        args.id = gateway.id
+    else:
+        gateway = Gateway(args.campaign, args.id, SqliteStore(args.store))
     registry = provider_module.registry(env)
     for name in filter(None, (env.get("GENESIS_SESSION_PROVIDERS") or "").split(",")):
         registry[name.strip()] = provider_module.SessionProvider(name.strip())
-    return App({args.id: gateway}, registry, env.get("GENESIS_PLAYER_TOKEN"), env.get("GENESIS_ALLOWED_ORIGIN"), getattr(args, "autorun", False))
+    gm_tokens = json.loads(env.get("GENESIS_GM_TOKENS") or "{}")
+    for name in gm_tokens:
+        registry.setdefault(name, provider_module.SessionProvider(name))
+    return App({args.id: gateway}, registry, env.get("GENESIS_PLAYER_TOKEN"), env.get("GENESIS_ALLOWED_ORIGIN"), getattr(args, "autorun", False), gm_tokens)
 
 
 def main(argv=None):
@@ -191,7 +241,8 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("serve", "work"):
         s = sub.add_parser(name)
-        s.add_argument("--campaign", type=Path, required=True); s.add_argument("--id", required=True); s.add_argument("--store", type=Path, required=True)
+        s.add_argument("--campaign", type=Path); s.add_argument("--id"); s.add_argument("--store", type=Path)
+        s.add_argument("--shared", type=Path, help="a shared staging environment directory in a git clone (replaces the three above)")
     sub.choices["serve"].add_argument("--port", type=int, default=8787)
     sub.choices["serve"].add_argument("--host", default="127.0.0.1")
     sub.choices["serve"].add_argument("--autorun", action="store_true")

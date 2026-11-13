@@ -185,6 +185,51 @@ class ServiceTest(unittest.TestCase):
         rolls = [r for r in gateway_module.ledger.read_jsonl(self.gw.campaign / "records/roll_log.jsonl") if action["action_id"] in r["purpose"]]
         self.assertEqual(len(rolls), 1)
 
+    def test_gm_session_transport_over_http(self):
+        """A session with only an HTTP tool plays a turn through the same gateway. The reasoning here is a
+        scripted mock; what is under test is the transport, its tokens and its privacy boundary."""
+        root = f"/v1/campaigns/{self.gw.id}"
+        gm_root = f"/v1/gm/{self.gw.id}/gemini-session"
+        self.app.gm_tokens = {"gemini-session": "gm-secret-G", "gpt-session": "gm-secret-O"}
+        for name in self.app.gm_tokens:
+            self.app.providers[name] = provider_module.SessionProvider(name)
+        action = self.declare(1, INSPECT, provider="gemini-session")
+        self.call("POST", root + "/actions", action)
+        self.assertEqual(self.app.work()[0]["outcome"], "waiting_for_session")
+        body = {"run": "sess-1", "model": "stated-by-session", "session": "https://example.invalid/s/1"}
+        for token in (None, "player-secret", "gm-secret-O"):                       # no token, the player's, another provider's
+            self.assertEqual(self.call("POST", gm_root + "/claim", body, token=token)[0], 401)
+        self.assertEqual(self.call("POST", f"/v1/gm/{self.gw.id}/gpt-session/claim", body, token="gm-secret-O")[1]["error"]["code"], "NOT_ROUTED_HERE")
+        self.assertEqual(self.call("GET", root + "/state", token="gm-secret-G")[0], 401)   # a GM token opens no player route
+        self.assertEqual(self.call("POST", gm_root + "/claim", body, token="gm-secret-G")[1]["phase"], "interpret")
+        private = []
+        gm = script("gemini-session")
+        while True:
+            code, context, _ = self.call("POST", gm_root + "/context", {"run": "sess-1"}, token="gm-secret-G")
+            private.append(self.bodies.pop())                                       # GM-only: keep it out of the player scan
+            self.assertEqual(code, 200)
+            move = gm.step(context)
+            verb = {"tables": "tables", "rolls": "roll", "commit": "commit"}[move["type"]]
+            payloads = move["rolls"] if verb == "roll" else [move.get("tables") or move.get("proposal")]
+            for payload in payloads:
+                code, result, _ = self.call("POST", f"{gm_root}/{verb}", {"run": "sess-1", "body": payload}, token="gm-secret-G")
+                private.append(self.bodies.pop())
+                self.assertEqual(code, 200, result)
+            if verb == "commit":
+                break
+        self.assertEqual(result["status"], "committed")
+        recovery = self.call("GET", root + "/recovery")[1]
+        self.assertIsNone(recovery["in_flight"])
+        self.assertIn("recent_private", "".join(private))
+        everything = "\n".join(self.bodies)
+        for secret in ("CANARY", "private table", "interpretation", "recent_private", "gm-secret"):
+            self.assertNotIn(secret, everything, secret)
+        import gateway as gateway_module
+        ruling = [e for e in gateway_module.ledger.load_all(self.gw.campaign) if e["kind"] == "gm_ruling" and "gm_provider" in e.get("details", {})][-1]
+        self.assertEqual(ruling["details"]["gm_provider"]["identities"][0],
+                         {"kind": "agent-session", "model": "stated-by-session", "session": "https://example.invalid/s/1", "mock": False,
+                          "provider": "gemini-session", "run": "sess-1"})
+
     def test_session_provider_waits_for_its_session(self):
         root = f"/v1/campaigns/{self.gw.id}"
         self.app.providers["claude-session"] = provider_module.SessionProvider("claude-session")
