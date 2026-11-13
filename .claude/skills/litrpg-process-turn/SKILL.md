@@ -103,6 +103,34 @@ Constrain what is impossible, ask about what is underspecified, adjudicate what 
   (hidden numbers, e.g. the strength the weld resists, go in a `gm_only` ruling). An interrupted construction creates nothing (state
   what partial work exists in the narration and, if it matters later, as `environment_change` with `limits: "unfinished"`).
 
+## 3d. Action economy, objects and NPC evaluations (candidate, 2026-11-13; rule: `creator/ACTION_ECONOMY_RULING.md`)
+Applies the adjudication repair reported on Hask Meadow round 9. The ruling file is authoritative; in brief:
+- **Cost each part of a compound declaration on its own.** One object interaction per turn is free: taking possession of or
+  operating an object (draw, stow, pick up, take from someone's grip, open, switch). A second one takes the action.
+- **No cost:** letting go or dropping; taking a hand off something; keeping a hand on something another character holds;
+  shifting, re-aiming or withdrawing a thing already held; receiving what another character puts into a free hand; brief
+  speech and short instructions. Igniting or extinguishing a held lightsaber is still an object interaction.
+- **Whose act it is.** Each character has their own hands and economy. What an NPC does is never charged to Aero or checked
+  against Aero's hands. An instruction is Aero's speech; carrying it out is the NPC's act.
+- **NPC cooperation** is the NPC's decision, from their state, knowledge and relationship. Never assume it and never invent
+  refusal; when committed events do not settle it, decide it with a table fixed before rolling. If they decline, the steps
+  that needed it stop (`prerequisite`) and the player decides.
+- **Hands** are judged per item and per task, at that point in the declared order. No blanket two-free-hands rule.
+- **Order.** Resolve in the player's order; never add a release, reorder steps or pick a hand. A genuine conflict stops the
+  turn and is stated before anything resolves.
+- **No roll for a routine act.** Roll only for real uncertainty with meaningful stakes.
+- **Publish it.** In `turn_context.objects`, mark costless acts `"cost": "none"` and another character's acts
+  `"by": "<their id>"` (with `takes_hands` when Aero receives something). The validator then bills nothing for them and shows
+  "(no action)" / "(theirs to do, no cost to you)". Unmarked objects keep the old accounting.
+- **NPC evaluations.** Each time you decide what an NPC or enemy does, record
+  `{npc, since, changes[], no_change_reason, outcome_key, repeat_reason, basis}` in the tables ruling's
+  `details.npc_evaluations`. `since` is that NPC's previous evaluation event (or null); `changes` lists every committed event
+  since then that bears on it (events naming the NPC must be listed). Build this round's table from those changes; do not
+  reuse last round's table when circumstances changed. The same outcome a third time running needs `repeat_reason`. Check
+  with `python3 development/gm_provider/npc_review.py`'s `check()` (the provider gateway runs it on every tables move).
+  A failed check gives its supported result and an actionable situation, never an identical reset or invented punishment.
+  When no side is engaging, leave initiative for scene time instead of holding six-second rounds that change nothing.
+
 ## 4. Narrate, make it durable, then publish
 1. Write narration to `/tmp/narr.txt` per NARRATIVE_SPEC (high-intensity horror where earned; injuries match committed damage; perspective rules). Run `turn.py lint <campaign_id> /tmp/narr.txt` and fix until it passes.
 2. Commit `gm_narration` (details `{text}`), `scene_state`, then a fresh public `turn_context` (TURN_CONTRACT §2, only what Aero can perceive) with idem `<action_id>:ctx`. The context must give:

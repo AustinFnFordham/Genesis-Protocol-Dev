@@ -29,6 +29,12 @@
  *   contract 3: objects[].frees_item (frees whichever hand holds that item), options/objects/moves .grants/.removes
  *   (planned flags, applied in step order), .unless [flags that make it pointless], .at_free (no place needed), .risk (visible risk text), movement[].ends_at, position_label,
  *   plan_result {stop_kind, reason, completed, pending, invalidated}, pending_steps[].status.
+ *   adjudication repair (ruling 2026-11-13, creator/ACTION_ECONOMY_RULING.md), all optional and GM-published:
+ *   objects[].cost "none": no object interaction is spent (letting go of or dropping something, taking a hand
+ *   off something, shifting a thing already held, receiving what another character puts into a free hand).
+ *   objects[].by (an actor id other than the acting character): that character performs it, at no cost to the
+ *   acting character; whether they do it is theirs to decide (info NPC_COOPERATION). Hand effects written on
+ *   such an object (takes_hands, needs_hands) still describe the acting character's hands (the receiver).
  */
 (function (root, factory) {
   var api = factory();
@@ -231,13 +237,18 @@
     return hit ? "at " + hit.charAt(0).toLowerCase() + hit.slice(1) : null;
   }
 
+  // An object step spends the acting character's object interaction unless the GM published it as costless
+  // (release / contact / held-item repositioning / receiving) or as another character's act.
+  function objCostly(ctx, id) { var o = byId((ctx && ctx.objects) || [], id); return !(o && (o.cost === "none" || (o.by && o.by !== ctx.actor))); }
+  function objBudget(ctx) { var b = (ctx && ctx.budget) || {}; return b.object_interaction == null ? 1 : b.object_interaction; }
+
   function previewSteps(steps, ctx, combat, speechAction, state) {
     var out = [], opts = ctx.options || [];
     state = state || { objSeen: 0 };
     steps.forEach(function (s) {
       var pre = s.condition && s.condition.text ? "Only if " + s.condition.text.replace(/^\s*(only\s+)?if\s+/i, "") + ": " : "";
       if (s.type === "speech" && s.text) out.push({ step: "speech", id: s.id, text: pre + "Say: “" + s.text + "”" + (speechAction ? " (extended, uses your action)" : " (free)") });
-      else if (s.type === "object") { var o = byId(ctx.objects, s.option); if (o) { out.push({ step: "object", id: s.id, text: pre + o.label + (combat ? (state.objSeen === 0 ? " (free object interaction)" : " (uses your action)") : "") }); state.objSeen++; } }
+      else if (s.type === "object") { var o = byId(ctx.objects, s.option); if (o) { var costly = objCostly(ctx, s.option), other = o.by && o.by !== ctx.actor; out.push({ step: "object", id: s.id, text: pre + o.label + (combat ? (other ? " (theirs to do, no cost to you)" : !costly ? " (no action)" : state.objSeen < objBudget(ctx) ? " (free object interaction)" : " (uses your action)") : "") }); if (costly) state.objSeen++; } }
       else if (s.type === "move") { var m = byId(ctx.movement, s.option); if (m) out.push({ step: "movement", id: s.id, text: pre + m.label + (m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? " (~" + m.feet + " ft)" : "") }); }
       else if (s.type === "action") { var a = byId(opts, s.option); if (a) out.push({ step: "action", id: s.id, text: pre + a.label + (s.target ? " → " + names(ctx, [s.target])[0] : "") + (s.trigger ? " (trigger: " + s.trigger + ")" : "") }); }
       else if (s.type === "bonus_action") { var x = byId(opts, s.option); if (x) out.push({ step: "bonus_action", id: s.id, text: pre + x.label }); }
@@ -293,7 +304,10 @@
     if (combat && customs.length) { actionCount += customs.length; customs.forEach(function () { actLabels.push("a custom action"); }); }
 
     // 3. action economy (combat only)
-    var extraObjects = Math.max(0, objs.length - (b.object_interaction == null ? 1 : b.object_interaction));
+    var costlyObjs = objs.filter(function (id) { return objCostly(ctx, id); });
+    var extraObjects = Math.max(0, costlyObjs.length - (b.object_interaction == null ? 1 : b.object_interaction));
+    var askedOf = {}; objs.forEach(function (id) { var o = byId(ctx.objects, id); if (o && o.by && o.by !== ctx.actor) askedOf[o.by] = 1; });
+    Object.keys(askedOf).forEach(function (who) { info.push({ code: "NPC_COOPERATION", message: "Part of this is " + ((byId(ctx.visible || [], who) || {}).short || who) + "'s to do, not Aero's. It costs Aero nothing; whether they do it is theirs to decide, and the GM resolves it from what they know and want." }); });
     if (extraObjects && combat) { actionCount += extraObjects; actLabels.push("a second object interaction"); }
     var stepCount = steps.filter(function (s) { return s.type !== "speech"; }).length;
     if (!combat && stepCount > 1) info.push({ code: "SEQUENCE", message: "Outside combat these happen one after another, in this order; the GM resolves the time they take and stops if something needs your decision." });
@@ -555,7 +569,7 @@
     if (kinds.power) info.push({ code: "UNLISTED_POWER", message: "“" + kinds.power[0].trim().slice(0, 120) + "” names a power that is not listed here. The GM checks Aero's sheet; a power he does not have is refused, not substituted." });
     if (kinds.other) info.push({ code: "UNMAPPED", message: "Part of this could not be matched to a listed option. The GM will interpret it and check it against these same rules before any roll." });
 
-    var used = { action: Math.min(actionCount, 9), bonus_action: bonus.length, movement_ft: feet, object_interaction: Math.min(objs.length, 1), reaction: reservesReaction ? 1 : 0 };
+    var used = { action: Math.min(actionCount, 9), bonus_action: bonus.length, movement_ft: feet, object_interaction: Math.min(costlyObjs.length, Math.max(1, b.object_interaction == null ? 1 : b.object_interaction)), reaction: reservesReaction ? 1 : 0 };
     return { errors: errors, warnings: warnings, info: info, used: used, trace: trace, halts: halts, speechAction: speechAction };
   }
 

@@ -1,0 +1,587 @@
+{
+ "actor": "aero",
+ "actor_name": "Aero",
+ "actor_conditions": [],
+ "mode": "combat",
+ "round": 9,
+ "budget": {
+  "action": 1,
+  "bonus_action": 1,
+  "reaction": 1,
+  "movement_ft": 30,
+  "object_interaction": 0
+ },
+ "speed_ft": 30,
+ "resources": {
+  "force_points": 3
+ },
+ "state_flags": [],
+ "flag_labels": {},
+ "dialogue": [
+  {
+   "id": "d1",
+   "approach": "assertive",
+   "text": "(low) Lantern to me. Both hands on the grip. Don't fire till I say.",
+   "extended": false
+  },
+  {
+   "id": "d2",
+   "approach": "calming",
+   "text": "Slow. Breathe out when you squeeze, not before. I've got the aim.",
+   "extended": false
+  },
+  {
+   "id": "d3",
+   "approach": "empathetic",
+   "text": "You don't have to do this. Tell me now if you can't.",
+   "extended": false
+  },
+  {
+   "id": "d4",
+   "approach": "inquisitive",
+   "text": "(low) You know these dogs. Do you know which one would lie at a door like that?",
+   "extended": false
+  },
+  {
+   "id": "d5",
+   "approach": "warning",
+   "text": "If it comes through that door, it comes fast. Stay at my side, whatever happens.",
+   "extended": false
+  }
+ ],
+ "options": [
+  {
+   "id": "listen_left_wall",
+   "slot": "action",
+   "label": "Listen toward the left wall",
+   "detail": "Wisdom (Perception); takes your action; a round ago something heavy came along the outside of the left wall and stopped close, near where you were at the hatch; you have heard nothing from it since; you cannot see through the planks",
+   "aliases": [
+    "listen to the left wall",
+    "listen for it",
+    "where did it stop",
+    "listen left"
+   ]
+  },
+  {
+   "id": "listen_back_hatch",
+   "slot": "action",
+   "label": "Listen back toward the hatch and the grass beyond",
+   "detail": "Wisdom (Perception); takes your action; the hatch is 30 ft behind you at the edge of the lantern light; the two you hit went out into the grass past it",
+   "aliases": [
+    "listen back",
+    "listen to the hatch",
+    "listen behind"
+   ]
+  },
+  {
+   "id": "ask_wick",
+   "slot": "action",
+   "label": "Ask Wick something",
+   "detail": "speech is free; a longer exchange takes your action; he stands close at your left side, his lantern up in his left hand, your blaster in his right under your left hand",
+   "aliases": [
+    "ask wick",
+    "talk to wick"
+   ]
+  },
+  {
+   "id": "read_wick",
+   "slot": "action",
+   "label": "Read Wick through the Force",
+   "detail": "Wisdom (Insight), takes your action; he is at your left side",
+   "aliases": [
+    "read wick",
+    "sense wick"
+   ]
+  },
+  {
+   "id": "ask_blaster_back",
+   "slot": "action",
+   "label": "Ask Wick for the blaster back",
+   "detail": "it is in his right hand, your left hand over it holding the aim; whether he lets go is up to him",
+   "aliases": [
+    "ask for the blaster",
+    "blaster back"
+   ]
+  },
+  {
+   "id": "look_up_floor",
+   "slot": "action",
+   "label": "Look and listen around the floor",
+   "detail": "Wisdom (Perception); takes your action; you stand in the dark half, in Wick's lantern light only; the strips' light begins 30 ft ahead of you, up the floor",
+   "aliases": [
+    "look around",
+    "look back",
+    "perception",
+    "look up the floor"
+   ]
+  },
+  {
+   "id": "minor_telekinesis",
+   "slot": "action",
+   "label": "Move a small loose thing with the Force",
+   "detail": "Jedi Fundamentals: takes your action; one thing in sight, unattended and at rest, 10 lb or less, within 30 ft; no Force Points; not a creature, nothing held or worn, never a thing in the air; your lamp is 90 ft off, out of reach",
+   "aliases": [
+    "telekinesis",
+    "with the force",
+    "lift it with the force",
+    "move it with the force",
+    "pull it to me"
+   ]
+  },
+  {
+   "id": "open_comm",
+   "slot": "action",
+   "label": "Open the comm channel again",
+   "detail": "the comm at your collar is closed; opened on the general hailing channel, everything you say aloud goes out over it; it is short-range",
+   "aliases": [
+    "open the comm",
+    "comm on",
+    "reopen the comm"
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "release_blaster",
+   "label": "Let go of the blaster",
+   "detail": "take your left hand off it; Wick keeps it in his right hand; the aim is then his alone",
+   "frees_hand": "left",
+   "aliases": [
+    "let go of the blaster",
+    "let go",
+    "release the blaster"
+   ],
+   "cost": "none"
+  },
+  {
+   "id": "clip_hilt",
+   "label": "Clip the hilt to your left hip",
+   "detail": "its home; frees your right hand; your object interaction is spent, so this turn it takes your action",
+   "frees_hand": "right",
+   "aliases": [
+    "clip the hilt",
+    "holster the saber",
+    "put the saber away"
+   ]
+  },
+  {
+   "id": "ignite_saber",
+   "label": "Ignite the indigo lightsaber",
+   "detail": "the hilt is in your right hand; the blade lights where you point it; your object interaction is spent, so this turn it takes your action",
+   "needs_hands": 1,
+   "aliases": [
+    "ignite",
+    "light the blade",
+    "ignite the saber"
+   ]
+  },
+  {
+   "id": "pick_up_rake",
+   "label": "Pick up the rake",
+   "detail": "on the walkway boards about 20 ft behind you, where you dropped it; you would have to go back to it; a long two-handed tool: your right hand holds the hilt",
+   "needs_hands": 2,
+   "aliases": [
+    "pick up the rake",
+    "take the rake",
+    "the rake"
+   ],
+   "at": "rake"
+  },
+  {
+   "id": "wick_gives_lantern",
+   "label": "Wick puts the lantern into your free hand",
+   "by": "wick",
+   "takes_hands": 1,
+   "item": "lantern",
+   "item_label": "Wick's lantern",
+   "at": "wick",
+   "detail": "his to do; you need one free hand to receive it"
+  },
+  {
+   "id": "take_lantern",
+   "label": "Take the lantern from Wick",
+   "needs_hands": 0,
+   "takes_hands": 1,
+   "item": "lantern",
+   "item_label": "Wick's lantern",
+   "at": "wick",
+   "detail": "you take it from his hand yourself: an object interaction"
+  },
+  {
+   "id": "wick_two_hands",
+   "label": "Wick takes the blaster's grip in both hands",
+   "by": "wick",
+   "detail": "his to do"
+  }
+ ],
+ "movement": [
+  {
+   "id": "hold",
+   "label": "Stay where you are, on the walkway",
+   "feet": 0,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "hatch": 30,
+    "light_end": 30,
+    "cart_door": 50,
+    "wall": 60,
+    "cold_lantern": 70,
+    "door": 90,
+    "switch_box": 90,
+    "lamp": 90,
+    "rake": 20,
+    "wick": 0
+   }
+  },
+  {
+   "id": "to_light_edge",
+   "label": "Go on up the walkway about 30 ft, to where the strips' light begins",
+   "feet": 30,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "hatch": 60,
+    "light_end": 0,
+    "cart_door": 20,
+    "wall": 30,
+    "cold_lantern": 40,
+    "door": 60,
+    "switch_box": 60,
+    "lamp": 60,
+    "rake": 50,
+    "wick": 0
+   },
+   "aliases": [
+    "go on",
+    "keep going",
+    "up the walkway",
+    "to the light",
+    "toward the door",
+    "toward the small door"
+   ]
+  },
+  {
+   "id": "to_rake",
+   "label": "Go back about 20 ft to the rake",
+   "feet": 20,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "hatch": 10,
+    "light_end": 50,
+    "cart_door": 70,
+    "wall": 80,
+    "cold_lantern": 90,
+    "door": 110,
+    "switch_box": 110,
+    "lamp": 110,
+    "rake": 0,
+    "wick": 0
+   },
+   "aliases": [
+    "back to the rake",
+    "go back to the rake"
+   ]
+  },
+  {
+   "id": "back_to_hatch",
+   "label": "Go back down the walkway to the hatch (~30 ft)",
+   "feet": 30,
+   "leaves_reach_of": [],
+   "distance_after": {
+    "hatch": 0,
+    "light_end": 60,
+    "cart_door": 80,
+    "wall": 90,
+    "cold_lantern": 100,
+    "door": 120,
+    "switch_box": 120,
+    "lamp": 120,
+    "rake": 10,
+    "wick": 0
+   },
+   "aliases": [
+    "back to the hatch",
+    "return to the hatch",
+    "go back"
+   ]
+  }
+ ],
+ "reactions": [],
+ "visible": [
+  {
+   "id": "wick",
+   "label": "Wick, close at your left side, in PELL's coveralls and gloves; his open lantern up in his left hand; your blaster in his right, your left hand over it, the muzzle held up the walkway at the foot of the small door. He let you guide it without a word and breathed with you. He has not fired.",
+   "distance_ft": 0,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "wick",
+    "the kid",
+    "the boy"
+   ]
+  },
+  {
+   "id": "hatch",
+   "label": "The far-end hatch, about 30 ft behind you at the far edge of the lantern light: shut and bolted from inside, the bolt home. Three cuts burned through its planks low along the sill, all dark; you pressed the ember out.",
+   "distance_ft": 30,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "hatch",
+    "the hatch",
+    "far hatch",
+    "far end"
+   ]
+  },
+  {
+   "id": "in_grass_out",
+   "label": "Out past the hatch, in the long grass, 30 ft and more behind you: the two you hit went straight out from the hatch into the dark; you could not hear where either stopped. From out there your own voice said 'I heard you come round. Take your time.', and earlier something said 'Mum?' in Wick's voice. This round: nothing.",
+   "distance_ft": null,
+   "hostile": true,
+   "conditions": [],
+   "aliases": [
+    "the ones you hit",
+    "the one you hit",
+    "out in the grass",
+    "outside the hatch"
+   ]
+  },
+  {
+   "id": "outside_cart",
+   "label": "Beyond the left wall: a round ago something heavy came low through the grass along the outside of the wall and stopped close, near where you were at the hatch, only the planks between. You came up the floor past that stretch of wall. You have heard nothing from it since. You cannot tell where it is now.",
+   "distance_ft": null,
+   "hostile": true,
+   "conditions": [],
+   "aliases": [
+    "outside",
+    "the breathing",
+    "the grass",
+    "them",
+    "the wall",
+    "beyond the wall",
+    "close",
+    "the one by the wall"
+   ]
+  },
+  {
+   "id": "beyond_end_wall",
+   "label": "Beyond the end wall, to the left of the hatch, 30 ft and more behind you: earlier something heavy came round the corner and settled out there. You have heard nothing move there since. You cannot see it.",
+   "distance_ft": null,
+   "hostile": true,
+   "conditions": [],
+   "aliases": [
+    "the one that came round",
+    "beyond the end wall",
+    "the end wall",
+    "it stopped",
+    "the corner"
+   ]
+  },
+  {
+   "id": "rake",
+   "label": "The grain rake, where you dropped it on the walkway boards about 20 ft behind you, at the edge of Wick's lantern light",
+   "distance_ft": 20,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "rake",
+    "the rake"
+   ]
+  },
+  {
+   "id": "prints",
+   "label": "The line of boot prints in the grain dust, running down the whole floor from the spill at her lantern to the sill of the hatch behind you and stopping there, nothing coming back; an even walking stride; a small work boot, a woman's size, a ridged farm-boot sole.",
+   "distance_ft": 0,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "prints",
+    "boot prints",
+    "footprints",
+    "tracks"
+   ]
+  },
+  {
+   "id": "walkway",
+   "label": "The board walkway running the length of the floor: you tested it end to end with the rake: every board knocks dead and solid on its spikes and sleepers; no space under it. Here in the dark half only Wick's lantern lights it; the strips' white light begins 30 ft ahead of you.",
+   "distance_ft": 0,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "walkway",
+    "the walkway",
+    "boards",
+    "posts",
+    "dead strips"
+   ]
+  },
+  {
+   "id": "drying_beds",
+   "label": "Rows of low slatted drying beds either side of the walkway, grain spread level in them, undisturbed; each a slatted tray over a shallow closed air box, a hand deep, fed by a sheet-metal duct from the right-hand wall; nothing bigger than a rat could get in",
+   "distance_ft": 0,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "beds",
+    "drying beds",
+    "grain",
+    "the grain"
+   ]
+  },
+  {
+   "id": "cart_door",
+   "label": "The wide double cart door in the left wall, 50 ft up the floor ahead of you: two plank leaves on iron strap hinges, shut, an iron ring pull on each; the heavy squared timber bar across both leaves, home in both iron brackets. Barred from inside.",
+   "distance_ft": 50,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "cart door",
+    "cart doors",
+    "the bar",
+    "double door",
+    "bar"
+   ]
+  },
+  {
+   "id": "cold_lantern",
+   "label": "70 ft up the walkway, in the white light: her hooded lantern with the blue tape on its handle, upright on the boards, out and cold, burned dry where it stands; beside it the bed raked level in even strokes to about halfway, rough past that, grain spilled onto the walkway.",
+   "distance_ft": 70,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "dark lantern",
+    "cold lantern",
+    "her lantern",
+    "the other lantern",
+    "half-raked bed"
+   ]
+  },
+  {
+   "id": "door",
+   "label": "The small door in the end wall, 90 ft up the floor, shut and latched from inside: the hook in its eye. Your lamp lies lit at its foot. One of them lies against the other side of it.",
+   "distance_ft": 90,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "door",
+    "the door",
+    "small door",
+    "hook",
+    "latch"
+   ]
+  },
+  {
+   "id": "at_door",
+   "label": "Outside the small door, 90 ft up the floor: one of them, lying against the door at its foot, unseen. You have heard nothing from it since it lay down.",
+   "distance_ft": 90,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "the one at the door",
+    "at the door",
+    "outside the door"
+   ]
+  },
+  {
+   "id": "lamp",
+   "label": "Your lamp, lit, on its side on the boards at the foot of the small door, 90 ft up the floor; its light a small patch on the boards far off. Whatever lies outside that door is a foot from it, on the other side of the planks.",
+   "distance_ft": 90,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "lamp",
+    "the lamp",
+    "glowrod lamp"
+   ]
+  },
+  {
+   "id": "switch_box",
+   "label": "The switch box on the frame by the small door, 90 ft up the floor, its switch thrown; the strips lit over the near half of the floor",
+   "distance_ft": 90,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "switch box",
+    "switch",
+    "the lights"
+   ]
+  },
+  {
+   "id": "ducts",
+   "label": "The fan housing and sheet-metal ducts along the right-hand wall, silent; branch ducts run in under each bed",
+   "distance_ft": 15,
+   "hostile": false,
+   "conditions": [],
+   "aliases": [
+    "fan",
+    "fans",
+    "ducts",
+    "machinery"
+   ]
+  }
+ ],
+ "notes": [
+  "Combat, round 9, still your turn. Initiative: you 21, the drover-dogs 7. When your turn ends, theirs comes.",
+  "Left this turn: your action, your bonus action, your movement (30 ft) and your reaction. Your object interaction is spent (you took hold of the blaster); handling another object this turn takes your action. Speech is free.",
+  "Your left hand is over the blaster in Wick's right hand, holding the aim on the foot of the small door, 90 ft up the walkway. Your right hand holds the unlit hilt. To take the lantern, one hand has to come free.",
+  "The small door is shut, its hook in its eye. What lies against it is on the far side of the planks, unseen; you aimed where something lying at its foot would be.",
+  "Wick has never fired a blaster. You told him not to fire unless you are threatened; you have not told him to fire.",
+  "You stand on the walkway about 90 ft in from the small door, about 30 ft up from the hatch, in the dark half, in Wick's lantern light only (about 30 ft); the strips' white light begins 30 ft ahead of you.",
+  "A round ago something heavy stopped close outside the left wall near the hatch end. Since then you have heard nothing from it, or from anything else. You cannot tell whether it moved.",
+  "The voices outside repeat words they have heard, word for word, in the voice that said them: yours, and Wick's.",
+  "The two you hit went out into the long grass past the hatch. Earlier something settled beyond the end wall left of the hatch; you have heard nothing there since.",
+  "The cart door, 50 ft ahead in the left wall, is barred. The hatch behind you is bolted. Your holster is empty.",
+  "The voice down the rise calls every few minutes; it last called just before your round-2 turn.",
+  "In your robe pockets: the folding knife (folded), the flat cell, three pairs of work gloves. In your backpack: the canteen, the dead datapad, eight rations. The comm at your collar is closed.",
+  "It is just over three hours since the sun went down. It will not be light for about twelve hours."
+ ],
+ "hands": {
+  "right": {
+   "item": "lightsaber",
+   "label": "the hilt, unlit"
+  },
+  "left": {
+   "item": "blaster",
+   "label": "on the blaster in Wick's hand, holding the aim"
+  }
+ },
+ "plan_result": {
+  "stop_kind": "mechanical",
+  "reason": "Wick is at your side, the blaster's muzzle held up the walkway at the foot of the small door by your left hand over his, and he is breathing with you. To take the lantern you need a free hand: your left is on the blaster, holding the aim, and your right holds the hilt. Which hand takes it is yours to say. It is still your turn: your action, bonus action, 30 ft of movement and your reaction remain; your object interaction is spent.",
+  "completed": 3,
+  "interrupted": 1,
+  "paused": 0,
+  "unattempted": 1,
+  "blocked": 0,
+  "cancelled": 0,
+  "suspended": 0
+ },
+ "equipment_from_ledger": true,
+ "position_label": "standing on the walkway about 90 ft in from the small end door, about 30 ft up from the far-end hatch, in the dark half; the unlit hilt in your right hand; your left hand over the blaster in Wick's right hand, holding the aim on the foot of the small door; Wick close at your left side, his lantern up in his left hand; the rake on the boards about 20 ft behind you",
+ "pending_steps": [
+  {
+   "id": "s4",
+   "seq": 0,
+   "type": "free",
+   "kind": "custom",
+   "text": "Grab the lantern from him",
+   "targets": [
+    "wick"
+   ],
+   "method": "take Wick's lantern",
+   "pending": true,
+   "interrupted": true,
+   "status": "interrupted"
+  },
+  {
+   "id": "s5",
+   "seq": 0,
+   "type": "speech",
+   "text": "Tell him to put his other hand on the grip, preparing him to fire the blaster at the dog on the other side of the door",
+   "target": "wick",
+   "pending": true,
+   "status": "unattempted"
+  }
+ ],
+ "pending_reason": "To take the lantern you need a free hand: your left is on the blaster holding the aim, your right holds the hilt. Taking it and telling Wick to put his other hand on the grip run only if you submit them again, with the hand you choose.",
+ "context_id": "evt_1385"
+}

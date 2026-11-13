@@ -7,7 +7,7 @@ SIGNIFICANT = {"world_event", "world_fact", "discovery", "observation", "scene_c
 
 
 def project(events):
-    if any(event["visibility"] == "gm_only" for event in events):
+    if any(event.get("visibility") == "gm_only" for event in events):
         raise ValueError("private event passed to player projection")
     turns, current = [], []
     def finish(group):
@@ -45,7 +45,7 @@ def project(events):
 
 
 def relationships(events, actor="aero", companion="wick"):
-    if any(event["visibility"] == "gm_only" for event in events):
+    if any(event.get("visibility") == "gm_only" for event in events):
         raise ValueError("private event passed to relationship projection")
     dimensions = {key: [] for key in DIMENSIONS}
     experiences = []
