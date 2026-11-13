@@ -1,5 +1,8 @@
 # Provider interchange: release candidate, HOLD
 
+> Continued in `development/SHARED_STAGING_AND_SESSIONS.md` (recovery keyed on accepted work, identity
+> attestation, the git-shared staging environment, session-driven GPT and Gemini routes, blockers).
+
 Branch `dev/provider-interchange`. Base: canonical recovery candidate `1acf2a0`
 (`rc/canonical-dice-recovery-f241ea6`) merged with the live head `d84a52c`
 (`litrpg/campaign-scaffold`, 2026-11-13). Campaign records under
@@ -191,7 +194,7 @@ native Windows; token cost and latency of any model.
 
 - **G0 Audit.** Supply `Genesis_Gemini_Link_Continuity_Audit_2026-11-13.md`; reconcile its decisions
   with this candidate.
-- **G1 Queue reachability.** The live queue, lease and published pages are a claude.ai artifact
+- **G1 Queue reachability (staging: resolved by the git-shared store; live Datapad: open).** The live queue, lease and published pages are a claude.ai artifact
   database, reachable only through Claude's ArtifactData tool and the artifact page itself. GPT and
   Gemini workers cannot read or write it. Decide one: (a) a Claude-run bridge that mirrors rows
   between the artifact database and the gateway store, or (b) host the gateway store as the queue

@@ -1,0 +1,63 @@
+{
+ "environment": {
+  "branch": "staging/provider-shared",
+  "scope": "staging/shared-1",
+  "head": "350c9da",
+  "campaign_id": "shared-1",
+  "canonical": false,
+  "source": "campaigns/starwars_litrpg/runs/sandbox at evt_0037 (revision 35)",
+  "store": "GitStore: queue, lease and public pages in the same git history as the staging ledger"
+ },
+ "turns": [
+  {
+   "action_id": "shared-0001",
+   "declaration": "Holster the blaster pistol",
+   "routed_to": "claude-session",
+   "reasoning": "ACTUAL model reasoning (agent session through gmctl)",
+   "identity_recorded_in_ledger": [
+    {
+     "kind": "agent-session",
+     "model": "claude-fable-5-2 (configured id; serving model may differ)",
+     "session": "https://claude.ai/code/session_01E2NDxNEN5gsoENocvR5GFj",
+     "mock": false,
+     "provider": "claude-session",
+     "run": "claude-s1"
+    }
+   ],
+   "moves": [
+    "tables",
+    "commit"
+   ],
+   "rolls": [],
+   "events": [
+    "evt_0039",
+    "evt_0038",
+    "evt_0040",
+    "evt_0041",
+    "evt_0042",
+    "evt_0043"
+   ],
+   "published_revision": 40,
+   "ledger_head": "evt_0043"
+  },
+  {
+   "action_id": "shared-0002",
+   "declaration": "Touch the remote's housing to test it",
+   "routed_to": "gpt-session",
+   "reasoning": "NOT RUN",
+   "status": "submitted, waiting for a GPT agent session",
+   "mechanical": {
+    "tables_fixed": false,
+    "rolls_accepted": 0,
+    "batch_accepted": false
+   }
+  }
+ ],
+ "not_demonstrated": [
+  "Any GPT reasoning through the gateway",
+  "Any Gemini reasoning through the gateway",
+  "Consecutive real-provider handoff Claude -> GPT -> Gemini",
+  "Return handoff after real GPT/Gemini turns"
+ ],
+ "why": "No GPT or Gemini session, credential or tool is reachable from this environment. The shared environment and SESSION_GM.md are what such a session needs."
+}
