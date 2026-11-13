@@ -1,9 +1,14 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "contest_declaration": {
-   "event_id": "evt_0028",
-   "steps": []
+   "event_id": "evt_0038",
+   "steps": [
+    {
+     "id": "k0",
+     "label": "holster_blaster"
+    }
+   ]
   },
   "continuity": {
    "status": "active",
@@ -11,32 +16,7 @@
    "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"
   },
   "campaign_id": "shared-1",
-  "rolls": [
-   {
-    "roll_id": "roll_t3_5",
-    "purpose": "Aero: Intelligence (Investigation), inspecting the disabled remote's scorch",
-    "summary": "1d20+1 [7] +1 = 8",
-    "by": "aero",
-    "formula": "1d20+1",
-    "mode": "normal",
-    "dice": [
-     {
-      "sign": 1,
-      "sides": 20,
-      "rolled": [
-       7
-      ],
-      "kept": [
-       7
-      ]
-     }
-    ],
-    "alternate": null,
-    "raw_total": 7,
-    "modifier": 1,
-    "total": 8
-   }
-  ],
+  "rolls": [],
   "dice_history": [],
   "turn_context": {
    "actor": "aero",
@@ -66,10 +46,7 @@
      "item": "lightsaber",
      "label": "the lit lightsaber"
     },
-    "left": {
-     "item": "blaster_pistol",
-     "label": "the blaster pistol"
-    }
+    "left": null
    },
    "dialogue": [
     {
@@ -88,6 +65,12 @@
      "id": "d3",
      "approach": "wry",
      "text": "Either it's real smoke or very committed set dressing.",
+     "extended": false
+    },
+    {
+     "id": "d4",
+     "approach": "cautious",
+     "text": "Sim, is that remote safe to touch?",
      "extended": false
     }
    ],
@@ -119,15 +102,6 @@
     }
    ],
    "objects": [
-    {
-     "id": "holster_blaster",
-     "label": "Holster the blaster pistol",
-     "removes": [],
-     "frees_hand": "left",
-     "aliases": [
-      "holster"
-     ]
-    },
     {
      "id": "deactivate_saber",
      "label": "Deactivate the indigo lightsaber",
@@ -163,6 +137,27 @@
       "pick up",
       "grab the remote",
       "take the remote"
+     ]
+    },
+    {
+     "id": "draw_blaster",
+     "label": "Draw the blaster pistol",
+     "takes_hands": 1,
+     "item": "blaster_pistol",
+     "item_label": "the blaster pistol",
+     "aliases": [
+      "draw the blaster",
+      "draw"
+     ]
+    },
+    {
+     "id": "lower_saber",
+     "label": "Lower the lit blade to your side",
+     "cost": "none",
+     "detail": "shifting what you already hold; no action",
+     "aliases": [
+      "lower the blade",
+      "lower the saber"
      ]
     }
    ],
@@ -208,8 +203,8 @@
     }
    ],
    "notes": [
-    "The remote lies dark 5 ft in front of you, within reach. You can't tell by eye whether its damage is real or a sim overlay.",
-    "Your saber is lit in your right hand; the blaster pistol (one shot spent) is in your left. Neither hand is free.",
+    "The blaster pistol (one shot spent) is in its holster. Your left hand is free; the saber is still lit in your right.",
+    "The remote lies dark 5 ft in front of you, within reach. You can't tell by eye whether its damage is real or a sim overlay; a free hand on the housing would tell you.",
     "The sim is holding the reset."
    ],
    "pending_steps": [
@@ -222,20 +217,20 @@
      "pending": true
     }
    ],
-   "pending_reason": "Not done: you can't yet tell whether the scorch is real, and both of your hands are full.",
-   "context_id": "evt_0037"
+   "pending_reason": "Your left hand is free now. Whether the scorch is real is still not settled, so picking the remote up still waits on that.",
+   "context_id": "evt_0043"
   },
-  "revision": 35,
-  "ledger_head": "evt_0037",
-  "turn_no": 3,
+  "revision": 40,
+  "ledger_head": "evt_0043",
+  "turn_no": 4,
   "scene": {
-   "title": "Sim Held",
-   "location": "Holo-sim room, unnamed courier (non-canon)",
-   "time": "Sim, round 2",
+   "title": "Sim deck",
+   "location": "Training sim (staging)",
+   "time": "Sim deck, moments later",
    "atmosphere": [
-    "reset held by the sim",
-    "the remote dark on the deck, smoke from its scorched hole",
-    "saber lit, blaster drawn"
+    "left hand free, saber lit in the right",
+    "the disabled remote dark on the deck, 5 ft off",
+    "the sim holding the reset"
    ]
   },
   "feed": [
@@ -298,6 +293,18 @@
     "event_id": "evt_0035",
     "time": "Sim, round 2",
     "text": "\"Sim, hold the reset.\"\n\nTwo flat notes from somewhere overhead. The room stays exactly as it is: grey deck plating, the exit seam far behind you, and the remote five feet in front of your boots, dark where it fell.\n\nYou look it over without touching it. The blade's light lays violet across the housing. The hole is a thumb's width across, the edges black, a thin thread of smoke still climbing out of it and bending in the room's slow air. It looks like a burn. It also looks like exactly what a training sim would draw on a target to tell you that you hit it. From here, with your eyes alone, you can't say which.\n\nThe saber hums in your right hand. The pistol hangs in your left, one shot spent. Nothing in the room moves.\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0038",
+    "time": "Sim deck, moments later",
+    "text": "Holster the blaster pistol"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0041",
+    "time": "Sim deck, moments later",
+    "text": "You bring the pistol down and seat it in the holster. It goes home with a small, final click.\n\nYour left hand comes away empty. In your right the blade is still lit, its hum the only steady sound on the deck, its indigo light lying across the plating and the dark shell of the remote.\n\nThe remote has not moved. Five feet off, a black-rimmed hole in its housing, a thread of smoke. Within reach of the hand you just freed.\n\nThe sim holds the reset."
    }
   ],
   "journal": [
@@ -384,6 +391,13 @@
     "kind": "world_fact",
     "knowledge": "fact",
     "text": "Aero's hands: the lit indigo lightsaber in his right hand, the blaster pistol (one shot spent) in his left. Neither is free."
+   },
+   {
+    "event_id": "evt_0040",
+    "time": "Sim deck, moments later",
+    "kind": "equipment_change",
+    "knowledge": "fact",
+    "text": "Aero holsters the blaster pistol. His left hand is free; the saber stays lit in his right."
    }
   ],
   "suggestions": [],
@@ -624,40 +638,40 @@
   },
   "history": {
    "feed": {
-    "total": 10,
-    "shown": 10,
+    "total": 12,
+    "shown": 12,
     "omitted": 0,
     "first_shown": "evt_0001",
     "pages": [
      {
       "id": "feed-0001",
-      "count": 10,
+      "count": 12,
       "first": "evt_0001",
-      "last": "evt_0035",
-      "hash": "49c147efa14370b5"
+      "last": "evt_0041",
+      "hash": "4c8ec14e3de27ddd"
      }
     ]
    },
    "journal": {
-    "total": 12,
-    "shown": 12,
+    "total": 13,
+    "shown": 13,
     "omitted": 0,
     "first_shown": "evt_0006",
     "pages": [
      {
       "id": "journal-0001",
-      "count": 12,
+      "count": 13,
       "first": "evt_0006",
-      "last": "evt_0033",
-      "hash": "db164e7c4c026411"
+      "last": "evt_0040",
+      "hash": "2d1d59bc11728de7"
      }
     ],
     "observations": 0
    },
    "budget_bytes": 96000,
    "target_bytes": 84000,
-   "bytes": 16455,
-   "revision": 35,
+   "bytes": 17485,
+   "revision": 40,
    "page_budget_bytes": 150000,
    "dice_history": {
     "total": 5,
@@ -674,10 +688,18 @@
     ]
    },
    "chapters": {
-    "total": 0,
+    "total": 1,
     "shown": 0,
-    "omitted": 0,
-    "pages": []
+    "omitted": 1,
+    "pages": [
+     {
+      "id": "chapters-0001",
+      "count": 1,
+      "first": "evt_0043",
+      "last": "evt_0043",
+      "hash": "2400a0790200537b"
+     }
+    ]
    },
    "events": {
     "total": 2,
