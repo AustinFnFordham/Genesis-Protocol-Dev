@@ -1,13 +1,13 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "kind": "journal",
   "page": 1,
   "id": "journal-0001",
-  "count": 12,
+  "count": 13,
   "first": "evt_0006",
-  "last": "evt_0033",
-  "hash": "db164e7c4c026411",
+  "last": "evt_0040",
+  "hash": "2d1d59bc11728de7",
   "entries": [
    {
     "event_id": "evt_0006",
@@ -92,6 +92,13 @@
     "kind": "world_fact",
     "knowledge": "fact",
     "text": "Aero's hands: the lit indigo lightsaber in his right hand, the blaster pistol (one shot spent) in his left. Neither is free."
+   },
+   {
+    "event_id": "evt_0040",
+    "time": "Sim deck, moments later",
+    "kind": "equipment_change",
+    "knowledge": "fact",
+    "text": "Aero holsters the blaster pistol. His left hand is free; the saber stays lit in his right."
    }
   ],
   "campaign_id": "shared-1"
