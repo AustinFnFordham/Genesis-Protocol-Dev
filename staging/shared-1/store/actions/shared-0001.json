@@ -1,8 +1,8 @@
 {
- "version": 7,
+ "version": 8,
  "data": {
   "action_id": "shared-0001",
-  "status": "resolved",
+  "status": "committed",
   "created_ms": 1794613407721,
   "source": "composer",
   "contract": "turn-contract/3",
@@ -59,17 +59,18 @@
   "processing": {
    "run": "claude-s1",
    "started_ms": 1794613414781,
-   "heartbeat_ms": 1794613439053,
-   "lease_ms": 588854,
-   "stage": "publishing",
-   "stage_started_ms": 1794613439053,
+   "heartbeat_ms": 1794613449244,
+   "lease_ms": 578663,
+   "stage": "complete",
+   "stage_started_ms": 1794613449244,
    "stages": {
     "claimed": 1794613414781,
     "context": 1794613418945,
     "rules": 1794613425692,
     "ledger": 1794613432797,
     "narration": 1794613437105,
-    "publishing": 1794613439053
+    "publishing": 1794613439053,
+    "complete": 1794613449244
    }
   },
   "ledger_events": [
@@ -81,7 +82,8 @@
    "evt_0043"
   ],
   "publication": {
-   "status": "pending"
-  }
+   "status": "published"
+  },
+  "published_revision": 40
  }
 }
