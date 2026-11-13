@@ -1,0 +1,75 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "feed",
+  "page": 1,
+  "id": "feed-0001",
+  "count": 10,
+  "first": "evt_0001",
+  "last": "evt_0035",
+  "hash": "49c147efa14370b5",
+  "entries": [
+   {
+    "who": "gm",
+    "event_id": "evt_0001",
+    "time": "Sim, round 1",
+    "text": "NON-CANON TEST SIM. A training remote hums to life fifteen feet away, its emitter glowing a lazy orange. A tinny voice: *Round one. Begin when ready.*"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0005",
+    "time": "Sim, round 1",
+    "text": "\"Again.\" I ignite my saber, close in on the remote, and strike it."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0011",
+    "time": "Sim, round 1",
+    "text": "The holo-sim floor is bare and evenly lit, nothing between you and the training remote but fifteen feet of grey deck. It hangs at chest height, dead ahead, its emitter glowing that lazy orange. No cover, no other targets, the exit seam somewhere behind you.\n\n\"Again.\"\n\nYour thumb finds the slide on the hilt at your left hip. The indigo blade snaps out with a hiss and a low, steady hum that fills the quiet room, throwing violet-blue light across the deck plates.\n\nYou cover ten feet in two long strides. The remote is an arm's length away now, its little thrusters ticking as it begins to swing its emitter toward you.\n\nIt never finishes the turn. The blade comes across in one stroke and catches it clean across the casing (14 to hit; 10 energy damage). The shell parts with a bright crack and a smell of scorched plating. The orange glow gutters out. The remote drops, bounces once on the deck at your feet, and lies there smoking, its thrusters gone silent.\n\nA tinny voice, unhurried: *Remote disabled. Round complete.*\n\nThe only sounds left are the hum of your blade and the faint tick of cooling metal.\n"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0014",
+    "time": "Sim, round 2",
+    "text": "NON-CANON TEST SIM. The disabled remote is swept away. A fresh one rises fifteen feet off, emitter glowing. *Round two. Begin when ready.*"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0017",
+    "time": "Sim, round 2",
+    "text": "I shoot the remote with my blaster."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0020",
+    "time": "Sim, round 2",
+    "text": "The fresh remote hangs fifteen feet ahead of you at chest height, dead centre over the grey deck, emitter glowing that lazy orange. Nothing between you and it. Your indigo blade is still lit in your right hand, humming low, throwing violet light across the plates at your feet. No cover anywhere, the exit seam somewhere behind you.\n\nYour left hand drops to the pistol at your right hip, cross-draw, and comes up with it.\n\nOne shot. The bolt cracks across the fifteen feet in a red streak and takes the remote square in its housing. Blaster: 1d20+5, [8] + 5 = 13. Hit. Damage: 1d6+3, [5] + 3 = 8 energy.\n\nThe emitter flares white, then goes dark. The remote drops like a stone and hits the deck with a flat metal clang, rolls half a turn and stops, a thin curl of smoke rising from a scorched hole the width of a thumb. The ozone smell of the shot hangs in the still air. It never fired.\n\nThe room goes quiet except for the hum of your saber. *Round two complete.*\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0023",
+    "time": "Sim, after round 2",
+    "text": "Walk over to the disabled remote (~10 ft)"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0025",
+    "time": "Sim, after round 2",
+    "text": "You cross the deck toward it. Ten feet of grey plating, your boots loud on the metal in the quiet, the indigo blade still humming in your right hand and laying violet light across the floor ahead of you. The pistol hangs drawn in your left. Nothing moves anywhere in the sim room; the exit seam is behind you now, farther than before.\n\nYou stop with the remote five feet in front of you, close enough to reach in a single step. It sits where it fell on the deck, dark, still, the emitter dead. The scorched hole in its housing is right there, a thumb's width across, its edges blackened, the last thin thread of smoke still curling up out of it. The sharp ozone smell of the shot is stronger here.\n\nIt does not react to you. The room is silent except for the saber.\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0028",
+    "time": "Sim, round 2",
+    "text": "Say: “Sim, hold the reset.” (free); Inspect the disabled remote → Training remote (disabled, on the deck); Only if the scorch is from a real blaster bolt, not a sim effect: Pick up the disabled remote"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0035",
+    "time": "Sim, round 2",
+    "text": "\"Sim, hold the reset.\"\n\nTwo flat notes from somewhere overhead. The room stays exactly as it is: grey deck plating, the exit seam far behind you, and the remote five feet in front of your boots, dark where it fell.\n\nYou look it over without touching it. The blade's light lays violet across the housing. The hole is a thumb's width across, the edges black, a thin thread of smoke still climbing out of it and bending in the room's slow air. It looks like a burn. It also looks like exactly what a training sim would draw on a target to tell you that you hit it. From here, with your eyes alone, you can't say which.\n\nThe saber hums in your right hand. The pistol hangs in your left, one shot spent. Nothing in the room moves.\n"
+   }
+  ],
+  "campaign_id": "shared-1"
+ }
+}

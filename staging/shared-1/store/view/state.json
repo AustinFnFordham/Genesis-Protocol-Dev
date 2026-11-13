@@ -1,0 +1,704 @@
+{
+ "version": 1,
+ "data": {
+  "contest_declaration": {
+   "event_id": "evt_0028",
+   "steps": []
+  },
+  "continuity": {
+   "status": "active",
+   "marks": 0,
+   "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"
+  },
+  "campaign_id": "shared-1",
+  "rolls": [
+   {
+    "roll_id": "roll_t3_5",
+    "purpose": "Aero: Intelligence (Investigation), inspecting the disabled remote's scorch",
+    "summary": "1d20+1 [7] +1 = 8",
+    "by": "aero",
+    "formula": "1d20+1",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 20,
+      "rolled": [
+       7
+      ],
+      "kept": [
+       7
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 7,
+    "modifier": 1,
+    "total": 8
+   }
+  ],
+  "dice_history": [],
+  "turn_context": {
+   "actor": "aero",
+   "actor_name": "Aero",
+   "actor_conditions": [],
+   "mode": "scene",
+   "round": null,
+   "budget": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "speed_ft": 30,
+   "resources": {
+    "force_points": 3
+   },
+   "state_flags": [
+    "saber_ignited"
+   ],
+   "flag_labels": {
+    "saber_ignited": "an ignited lightsaber"
+   },
+   "hands": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the lit lightsaber"
+    },
+    "left": {
+     "item": "blaster_pistol",
+     "label": "the blaster pistol"
+    }
+   },
+   "dialogue": [
+    {
+     "id": "d1",
+     "approach": "investigative",
+     "text": "Sim, is the damage on this remote real or projected?",
+     "extended": false
+    },
+    {
+     "id": "d2",
+     "approach": "assertive",
+     "text": "Sim, end program.",
+     "extended": false
+    },
+    {
+     "id": "d3",
+     "approach": "wry",
+     "text": "Either it's real smoke or very committed set dressing.",
+     "extended": false
+    }
+   ],
+   "options": [
+    {
+     "id": "inspect_remote",
+     "slot": "action",
+     "label": "Inspect the disabled remote again",
+     "needs_target": true,
+     "reach_ft": 5,
+     "aliases": [
+      "inspect",
+      "examine",
+      "look at"
+     ]
+    },
+    {
+     "id": "touch_remote",
+     "slot": "action",
+     "label": "Touch the remote's housing to test it",
+     "needs_hands": 1,
+     "at": "remote",
+     "reach_ft": 5,
+     "aliases": [
+      "touch the remote",
+      "touch it",
+      "feel the housing"
+     ]
+    }
+   ],
+   "objects": [
+    {
+     "id": "holster_blaster",
+     "label": "Holster the blaster pistol",
+     "removes": [],
+     "frees_hand": "left",
+     "aliases": [
+      "holster"
+     ]
+    },
+    {
+     "id": "deactivate_saber",
+     "label": "Deactivate the indigo lightsaber",
+     "removes": [
+      "saber_ignited"
+     ],
+     "aliases": [
+      "deactivate",
+      "shut off"
+     ]
+    },
+    {
+     "id": "clip_saber",
+     "label": "Clip the saber hilt to your belt (switches the blade off)",
+     "frees_hand": "right",
+     "aliases": [
+      "clip the hilt",
+      "clip the saber"
+     ],
+     "removes": [
+      "saber_ignited"
+     ]
+    },
+    {
+     "id": "pick_up_remote",
+     "label": "Pick up the disabled remote",
+     "takes_hands": 1,
+     "at": "remote",
+     "reach_ft": 5,
+     "item": "training_remote",
+     "item_label": "the training remote",
+     "aliases": [
+      "pick up",
+      "grab the remote",
+      "take the remote"
+     ]
+    }
+   ],
+   "movement": [
+    {
+     "id": "hold",
+     "label": "Hold position",
+     "feet": 0,
+     "leaves_reach_of": [],
+     "distance_after": {
+      "remote": 5
+     }
+    },
+    {
+     "id": "back_off",
+     "label": "Step back to where you started",
+     "feet": 10,
+     "leaves_reach_of": [],
+     "distance_after": {
+      "remote": 15
+     },
+     "aliases": [
+      "step back",
+      "back off",
+      "return"
+     ]
+    }
+   ],
+   "reactions": [],
+   "visible": [
+    {
+     "id": "remote",
+     "label": "Training remote (disabled, on the deck)",
+     "distance_ft": 5,
+     "hostile": false,
+     "conditions": [
+      "disabled"
+     ],
+     "aliases": [
+      "remote",
+      "droid"
+     ]
+    }
+   ],
+   "notes": [
+    "The remote lies dark 5 ft in front of you, within reach. You can't tell by eye whether its damage is real or a sim overlay.",
+    "Your saber is lit in your right hand; the blaster pistol (one shot spent) is in your left. Neither hand is free.",
+    "The sim is holding the reset."
+   ],
+   "pending_steps": [
+    {
+     "type": "object",
+     "option": "pick_up_remote",
+     "condition": {
+      "text": "the scorch is from a real blaster bolt, not a sim effect"
+     },
+     "pending": true
+    }
+   ],
+   "pending_reason": "Not done: you can't yet tell whether the scorch is real, and both of your hands are full.",
+   "context_id": "evt_0037"
+  },
+  "revision": 35,
+  "ledger_head": "evt_0037",
+  "turn_no": 3,
+  "scene": {
+   "title": "Sim Held",
+   "location": "Holo-sim room, unnamed courier (non-canon)",
+   "time": "Sim, round 2",
+   "atmosphere": [
+    "reset held by the sim",
+    "the remote dark on the deck, smoke from its scorched hole",
+    "saber lit, blaster drawn"
+   ]
+  },
+  "feed": [
+   {
+    "who": "gm",
+    "event_id": "evt_0001",
+    "time": "Sim, round 1",
+    "text": "NON-CANON TEST SIM. A training remote hums to life fifteen feet away, its emitter glowing a lazy orange. A tinny voice: *Round one. Begin when ready.*"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0005",
+    "time": "Sim, round 1",
+    "text": "\"Again.\" I ignite my saber, close in on the remote, and strike it."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0011",
+    "time": "Sim, round 1",
+    "text": "The holo-sim floor is bare and evenly lit, nothing between you and the training remote but fifteen feet of grey deck. It hangs at chest height, dead ahead, its emitter glowing that lazy orange. No cover, no other targets, the exit seam somewhere behind you.\n\n\"Again.\"\n\nYour thumb finds the slide on the hilt at your left hip. The indigo blade snaps out with a hiss and a low, steady hum that fills the quiet room, throwing violet-blue light across the deck plates.\n\nYou cover ten feet in two long strides. The remote is an arm's length away now, its little thrusters ticking as it begins to swing its emitter toward you.\n\nIt never finishes the turn. The blade comes across in one stroke and catches it clean across the casing (14 to hit; 10 energy damage). The shell parts with a bright crack and a smell of scorched plating. The orange glow gutters out. The remote drops, bounces once on the deck at your feet, and lies there smoking, its thrusters gone silent.\n\nA tinny voice, unhurried: *Remote disabled. Round complete.*\n\nThe only sounds left are the hum of your blade and the faint tick of cooling metal.\n"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0014",
+    "time": "Sim, round 2",
+    "text": "NON-CANON TEST SIM. The disabled remote is swept away. A fresh one rises fifteen feet off, emitter glowing. *Round two. Begin when ready.*"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0017",
+    "time": "Sim, round 2",
+    "text": "I shoot the remote with my blaster."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0020",
+    "time": "Sim, round 2",
+    "text": "The fresh remote hangs fifteen feet ahead of you at chest height, dead centre over the grey deck, emitter glowing that lazy orange. Nothing between you and it. Your indigo blade is still lit in your right hand, humming low, throwing violet light across the plates at your feet. No cover anywhere, the exit seam somewhere behind you.\n\nYour left hand drops to the pistol at your right hip, cross-draw, and comes up with it.\n\nOne shot. The bolt cracks across the fifteen feet in a red streak and takes the remote square in its housing. Blaster: 1d20+5, [8] + 5 = 13. Hit. Damage: 1d6+3, [5] + 3 = 8 energy.\n\nThe emitter flares white, then goes dark. The remote drops like a stone and hits the deck with a flat metal clang, rolls half a turn and stops, a thin curl of smoke rising from a scorched hole the width of a thumb. The ozone smell of the shot hangs in the still air. It never fired.\n\nThe room goes quiet except for the hum of your saber. *Round two complete.*\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0023",
+    "time": "Sim, after round 2",
+    "text": "Walk over to the disabled remote (~10 ft)"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0025",
+    "time": "Sim, after round 2",
+    "text": "You cross the deck toward it. Ten feet of grey plating, your boots loud on the metal in the quiet, the indigo blade still humming in your right hand and laying violet light across the floor ahead of you. The pistol hangs drawn in your left. Nothing moves anywhere in the sim room; the exit seam is behind you now, farther than before.\n\nYou stop with the remote five feet in front of you, close enough to reach in a single step. It sits where it fell on the deck, dark, still, the emitter dead. The scorched hole in its housing is right there, a thumb's width across, its edges blackened, the last thin thread of smoke still curling up out of it. The sharp ozone smell of the shot is stronger here.\n\nIt does not react to you. The room is silent except for the saber.\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0028",
+    "time": "Sim, round 2",
+    "text": "Say: “Sim, hold the reset.” (free); Inspect the disabled remote → Training remote (disabled, on the deck); Only if the scorch is from a real blaster bolt, not a sim effect: Pick up the disabled remote"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0035",
+    "time": "Sim, round 2",
+    "text": "\"Sim, hold the reset.\"\n\nTwo flat notes from somewhere overhead. The room stays exactly as it is: grey deck plating, the exit seam far behind you, and the remote five feet in front of your boots, dark where it fell.\n\nYou look it over without touching it. The blade's light lays violet across the housing. The hole is a thumb's width across, the edges black, a thin thread of smoke still climbing out of it and bending in the room's slow air. It looks like a burn. It also looks like exactly what a training sim would draw on a target to tell you that you hit it. From here, with your eyes alone, you can't say which.\n\nThe saber hums in your right hand. The pistol hangs in your left, one shot spent. Nothing in the room moves.\n"
+   }
+  ],
+  "journal": [
+   {
+    "event_id": "evt_0006",
+    "time": "Sim,round1",
+    "kind": "dialogue",
+    "knowledge": "fact",
+    "text": "Aero says: \"Again.\""
+   },
+   {
+    "event_id": "evt_0007",
+    "time": "Sim,round1",
+    "kind": "object_interaction",
+    "knowledge": "fact",
+    "text": "Aero ignites the indigo lightsaber (state flag saber_ignited)."
+   },
+   {
+    "event_id": "evt_0008",
+    "time": "Sim,round1",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero closes 10 ft on the training remote; it is now 5 ft away."
+   },
+   {
+    "event_id": "evt_0009",
+    "time": "Sim,round1",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's lightsaber strike hits the training remote (14) for 10 energy damage."
+   },
+   {
+    "event_id": "evt_0010",
+    "time": "Sim,round1",
+    "kind": "combat_end",
+    "knowledge": "fact",
+    "text": "The training remote is reduced to 0 HP and drops, disabled. The sim round ends; the remote never acted."
+   },
+   {
+    "event_id": "evt_0018",
+    "time": "Sim, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's blaster shot hits the training remote (13) for 8 energy damage."
+   },
+   {
+    "event_id": "evt_0019",
+    "time": "Sim, round 2",
+    "kind": "combat_end",
+    "knowledge": "fact",
+    "text": "The training remote is reduced to 0 HP and drops, disabled. Sim round 2 ends; the remote never acted."
+   },
+   {
+    "event_id": "evt_0024",
+    "time": "Sim, after round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero walks 10 ft to the disabled training remote; it is now 5 ft away."
+   },
+   {
+    "event_id": "evt_0030",
+    "time": "Sim, round 2",
+    "kind": "speech",
+    "knowledge": "fact",
+    "text": "Aloud to the sim, Aero says: 'Sim, hold the reset.'"
+   },
+   {
+    "event_id": "evt_0031",
+    "time": "Sim, round 2",
+    "kind": "world_event",
+    "knowledge": "fact",
+    "text": "The sim's control program acknowledges with a flat two-note tone; the reset is held. The room stays as it is."
+   },
+   {
+    "event_id": "evt_0032",
+    "time": "Sim, round 2",
+    "kind": "skill_check",
+    "knowledge": "fact",
+    "text": "Intelligence (Investigation) 8 (natural 7 +1), inspecting the disabled remote from 5 ft: a scorched hole a thumb's width across, blackened edges, a thread of smoke. From looking alone Aero cannot tell whether the damage is physical or a sim overlay."
+   },
+   {
+    "event_id": "evt_0033",
+    "time": "Sim, round 2",
+    "kind": "world_fact",
+    "knowledge": "fact",
+    "text": "Aero's hands: the lit indigo lightsaber in his right hand, the blaster pistol (one shot spent) in his left. Neither is free."
+   }
+  ],
+  "suggestions": [],
+  "objectives": [],
+  "objective_sources": {},
+  "chapters": [],
+  "events": [],
+  "relationship_evidence": [],
+  "active_actor": "aero",
+  "roster": [
+   {
+    "id": "aero",
+    "name": "Aeleron \"Aero\" Do'ordo",
+    "line": "Echani Sentinel · Jedi · Newly Knighted Jedi",
+    "role": "You",
+    "status": "Active",
+    "mechanics": "authoritative",
+    "note": "",
+    "joined_event": null
+   }
+  ],
+  "member_journals": {},
+  "party": [
+   {
+    "name": "Aeleron \"Aero\" Do'ordo",
+    "role": "You",
+    "status": "Active"
+   }
+  ],
+  "character": {
+   "name": "Aeleron \"Aero\" Do'ordo",
+   "line": "Echani Sentinel · Jedi · Newly Knighted Jedi",
+   "level": 1,
+   "hp": [
+    11,
+    11
+   ],
+   "strain": [
+    12,
+    12
+   ],
+   "force": [
+    3,
+    3
+   ],
+   "ac": 13,
+   "speed": "30 feet",
+   "initiative": 3,
+   "scores": {
+    "STR": [
+     8,
+     -1
+    ],
+    "DEX": [
+     16,
+     3
+    ],
+    "CON": [
+     12,
+     1
+    ],
+    "INT": [
+     12,
+     1
+    ],
+    "WIS": [
+     14,
+     2
+    ],
+    "CHA": [
+     14,
+     2
+    ]
+   },
+   "passive": {
+    "perception": 14,
+    "insight": 14
+   },
+   "conditions": [],
+   "skills": [
+    {
+     "name": "insight",
+     "mod": 4
+    },
+    {
+     "name": "persuasion",
+     "mod": 4
+    },
+    {
+     "name": "technology",
+     "mod": 3
+    },
+    {
+     "name": "intimidation",
+     "mod": 4
+    },
+    {
+     "name": "perception",
+     "mod": 4
+    }
+   ],
+   "languages": [
+    "Galactic Basic",
+    "Echani",
+    "Sith"
+   ],
+   "powers": [
+    {
+     "name": "Battle Insight",
+     "cost": "0 Force Points",
+     "effect": "Choose one visible creature. Aero has advantage on his next attack against it. The effect ends after that attack, if concentration breaks, if the target becomes invalid, or after 1 minute. Range: 30 feet."
+    },
+    {
+     "name": "Burst",
+     "cost": "0 Force Points",
+     "effect": "Every other creature in the radius, including allies, makes a Dexterity save against DC 12. Failure deals 1d4 force damage and knocks the creature prone; success causes neither. Aero is unaffected. Range: 5-foot radius centered on Aero."
+    }
+   ],
+   "features": [
+    {
+     "name": "Martial Arts Training",
+     "kind": "passive",
+     "effect": "Proficient with unarmed strikes; may use Dexterity for their attack and damage rolls."
+    },
+    {
+     "name": "Combat Discipline",
+     "kind": "passive",
+     "effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents."
+    },
+    {
+     "name": "Combat Communication",
+     "kind": "passive or free action",
+     "effect": "Advantage on Insight checks to read emotions during combat. Once per short rest, after a meaningful brief sparring match, advantage on one Charisma check."
+    },
+    {
+     "name": "Force Connection",
+     "kind": "passive or action",
+     "effect": "May sense significant Force disturbances without automatically learning identity, location, or explanation. As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment."
+    },
+    {
+     "name": "Sentinel Balance",
+     "kind": "reaction",
+     "effect": "Add 1d4 to the failed saving throw, potentially turning it into a success."
+    },
+    {
+     "name": "Lightsaber Deflect - Tier 1",
+     "kind": "reaction",
+     "effect": "Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection attack against one visible creature within 30 feet; on a hit it deals the original attack's rolled damage without adding Dexterity."
+    },
+    {
+     "name": "Former Master and Jedi Network",
+     "kind": "narrative or social",
+     "effect": "Knows Master Taron's last confirmed region and how to identify or locate established Jedi safe houses and trusted contacts. Reasonably available contacts may offer guidance, basic information, or temporary shelter."
+    },
+    {
+     "name": "Echani Grappling Training",
+     "kind": "special melee attack",
+     "effect": "With a free hand, make a Dexterity-based martial check at +5 against the target's Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled and its speed becomes 0."
+    },
+    {
+     "name": "Jedi Fundamentals: Minor Telekinesis",
+     "kind": "campaign ruling (provisional) · action in combat",
+     "effect": "Gently lift, reposition, retrieve or manipulate one visible, unattended object of 10 lb or less within 30 ft. No Force Points. Outside combat, no roll unless the outcome is uncertain; in combat it uses your action. It cannot deal damage, move or disarm a creature, take anything held or worn, stop a projectile, or stand in for a Force power you have not learned. It is not Force Push or Force Pull."
+    }
+   ],
+   "weapons": [
+    {
+     "name": "Taron-forged Modular Indigo Lightsaber",
+     "attack": 5,
+     "damage": "1d8+3 / 1d10+3"
+    },
+    {
+     "name": "Standard Blaster Pistol",
+     "attack": 5,
+     "damage": "1d6+3"
+    },
+    {
+     "name": "Unarmed Strike",
+     "attack": 5,
+     "damage": "1d4+3"
+    }
+   ],
+   "armor": {
+    "name": "Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle",
+    "ac": 13
+   },
+   "inventory": [
+    {
+     "item": "Security Kit",
+     "qty": 1
+    },
+    {
+     "item": "Meditation Kit",
+     "qty": 1
+    },
+    {
+     "item": "Backpack",
+     "qty": 1
+    },
+    {
+     "item": "Bedroll",
+     "qty": 1
+    },
+    {
+     "item": "Compact mess kit",
+     "qty": 1
+    },
+    {
+     "item": "Ration pack",
+     "qty": 10
+    },
+    {
+     "item": "Canteen",
+     "qty": 1
+    },
+    {
+     "item": "Compact Jedi glowrod",
+     "qty": 1
+    },
+    {
+     "item": "Syntherope",
+     "qty": 1
+    },
+    {
+     "item": "Basic fire-starting tool",
+     "qty": 1
+    },
+    {
+     "item": "Personal comlink",
+     "qty": 1
+    },
+    {
+     "item": "Blaster ammunition",
+     "qty": 50
+    }
+   ],
+   "credits": 50
+  },
+  "history": {
+   "feed": {
+    "total": 10,
+    "shown": 10,
+    "omitted": 0,
+    "first_shown": "evt_0001",
+    "pages": [
+     {
+      "id": "feed-0001",
+      "count": 10,
+      "first": "evt_0001",
+      "last": "evt_0035",
+      "hash": "49c147efa14370b5"
+     }
+    ]
+   },
+   "journal": {
+    "total": 12,
+    "shown": 12,
+    "omitted": 0,
+    "first_shown": "evt_0006",
+    "pages": [
+     {
+      "id": "journal-0001",
+      "count": 12,
+      "first": "evt_0006",
+      "last": "evt_0033",
+      "hash": "db164e7c4c026411"
+     }
+    ],
+    "observations": 0
+   },
+   "budget_bytes": 96000,
+   "target_bytes": 84000,
+   "bytes": 16455,
+   "revision": 35,
+   "page_budget_bytes": 150000,
+   "dice_history": {
+    "total": 5,
+    "shown": 0,
+    "omitted": 5,
+    "pages": [
+     {
+      "id": "dice_history-0001",
+      "count": 5,
+      "first": "evt_0009",
+      "last": "evt_0032",
+      "hash": "f141efe68a804722"
+     }
+    ]
+   },
+   "chapters": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   },
+   "events": {
+    "total": 2,
+    "shown": 0,
+    "omitted": 2,
+    "pages": [
+     {
+      "id": "events-0001",
+      "count": 2,
+      "first": "evt_0031",
+      "last": "evt_0033",
+      "hash": "bf6a14e6606fe2c9"
+     }
+    ]
+   },
+   "relationship_evidence": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   }
+  }
+ }
+}

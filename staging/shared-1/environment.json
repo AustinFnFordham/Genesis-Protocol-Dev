@@ -1,0 +1,8 @@
+{
+ "schema": "genesis-shared-staging/1",
+ "campaign_id": "shared-1",
+ "canonical": false,
+ "source": "campaigns/starwars_litrpg/runs/sandbox",
+ "experimental_resolution": false,
+ "note": "Isolated staging copy of the non-canon sandbox campaign for provider-interchange acceptance. Not canonical. Safe to delete."
+}

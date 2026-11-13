@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "events",
+  "page": 1,
+  "id": "events-0001",
+  "count": 2,
+  "first": "evt_0031",
+  "last": "evt_0033",
+  "hash": "bf6a14e6606fe2c9",
+  "entries": [
+   {
+    "event_id": "evt_0031",
+    "text": "The sim's control program acknowledges with a flat two-note tone; the reset is held. The room stays as it is.",
+    "knowledge": "fact",
+    "time": "Sim, round 2"
+   },
+   {
+    "event_id": "evt_0033",
+    "text": "Aero's hands: the lit indigo lightsaber in his right hand, the blaster pistol (one shot spent) in his left. Neither is free.",
+    "knowledge": "fact",
+    "time": "Sim, round 2"
+   }
+  ],
+  "campaign_id": "shared-1"
+ }
+}

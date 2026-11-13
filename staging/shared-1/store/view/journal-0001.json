@@ -1,0 +1,99 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "journal",
+  "page": 1,
+  "id": "journal-0001",
+  "count": 12,
+  "first": "evt_0006",
+  "last": "evt_0033",
+  "hash": "db164e7c4c026411",
+  "entries": [
+   {
+    "event_id": "evt_0006",
+    "time": "Sim,round1",
+    "kind": "dialogue",
+    "knowledge": "fact",
+    "text": "Aero says: \"Again.\""
+   },
+   {
+    "event_id": "evt_0007",
+    "time": "Sim,round1",
+    "kind": "object_interaction",
+    "knowledge": "fact",
+    "text": "Aero ignites the indigo lightsaber (state flag saber_ignited)."
+   },
+   {
+    "event_id": "evt_0008",
+    "time": "Sim,round1",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero closes 10 ft on the training remote; it is now 5 ft away."
+   },
+   {
+    "event_id": "evt_0009",
+    "time": "Sim,round1",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's lightsaber strike hits the training remote (14) for 10 energy damage."
+   },
+   {
+    "event_id": "evt_0010",
+    "time": "Sim,round1",
+    "kind": "combat_end",
+    "knowledge": "fact",
+    "text": "The training remote is reduced to 0 HP and drops, disabled. The sim round ends; the remote never acted."
+   },
+   {
+    "event_id": "evt_0018",
+    "time": "Sim, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's blaster shot hits the training remote (13) for 8 energy damage."
+   },
+   {
+    "event_id": "evt_0019",
+    "time": "Sim, round 2",
+    "kind": "combat_end",
+    "knowledge": "fact",
+    "text": "The training remote is reduced to 0 HP and drops, disabled. Sim round 2 ends; the remote never acted."
+   },
+   {
+    "event_id": "evt_0024",
+    "time": "Sim, after round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero walks 10 ft to the disabled training remote; it is now 5 ft away."
+   },
+   {
+    "event_id": "evt_0030",
+    "time": "Sim, round 2",
+    "kind": "speech",
+    "knowledge": "fact",
+    "text": "Aloud to the sim, Aero says: 'Sim, hold the reset.'"
+   },
+   {
+    "event_id": "evt_0031",
+    "time": "Sim, round 2",
+    "kind": "world_event",
+    "knowledge": "fact",
+    "text": "The sim's control program acknowledges with a flat two-note tone; the reset is held. The room stays as it is."
+   },
+   {
+    "event_id": "evt_0032",
+    "time": "Sim, round 2",
+    "kind": "skill_check",
+    "knowledge": "fact",
+    "text": "Intelligence (Investigation) 8 (natural 7 +1), inspecting the disabled remote from 5 ft: a scorched hole a thumb's width across, blackened edges, a thread of smoke. From looking alone Aero cannot tell whether the damage is physical or a sim overlay."
+   },
+   {
+    "event_id": "evt_0033",
+    "time": "Sim, round 2",
+    "kind": "world_fact",
+    "knowledge": "fact",
+    "text": "Aero's hands: the lit indigo lightsaber in his right hand, the blaster pistol (one shot spent) in his left. Neither is free."
+   }
+  ],
+  "campaign_id": "shared-1"
+ }
+}

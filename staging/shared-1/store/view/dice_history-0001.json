@@ -1,0 +1,133 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "dice_history",
+  "page": 1,
+  "id": "dice_history-0001",
+  "count": 5,
+  "first": "evt_0009",
+  "last": "evt_0032",
+  "hash": "f141efe68a804722",
+  "entries": [
+   {
+    "roll_id": "roll_t1_1",
+    "purpose": "Aero: lightsaber attack vs training remote",
+    "summary": "1d20+5 [9] +5 = 14",
+    "by": "aero",
+    "formula": "1d20+5",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 20,
+      "rolled": [
+       9
+      ],
+      "kept": [
+       9
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 9,
+    "modifier": 5,
+    "total": 14,
+    "event_id": "evt_0009",
+    "time": "Sim,round1",
+    "turn_no": 1
+   },
+   {
+    "roll_id": "roll_t1_2",
+    "purpose": "Aero: lightsaber damage (one-handed) vs training remote",
+    "summary": "1d8+3 [7] +3 = 10",
+    "by": "aero",
+    "formula": "1d8+3",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 8,
+      "rolled": [
+       7
+      ],
+      "kept": [
+       7
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 7,
+    "modifier": 3,
+    "total": 10,
+    "event_id": "evt_0009",
+    "time": "Sim,round1",
+    "turn_no": 1
+   },
+   {
+    "roll_id": "roll_t2_3",
+    "purpose": "Aero: blaster pistol shot vs training remote",
+    "summary": "total 13",
+    "by": "gm",
+    "redacted": true,
+    "event_id": "evt_0018",
+    "time": "Sim, round 2",
+    "turn_no": 2
+   },
+   {
+    "roll_id": "roll_t2_4",
+    "purpose": "Aero: blaster pistol damage vs training remote",
+    "summary": "1d6+3 [5] +3 = 8",
+    "by": "aero",
+    "formula": "1d6+3",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 6,
+      "rolled": [
+       5
+      ],
+      "kept": [
+       5
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 5,
+    "modifier": 3,
+    "total": 8,
+    "event_id": "evt_0018",
+    "time": "Sim, round 2",
+    "turn_no": 2
+   },
+   {
+    "roll_id": "roll_t3_5",
+    "purpose": "Aero: Intelligence (Investigation), inspecting the disabled remote's scorch",
+    "summary": "1d20+1 [7] +1 = 8",
+    "by": "aero",
+    "formula": "1d20+1",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 20,
+      "rolled": [
+       7
+      ],
+      "kept": [
+       7
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 7,
+    "modifier": 1,
+    "total": 8,
+    "event_id": "evt_0032",
+    "time": "Sim, round 2",
+    "turn_no": 3
+   }
+  ],
+  "campaign_id": "shared-1"
+ }
+}
