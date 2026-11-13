@@ -6,9 +6,9 @@
   "provider_usage_tokens": null,
   "provider_latency_ms": null,
   "provider_model_calls_measured": null,
-  "legacy_dice_cli_crash_atomicity": "FAIL",
+  "legacy_dice_cli_crash_atomicity": "PASS_LOCAL_WITH_STABLE_REQUEST_ID",
   "experimental_dice_transaction_recovery": "PASS_LOCAL",
-  "python_scripts_passed": 20,
+  "python_scripts_passed": 21,
   "experimental_test_cases": 19,
   "browser_suites_passed": 7,
   "brief_heads_verified": 1186,
@@ -20,5 +20,7 @@
   "approval_required_after_remaining_gates": true,
   "live_base": "7845e4c4d03a45946930c497ba5274a57a3de17c",
   "public_resolution_roll_provenance_guard": "PASS_LOCAL",
-  "ordinary_npc_critical_policy": "PASS_LOCAL"
+  "ordinary_npc_critical_policy": "PASS_LOCAL",
+  "legacy_dice_recovery_evidence": "../legacy_dice_recovery/gate.json",
+  "historical_measurements_retained": true
 }

@@ -1,6 +1,9 @@
 # Release candidate gate — HOLD
 
-Branch: `rc/experimental-resolution-acd961c`.
+Candidate: `rc/experimental-resolution-acd961c` at `f241ea6`.
+Recovery follow-up: `dev/legacy-dice-crash-recovery-f241ea6`; see
+[legacy dice recovery milestone](LEGACY_DICE_RECOVERY.md) for the current local gate.
+The frozen campaign base and historical measurements below are retained.
 Final frozen live base: `7845e4c4d03a45946930c497ba5274a57a3de17c`.
 Development incorporated: `8f6a641b4a062031da52838b20e6a2d7b3f47119`.
 
@@ -52,8 +55,8 @@ GM prose and credentials are not included in those evidence files.
 | Preserve current Hask Meadow, registry and shared character definitions | PASS locally | Empty Git diff against the live base for all `campaigns/starwars_litrpg/runs/`, all `api_bridge/gm/`, and `ui/turn_contract.js`. |
 | Experimental mapping, eligibility, criticals, degree bands and independent d6 | PASS locally | 19 experimental test cases, including all 20 faces, all 400 advantage pairs in both directions, mixed-dice isolation and every degree boundary. |
 | Retry/replay and dice partial-write recovery | PASS for new adapter | Real subprocess termination at seven transaction boundaries, torn append and partial state-temporary recovery, independent ordinary replay and separate-axis replay. |
-| Unmodified legacy dice CLI crash atomicity | FAIL | Process termination after public append leaves its cursor behind. Adapter refuses divergence. Legacy CLI itself remains unchanged and is not certified safe for interrupted retry. |
-| Existing Python regressions | PASS | 20 scripts including the experimental suite; earlier dice, validator, security, ledger, brief, sequencer and public-client coverage retained. |
+| Legacy dice CLI crash recovery | PASS locally with stable request IDs | Follow-up adds durable plans and receipts for rolls and turn advancement; ten roll and six advance process-kill boundaries pass. Unkeyed completed-response retries remain ambiguous; no automatic historical repair. See `verification/legacy_dice_recovery/`. |
+| Existing Python regressions | PASS | Follow-up: 21 scripts including nine new recovery cases and the 19-case experimental suite; earlier dice, validator, security, ledger, brief, sequencer and public-client coverage retained. |
 | Compact brief replay/privacy | PASS locally | All 1,186 heads covered by verified prefix plus appended-head replay; zero detected player leaks; hidden history retrieval refused. |
 | Browser regression suites | PASS in Chromium | Seven suites: base composer, sequencer, scene, emulated iPhone, paginated history, player experience and experimental controls. |
 | Real mobile Safari | NOT RUN | No real Safari/device connection available. Chromium mobile emulation is not Safari certification. |
@@ -106,8 +109,10 @@ retrieval, snapshot sizes and zero scripted-model-call counts are in
 - The experimental dice adapter supports one roll per action/step/actor/kind.
   More complex repeated-roll steps need explicit decomposition or a reviewed
   roll-plan contract. A new key is not permission to reroll.
-- Legacy interrupted rolls and once-only `--advance-turn` recovery need a
-  reviewed integration path. No automatic legacy-state repair is performed.
+- Legacy CLI recovery now supports rolls and once-only `--advance-turn` with
+  stable request IDs. Unkeyed successful calls remain separate operations; a
+  lost completed response is ambiguous. Staging callers must adopt the documented
+  retry contract. No automatic historical-state repair is performed.
 - Public resolution records are checked against the authoritative roll, original
   declaration, settings and step. Private numeric fields and NPC/GM resolution
   metadata cannot be committed through this public metadata lane. New experimental

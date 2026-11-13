@@ -29,6 +29,8 @@ def paths(camp):
 
 def read_jsonl(p):
     def read():
+        if (p.parent.parent / "hidden/dice_cli_pending.json").exists():
+            raise ValueError("dice transaction is incomplete; recover its accepted request before reading")
         if (p.parent.parent / "hidden/experimental_dice_pending.json").exists():
             raise ValueError("experimental dice transaction is incomplete; recover its accepted request before reading")
         if p.name == "events.jsonl" and (p.parent.parent / "hidden/ledger_batch_pending.json").exists():

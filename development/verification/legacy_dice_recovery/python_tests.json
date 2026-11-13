@@ -1,0 +1,131 @@
+{
+  "scripts": [
+    {
+      "path": ".claude/skills/litrpg-dice/test_roll.py",
+      "passed": true,
+      "elapsed_ms": 727.56,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-dice/test_audit_rng.py",
+      "passed": true,
+      "elapsed_ms": 373.21,
+      "invocation": "python -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-ledger/test_ledger.py",
+      "passed": true,
+      "elapsed_ms": 945.64,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-ledger/test_batch.py",
+      "passed": true,
+      "elapsed_ms": 88.45,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_brief.py",
+      "passed": true,
+      "elapsed_ms": 140.14,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_brief_checkpoint.py",
+      "passed": true,
+      "elapsed_ms": 249.89,
+      "invocation": "python -B"
+    },
+    {
+      "path": ".claude/skills/litrpg-process-turn/test_turn.py",
+      "passed": true,
+      "elapsed_ms": 947.02,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_dice_display.py",
+      "passed": true,
+      "elapsed_ms": 114.99,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_dice_history.py",
+      "passed": true,
+      "elapsed_ms": 128.41,
+      "invocation": "python -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_turn_contract.py",
+      "passed": true,
+      "elapsed_ms": 730.35,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_sequencer.py",
+      "passed": true,
+      "elapsed_ms": 5676.03,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_scene_sequencing.py",
+      "passed": true,
+      "elapsed_ms": 1791.42,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "campaigns/starwars_litrpg/ui/test_campaign_features.py",
+      "passed": true,
+      "elapsed_ms": 146.74,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_readiness.py",
+      "passed": true,
+      "elapsed_ms": 172.65,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_increment_contracts.py",
+      "passed": true,
+      "elapsed_ms": 108.36,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_interop.py",
+      "passed": true,
+      "elapsed_ms": 542.48,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_worker_progress.py",
+      "passed": true,
+      "elapsed_ms": 64.07,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_action_fences.py",
+      "passed": true,
+      "elapsed_ms": 694.38,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/test_worker_roundtrip.py",
+      "passed": true,
+      "elapsed_ms": 764.46,
+      "invocation": "python -I -B"
+    },
+    {
+      "path": "development/experimental_resolution/test_resolution.py",
+      "passed": true,
+      "elapsed_ms": 8938.62,
+      "invocation": "python -B"
+    },
+    {
+      "path": "development/test_legacy_dice_recovery.py",
+      "passed": true,
+      "elapsed_ms": 3698.35,
+      "invocation": "python -B"
+    }
+  ],
+  "all_passed": true
+}

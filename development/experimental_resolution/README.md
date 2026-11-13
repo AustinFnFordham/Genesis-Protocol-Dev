@@ -122,12 +122,14 @@ A receipt is durable before clearing the pending barrier. Event/roll readers fai
 closed while a dice transaction is pending. Changed bytes require manual review;
 the engine never truncates a log, reseeds dice or silently reconciles a cursor.
 
-The legacy `roll.py` CLI is unchanged by this increment. A real process-kill test
-demonstrated that its public append can precede cursor replacement. That legacy
-path is not certified crash-safe. The new adapter detects such divergence and
-refuses a new roll. It does not retrospectively repair legacy interrupted rolls.
-The existing `--advance-turn` operation is also outside the new transaction;
-a remote worker must establish its once-only turn transition before promotion.
+The original candidate characterized a legacy `roll.py` crash between public
+append and cursor replacement. The subsequent
+[CLI recovery milestone](../LEGACY_DICE_RECOVERY.md) adds a private journal,
+shared writer lock and stable request receipts to that path, including
+`--advance-turn`. The adapter refuses a pending CLI transaction until it is
+recovered. Older unjournaled divergence still requires manual reconciliation;
+completed response-loss retries require stable request IDs. No live worker
+migration or remote certification is implied.
 
 ## Tests
 
