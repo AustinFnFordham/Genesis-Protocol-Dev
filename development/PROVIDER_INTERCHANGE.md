@@ -22,7 +22,7 @@ provider can be returned to. Claude → GPT → Gemini is an acceptance test, no
 | Provider adapters | `gm_provider/providers.py`: Anthropic, OpenAI, Google (model API), agent session, scripted | Wire formats tested against a local fake; **no live GPT or Gemini call was possible** |
 | Player API + worker | `gm_provider/service.py`, operator CLI `gm_provider/gmctl.py` | Implemented, tested over real local HTTP |
 | Connection contract | `development/GEMINI_CONNECTION_CONTRACT.md` | Verified against the implemented service only; nothing is hosted |
-| Verification | `development/run_all_checks.sh`, `prepare_browser_fixtures.py`, `verification/provider_interchange/` | 39 of 39 suites pass |
+| Verification | `development/run_all_checks.sh`, `prepare_browser_fixtures.py`, `verification/provider_interchange/checks.json` | 39 of 39 suites pass on `678368a` |
 
 Not supplied: `Genesis_Gemini_Link_Continuity_Audit_2026-11-13.md` was not attached to the session,
 is not in the repository on any branch, and is not in the project documents. Its decisions could not
