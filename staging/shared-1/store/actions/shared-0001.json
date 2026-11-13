@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "data": {
   "action_id": "shared-0001",
   "status": "processing",
@@ -59,12 +59,13 @@
   "processing": {
    "run": "claude-s1",
    "started_ms": 1794613414781,
-   "heartbeat_ms": 1794613414781,
-   "lease_ms": 594995,
-   "stage": "claimed",
-   "stage_started_ms": 1794613414781,
+   "heartbeat_ms": 1794613418945,
+   "lease_ms": 598078,
+   "stage": "context",
+   "stage_started_ms": 1794613418945,
    "stages": {
-    "claimed": 1794613414781
+    "claimed": 1794613414781,
+    "context": 1794613418945
    }
   }
  }
