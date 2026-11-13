@@ -19,3 +19,10 @@ pages-first and snapshot-last ordering after git durability checks.
 This increment implements public refresh and the existing local batch adapter.
 Remote authentication, provider adjudication adapters and end-to-end provider
 interchangeability are not implemented or certified.
+
+## Superseded in part (2026-11-13, `dev/provider-interchange`)
+
+The proposed adjudication interface above is now implemented as the GM gateway
+(`development/gm_provider/`): provider adapters, routing, in-flight handoff, the
+player HTTP API and its tests. Read `development/PROVIDER_INTERCHANGE.md`. Model-backed
+GPT and Gemini execution and any hosted deployment remain unverified.

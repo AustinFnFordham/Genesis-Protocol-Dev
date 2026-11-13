@@ -1,0 +1,116 @@
+{
+ "what": "Actual model-backed GM turns through the provider gateway on an isolated copy of the non-canon sandbox campaign",
+ "campaign_copy": "development/.qa/demo (ignored, disposable)",
+ "source": "campaigns/starwars_litrpg/runs/sandbox at evt_0037, revision 35",
+ "turns": [
+  {
+   "action_id": "demo-claude-0001",
+   "declaration": "Inspect the disabled remote again",
+   "provider": "claude-session",
+   "execution": "ACTUAL: Claude in this agent session (configured model id claude-fable-5-2) through gmctl; not an API-key call",
+   "moves": [
+    "tables",
+    "roll",
+    "commit"
+   ],
+   "roll": "roll_t4_6 1d20+1 = 5 (binding)",
+   "events": [
+    "evt_0038",
+    "evt_0039",
+    "evt_0040",
+    "evt_0041",
+    "evt_0042",
+    "evt_0043",
+    "evt_0044"
+   ],
+   "published_revision": 40
+  },
+  {
+   "action_id": "demo-switch-0002",
+   "declaration": "Holster the blaster pistol",
+   "route": [
+    {
+     "provider": "gpt",
+     "from": null
+    },
+    {
+     "provider": "gemini",
+     "from": "gpt"
+    },
+    {
+     "provider": "claude-session",
+     "from": "gemini"
+    }
+   ],
+   "attempts": [
+    {
+     "provider": "gpt",
+     "execution": "NOT RUN",
+     "outcome": "blocked",
+     "reason": "missing OPENAI_API_KEY, GENESIS_GPT_MODEL"
+    },
+    {
+     "provider": "claude (API adapter)",
+     "outcome": "not_routed",
+     "note": "refused to take an action routed to gpt"
+    },
+    {
+     "provider": "gemini",
+     "execution": "NOT RUN",
+     "outcome": "blocked",
+     "reason": "missing GEMINI_API_KEY, GENESIS_GEMINI_MODEL"
+    },
+    {
+     "provider": "claude-session",
+     "execution": "ACTUAL: Claude in this agent session",
+     "outcome": "committed",
+     "moves": [
+      "tables",
+      "commit"
+     ],
+     "continued_from": "evt_0044, the head committed by the previous turn"
+    }
+   ],
+   "events": [
+    "evt_0045",
+    "evt_0046",
+    "evt_0047",
+    "evt_0048",
+    "evt_0049",
+    "evt_0050"
+   ],
+   "published_revision": 45
+  }
+ ],
+ "final": {
+  "revision": 45,
+  "ledger_head": "evt_0050",
+  "hands": {
+   "right": {
+    "item": "lightsaber",
+    "label": "the lit lightsaber"
+   },
+   "left": null
+  },
+  "pending_steps_preserved": [
+   {
+    "type": "object",
+    "option": "pick_up_remote",
+    "condition": {
+     "text": "the scorch is from a real blaster bolt, not a sim effect"
+    },
+    "pending": true
+   }
+  ]
+ },
+ "checks": {
+  "ledger_validates": true,
+  "rng_audit_ok": true,
+  "private_strings_in_player_surfaces": []
+ },
+ "not_demonstrated": [
+  "GPT model-backed turn (no credential in this environment)",
+  "Gemini model-backed turn (no credential in this environment)",
+  "Claude via the Anthropic API adapter (no ANTHROPIC_API_KEY)"
+ ]
+}

@@ -17,6 +17,7 @@ in this increment is deployed to the live Claude worker, database or Artifact.
 | Campaign Genesis | Isolated CLI accepts era, preferences, worldbuilding choices, canonical endpoints, conditional Chaos templates; validates resolution and connectivity | No playable chronology/card-deck engine, automatic lore certification or canonical promotion |
 | Before the Fall | Original user document recovered and fingerprinted, original mechanics preserved as source reference; optional mode binds an unchanged rules file | Card-outcome deck is absent from the source document; chronology execution is not certified |
 | Provider interoperability | Two independent client processes read and refresh the same public revision; revision fingerprints and proposed adjudication/commit boundary documented | No Claude/ChatGPT/Gemini adjudication interchangeability claim; external provider and remote commit adapters remain untested |
+| Provider interchange (2026-11-13) | Shared GM gateway (`gm_provider/`): routing, lease, operation record, mid-turn handoff without rerolls, shared validators, player HTTP API; adapters for Anthropic, OpenAI, Google and agent sessions; two actual Claude-session turns on an isolated copy | No live GPT or Gemini call (no credentials); nothing hosted; live Datapad queue unreachable from outside Claude. See PROVIDER_INTERCHANGE.md gates G0–G7 |
 
 Read CONSOLIDATED_IMPLEMENTATION.md for measurements, test commands, file mapping
 and commit references. Verification JSON contains aggregate data, not hidden
