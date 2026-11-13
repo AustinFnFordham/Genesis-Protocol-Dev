@@ -1,13 +1,13 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "kind": "feed",
   "page": 1,
   "id": "feed-0001",
-  "count": 10,
+  "count": 12,
   "first": "evt_0001",
-  "last": "evt_0035",
-  "hash": "49c147efa14370b5",
+  "last": "evt_0041",
+  "hash": "4c8ec14e3de27ddd",
   "entries": [
    {
     "who": "gm",
@@ -68,6 +68,18 @@
     "event_id": "evt_0035",
     "time": "Sim, round 2",
     "text": "\"Sim, hold the reset.\"\n\nTwo flat notes from somewhere overhead. The room stays exactly as it is: grey deck plating, the exit seam far behind you, and the remote five feet in front of your boots, dark where it fell.\n\nYou look it over without touching it. The blade's light lays violet across the housing. The hole is a thumb's width across, the edges black, a thin thread of smoke still climbing out of it and bending in the room's slow air. It looks like a burn. It also looks like exactly what a training sim would draw on a target to tell you that you hit it. From here, with your eyes alone, you can't say which.\n\nThe saber hums in your right hand. The pistol hangs in your left, one shot spent. Nothing in the room moves.\n"
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0038",
+    "time": "Sim deck, moments later",
+    "text": "Holster the blaster pistol"
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0041",
+    "time": "Sim deck, moments later",
+    "text": "You bring the pistol down and seat it in the holster. It goes home with a small, final click.\n\nYour left hand comes away empty. In your right the blade is still lit, its hum the only steady sound on the deck, its indigo light lying across the plating and the dark shell of the remote.\n\nThe remote has not moved. Five feet off, a black-rimmed hole in its housing, a thread of smoke. Within reach of the hand you just freed.\n\nThe sim holds the reset."
    }
   ],
   "campaign_id": "shared-1"
