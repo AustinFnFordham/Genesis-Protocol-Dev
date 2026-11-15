@@ -1,19 +1,20 @@
-"""OAuth-protected ChatGPT tools for the existing shared staging gateway.
+"""OAuth-protected shared ChatGPT/Gemini tools for the existing shared staging gateway.
 
 No model execution, new store, or alternate commit path. Run on the persistence
 host; Git credentials and provider tokens stay there. Writes default to disabled.
 """
 import argparse
 import hmac
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
-import threading
 import time
 from urllib.parse import urlsplit
 
-import httpx
+import anyio
+import jwt
 from mcp.server.auth.middleware.auth_context import get_access_token
 from mcp.server.auth.provider import AccessToken
 from mcp.server.auth.settings import AuthSettings
@@ -24,6 +25,7 @@ from mcp.types import CallToolResult, TextContent, ToolAnnotations
 from gateway import Refused
 from git_errors import GitFailure
 from service import App
+from worktree_guard import for_gateway
 
 READ = "genesis:read"
 GM = "genesis:gm"
@@ -45,64 +47,117 @@ def https_url(value):
     return value
 
 
-class IntrospectionVerifier:
-    """RFC7662 verification at an explicitly configured trusted OAuth issuer.
+# Public projection helpers selectively ported from Gemini commit 2a1e324.
+def _public_sha256(state_doc: dict) -> str:
+    return hashlib.sha256(json.dumps(state_doc, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
-    ChatGPT tokens are audience-bound to MCP, never forwarded to Git or used as
-    the internal GM token. An issuer outage fails closed; no token is cached.
+def _compact_state(state_doc: dict) -> dict:
+    """Bounded, mobile-friendly summary of the public `view/state` document.
+
+    Preserves all actionable player & GM turn_context fields (cursor/revision, scene, character
+    vital state, options, dialogue, objects, movement, hands, pending_steps, notes, recent feed)
+    while keeping payload size small for mobile conversation refresh.
     """
-    def __init__(self, issuer, resource, endpoint, client_id, client_secret, subject, transport=None):
-        self.issuer, self.resource, self.endpoint = map(https_url, (issuer, resource, endpoint))
-        if not all(isinstance(v, str) and v for v in (client_id, client_secret, subject)):
-            raise ValueError("OAuth introspection client credentials and allowed subject are required")
-        self.client_id, self.client_secret, self.subject = client_id, client_secret, subject
-        self.transport = transport
+    scene = state_doc.get("scene") or {}
+    character = state_doc.get("character") or {}
+    tc = state_doc.get("turn_context") or {}
+    feed = state_doc.get("feed") or []
+    journal = state_doc.get("journal") or []
+    return {
+        "revision": state_doc.get("revision"),
+        "ledger_head": state_doc.get("ledger_head"),
+        "active_actor": state_doc.get("active_actor"),
+        "scene": {
+            "title": scene.get("title"),
+            "location": scene.get("location"),
+            "summary": scene.get("summary"),
+            "atmosphere": (scene.get("atmosphere") or [])[:6],
+        },
+        "character": {
+            "id": character.get("id") or tc.get("actor"),
+            "name": character.get("name") or tc.get("actor_name"),
+            "hp": character.get("hp"),
+            "conditions": character.get("conditions") or [],
+            "hands": tc.get("hands") or character.get("hands") or {},
+        },
+        "turn_context": {
+            "context_id": tc.get("context_id"),
+            "actor": tc.get("actor"),
+            "actor_name": tc.get("actor_name"),
+            "mode": tc.get("mode"),
+            "round": tc.get("round"),
+            "budget": tc.get("budget"),
+            "speed_ft": tc.get("speed_ft"),
+            "resources": tc.get("resources"),
+            "hands": tc.get("hands"),
+            "options": tc.get("options") or [],
+            "dialogue": tc.get("dialogue") or [],
+            "objects": tc.get("objects") or [],
+            "movement": tc.get("movement") or [],
+            "reactions": tc.get("reactions") or [],
+            "visible": tc.get("visible") or [],
+            "notes": tc.get("notes") or [],
+            "pending_steps": tc.get("pending_steps") or [],
+            "pending_reason": tc.get("pending_reason"),
+        },
+        "recent_feed": feed[-3:],
+        "recent_journal": journal[-2:],
+    }
+
+class JWTVerifier:
+    """Auth0 is the authorization server. This resource server only verifies JWTs.
+
+    Codes, login passwords, signing keys and replay state never live here.
+    The verified OAuth client (azp) is pinned to exactly one GM provider.
+    """
+    def __init__(self, issuer, resource, clients, subject, key_client=None):
+        self.issuer, self.resource = https_url(issuer), https_url(resource)
+        if not self.issuer.endswith('/') or urlsplit(self.issuer).path != '/':
+            raise ValueError('Use the exact Auth0 tenant issuer, including its final slash')
+        if (not subject or not isinstance(clients, dict) or not clients
+                or any(not k or v not in {'gpt-session', 'gemini-session'} for k,v in clients.items())
+                or len(clients) != 2 or set(clients.values()) != {'gpt-session', 'gemini-session'}):
+            raise ValueError('Pin distinct OAuth client IDs to the two supported providers')
+        self.clients, self.subject = dict(clients), subject
+        self.keys = key_client or jwt.PyJWKClient(self.issuer + '.well-known/jwks.json', timeout=5)
 
     async def verify_token(self, token):
         try:
-            async with httpx.AsyncClient(timeout=5, follow_redirects=False, transport=self.transport) as client:
-                response = await client.post(self.endpoint, data={"token": token, "token_type_hint": "access_token"},
-                                             auth=httpx.BasicAuth(self.client_id, self.client_secret))
-            if response.status_code != 200 or len(response.content) > 65536:
+            if len(token) > 16384: return None
+            key = await anyio.to_thread.run_sync(self.keys.get_signing_key_from_jwt, token)
+            data = jwt.decode(token, key.key, algorithms=['RS256'], audience=self.resource,
+                issuer=self.issuer, options={'require': ['exp','iat','iss','sub','aud','azp']})
+            scopes, subject, client = data.get('scope'), data.get('sub'), data.get('azp')
+            if (not isinstance(subject, str) or not hmac.compare_digest(subject.encode(), self.subject.encode())
+                    or client not in self.clients or not isinstance(scopes, str) or READ not in scopes.split()):
                 return None
-            data = response.json()
-            audience = data.get("aud")
-            audiences = [audience] if isinstance(audience, str) else audience
-            expires = data.get("exp")
-            scopes = data.get("scope")
-            subject = data.get("sub")
-            if (data.get("active") is not True or data.get("iss") != self.issuer
-                    or not isinstance(audiences, list) or self.resource not in audiences
-                    or type(expires) is not int or expires <= time.time()
-                    or not isinstance(subject, str) or not hmac.compare_digest(subject.encode(), self.subject.encode())
-                    or not isinstance(scopes, str) or READ not in scopes.split()
-                    or not isinstance(data.get("client_id"), str) or not data["client_id"]):
-                return None
-            return AccessToken(token=token, client_id=data["client_id"], scopes=scopes.split(),
-                               expires_at=expires, resource=self.resource, subject=subject)
-        except (httpx.HTTPError, ValueError, TypeError, AttributeError):
+            return AccessToken(token=token, client_id=client, scopes=scopes.split(), expires_at=data['exp'],
+                subject=subject, resource=self.resource, claims={'provider': self.clients[client]})
+        except (jwt.PyJWTError, ValueError, TypeError, OSError):
             return None
 
 
 class GatewayTools:
-    def __init__(self, app, campaign_id, subject, writes=False):
-        if set(app.gateways) != {campaign_id} or not app.gm_tokens.get(PROVIDER):
-            raise ValueError("Bind one staging campaign and the server-held gpt-session GM token")
+    def __init__(self, app, campaign_id, subject, writes=False, guard=None):
+        if set(app.gateways) != {campaign_id} or not subject:
+            raise ValueError("Bind one staging campaign and an authorized owner subject")
         self.app, self.campaign_id, self.subject, self.writes = app, campaign_id, subject, writes
-        self.guard = threading.RLock()
+        self.guard = guard or for_gateway(app.gateways[campaign_id])
 
     def authorize(self, write=False):
         token = get_access_token()
         if (not token or token.subject != self.subject or READ not in token.scopes
-                or not token.expires_at or token.expires_at <= time.time()):
+                or not token.expires_at or token.expires_at <= time.time()
+                or (token.claims or {}).get("provider") not in {"gpt-session", "gemini-session"}):
             raise Refused("UNAUTHORIZED", "An authorized Genesis account is required")
         if write and not self.writes:
             raise Refused("WRITES_DISABLED", "GM writes require explicit host opt-in")
         if write and GM not in token.scopes:
             raise Refused("INSUFFICIENT_SCOPE", "GM writes require genesis:gm scope")
+        return token
 
-    def read(self, kind, value=None):
-        self.authorize()
+    def read(self, kind, value=None, *, include_full_state=False, known_revision=None, known_ledger_head=None, known_public_sha256=None):
+        token = self.authorize()
         with self.guard:
             gateway = self.app.gateways[self.campaign_id]
             if kind == "refresh":
@@ -114,7 +169,23 @@ class GatewayTools:
                 recovery = gateway.recovery()
                 if (public["cursor"]["revision"], public["cursor"]["ledger_head"]) != (recovery["revision"], recovery["ledger_head"]):
                     raise Refused("REFRESH_MOVED", "Campaign moved during refresh; repeat the read")
-                return {"audience": "player", "public": public, "recovery": recovery}
+                sha = _public_sha256(public['state'])
+                cursor = dict(public['cursor'], public_sha256=sha)
+                if known_revision is not None and known_revision > cursor['revision']:
+                    raise Refused('CURSOR_AHEAD', 'Refresh cursor is ahead of authority')
+                if known_revision == cursor['revision'] and known_ledger_head and known_ledger_head != cursor['ledger_head']:
+                    raise Refused('CURSOR_MISMATCH', 'Refresh revision and ledger head disagree')
+                if known_public_sha256:
+                    changed = known_public_sha256 != sha
+                elif known_revision is not None and known_ledger_head:
+                    changed = (known_revision, known_ledger_head) != (cursor['revision'], cursor['ledger_head'])
+                else: changed = True
+                view = {k: public[k] for k in ('pages','routing','in_flight')}
+                view.update(cursor=cursor, summary=_compact_state(public['state']))
+                if include_full_state: view['state'] = public['state']
+                return {'audience':'player', 'public':view, 'recovery':recovery, 'changed':changed,
+                    'connection_provider':token.claims['provider'], 'read_only':not self.writes,
+                    'storage_generation':self.guard.generation, 'storage_recovery_required':self.guard.recovery_required}
             if kind == "page":
                 if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", value):
                     raise Refused("BAD_PAGE", "Use a page ID advertised by refresh")
@@ -124,15 +195,18 @@ class GatewayTools:
             raise Refused("BAD_REFERENCE", "Use an advertised reference name")
 
     def gm(self, verb, run, body=None, model=None, session=None):
-        self.authorize(write=True)
+        token = self.authorize(write=True)
+        provider = token.claims["provider"]
+        if not self.app.gm_tokens.get(provider):
+            raise Refused("PROVIDER_NOT_CONFIGURED", "Server-held GM token is not configured for this authorized client")
         if verb not in {"claim", "context", "tables", "roll", "review", "commit", "publish", "release"}:
             raise Refused("BAD_VERB", "Unsupported GM operation")
         if not isinstance(run, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", run):
             raise Refused("BAD_RUN", "Use one stable run ID per authorized GM attempt")
         with self.guard:
             # Reuse the exact existing token-scoped HTTP transport handler.
-            status, payload = self.app.gm("POST", self.campaign_id, PROVIDER, verb,
-                {"authorization": "Bearer " + self.app.gm_tokens[PROVIDER]},
+            status, payload = self.app.gm("POST", self.campaign_id, provider, verb,
+                {"authorization": "Bearer " + self.app.gm_tokens[provider]},
                 json.dumps({"run": run, "body": body, "model": model, "session": session}).encode())
             return {"http_status": status, "audience": "gm", "result": payload}
 
@@ -160,15 +234,15 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
     resource, issuer = https_url(resource), https_url(issuer)
     if urlsplit(resource).path != "/mcp":
         raise ValueError("The MCP resource URL must end in /mcp at the origin root")
-    mcp = FastMCP("Genesis shared staging", instructions=(
+    mcp = FastMCP("Genesis shared mobile staging", instructions=(
         "You are the GM; this service does not call a model. Start with genesis_refresh and the reference tools. "
-        "Claim only a player-authorized pending gpt-session staging request. Use one run ID, accepted tables and rolls. "
+        "Claim only a player-authorized pending request routed to your authenticated provider. Use one run ID, accepted tables and rolls. "
         "Never reroll, change player intent or bypass validation. Context is GM-private; narrate only committed public results. "
         "On Git errors stop; use refresh for recovery. Do not publish private tool output to the player."),
         host=host, port=port, stateless_http=True, json_response=True, max_request_body_size=262144,
         token_verifier=verifier, auth=AuthSettings(issuer_url=issuer, resource_server_url=resource, required_scopes=[READ]),
         transport_security=TransportSecuritySettings(allowed_hosts=[urlsplit(resource).netloc, "127.0.0.1:*", "localhost:*"],
-                                                     allowed_origins=["https://chatgpt.com", resource.rsplit("/", 1)[0]]))
+                                                     allowed_origins=["https://chatgpt.com", "https://gemini.google.com", resource.rsplit("/", 1)[0]]))
 
     def register(name, function, description, readonly=False, destructive=False):
         scopes = [READ] if readonly else [READ, GM]
@@ -176,8 +250,10 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
                  destructiveHint=destructive, openWorldHint=False),
                  meta={"securitySchemes": [{"type": "oauth2", "scopes": scopes}]})(function)
 
-    def refresh() -> CallToolResult:
-        return result(lambda: tools.read("refresh"))
+    def refresh(include_full_state: bool = False, known_revision: int | None = None,
+                known_ledger_head: str | None = None, known_public_sha256: str | None = None) -> CallToolResult:
+        return result(lambda: tools.read('refresh', include_full_state=include_full_state, known_revision=known_revision,
+            known_ledger_head=known_ledger_head, known_public_sha256=known_public_sha256))
     def page(page_id: str) -> CallToolResult:
         return result(lambda: tools.read("page", page_id))
     def reference(name: str) -> CallToolResult:
@@ -199,16 +275,18 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
     def release(run: str) -> CallToolResult:
         return result(lambda: tools.gm("release", run))
     register("genesis_refresh", refresh, "Read public staging state, request status and recovery flags. No lease or turn mutation.", True)
+    register("genesis_staging_refresh", refresh, "Same read-only refresh, with public digest and cursor checks for Gemini clients.", True)
     register("genesis_page", page, "Read a public history page ID advertised by genesis_refresh.", True)
     register("genesis_reference", reference, "Read authoritative guidance: " + ", ".join(REFERENCES) + ". No arbitrary file access.", True)
-    register("genesis_claim", claim, "Claim the existing player-authorized gpt-session request. Persists a lease; no replacement declaration.")
-    register("genesis_context", context, "Get GM-private context for the held run. Renews lease and records processing stage; this is a write.")
-    register("genesis_tables", tables, "Accept the session GM's interpretation and tables once, before dice. Reuse accepted work.")
-    register("genesis_roll", roll, "Ask the deterministic gateway roller for one roll. Repeat identical requests after uncertainty; never choose faces.")
-    register("genesis_review", review, "Return a declaration for player clarification before mechanical work is accepted.")
-    register("genesis_commit", commit, "Validate and atomically commit the session GM's proposal. Append-only authoritative consequences.", destructive=True)
-    register("genesis_publish", publish, "Finish accepted work and paginated public publication; never author a replacement turn.")
-    register("genesis_release", release, "Release this run's lease, preserving all accepted tables, dice and recovery records.")
+    if tools.writes:
+        register("genesis_claim", claim, "Claim the existing player-authorized request routed to the authenticated client. Persists a lease; no replacement declaration.")
+        register("genesis_context", context, "Get GM-private context for the held run. Renews lease and records processing stage; this is a write.")
+        register("genesis_tables", tables, "Accept the session GM's interpretation and tables once, before dice. Reuse accepted work.")
+        register("genesis_roll", roll, "Ask the deterministic gateway roller for one roll. Repeat identical requests after uncertainty; never choose faces.")
+        register("genesis_review", review, "Return a declaration for player clarification before mechanical work is accepted.")
+        register("genesis_commit", commit, "Validate and atomically commit the session GM's proposal. Append-only authoritative consequences.", destructive=True)
+        register("genesis_publish", publish, "Finish accepted work and paginated public publication; never author a replacement turn.")
+        register("genesis_release", release, "Release this run's lease, preserving all accepted tables, dice and recovery records.")
     return mcp
 
 
@@ -223,11 +301,12 @@ def build(shared, env=None):
     if gateway.store.branch != "staging/provider-shared":
         raise ValueError("The authoritative checkout must be on staging/provider-shared; code lives in a separate checkout")
     issuer, resource = env["GENESIS_MCP_ISSUER"], env["GENESIS_MCP_RESOURCE"]
-    verifier = IntrospectionVerifier(issuer, resource, env["GENESIS_MCP_INTROSPECTION_URL"],
-        env["GENESIS_MCP_CLIENT_ID"], env["GENESIS_MCP_CLIENT_SECRET"], env["GENESIS_MCP_SUBJECT"])
-    tokens = json.loads(env["GENESIS_GM_TOKENS"])
-    app = App({gateway.id: gateway}, {}, None, gm_tokens={PROVIDER: tokens[PROVIDER]})
-    tools = GatewayTools(app, gateway.id, env["GENESIS_MCP_SUBJECT"], writes=env.get("GENESIS_MCP_ENABLE_WRITES") == "1")
+    verifier = JWTVerifier(issuer, resource, json.loads(env['GENESIS_MCP_CLIENT_PROVIDERS']), env['GENESIS_MCP_SUBJECT'])
+    tokens = json.loads(env.get('GENESIS_GM_TOKENS') or '{}')
+    app = App({gateway.id: gateway}, {}, None, gm_tokens=tokens)
+    guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'))
+    writes = env.get('GENESIS_MCP_ENABLE_WRITES') == '1' and not guard.recovery_required
+    tools = GatewayTools(app, gateway.id, env['GENESIS_MCP_SUBJECT'], writes=writes, guard=guard)
     return create_server(tools, verifier, issuer, resource, host=env.get("GENESIS_MCP_HOST", "127.0.0.1"),
                          port=int(env.get("GENESIS_MCP_PORT", "8789")))
 

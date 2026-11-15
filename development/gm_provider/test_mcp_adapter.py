@@ -31,7 +31,7 @@ SUBJECT = "owner-staging-subject"
 def access(scopes=None, subject=SUBJECT):
     return AccessToken(token="test-oauth-token", client_id="test-chatgpt-client", subject=subject,
                        resource=RESOURCE, scopes=[adapter.READ, adapter.GM] if scopes is None else scopes,
-                       expires_at=int(time.time()) + 300)
+                       expires_at=int(time.time()) + 300, claims={"provider":"gpt-session"})
 
 
 class Verifier:
@@ -44,48 +44,7 @@ def tools(gateway, writes=True):
     return adapter.GatewayTools(app, gateway.id, SUBJECT, writes=writes)
 
 
-class OAuth(unittest.TestCase):
-    def verifier(self, data=None, status=200, callback=None):
-        data = data if data is not None else {"active": True, "iss": ISSUER, "aud": RESOURCE,
-            "sub": SUBJECT, "exp": int(time.time()) + 300, "scope": "genesis:read genesis:gm", "client_id": "chatgpt-client"}
-        def handle(request):
-            self.assertEqual(str(request.url), ISSUER + "/introspect")
-            self.assertEqual(request.method, "POST")
-            self.assertIn(b"token=test-oauth-token", request.content)
-            self.assertTrue(request.headers["authorization"].startswith("Basic "))
-            if callback:
-                return callback(request)
-            return httpx.Response(status, json=data)
-        return adapter.IntrospectionVerifier(ISSUER, RESOURCE, ISSUER + "/introspect", "resource-client",
-            "test-introspection-secret", SUBJECT, transport=httpx.MockTransport(handle))
-
-    def test_active_subject_audience_issuer_expiry_and_scope(self):
-        verifier = self.verifier()
-        token = asyncio.run(verifier.verify_token("test-oauth-token"))
-        self.assertEqual(token.subject, SUBJECT)
-        original = {"active": True, "iss": ISSUER, "aud": RESOURCE, "sub": SUBJECT,
-            "exp": int(time.time()) + 300, "scope": adapter.READ, "client_id": "client"}
-        for change in ({"active": False}, {"active": "true"}, {"iss": "https://wrong.invalid"},
-                       {"aud": "https://wrong.invalid/mcp"}, {"sub": "other-user"}, {"exp": 1},
-                       {"exp": "9999999999"}, {"scope": adapter.GM}, {"client_id": None}):
-            with self.subTest(change=change):
-                self.assertIsNone(asyncio.run(self.verifier(dict(original, **change)).verify_token("test-oauth-token")))
-
-    def test_issuer_outage_redirect_or_malformed_response_fails_closed(self):
-        for status in (302, 401, 500):
-            self.assertIsNone(asyncio.run(self.verifier(status=status).verify_token("test-oauth-token")))
-        for data in ([], None, "private upstream content"):
-            if data is None:
-                continue
-            self.assertIsNone(asyncio.run(self.verifier(data).verify_token("test-oauth-token")))
-        def timeout(request):
-            raise httpx.ReadTimeout("PRIVATE_CANARY test-introspection-secret")
-        self.assertIsNone(asyncio.run(self.verifier(callback=timeout).verify_token("test-oauth-token")))
-
-    def test_credentialed_or_insecure_urls_are_refused(self):
-        for url in ("http://host/mcp", "https://user:secret@host/mcp", "https://host/mcp?token=secret"):
-            with self.assertRaises(ValueError):
-                adapter.https_url(url)
+# OAuth validity, issuer outage and URL tests now live in test_mobile_reconciliation.py
 
 
 class Adapter(Base):
@@ -195,10 +154,9 @@ class Adapter(Base):
             self.assertEqual(r.status_code, 200, r.text)
             descriptions = {t["name"]: t for t in r.json()["result"]["tools"]}
             self.assertTrue(descriptions["genesis_refresh"]["annotations"]["readOnlyHint"])
-            self.assertFalse(descriptions["genesis_context"]["annotations"]["readOnlyHint"])
-            self.assertTrue(descriptions["genesis_commit"]["annotations"]["destructiveHint"])
-            self.assertNotIn("campaign_id", descriptions["genesis_claim"]["inputSchema"]["properties"])
-            self.assertIn("oauth2", json.dumps(descriptions["genesis_claim"]["_meta"]))
+            self.assertNotIn("genesis_context", descriptions)
+            self.assertNotIn("genesis_commit", descriptions)
+            self.assertIn("oauth2", json.dumps(descriptions["genesis_refresh"]["_meta"]))
             for name, args in (("genesis_refresh", {}), ("genesis_claim", {"run": "run", "model": "gpt-session", "session": "local-test"})):
                 payload = dict(envelope, method="tools/call", params={"name": name, "arguments": args})
                 r = client.post("/mcp", headers=headers, json=payload)
