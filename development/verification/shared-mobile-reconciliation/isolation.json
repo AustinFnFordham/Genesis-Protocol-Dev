@@ -1,0 +1,33 @@
+{
+  "base": "3e87d45849c5275fd2aa4c9dcd2ae7977315b762",
+  "outside_development_files": 1191,
+  "outside_development_byte_identical": true,
+  "outside_development_sha256": "23cab44da5e0ac2296807c0cbbc041092c5ed862b8bb620b62eae82aa9faef4d",
+  "existing_gateway_store_http_diagnostics_unchanged": [
+    "gateway.py",
+    "store.py",
+    "git_errors.py",
+    "service.py",
+    "gmctl.py",
+    "runner.py"
+  ],
+  "remote_refs_unchanged": {
+    "refs/heads/dev/chatgpt-gateway-adapter-6942257": "3e87d45849c5275fd2aa4c9dcd2ae7977315b762",
+    "refs/heads/dev/gemini-mcp-provider": "2a1e324abc81f94e3550851d9d6eb7326c74b0ee",
+    "refs/heads/staging/provider-shared": "350c9da29ed2d7d667f147421d9d15b5471cd4d2"
+  },
+  "queue": {
+    "action_id": "shared-0002",
+    "version": 1,
+    "status": "submitted",
+    "provider": "gpt-session"
+  },
+  "lease": {
+    "version": 5,
+    "holder": null
+  },
+  "gameplay": false,
+  "deployment": false,
+  "billing_changes": false,
+  "shell_push_attempted": false
+}

@@ -1,5 +1,9 @@
 # ChatGPT session GM connection: prepared, not deployed
 
+Historical GPT-only runbook. The reconciled candidate and current setup are in
+`SHARED_MOBILE_GATEWAY_SETUP.md`; its Auth0/JWT and two-client bindings supersede
+the introspection-only configuration described below. No original branch was changed.
+
 ## Verified status
 
 Diagnostic repair `6942257de29d099e0b6c2ed387812af42d991eb7` exists remotely at

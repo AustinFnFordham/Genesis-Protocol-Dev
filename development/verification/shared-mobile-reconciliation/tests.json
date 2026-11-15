@@ -1,0 +1,51 @@
+[
+  {
+    "suite": "development/gm_provider/test_mobile_reconciliation.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 13975.98,
+    "output": "/workspace/scratch/a6d99fc4971c/genesis-shared-mobile-gateway/development/gm_provider/test_mcp_adapter.py:12: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n  from starlette.testclient import TestClient\n../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.\n  warnings.warn(\nStreamableHTTP session manager started\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nTerminating session: None\nProcessing request of type CallToolRequest\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nTerminating session: None\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44573/mcp \"HTTP/1.1 200 OK\"\nStreamableHTTP session manager shutting down\n............\n----------------------------------------------------------------------\nRan 14 tests in 13.233s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_mcp_adapter.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 3909.64,
+    "output": "/workspace/scratch/a6d99fc4971c/genesis-shared-mobile-gateway/development/gm_provider/test_mcp_adapter.py:12: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n  from starlette.testclient import TestClient\n.../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.\n  warnings.warn(\nStreamableHTTP session manager started\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 401 Unauthorized\"\nHTTP Request: GET https://genesis.example.invalid/.well-known/oauth-protected-resource/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nTool 'genesis_claim' not listed, no validation will be performed\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nStreamableHTTP session manager shutting down\n.....\n----------------------------------------------------------------------\nRan 8 tests in 3.191s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_git_diagnostics.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 2453.33,
+    "output": "...............\n----------------------------------------------------------------------\nRan 15 tests in 2.179s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_shared_store.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 17310.36,
+    "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 17.089s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_gateway.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 31796.14,
+    "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 31.640s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_service.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 11340.7,
+    "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 11.167s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_npc_review.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 39.57,
+    "output": "ok npc review tests\n"
+  }
+]

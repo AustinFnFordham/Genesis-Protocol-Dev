@@ -1,0 +1,6 @@
+{
+  "first_exchange": 200,
+  "same_process_replay": 400,
+  "after_restart_replay": 200,
+  "same_owner_secret_can_supply_signing_seed": true
+}
