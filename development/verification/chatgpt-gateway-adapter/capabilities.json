@@ -1,0 +1,35 @@
+{
+  "existing_service_verified": false,
+  "existing_service_evidence": "Repository docs list hosting pending; no gateway URL or token configuration found. Separately managed hosts cannot be excluded.",
+  "known_datapad_site": "appgprj_6af14f7d9cb48191bb7cdf34fc33f15c",
+  "site_inspection": {
+    "tool": "Sites get_site",
+    "include_mcp_connection": true,
+    "result": "SitesConnectorError: The published Site does not declare an MCP server. Enable MCP and republish it."
+  },
+  "connected_genesis_tool_found": false,
+  "plugin_search_query": "Genesis Protocol",
+  "plugin_search_genesis_match": false,
+  "authenticated_remote_staging_refresh_performed": false,
+  "local_mcp_transport": {
+    "authentication": "Test verifier; not a real OAuth issuer",
+    "methods": [
+      "POST /mcp (401 unauthenticated)",
+      "GET /.well-known/oauth-protected-resource/mcp (200)",
+      "tools/list (200 authenticated test token)",
+      "tools/call genesis_refresh (200, no mutation)",
+      "tools/call genesis_claim (WRITES_DISABLED)"
+    ]
+  },
+  "model_calls": 0,
+  "backend_model_substitution": false,
+  "deployment": false,
+  "billing_changes": false,
+  "limitations": [
+    "Host and TLS endpoint not provisioned",
+    "OAuth issuer and account-level plugin registration required",
+    "Server Git write authentication not verified remotely",
+    "Real mobile plugin invocation not exercised",
+    "GM tool payloads can be inspected by the account owner"
+  ]
+}

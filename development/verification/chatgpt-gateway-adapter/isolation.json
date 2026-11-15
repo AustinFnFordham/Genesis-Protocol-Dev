@@ -1,0 +1,22 @@
+{
+  "base": "6942257de29d099e0b6c2ed387812af42d991eb7",
+  "all_original_tracked_files_unchanged": true,
+  "original_tracked_file_count": 1289,
+  "sha256": "9c6afc705bca7921ee51e411ef9276cff8c22098eda9830afc80e8b133088c9d",
+  "shared_remote_head": "350c9da29ed2d7d667f147421d9d15b5471cd4d2",
+  "diagnostic_repair_remote_head": "6942257de29d099e0b6c2ed387812af42d991eb7",
+  "shared_request": {
+    "action_id": "shared-0002",
+    "version": 1,
+    "status": "submitted",
+    "provider": "gpt-session"
+  },
+  "lease": {
+    "version": 5,
+    "holder": null
+  },
+  "gameplay": false,
+  "shell_push_attempted": false,
+  "deployed": false,
+  "billing_changes": false
+}

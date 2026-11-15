@@ -1,0 +1,3 @@
+# Isolate these from the existing Claude runtime's environment.
+mcp==1.29.0
+httpx==0.28.1
