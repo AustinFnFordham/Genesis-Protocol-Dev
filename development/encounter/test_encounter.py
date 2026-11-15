@@ -178,6 +178,38 @@ def test_mode_transitions_are_explicit_and_reasoned():
     assert E.fold(events + [ev("encounter_end", reason="the pack withdrew")])["active"] is False
 
 
+def test_initiative_is_kept_for_contests_not_only_attack_range():
+    events = start() + turn("aero")
+    state = E.fold(events)
+    quiet = {"can_affect": [], "contests": [], "hazards": []}
+    assert E.assess_mode(state, events, quiet)["recommend"] == "standoff"
+    # Nobody is in reach of anybody, but something is being decided this round.
+    for contest in ("a dog is digging under the sill and will be through in two rounds", "Wick is running for the switch box", "the fire is climbing the wall"):
+        key = "hazards" if "fire" in contest else "contests"
+        advice = E.assess_mode(state, events, dict(quiet, **{key: [{"what": contest, "scale": "rounds", "cites": ["evt_0002"]}]}))
+        assert advice["recommend"] == "combat", contest
+    assert E.assess_mode(state, events, dict(quiet, contests=[{"what": "uncited worry", "scale": "rounds"}]))["recommend"] == "standoff"
+    slow = E.assess_mode(state, events, dict(quiet, contests=[{"what": "they are waiting for dawn", "scale": "minutes", "cites": ["evt_0002"]}]))
+    assert slow["recommend"] == "standoff" and any("slower" in line for line in slow["because"])
+    # A readied action waiting on a trigger is a live contest by itself.
+    waiting = events + [ev("turn_start", actor_id="wick"), ev("ready_set", actor_id="wick", trigger="the door opens", does="one shot"), ev("turn_end", actor_id="wick")]
+    advice = E.assess_mode(E.fold(waiting), waiting, quiet)
+    assert advice["recommend"] == "combat" and any("readied" in line for line in advice["because"])
+    assert E.fold(waiting)["mode"] == "combat", "advice never changes the mode"
+
+
+def test_control_classification_is_not_changed_by_play():
+    """Who decides an actor is set when it joins. No turn, command, readied action or reaction rewrites it,
+    and the controller exposes nothing a dice resolver could mistake for player control."""
+    events = start(wick="gm") + turn("aero") + [ev("turn_start", actor_id="wick"), ev("ready_set", actor_id="wick", trigger="Aero says fire", does="one shot"),
+                                               ev("turn_end", actor_id="wick")] + turn("dog_a") + turn("dog_b") + turn("dog_c") + [ev("turn_start", actor_id="aero"), ev("ready_fired", actor_id="wick")]
+    state = E.fold(events)
+    assert state["actors"]["wick"]["control"] == {"decides": "gm", "basis": "test"}
+    assert E.fold(start(wick="player_directed") + turn("aero"))["actors"]["wick"]["control"]["decides"] == "player_directed"
+    assert "controlled_actors" not in json.dumps(E.private(state)) and "resolution" not in json.dumps(E.public(state))
+    assert not any(kind.startswith("control") for kind in E.KINDS), "no event kind changes control; that takes an owner ruling and a new record"
+
+
 def test_public_view_hides_hidden_actors():
     events = start() + turn("aero") + turn("wick") + [ev("turn_start", actor_id="dog_a"), spend("dog_a", "movement_ft", 40)]
     state = E.fold(events)

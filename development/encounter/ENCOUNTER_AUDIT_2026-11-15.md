@@ -1,5 +1,16 @@
 # Barn encounter audit, Hask Meadow (2026-11-15). Read-only
 
+> **Scope correction, 2026-11-15 (second pass).** Read this audit with
+> `COMPATIBILITY_AND_ADOPTION.md`. Two corrections apply throughout:
+> 1. Dice. Regular/Heroic/Legendary and the independent narrative d6 are designed and implemented in
+>    the experimental resolver (`development/experimental_resolution/`, inspected at `1acf2a0`). They
+>    are not integrated into live Hask Meadow. This audit's statements describe the live integration
+>    only; they are not statements about the design or the code.
+> 2. "Defect". Several findings below measure committed play against `ENCOUNTER_RULING.md` and
+>    `ACTION_ECONOMY_RULING.md`, which were written after that play and are not adopted. Those
+>    findings are proposals for change, not evidence that an adopted rule was broken. The
+>    compatibility report classifies each one.
+
 Audited at ledger head `evt_1417`, public revision 1125, commit `ebda584`: combat round 11, Aero's
 turn. Nothing was committed, rolled, advanced or changed. Hidden positions, hit points, target
 numbers and tables are deliberately left out of this file. Sources read: `CAMPAIGN_CHARTER.md`,
@@ -15,12 +26,19 @@ numbers and tables are deliberately left out of this file. Sources read: `CAMPAI
   by its own private d6 table each round.
 - **No companion rules for encounters.** The charter covers who controls party members and how
   companions react; nothing covers a companion's turn.
-- **Dice.** One resolver, `roll.py` (seeded mulberry32 stream, `normal`/`advantage`/`disadvantage`).
-  No dice mode is configured in the registry or the campaign, none is active, and none is triggered
-  by combat. `turn_context.mode` (`scene`/`combat`) is the encounter mode and changes only the action
-  economy. Regular/Heroic/Legendary and the narrative d6 exist only in the experimental engine on
-  marked non-canonical copies. So no transition failed and nothing failed to display: there is no
-  combat dice mode or SID procedure in the repository to transition to. Round 10's rolls were all
+- **Dice, live integration.** The live worker rolls through `roll.py` (seeded mulberry32 stream,
+  `normal`/`advantage`/`disadvantage`). Hask Meadow carries no experimental-resolution marker, the
+  live page does not show the resolution controls, and its submitted actions carry no
+  `resolution_settings`, so every live roll is Regular with Narrative Consequences off.
+- **Dice, design and code.** Resolution temperature (Regular/Heroic/Legendary) and the independent
+  narrative d6 exist: policy, transactional engine, public/private filters, composer controls,
+  replay and crash-recovery tests, on `rc/canonical-dice-recovery-f241ea6` (`1acf2a0`) and carried
+  on this branch. They are sandbox-only by their own README and gate.
+- **Three separate things.** Encounter mode (`turn_context.mode`: scene/combat, and the proposed
+  standoff) governs the action economy. Resolution temperature and Narrative Consequences are two
+  independent per-action player settings. By the inspected design none of them selects another:
+  starting initiative changes no dice setting. So in live play no required transition failed and
+  nothing failed to display; the settings were simply never offered there. Round 10's rolls were all
   ordinary: Wick's shot `1d20+2` at disadvantage, total 10; eight private d6 tables; two `1d20+2`
   Stealth rolls for the dogs.
 
@@ -111,7 +129,7 @@ Free text is still accepted, so nothing was forbidden, but the buttons taught th
 4. Core actions are not guaranteed in combat contexts.
 5. Costs displayed for observation, a question, a request and the comm are wrong or mislabelled.
 6. The brace was billed as an object interaction (harmless here).
-7. Dice modes: not a defect. None is configured, so none could transition.
+7. Dice: no transition failed. The experimental modes exist in code and are not integrated into live play.
 
 **GM interpretation and encounter design**
 1. Initiative was kept for five rounds with no possible contact.

@@ -6,6 +6,11 @@ rules beyond `TURN_CONTRACT.md` §4 item 3 (one action, one bonus, one reaction,
 object interaction; extended social actions use the action; ordinary speech is free), §4b ("when
 initiative starts, the sequence ends") and the shape of `combat_round` events. The repository holds
 no SW5e combat-chapter text, so every line is a ruling in the standard d20 reading, not a quotation.
+Because it is new, committed play before its adoption cannot have violated it; where it differs from
+how the barn encounter was run, that is a proposed change, not a finding of error. It governs the
+action economy only. It selects no dice setting: resolution temperature and Narrative Consequences
+remain separate per-action player choices under `development/experimental_resolution/`, and who
+decides a companion's actions (§9) does not change whose rolls those settings apply to.
 Companion files: `ACTION_ECONOMY_RULING.md` (objects, hands, NPC cooperation). Executable form:
 `development/encounter/encounter.py`. Owner decisions still open are in §9.
 
@@ -63,8 +68,10 @@ Dash, Disengage, Dodge, Help, Hide, Ready and Search are always available in com
 adds them to every combat context; an option list is never the limit of what may be declared.
 
 ## 7. Encounter mode
-`combat`: initiative and six-second turns. Warranted while a creature can act on an opponent within a
-round, or a hazard runs round by round. `standoff`: the same creatures, hostile and in place, but
+`combat`: initiative and six-second turns. Warranted while anything meaningful is being decided
+round by round: a creature can act on an opponent within a round (by any means, not only an attack
+in reach), a chase or a race, a breach in progress, a readied action waiting on its trigger, a
+countdown, a hazard spreading by the round. `standoff`: the same creatures, hostile and in place, but
 neither side can reach the other within a round. No initiative; time passes as the fiction needs;
 the hostile side's patience, plans and positions keep moving in the hidden simulation. `scene`:
 no encounter.

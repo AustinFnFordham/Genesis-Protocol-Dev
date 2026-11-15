@@ -763,6 +763,59 @@ class ExperimentalSettings(Base):
         self.healthy()
         self.assertTrue(gateway_module.engine.replay(self.gw.campaign)["ok"])
 
+    def test_known_gap_one_gm_roll_per_step_and_kind_under_the_experimental_engine(self):
+        """Documents a limit of the inspected experimental engine, not a behaviour to keep: its no-reroll slot is
+        (action, step, kind, requester), so two creatures rolled by the GM cannot both make the same kind of roll in
+        one action. Per-creature turns need a reviewed roll-subject in that slot before dice modes and the encounter
+        record are staged together (COMPATIBILITY_AND_ADOPTION.md, gap X1). The ordinary resolver has no such limit."""
+        action, _ = self.act(INSPECT, provider="claude")
+        self.gw.claim("claude", "run-a", {"kind": "scripted", "mock": True})
+        self.gw.fix_tables("claude", "run-a", {"interpretation": "two creatures act", "tables": "none"})
+        step = action["declaration"]["steps"][0]["id"]
+        ask = lambda key: self.gw.roll("claude", "run-a", {"roll_key": key, "step_id": step, "formula": "1d20+4", "kind": "attack", "requested_by": "gm", "purpose": key})
+        first = ask("creature_one.attack")
+        with self.assertRaises(Refused) as caught:
+            ask("creature_two.attack")
+        self.assertEqual(caught.exception.code, "DICE_REFUSED")
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 1)
+        self.assertFalse(first["replayed"])
+
+    def test_a_companion_roll_is_never_treated_as_the_players(self):
+        """Heroic and Narrative Consequences are the player's choice for the player character's own d20s. An ally
+        acting on the player's word, in an encounter where the ally is even marked player-directed, still rolls
+        through the GM and stays Regular with no narrative axis. Beginning an encounter changes no dice setting."""
+        e = EncounterThroughTheGateway.e
+        party = [{"actor_id": "aero", "label": "Aero", "side": "party", "initiative": 21, "control": {"decides": "player"}},
+                 {"actor_id": "ally", "label": "The ally", "side": "party", "initiative": 12, "control": {"decides": "player_directed"}}]
+        action, _ = self.act(INSPECT, provider="claude", settings={"temperature": "heroic", "narrative_consequences": True})
+        self.gw.claim("claude", "run-a", {"kind": "scripted", "mock": True})
+        self.gw.fix_tables("claude", "run-a", {"interpretation": "Aero studies the remote; on his word the ally takes a shot at it.", "tables": "none"})
+        step = action["declaration"]["steps"][0]["id"]
+        own = self.gw.roll("claude", "run-a", {"roll_key": f"{step}.check", "step_id": step, "formula": "1d20+3", "kind": "check", "requested_by": "aero",
+                                              "purpose": "Aero studies the remote", "dc": 12})["result"]["resolution"]
+        theirs = self.gw.roll("claude", "run-a", {"roll_key": "ally", "step_id": step, "formula": "1d20+2", "kind": "attack", "requested_by": "gm",
+                                                 "purpose": "The ally fires on Aero's word", "dc": 12})["result"]["resolution"]
+        self.assertEqual((own["eligible"], own["roll"]["temperature"], own["narrative"] is not None), (True, "heroic", True))
+        self.assertEqual((theirs["eligible"], theirs["roll"]["temperature"], theirs["narrative"]), (False, "regular", None))
+        self.assertIsNone(theirs["roll"]["effective_d20"])
+        with self.assertRaises(Refused) as caught:                    # nobody can ask for a roll "as" the ally to borrow the player's mode
+            self.gw.roll("claude", "run-a", {"roll_key": "x", "step_id": step, "formula": "1d20+2", "kind": "attack", "requested_by": "ally", "purpose": "as the ally"})
+        self.assertEqual(caught.exception.code, "BAD_ROLL")
+        context = self.gw.context("claude", "run-a")
+        move = script("claude").step(context)
+        move["proposal"]["events"] += [{"kind": "attack_resolved", "actor": "gm", "summary": "The ally fires and misses.", "details": {"npc": "ally"}, "roll_keys": ["ally"]},
+                                       e("encounter_start", encounter_id="x", mode="combat", participants=party), e("turn_start", actor_id="aero")]
+        self.assertEqual(self.gw.commit("claude", "run-a", move["proposal"])["status"], "committed")
+        declared = [x for x in ledger.load_all(self.gw.campaign) if x["kind"] == "player_declaration"][-1]["details"]
+        self.assertEqual(declared["resolution_settings"], {"temperature": "heroic", "narrative_consequences": True}, "the submitted settings are immutable")
+        # The next action, now inside an encounter, defaults to Regular / Off: initiative selects nothing.
+        nxt, _ = self.act(INSPECT, provider="claude")
+        self.assertEqual(self.gw.store.read("actions/" + nxt["action_id"])[1]["resolution_settings"], gateway_module.policy.DEFAULT)
+        tracker = self.gw.public_state()["state"]["turn_context"]["encounter"]
+        self.assertEqual((tracker["mode"], tracker["order"][1]["control"]), ("combat", "player_directed"))
+        self.assertNotIn("temperature", json.dumps(tracker))
+        self.assertTrue(gateway_module.engine.replay(self.gw.campaign)["ok"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)

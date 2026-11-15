@@ -1,228 +1,224 @@
 {
- "commit": "d7d5cd0",
+ "commit": "2425e54",
  "dirty": true,
  "failed": 0,
  "suites": [
   {
    "suite": ".claude/skills/litrpg-dice/test_audit_rng.py",
    "passed": true,
-   "elapsed_ms": 193
+   "elapsed_ms": 176
   },
   {
    "suite": ".claude/skills/litrpg-dice/test_roll.py",
    "passed": true,
-   "elapsed_ms": 749
+   "elapsed_ms": 599
   },
   {
    "suite": ".claude/skills/litrpg-ledger/test_batch.py",
    "passed": true,
-   "elapsed_ms": 103
+   "elapsed_ms": 67
   },
   {
    "suite": ".claude/skills/litrpg-ledger/test_ledger.py",
    "passed": true,
-   "elapsed_ms": 1035
+   "elapsed_ms": 794
   },
   {
    "suite": ".claude/skills/litrpg-process-turn/test_brief.py",
    "passed": true,
-   "elapsed_ms": 191
+   "elapsed_ms": 158
   },
   {
    "suite": ".claude/skills/litrpg-process-turn/test_brief_checkpoint.py",
    "passed": true,
-   "elapsed_ms": 322
+   "elapsed_ms": 293
   },
   {
    "suite": ".claude/skills/litrpg-process-turn/test_turn.py",
    "passed": true,
-   "elapsed_ms": 1246
+   "elapsed_ms": 910
   },
   {
    "suite": "campaigns/starwars_litrpg/creator/test_continuity.py",
    "passed": true,
-   "elapsed_ms": 376
+   "elapsed_ms": 258
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_action_economy.py",
    "passed": true,
-   "elapsed_ms": 780
+   "elapsed_ms": 710
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_campaign_features.py",
    "passed": true,
-   "elapsed_ms": 203
+   "elapsed_ms": 137
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_dice_display.py",
    "passed": true,
-   "elapsed_ms": 210
+   "elapsed_ms": 128
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_dice_history.py",
    "passed": true,
-   "elapsed_ms": 161
+   "elapsed_ms": 129
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_roster.py",
    "passed": true,
-   "elapsed_ms": 206
+   "elapsed_ms": 199
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_scene_sequencing.py",
    "passed": true,
-   "elapsed_ms": 954
+   "elapsed_ms": 785
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_sequencer.py",
    "passed": true,
-   "elapsed_ms": 3271
+   "elapsed_ms": 2547
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_turn_contract.py",
    "passed": true,
-   "elapsed_ms": 425
+   "elapsed_ms": 393
   },
   {
    "suite": "development/encounter/test_encounter.py",
    "passed": true,
-   "elapsed_ms": 44
+   "elapsed_ms": 41
   },
   {
    "suite": "development/experimental_resolution/test_resolution.py",
    "passed": true,
-   "elapsed_ms": 6671
+   "elapsed_ms": 5368
   },
   {
    "suite": "development/gm_provider/test_gateway.py",
    "passed": true,
-   "elapsed_ms": 27960
+   "elapsed_ms": 23362
   },
   {
    "suite": "development/gm_provider/test_npc_review.py",
    "passed": true,
-   "elapsed_ms": 33
+   "elapsed_ms": 26
   },
   {
    "suite": "development/gm_provider/test_service.py",
    "passed": true,
-   "elapsed_ms": 8410
+   "elapsed_ms": 7935
   },
   {
    "suite": "development/gm_provider/test_shared_store.py",
    "passed": true,
-   "elapsed_ms": 19214
+   "elapsed_ms": 16333
   },
   {
    "suite": "development/test_action_fences.py",
    "passed": true,
-   "elapsed_ms": 614
+   "elapsed_ms": 515
   },
   {
    "suite": "development/test_increment_contracts.py",
    "passed": true,
-   "elapsed_ms": 107
+   "elapsed_ms": 111
   },
   {
    "suite": "development/test_interop.py",
    "passed": true,
-   "elapsed_ms": 464
+   "elapsed_ms": 366
   },
   {
    "suite": "development/test_legacy_dice_recovery.py",
    "passed": true,
-   "elapsed_ms": 8232
+   "elapsed_ms": 6256
   },
   {
    "suite": "development/test_readiness.py",
    "passed": true,
-   "elapsed_ms": 196
+   "elapsed_ms": 142
   },
   {
    "suite": "development/test_worker_progress.py",
    "passed": true,
-   "elapsed_ms": 64
+   "elapsed_ms": 49
   },
   {
    "suite": "development/test_worker_roundtrip.py",
    "passed": true,
-   "elapsed_ms": 587
+   "elapsed_ms": 418
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_ui.cjs",
    "passed": true,
-   "elapsed_ms": 5863
+   "elapsed_ms": 6192
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_sequencer_ui.cjs",
    "passed": true,
-   "elapsed_ms": 18347
+   "elapsed_ms": 17702
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_scene_ui.cjs",
    "passed": true,
-   "elapsed_ms": 6175
+   "elapsed_ms": 5785
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_iphone.cjs",
    "passed": true,
-   "elapsed_ms": 8568
+   "elapsed_ms": 8028
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_history.cjs",
    "passed": true,
-   "elapsed_ms": 3764
+   "elapsed_ms": 3553
   },
   {
    "suite": "campaigns/starwars_litrpg/ui/test_datapad_review_options.cjs",
    "passed": true,
-   "elapsed_ms": 5939
+   "elapsed_ms": 4566
   },
   {
    "suite": "development/test_player_experience.cjs",
    "passed": true,
-   "elapsed_ms": 3739
+   "elapsed_ms": 3445
   },
   {
    "suite": "development/test_dice_history_ui.cjs",
    "passed": true,
-   "elapsed_ms": 1012
+   "elapsed_ms": 1010
   },
   {
    "suite": "development/experimental_resolution/test_controls.cjs",
    "passed": true,
-   "elapsed_ms": 2026
+   "elapsed_ms": 1828
   },
   {
    "suite": "development/encounter/test_tracker_ui.cjs",
    "passed": true,
-   "elapsed_ms": 1610
+   "elapsed_ms": 1513
   },
   {
    "suite": "rng_audit hask_meadow_r2",
    "passed": true,
-   "elapsed_ms": 2248
+   "elapsed_ms": 1845
   },
   {
    "suite": "rng_audit sandbox",
    "passed": true,
-   "elapsed_ms": 270
+   "elapsed_ms": 194
   },
   {
    "suite": "page is the built page",
    "passed": true,
-   "elapsed_ms": 43
+   "elapsed_ms": 34
   }
  ],
- "note": "development/run_all_checks.sh, working tree of dev/encounter-controller before its commit. Local only; headless Chromium.",
- "protected_paths": {
-  "campaign_runs_identical_to_live_head_ebda584": true
- },
+ "note": "development/run_all_checks.sh, dev/encounter-controller working tree for the compatibility pass. Local only; headless Chromium.",
  "encounter_tests": {
-  "controller_cases": 10,
-  "gateway_encounter_case": 1,
-  "validator_cases": 10,
-  "tracker_browser_check": 1,
-  "actors": "synthetic; no campaign read or written"
+  "controller_cases": 12,
+  "gateway_encounter_cases": 3,
+  "validator_cases": 11,
+  "tracker_browser_check": 1
  }
 }

@@ -123,6 +123,28 @@ def test_a_submission_does_not_end_the_turn_by_itself():
     assert json.loads(p.stdout)["validation"]["ends_turn"] is True
 
 
+def test_an_unused_reaction_or_unavailable_bonus_never_keeps_a_turn_open():
+    ctx = json.loads(CTX.read_text())
+    assert ctx["budget"]["reaction"] == 1 and ctx["budget"]["bonus_action"] == 1 and ctx["budget"]["object_interaction"] == 0
+    assert not any(o.get("slot") == "bonus_action" for o in ctx["options"]), "Aero has no bonus-action option here"
+    far = [m for m in ctx["movement"] if m["feet"] == 30][0]["id"]
+    # Action spent, all movement spent, object interaction already spent: only the reaction and an unusable bonus action remain.
+    v = validate([act("dodge"), {"type": "move", "option": far}])
+    assert v["legal"] and v["ends_turn"] is True, v["info"]
+    note = [i["message"] for i in v["info"] if i["code"] == "TURN_ENDS"][0]
+    assert "Unspent" not in note and "reaction" not in note.lower() and "bonus" not in note.lower(), note
+    # With a real bonus-action option on offer and unspent, the turn stays open and says why.
+    ctx["options"].append({"id": "second_wind", "slot": "bonus_action", "label": "A feature that takes a bonus action"})
+    tmp = HERE / "fixtures" / ".handoff_bonus.json"; tmp.write_text(json.dumps(ctx))
+    try:
+        v = validate([act("dodge"), {"type": "move", "option": far}], tmp)
+        assert v["ends_turn"] is False and "bonus action" in [i["message"] for i in v["info"] if i["code"] == "TURN_CONTINUES"][0]
+        v = validate([act("dodge"), {"type": "bonus_action", "option": "second_wind"}, {"type": "move", "option": far}], tmp)
+        assert v["ends_turn"] is True
+    finally:
+        tmp.unlink()
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

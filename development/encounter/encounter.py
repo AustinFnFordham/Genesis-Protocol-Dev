@@ -250,9 +250,13 @@ def whose_decision(state):
 
 def assess_mode(state, events, facts):
     """Advisory only. `facts` come from the GM, each citing committed events:
-        {"can_affect": [{"from", "to", "how", "cites"}], "hazards": [{"what", "scale": "rounds"|"minutes", "cites"}]}
-    Combat (six-second turns in initiative) is warranted while someone can act on someone else within a round or
-    a hazard runs on that scale. Otherwise the same people in the same place are a standoff: no initiative, time
+        {"can_affect": [{"from", "to", "how", "cites"}],
+         "contests":   [{"what", "scale": "rounds"|"minutes", "cites"}],
+         "hazards":    [{"what", "scale": "rounds"|"minutes", "cites"}]}
+    Initiative is warranted by any meaningful contest decided round by round, not only by attack range: a chase, a
+    race to a door or a switch, a breach in progress, someone slipping away unseen, a countdown, a readied action
+    waiting on a trigger, a hazard spreading by the round. `can_affect` is any cited way one side can act on the
+    other within a round (reach, a line of fire, a power, a thrown thing), whether or not anyone has attacked. Otherwise the same people in the same place are a standoff: no initiative, time
     passes as the fiction needs, and combat resumes the moment a listed trigger happens. Never changes anything."""
     if not state["active"]:
         return {"recommend": "scene", "because": ["no encounter is running"]}
@@ -261,19 +265,26 @@ def assess_mode(state, events, facts):
                (e.get("details") or {}).get("target") in state["actors"]]
     reach = [f for f in facts.get("can_affect", []) if f.get("cites")]
     fast = [h for h in facts.get("hazards", []) if h.get("scale") == "rounds" and h.get("cites")]
+    racing = [c for c in facts.get("contests", []) if c.get("scale") == "rounds" and c.get("cites")]
+    readied = [a["actor_id"] for a in state["actors"].values() if a["ready"]]
     because = []
+    if racing:
+        because.append(f"{len(racing)} cited contest(s) being decided round by round")
+    if readied:
+        because.append(f"{len(readied)} readied action(s) waiting on a trigger")
     if reach:
         because.append(f"{len(reach)} cited way(s) one side can act on the other within a round")
     if fast:
         because.append(f"{len(fast)} cited hazard(s) running round by round")
-    if reach or fast:
+    if reach or fast or racing or readied:
         return {"recommend": "combat", "because": because, "last_contact": contact[-1] if contact else None}
-    slow = [h for h in facts.get("hazards", []) if h.get("scale") == "minutes"]
+    slow = [h for h in facts.get("hazards", []) + facts.get("contests", []) if h.get("scale") == "minutes"]
     return {"recommend": "standoff", "last_contact": contact[-1] if contact else None,
             "because": ["no cited way for either side to act on the other within a round",
-                        "no cited hazard on a round-by-round scale"] + ([f"{len(slow)} slower hazard(s) keep running in scene time"] if slow else []),
+                        "no cited contest or hazard being decided round by round", "no readied action waiting on a trigger"]
+                       + ([f"{len(slow)} slower contest(s) or hazard(s) keep running in scene time"] if slow else []),
             "resume_combat_when": ["an attack or hostile contact", "a barrier between the sides is opened or breached",
-                                   "either side moves to where it can reach the other", "a hazard starts to run round by round"],
+                                   "either side moves to where it can act on the other", "a contest or hazard starts to be decided round by round"],
             "requires": "a committed encounter_mode event with this reason; hostile actors keep their positions, wounds and reactions"}
 
 
