@@ -108,8 +108,8 @@ class GitStore:
         with self.guard:
             if not force and self._time.monotonic() - self.last_sync < self.min_sync_s:
                 return
+            self.last_sync = 0.0
             self._git("fetch", "--quiet", self.remote, self.branch)
-            self.last_sync = self._time.monotonic()
             if self._git("rev-list", "--count", f"HEAD..{self.remote}/{self.branch}").strip() != "0":
                 merged = self._git("merge", "--ff-only", "--quiet", f"{self.remote}/{self.branch}", check=False)
                 if merged.returncode != 0:
@@ -121,6 +121,7 @@ class GitStore:
                 raise GitFailure({"operation":"sync", "exit_code":None, "classification":"sync_required",
                                   "stderr":"local commits are not confirmed on the shared branch; reconcile before writing",
                                   "stdout":"", "timed_out":False, "remote_outcome":"unknown"})
+            self.last_sync = self._time.monotonic()
 
     def _path(self, key):
         return self.directory / (key + ".json")

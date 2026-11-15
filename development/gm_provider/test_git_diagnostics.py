@@ -137,7 +137,13 @@ class LocalGit(unittest.TestCase):
         self.assertFalse(caught.exception.details["local_commit_reverted"])
         self.assertNotEqual(self.git(self.repo,"rev-parse","HEAD").strip(), self.head)
         self.assertEqual(self.git(self.root/"origin.git","rev-parse","refs/heads/staging").strip(), self.head)
-        fresh = GitStore(self.scope,min_sync_s=0)
+        fresh = GitStore(self.scope)
+        # A failed sync must not populate the success cache and let the second
+        # read expose an unconfirmed local lease.
+        for _ in range(2):
+            with self.assertRaises(GitFailure) as unreadable:
+                fresh.read("locks/test")
+            self.assertEqual(unreadable.exception.code,"GIT_SYNC_REQUIRED")
         with self.assertRaises(GitFailure) as fenced:
             fresh.put("locks/test", {"holder":"another"}, 1)
         self.assertEqual(fenced.exception.code,"GIT_SYNC_REQUIRED")
