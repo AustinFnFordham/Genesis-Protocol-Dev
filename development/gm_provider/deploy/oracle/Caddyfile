@@ -1,0 +1,16 @@
+{
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+    storage file_system {
+        root /var/data/caddy
+    }
+}
+{$GENESIS_HOSTNAME} {
+    header Cache-Control "no-store"
+    @gateway path /mcp /.well-known/oauth-protected-resource/mcp
+    handle @gateway {
+        reverse_proxy 127.0.0.1:8789
+    }
+    handle {
+        respond "Not found" 404
+    }
+}

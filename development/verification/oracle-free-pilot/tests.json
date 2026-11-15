@@ -1,0 +1,44 @@
+[
+  {
+    "suite": "test_oracle_pilot.py",
+    "passed": true,
+    "duration_s": 0.27,
+    "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nOK\n"
+  },
+  {
+    "suite": "test_mobile_reconciliation.py",
+    "passed": true,
+    "duration_s": 27.02,
+    "output": "/workspace/scratch/a6d99fc4971c/genesis-oracle-free/development/gm_provider/test_mcp_adapter.py:12: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n  from starlette.testclient import TestClient\n../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.\n  warnings.warn(\nStreamableHTTP session manager started\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nTerminating session: None\nProcessing request of type CallToolRequest\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nTerminating session: None\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nTerminating session: None\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nHTTP Request: POST http://127.0.0.1:44301/mcp \"HTTP/1.1 200 OK\"\nTerminating session: None\nStreamableHTTP session manager shutting down\n............\n----------------------------------------------------------------------\nRan 14 tests in 25.814s\n\nOK\n"
+  },
+  {
+    "suite": "test_mcp_adapter.py",
+    "passed": true,
+    "duration_s": 6.62,
+    "output": "/workspace/scratch/a6d99fc4971c/genesis-oracle-free/development/gm_provider/test_mcp_adapter.py:12: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n  from starlette.testclient import TestClient\n.../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.\n  warnings.warn(\nStreamableHTTP session manager started\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 401 Unauthorized\"\nHTTP Request: GET https://genesis.example.invalid/.well-known/oauth-protected-resource/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type ListToolsRequest\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nProcessing request of type CallToolRequest\nTool 'genesis_claim' not listed, no validation will be performed\nTerminating session: None\nHTTP Request: POST https://genesis.example.invalid/mcp \"HTTP/1.1 200 OK\"\nStreamableHTTP session manager shutting down\n.....\n----------------------------------------------------------------------\nRan 8 tests in 5.570s\n\nOK\n"
+  },
+  {
+    "suite": "test_git_diagnostics.py",
+    "passed": true,
+    "duration_s": 4.1,
+    "output": "...............\n----------------------------------------------------------------------\nRan 15 tests in 3.654s\n\nOK\n"
+  },
+  {
+    "suite": "test_shared_store.py",
+    "passed": true,
+    "duration_s": 29.24,
+    "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 28.865s\n\nOK\n"
+  },
+  {
+    "suite": "test_gateway.py",
+    "passed": true,
+    "duration_s": 49.74,
+    "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 49.400s\n\nOK\n"
+  },
+  {
+    "suite": "test_service.py",
+    "passed": true,
+    "duration_s": 15.66,
+    "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 15.245s\n\nOK\n"
+  }
+]

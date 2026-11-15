@@ -1,3 +1,5 @@
+> PAID PROPOSAL WITHDRAWN. Use [Oracle Always Free pilot](ORACLE_ALWAYS_FREE_PILOT.md). This document is historical; do not provision Render.
+
 # One shared mobile gateway — deployment proposal, not deployed
 
 ## What you would approve

@@ -1,0 +1,27 @@
+[Unit]
+Description=Genesis Oracle read-only staging pilot
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/var/data
+ConditionPathIsMountPoint=/var/data
+[Service]
+User=genesis
+Group=genesis
+WorkingDirectory=/opt/genesis-code
+EnvironmentFile=/etc/genesis/gateway.env
+Environment=PYTHONDONTWRITEBYTECODE=1 HOME=/var/lib/genesis
+ExecStartPre=/usr/bin/mountpoint -q /var/data
+ExecStart=/opt/genesis-venv/bin/python -B /opt/genesis-code/development/gm_provider/deploy/oracle/run.py
+Restart=on-failure
+RestartSec=30
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/data
+MemoryHigh=512M
+MemoryMax=1G
+CPUQuota=100%
+[Install]
+WantedBy=multi-user.target

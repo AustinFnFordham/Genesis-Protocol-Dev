@@ -1,0 +1,10 @@
+{
+  "base": "09a3094f37e93848279d02500dfb75663af99041",
+  "outside_development_byte_identical": true,
+  "files": 1191,
+  "adapter_gateway_recovery_unchanged": true,
+  "deployed": false,
+  "gameplay": false,
+  "billing_upgraded": false,
+  "arm_execution_tested": false
+}
