@@ -1,0 +1,13 @@
+{
+  "operation": "push-development-branch",
+  "exit_code": 128,
+  "classification": "authentication_or_permission",
+  "stderr": "fatal: could not read Username for '[redacted-url]': terminal prompts disabled",
+  "stdout": "",
+  "timed_out": false,
+  "remote_outcome": "rejected",
+  "success": false,
+  "local_commit": "c7390c165fb02ffd81c32bc6ae82a526bfbbd10b",
+  "target_branch": "dev/git-claim-diagnostics-350c9da",
+  "shared_staging_targeted": false
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "suite": "development/gm_provider/test_git_diagnostics.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 2364.8,
+    "output": "...............\n----------------------------------------------------------------------\nRan 15 tests in 2.099s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_shared_store.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 16130.08,
+    "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 15.908s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_gateway.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 34034.63,
+    "output": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 33.807s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_service.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 10242.26,
+    "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 10.005s\n\nOK\n"
+  },
+  {
+    "suite": "development/gm_provider/test_npc_review.py",
+    "passed": true,
+    "exit_code": 0,
+    "elapsed_ms": 41.13,
+    "output": "ok npc review tests\n"
+  }
+]

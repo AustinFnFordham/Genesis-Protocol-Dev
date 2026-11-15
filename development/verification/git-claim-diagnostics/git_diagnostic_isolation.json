@@ -1,0 +1,27 @@
+{
+  "base": "350c9da29ed2d7d667f147421d9d15b5471cd4d2",
+  "protected_files": 146,
+  "protected_sha256": "ad0ee7cf069e8401f1e422cf9bdc34b547ce1b7e63803e0fc8e8dc862b0b47ad",
+  "working_files_byte_identical": true,
+  "shared_remote_head": "350c9da29ed2d7d667f147421d9d15b5471cd4d2",
+  "shared_remote_unchanged": true,
+  "request_id": "shared-0002",
+  "action_version": 1,
+  "action_status": "submitted",
+  "provider": "gpt-session",
+  "lease_holder": null,
+  "lease_version": 5,
+  "live_worker_invoked": false,
+  "deployed": false,
+  "all_tracked_outside_development": {
+    "files": 1191,
+    "byte_identical": true,
+    "sha256": "23cab44da5e0ac2296807c0cbbc041092c5ed862b8bb620b62eae82aa9faef4d"
+  },
+  "original_checkout": {
+    "files": 1282,
+    "byte_identical": true,
+    "sha256": "7ddfb04bc162c6f961df23802bf9def83fcbd920466b2994ff7e38c8bc71a9f5"
+  },
+  "original_checkout_clean": true
+}

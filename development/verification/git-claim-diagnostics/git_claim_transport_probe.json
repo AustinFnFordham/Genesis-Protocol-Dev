@@ -1,0 +1,12 @@
+{
+  "operation": "push-dry-run",
+  "exit_code": 128,
+  "classification": "authentication_or_permission",
+  "stderr": "fatal: could not read Username for '[redacted-url]': terminal prompts disabled",
+  "stdout": "",
+  "timed_out": false,
+  "remote_outcome": "rejected",
+  "probe": "non-mutating push dry-run of existing remote head to the same ref",
+  "shared_head": "350c9da29ed2d7d667f147421d9d15b5471cd4d2",
+  "queue_or_lease_written": false
+}
