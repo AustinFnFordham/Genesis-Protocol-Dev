@@ -86,6 +86,43 @@ def test_old_contexts_are_unchanged():
         tmp.unlink()
 
 
+def act(i, **more): return dict({"type": "action", "option": i}, **more)
+
+
+def test_core_actions_are_always_available_in_combat():
+    ctx = json.loads(CTX.read_text())
+    assert not any(o["id"] in ("dash", "dodge", "help", "ready", "disengage", "search", "hide") for o in ctx["options"])   # the GM listed none
+    for core in ("dash", "dodge", "disengage", "hide", "search"):
+        v = validate([act(core)])
+        assert v["legal"] and v["used"]["action"] == 1, (core, v["errors"])
+    assert validate([act("help", target="wick")])["legal"]
+    assert validate([act("ready", trigger="the small door opens")])["legal"]
+    assert not validate([act("dash"), act("dodge")])["legal"]                       # still one action
+    far = [m for m in ctx["movement"] if m["feet"] == 30][0]["id"]
+    ctx["movement"].append({"id": "long", "label": "Run 55 ft up the walkway", "feet": 55, "leaves_reach_of": [], "distance_after": {}})
+    tmp = HERE / "fixtures" / ".handoff_dash.json"; tmp.write_text(json.dumps(ctx))
+    try:
+        assert "DISTANCE" in codes(validate([{"type": "move", "option": "long"}], tmp))
+        assert validate([act("dash"), {"type": "move", "option": "long"}], tmp)["legal"]      # Dash adds the movement
+        ctx["core_actions"] = False
+        tmp.write_text(json.dumps(ctx))
+        assert not validate([act("dash")], tmp)["legal"] or validate([act("dash")], tmp)["used"]["action"] == 0
+    finally:
+        tmp.unlink()
+
+
+def test_a_submission_does_not_end_the_turn_by_itself():
+    v = validate([obj("release_blaster"), SAY])
+    assert v["ends_turn"] is False and "TURN_CONTINUES" in codes(v, "info")
+    decl = {"actor": "aero", "source": "composer", "freeform": "", "unmapped": [], "steps": [SAY], "end_turn": True}
+    p = subprocess.run(["node", str(JS), "validate", "-", str(CTX)], input=json.dumps(decl), capture_output=True, text=True)
+    v = json.loads(p.stdout)["validation"]
+    assert v["ends_turn"] is True and "TURN_ENDS" in codes(v, "info")
+    decl = {"actor": "aero", "source": "freeform", "freeform": "I end my turn.", "unmapped": ["I end my turn."], "steps": []}
+    p = subprocess.run(["node", str(JS), "validate", "-", str(CTX)], input=json.dumps(decl), capture_output=True, text=True)
+    assert json.loads(p.stdout)["validation"]["ends_turn"] is True
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

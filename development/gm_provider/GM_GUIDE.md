@@ -76,6 +76,21 @@ Order: `review` (only before anything else) **or** `tables` → zero or more `ro
 - When no side is engaging, time may pass in scene mode; do not hold the table in six-second rounds
   that change nothing.
 
+## Encounters (creator/ENCOUNTER_RULING.md)
+- Every acting creature is a participant with its own initiative count and its own budget: one action, a bonus action only
+  if a feature grants it, movement up to speed, one free object interaction, one reaction. Record `encounter_start` once,
+  then for each actor in order `turn_start`, a `resource_spent` / `ready_set` / `ready_fired` per thing spent, `turn_end`.
+  The gateway refuses a batch that breaks the order or a budget.
+- A shared initiative count shares nothing else. Each creature moves and acts once, on its own budget.
+- A spoken command is free and gives no one a turn. A listener acts on its own turn, or on the word only through a Ready it
+  set on its own earlier turn.
+- If `control` for a companion is undecided, do not act for it and do not skip it: stop and offer player-directed or GM-driven.
+- A submission does not end the player's turn. End it only on `TURN_ENDS` in `validation.info`.
+- Hold initiative only while someone can act on someone else within a round. Otherwise propose `encounter_mode: standoff`
+  with a reason; resume combat on contact. Never switch silently.
+- Plainly perceptible things and brief speech are free. Do not sell observation as an action. Never write
+  `turn_context.encounter`; the gateway derives it.
+
 ## Dice settings
 `resolution.settings` is the player's choice and is applied by the resolver, not by you: Regular,
 Heroic or Legendary for the player character's own d20 checks, attacks and saves; Narrative

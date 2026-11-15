@@ -32,6 +32,8 @@ This supersedes charter rule 1's "no menus unless asked": the owner asked. Free 
 
 - Optional (ruling 2026-11-13, `ACTION_ECONOMY_RULING.md`), GM-published: `objects[].cost: "none"` (release, contact, shifting a held thing, receiving: no object interaction is spent) and `objects[].by: "<actor id>"` (another character's act: no cost to the acting character, info `NPC_COOPERATION`; hand fields on it describe the receiver). Objects without these fields are costed as before.
 
+- Optional (ruling 2026-11-15, `ENCOUNTER_RULING.md`): `encounter` (the initiative tracker: mode, round, current, next, order with per-actor budgets; derived from the ledger, never GM-written), `core_actions: false` to suppress the always-available combat actions (Dash, Disengage, Dodge, Help, Hide, Ready, Search), and declaration field `end_turn`. Validation reports `ends_turn` with info `TURN_ENDS` or `TURN_CONTINUES`.
+
 Options are contextual examples, not a closed list. Anything else may be written freely.
 
 ## 3. Declaration

@@ -19,6 +19,7 @@ timed "$U/test_datapad_review_options.cjs" node $U/test_datapad_review_options.c
 timed "development/test_player_experience.cjs" node development/test_player_experience.cjs
 timed "development/test_dice_history_ui.cjs" node development/test_dice_history_ui.cjs $P $Q/dice_ui
 timed "development/experimental_resolution/test_controls.cjs" node development/experimental_resolution/test_controls.cjs
+timed "development/encounter/test_tracker_ui.cjs" node development/encounter/test_tracker_ui.cjs $P $Q/state_round1.json
 timed "rng_audit hask_meadow_r2" python3 -B .claude/skills/litrpg-dice/audit_rng.py campaigns/starwars_litrpg/runs/hask_meadow_r2
 timed "rng_audit sandbox" python3 -B .claude/skills/litrpg-dice/audit_rng.py campaigns/starwars_litrpg/runs/sandbox
 timed "page is the built page" bash -c "python3 $U/build_datapad.py --out $Q/rebuilt.html >/dev/null && cmp $Q/rebuilt.html $P"

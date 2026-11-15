@@ -599,7 +599,27 @@
 
   /* Equipment interactions are derived from ctx.equipment (the record), so the palette always offers taking an item
      out, putting it away or setting it down, without the GM listing each one. Objects the GM published for an item win. */
+  /* Core combat actions are always available in combat, whatever the GM listed (encounter ruling 2026-11-15,
+     creator/ENCOUNTER_RULING.md §6). The list stays open: anything else may still be written freely. A context can
+     opt out with core_actions: false; an option the GM published under the same id wins. */
+  var CORE_ACTIONS = [
+    { id: "dash", slot: "action", label: "Dash", detail: "your action; doubles how far you can move this turn", doubles_movement: true, aliases: ["dash", "run", "sprint"] },
+    { id: "disengage", slot: "action", label: "Disengage", detail: "your action; your movement this turn provokes no opportunity attacks", suppresses_opportunity_attacks: true, aliases: ["disengage", "withdraw carefully"] },
+    { id: "dodge", slot: "action", label: "Dodge", detail: "your action; until your next turn attacks you can see coming are harder to land", aliases: ["dodge", "defend"] },
+    { id: "help", slot: "action", label: "Help", detail: "your action; aid one creature's next check, or its next attack against a foe within 5 ft of you", needs_target: true, aliases: ["help", "assist", "aid"] },
+    { id: "ready", slot: "action", label: "Ready an action", detail: "your action now; name the trigger and what you do; it then takes your reaction when the trigger happens", needs_trigger: true, uses_reaction_when_triggered: true, aliases: ["ready", "hold my action", "wait for"] },
+    { id: "search", slot: "action", label: "Search", detail: "your action; a deliberate, focused search or listen (a check). What is plainly there to see or hear costs nothing.", aliases: ["search", "search for"] },
+    { id: "hide", slot: "action", label: "Hide", detail: "your action; needs something to hide behind or in", aliases: ["hide", "take cover and hide"] }
+  ];
+  function withCore(ctx) {
+    if (!ctx || ctx.mode !== "combat" || ctx.core_actions === false || ctx.__core) return ctx;
+    var c = clone(ctx); c.__core = true; c.options = (c.options || []).slice();
+    CORE_ACTIONS.forEach(function (o) { if (!byId(c.options, o.id)) { var x = clone(o); x.generated = true; x.core = true; c.options.push(x); } });
+    return c;
+  }
+
   function withEquipment(ctx) {
+    ctx = withCore(ctx);
     if (!ctx || !Array.isArray(ctx.equipment) || ctx.__eq) return ctx;
     var c = clone(ctx); c.__eq = true; c.objects = (c.objects || []).slice();
     var covered = {}; c.objects.forEach(function (o) { [o.item, o.frees_item, o.equipment].forEach(function (x) { if (x) covered[x] = 1; }); });
@@ -664,10 +684,23 @@
     if (mv && mv.id === "hold" && !decl.steps.some(function (s) { return s.type === "move"; }) && decl.steps.length) preview.push({ step: "movement", text: mv.label });
     (decl.reactions || []).forEach(function (r) { var x = byId(ctx.reactions, r); if (x) preview.push({ step: "reaction", text: (ctx.reaction_prompt ? "Now: " : "If " + x.trigger + ": ") + x.label }); });
     if (ctx.reaction_prompt && decl.reaction_decline) preview.push({ step: "reaction", text: "Do not react" });
+    // A submission is not the end of a turn (ENCOUNTER_RULING.md §5). In combat the turn ends when the player says so
+    // or when nothing is left to spend; otherwise the GM resolves these steps and the same turn continues.
+    var endsTurn = false, left = [];
+    if (combat && !ctx.reaction_prompt) {
+      var bb = ctx.budget || {};
+      if ((bb.action == null ? 1 : bb.action) - used.action > 0) left.push("action");
+      if ((bb.bonus_action == null ? 1 : bb.bonus_action) - used.bonus_action > 0 && (ctx.options || []).some(function (o) { return o.slot === "bonus_action"; })) left.push("bonus action");
+      var mvLeft = (bb.movement_ft == null ? (ctx.speed_ft || 0) : bb.movement_ft) - used.movement_ft; if (mvLeft > 0) left.push(mvLeft + " ft of movement");
+      if ((bb.object_interaction == null ? 1 : bb.object_interaction) - used.object_interaction > 0) left.push("object interaction");
+      endsTurn = decl.end_turn === true || /\bend(s|ing)? (my |the |his |aero's )?turn\b/i.test(String(decl.freeform || "") + " " + (decl.unmapped || []).join(" ")) || !left.length;
+      info.push(endsTurn ? { code: "TURN_ENDS", message: "This ends " + (ctx.actor_name || "Aero") + "'s turn." + (left.length ? " Unspent: " + left.join(", ") + "." : "") }
+                         : { code: "TURN_CONTINUES", message: "Your turn continues after this. Left: " + left.join(", ") + ". Say “end my turn” when you are done." });
+    }
     var confirm = warnings.filter(function (w) { return !w.advisory; });
     var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
     return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,
-             errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives,
+             errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives, ends_turn: endsTurn,
              steps: decl.steps, halts: halts, trace: decl.steps.length ? flat(decl.steps).map(function (s) { return trace[s.id]; }).filter(Boolean) : [], paths: ps.length };
   }
 

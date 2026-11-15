@@ -131,6 +131,27 @@ Applies the adjudication repair reported on Hask Meadow round 9. The ruling file
   A failed check gives its supported result and an actionable situation, never an identical reset or invented punishment.
   When no side is engaging, leave initiative for scene time instead of holding six-second rounds that change nothing.
 
+## 3e. Encounters, initiative and per-actor turns (candidate, 2026-11-15; rule: `creator/ENCOUNTER_RULING.md`)
+- **Record the encounter.** When initiative starts, commit `encounter_start` (GM-only when it lists creatures Aero has not
+  perceived) with every participant: stable `actor_id`, `label`, `side`, `initiative`, `group` for a shared count, `hidden`,
+  `speed_ft`, `bonus_action_eligible`, `control {decides: player | gm | player_directed, basis}`. Companions who act are
+  participants with their own count. Each hostile creature is its own participant.
+- **One turn each, in order.** For every actor commit `turn_start`, a `resource_spent` (or `ready_set` / `ready_fired`) for
+  each thing it spends, and `turn_end`. Check the batch first with `python3 development/encounter/encounter.py`'s `check()`
+  (the provider gateway runs it on every commit). A shared count shares nothing else: no pooled actions, movement or reactions.
+- **Commands.** Speech is free for the speaker and gives the listener no turn. A listener acts on its own turn, or on a word
+  only if it took Ready on its own earlier turn (its action then, its reaction on the trigger).
+- **Control undecided** means stop and ask: publish the two options (player-directed, GM-driven). Never choose silently.
+- **A submission does not end a turn.** Resolve every legal step, stop at a genuine decision or interruption, and keep the
+  same turn open with what is left unless the validator says `TURN_ENDS` (the player said so, or nothing is left).
+- **Mode.** Keep initiative only while someone can act on someone else within a round or a hazard runs round by round.
+  Otherwise propose a standoff with `encounter_mode` and a reason citing committed events; never switch silently, never
+  mid-turn. Resume combat on contact, a breached barrier, a side closing to reach, or a round-scale hazard.
+- **Costs.** Plainly perceptible things and brief speech cost nothing. Search, Dash, Disengage, Dodge, Help, Hide and Ready are
+  actions and are always available. Do not publish observation or a question as "takes your action".
+- **Narrate the change.** Say what changed and what can be acted on. Do not restate standing scene facts every round.
+- The player's tracker (`turn_context.encounter`) is derived by the controller. Do not write it by hand.
+
 ## 4. Narrate, make it durable, then publish
 1. Write narration to `/tmp/narr.txt` per NARRATIVE_SPEC (high-intensity horror where earned; injuries match committed damage; perspective rules). Run `turn.py lint <campaign_id> /tmp/narr.txt` and fix until it passes.
 2. Commit `gm_narration` (details `{text}`), `scene_state`, then a fresh public `turn_context` (TURN_CONTRACT §2, only what Aero can perceive) with idem `<action_id>:ctx`. The context must give:

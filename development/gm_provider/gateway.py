@@ -41,7 +41,7 @@ import time
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 UI = ROOT / "campaigns/starwars_litrpg/ui"
-for extra in (HERE, ROOT / ".claude/skills/litrpg-ledger", UI, ROOT / "development/experimental_resolution"):
+for extra in (HERE, ROOT / ".claude/skills/litrpg-ledger", UI, ROOT / "development/experimental_resolution", ROOT / "development/encounter"):
     if str(extra) not in sys.path:
         sys.path.insert(0, str(extra))
 import batch            # noqa: E402
@@ -49,6 +49,7 @@ import export_state     # noqa: E402
 import ledger           # noqa: E402
 import policy           # noqa: E402
 import npc_review       # noqa: E402
+import encounter        # noqa: E402
 from store import Conflict  # noqa: E402
 
 
@@ -609,6 +610,15 @@ class Gateway:
                     if order.index(step) < last:
                         bad("STEP_ORDER", f"event {index}: declared steps resolve in the player's order")
                     last = max(last, order.index(step))
+        # Initiative, turn order and every actor's budget are checked against the committed record
+        # (development/encounter/encounter.py). The provider proposes; it cannot grant a turn or a resource.
+        try:
+            _, encounter_problems = encounter.check(ledger.load_all(self.campaign), [e for e in events if isinstance(e, dict)])
+        except encounter.EncounterError as error:
+            encounter_problems = [{"code": "ENCOUNTER_RECORD", "message": f"the committed encounter record does not fold: {error.message}"}]
+        problems.extend(encounter_problems)
+        if isinstance(context, dict) and "encounter" in context:
+            context = {k: v for k, v in context.items() if k != "encounter"}     # never taken from a provider; the gateway derives it
         cited = {k for e in events if isinstance(e, dict) for k in e.get("roll_keys", [])}
         for roll_key, known in op["rolls"].items():
             if roll_key not in cited:
@@ -673,7 +683,12 @@ class Gateway:
             drafts.append(event("gm_narration", f"Narration for {action_id}", {"text": proposal["narration"]}, causes=["$1"]))
             if isinstance(proposal.get("scene_state"), dict):
                 drafts.append(event("scene_state", str(proposal["scene_state"].get("summary") or "Scene"), {k: v for k, v in proposal["scene_state"].items() if k != "summary"}, causes=[f"${count+1}"]))
-            drafts.append(event("turn_context", f"Turn context after {action_id}", proposal["turn_context"], causes=[f"${count+1}"]))
+            after, _ = encounter.check(all_events, [e for e in proposal["events"] if isinstance(e, dict)])
+            tracker = encounter.public(after)
+            published_context = {k: v for k, v in proposal["turn_context"].items() if k != "encounter"}
+            if tracker:
+                published_context["encounter"] = tracker
+            drafts.append(event("turn_context", f"Turn context after {action_id}", published_context, causes=[f"${count+1}"]))
             request = {"batch_id": action_id, "expected_revision": len(all_events), "expected_head": all_events[-1]["event_id"], "events": drafts}
             op["commit"] = {"request": request, "fingerprint": digest(request), "by": {"provider": provider, "run": run}}
             self._save_op(op)

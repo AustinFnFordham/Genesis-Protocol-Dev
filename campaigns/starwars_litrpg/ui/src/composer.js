@@ -178,6 +178,29 @@
   function check(group, value, checked, label, small) {
     return '<label class="opt"><input type="checkbox" value="' + esc(value) + '" data-c="' + group + '"' + (checked ? " checked" : "") + '><span class="lbl">' + esc(label) + (small ? "<small>" + esc(small) + "</small>" : "") + "</span></label>";
   }
+  /* Initiative tracker (turn_context.encounter, derived from the ledger by the encounter controller). Shows only what
+     the context carries: hidden actors arrive as one anonymous slot and stay that way. */
+  function renderEncounter(c) {
+    var e = c && c.encounter; if (!e || !e.order) return "";
+    var names = { combat: "Combat", standoff: "Standoff", scene: "Scene" };
+    function res(b) {
+      if (!b) return "";
+      function one(n, left, txt) { return '<span class="pill ' + (left ? "ok" : "used") + '">' + n + ": " + txt + "</span>"; }
+      return one("Action", b.action, b.action ? "ready" : "spent") + (b.bonus_action == null ? "" : one("Bonus", b.bonus_action, b.bonus_action ? "ready" : "spent")) +
+        one("Move", b.movement_ft, b.movement_ft + "/" + b.speed_ft + " ft") + one("Reaction", b.reaction, b.reaction ? "ready" : "spent") + one("Object", b.object_interaction, b.object_interaction ? "ready" : "spent");
+    }
+    var rows = e.order.map(function (s) {
+      var mark = s.status === "acting" ? "▶ " : s.status === "done" ? "✓ " : "";
+      var who = s.unseen ? "" : (s.control === "undecided" ? " · control undecided" : s.control === "player_directed" ? " · you direct" : s.control === "gm" ? " · acts on their own" : "");
+      return '<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:4px"><b>' + mark + esc(s.label) + "</b><span class=\"note\" style=\"margin:0\">" + esc(String(s.initiative)) + esc(who) +
+        ((s.conditions || []).length ? " · " + esc(s.conditions.join(", ")) : "") + (s.ready ? " · readied: " + esc(s.ready.does) + " when " + esc(s.ready.trigger) : "") + "</span>" +
+        (s.unseen || e.mode !== "combat" ? "" : '<div class="budget" style="margin:0">' + res(s.budget) + "</div>") + "</div>";
+    }).join("");
+    var head = (names[e.mode] || esc(e.mode)) + (e.round ? " · round " + esc(e.round) : "") + (e.current ? " · now: " + esc(e.current) : "") + (e.next ? " · next: " + esc(e.next) : "");
+    var need = e.decision && e.decision.kind === "ruling_needed" ? '<div class="check warn" style="margin-top:6px">A ruling is needed before this goes on: who decides this character’s actions in a fight.</div>' : "";
+    return '<div class="check" id="encounterTracker" style="margin-top:8px"><b>' + head + "</b>" + (e.mode !== "combat" && e.mode_reason ? '<div class="note" style="margin:2px 0 0">' + esc(e.mode_reason) + "</div>" : "") + rows + need + "</div>";
+  }
+
   function budget(c, r) {
     if (c.mode !== "combat") return '<div class="note">Scene: no initiative and no action economy. Group what Aero intends into sequences, in order. The GM plays the whole plan in one pass and stops only when the world interrupts or something needs your decision. Hands, gear, distance and time still apply.</div>';
     var b = c.budget || {}, u = r.used;
@@ -431,7 +454,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      renderResolutionControls(v, busy || phase) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +

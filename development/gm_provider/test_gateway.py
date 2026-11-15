@@ -642,6 +642,93 @@ class RecoveryAfterRelease(Base):
         self.assertIsNone(self.gw.recovery()["in_flight"])
 
 
+class EncounterThroughTheGateway(Base):
+    """The gateway holds every provider to initiative order and per-actor budgets, and publishes the tracker."""
+
+    PARTICIPANTS = [
+        {"actor_id": "aero", "label": "Aero", "side": "party", "initiative": 21, "control": {"decides": "player"}},
+        {"actor_id": "ally", "label": "The ally", "side": "party", "initiative": 12, "control": {"decides": "gm"}},
+        {"actor_id": "lurker_1", "label": "HIDDEN_LURKER_ONE", "side": "foe", "initiative": 7, "group": "lurkers", "hidden": True, "control": {"decides": "gm"}},
+        {"actor_id": "lurker_2", "label": "HIDDEN_LURKER_TWO", "side": "foe", "initiative": 7, "group": "lurkers", "hidden": True, "control": {"decides": "gm"}}]
+
+    def gm(self, name, extra):
+        def add(move, context):
+            if move["type"] == "commit":
+                step = context["declaration"]["steps"][0]["id"]
+                move["proposal"]["events"] = [e for e in move["proposal"]["events"]] + extra(step)
+            return move
+        return script(name, add)
+
+    @staticmethod
+    def e(kind, **details):
+        return {"kind": kind, "summary": kind, "visibility": "gm_only" if details.pop("_private", False) else "player", "details": details}
+
+    def test_order_budgets_and_public_tracker(self):
+        e = self.e
+        opening = lambda step: [e("encounter_start", encounter_id="staging-fight", mode="combat", participants=self.PARTICIPANTS),
+                                e("turn_start", actor_id="aero"), e("resource_spent", actor_id="aero", resource="object_interaction", **{"for": step})]
+        self.act(HOLSTER, provider="claude")
+        self.assertEqual(run_turn(self.gw, self.gm("claude", opening))["outcome"], "committed")
+        state = self.gw.public_state()["state"]
+        tracker = state["turn_context"]["encounter"]
+        self.assertEqual((tracker["mode"], tracker["round"], tracker["current"], tracker["next"]), ("combat", 1, "Aero", "The ally"))
+        self.assertEqual([s["label"] for s in tracker["order"]], ["Aero", "The ally", "Others you cannot see"])
+        self.assertEqual(tracker["order"][0]["budget"]["object_interaction"], 0)
+        self.assertNotIn("HIDDEN_LURKER", json.dumps(self.gw.public_state()) + json.dumps([self.gw.store.read(k)[1] for k in self.gw.store.keys("view/")]))
+        # A second provider continues the same turn. It may not let the ally act on Aero's turn, nor skip anyone.
+        cases = {"ENCOUNTER_OFF_TURN": lambda step: [e("resource_spent", actor_id="ally", resource="action", **{"for": "acts on Aero's word"})],
+                 "ENCOUNTER_OUT_OF_ORDER": lambda step: [e("turn_end", actor_id="aero"), e("turn_start", actor_id="lurker_1", _private=True)],
+                 "ENCOUNTER_NO_BUDGET": lambda step: [e("resource_spent", actor_id="aero", resource="object_interaction")]}
+        action, _ = self.act(INSPECT, provider="gpt")
+        self.gw.claim("gpt", "run-x", {"kind": "scripted", "mock": True})
+        good = script("gpt")
+        while True:
+            context = self.gw.context("gpt", "run-x")
+            move = good.step(context)
+            if move["type"] == "commit":
+                break
+            if move["type"] == "tables":
+                self.gw.fix_tables("gpt", "run-x", move["tables"])
+            else:
+                for request in move["rolls"]:
+                    self.gw.roll("gpt", "run-x", request)
+        step = action["declaration"]["steps"][0]["id"]
+        for code, extra in cases.items():
+            proposal = copy.deepcopy(move["proposal"])
+            proposal["events"] += extra(step)
+            with self.assertRaises(Refused) as caught:
+                self.gw.commit("gpt", "run-x", proposal)
+            self.assertIn(code, [p["code"] for p in caught.exception.extra["problems"]], code)
+        # The legal continuation: Aero spends his action and ends; the ally and both lurkers each take one turn.
+        proposal = copy.deepcopy(move["proposal"])
+        proposal["turn_context"]["encounter"] = {"mode": "scene", "order": []}          # a forged tracker is discarded, not trusted
+        proposal["events"] += [e("resource_spent", actor_id="aero", resource="action", **{"for": step}), e("turn_end", actor_id="aero"),
+                               e("turn_start", actor_id="ally"), e("ready_set", actor_id="ally", trigger="Aero says the word", does="one shot"), e("turn_end", actor_id="ally"),
+                               e("turn_start", actor_id="lurker_1", _private=True), e("resource_spent", actor_id="lurker_1", resource="movement_ft", amount=30, _private=True), e("turn_end", actor_id="lurker_1", _private=True),
+                               e("turn_start", actor_id="lurker_2", _private=True), e("turn_end", actor_id="lurker_2", _private=True),
+                               e("turn_start", actor_id="aero")]
+        try:
+            status = self.gw.commit("gpt", "run-x", proposal)
+        except Refused as refusal:
+            self.fail(refusal.extra)
+        self.assertEqual(status["status"], "committed")
+        tracker = self.gw.public_state()["state"]["turn_context"]["encounter"]
+        self.assertEqual((tracker["round"], tracker["current"], tracker["next"]), (2, "Aero", "The ally"))
+        self.assertEqual(tracker["order"][1]["ready"], {"trigger": "Aero says the word", "does": "one shot"})
+        self.assertEqual(tracker["order"][0]["budget"]["action"], 1)
+        public = json.dumps(self.gw.public_state()) + json.dumps([self.gw.page(p) for p in self.gw.public_state()["pages"]])
+        for secret in ("HIDDEN_LURKER", "lurker_1", "lurker_2"):
+            self.assertNotIn(secret, public)
+        # Mode change by a third provider, with a reason; initiative is suspended, nobody is removed.
+        calm = lambda step: [e("resource_spent", actor_id="aero", resource="action", **{"for": step}), e("turn_end", actor_id="aero"),
+                             e("encounter_mode", mode="standoff", reason="neither side can reach the other", cites=[])]
+        self.act(INSPECT, provider="gemini")
+        self.assertEqual(run_turn(self.gw, self.gm("gemini", calm))["outcome"], "committed")
+        tracker = self.gw.public_state()["state"]["turn_context"]["encounter"]
+        self.assertEqual((tracker["mode"], tracker["round"], tracker["decision"]["kind"]), ("standoff", None, "player"))
+        self.healthy()
+
+
 class Settings(Base):
     def test_legacy_campaign_refuses_dice_modes(self):
         with self.assertRaises(Refused) as caught:

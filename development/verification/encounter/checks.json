@@ -1,0 +1,228 @@
+{
+ "commit": "d7d5cd0",
+ "dirty": true,
+ "failed": 0,
+ "suites": [
+  {
+   "suite": ".claude/skills/litrpg-dice/test_audit_rng.py",
+   "passed": true,
+   "elapsed_ms": 193
+  },
+  {
+   "suite": ".claude/skills/litrpg-dice/test_roll.py",
+   "passed": true,
+   "elapsed_ms": 749
+  },
+  {
+   "suite": ".claude/skills/litrpg-ledger/test_batch.py",
+   "passed": true,
+   "elapsed_ms": 103
+  },
+  {
+   "suite": ".claude/skills/litrpg-ledger/test_ledger.py",
+   "passed": true,
+   "elapsed_ms": 1035
+  },
+  {
+   "suite": ".claude/skills/litrpg-process-turn/test_brief.py",
+   "passed": true,
+   "elapsed_ms": 191
+  },
+  {
+   "suite": ".claude/skills/litrpg-process-turn/test_brief_checkpoint.py",
+   "passed": true,
+   "elapsed_ms": 322
+  },
+  {
+   "suite": ".claude/skills/litrpg-process-turn/test_turn.py",
+   "passed": true,
+   "elapsed_ms": 1246
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/creator/test_continuity.py",
+   "passed": true,
+   "elapsed_ms": 376
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_action_economy.py",
+   "passed": true,
+   "elapsed_ms": 780
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_campaign_features.py",
+   "passed": true,
+   "elapsed_ms": 203
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_dice_display.py",
+   "passed": true,
+   "elapsed_ms": 210
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_dice_history.py",
+   "passed": true,
+   "elapsed_ms": 161
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_roster.py",
+   "passed": true,
+   "elapsed_ms": 206
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_scene_sequencing.py",
+   "passed": true,
+   "elapsed_ms": 954
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_sequencer.py",
+   "passed": true,
+   "elapsed_ms": 3271
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_turn_contract.py",
+   "passed": true,
+   "elapsed_ms": 425
+  },
+  {
+   "suite": "development/encounter/test_encounter.py",
+   "passed": true,
+   "elapsed_ms": 44
+  },
+  {
+   "suite": "development/experimental_resolution/test_resolution.py",
+   "passed": true,
+   "elapsed_ms": 6671
+  },
+  {
+   "suite": "development/gm_provider/test_gateway.py",
+   "passed": true,
+   "elapsed_ms": 27960
+  },
+  {
+   "suite": "development/gm_provider/test_npc_review.py",
+   "passed": true,
+   "elapsed_ms": 33
+  },
+  {
+   "suite": "development/gm_provider/test_service.py",
+   "passed": true,
+   "elapsed_ms": 8410
+  },
+  {
+   "suite": "development/gm_provider/test_shared_store.py",
+   "passed": true,
+   "elapsed_ms": 19214
+  },
+  {
+   "suite": "development/test_action_fences.py",
+   "passed": true,
+   "elapsed_ms": 614
+  },
+  {
+   "suite": "development/test_increment_contracts.py",
+   "passed": true,
+   "elapsed_ms": 107
+  },
+  {
+   "suite": "development/test_interop.py",
+   "passed": true,
+   "elapsed_ms": 464
+  },
+  {
+   "suite": "development/test_legacy_dice_recovery.py",
+   "passed": true,
+   "elapsed_ms": 8232
+  },
+  {
+   "suite": "development/test_readiness.py",
+   "passed": true,
+   "elapsed_ms": 196
+  },
+  {
+   "suite": "development/test_worker_progress.py",
+   "passed": true,
+   "elapsed_ms": 64
+  },
+  {
+   "suite": "development/test_worker_roundtrip.py",
+   "passed": true,
+   "elapsed_ms": 587
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_ui.cjs",
+   "passed": true,
+   "elapsed_ms": 5863
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_sequencer_ui.cjs",
+   "passed": true,
+   "elapsed_ms": 18347
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_scene_ui.cjs",
+   "passed": true,
+   "elapsed_ms": 6175
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_iphone.cjs",
+   "passed": true,
+   "elapsed_ms": 8568
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_history.cjs",
+   "passed": true,
+   "elapsed_ms": 3764
+  },
+  {
+   "suite": "campaigns/starwars_litrpg/ui/test_datapad_review_options.cjs",
+   "passed": true,
+   "elapsed_ms": 5939
+  },
+  {
+   "suite": "development/test_player_experience.cjs",
+   "passed": true,
+   "elapsed_ms": 3739
+  },
+  {
+   "suite": "development/test_dice_history_ui.cjs",
+   "passed": true,
+   "elapsed_ms": 1012
+  },
+  {
+   "suite": "development/experimental_resolution/test_controls.cjs",
+   "passed": true,
+   "elapsed_ms": 2026
+  },
+  {
+   "suite": "development/encounter/test_tracker_ui.cjs",
+   "passed": true,
+   "elapsed_ms": 1610
+  },
+  {
+   "suite": "rng_audit hask_meadow_r2",
+   "passed": true,
+   "elapsed_ms": 2248
+  },
+  {
+   "suite": "rng_audit sandbox",
+   "passed": true,
+   "elapsed_ms": 270
+  },
+  {
+   "suite": "page is the built page",
+   "passed": true,
+   "elapsed_ms": 43
+  }
+ ],
+ "note": "development/run_all_checks.sh, working tree of dev/encounter-controller before its commit. Local only; headless Chromium.",
+ "protected_paths": {
+  "campaign_runs_identical_to_live_head_ebda584": true
+ },
+ "encounter_tests": {
+  "controller_cases": 10,
+  "gateway_encounter_case": 1,
+  "validator_cases": 10,
+  "tracker_browser_check": 1,
+  "actors": "synthetic; no campaign read or written"
+ }
+}
