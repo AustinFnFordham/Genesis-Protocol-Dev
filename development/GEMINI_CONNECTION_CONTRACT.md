@@ -43,6 +43,7 @@ player phrase a declaration, but it is not the GM and its output is only a decla
 | `POST /v1/campaigns/{id}/actions` (envelope below) | `202` and the action status; `200` with `duplicate: true` on a retry |
 | `GET /v1/campaigns/{id}/actions/{action_id}` | `{action_id, status, provider, stage, blocked, review, error, publication, published_revision}` |
 | `POST /v1/campaigns/{id}/actions/{action_id}/reroute` `{provider}` | Explicit handoff of an unfinished action |
+| `GET /v1/campaigns/{id}/recovery` | `{revision, ledger_head, record_mid_write, in_flight: {…status, phase, mechanical, next, reroute_allowed}, lease: {held, provider, expires_in_ms}}` |
 
 `state` is the same document the Datapad reads (`view/state`): scene, character, `turn_context`
 (options, objects, movement, dialogue, notes, hands, pending steps), recent feed and journal, and the
@@ -107,6 +108,17 @@ campaign has dice modes enabled.
   seed, or any provider credential.
 - The provider that ran each turn is recorded privately with the turn; the app sees the routed
   provider on the action status.
+
+## 6b. Recovery and the app's own routes
+
+Every action status carries `mechanical {tables_fixed, rolls_accepted, batch_accepted, batch_committed,
+fingerprint}`. Use it, not the revision, to tell whether a turn has started to resolve: the revision
+does not move until the turn commits. After a reconnect call `recovery` first.
+
+The app must not execute a turn in its own server, roll dice, or keep a lease, receipt or turn
+counter. Its reported `/api/v1/…/turns/execute`, recovery and lease routes map onto submit-and-poll,
+`recovery`, and the read-only `recovery.lease`. The mapping is by intent only: the app's source has
+not been supplied or inspected (see `SHARED_STAGING_AND_SESSIONS.md` §2).
 
 ## 7. Before production
 
