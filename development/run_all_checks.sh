@@ -15,6 +15,7 @@ timed "$U/test_datapad_sequencer_ui.cjs" node $U/test_datapad_sequencer_ui.cjs $
 timed "$U/test_datapad_scene_ui.cjs" node $U/test_datapad_scene_ui.cjs $P $Q/state_hask.json $Q/shots
 timed "$U/test_datapad_iphone.cjs" node $U/test_datapad_iphone.cjs $P $Q/state_hask.json $Q/shots
 timed "$U/test_datapad_history.cjs" node $U/test_datapad_history.cjs $P $Q/ui
+timed "$U/test_datapad_history.cjs (many pages per kind)" node $U/test_datapad_history.cjs $P $Q/ui_multi
 timed "$U/test_datapad_review_options.cjs" node $U/test_datapad_review_options.cjs $P $U/fixtures/needs_revision/state.json $U/fixtures/needs_revision/actions
 timed "development/test_player_experience.cjs" node development/test_player_experience.cjs
 timed "development/test_dice_history_ui.cjs" node development/test_dice_history_ui.cjs $P $Q/dice_ui

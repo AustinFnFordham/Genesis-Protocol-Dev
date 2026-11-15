@@ -729,6 +729,74 @@ class EncounterThroughTheGateway(Base):
         self.healthy()
 
 
+    def test_recruitment_and_control_are_owner_records_never_a_gm_proposal(self):
+        """Wick-like ally: GM-run until the owner records a recruitment. A provider cannot recruit, hand over or take
+        control inside a turn; the owner record is checked by the controller, republishes the tracker and rolls nothing."""
+        e = self.e
+        people = [{"actor_id": "aero", "label": "Aero", "side": "party", "role": "player_character", "initiative": 21, "control": {"decides": "player"}},
+                  {"actor_id": "ally", "label": "The ally", "side": "party", "role": "allied_npc", "initiative": 12, "control": {"decides": "gm", "basis": "temporary ally"}},
+                  {"actor_id": "foe", "label": "A foe", "side": "foe", "role": "npc", "initiative": 7}]
+        opening = lambda step: [e("encounter_start", encounter_id="control-fight", mode="combat", participants=people),
+                                e("turn_start", actor_id="aero"), e("resource_spent", actor_id="aero", resource="object_interaction", **{"for": step})]
+        self.act(HOLSTER, provider="claude")
+        self.assertEqual(run_turn(self.gw, self.gm("claude", opening))["outcome"], "committed")
+        row = lambda: self.gw.public_state()["state"]["turn_context"]["encounter"]["order"][1]
+        self.assertEqual((row()["role"], row()["control"]), ("allied_npc", "gm"))
+        rolls_before = (self.gw.campaign / "records/roll_log.jsonl").read_bytes()
+        # A GM provider tries to recruit him, or to make him player-directed, as part of resolving a turn: refused.
+        action, _ = self.act(INSPECT, provider="gpt")
+        self.gw.claim("gpt", "run-x", {"kind": "scripted", "mock": True})
+        good = script("gpt")
+        while True:
+            move = good.step(self.gw.context("gpt", "run-x"))
+            if move["type"] == "commit":
+                break
+            if move["type"] == "tables":
+                self.gw.fix_tables("gpt", "run-x", move["tables"])
+            else:
+                for request in move["rolls"]:
+                    self.gw.roll("gpt", "run-x", request)
+        for sneaked in (e("party_joined", member_id="ally", name="The ally", basis="he helped Aero"),
+                        e("control_changed", actor_id="ally", decides="player_directed", basis="Aero ordered him"),
+                        e("party_left", member_id="ally", reason="the GM says so")):
+            proposal = copy.deepcopy(move["proposal"])
+            proposal["events"].append(sneaked)
+            with self.assertRaises(Refused) as caught:
+                self.gw.commit("gpt", "run-x", proposal)
+            self.assertIn("RESERVED_KIND", [p["code"] for p in caught.exception.extra["problems"]])
+        # Nor while a declaration is in flight, by anyone.
+        with self.assertRaises(Refused) as caught:
+            self.gw.owner_record("party_joined", {"member_id": "ally", "name": "The ally", "basis": "owner"})
+        self.assertEqual(caught.exception.code, "TURN_IN_FLIGHT")
+        step = action["declaration"]["steps"][0]["id"]
+        proposal = copy.deepcopy(move["proposal"])
+        proposal["events"] += [e("resource_spent", actor_id="aero", resource="action", **{"for": step}), e("turn_end", actor_id="aero")]
+        self.assertEqual(self.gw.commit("gpt", "run-x", proposal)["status"], "committed")
+        self.assertEqual(self.gw.public_state()["state"]["turn_context"]["encounter"]["decision"], {"kind": "gm", "actor_id": "ally", "control": "gm"})
+        # Without recruitment he cannot be handed to the player; with it, he is player-directed by default.
+        for kind, details, code in (("control_changed", {"actor_id": "ally", "decides": "player_directed", "basis": "owner"}, "RECORD_REFUSED"),
+                                    ("party_joined", {"member_id": "ally", "name": "The ally"}, "BAD_RECORD"),
+                                    ("encounter_mode", {"mode": "scene", "reason": "x", "basis": "x"}, "BAD_RECORD")):
+            with self.assertRaises(Refused) as caught:
+                self.gw.owner_record(kind, details)
+            self.assertEqual(caught.exception.code, code)
+        before = self.gw.public_state()["cursor"]["revision"]
+        done = self.gw.owner_record("party_joined", {"member_id": "ally", "name": "The ally", "basis": "the player asked him to join and he agreed (owner record)"})
+        self.assertEqual((row()["role"], row()["control"]), ("party_member", "player_directed"))
+        state = self.gw.public_state()
+        self.assertGreater(state["cursor"]["revision"], before)
+        self.assertEqual(state["state"]["turn_context"]["encounter"]["decision"], {"kind": "player", "actor_id": "ally", "control": "player_directed"})
+        self.assertEqual(done["recorded"], "party_joined")
+        self.gw.owner_record("control_changed", {"actor_id": "ally", "decides": "gm", "basis": "the player asks the GM to run him for now"})
+        self.assertEqual((row()["role"], row()["control"]), ("party_member", "gm"))
+        self.gw.owner_record("party_left", {"member_id": "ally", "reason": "he goes home"})
+        self.assertEqual((row()["role"], row()["control"]), ("allied_npc", "gm"))
+        self.assertEqual(len(ledger.read_jsonl(self.gw.campaign / "records/roll_log.jsonl")), len(rolls_before.splitlines()) + 1, "only the one declared check was rolled")
+        self.assertEqual(len([r for r in ledger.read_jsonl(self.gw.campaign / "records/roll_log.jsonl") if "owner" in r.get("purpose", "")]), 0)
+        self.assertIsNone(self.gw.recovery()["in_flight"])
+        self.healthy()
+
+
 class Settings(Base):
     def test_legacy_campaign_refuses_dice_modes(self):
         with self.assertRaises(Refused) as caught:
@@ -763,30 +831,119 @@ class ExperimentalSettings(Base):
         self.healthy()
         self.assertTrue(gateway_module.engine.replay(self.gw.campaign)["ok"])
 
-    def test_known_gap_one_gm_roll_per_step_and_kind_under_the_experimental_engine(self):
-        """Documents a limit of the inspected experimental engine, not a behaviour to keep: its no-reroll slot is
-        (action, step, kind, requester), so two creatures rolled by the GM cannot both make the same kind of roll in
-        one action. Per-creature turns need a reviewed roll-subject in that slot before dice modes and the encounter
-        record are staged together (COMPATIBILITY_AND_ADOPTION.md, gap X1). The ordinary resolver has no such limit."""
+    FIGHT = [{"actor_id": "aero", "label": "Aero", "side": "party", "role": "player_character", "initiative": 21, "control": {"decides": "player"}},
+             {"actor_id": "wick", "label": "Wick", "side": "party", "role": "allied_npc", "initiative": 12, "control": {"decides": "gm", "basis": "temporary ally, not recruited"}},
+             {"actor_id": "foe_1", "label": "First foe", "side": "foe", "role": "npc", "initiative": 7, "group": "foes", "control": {"decides": "gm"}},
+             {"actor_id": "foe_2", "label": "HIDDEN_FOE_TWO", "side": "foe", "role": "npc", "initiative": 7, "group": "foes", "hidden": True, "control": {"decides": "gm"}}]
+
+    def open_fight(self):
+        e = EncounterThroughTheGateway.e
+        opening = lambda step: [e("encounter_start", encounter_id="dice-fight", mode="combat", participants=self.FIGHT),
+                                e("turn_start", actor_id="aero"), e("resource_spent", actor_id="aero", resource="object_interaction", **{"for": step})]
+        self.act(HOLSTER, provider="claude")
+        self.assertEqual(run_turn(self.gw, EncounterThroughTheGateway.gm(self, "claude", opening))["outcome"], "committed")
+
+    def test_each_creature_has_its_own_roll_subject_and_npc_turn_provenance(self):
+        """X1 and X2 (COMPATIBILITY_AND_ADOPTION.md §6), corrected in the existing engine. Two creatures rolled by the GM
+        each make the same kind of roll in one action, each on its own turn, citing no player step. Accepted-roll identity
+        and no-reroll hold per creature. Only the player character's own d20 is transformed by Heroic."""
+        e = EncounterThroughTheGateway.e
+        self.open_fight()
+        action, _ = self.act(INSPECT, provider="claude", settings={"temperature": "heroic", "narrative_consequences": True})
+        self.gw.claim("claude", "run-a", {"kind": "scripted", "mock": True})
+        self.gw.fix_tables("claude", "run-a", {"interpretation": "Aero studies the remote; then each foe takes its own turn.", "tables": "none"})
+        step = action["declaration"]["steps"][0]["id"]
+        own = self.gw.roll("claude", "run-a", {"roll_key": f"{step}.check", "step_id": step, "formula": "1d20+3", "kind": "check", "requested_by": "aero",
+                                              "purpose": "Aero studies the remote", "dc": 12})["result"]
+        npc = lambda key, subject, by="gm", **more: self.gw.roll("claude", "run-a", dict({"roll_key": key, "formula": "1d20+4", "kind": "attack", "requested_by": by,
+                                                              "purpose": "A foe attacks", "dc": 13, "subject": subject, "provenance": {"kind": "gm_turn", "actor_id": subject}}, **more))
+        one = npc("npc_a.attack", "foe_1")
+        two = npc("npc_b.attack", "foe_2", by="gm_hidden")
+        self.assertFalse(one["replayed"] or two["replayed"])
+        self.assertNotEqual(one["result"]["roll_id"], two["result"]["roll_id"])
+        # No reroll: the same request again, and the same creature under a new key, both return the accepted roll.
+        self.assertEqual(npc("npc_a.attack", "foe_1")["result"]["roll_id"], one["result"]["roll_id"])
+        again = npc("npc_a.attack_retry", "foe_1")
+        self.assertTrue(again["replayed"])
+        self.assertEqual(again["result"]["roll_id"], one["result"]["roll_id"])
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 3)
+        # Refused: a subject on the player character's own roll; a creature that is not in the encounter; mismatched or mixed provenance.
+        for bad in ({"roll_key": "x1", "step_id": step, "formula": "1d20+3", "kind": "check", "requested_by": "aero", "purpose": "again", "subject": "aero"},
+                    {"roll_key": "x2", "formula": "1d20", "kind": "attack", "requested_by": "gm", "purpose": "a stranger", "subject": "nobody", "provenance": {"kind": "gm_turn", "actor_id": "nobody"}},
+                    {"roll_key": "x3", "formula": "1d20", "kind": "attack", "requested_by": "gm", "purpose": "mismatch", "subject": "foe_1", "provenance": {"kind": "gm_turn", "actor_id": "foe_2"}},
+                    {"roll_key": "x4", "step_id": step, "formula": "1d20", "kind": "save", "requested_by": "gm", "purpose": "both", "subject": "foe_1", "provenance": {"kind": "gm_turn", "actor_id": "foe_1"}},
+                    {"roll_key": "x5", "formula": "1d20", "kind": "attack", "requested_by": "gm", "purpose": "for the player", "subject": "aero", "provenance": {"kind": "gm_turn", "actor_id": "aero"}}):
+            with self.assertRaises(Refused) as caught:
+                self.gw.roll("claude", "run-a", bad)
+            self.assertEqual(caught.exception.code, "BAD_ROLL", bad["roll_key"])
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 3)
+        # Dice treatment: only Aero's own d20 is Heroic with a narrative axis; both creatures are Regular with none.
+        self.assertEqual((own["resolution"]["eligible"], own["resolution"]["roll"]["temperature"], own["resolution"]["narrative"] is not None), (True, "heroic", True))
+        for theirs in (one, two):
+            r = theirs["result"]["resolution"]
+            self.assertEqual((r["eligible"], r["roll"]["temperature"], r["narrative"], r["roll"]["effective_d20"]), (False, "regular", None, None))
+        # Provenance: the public roll log names the step for Aero and only "gm_turn" for the creatures; which creature is private.
+        log = {r["roll_id"]: r for r in self.rolls_for(action["action_id"])}
+        self.assertEqual(log[own["roll_id"]]["resolution_provenance"], {"action_id": action["action_id"], "step_id": step, "roll_key": f"{step}.check"})
+        for theirs, key in ((one, "npc_a.attack"), (two, "npc_b.attack")):
+            self.assertEqual(log[theirs["result"]["roll_id"]]["resolution_provenance"], {"action_id": action["action_id"], "step_id": None, "roll_key": key, "source": "gm_turn"})
+        private = {r["roll_id"]: r["request"] for r in ledger.read_jsonl(self.gw.campaign / "hidden/experimental_resolution_log.jsonl")}
+        self.assertEqual([private[t["result"]["roll_id"]]["subject"] for t in (one, two)], ["foe_1", "foe_2"])
+        self.assertNotIn("foe_2", (self.gw.campaign / "records/roll_log.jsonl").read_text())
+        # Commit: the creatures' rolls must sit in their own turns, cited by their own events.
+        base = {"world_time": "Staging", "narration": "You study the remote. Something strikes at you from the dark.", "scene_state": {"summary": "s", "title": "t", "location": "l", "atmosphere": []},
+                "turn_context": {k: v for k, v in self.gw.public_state()["state"]["turn_context"].items() if k not in ("context_id", "encounter", "equipment")}}
+        mine = [{"kind": "observation", "actor": "aero", "summary": "Aero studies the remote", "details": {"step_id": step}, "roll_keys": [f"{step}.check"]},
+                e("resource_spent", actor_id="aero", resource="action", **{"for": step}), e("turn_end", actor_id="aero"),
+                e("turn_start", actor_id="wick"), e("turn_end", actor_id="wick")]
+        hit = lambda actor, key, private=False: dict(e("attack_resolved", actor_id=actor, _private=private), actor=actor, roll_keys=[key])
+        turns = [e("turn_start", actor_id="foe_1"), e("resource_spent", actor_id="foe_1", resource="action"), hit("foe_1", "npc_a.attack"), e("turn_end", actor_id="foe_1"),
+                 e("turn_start", actor_id="foe_2", _private=True), e("resource_spent", actor_id="foe_2", resource="action", _private=True), hit("foe_2", "npc_b.attack", True), e("turn_end", actor_id="foe_2", _private=True),
+                 e("turn_start", actor_id="aero")]
+        wrong_actor = [dict(x, actor="foe_1") if x.get("roll_keys") == ["npc_b.attack"] else x for x in turns]
+        no_turn = [hit("foe_1", "npc_a.attack"), hit("foe_2", "npc_b.attack", True)]
+        for events in (mine + no_turn, mine + wrong_actor):
+            with self.assertRaises(Refused) as caught:
+                self.gw.commit("claude", "run-a", dict(base, events=events))
+            self.assertIn("NPC_ROLL_PROVENANCE", [p["code"] for p in caught.exception.extra["problems"]])
+        try:
+            status = self.gw.commit("claude", "run-a", dict(base, events=mine + turns))
+        except Refused as refusal:
+            self.fail(refusal.extra)
+        self.assertEqual(status["status"], "committed")
+        tracker = self.gw.public_state()["state"]["turn_context"]["encounter"]
+        self.assertEqual((tracker["round"], tracker["current"]), (2, "Aero"))
+        self.assertNotIn("HIDDEN_FOE_TWO", json.dumps(self.gw.public_state()))
+        self.assertTrue(gateway_module.engine.replay(self.gw.campaign)["ok"])
+        self.healthy()
+
+    def test_rolls_without_a_subject_keep_their_accepted_identity(self):
+        """The slot of a request that names no subject is byte-identical to the inspected engine's, so nothing accepted
+        before the correction can be rerolled after it, and a legacy second GM roll for the same step and kind is still refused."""
+        engine = gateway_module.engine
+        legacy = lambda action_id, request, actor: [action_id, request.get("step_id"), request.get("kind"), request.get("requested_by", actor)]
+        for request in ({"step_id": "k0", "kind": "check", "requested_by": "aero"}, {"step_id": "k0", "kind": "attack", "requested_by": "gm"}, {"step_id": "k1", "kind": "save"}):
+            self.assertEqual(engine.slot_identity("act-1", {"actor": "aero"}, request), legacy("act-1", request, "aero"))
         action, _ = self.act(INSPECT, provider="claude")
         self.gw.claim("claude", "run-a", {"kind": "scripted", "mock": True})
-        self.gw.fix_tables("claude", "run-a", {"interpretation": "two creatures act", "tables": "none"})
+        self.gw.fix_tables("claude", "run-a", {"interpretation": "two unnamed rolls", "tables": "none"})
         step = action["declaration"]["steps"][0]["id"]
         ask = lambda key: self.gw.roll("claude", "run-a", {"roll_key": key, "step_id": step, "formula": "1d20+4", "kind": "attack", "requested_by": "gm", "purpose": key})
-        first = ask("creature_one.attack")
+        ask("unnamed_one.attack")
         with self.assertRaises(Refused) as caught:
-            ask("creature_two.attack")
+            ask("unnamed_two.attack")
         self.assertEqual(caught.exception.code, "DICE_REFUSED")
         self.assertEqual(len(self.rolls_for(action["action_id"])), 1)
-        self.assertFalse(first["replayed"])
 
     def test_a_companion_roll_is_never_treated_as_the_players(self):
         """Heroic and Narrative Consequences are the player's choice for the player character's own d20s. An ally
         acting on the player's word, in an encounter where the ally is even marked player-directed, still rolls
         through the GM and stays Regular with no narrative axis. Beginning an encounter changes no dice setting."""
         e = EncounterThroughTheGateway.e
-        party = [{"actor_id": "aero", "label": "Aero", "side": "party", "initiative": 21, "control": {"decides": "player"}},
-                 {"actor_id": "ally", "label": "The ally", "side": "party", "initiative": 12, "control": {"decides": "player_directed"}}]
+        self.open_fight()
+        # Even a formally recruited, player-directed companion: tactical control is not dice eligibility (decision D3).
+        self.gw.owner_record("party_joined", {"member_id": "wick", "name": "Wick", "basis": "test: recruited on the record"})
+        self.assertEqual(self.gw.public_state()["state"]["turn_context"]["encounter"]["order"][1]["control"], "player_directed")
         action, _ = self.act(INSPECT, provider="claude", settings={"temperature": "heroic", "narrative_consequences": True})
         self.gw.claim("claude", "run-a", {"kind": "scripted", "mock": True})
         self.gw.fix_tables("claude", "run-a", {"interpretation": "Aero studies the remote; on his word the ally takes a shot at it.", "tables": "none"})
@@ -794,17 +951,16 @@ class ExperimentalSettings(Base):
         own = self.gw.roll("claude", "run-a", {"roll_key": f"{step}.check", "step_id": step, "formula": "1d20+3", "kind": "check", "requested_by": "aero",
                                               "purpose": "Aero studies the remote", "dc": 12})["result"]["resolution"]
         theirs = self.gw.roll("claude", "run-a", {"roll_key": "ally", "step_id": step, "formula": "1d20+2", "kind": "attack", "requested_by": "gm",
-                                                 "purpose": "The ally fires on Aero's word", "dc": 12})["result"]["resolution"]
+                                                 "purpose": "The ally fires on Aero's word", "dc": 12, "subject": "wick"})["result"]["resolution"]
         self.assertEqual((own["eligible"], own["roll"]["temperature"], own["narrative"] is not None), (True, "heroic", True))
         self.assertEqual((theirs["eligible"], theirs["roll"]["temperature"], theirs["narrative"]), (False, "regular", None))
         self.assertIsNone(theirs["roll"]["effective_d20"])
         with self.assertRaises(Refused) as caught:                    # nobody can ask for a roll "as" the ally to borrow the player's mode
-            self.gw.roll("claude", "run-a", {"roll_key": "x", "step_id": step, "formula": "1d20+2", "kind": "attack", "requested_by": "ally", "purpose": "as the ally"})
+            self.gw.roll("claude", "run-a", {"roll_key": "x", "step_id": step, "formula": "1d20+2", "kind": "attack", "requested_by": "wick", "purpose": "as the ally"})
         self.assertEqual(caught.exception.code, "BAD_ROLL")
         context = self.gw.context("claude", "run-a")
         move = script("claude").step(context)
-        move["proposal"]["events"] += [{"kind": "attack_resolved", "actor": "gm", "summary": "The ally fires and misses.", "details": {"npc": "ally"}, "roll_keys": ["ally"]},
-                                       e("encounter_start", encounter_id="x", mode="combat", participants=party), e("turn_start", actor_id="aero")]
+        move["proposal"]["events"] += [{"kind": "attack_resolved", "actor": "gm", "summary": "The ally fires and misses.", "details": {"npc": "wick"}, "roll_keys": ["ally"]}]
         self.assertEqual(self.gw.commit("claude", "run-a", move["proposal"])["status"], "committed")
         declared = [x for x in ledger.load_all(self.gw.campaign) if x["kind"] == "player_declaration"][-1]["details"]
         self.assertEqual(declared["resolution_settings"], {"temperature": "heroic", "narrative_consequences": True}, "the submitted settings are immutable")

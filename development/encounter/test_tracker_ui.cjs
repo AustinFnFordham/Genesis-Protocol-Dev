@@ -38,7 +38,24 @@ const { chromium } = require("playwright");
     await second.goto("file://" + path.resolve(html)); await second.waitForSelector("#encounterTracker");
     const calm = await second.locator("#encounterTracker").textContent();
     assert.match(calm, /^Standoff/); assert.match(calm, /every way in is shut/); assert.equal(/Action:/.test(calm), false);
+    // Control labels (charter "Party membership and control"): an unrecruited ally is the GM's; a recruited member is yours to direct.
+    const label = async (role, control, acting) => {
+      const st = JSON.parse(JSON.stringify(state)); const en = st.turn_context.encounter;
+      en.mode = "combat"; en.round = 3; en.order[1].role = role; en.order[1].control = control; en.order[0].role = "player_character";
+      if (acting) { en.order[0].status = "done"; en.order[1].status = "acting"; en.current = "Wick"; en.decision = { kind: "player", actor_id: "wick", control }; }
+      const p = await browser.newPage({ viewport: { width: 390, height: 844 } }); p.on("pageerror", e => errors.push(e.message));
+      await p.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock, st });
+      await p.goto("file://" + path.resolve(html)); await p.waitForSelector("#encounterTracker");
+      const t = await p.locator("#encounterTracker").textContent(); await p.close(); return t;
+    };
+    const allied = await label("allied_npc", "gm");
+    assert.match(allied, /Wick12 · ally, not in your party · GM decides/); assert.match(allied, /Aero21 · you/);
+    assert.match(allied, /You can ask them for something as speech; it costs nothing and gives no one an extra action/);
+    assert.equal(/you direct/.test(allied), false);
+    const member = await label("party_member", "player_directed", true);
+    assert.match(member, /party member · you direct/); assert.match(member, /It is Wick’s turn and you direct them/); assert.equal(/not in your party/.test(member), false);
+    assert.match(await label("party_member", "gm"), /party member · GM is running them/);
     assert.deepEqual(errors, []);
-    console.log("PASS encounter tracker: order, budgets, unseen slot, readied action, core actions, standoff, phone width");
+    console.log("PASS encounter tracker: order, budgets, unseen slot, readied action, core actions, standoff, control labels, phone width");
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

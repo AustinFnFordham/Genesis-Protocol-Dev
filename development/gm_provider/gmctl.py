@@ -14,6 +14,9 @@ validators. It uses this tool instead of an API key.
   gmctl.py ... context|publish|release PROVIDER --run RUN [--out FILE]
   gmctl.py ... review|tables|roll|commit PROVIDER --run RUN FILE.json
   gmctl.py ... run PROVIDER                       let a model-API provider play the whole turn
+  gmctl.py ... recruit MEMBER_ID "Name" "basis"   OWNER: record that this character formally joins the party
+  gmctl.py ... dismiss MEMBER_ID "reason"         OWNER: record that this character leaves the party
+  gmctl.py ... control ACTOR_ID player_directed|gm "basis"   OWNER: who directs a recruited companion in combat
 
 Exit codes: 0 done, 3 refused (the JSON says why), 2 usage.
 """
@@ -72,6 +75,12 @@ def main(argv=None):
             out = gateway.action_status(a.args[0])
         elif c == "reroute":
             out = gateway.reroute(a.args[0], a.args[1], by="operator")
+        elif c == "recruit":
+            out = gateway.owner_record("party_joined", {"member_id": a.args[0], "name": a.args[1], "basis": a.args[2]})
+        elif c == "dismiss":
+            out = gateway.owner_record("party_left", {"member_id": a.args[0], "reason": a.args[1]})
+        elif c == "control":
+            out = gateway.owner_record("control_changed", {"actor_id": a.args[0], "decides": a.args[1], "basis": a.args[2]})
         elif c == "run":
             registry = provider_module.registry()
             if a.args[0] not in registry:

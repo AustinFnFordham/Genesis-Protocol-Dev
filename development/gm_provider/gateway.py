@@ -68,7 +68,10 @@ engine = _module("gateway_engine", "development/experimental_resolution/engine.p
 
 SCHEMA = "genesis-gm-operation/1"
 PROVIDER_ID = re.compile(r"^[a-z][a-z0-9_-]{1,39}$")
-RESERVED_KINDS = {"player_declaration", "owner_ruling", "ruling_void", "gm_narration", "scene_state", "turn_context"}
+RESERVED_KINDS = {"player_declaration", "owner_ruling", "ruling_void", "gm_narration", "scene_state", "turn_context",
+                  # Who is in the party and who directs a companion are explicit owner-level records (Gateway.owner_record),
+                  # never the by-product of a turn: accompanying, helping or obeying Aero recruits no one.
+                  "party_joined", "party_left", "control_changed"}
 IN_FLIGHT = ("submitted", "processing", "resolved")
 IMMUTABLE = ("actor", "campaign_id", "based_on_revision", "ledger_head", "context_id", "declaration", "text")
 
@@ -526,9 +529,20 @@ class Gateway:
         steps = engine.step_ids(declaration)
         if request["requested_by"] == row["actor"] and request.get("step_id") not in steps:
             raise Refused("NOT_DECLARED", "the player character rolls only for a step the player declared")
-        clean = {k: request[k] for k in ("roll_key", "step_id", "formula", "mode", "kind", "requested_by", "purpose", "dc", "rule_sources") if request.get(k) is not None}
+        # A GM roll may name its subject (the creature it is for) and, for a creature's own turn, GM-turn provenance.
+        # Neither is accepted on the player character's roll (engine.roll_subject states why).
+        try:
+            subject, gm_turn = engine.roll_subject({"actor": row["actor"]}, request)
+        except ValueError as error:
+            raise Refused("BAD_ROLL", str(error))
+        if gm_turn or subject:
+            state = encounter.fold(ledger.load_all(self.campaign))
+            if state["active"] and subject not in state["actors"]:
+                raise Refused("BAD_ROLL", f"{subject} is not a participant in the running encounter")
+        clean = {k: request[k] for k in ("roll_key", "step_id", "formula", "mode", "kind", "requested_by", "purpose", "dc", "rule_sources", "subject", "provenance") if request.get(k) is not None}
         request_hash = digest(clean)
-        slot = digest([clean.get("step_id"), clean["kind"], clean["requested_by"]]) if clean["requested_by"] == row["actor"] else None
+        slot = (digest([clean.get("step_id"), clean["kind"], clean["requested_by"]]) if clean["requested_by"] == row["actor"] else
+                digest(["gm_turn" if gm_turn else clean.get("step_id"), clean["kind"], clean["requested_by"], subject]) if subject else None)
         for known_key, known in op["rolls"].items():
             if known_key == clean["roll_key"]:
                 if known["request_hash"] != request_hash:
@@ -542,7 +556,9 @@ class Gateway:
             action = dict(self._identity(row), campaign_id=self.id)
             try:
                 result = engine.execute(self.campaign, row["action_id"], action, dict(clean, mode=clean.get("mode", "normal"),
-                                        rule_sources=clean.get("rule_sources") or ["GM ruling"], step_id=clean.get("step_id") or next(iter(steps), None)))
+                                        rule_sources=clean.get("rule_sources") or ["GM ruling"],
+                                        # a creature's own turn cites no player step; legacy GM rolls without provenance keep citing the first one
+                                        step_id=None if gm_turn else (clean.get("step_id") or next(iter(steps), None))))
             except ValueError as error:
                 raise Refused("DICE_REFUSED", str(error))
             record, private = result["roll"], result["resolution"]
@@ -563,7 +579,8 @@ class Gateway:
         if clean.get("dc") is not None and private is None and result["final_total"] is not None:
             result["meets_dc"] = result["final_total"] >= int(clean["dc"])
         op = self._op(row["action_id"])
-        op["rolls"][clean["roll_key"]] = {"request_hash": request_hash, "slot": slot, "result": result, "by": {"provider": provider, "run": run}}
+        op["rolls"][clean["roll_key"]] = {"request_hash": request_hash, "slot": slot, "result": result, "by": {"provider": provider, "run": run},
+                                          "subject": subject, "gm_turn": gm_turn}
         self._save_op(op)
         return {"roll_key": clean["roll_key"], "result": result, "replayed": False}
 
@@ -623,6 +640,17 @@ class Gateway:
         for roll_key, known in op["rolls"].items():
             if roll_key not in cited:
                 bad("ROLL_UNACCOUNTED", f"accepted roll {roll_key} is binding and must be cited by an event")
+            elif known.get("gm_turn"):
+                # Explicit NPC-turn provenance (X2): the roll belongs to that creature's own turn, so the same batch must
+                # open that turn (or spend that creature's reaction) and the roll must be cited by that creature's event.
+                subject = known["subject"]
+                acts = [e for e in events if isinstance(e, dict) and (e.get("details") or {}).get("actor_id") == subject and
+                        e.get("kind") in ("turn_start", "resource_spent", "ready_fired")]
+                citing = [e for e in events if isinstance(e, dict) and roll_key in e.get("roll_keys", [])]
+                if not acts:
+                    bad("NPC_ROLL_PROVENANCE", f"roll {roll_key} was requested for {subject}'s own turn, but this batch records no turn or reaction for {subject}")
+                elif any(e.get("actor") != subject for e in citing):
+                    bad("NPC_ROLL_PROVENANCE", f"roll {roll_key} belongs to {subject}; the event that cites it must have actor {subject}")
         public_text = json.dumps({"n": proposal.get("narration"), "c": context, "s": proposal.get("scene_state"),
                                   "e": [e for e in events if isinstance(e, dict) and e.get("visibility", "player") == "player"]}, ensure_ascii=False)
         hidden = [e for e in ledger.load_all(self.campaign) if e["visibility"] == "gm_only"]
@@ -705,6 +733,71 @@ class Gateway:
         key, version, row = self._stage((key, version, row), lock, run, "narration", status="resolved",
                                         ledger_events=result["events"], publication={"status": "pending"})
         return self._publish((key, version, row), lock, run)
+
+    def owner_record(self, kind, details, by="owner"):
+        """Commit one explicit party or control transition (party_joined, party_left, control_changed) on the owner's
+        word, between turns. It is checked by the encounter controller like any event, spends nothing, rolls nothing,
+        and republishes the tracker so the player sees who directs whom. Providers cannot propose these kinds."""
+        if kind not in encounter.OWNER_KINDS:
+            raise Refused("BAD_RECORD", "owner records are party_joined, party_left and control_changed")
+        if not isinstance(details, dict) or not str(details.get("basis") or details.get("reason") or "").strip():
+            raise Refused("BAD_RECORD", "an owner record states its basis")
+        if self._in_flight():
+            raise Refused("TURN_IN_FLIGHT", "record this between turns, not while a declaration is being resolved")
+        now = self.clock()
+        version, lock = self._lock()
+        if lock and lock.get("holder") and lock.get("expires_ms", 0) > now:
+            raise Refused("PROVIDER_BUSY", "a GM run holds the campaign lease")
+        all_events = ledger.load_all(self.campaign)
+        draft = {"kind": kind, "details": details}
+        try:
+            after, problems = encounter.check(all_events, [draft])
+        except encounter.EncounterError as error:
+            raise Refused("ENCOUNTER_RECORD", f"the committed encounter record does not fold: {error.message}")
+        if problems:
+            raise Refused("RECORD_REFUSED", problems[0]["message"], problems=problems)
+        run = f"owner-{now}"
+        lock = {"holder": run, "provider": "owner", "expires_ms": now + self.lease_ms, "acquired_ms": now}
+        try:
+            self.store.put("locks/" + self.id, lock, version)
+        except Conflict:
+            raise Refused("PROVIDER_BUSY", "the lease changed hands")
+        last = all_events[-1]
+        shape = lambda k, summary, d, causes=None: {"session": last.get("session", 1), "turn_no": last.get("turn_no", 0), "world_time": last.get("world_time", ""),
+                                                    "kind": k, "summary": summary, "actor": by, "visibility": "player", "knowledge_type": "fact",
+                                                    "known_to": [], "caused_by": causes or [], "roll_ids": [], "tags": ["owner_record"], "details": d}
+        who = details.get("member_id") or details.get("actor_id")
+        summary = {"party_joined": f"{details.get('name') or who} joins the party (recorded by the owner).",
+                   "party_left": f"{details.get('name') or who} leaves the party (recorded by the owner).",
+                   "control_changed": f"Who directs {who} in combat is now: {details.get('decides')} (recorded by the owner)."}[kind]
+        drafts = [shape(kind, summary, details)]
+        contexts = [e for e in all_events if e["kind"] == "turn_context" and e.get("visibility", "player") == "player"]
+        if contexts:
+            context = {k: v for k, v in contexts[-1]["details"].items() if k not in ("encounter", "context_id")}
+            tracker = encounter.public(after)
+            if tracker:
+                context["encounter"] = tracker
+            drafts.append(shape("turn_context", f"Turn context after the {kind.replace('_', ' ')} record", context, ["$1"]))
+        request = {"batch_id": f"{kind}-{now}", "expected_revision": len(all_events), "expected_head": last["event_id"], "events": drafts}
+        lease = self._lease_file(lock)
+        try:
+            result = batch.apply(self.campaign, request, lease, run, ledger)
+        except ValueError as error:
+            raise Refused("COMMIT_REFUSED", str(error))
+        finally:
+            lease.unlink(missing_ok=True)
+            self._release(run)
+        if self.durable:
+            self.durable(self.campaign, request["batch_id"])
+        documents = export_state.publish_set(self._public())
+        for name, page in documents["pages"].items():
+            page_version, current = self.store.read("view/" + name)
+            if current != page:
+                self.store.put("view/" + name, page, page_version)
+        state_version, current = self.store.read("view/state")
+        if current != documents["state"]:
+            self.store.put("view/state", documents["state"], state_version)
+        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"], "encounter": encounter.public(after)}
 
     def publish(self, provider, run):
         """Finish publication of a resolved action. Mechanical: any provider's run may do it; nothing is authored."""

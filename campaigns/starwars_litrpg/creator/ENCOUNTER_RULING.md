@@ -19,6 +19,22 @@ Every creature that can act in it is a participant with a stable actor id, its o
 and its own budget: the player character, companions and bystanders who act, and each hostile
 creature individually. A creature that is merely nearby and not acting is not a participant.
 
+**Role and control (owner ruling 2026-11-15; charter "Party membership and control").** Each participant
+has a role, and the role fixes who decides its actions:
+
+| Role | Who decides in combat | How it is established |
+| --- | --- | --- |
+| `player_character` | The player | The active PC |
+| `party_member` | The player directs their legal tactics by default (`player_directed`), on the companion's own turn and budget. The companion keeps their identity and convictions; a refusal needs an established character-based reason | A committed `party_joined` record |
+| `allied_npc` | The GM, from the character's established motives and knowledge | Accompanies or helps without recruitment. **Wick** |
+| `npc` | The GM | Everyone else |
+
+A request or a command is speech: it grants no action and changes no role. Recruitment (`party_joined`,
+`party_left`) and any hand-over of a party member's tactics (`control_changed`, with its basis) are
+explicit owner-level records made between turns; a GM provider cannot propose them. Outside combat
+companions are GM-performed unless the player has explicitly taken one as the active player character.
+Control decides tactics only. It never changes dice treatment.
+
 ## 2. Each actor's turn budget
 On its own turn: one action; one bonus action only if a feature it has grants one; movement up to its
 speed; one free object interaction (`ACTION_ECONOMY_RULING.md`). Off its turn: one reaction.
@@ -90,12 +106,11 @@ names, numbers, budgets or positions. The tracker is derived from the record by 
 controller; a GM provider cannot write it.
 
 ## 9. Owner decisions still required
-1. **Who decides Wick's actions in an encounter.** The charter says party members other than the
-   active PC are "GM-driven and transferable" and that companions act from their own convictions.
-   Wick is not recorded as a party member. Options: (a) GM-driven: he acts on his own turn from his
-   own state; your words inform him; (b) player-directed: you declare his turn's tactics on his
-   count, and the GM may still have him balk where his convictions demand. Until ruled, the
-   controller records `control: undecided` and will not start his turn.
+1. **Who decides Wick's actions in an encounter.** *Decided 2026-11-15:* Wick is a temporary allied
+   NPC, not a party member. The GM decides his actions on his own turn from his established motives
+   and knowledge. Aero can ask; a command grants no extra action. He would become player-directed only
+   through a recorded recruitment (§1). This is in force in the noncanonical test build; live Hask
+   Meadow has no encounter record yet, so nothing there is changed.
 2. **Wick's initiative.** Not rolled. To be rolled when the encounter record is adopted.
 3. **A steadying/bracing rule.** Whether physically supporting someone's aim outside the 5 ft Help
    case should give anything (for example advantage cancelling long-range disadvantage). Not

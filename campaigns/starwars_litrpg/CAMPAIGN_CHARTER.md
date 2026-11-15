@@ -11,7 +11,7 @@ GM-chosen and hidden (see `hidden/GM_LEDGER.md`). Revealed through play.
 - The player controls Aero (Aeleron "Aero" Do'ordo; sheet `api_bridge/gm/aero_character_runtime.yml`) and any other party member they later take control of.
 - The GM never decides Aero's subjective beliefs, emotions, dialogue, or intentions. The GM presents circumstances and consequences; the player decides how Aero responds.
 - The GM controls the world, NPCs, factions, enemies, consequences, and the System.
-- Target: a trio, one active PC at a time, the others GM-driven and transferable. No companion files are imported yet; companions arrive through play or from files the owner supplies.
+- Target: a trio, one active PC at a time. No companion files are imported yet; companions arrive through play or from files the owner supplies. Who decides a companion's actions is set out under "Party membership and control" below.
 
 ## Authority of sources
 1. The selected ruleset and validated source data, where they support the situation.
@@ -49,6 +49,21 @@ Owner-defined; the full spec is not yet in the repo, so this follows the owner's
 - Trust, respect, fear, and affection are independent. A companion can admire power while disagreeing with decisions, or love someone while losing trust in them.
 - Magnitude guidelines (`Contracts/INTER_PARTY_INFLUENCE_ENGINE.md` section 8) are reference only, never automatic modifiers. No universal per-session limits.
 - Companions may change, leave, betray the party, reconcile, or become Nemeses when their individual circumstances justify it, with evidence in the ledger.
+
+## Party membership and control (owner ruling 2026-11-15)
+Three standings, kept apart:
+- **Player character.** The active PC (Aero). The player decides everything they do.
+- **Party member.** A companion formally recruited into the player's party. **In combat the player directs them by default**: on the companion's own turn the player chooses their legal tactics, using the companion's own movement, action, bonus action, reaction and resources. Tactical control does not override the companion's identity, convictions or agency. They may refuse, but only for an established, character-based reason on the record, never as arbitrary GM obstruction. **Outside combat companions are GM-performed characters**, unless the player explicitly takes one as the active player character.
+- **Allied NPC.** Someone who accompanies or helps the party without having been recruited. **The GM decides their actions**, from their established motives and knowledge. The player character can ask for cooperation; a command is speech and grants no one an extra action. **Wick is an allied NPC**: a temporary ally, not a party member.
+
+Transitions are explicit and recorded, never implied:
+- Joining the party is a committed `party_joined` record; leaving is `party_left`. Handing a party member's combat tactics to the GM, or taking them back, is `control_changed` with its basis. Taking a companion as the active player character is its own owner record.
+- Merely accompanying, helping, obeying or fighting beside Aero recruits no one and changes no one's control. A GM cannot create these records while resolving a turn; they are made on the owner's word, between turns.
+- These rules apply from the ruling forward. No earlier event is reinterpreted.
+
+Dice: tactical control is not dice eligibility. Heroic and Legendary temperature and Narrative Consequences are meant for the **player party** (Aero and party members), never for allied NPCs, other NPCs, enemies or monsters. Today the resolver grants them only to the declaring player character's own d20s; extending them to a recruited companion's rolls is a separate decision, still open (`development/encounter/COMPATIBILITY_AND_ADOPTION.md`, D3).
+
+Executable form: `development/encounter/encounter.py` (roles, `party_joined`, `party_left`, `control_changed`). Rules in play: `creator/ENCOUNTER_RULING.md` §1 and §9.
 
 ## Conflict
 - No automatic reset after a session or a rest, and no automatic recovery. No numeric Conflict meter is introduced (Aero's sheet has none).

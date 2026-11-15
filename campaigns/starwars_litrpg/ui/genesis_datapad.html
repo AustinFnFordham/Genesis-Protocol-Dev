@@ -1465,14 +1465,26 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     }
     var rows = e.order.map(function (s) {
       var mark = s.status === "acting" ? "▶ " : s.status === "done" ? "✓ " : "";
-      var who = s.unseen ? "" : (s.control === "undecided" ? " · control undecided" : s.control === "player_directed" ? " · you direct" : s.control === "gm" ? " · acts on their own" : "");
+      // Who decides (charter "Party membership and control"): you; a recruited party member you direct in combat;
+      // a recruited member the GM is running; an ally who is not in your party; anyone else.
+      var who = s.unseen ? "" : s.control === "player" ? " · you" :
+        s.control === "undecided" ? " · control undecided" :
+        s.control === "player_directed" ? " · party member · you direct" :
+        s.role === "party_member" ? " · party member · GM is running them" :
+        s.role === "allied_npc" ? " · ally, not in your party · GM decides" :
+        s.control === "gm" ? " · acts on their own" : "";
       return '<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:4px"><b>' + mark + esc(s.label) + "</b><span class=\"note\" style=\"margin:0\">" + esc(String(s.initiative)) + esc(who) +
         ((s.conditions || []).length ? " · " + esc(s.conditions.join(", ")) : "") + (s.ready ? " · readied: " + esc(s.ready.does) + " when " + esc(s.ready.trigger) : "") + "</span>" +
         (s.unseen || e.mode !== "combat" ? "" : '<div class="budget" style="margin:0">' + res(s.budget) + "</div>") + "</div>";
     }).join("");
     var head = (names[e.mode] || esc(e.mode)) + (e.round ? " · round " + esc(e.round) : "") + (e.current ? " · now: " + esc(e.current) : "") + (e.next ? " · next: " + esc(e.next) : "");
+    var acting = e.order.filter(function (s) { return s.status === "acting" || (!e.current && s.label === e.next); })[0];
+    var ally = e.mode === "combat" && e.order.some(function (s) { return s.role === "allied_npc"; }) ?
+      '<div class="note" id="controlNote" style="margin-top:6px">An ally who has not joined your party takes their own turn, decided by the GM from what they know and want. You can ask them for something as speech; it costs nothing and gives no one an extra action.</div>' : "";
+    var direct = acting && acting.control === "player_directed" ?
+      '<div class="check warn" id="directNote" style="margin-top:6px">It is ' + esc(acting.label) + '’s turn and you direct them: choose their tactics from their own movement and actions. They may refuse only for a reason rooted in who they are.</div>' : "";
     var need = e.decision && e.decision.kind === "ruling_needed" ? '<div class="check warn" style="margin-top:6px">A ruling is needed before this goes on: who decides this character’s actions in a fight.</div>' : "";
-    return '<div class="check" id="encounterTracker" style="margin-top:8px"><b>' + head + "</b>" + (e.mode !== "combat" && e.mode_reason ? '<div class="note" style="margin:2px 0 0">' + esc(e.mode_reason) + "</div>" : "") + rows + need + "</div>";
+    return '<div class="check" id="encounterTracker" style="margin-top:8px"><b>' + head + "</b>" + (e.mode !== "combat" && e.mode_reason ? '<div class="note" style="margin:2px 0 0">' + esc(e.mode_reason) + "</div>" : "") + rows + direct + ally + need + "</div>";
   }
 
   function budget(c, r) {

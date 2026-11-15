@@ -16,12 +16,14 @@ def ev(kind, **details):
     return {"event_id": f"evt_{N[0]:04d}", "kind": kind, "details": details}
 
 
-def start(wick="gm", mode="combat"):
+def start(wick="gm", mode="combat", role=None):
+    """wick="player_directed" stands for a formally recruited companion: the recruitment is recorded first."""
     N[0] = 0
     P = lambda i, label, side, init, **k: dict(actor_id=i, label=label, side=side, initiative=init, **k)
-    return [ev("encounter_start", encounter_id="barn", mode=mode, participants=[
+    recruited = [ev("party_joined", member_id="wick", name="Wick", basis="test: the player recruited him on the record")] if wick == "player_directed" or role == "party_member" else []
+    return recruited + [ev("encounter_start", encounter_id="barn", mode=mode, participants=[
         P("aero", "Aero", "party", 21, control={"decides": "player", "basis": "CAMPAIGN_CHARTER: the player controls Aero"}),
-        P("wick", "Wick", "party", 12, control={"decides": wick, "basis": "test"}),
+        P("wick", "Wick", "party", 12, control={"decides": wick, "basis": "test"}, **({"role": role} if role else {})),
         P("dog_a", "SECRET_ALPHA", "pack", 7, group="pack", hidden=True, speed_ft=40, control={"decides": "gm"}),
         P("dog_b", "SECRET_BETA", "pack", 7, group="pack", hidden=True, speed_ft=40, control={"decides": "gm"}),
         P("dog_c", "SECRET_GAMMA", "pack", 7, group="pack", hidden=True, speed_ft=40, control={"decides": "gm"})])]
@@ -207,7 +209,70 @@ def test_control_classification_is_not_changed_by_play():
     assert state["actors"]["wick"]["control"] == {"decides": "gm", "basis": "test"}
     assert E.fold(start(wick="player_directed") + turn("aero"))["actors"]["wick"]["control"]["decides"] == "player_directed"
     assert "controlled_actors" not in json.dumps(E.private(state)) and "resolution" not in json.dumps(E.public(state))
-    assert not any(kind.startswith("control") for kind in E.KINDS), "no event kind changes control; that takes an owner ruling and a new record"
+    # Only the explicit, owner-level records change who decides. Nothing that happens in play does.
+    assert {k for k in E.KINDS if k.startswith(("control", "party"))} == set(E.OWNER_KINDS)
+    for played in ("turn_start", "turn_end", "resource_spent", "ready_set", "ready_fired", "encounter_mode", "condition_change", "encounter_join"):
+        assert played not in E.OWNER_KINDS
+
+
+def test_an_allied_npc_is_gm_run_and_cannot_be_directed_without_recruitment():
+    """Wick today: a temporary ally, not a party member. The GM decides his turn from his own motives. Asking, ordering,
+    being obeyed or fighting on the same side changes nothing; only a recorded recruitment does."""
+    events = start(wick="gm", role="allied_npc") + turn("aero")
+    state = E.fold(events)
+    assert (state["actors"]["wick"]["role"], state["actors"]["wick"]["control"]["decides"], state["party"]) == ("allied_npc", "gm", {})
+    assert E.whose_decision(state) == {"kind": "gm", "actor_id": "wick", "control": "gm"}
+    row = E.public(state)["order"][1]
+    assert (row["role"], row["control"]) == ("allied_npc", "gm")
+    assert code([], start(wick="player_directed", role="allied_npc")[1:]) == "CONTROL_NEEDS_RECRUITMENT"
+    assert code([], start(wick="player_directed")[1:]) == "NOT_RECRUITED", "player-directed without a recorded recruitment"
+    assert code([], start(wick="player", role="allied_npc")) == "BAD_CONTROL", "only the active player character is decided outright by the player"
+    assert code(events, [ev("control_changed", actor_id="wick", decides="player_directed", basis="Aero told him to")]) == "CONTROL_NEEDS_RECRUITMENT"
+    # An allied NPC with no control stated is the GM's by default: his turn is never blocked waiting for a ruling.
+    default = start(wick=None, role="allied_npc") + turn("aero")
+    assert E.fold(default)["actors"]["wick"]["control"]["decides"] == "gm" and not E.check(default, [ev("turn_start", actor_id="wick")])[1]
+    # He acts on his own turn with his own budget, exactly once a round, and never on Aero's.
+    assert code(start(wick="gm", role="allied_npc") + [ev("turn_start", actor_id="aero")], [spend("wick", "action")]) == "OFF_TURN"
+    assert not E.check(events, [ev("turn_start", actor_id="wick"), spend("wick", "action"), spend("wick", "movement_ft", 30), ev("turn_end", actor_id="wick")])[1]
+
+
+def test_recruitment_and_control_are_explicit_recorded_transitions():
+    """Joining the party is a committed party_joined; from then the companion is player-directed in combat by default.
+    Control can be handed to the GM and back only by control_changed with a basis, between that character's turns."""
+    events = start(wick="gm", role="allied_npc") + turn("aero")
+    joined = events + [ev("party_joined", member_id="wick", name="Wick", basis="the player recruited Wick; he agreed (owner record)")]
+    state = E.fold(joined)
+    assert (state["actors"]["wick"]["role"], state["actors"]["wick"]["control"]["decides"]) == ("party_member", "player_directed")
+    assert "wick" in state["party"] and E.whose_decision(state) == {"kind": "player", "actor_id": "wick", "control": "player_directed"}
+    assert (E.public(state)["order"][1]["role"], E.public(state)["order"][1]["control"]) == ("party_member", "player_directed")
+    # His turn still uses his own budget and his own place in the order; directing him grants nobody an extra action.
+    assert code(joined, [ev("turn_start", actor_id="dog_a")]) == "OUT_OF_ORDER"
+    assert code(joined + [ev("turn_start", actor_id="wick"), spend("wick", "action")], [spend("wick", "action")]) == "NO_BUDGET"
+    assert code(joined + [ev("turn_start", actor_id="wick")], [spend("aero", "action")]) == "OFF_TURN"
+    # Explicit hand-over to the GM and back; never in the middle of his own turn, never without a basis.
+    assert code(joined, [ev("control_changed", actor_id="wick", decides="gm")]) == "BAD_CONTROL"
+    assert code(joined + [ev("turn_start", actor_id="wick")], [ev("control_changed", actor_id="wick", decides="gm", basis="x")]) == "MID_TURN"
+    handed = joined + [ev("control_changed", actor_id="wick", decides="gm", basis="the player asked the GM to run him this fight")]
+    assert E.fold(handed)["actors"]["wick"]["control"]["decides"] == "gm" and E.whose_decision(E.fold(handed))["kind"] == "gm"
+    assert E.fold(handed + [ev("control_changed", actor_id="wick", decides="player_directed", basis="the player took him back")])["actors"]["wick"]["control"]["decides"] == "player_directed"
+    assert code(joined, [ev("control_changed", actor_id="aero", decides="gm", basis="x")]) == "CONTROL_NEEDS_RECRUITMENT", "the player character is never handed over this way"
+    # Leaving the party is as explicit, and returns him to the GM.
+    left = E.fold(joined + [ev("party_left", member_id="wick", reason="he goes home")])
+    assert (left["actors"]["wick"]["role"], left["actors"]["wick"]["control"]["decides"], left["party"]) == ("allied_npc", "gm", {})
+    # Recruitment recorded outside a fight carries into the next one.
+    N[0] = 100
+    before = [ev("party_joined", member_id="wick", name="Wick", basis="recruited on the road")]
+    later = E.fold(before + start(wick=None, role="party_member")[1:])
+    assert later["actors"]["wick"]["control"]["decides"] == "player_directed"
+
+
+def test_outside_combat_companions_are_gm_performed():
+    """In standoff or scene the player declares for the active player character only; a recruited companion is performed
+    by the GM unless the player has explicitly taken them as the active character (a separate record, not modelled here)."""
+    state = E.fold(start(wick="player_directed", mode="standoff"))
+    assert E.whose_decision(state)["kind"] == "player" and "actor_id" not in E.whose_decision(state)
+    assert code(start(wick="player_directed", mode="standoff"), [ev("turn_start", actor_id="wick")]) == "NOT_IN_INITIATIVE"
+    assert all(row["status"] == "no order" for row in E.public(state)["order"])
 
 
 def test_public_view_hides_hidden_actors():

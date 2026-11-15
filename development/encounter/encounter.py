@@ -17,8 +17,25 @@ Events it reads (`details` shown):
   condition_change  {target, add: [...], remove: [...]} (existing kind)
   encounter_end     {reason}
 
-participant: {actor_id, label, side, initiative, group, hidden, speed_ft, bonus_action_eligible,
+  party_joined      {member_id, name, basis, combat_control?}   explicit recruitment into the player's party (owner-level)
+  party_left        {member_id, reason}
+  control_changed   {actor_id, decides, basis}          explicit change of who decides a party member's tactics (owner-level)
+
+participant: {actor_id, label, side, role, initiative, group, hidden, speed_ft, bonus_action_eligible,
               control: {decides: "player" | "gm" | "player_directed" | null, basis}}
+
+Control (owner ruling 2026-11-15, CAMPAIGN_CHARTER "Companions and relationships"):
+  role player_character  the active player character. decides = player.
+  role party_member      formally recruited into the player's party (a committed party_joined names them). In combat the
+                         player directs their legal tactics by default (player_directed), on the companion's own turn and
+                         from the companion's own budget. Tactical control never overrides who they are: a refusal needs an
+                         established character-based reason. Outside combat they are GM-performed.
+  role allied_npc        accompanies or helps the party without having been recruited (Wick). The GM decides, from their
+                         established motives and knowledge. Never player_directed.
+  role npc               everyone else. The GM decides.
+Accompanying, helping, obeying a request or sharing a side never changes a role or who decides. Only party_joined,
+party_left and control_changed do, and those are owner-level records, not something play or a GM proposal produces.
+Control says who chooses tactics. It says nothing about dice: the resolver never reads it.
 
 `group` puts several actors on one initiative count. It is an ordering convenience only: every member
 has its own budget, its own reaction and its own single turn, taken one after another.
@@ -30,10 +47,12 @@ import json
 RESOURCES = ("action", "bonus_action", "reaction", "object_interaction", "movement_ft")
 MODES = ("combat", "standoff", "scene")
 CONTROL = ("player", "gm", "player_directed")
+ROLES = ("player_character", "party_member", "allied_npc", "npc")
+OWNER_KINDS = ("party_joined", "party_left", "control_changed")
 NO_TURN = {"incapacitated", "unconscious", "dead", "stunned", "paralyzed", "petrified"}
 NO_REACTION = NO_TURN | {"surprised"}
 KINDS = {"encounter_start", "encounter_join", "encounter_leave", "encounter_mode", "turn_start", "resource_spent",
-         "ready_set", "ready_fired", "turn_end", "condition_change", "encounter_end"}
+         "ready_set", "ready_fired", "turn_end", "condition_change", "encounter_end", "party_joined", "party_left", "control_changed"}
 
 
 class EncounterError(ValueError):
@@ -44,18 +63,45 @@ class EncounterError(ValueError):
 
 def empty():
     return {"active": False, "encounter_id": None, "mode": "scene", "round": 0, "actors": {}, "order": [],
-            "current": None, "acted": [], "mode_history": [], "left": {}}
+            "current": None, "acted": [], "mode_history": [], "left": {}, "party": {}}
 
 
-def _participant(raw):
+def _control(role, decides, basis, recruited, name):
+    """Who decides, checked against the role. Returns (role, decides). A missing role is inferred from a legacy record:
+    player -> player_character, player_directed -> party_member, gm -> npc, nothing -> unclassified and undecided."""
+    if decides is not None and decides not in CONTROL:
+        raise EncounterError("BAD_CONTROL", "control.decides is player, gm, player_directed or null (undecided)")
+    if role is None:
+        role = {"player": "player_character", "player_directed": "party_member", "gm": "npc"}.get(decides)
+        if role is None:
+            return None, None
+    if role not in ROLES:
+        raise EncounterError("BAD_CONTROL", "role is player_character, party_member, allied_npc or npc")
+    if role == "player_character":
+        if decides not in (None, "player"):
+            raise EncounterError("BAD_CONTROL", f"{name} is the player character; the player decides")
+        return role, "player"
+    if decides == "player":
+        raise EncounterError("BAD_CONTROL", f"only the active player character is decided by the player outright; {name} is not")
+    if role == "party_member":
+        if not recruited:
+            raise EncounterError("NOT_RECRUITED", f"{name} has not been recruited into the party on the record (no party_joined event); "
+                                                  "accompanying or helping does not make a party member")
+        if decides == "gm" and not str(basis or "").strip():
+            raise EncounterError("BAD_CONTROL", f"a party member is player-directed in combat by default; GM control of {name} needs a recorded basis")
+        return role, decides or "player_directed"
+    if decides == "player_directed":
+        raise EncounterError("CONTROL_NEEDS_RECRUITMENT", f"{name} is not a recruited party member; a request or a command does not let the player direct them")
+    return role, "gm"
+
+
+def _participant(raw, party=None):
     need = ("actor_id", "label", "side", "initiative")
     if not isinstance(raw, dict) or any(raw.get(k) in (None, "") for k in need):
         raise EncounterError("BAD_PARTICIPANT", "a participant needs actor_id, label, side and initiative")
     control = raw.get("control") or {}
-    decides = control.get("decides")
-    if decides is not None and decides not in CONTROL:
-        raise EncounterError("BAD_CONTROL", "control.decides is player, gm, player_directed or null (undecided)")
-    return {"actor_id": raw["actor_id"], "label": raw["label"], "side": raw["side"], "initiative": raw["initiative"],
+    role, decides = _control(raw.get("role"), control.get("decides"), control.get("basis"), raw["actor_id"] in (party or {}), raw["actor_id"])
+    return {"actor_id": raw["actor_id"], "label": raw["label"], "side": raw["side"], "role": role, "initiative": raw["initiative"],
             "group": raw.get("group") or raw["actor_id"], "hidden": bool(raw.get("hidden")),
             "speed_ft": int(raw.get("speed_ft", 30)), "bonus_action_eligible": bool(raw.get("bonus_action_eligible")),
             "control": {"decides": decides, "basis": control.get("basis")}, "conditions": [],
@@ -88,16 +134,58 @@ def apply(state, event):
         raise EncounterError(code, message, eid)
     if kind not in KINDS:
         return state
+    if kind in ("party_joined", "party_left"):
+        # Recruitment is its own explicit record, in or out of an encounter. It is the only thing that makes a party member.
+        member = d.get("member_id") or d.get("actor_id")
+        if not member:
+            fail("BAD_PARTICIPANT", f"{kind} names the member")
+        actor = state["actors"].get(member) if state["active"] else None
+        if actor and state["current"] == member:
+            fail("MID_TURN", "party membership changes between that character's turns, not during one")
+        if kind == "party_joined":
+            if actor and actor["role"] == "player_character":
+                fail("BAD_CONTROL", "the player character is already the party")
+            if d.get("combat_control", "player_directed") not in ("player_directed", "gm"):
+                fail("BAD_CONTROL", "combat_control is player_directed (the default) or gm")
+            if d.get("combat_control") == "gm" and not str(d.get("basis") or "").strip():
+                fail("BAD_CONTROL", "joining under GM control in combat needs a recorded basis")
+            state["party"][member] = {"at": eid, "basis": d.get("basis")}
+            if actor:
+                actor["role"] = "party_member"
+                actor["control"] = {"decides": d.get("combat_control", "player_directed"), "basis": d.get("basis") or f"recruited ({eid})"}
+        else:
+            state["party"].pop(member, None)
+            if actor and actor["role"] == "party_member":
+                actor["role"] = "allied_npc"
+                actor["control"] = {"decides": "gm", "basis": f"left the party ({eid})"}
+        return state
+    if kind == "control_changed":
+        actor = state["actors"].get(d.get("actor_id")) if state["active"] else None
+        if actor is None:
+            fail("UNKNOWN_ACTOR", f"{d.get('actor_id')} is not in a running encounter")
+        if state["current"] == actor["actor_id"]:
+            fail("MID_TURN", "control changes between that character's turns, not during one")
+        if actor["role"] != "party_member":
+            fail("CONTROL_NEEDS_RECRUITMENT", f"{actor['actor_id']} is not a recruited party member; record party_joined first")
+        if d.get("decides") not in ("player_directed", "gm") or not str(d.get("basis") or "").strip():
+            fail("BAD_CONTROL", "a control change names player_directed or gm and its basis")
+        actor["control"] = {"decides": d["decides"], "basis": d["basis"]}
+        return state
     if kind == "encounter_start":
         if state["active"]:
             fail("ALREADY_ACTIVE", "an encounter is already running")
         if d.get("mode", "combat") not in MODES:
             fail("BAD_MODE", "unknown encounter mode")
+        party = state["party"]
         state = empty()
+        state["party"] = party
         state.update(active=True, encounter_id=d.get("encounter_id") or eid, mode=d.get("mode", "combat"), round=1,
                      mode_history=[{"mode": d.get("mode", "combat"), "at": eid, "reason": d.get("reason") or "encounter began"}])
         for raw in d.get("participants") or []:
-            p = _participant(raw)
+            try:
+                p = _participant(raw, state["party"])
+            except EncounterError as error:
+                fail(error.code, error.message)
             if p["actor_id"] in state["actors"]:
                 fail("DUPLICATE_ACTOR", f"{p['actor_id']} is listed twice")
             state["actors"][p["actor_id"]] = p
@@ -128,7 +216,10 @@ def apply(state, event):
             state["mode_history"].append({"mode": d["mode"], "at": eid, "reason": d["reason"], "cites": d.get("cites", [])})
         return state
     if kind == "encounter_join":
-        p = _participant(d.get("participant"))
+        try:
+            p = _participant(d.get("participant"), state["party"])
+        except EncounterError as error:
+            fail(error.code, error.message)
         if p["actor_id"] in state["actors"]:
             fail("DUPLICATE_ACTOR", f"{p['actor_id']} is already in the encounter")
         state["actors"][p["actor_id"]] = p
@@ -295,6 +386,7 @@ def public(state):
     def row(actor):
         b = actor["budget"]
         return {"actor_id": actor["actor_id"], "label": actor["label"], "side": actor["side"], "initiative": actor["initiative"],
+                "role": actor["role"] or "unclassified",
                 "control": actor["control"]["decides"] or "undecided", "conditions": actor["conditions"],
                 "budget": {"action": b["action"], "bonus_action": b["bonus_action"] if actor["bonus_action_eligible"] else None,
                            "reaction": b["reaction"], "object_interaction": b["object_interaction"],

@@ -4,6 +4,7 @@
   .qa/state_hask.json     bounded snapshot of the current Hask Meadow public record
   .qa/state_round1.json   the same snapshot with the round-1 combat context fixture (test_datapad_ui.cjs)
   .qa/ui/view/*.json      full publish set (history and player-experience suites)
+  .qa/ui_multi/view/*.json  the same record cut into many small pages per kind (history suite: multi-page pagination)
   .qa/dice_ui/*.json      synthetic dice-history set with one older page (test_dice_history_ui.cjs)
 """
 import json
@@ -30,6 +31,10 @@ def main():
     state = E.build(campaign_dir=ROOT / "campaigns/starwars_litrpg/runs/hask_meadow_r2", campaign_id="hask_meadow_r2")
     documents = E.publish_set(state)
     dump(QA / "ui/view", documents)
+    # Deterministic multi-page set: same public record, small page budget, so every kind has several pages.
+    multi = E.publish_set(state, page_budget=40_000)
+    assert len(multi["state"]["history"]["feed"]["pages"]) >= 3 and len(multi["state"]["history"]["journal"]["pages"]) >= 3, "multi-page fixture needs three or more pages per kind"
+    dump(QA / "ui_multi/view", multi)
     # The single-snapshot suites use the worker's own export (it adds the processor block the page reads).
     subprocess.run([sys.executable, "-B", str(ROOT / ".claude/skills/litrpg-process-turn/turn.py"), "export", "hask_meadow_r2",
                     "--out", str(QA / "state_hask.json")], check=True, capture_output=True)

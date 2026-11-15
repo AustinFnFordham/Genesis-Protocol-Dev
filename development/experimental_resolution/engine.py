@@ -84,6 +84,43 @@ def step_ids(declaration):
     return {step.get("id"): step for step in walk(declaration.get("steps", []))}
 
 
+GM_REQUESTERS = ("gm", "gm_hidden")
+
+
+def roll_subject(action, request):
+    """Who a GM-requested roll is FOR, and where it comes from (gaps X1 and X2).
+
+    `subject` names the creature a GM-requested roll belongs to, so several creatures can each make the same kind of
+    roll in one action without sharing a no-reroll slot. `provenance: {"kind": "gm_turn", "actor_id": subject}` says
+    the roll belongs to that creature's own turn rather than to a step the player declared.
+    Both are refused on the player character's own rolls: a player roll is identified by its declared step alone, so
+    neither field can be used to open a second slot for it. Returns (subject, gm_turn)."""
+    subject, provenance = request.get("subject"), request.get("provenance")
+    requester = request.get("requested_by", action.get("actor"))
+    if subject is None and provenance is None:
+        return None, False
+    if requester not in GM_REQUESTERS:
+        raise ValueError("a roll subject or GM-turn provenance is only for creatures the GM rolls for")
+    if not isinstance(subject, str) or not subject or subject == action.get("actor"):
+        raise ValueError("a GM-requested roll names the creature it is for; never the player character")
+    if provenance is None:
+        return subject, False
+    if not isinstance(provenance, dict) or provenance.get("kind") != "gm_turn" or provenance.get("actor_id") != subject or set(provenance) - {"kind", "actor_id"}:
+        raise ValueError("GM-turn provenance is {kind: gm_turn, actor_id: <the roll's subject>}")
+    if request.get("step_id") is not None:
+        raise ValueError("a roll belongs to a declared step or to a creature's own turn, not both")
+    return subject, True
+
+
+def slot_identity(action_id, action, request):
+    """The no-reroll slot. Unchanged for every request that names no subject, so accepted rolls keep their identity."""
+    subject, gm_turn = roll_subject(action, request)
+    parts = [action_id, "gm_turn" if gm_turn else request.get("step_id"), request.get("kind"), request.get("requested_by", action.get("actor"))]
+    if subject is not None:
+        parts.append(subject)
+    return parts
+
+
 def narrative_face(seed, turn_no, action_id, roll_key):
     material = f"genesis:narrative:v1:{seed}:{turn_no}:{action_id}:{roll_key}"
     domain_seed = int.from_bytes(hashlib.sha256(material.encode()).digest()[:4], "little")
@@ -92,8 +129,9 @@ def narrative_face(seed, turn_no, action_id, roll_key):
 
 def generate(campaign, action_id, action, request, config):
     declaration = preflight(campaign, action)
-    step = step_ids(declaration).get(request.get("step_id"))
-    if not step or (step.get("pending") and (not step.get("authorized") or step.get("authorized_ctx") != action.get("context_id"))):
+    subject, gm_turn = roll_subject(action, request)
+    step = None if gm_turn else step_ids(declaration).get(request.get("step_id"))
+    if not gm_turn and (not step or (step.get("pending") and (not step.get("authorized") or step.get("authorized_ctx") != action.get("context_id")))):
         raise ValueError("roll must reference an explicitly authorized declaration step")
     if request.get("kind") not in ("check", "attack", "save", "damage", "other"):
         raise ValueError("roll kind required")
@@ -136,7 +174,11 @@ def generate(campaign, action_id, action, request, config):
         resolution["narrative_stream"] = {"domain": "genesis:narrative:v1", "algorithm": "mulberry32",
                                           "request": request["roll_key"], "draw_index": 0}
     record["resolution"] = policy.public_resolution(resolution)
-    record["resolution_provenance"] = {"action_id":action_id,"step_id":request["step_id"],"roll_key":request["roll_key"]}
+    record["resolution_provenance"] = {"action_id":action_id,"step_id":request.get("step_id"),"roll_key":request["roll_key"]}
+    if gm_turn:
+        # Public record: says only that this was a creature's own turn. Which creature stays in the private log
+        # (the request, below), because a hidden creature must not be named in the public roll log.
+        record["resolution_provenance"]["source"] = "gm_turn"
     logs = {"records/roll_log.jsonl": record,
             "hidden/experimental_resolution_log.jsonl": {"roll_id": record["roll_id"], "action_id": action_id,
                 "ordinary_draw_start": state["draws_used"]-used, "ordinary_draw_end": state["draws_used"],
@@ -180,8 +222,7 @@ def execute(campaign, action_id, action, request, after_write=None):
         value = {"action_hash": fingerprint(identity(action)), "campaign_id": action["campaign_id"]}
         if binding.exists() and json.loads(binding.read_text()) != value:
             raise ValueError("immutable action or selected resolution settings changed")
-        slot = bindings / ("slot-"+fingerprint([action_id, request.get("step_id"), request.get("kind"),
-                                               request.get("requested_by", action.get("actor"))])+".json")
+        slot = bindings / ("slot-"+fingerprint(slot_identity(action_id, action, request))+".json")
         slot_value = {"request_hash":request_hash}
         if slot.exists() and json.loads(slot.read_text()) != slot_value:
             raise ValueError("this step/actor/roll-kind already has an accepted roll; a new key cannot reroll it")
