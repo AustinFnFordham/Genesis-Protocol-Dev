@@ -12,6 +12,7 @@ The runner never tries a second provider.
 import secrets
 
 from gateway import Refused
+from git_errors import GitFailure
 from providers import BadMove, Unavailable
 
 RECOVERABLE = {"PROPOSAL_REJECTED", "NPC_EVALUATION", "BAD_TABLES", "BAD_ROLL", "PURPOSE_LEAK", "NOT_DECLARED", "TABLES_FIRST",
@@ -21,7 +22,10 @@ RECOVERABLE = {"PROPOSAL_REJECTED", "NPC_EVALUATION", "BAD_TABLES", "BAD_ROLL", 
 def run_turn(gateway, provider, run=None, max_moves=16, max_rejections=3, interrupt=None):
     run = run or f"run-{provider.id}-{secrets.token_hex(6)}"
     capability = provider.capabilities()
-    item = gateway._in_flight()
+    try:
+        item = gateway._in_flight()
+    except GitFailure as failure:
+        return {"outcome":"blocked", "run":run, **failure.as_dict()}
     if not item:
         return {"outcome": "nothing", "run": run}
     action_id = item[2]["action_id"]
@@ -34,6 +38,8 @@ def run_turn(gateway, provider, run=None, max_moves=16, max_rejections=3, interr
     try:
         claim = gateway.claim(provider.id, run, {"kind": capability.get("kind"), "model": capability.get("model"),
                                                 "mock": capability.get("mock"), "session": None})
+    except GitFailure as failure:
+        return {"outcome":"blocked", "run":run, "action_id":action_id, **failure.as_dict()}
     except Refused as refusal:
         return {"outcome": {"PROVIDER_BUSY": "busy", "NOTHING_TO_DO": "nothing", "NOT_ROUTED_HERE": "not_routed"}.get(refusal.code, "refused"),
                 "run": run, "action_id": action_id, **refusal.as_dict()}
@@ -86,5 +92,7 @@ def run_turn(gateway, provider, run=None, max_moves=16, max_rejections=3, interr
     except Unavailable as error:
         gateway.release(provider.id, run, "provider unavailable mid-turn")
         return {"outcome": "blocked", "run": run, "action_id": action_id, "moves": moves, "reason": str(error)[:300]}
+    except GitFailure as failure:
+        return {"outcome":"blocked", "run":run, "action_id":action_id, "moves":moves, **failure.as_dict()}
     except Refused as refusal:
         return {"outcome": "refused", "run": run, "action_id": action_id, "moves": moves, **refusal.as_dict()}

@@ -50,6 +50,7 @@ import ledger           # noqa: E402
 import policy           # noqa: E402
 import npc_review       # noqa: E402
 from store import Conflict  # noqa: E402
+from git_errors import GitFailure  # noqa: E402
 
 
 def _module(name, relative):
@@ -171,8 +172,10 @@ class Gateway:
         lock = dict(lock, expires_ms=now + self.lease_ms)
         try:
             self.store.put("locks/" + self.id, lock, version)
+        except GitFailure:
+            raise
         except Conflict:
-            raise Refused("LEASE_LOST", "the lease changed hands; stop and write nothing more")
+            raise Refused("LEASE_LOST", "the lease compare-and-set was rejected; stop and write nothing more")
         item = self._in_flight()
         if not item or item[2].get("processing", {}).get("run") != run:
             raise Refused("NOT_CLAIMED", "this run has no claimed action")
@@ -194,6 +197,8 @@ class Gateway:
         row = dict(row, **fields, **patch)
         try:
             version = self.store.put(key, row, version)
+        except GitFailure:
+            raise
         except Conflict:
             raise Refused("LEASE_LOST", "the action row changed under this run; stop and write nothing more")
         return key, version, row
@@ -274,6 +279,8 @@ class Gateway:
                **identity, "gm": {"provider": provider, "route": [{"provider": provider, "by": "player", "at_ms": self.clock()}]}}
         try:
             self.store.put(key, row, 0)
+        except GitFailure:
+            raise
         except Conflict:
             return self.submit(action)
         # Two different declarations can pass the in-flight check at the same moment. The earlier one
@@ -317,6 +324,8 @@ class Gateway:
         item = self._in_flight()
         try:
             state = self._public()
+        except GitFailure:
+            raise
         except ValueError:      # an accepted dice request or ledger batch is mid-write: readers fail closed
             state = {"revision": None, "ledger_head": None}
         _, lock = self._lock()
@@ -348,7 +357,7 @@ class Gateway:
             raise Refused("NOT_REROUTABLE", f"an action that is {row['status']} needs no GM; nothing to hand over")
         _, lock = self._lock()
         if row["status"] == "processing" and lock and lock.get("holder") and lock.get("expires_ms", 0) > self.clock():
-            raise Refused("PROVIDER_BUSY", "the current provider still holds the lease; wait for it to release or expire")
+            raise Refused("PROVIDER_BUSY", "the current provider still holds the lease; wait for it to release or expire", verified_competing_holder=True)
         gm = dict(row.get("gm", {}))
         if gm.get("provider") != provider:
             gm["route"] = gm.get("route", []) + [{"provider": provider, "by": by, "at_ms": self.clock(), "from": gm.get("provider")}]
@@ -380,7 +389,7 @@ class Gateway:
         now = self.clock()
         version, lock = self._lock()
         if lock and lock.get("holder") not in (None, run) and lock.get("expires_ms", 0) > now:
-            raise Refused("PROVIDER_BUSY", "another run holds the campaign lease", holder_provider=lock.get("provider"))
+            raise Refused("PROVIDER_BUSY", "another run holds the campaign lease", holder_provider=lock.get("provider"), verified_competing_holder=True)
         item = self._in_flight()
         if not item:
             raise Refused("NOTHING_TO_DO", "no action is waiting for a GM")
@@ -392,8 +401,21 @@ class Gateway:
         lock = {"holder": run, "provider": provider, "expires_ms": now + self.lease_ms, "acquired_ms": now}
         try:
             self.store.put("locks/" + self.id, lock, version)
+        except GitFailure:
+            raise
         except Conflict:
-            raise Refused("PROVIDER_BUSY", "lost the race for the campaign lease")
+            # A changed ref/version is not itself evidence that another worker
+            # owns a live lease. Re-read once, without making another write.
+            try:
+                _, current = self._lock()
+            except GitFailure:
+                raise
+            except Conflict:
+                current = None
+            if current and current.get("holder") not in (None, run) and current.get("expires_ms", 0) > self.clock():
+                raise Refused("PROVIDER_BUSY", "a competing live lease holder was verified after the CAS conflict",
+                              holder_provider=current.get("provider"), verified_competing_holder=True)
+            raise Refused("CLAIM_CAS_CONFLICT", "lease compare-and-set rejected; no competing live holder was verified", verified_competing_holder=False)
         action_id = row["action_id"]
         op = self._op(action_id)
         if op is None:

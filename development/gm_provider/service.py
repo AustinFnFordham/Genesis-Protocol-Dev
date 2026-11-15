@@ -47,8 +47,9 @@ from gateway import Gateway, Refused   # noqa: E402
 import providers as provider_module    # noqa: E402
 from runner import run_turn            # noqa: E402
 from store import SqliteStore, Conflict  # noqa: E402
+from git_errors import GitFailure       # noqa: E402
 
-STATUS = {"STALE": 409, "TURN_IN_FLIGHT": 409, "ACTION_ID_REUSED": 409, "PROVIDER_BUSY": 409, "NOT_REROUTABLE": 409,
+STATUS = {"STALE": 409, "TURN_IN_FLIGHT": 409, "ACTION_ID_REUSED": 409, "PROVIDER_BUSY": 409, "CLAIM_CAS_CONFLICT":409, "NOT_REROUTABLE": 409,
           "NO_SUCH_ACTION": 404, "NO_SUCH_PAGE": 404, "PROVIDER_NOT_SELECTED": 422, "UNSUPPORTED_SETTINGS": 422}
 MAX_BODY = 262144
 
@@ -66,6 +67,9 @@ class App:
             for campaign_id, gateway in self.gateways.items():
                 try:
                     item = gateway._in_flight()
+                except GitFailure as error:
+                    results.append({"campaign_id":campaign_id,"outcome":"blocked",**error.as_dict()})
+                    continue
                 except (Refused, ValueError) as error:
                     results.append({"campaign_id": campaign_id, "outcome": "refused", "error": str(error)[:200]})
                     continue
@@ -143,6 +147,8 @@ class App:
                     threading.Thread(target=self.work, daemon=True).start()
                 return 200, status
             return 404, {"error": {"code": "NOT_FOUND", "message": "unknown path"}}
+        except GitFailure as failure:
+            return (409 if failure.code == "GIT_STALE_REF" else 503), failure.as_dict()
         except Refused as refusal:
             return STATUS.get(refusal.code, 400), refusal.as_dict()
         except Conflict:
@@ -172,6 +178,8 @@ class App:
             return 200, calls[verb]()
         except json.JSONDecodeError:
             return 400, {"error": {"code": "BAD_JSON", "message": "body must be JSON"}}
+        except GitFailure as failure:
+            return (409 if failure.code == "GIT_STALE_REF" else 503), failure.as_dict()
         except Refused as refusal:
             return STATUS.get(refusal.code, 409 if refusal.code in ("LEASE_LOST", "NOT_ROUTED_HERE", "TABLES_FIXED", "ALREADY_COMMITTED") else 400), refusal.as_dict()
         except Conflict:

@@ -15,6 +15,15 @@ or `claude-session`. Use exactly that id. If the queued action is routed to anot
 - Never state a die result. Ask the gateway for every roll. An accepted roll is final.
 - If the gateway refuses a move, read the reason and fix that move. If it says `LEASE_LOST`,
   `NOT_ROUTED_HERE` or `PROVIDER_BUSY`, stop and report; do not retry around it.
+- Also stop on `CLAIM_CAS_CONFLICT`, any `GIT_*` error, or an unconfirmed push.
+  Report its Git exit code and sanitized diagnostics. `PROVIDER_BUSY` means a live
+  competing holder was actually observed; a rejected Git ref/version alone does
+  not prove a competing worker. Never replace missing write credentials with a
+  different commit path for gameplay. Read-only recovery can be inspected, but
+  never clear a lease or retry a claim around these errors.
+- A transport failure can lose the acknowledgement after a server accepts a
+  write. Preserve unconfirmed local work and reconcile the shared ref first;
+  do not assume the write was rejected or repeat accepted dice.
 - Say truthfully which model you are in `--model`. If you do not know, write `unknown`.
 
 ## Procedure

@@ -10,10 +10,17 @@ only through Claude's ArtifactData tool, so no adapter for it exists outside a C
 import json
 import sqlite3
 import threading
+import os
+import subprocess
+from git_errors import GitFailure, diagnostic, OPERATIONS
 
 
 class Conflict(ValueError):
     """The document changed since it was read."""
+
+
+class GitRefConflict(GitFailure, Conflict):
+    """A verified Git ref rejection, distinct from a verified competing lease."""
 
 
 class SqliteStore:
@@ -63,10 +70,11 @@ class GitStore:
     logs and receipts, the ledger batch) so a different session that takes over later starts from it.
     Needs only git access to the branch: no server, no database, no model credential.
     """
-    def __init__(self, scope, remote="origin", branch=None, min_sync_s=2.0, author="Genesis gateway <gateway@genesis.invalid>"):
+    def __init__(self, scope, remote="origin", branch=None, min_sync_s=2.0, author="Genesis gateway <gateway@genesis.invalid>", git_timeout=30):
         import subprocess
         import time
         self._run, self._time = subprocess.run, time
+        self.git_timeout = git_timeout
         self.scope = __import__("pathlib").Path(scope).resolve()
         self.directory = self.scope / "store"
         self.repo = __import__("pathlib").Path(self._git_at(self.scope, "rev-parse", "--show-toplevel").strip())
@@ -78,9 +86,18 @@ class GitStore:
         self.guard = threading.RLock()
 
     def _git_at(self, cwd, *args, check=True):
-        result = self._run(["git", *args], cwd=str(cwd), capture_output=True, text=True)
+        operation = next((a for a in args if a in OPERATIONS), "git")
+        environment = dict(os.environ, GIT_TERMINAL_PROMPT="0", GCM_INTERACTIVE="Never", LC_ALL="C")
+        try:
+            result = self._run(["git", *args], cwd=str(cwd), capture_output=True, text=True,
+                               timeout=self.git_timeout, env=environment)
+        except subprocess.TimeoutExpired as error:
+            raise GitFailure(diagnostic(operation, None, error.stderr, error.stdout, timed_out=True)) from None
+        except OSError:
+            raise GitFailure(diagnostic(operation, None, execution=True)) from None
         if check and result.returncode != 0:
-            raise RuntimeError(f"git {' '.join(args[:3])}: {result.stderr.strip()[:300]}")
+            details = diagnostic(operation, result.returncode, result.stderr, result.stdout)
+            raise (GitRefConflict if details["classification"] == "stale_ref" else GitFailure)(details) from None
         return result.stdout if check else result
 
     def _git(self, *args, check=True):
@@ -96,7 +113,14 @@ class GitStore:
             if self._git("rev-list", "--count", f"HEAD..{self.remote}/{self.branch}").strip() != "0":
                 merged = self._git("merge", "--ff-only", "--quiet", f"{self.remote}/{self.branch}", check=False)
                 if merged.returncode != 0:
-                    raise Conflict("the shared record moved under this session's unpushed work; stop and write nothing more")
+                    details = diagnostic("merge", merged.returncode, merged.stderr, merged.stdout)
+                    raise (GitRefConflict if details["classification"] == "stale_ref" else GitFailure)(details)
+            # An indeterminate push may have reached the server. Never stack more
+            # writes on an unconfirmed local commit, including in a new process.
+            if self._git("rev-list", "--count", f"{self.remote}/{self.branch}..HEAD").strip() != "0":
+                raise GitFailure({"operation":"sync", "exit_code":None, "classification":"sync_required",
+                                  "stderr":"local commits are not confirmed on the shared branch; reconcile before writing",
+                                  "stdout":"", "timed_out":False, "remote_outcome":"unknown"})
 
     def _path(self, key):
         return self.directory / (key + ".json")
@@ -112,14 +136,28 @@ class GitStore:
 
     def _push(self, message):
         self._git("add", "-A", "--", str(self.scope))
-        if self._git("diff", "--cached", "--quiet", "--", str(self.scope), check=False).returncode == 0:
+        changes = self._git("diff", "--cached", "--quiet", "--", str(self.scope), check=False)
+        if changes.returncode == 0:
             return True
+        if changes.returncode != 1:
+            raise GitFailure(diagnostic("diff", changes.returncode, changes.stderr, changes.stdout))
         self._git(*self.identity, "commit", "--quiet", "-m", message, "--", str(self.scope))
-        pushed = self._git("push", "--quiet", self.remote, f"HEAD:{self.branch}", check=False)
-        if pushed.returncode != 0:
-            self._git("reset", "--quiet", "--soft", "HEAD~1")
-            self._git("reset", "--quiet", "--", str(self.scope))
-            return False
+        try:
+            pushed = self._git("push", "--quiet", self.remote, f"HEAD:{self.branch}", check=False)
+            if pushed.returncode != 0:
+                details = diagnostic("push", pushed.returncode, pushed.stderr, pushed.stdout)
+                raise (GitRefConflict if details["classification"] == "stale_ref" else GitFailure)(details)
+        except GitFailure as error:
+            error.details["local_commit_reverted"] = False
+            if error.details["remote_outcome"] == "rejected":
+                try:
+                    self._git("reset", "--quiet", "--soft", "HEAD~1")
+                    self._git("reset", "--quiet", "--", str(self.scope))
+                    error.details["local_commit_reverted"] = True
+                except GitFailure as cleanup:
+                    error.details["cleanup_failure"] = cleanup.details
+            self.last_sync = 0.0
+            raise
         return True
 
     def put(self, key, data, expected):
@@ -132,21 +170,21 @@ class GitStore:
             path.parent.mkdir(parents=True, exist_ok=True)
             previous = path.read_bytes() if path.exists() else None
             path.write_text(json.dumps({"version": expected+1, "data": data}, ensure_ascii=False, indent=1), encoding="utf-8")
-            if not self._push(f"{self.scope.name}: {key} v{expected+1}"):
-                if previous is None:
-                    path.unlink()
-                else:
-                    path.write_bytes(previous)
-                self.last_sync = 0.0
-                raise Conflict(f"{key}: another session wrote the shared record first")
+            try:
+                self._push(f"{self.scope.name}: {key} v{expected+1}")
+            except GitFailure as error:
+                if error.details.get("local_commit_reverted"):
+                    if previous is None:
+                        path.unlink()
+                    else:
+                        path.write_bytes(previous)
+                raise
             return expected+1
 
     def checkpoint(self, what):
         with self.guard:
             self.sync(force=True)
-            if not self._push(f"{self.scope.name}: accepted {what}"):
-                self.last_sync = 0.0
-                raise Conflict("another session wrote the shared record first; this session's accepted work was not shared")
+            self._push(f"{self.scope.name}: accepted {what}")
 
     def keys(self, prefix):
         with self.guard:

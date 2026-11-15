@@ -28,6 +28,7 @@ from gateway import Gateway, Refused   # noqa: E402
 import providers as provider_module    # noqa: E402
 from runner import run_turn            # noqa: E402
 from store import SqliteStore          # noqa: E402
+from git_errors import GitFailure     # noqa: E402
 
 
 def main(argv=None):
@@ -43,15 +44,16 @@ def main(argv=None):
     parser.add_argument("--model", help="claim: the model this session says it is (attestation, recorded with the turn)")
     parser.add_argument("--session", help="claim: a session reference (URL or id) for the record")
     a = parser.parse_intermixed_args(argv)
-    if a.shared:
-        import staging
-        gateway = staging.open_shared(a.shared)
-    elif a.campaign and a.id and a.store:
-        gateway = Gateway(a.campaign, a.id, SqliteStore(a.store))
-    else:
+    def open_gateway():
+        if a.shared:
+            import staging
+            return staging.open_shared(a.shared)
+        if a.campaign and a.id and a.store:
+            return Gateway(a.campaign, a.id, SqliteStore(a.store))
         parser.exit(2, "give --shared DIR, or -c -i -s\n")
     load = lambda index: json.loads(Path(a.args[index]).read_text(encoding="utf-8"))
     try:
+        gateway = open_gateway()
         c = a.command
         if c == "state":
             out = gateway.public_state()
@@ -87,6 +89,9 @@ def main(argv=None):
                    "roll": lambda: gateway.roll(provider, a.run, load(1)), "commit": lambda: gateway.commit(provider, a.run, load(1))}[c]()
         else:
             parser.exit(2, f"unknown command {c}\n")
+    except GitFailure as failure:
+        print(json.dumps(failure.as_dict(), indent=1, ensure_ascii=False))
+        return 3
     except Refused as refusal:
         print(json.dumps(refusal.as_dict(), indent=1, ensure_ascii=False))
         return 3
