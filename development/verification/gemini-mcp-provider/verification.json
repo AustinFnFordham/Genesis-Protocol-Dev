@@ -1,0 +1,79 @@
+{
+  "branch": "dev/gemini-mcp-provider",
+  "base_commits": {
+    "staging_provider_shared": "350c9da29ed2d7d667f147421d9d15b5471cd4d2",
+    "git_claim_diagnostics": "6942257de29d099e0b6c2ed387812af42d991eb7",
+    "provider_interchange": "9030816280a373bc6ef4ce539d087665728f2fd8"
+  },
+  "deliverable_1_read_only_staging_refresh": {
+    "campaign_id": "shared-1",
+    "revision": 40,
+    "ledger_head": "evt_0043",
+    "context_id": "evt_0043",
+    "in_flight_action_id": "shared-0002",
+    "in_flight_status": "submitted",
+    "in_flight_routed_to": "gpt-session",
+    "in_flight_phase": "interpret",
+    "lease_held": false,
+    "read_only_enforced": true
+  },
+  "isolation": {
+    "protected_paths": [
+      "staging/shared-1",
+      "campaigns",
+      "api_bridge/gm"
+    ],
+    "protected_files": 146,
+    "diff_against_350c9da_bytes": 0,
+    "shared_0002_version": 1,
+    "shared_0002_status": "submitted",
+    "shared_0002_provider": "gpt-session",
+    "lease_version": 5,
+    "lease_holder": null,
+    "hask_meadow_modified": false,
+    "campaign_advanced": false
+  },
+  "test_suites": [
+    {
+      "suite": "development/gm_provider/test_mcp_adapter.py",
+      "cases": 5,
+      "passed": true,
+      "evidence_kind": "local deterministic + in-process wire + local loopback HTTP + mock GM on isolated copy + read-only shared-1 refresh"
+    },
+    {
+      "suite": "development/gm_provider/test_service.py",
+      "cases": 5,
+      "passed": true,
+      "evidence_kind": "local loopback HTTP + local fake model server"
+    },
+    {
+      "suite": "development/gm_provider/test_gateway.py",
+      "cases": 23,
+      "passed": true,
+      "evidence_kind": "local deterministic gateway + scripted mocks on isolated copies"
+    },
+    {
+      "suite": "development/gm_provider/test_git_diagnostics.py",
+      "cases": 15,
+      "passed": true,
+      "evidence_kind": "local bare git repositories + failure classification"
+    },
+    {
+      "suite": "development/gm_provider/test_shared_store.py",
+      "cases": 4,
+      "passed": true,
+      "evidence_kind": "local bare git remote + multi-clone CAS + mid-turn handoff"
+    },
+    {
+      "suite": "development/gm_provider/test_npc_review.py",
+      "cases": 4,
+      "passed": true,
+      "evidence_kind": "local deterministic validator"
+    }
+  ],
+  "not_executed": [
+    "Cloud provisioning, billing enablement, or live remote deployment (prohibited by instruction)",
+    "Remote HTTPS connection test against a deployed cloud endpoint",
+    "Actual Gemini mobile app end-to-end turn execution (requires remote HTTPS deployment + personal Google account linking)"
+  ]
+}

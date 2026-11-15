@@ -1,5 +1,10 @@
 # Gemini app connection contract (v1, staging)
 
+> **Native Gemini mobile conversation (`gemini-session`) via Custom Connected Apps / Remote MCP:**
+> See `development/GEMINI_MOBILE_MCP_CONNECTION.md` for the Streamable HTTP MCP + OAuth 2.1 PKCE
+> adapter (`development/gm_provider/mcp_adapter.py`) where Gemini in the mobile chat performs GM
+> reasoning over the existing gateway while the desktop is powered off.
+
 What a Gemini-hosted app (or any other player client) needs to play a Genesis campaign on an
 ongoing basis: load, refresh, declare, wait, reconnect, and hand the GM seat to another provider.
 

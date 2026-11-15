@@ -28,7 +28,14 @@ accepted there and a GM token is never accepted on player routes.
   POST /v1/gm/{id}/{provider}/context|publish|release   {"run"}
   POST /v1/gm/{id}/{provider}/tables|roll|review|commit {"run", "body": {...}}
 
-Run:  GENESIS_PLAYER_TOKEN=... python3 service.py serve --campaign DIR --id ID --store FILE [--port 8787] [--autorun]
+  GET  /.well-known/oauth-protected-resource       OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  GET  /.well-known/oauth-authorization-server     OAuth 2.1 Authorization Server Metadata (RFC 8414)
+  POST /oauth/register                             Dynamic Client Registration (RFC 7591)
+  GET|POST /oauth/authorize                        OAuth 2.1 PKCE (S256) authorization endpoint
+  POST /oauth/token                                OAuth 2.1 token exchange & refresh endpoint
+  POST|GET|DELETE /mcp (and /v1/mcp)               MCP Streamable HTTP endpoint for Gemini Connected Apps
+
+Run:  GENESIS_PLAYER_TOKEN=... python3 service.py serve --campaign DIR --id ID --store FILE [--port 8787] [--autorun] [--read-only]
       python3 service.py work --campaign DIR --id ID --store FILE         (one worker pass)
 """
 import argparse
@@ -48,6 +55,7 @@ import providers as provider_module    # noqa: E402
 from runner import run_turn            # noqa: E402
 from store import SqliteStore, Conflict  # noqa: E402
 from git_errors import GitFailure       # noqa: E402
+from mcp_adapter import MCPAdapter, OAuthServer  # noqa: E402
 
 STATUS = {"STALE": 409, "TURN_IN_FLIGHT": 409, "ACTION_ID_REUSED": 409, "PROVIDER_BUSY": 409, "CLAIM_CAS_CONFLICT":409, "NOT_REROUTABLE": 409,
           "NO_SUCH_ACTION": 404, "NO_SUCH_PAGE": 404, "PROVIDER_NOT_SELECTED": 422, "UNSUPPORTED_SETTINGS": 422}
@@ -55,10 +63,30 @@ MAX_BODY = 262144
 
 
 class App:
-    def __init__(self, gateways, providers, token, origin=None, autorun=False, gm_tokens=None):
+    def __init__(self, gateways, providers, token, origin=None, autorun=False, gm_tokens=None, *,
+                 read_token=None, oauth_secret=None, oauth_client_id=None, oauth_client_secret=None,
+                 public_base_url=None, read_only=False):
         self.gateways, self.providers, self.token, self.origin, self.autorun = gateways, providers, token, origin, autorun
         self.gm_tokens = dict(gm_tokens or {})
+        self.read_token = read_token
+        self.read_only = bool(read_only)
         self.working = threading.Lock()
+        self.oauth = OAuthServer(
+            oauth_secret or self.gm_tokens.get("gemini-session") or token or read_token or "",
+            read_token=read_token,
+            player_token=token,
+            gm_tokens=self.gm_tokens,
+            oauth_secret=oauth_secret,
+            client_id=oauth_client_id,
+            client_secret=oauth_client_secret,
+            read_only=self.read_only,
+        )
+        self.mcp = MCPAdapter(
+            self.gateways,
+            self.oauth,
+            public_base_url=public_base_url,
+            read_only=self.read_only,
+        )
 
     def work(self):
         """One worker pass: run the routed provider for each campaign's in-flight action. Never substitutes."""
@@ -93,9 +121,24 @@ class App:
     def matrix(self):
         return [{k: v for k, v in row.items() if k != "endpoint"} for row in provider_module.matrix(self.providers)]
 
+    def handle_http(self, method, raw_path, headers, body):
+        """Full HTTP handler returning `(status_code, payload_or_bytes, extra_headers)`."""
+        path, _, query = (raw_path or "").partition("?")
+        headers = {k.lower(): v for k, v in (headers or {}).items()}
+        mcp_response = self.mcp.handle_http(method, path, query, headers, body)
+        if mcp_response is not None:
+            return mcp_response
+        code, payload = self.handle(method, path, headers, body)
+        return code, payload, {}
+
     def handle(self, method, path, headers, body):
+        path, _, query = (path or "").partition("?")
+        headers = {k.lower(): v for k, v in (headers or {}).items()}
+        mcp_response = self.mcp.handle_http(method, path, query, headers, body)
+        if mcp_response is not None:
+            return mcp_response[0], mcp_response[1]
         if method == "GET" and path == "/v1/health":
-            return 200, {"ok": True}
+            return 200, {"ok": True, "read_only": self.read_only, "mcp": "/mcp"}
         if method == "GET" and path == "/v1/providers":
             return 200, {"providers": self.matrix()}
         gm = re.match(r"^/v1/gm/([A-Za-z0-9_-]{1,64})/([a-z][a-z0-9_-]{1,39})/(claim|context|tables|roll|review|commit|publish|release)$", path)
@@ -105,7 +148,9 @@ class App:
         if not match:
             return 404, {"error": {"code": "NOT_FOUND", "message": "unknown path"}}
         supplied = headers.get("authorization", "")
-        if not self.token or not hmac.compare_digest(supplied.encode(), ("Bearer " + self.token).encode()):
+        valid_player = bool(self.token and hmac.compare_digest(supplied.encode(), ("Bearer " + self.token).encode()))
+        valid_read = bool(method == "GET" and self.read_token and hmac.compare_digest(supplied.encode(), ("Bearer " + self.read_token).encode()))
+        if not (valid_player or valid_read):
             return 401, {"error": {"code": "UNAUTHORIZED", "message": "player token required"}}
         gateway = self.gateways.get(match.group(1))
         if gateway is None:
@@ -124,6 +169,8 @@ class App:
                 return 200, gateway.action_status(action.group(1))
             if method != "POST":
                 return 404, {"error": {"code": "NOT_FOUND", "message": "unknown path"}}
+            if self.read_only:
+                return 403, {"error": {"code": "READ_ONLY_MODE", "message": "this service is running in read-only mode"}}
             try:
                 data = json.loads(body or b"{}")
             except json.JSONDecodeError:
@@ -165,6 +212,8 @@ class App:
         gateway = self.gateways.get(campaign_id)
         if gateway is None or method != "POST":
             return 404, {"error": {"code": "NOT_FOUND", "message": "unknown campaign or method"}}
+        if self.read_only:
+            return 403, {"error": {"code": "READ_ONLY_MODE", "message": "this service is running in read-only mode"}}
         try:
             data = json.loads(body or b"{}")
             run, payload = data.get("run"), data.get("body")
@@ -195,31 +244,46 @@ def handler(app):
         def respond(self):
             length = int(self.headers.get("content-length") or 0)
             if length > MAX_BODY:
-                code, payload = 413, {"error": {"code": "TOO_LARGE", "message": "body too large"}}
+                code, payload, extra_headers = 413, {"error": {"code": "TOO_LARGE", "message": "body too large"}}, {}
             else:
-                code, payload = app.handle(self.command, self.path.split("?")[0], {k.lower(): v for k, v in self.headers.items()},
-                                           self.rfile.read(length) if length else b"")
-            data = json.dumps(payload, ensure_ascii=False).encode()
+                code, payload, extra_headers = app.handle_http(
+                    self.command,
+                    self.path,
+                    {k.lower(): v for k, v in self.headers.items()},
+                    self.rfile.read(length) if length else b"",
+                )
+            extra_headers = dict(extra_headers or {})
+            ctype = extra_headers.pop("content-type", "application/json; charset=utf-8")
+            if isinstance(payload, bytes):
+                data = payload
+            else:
+                data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
             self.send_response(code)
-            self.send_header("content-type", "application/json; charset=utf-8")
+            if data or code not in (202, 204):
+                self.send_header("content-type", ctype)
             self.send_header("content-length", str(len(data)))
             self.send_header("cache-control", "no-store")
+            for k, v in extra_headers.items():
+                self.send_header(k, v)
             if app.origin:
                 self.send_header("access-control-allow-origin", app.origin)
-                self.send_header("access-control-allow-headers", "authorization, content-type")
-                self.send_header("access-control-allow-methods", "GET, POST, OPTIONS")
+                self.send_header("access-control-allow-headers", "authorization, content-type, mcp-session-id, mcp-protocol-version")
+                self.send_header("access-control-expose-headers", "mcp-session-id, www-authenticate")
+                self.send_header("access-control-allow-methods", "GET, POST, DELETE, OPTIONS")
                 self.send_header("vary", "origin")
             self.end_headers()
-            self.wfile.write(data)
+            if data:
+                self.wfile.write(data)
 
-        do_GET = do_POST = respond
+        do_GET = do_POST = do_DELETE = respond
 
         def do_OPTIONS(self):
             self.send_response(204)
             if app.origin:
                 self.send_header("access-control-allow-origin", app.origin)
-                self.send_header("access-control-allow-headers", "authorization, content-type")
-                self.send_header("access-control-allow-methods", "GET, POST, OPTIONS")
+                self.send_header("access-control-allow-headers", "authorization, content-type, mcp-session-id, mcp-protocol-version")
+                self.send_header("access-control-expose-headers", "mcp-session-id, www-authenticate")
+                self.send_header("access-control-allow-methods", "GET, POST, DELETE, OPTIONS")
             self.end_headers()
 
         def log_message(self, *args):
@@ -241,7 +305,22 @@ def build(args, env=None):
     gm_tokens = json.loads(env.get("GENESIS_GM_TOKENS") or "{}")
     for name in gm_tokens:
         registry.setdefault(name, provider_module.SessionProvider(name))
-    return App({args.id: gateway}, registry, env.get("GENESIS_PLAYER_TOKEN"), env.get("GENESIS_ALLOWED_ORIGIN"), getattr(args, "autorun", False), gm_tokens)
+    registry.setdefault("gemini-session", provider_module.SessionProvider("gemini-session"))
+    read_only = bool(getattr(args, "read_only", False) or env.get("GENESIS_MCP_READ_ONLY", "").lower() in ("1", "true", "yes"))
+    return App(
+        {args.id: gateway},
+        registry,
+        env.get("GENESIS_PLAYER_TOKEN"),
+        env.get("GENESIS_ALLOWED_ORIGIN"),
+        getattr(args, "autorun", False),
+        gm_tokens,
+        read_token=env.get("GENESIS_READ_TOKEN"),
+        oauth_secret=env.get("GENESIS_OAUTH_SECRET"),
+        oauth_client_id=env.get("GENESIS_OAUTH_CLIENT_ID"),
+        oauth_client_secret=env.get("GENESIS_OAUTH_CLIENT_SECRET"),
+        public_base_url=env.get("GENESIS_PUBLIC_BASE_URL"),
+        read_only=read_only,
+    )
 
 
 def main(argv=None):
@@ -251,16 +330,17 @@ def main(argv=None):
         s = sub.add_parser(name)
         s.add_argument("--campaign", type=Path); s.add_argument("--id"); s.add_argument("--store", type=Path)
         s.add_argument("--shared", type=Path, help="a shared staging environment directory in a git clone (replaces the three above)")
-    sub.choices["serve"].add_argument("--port", type=int, default=8787)
-    sub.choices["serve"].add_argument("--host", default="127.0.0.1")
+    sub.choices["serve"].add_argument("--port", type=int, default=int(os.environ.get("PORT", "8787")))
+    sub.choices["serve"].add_argument("--host", default=os.environ.get("HOST", "127.0.0.1"))
     sub.choices["serve"].add_argument("--autorun", action="store_true")
+    sub.choices["serve"].add_argument("--read-only", action="store_true", help="expose only read-only staging refresh and inspection tools")
     args = parser.parse_args(argv)
     app = build(args)
     if args.command == "work":
         print(json.dumps(app.work(), indent=1))
         return 0
-    if not app.token:
-        parser.exit(2, "GENESIS_PLAYER_TOKEN is required to serve\n")
+    if not (app.token or app.read_token or app.oauth.oauth_secret or app.gm_tokens):
+        parser.exit(2, "at least one of GENESIS_PLAYER_TOKEN, GENESIS_READ_TOKEN, GENESIS_OAUTH_SECRET, or GENESIS_GM_TOKENS is required to serve\n")
     ThreadingHTTPServer((args.host, args.port), handler(app)).serve_forever()
 
 

@@ -1,0 +1,28 @@
+# Alternative Fly.io deployment configuration for Genesis Protocol Remote MCP Gateway.
+# Prepared for inspection only — DO NOT deploy without owner provisioning and billing approval.
+app = "genesis-mcp-gateway"
+primary_region = "iad"
+
+[build]
+  dockerfile = "development/gm_provider/deploy/Dockerfile"
+
+[env]
+  PORT = "8080"
+  HOST = "0.0.0.0"
+  GENESIS_SHARED_SCOPE = "staging/shared-1"
+  GENESIS_GIT_BRANCH = "staging/provider-shared"
+  GENESIS_SYNC_ON_START = "1"
+  GENESIS_MCP_READ_ONLY = "1"
+  GENESIS_ALLOWED_ORIGIN = "https://gemini.google.com"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

@@ -1,0 +1,74 @@
+# Declarative Google Cloud Run service manifest for Genesis Protocol Remote MCP Gateway.
+# Prepared for inspection only — DO NOT deploy without owner provisioning and billing approval.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: genesis-mcp-gateway
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    metadata:
+      annotations:
+        # Single-instance concurrency guarantees serialized GitStore operations and in-memory code replay tracking
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "1"
+        run.googleapis.com/cpu-throttling: "true"
+    spec:
+      containerConcurrency: 10
+      timeoutSeconds: 120
+      containers:
+        - image: REGION-docker.pkg.dev/PROJECT_ID/genesis/genesis-mcp-gateway:latest
+          ports:
+            - name: http1
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          env:
+            - name: GENESIS_SHARED_SCOPE
+              value: "staging/shared-1"
+            - name: GENESIS_GIT_BRANCH
+              value: "staging/provider-shared"
+            - name: GENESIS_SYNC_ON_START
+              value: "1"
+            # Start in read-only mode (1) for Deliverable 1; set to "0" to enable full gemini-session GM writes
+            - name: GENESIS_MCP_READ_ONLY
+              value: "1"
+            - name: GENESIS_ALLOWED_ORIGIN
+              value: "https://gemini.google.com"
+            - name: GENESIS_PUBLIC_BASE_URL
+              value: "https://genesis-mcp-gateway-HASH-uc.a.run.app"
+            - name: GENESIS_OAUTH_CLIENT_ID
+              value: "genesis-gemini-mobile"
+            - name: GENESIS_OAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-oauth-secret
+                  key: latest
+            - name: GENESIS_OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-oauth-client-secret
+                  key: latest
+            - name: GENESIS_READ_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-read-token
+                  key: latest
+            - name: GENESIS_PLAYER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-player-token
+                  key: latest
+            - name: GENESIS_GM_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-gm-tokens
+                  key: latest
+            - name: GITHUB_PAT
+              valueFrom:
+                secretKeyRef:
+                  name: genesis-github-pat
+                  key: latest
