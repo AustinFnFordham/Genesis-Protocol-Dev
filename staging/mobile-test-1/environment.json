@@ -11,5 +11,13 @@
   "enemies": "separate per-creature budgets, shared initiative count",
   "dice": "Regular/Heroic/Legendary and Narrative Consequences per submission, player character's own d20s only",
   "adopted_into_live": false
+ },
+ "artifact_url": "https://claude.ai/artifact/CnRh7iAy75JNZePbPhUeqb",
+ "worker": {
+  "server": "Claude Code Remote",
+  "tool": "fire_trigger",
+  "trigger_id": "trig_01J5tRZ3t2WehBNzx3Z3Z2Wj",
+  "runbook": "development/mobile_test/WORKER.md",
+  "branch": "staging/mobile-test"
  }
 }
