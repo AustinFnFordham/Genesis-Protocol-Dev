@@ -1,5 +1,5 @@
 {
- "version": 8,
+ "version": 9,
  "data": {
   "action_id": "rt1-1794789940",
   "status": "resolved",
@@ -81,17 +81,18 @@
   "processing": {
    "run": "claude-session-1794789976",
    "started_ms": 1794789995704,
-   "heartbeat_ms": 1794790096489,
-   "lease_ms": 592302,
-   "stage": "narration",
-   "stage_started_ms": 1794790096489,
+   "heartbeat_ms": 1794790098348,
+   "lease_ms": 590443,
+   "stage": "publishing",
+   "stage_started_ms": 1794790098348,
    "stages": {
     "claimed": 1794789995704,
     "context": 1794790000477,
     "rules": 1794790036550,
     "dice": 1794790045412,
     "ledger": 1794790092604,
-    "narration": 1794790096489
+    "narration": 1794790096489,
+    "publishing": 1794790098348
    }
   },
   "ledger_events": [
