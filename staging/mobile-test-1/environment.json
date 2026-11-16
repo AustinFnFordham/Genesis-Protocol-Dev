@@ -1,0 +1,8 @@
+{
+ "schema": "genesis-shared-staging/1",
+ "campaign_id": "mobile-test-1",
+ "canonical": false,
+ "source": "development/mobile_test/fixture_campaign",
+ "experimental_resolution": true,
+ "note": "Noncanonical mobile test drill. Isolated copy of a deterministic fixture. Not a canonical campaign. Safe to delete."
+}

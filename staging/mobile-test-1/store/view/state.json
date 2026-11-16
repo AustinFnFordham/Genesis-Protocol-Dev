@@ -1,0 +1,709 @@
+{
+ "version": 1,
+ "data": {
+  "experimental_resolution": {
+   "enabled": true,
+   "schema": "genesis-experimental-resolution/1"
+  },
+  "contest_declaration": null,
+  "continuity": {
+   "status": "active",
+   "marks": 0,
+   "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"
+  },
+  "campaign_id": "mobile-test-1",
+  "rolls": [],
+  "dice_history": [],
+  "turn_context": {
+   "actor": "aero",
+   "actor_name": "Aero",
+   "actor_conditions": [],
+   "mode": "combat",
+   "round": 1,
+   "budget": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "speed_ft": 30,
+   "resources": {
+    "force_points": 3
+   },
+   "state_flags": [],
+   "flag_labels": {
+    "saber_ignited": "an ignited lightsaber"
+   },
+   "position_label": "mid-floor, Wick 10 ft behind you",
+   "hands": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the unlit lightsaber hilt"
+    },
+    "left": null
+   },
+   "dialogue": [
+    {
+     "id": "d1",
+     "approach": "assertive",
+     "text": "Wick, stay behind me.",
+     "extended": false
+    },
+    {
+     "id": "d2",
+     "approach": "tactical",
+     "text": "Wick, shoot the near one if it comes at us.",
+     "extended": false
+    },
+    {
+     "id": "d3",
+     "approach": "calming",
+     "text": "Easy. Hold your fire until I say.",
+     "extended": false
+    },
+    {
+     "id": "d4",
+     "approach": "investigative",
+     "text": "Wick, what's behind those crates? Can you see it?",
+     "extended": false
+    }
+   ],
+   "options": [
+    {
+     "id": "saber_attack",
+     "slot": "action",
+     "label": "Lightsaber attack",
+     "detail": "one target within 5 ft; needs the blade lit",
+     "needs_target": true,
+     "reach_ft": 5,
+     "requires": [
+      "saber_ignited"
+     ],
+     "readiable": true,
+     "aliases": [
+      "slash",
+      "strike",
+      "attack",
+      "cut",
+      "swing"
+     ]
+    },
+    {
+     "id": "burst",
+     "slot": "action",
+     "label": "Burst",
+     "detail": "5-ft radius centered on you; 0 Force Points; Dexterity save or 1d4 force damage and prone",
+     "area_ft": 5,
+     "cost": {
+      "force_points": 0
+     },
+     "aliases": [
+      "burst"
+     ]
+    },
+    {
+     "id": "battle_insight",
+     "slot": "action",
+     "label": "Battle Insight",
+     "detail": "one creature you can see within 30 ft; advantage on your next attack against it; 0 Force Points",
+     "needs_target": true,
+     "reach_ft": 30,
+     "cost": {
+      "force_points": 0
+     },
+     "aliases": [
+      "battle insight"
+     ]
+    },
+    {
+     "id": "listen_crates",
+     "slot": "action",
+     "label": "Search for what moved behind the crates",
+     "detail": "Wisdom (Perception); the Search action",
+     "aliases": [
+      "search the crates",
+      "listen",
+      "search"
+     ]
+    }
+   ],
+   "objects": [
+    {
+     "id": "ignite_saber",
+     "label": "Ignite the lightsaber",
+     "grants": [
+      "saber_ignited"
+     ],
+     "unless": [
+      "saber_ignited"
+     ],
+     "aliases": [
+      "ignite",
+      "light my saber",
+      "ignite my lightsaber"
+     ]
+    }
+   ],
+   "movement": [
+    {
+     "id": "hold",
+     "label": "Hold position",
+     "feet": 0,
+     "leaves_reach_of": []
+    },
+    {
+     "id": "to_near_hound",
+     "label": "Close on the near hound",
+     "feet": 10,
+     "leaves_reach_of": [],
+     "distance_after": {
+      "hound_1": 5,
+      "hound_2": 30,
+      "wick": 20
+     },
+     "ends_at": "within reach of the near hound",
+     "aliases": [
+      "close on the near hound",
+      "advance",
+      "charge",
+      "close in"
+     ]
+    },
+    {
+     "id": "back_to_wick",
+     "label": "Step back beside Wick",
+     "feet": 10,
+     "leaves_reach_of": [],
+     "distance_after": {
+      "hound_1": 25,
+      "hound_2": 50,
+      "wick": 0
+     },
+     "ends_at": "beside Wick",
+     "aliases": [
+      "beside wick",
+      "back to wick",
+      "fall back",
+      "step back"
+     ]
+    },
+    {
+     "id": "to_crates",
+     "label": "Move to the crate line on the left",
+     "feet": 20,
+     "leaves_reach_of": [],
+     "distance_after": {
+      "hound_1": 20,
+      "hound_2": 45,
+      "wick": 20
+     },
+     "ends_at": "at the crate line",
+     "aliases": [
+      "crates",
+      "crate line",
+      "to the crates"
+     ]
+    }
+   ],
+   "reactions": [
+    {
+     "id": "sentinel_balance",
+     "label": "Sentinel Balance",
+     "trigger": "you fail a saving throw",
+     "aliases": [
+      "sentinel balance"
+     ]
+    },
+    {
+     "id": "opportunity_attack",
+     "label": "Opportunity attack",
+     "trigger": "a hostile you can see leaves your reach",
+     "aliases": [
+      "opportunity attack"
+     ]
+    }
+   ],
+   "visible": [
+    {
+     "id": "hound_1",
+     "label": "The near sim hound",
+     "short": "the near hound",
+     "distance_ft": 15,
+     "hostile": true,
+     "conditions": [],
+     "aliases": [
+      "near hound",
+      "near one",
+      "first hound",
+      "hound"
+     ]
+    },
+    {
+     "id": "hound_2",
+     "label": "The far sim hound",
+     "short": "the far hound",
+     "distance_ft": 40,
+     "hostile": true,
+     "conditions": [],
+     "aliases": [
+      "far hound",
+      "far one",
+      "second hound"
+     ]
+    },
+    {
+     "id": "wick",
+     "label": "Wick",
+     "distance_ft": 10,
+     "hostile": false,
+     "conditions": [],
+     "aliases": [
+      "wick",
+      "the kid",
+      "the boy"
+     ]
+    }
+   ],
+   "notes": [
+    "TEST BUILD, not canon. Wick is an ally, not a party member: the GM runs his turn after yours.",
+    "The near hound is 15 ft ahead, the far one 40 ft. Something moved behind the crates on your left; you have not seen it.",
+    "Your turn stays open across submissions until you say “end my turn” or nothing is left to spend."
+   ],
+   "encounter": {
+    "mode": "combat",
+    "round": 1,
+    "current": "Aero",
+    "next": "Wick",
+    "order": [
+     {
+      "actor_id": "aero",
+      "label": "Aero",
+      "side": "party",
+      "initiative": 15,
+      "role": "player_character",
+      "control": "player",
+      "conditions": [],
+      "budget": {
+       "action": 1,
+       "bonus_action": null,
+       "reaction": 1,
+       "object_interaction": 1,
+       "movement_ft": 30,
+       "speed_ft": 30
+      },
+      "ready": null,
+      "unseen": false,
+      "status": "acting"
+     },
+     {
+      "actor_id": "wick",
+      "label": "Wick",
+      "side": "party",
+      "initiative": 12,
+      "role": "allied_npc",
+      "control": "gm",
+      "conditions": [],
+      "budget": {
+       "action": 0,
+       "bonus_action": null,
+       "reaction": 1,
+       "object_interaction": 0,
+       "movement_ft": 0,
+       "speed_ft": 30
+      },
+      "ready": null,
+      "unseen": false,
+      "status": "waiting"
+     },
+     {
+      "actor_id": "hound_1",
+      "label": "Sim hound (near)",
+      "side": "sim",
+      "initiative": 9,
+      "role": "npc",
+      "control": "gm",
+      "conditions": [],
+      "budget": {
+       "action": 0,
+       "bonus_action": null,
+       "reaction": 1,
+       "object_interaction": 0,
+       "movement_ft": 0,
+       "speed_ft": 40
+      },
+      "ready": null,
+      "unseen": false,
+      "status": "waiting"
+     },
+     {
+      "actor_id": "hound_2",
+      "label": "Sim hound (far)",
+      "side": "sim",
+      "initiative": 9,
+      "role": "npc",
+      "control": "gm",
+      "conditions": [],
+      "budget": {
+       "action": 0,
+       "bonus_action": null,
+       "reaction": 1,
+       "object_interaction": 0,
+       "movement_ft": 0,
+       "speed_ft": 40
+      },
+      "ready": null,
+      "unseen": false,
+      "status": "waiting"
+     },
+     {
+      "slot": "hidden:sim:9",
+      "label": "Others you cannot see",
+      "side": "sim",
+      "initiative": 9,
+      "unseen": true,
+      "status": "waiting"
+     }
+    ],
+    "decision": {
+     "kind": "player",
+     "actor_id": "aero",
+     "control": "player"
+    },
+    "mode_since": "evt_0004",
+    "mode_reason": "the drill program starts"
+   },
+   "context_id": "evt_0006"
+  },
+  "revision": 4,
+  "ledger_head": "evt_0006",
+  "turn_no": 0,
+  "scene": {
+   "title": "Sim Deck: Drill Seven (TEST, not canon)",
+   "location": "Holo-sim deck",
+   "time": "Sim drill, round 1",
+   "atmosphere": [
+    "noncanonical test build",
+    "combat, round 1",
+    "two sim hounds in sight",
+    "something behind the crates",
+    "Wick 10 ft behind you"
+   ]
+  },
+  "feed": [
+   {
+    "who": "gm",
+    "event_id": "evt_0002",
+    "time": "Sim drill, round 1",
+    "text": "NONCANONICAL TEST DRILL. Nothing here is part of the Hask Meadow story.\n\nThe sim deck has dressed itself as a long barn: plank walls, a packed-earth floor, a line of crates down the left side. The air smells of hot emitters, not hay. You stand in the middle of the floor with your lightsaber hilt unlit in your right hand. Wick is ten feet behind you with the blaster pistol in both hands, pointed at the floor the way you showed him.\n\nTwo grey shapes resolve out of the far dark. The near one stops fifteen feet ahead of you, head low, flickering faintly at the edges. The far one hangs back forty feet off, pacing the right-hand wall. Somewhere behind the crates on your left, claws tick once on the floor and stop.\n\nA flat voice from the ceiling: *Drill seven. Three constructs. Begin.*\n\nIt is your turn. Wick acts after you, on his own; the hounds act after him."
+   }
+  ],
+  "journal": [
+   {
+    "event_id": "evt_0005",
+    "time": "Sim drill, round 1",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Aero's turn begins (round 1)."
+   }
+  ],
+  "suggestions": [],
+  "objectives": [],
+  "objective_sources": {},
+  "chapters": [],
+  "events": [],
+  "relationship_evidence": [],
+  "active_actor": "aero",
+  "roster": [
+   {
+    "id": "aero",
+    "name": "Aeleron \"Aero\" Do'ordo",
+    "line": "Echani Sentinel · Jedi · Newly Knighted Jedi",
+    "role": "You",
+    "status": "Active",
+    "mechanics": "authoritative",
+    "note": "",
+    "joined_event": null
+   }
+  ],
+  "member_journals": {},
+  "party": [
+   {
+    "name": "Aeleron \"Aero\" Do'ordo",
+    "role": "You",
+    "status": "Active"
+   }
+  ],
+  "character": {
+   "name": "Aeleron \"Aero\" Do'ordo",
+   "line": "Echani Sentinel · Jedi · Newly Knighted Jedi",
+   "level": 1,
+   "hp": [
+    11,
+    11
+   ],
+   "strain": [
+    12,
+    12
+   ],
+   "force": [
+    3,
+    3
+   ],
+   "ac": 13,
+   "speed": "30 feet",
+   "initiative": 3,
+   "scores": {
+    "STR": [
+     8,
+     -1
+    ],
+    "DEX": [
+     16,
+     3
+    ],
+    "CON": [
+     12,
+     1
+    ],
+    "INT": [
+     12,
+     1
+    ],
+    "WIS": [
+     14,
+     2
+    ],
+    "CHA": [
+     14,
+     2
+    ]
+   },
+   "passive": {
+    "perception": 14,
+    "insight": 14
+   },
+   "conditions": [],
+   "skills": [
+    {
+     "name": "insight",
+     "mod": 4
+    },
+    {
+     "name": "persuasion",
+     "mod": 4
+    },
+    {
+     "name": "technology",
+     "mod": 3
+    },
+    {
+     "name": "intimidation",
+     "mod": 4
+    },
+    {
+     "name": "perception",
+     "mod": 4
+    }
+   ],
+   "languages": [
+    "Galactic Basic",
+    "Echani",
+    "Sith"
+   ],
+   "powers": [
+    {
+     "name": "Battle Insight",
+     "cost": "0 Force Points",
+     "effect": "Choose one visible creature. Aero has advantage on his next attack against it. The effect ends after that attack, if concentration breaks, if the target becomes invalid, or after 1 minute. Range: 30 feet."
+    },
+    {
+     "name": "Burst",
+     "cost": "0 Force Points",
+     "effect": "Every other creature in the radius, including allies, makes a Dexterity save against DC 12. Failure deals 1d4 force damage and knocks the creature prone; success causes neither. Aero is unaffected. Range: 5-foot radius centered on Aero."
+    }
+   ],
+   "features": [
+    {
+     "name": "Martial Arts Training",
+     "kind": "passive",
+     "effect": "Proficient with unarmed strikes; may use Dexterity for their attack and damage rolls."
+    },
+    {
+     "name": "Combat Discipline",
+     "kind": "passive",
+     "effect": "Advantage on Wisdom (Insight) checks when analyzing combat situations or opponents."
+    },
+    {
+     "name": "Combat Communication",
+     "kind": "passive or free action",
+     "effect": "Advantage on Insight checks to read emotions during combat. Once per short rest, after a meaningful brief sparring match, advantage on one Charisma check."
+    },
+    {
+     "name": "Force Connection",
+     "kind": "passive or action",
+     "effect": "May sense significant Force disturbances without automatically learning identity, location, or explanation. As an action, focus on one visible creature within 30 feet and gain advantage on one Insight check before the end of Aero's next turn to read emotional state or apparent concealment."
+    },
+    {
+     "name": "Sentinel Balance",
+     "kind": "reaction",
+     "effect": "Add 1d4 to the failed saving throw, potentially turning it into a success."
+    },
+    {
+     "name": "Lightsaber Deflect - Tier 1",
+     "kind": "reaction",
+     "effect": "Reduce damage by 1d10+2. If reduced to zero, Aero may make a +5 ranged deflection attack against one visible creature within 30 feet; on a hit it deals the original attack's rolled damage without adding Dexterity."
+    },
+    {
+     "name": "Former Master and Jedi Network",
+     "kind": "narrative or social",
+     "effect": "Knows Master Taron's last confirmed region and how to identify or locate established Jedi safe houses and trusted contacts. Reasonably available contacts may offer guidance, basic information, or temporary shelter."
+    },
+    {
+     "name": "Echani Grappling Training",
+     "kind": "special melee attack",
+     "effect": "With a free hand, make a Dexterity-based martial check at +5 against the target's Strength (Athletics) or Dexterity (Acrobatics). On success, the target is grappled and its speed becomes 0."
+    },
+    {
+     "name": "Jedi Fundamentals: Minor Telekinesis",
+     "kind": "campaign ruling (provisional) · action in combat",
+     "effect": "Gently lift, reposition, retrieve or manipulate one visible, unattended object of 10 lb or less within 30 ft. No Force Points. Outside combat, no roll unless the outcome is uncertain; in combat it uses your action. It cannot deal damage, move or disarm a creature, take anything held or worn, stop a projectile, or stand in for a Force power you have not learned. It is not Force Push or Force Pull."
+    }
+   ],
+   "weapons": [
+    {
+     "name": "Taron-forged Modular Indigo Lightsaber",
+     "attack": 5,
+     "damage": "1d8+3 / 1d10+3"
+    },
+    {
+     "name": "Standard Blaster Pistol",
+     "attack": 5,
+     "damage": "1d6+3"
+    },
+    {
+     "name": "Unarmed Strike",
+     "attack": 5,
+     "damage": "1d4+3"
+    }
+   ],
+   "armor": {
+    "name": "Dark-grey Jedi robes with Master Taron's Mornos Synthweave mantle",
+    "ac": 13
+   },
+   "inventory": [
+    {
+     "item": "Security Kit",
+     "qty": 1
+    },
+    {
+     "item": "Meditation Kit",
+     "qty": 1
+    },
+    {
+     "item": "Backpack",
+     "qty": 1
+    },
+    {
+     "item": "Bedroll",
+     "qty": 1
+    },
+    {
+     "item": "Compact mess kit",
+     "qty": 1
+    },
+    {
+     "item": "Ration pack",
+     "qty": 10
+    },
+    {
+     "item": "Canteen",
+     "qty": 1
+    },
+    {
+     "item": "Compact Jedi glowrod",
+     "qty": 1
+    },
+    {
+     "item": "Syntherope",
+     "qty": 1
+    },
+    {
+     "item": "Basic fire-starting tool",
+     "qty": 1
+    },
+    {
+     "item": "Personal comlink",
+     "qty": 1
+    },
+    {
+     "item": "Blaster ammunition",
+     "qty": 50
+    }
+   ],
+   "credits": 50
+  },
+  "history": {
+   "feed": {
+    "total": 1,
+    "shown": 1,
+    "omitted": 0,
+    "first_shown": "evt_0002",
+    "pages": [
+     {
+      "id": "feed-0001",
+      "count": 1,
+      "first": "evt_0002",
+      "last": "evt_0002",
+      "hash": "1cc856b237e24ea7"
+     }
+    ]
+   },
+   "journal": {
+    "total": 1,
+    "shown": 1,
+    "omitted": 0,
+    "first_shown": "evt_0005",
+    "pages": [
+     {
+      "id": "journal-0001",
+      "count": 1,
+      "first": "evt_0005",
+      "last": "evt_0005",
+      "hash": "bc954d90d0915a85"
+     }
+    ],
+    "observations": 0
+   },
+   "budget_bytes": 96000,
+   "target_bytes": 84000,
+   "bytes": 12389,
+   "revision": 4,
+   "page_budget_bytes": 150000,
+   "dice_history": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   },
+   "chapters": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   },
+   "events": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   },
+   "relationship_evidence": {
+    "total": 0,
+    "shown": 0,
+    "omitted": 0,
+    "pages": []
+   }
+  }
+ }
+}

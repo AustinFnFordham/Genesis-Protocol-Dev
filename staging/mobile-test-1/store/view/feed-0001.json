@@ -1,0 +1,21 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "feed",
+  "page": 1,
+  "id": "feed-0001",
+  "count": 1,
+  "first": "evt_0002",
+  "last": "evt_0002",
+  "hash": "1cc856b237e24ea7",
+  "entries": [
+   {
+    "who": "gm",
+    "event_id": "evt_0002",
+    "time": "Sim drill, round 1",
+    "text": "NONCANONICAL TEST DRILL. Nothing here is part of the Hask Meadow story.\n\nThe sim deck has dressed itself as a long barn: plank walls, a packed-earth floor, a line of crates down the left side. The air smells of hot emitters, not hay. You stand in the middle of the floor with your lightsaber hilt unlit in your right hand. Wick is ten feet behind you with the blaster pistol in both hands, pointed at the floor the way you showed him.\n\nTwo grey shapes resolve out of the far dark. The near one stops fifteen feet ahead of you, head low, flickering faintly at the edges. The far one hangs back forty feet off, pacing the right-hand wall. Somewhere behind the crates on your left, claws tick once on the floor and stop.\n\nA flat voice from the ceiling: *Drill seven. Three constructs. Begin.*\n\nIt is your turn. Wick acts after you, on his own; the hounds act after him."
+   }
+  ],
+  "campaign_id": "mobile-test-1"
+ }
+}

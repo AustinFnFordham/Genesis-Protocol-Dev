@@ -1,0 +1,22 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "journal",
+  "page": 1,
+  "id": "journal-0001",
+  "count": 1,
+  "first": "evt_0005",
+  "last": "evt_0005",
+  "hash": "bc954d90d0915a85",
+  "entries": [
+   {
+    "event_id": "evt_0005",
+    "time": "Sim drill, round 1",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Aero's turn begins (round 1)."
+   }
+  ],
+  "campaign_id": "mobile-test-1"
+ }
+}
