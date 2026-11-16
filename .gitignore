@@ -20,3 +20,4 @@ SW5e_Data_Hub/logs/
 Thumbs.db
 Desktop.ini
 api_bridge/gm/campaigns/starwars_litrpg/
+development/mobile_test/fixture_campaign/hidden/.ledger_writer.lock

@@ -9,7 +9,7 @@
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "", carried: false,
              temperature: "regular", narrativeConsequences: false,
              sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [],
-                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "" } };
+                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "", endTurn: false } };
   }
   function upgradeSel(s) {  // drafts saved by older versions keep working
     s.steps = s.steps || []; s.nseq = s.nseq || 1; s.labels = s.labels || [""]; s.active = s.active || { seq: 0 };
@@ -98,8 +98,9 @@
     }
     return st;
   }
+  function endsTurnNow(c) { return !!(c && c.mode === "combat" && !c.reaction_prompt && ui.sel.endTurn); }
   function declaration(c) {
-    if (ui.mode === "write") return T.parseFreeform(ui.write, c);
+    if (ui.mode === "write") { var w = T.parseFreeform(ui.write, c); if (endsTurnNow(c)) w.end_turn = true; return w; }
     var d = T.emptyDecl(c), s = ui.sel;
     if (sceneMode(c)) {  // scene: ordered steps in visual sequences; speech lines are steps of their own
       d.steps = s.steps.map(cleanStep);
@@ -121,6 +122,7 @@
     d.objects = s.objects.filter(function (o) { return byId(c.objects, o); });
     d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
     if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
+    if (endsTurnNow(c)) d.end_turn = true;   // the player's explicit word; a submission alone never ends a turn
     return d;
   }
   function newId() { return "s" + (ui.sel.nextId++); }
@@ -154,6 +156,7 @@
     if (d.bonus_actions && d.bonus_actions[0]) s.bonus = d.bonus_actions[0].option;
     s.movement = d.movement ? d.movement.option : "hold";
     s.objects = (d.objects || []).slice(); s.reactions = (d.reactions || []).slice();
+    s.endTurn = d.end_turn === true;
     ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).join(" "); saveUi();
   }
   function turnText(d, r) {
@@ -507,6 +510,8 @@
       } else if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
       if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
+    if (c.mode === "combat" && !c.reaction_prompt) h += '<fieldset class="grp"><legend>Turn</legend><label class="opt"><input type="checkbox" id="endTurn"' + (ui.sel.endTurn ? " checked" : "") +
+      '><span class="lbl">End my turn after this<small>Leave it off to keep your turn open: the GM resolves what you submit and you go on with what is left.</small></span></label></fieldset>';
     h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
     h += '<div class="submitbar' + (scene ? " sticky" : "") + '" id="submitBar">' + submitBar(r, stat, busy) + "</div>" +
       (busy ? '<div class="note">One turn at a time: the current one is with the GM.</div>' : "") + renderActions() + "</div>";
@@ -519,7 +524,7 @@
       '<div class="row"><button class="btn primary" id="submitAlt"' + (busy || phase ? " disabled" : "") + '>Submit this option</button><button class="btn" id="discardAlt">Discard</button><span class="note" id="altMsg"></span></div></div>';
   }
   function canSubmitNow(r, busy) {
-    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt);
+    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt || endsTurnNow(ctxOf(view)));
   }
   function fixCount(r, stat) {
     var n = r.errors.filter(function (e) { return !e.step_id; }).length;
@@ -693,7 +698,9 @@
     var feed = v.feed.filter(function (f) { return f.who === "gm"; }).slice(-1).map(function (f) {
       return '<div data-eid="' + esc(f.event_id) + '" class="' + (f.who === "player" ? "you" : "gm") + '"><div class="meta">' + (f.who === "player" ? "Aero · " : "Narrator · ") + esc(f.time) + "</div>" + paras(f.text) + "</div>";
     }).join("");
-    return '<div class="panel hdr"><div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
+    return '<div class="panel hdr">' + (v.test_build ? '<div class="check warn" id="testBanner" style="margin:0 0 8px"><b>Noncanonical test build</b><div class="note" style="margin:0">' +
+      esc(v.test_build.note || "Nothing here is part of the canonical campaign.") + " Campaign " + esc(v.campaign_id) + (v.test_build.code_commit ? " · code " + esc(String(v.test_build.code_commit).slice(0, 7)) : "") + "</div></div>" : "") +
+      '<div class="mirror"><span class="pill">Ledger mirror · read only</span><span>rev ' + v.revision + " · " + esc(v.ledger_head) + " · turn " + v.turn_no + "</span></div>" +
       '<h1 style="margin-top:8px">' + esc(s.title) + '</h1><div class="sub"><span>' + esc(s.location) + "</span><span>" + esc(s.time) + "</span></div>" +
       '<div class="tags">' + s.atmosphere.map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("") + "</div></div>" +
       '<div class="panel"><h2>Narrative</h2>' + '<div class="feed">' + (feed || '<div class="empty">The scene has not been narrated.</div>') + "</div></div>" +
@@ -914,6 +921,8 @@
         var alt = a && a.review && a.review.alternatives[+p[1]], c = ctxOf(view);
         if (!alt || !alt.declaration || !c) return;
         loadDeclaration(alt.declaration, c);
+        // An option that only ends the turn says so explicitly, so the rules check and the GM both see it.
+        if (c.mode === "combat" && !((alt.declaration.steps || []).length || (alt.declaration.actions || []).length) && /\bend\b[^.]{0,20}\bturn\b/i.test(alt.label || "")) ui.sel.endTurn = true;
         ui.alt = { of: a._id, index: +p[1], label: alt.label || "GM option" }; saveUi(); render();
         var go = function () { var el = $("altBanner"); if (el && el.scrollIntoView) el.scrollIntoView({ block: "start" }); };
         go(); setTimeout(go, 60);  // again after layout settles (sticky bars, tab bar)
@@ -925,6 +934,7 @@
       if (r && r.needs_confirmation && !ui.confirmed) { if (m) m.textContent = "Confirm the listed risks below first, then submit."; return; }
       submitTurn();
     });
+    on("endTurn", "change", function (e) { ui.sel.endTurn = e.target.checked; ui.confirmed = false; ui.draftId = ""; saveUi(); render(); });
     on("discardAlt", "click", function () { ui = freshUi(ui.ctxId, ui.write); saveUi(); render(); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-wd]"), function (b) {
       b.addEventListener("click", function () {
@@ -1009,6 +1019,7 @@
     var d = c ? declaration(c) : null, r = c ? safeValidate(d, c) : null;
     if (c && (!r.legal || (r.needs_confirmation && !ui.confirmed))) return;
     var text = c ? turnText(d, r) : ui.write.trim();
+    if (d && d.end_turn && !/\bend (my|the|your) turn\b/i.test(text)) text += (text ? ". " : "") + "End my turn.";
     if (ui.alt) text = "GM option chosen: " + ui.alt.label + (text ? "\n" + text : "");
     if (!text) return;
     var selectedResolution = resolutionSettings(view);

@@ -693,7 +693,7 @@
       if ((bb.bonus_action == null ? 1 : bb.bonus_action) - used.bonus_action > 0 && (ctx.options || []).some(function (o) { return o.slot === "bonus_action"; })) left.push("bonus action");
       var mvLeft = (bb.movement_ft == null ? (ctx.speed_ft || 0) : bb.movement_ft) - used.movement_ft; if (mvLeft > 0) left.push(mvLeft + " ft of movement");
       if ((bb.object_interaction == null ? 1 : bb.object_interaction) - used.object_interaction > 0) left.push("object interaction");
-      endsTurn = decl.end_turn === true || /\bend(s|ing)? (my |the |his |aero's )?turn\b/i.test(String(decl.freeform || "") + " " + (decl.unmapped || []).join(" ")) || !left.length;
+      endsTurn = decl.end_turn === true || /\bend(s|ing)? (my |the |his |your |aero's )?turn\b/i.test(String(decl.freeform || "") + " " + (decl.unmapped || []).join(" ")) || !left.length;
       info.push(endsTurn ? { code: "TURN_ENDS", message: "This ends " + (ctx.actor_name || "Aero") + "'s turn." + (left.length ? " Unspent: " + left.join(", ") + "." : "") }
                          : { code: "TURN_CONTINUES", message: "Your turn continues after this. Left: " + left.join(", ") + ". Say “end my turn” when you are done." });
     }
