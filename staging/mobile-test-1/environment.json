@@ -4,5 +4,12 @@
  "canonical": false,
  "source": "development/mobile_test/fixture_campaign",
  "experimental_resolution": true,
- "note": "Noncanonical mobile test drill. Isolated copy of a deterministic fixture. Not a canonical campaign. Safe to delete."
+ "note": "Noncanonical mobile test drill. Isolated copy of a deterministic fixture. Not a canonical campaign. Safe to delete.",
+ "code_commit": "b2d59bb58c3c103a1ee2b12c02d26a4d117d047e",
+ "test_settings": {
+  "wick": "allied_npc, GM-driven, own turn and budget",
+  "enemies": "separate per-creature budgets, shared initiative count",
+  "dice": "Regular/Heroic/Legendary and Narrative Consequences per submission, player character's own d20s only",
+  "adopted_into_live": false
+ }
 }
