@@ -1,19 +1,31 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "kind": "feed",
   "page": 1,
   "id": "feed-0001",
-  "count": 1,
+  "count": 3,
   "first": "evt_0002",
-  "last": "evt_0002",
-  "hash": "1cc856b237e24ea7",
+  "last": "evt_0016",
+  "hash": "2e9daa269e32f9c8",
   "entries": [
    {
     "who": "gm",
     "event_id": "evt_0002",
     "time": "Sim drill, round 1",
     "text": "NONCANONICAL TEST DRILL. Nothing here is part of the Hask Meadow story.\n\nThe sim deck has dressed itself as a long barn: plank walls, a packed-earth floor, a line of crates down the left side. The air smells of hot emitters, not hay. You stand in the middle of the floor with your lightsaber hilt unlit in your right hand. Wick is ten feet behind you with the blaster pistol in both hands, pointed at the floor the way you showed him.\n\nTwo grey shapes resolve out of the far dark. The near one stops fifteen feet ahead of you, head low, flickering faintly at the edges. The far one hangs back forty feet off, pacing the right-hand wall. Somewhere behind the crates on your left, claws tick once on the floor and stop.\n\nA flat voice from the ceiling: *Drill seven. Three constructs. Begin.*\n\nIt is your turn. Wick acts after you, on his own; the hounds act after him."
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0007",
+    "time": "Sim drill, round 1",
+    "text": "I ignite my lightsaber, close on the near hound and strike the near hound."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0016",
+    "time": "Sim drill, round 1",
+    "text": "The hilt hums in your right hand and the indigo blade snaps alight, washing the sim deck's grid floor in violet. You close the gap in three quick strides, and the near hound's projected hide flickers as it crouches to meet you. Your cut lands clean, a bright seam scored across its flank, and the construct staggers, its outline stuttering where the blade passed. It is hurt, but it is still on its feet, a hand's breadth beyond your blade tip. Behind you, Wick's breathing is loud in the quiet; the far hound paces the right wall, and something behind the crates on your left has gone still. Your action is spent, but your turn is not over: you still have ground to cover if you want it."
    }
   ],
   "campaign_id": "mobile-test-1"
