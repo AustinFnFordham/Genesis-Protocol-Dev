@@ -1,0 +1,75 @@
+{
+ "version": 1,
+ "data": {
+  "action_id": "rt1-1794789940",
+  "status": "submitted",
+  "created_ms": 1794789985122,
+  "source": "freeform",
+  "contract": "turn-contract/3",
+  "confirmed_warnings": true,
+  "actor": "aero",
+  "campaign_id": "mobile-test-1",
+  "based_on_revision": 4,
+  "ledger_head": "evt_0006",
+  "context_id": "evt_0006",
+  "declaration": {
+   "actions": [
+    {
+     "option": "saber_attack",
+     "target": "hound_1",
+     "trigger": null
+    }
+   ],
+   "actor": "aero",
+   "bonus_actions": [],
+   "freeform": "I ignite my lightsaber, close on the near hound and strike the near hound.",
+   "movement": {
+    "option": "to_near_hound"
+   },
+   "objects": [
+    "ignite_saber"
+   ],
+   "reactions": [],
+   "source": "freeform",
+   "speech": null,
+   "steps": [
+    {
+     "id": "k0",
+     "option": "ignite_saber",
+     "seq": 0,
+     "type": "object"
+    },
+    {
+     "id": "k1",
+     "option": "to_near_hound",
+     "seq": 0,
+     "type": "move"
+    },
+    {
+     "id": "k2",
+     "option": "saber_attack",
+     "seq": 0,
+     "target": "hound_1",
+     "trigger": null,
+     "type": "action"
+    }
+   ],
+   "unmapped": []
+  },
+  "text": "I ignite my lightsaber, close on the near hound and strike the near hound.",
+  "resolution_settings": {
+   "temperature": "heroic",
+   "narrative_consequences": true
+  },
+  "gm": {
+   "provider": "claude-session",
+   "route": [
+    {
+     "provider": "claude-session",
+     "by": "player",
+     "at_ms": 1794789985123
+    }
+   ]
+  }
+ }
+}
