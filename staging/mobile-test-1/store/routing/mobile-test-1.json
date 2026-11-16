@@ -1,0 +1,13 @@
+{
+ "version": 1,
+ "data": {
+  "provider": "claude-session",
+  "history": [
+   {
+    "provider": "claude-session",
+    "by": "operator",
+    "at_ms": 1794789842530
+   }
+  ]
+ }
+}
