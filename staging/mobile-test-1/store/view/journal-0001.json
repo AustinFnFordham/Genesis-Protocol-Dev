@@ -1,13 +1,13 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "kind": "journal",
   "page": 1,
   "id": "journal-0001",
-  "count": 1,
+  "count": 7,
   "first": "evt_0005",
-  "last": "evt_0005",
-  "hash": "bc954d90d0915a85",
+  "last": "evt_0015",
+  "hash": "06e9e1ec79ff0904",
   "entries": [
    {
     "event_id": "evt_0005",
@@ -15,6 +15,48 @@
     "kind": "turn_start",
     "knowledge": "fact",
     "text": "Aero's turn begins (round 1)."
+   },
+   {
+    "event_id": "evt_0009",
+    "time": "Sim drill, round 1",
+    "kind": "object_interaction",
+    "knowledge": "fact",
+    "text": "Aero ignites the lightsaber in his right hand."
+   },
+   {
+    "event_id": "evt_0010",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero's free object interaction is used."
+   },
+   {
+    "event_id": "evt_0011",
+    "time": "Sim drill, round 1",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero closes 10 ft to within reach of the near hound."
+   },
+   {
+    "event_id": "evt_0012",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero spends 10 ft of movement."
+   },
+   {
+    "event_id": "evt_0013",
+    "time": "Sim drill, round 1",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's lightsaber strike hits the near hound and scores a burning cut across its flank; it stays up."
+   },
+   {
+    "event_id": "evt_0015",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero's action is used."
    }
   ],
   "campaign_id": "mobile-test-1"
