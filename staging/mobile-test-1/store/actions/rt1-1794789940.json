@@ -1,8 +1,8 @@
 {
- "version": 7,
+ "version": 8,
  "data": {
   "action_id": "rt1-1794789940",
-  "status": "processing",
+  "status": "resolved",
   "created_ms": 1794789985122,
   "source": "freeform",
   "contract": "turn-contract/3",
@@ -81,17 +81,35 @@
   "processing": {
    "run": "claude-session-1794789976",
    "started_ms": 1794789995704,
-   "heartbeat_ms": 1794790092604,
-   "lease_ms": 596187,
-   "stage": "ledger",
-   "stage_started_ms": 1794790092604,
+   "heartbeat_ms": 1794790096489,
+   "lease_ms": 592302,
+   "stage": "narration",
+   "stage_started_ms": 1794790096489,
    "stages": {
     "claimed": 1794789995704,
     "context": 1794790000477,
     "rules": 1794790036550,
     "dice": 1794790045412,
-    "ledger": 1794790092604
+    "ledger": 1794790092604,
+    "narration": 1794790096489
    }
+  },
+  "ledger_events": [
+   "evt_0007",
+   "evt_0008",
+   "evt_0009",
+   "evt_0010",
+   "evt_0011",
+   "evt_0012",
+   "evt_0013",
+   "evt_0014",
+   "evt_0015",
+   "evt_0016",
+   "evt_0017",
+   "evt_0018"
+  ],
+  "publication": {
+   "status": "pending"
   }
  }
 }
