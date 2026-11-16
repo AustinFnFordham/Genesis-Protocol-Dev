@@ -217,7 +217,8 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     config_path = rdir / "experimental_resolution.json"
     if config_path.exists():
         config = json.loads(config_path.read_text())
-        if config.get("enabled") is True and config.get("canonical") is False and config.get("campaign_id") == campaign_id:
+        if config.get("enabled") is True and config.get("campaign_id") == campaign_id and (config.get("canonical") is False or (
+                config.get("canonical") is True and isinstance(config.get("owner_adopted"), str))):
             experimental["experimental_resolution"] = {"enabled": True, "schema": "genesis-experimental-resolution/1"}
     return {
         **experimental,

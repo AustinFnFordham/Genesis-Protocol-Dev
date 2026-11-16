@@ -43,6 +43,24 @@ from `campaigns/starwars_litrpg/runs/registry.json`. Database rows are player-wr
 ## 3. Resolve (GM)
 Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/GM_LEDGER.md`, `hidden/PACK_PROFILE.md` (run 2) and `hidden/events.jsonl`, `creator/TURN_CONTRACT.md`, `creator/NARRATIVE_SPEC.md`, `creator/PROTAGONIST_CONTINUITY.md`, `creator/JEDI_FUNDAMENTALS.md`, `creator/DESIGN_DECISIONS.md`, and recent public events.
 - Every roll: `python3 .claude/skills/litrpg-dice/roll.py --campaign <dir> ... --purpose "[<action_id>] ..."`. Call `--advance-turn` once first. Rolls are binding. Purposes are public: no enemy DC, AC or other hidden number in them (pass DCs with `--dc`). Log each roll under who makes it: `--by aero` for Aero's own checks, attacks and saves (the Datapad shows him the full dice); `--by gm` for enemies, NPCs and the world (the player sees only the total); `--by gm_hidden` for GM tables and checks the player has not perceived (never shown).
+- **Dice settings (owner-adopted for `hask_meadow_r2`, 2026-11-15).** When the run has `experimental_resolution.json` and the row's
+  `resolution_settings` are not Regular/off, roll every roll of that action with the resolver instead of `roll.py` (same seed,
+  cursor and roll log; `--advance-turn` first as usual): write the row to `/tmp/action.json` (with `campaign_id` set to the
+  run's id) and each request to `/tmp/req.json`, then `python3 development/experimental_resolution/engine.py <dir> <action_id> /tmp/action.json /tmp/req.json`.
+  Request: `{roll_key, step_id, formula, mode, kind: check|attack|save|damage|other, requested_by: aero|gm|gm_hidden, purpose, dc?, rule_sources: [..]}`.
+  Aero's rolls cite the declared step they resolve. A creature's own turn carries `subject: <its encounter actor_id>` and
+  `provenance: {kind: gm_turn, actor_id: <same>}` and no `step_id`; other GM rolls cite the step that provoked them. The resolver
+  applies Heroic/Legendary only to Aero's own d20 checks, attacks and saves (the player party; never NPCs, Wick, enemies or
+  monsters) and returns `resolution` (effective total, degree, Narrative Advantage/Threat when on). Use it as returned.
+  Advantage or Threat may be spent only on effects that follow from committed events; it never creates facts or acts for
+  Aero. A retry with the same `roll_key` returns the accepted roll; a new key for the same step and kind is refused (no rerolls).
+  Regular/off rows keep `roll.py` exactly as before.
+- **Adopting the encounter tracker mid-fight (owner ruling 2026-11-15).** Hask Meadow was already in combat (round 11) before
+  the tracker existed. On the first combat turn after this ruling, before anything else in the batch, commit `encounter_start`
+  with `round` set to the current round and every participant per §3e (Aero; Wick as `allied_npc`, `control {decides: gm}`,
+  his own count; each dog that is in the fight as its own participant, `hidden: true` and the event `gm_only` for dogs Aero has
+  not perceived). Initiative values come from committed events where they exist; otherwise fix them with a `gm_hidden` table
+  first. Nothing earlier is rewritten. From then on §3e applies to every round.
 - Every event: `ledger.py --campaign <dir> add ... --idem "<action_id>:<n>"`. First event: `player_declaration` with details `{action_id, text, declaration}`. Then `hp_change` / `condition_change` events for every HP or condition change (the Datapad reads them).
 - Resolve the declared steps in the player's order (`validation.steps`; contract-1 declarations get them in preview order). **Stop at the first step that needs the player** (TURN_CONTRACT §4b): a `condition` not settled by committed events (`validation.halts` lists them), a material choice, an unforeseen event or threat, or initiative. Resolve the steps before it that do not depend on it; record the stop and the reason in the GM ruling. Then resolve every NPC/enemy turn up to the player's next decision point. NPCs act from their own convictions and established tactics (PACK_PROFILE), neither forced to attack nor made passive to protect Aero. Never decide for the player character or invent their thoughts.
 - **Capability** comes from the sheet plus explicit campaign grants (`creator/jedi_fundamentals.json` → `granted_to`; rule `creator/JEDI_FUNDAMENTALS.md`, owner ruling 2026-11-11). Minor Telekinesis is a granted feature, not a power: check every limit (one visible, unattended object, 10 lb or less, within 30 ft; no damage, no creature, nothing held or worn, no projectile, no stand-in for an unlearned power) against committed events; a use outside a limit is refused for that reason. Anything else not on the sheet is still `UNKNOWN_POWER`: refused, never substituted.
@@ -131,7 +149,7 @@ Applies the adjudication repair reported on Hask Meadow round 9. The ruling file
   A failed check gives its supported result and an actionable situation, never an identical reset or invented punishment.
   When no side is engaging, leave initiative for scene time instead of holding six-second rounds that change nothing.
 
-## 3e. Encounters, initiative and per-actor turns (candidate, 2026-11-15; rule: `creator/ENCOUNTER_RULING.md`)
+## 3e. Encounters, initiative and per-actor turns (live for hask_meadow_r2 from 2026-11-15; rule: `creator/ENCOUNTER_RULING.md`)
 - **Record the encounter.** When initiative starts, commit `encounter_start` (GM-only when it lists creatures Aero has not
   perceived) with every participant: stable `actor_id`, `label`, `side`, `initiative`, `group` for a shared count, `hidden`,
   `speed_ft`, `bonus_action_eligible`, `control {decides: player | gm | player_directed, basis}`. Companions who act are

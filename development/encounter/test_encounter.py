@@ -312,6 +312,21 @@ def test_duplicate_events_and_interrupted_recovery():
     assert code([], [spend("aero", "action")]) == "NO_ENCOUNTER"
 
 
+
+
+def test_an_encounter_already_under_way_starts_at_its_current_round():
+    evs = start()
+    evs[-1]["details"]["round"] = 11
+    assert E.fold(evs)["round"] == 11
+    evs[-1]["details"]["round"] = 0
+    try:
+        E.fold(evs)
+    except Exception as error:  # noqa: BLE001
+        assert "BAD_ROUND" in str(error) or "round" in str(error)
+    else:
+        raise AssertionError("round 0 accepted")
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

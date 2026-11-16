@@ -33,3 +33,9 @@
 ## Provisional rulings
 See `UAT_LOG.md` (PR-001).
 - At first combat: derive drover-dog stat blocks from an SRD mastiff baseline plus System-granted increments, record provenance, log as provisional (no creature registry data exists).
+
+## Owner direction (2026-11-15)
+- Arc plan: finish the Hask Meadow horror arc, then it is converted into LitRPG book chapters, then a new arc begins.
+- Pacing is the priority: keep the turn open while Aero has budget left, resolve the other side's turns promptly once his turn ends, and do not spend rounds restating standing scene facts.
+- Varon and Rissa are to be introduced in a later arc. Nothing in this arc may close that door; the player may still test extreme choices here, and the world answers them honestly.
+- For a later arc (not this pack, which stays the drover-dogs as established): Imperial-trained massiff-style war beasts as a horror element.
