@@ -1,9 +1,9 @@
 {
- "version": 7,
+ "version": 8,
  "data": {
-  "holder": "claude-session-1794789976",
+  "holder": null,
   "provider": "claude-session",
-  "expires_ms": 1794790688791,
-  "acquired_ms": 1794789990517
+  "expires_ms": 0,
+  "released_ms": 1794790109626
  }
 }
