@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "data": {
   "action_id": "rt1-1794789940",
   "status": "processing",
@@ -81,12 +81,13 @@
   "processing": {
    "run": "claude-session-1794789976",
    "started_ms": 1794789995704,
-   "heartbeat_ms": 1794789995704,
-   "lease_ms": 594813,
-   "stage": "claimed",
-   "stage_started_ms": 1794789995704,
+   "heartbeat_ms": 1794790000477,
+   "lease_ms": 597783,
+   "stage": "context",
+   "stage_started_ms": 1794790000477,
    "stages": {
-    "claimed": 1794789995704
+    "claimed": 1794789995704,
+    "context": 1794790000477
    }
   }
  }
