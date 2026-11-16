@@ -1,18 +1,141 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "experimental_resolution": {
    "enabled": true,
    "schema": "genesis-experimental-resolution/1"
   },
-  "contest_declaration": null,
+  "contest_declaration": {
+   "event_id": "evt_0007",
+   "steps": [
+    {
+     "id": "k0",
+     "label": "ignite_saber"
+    },
+    {
+     "id": "k1",
+     "label": "to_near_hound"
+    },
+    {
+     "id": "k2",
+     "label": "saber_attack"
+    }
+   ]
+  },
   "continuity": {
    "status": "active",
    "marks": 0,
    "ends": "after Hask Meadow is complete and level 3 is reached, at the end of the next long rest"
   },
   "campaign_id": "mobile-test-1",
-  "rolls": [],
+  "rolls": [
+   {
+    "roll_id": "roll_t1_1",
+    "purpose": "Aero strikes at the near hound with the lightsaber",
+    "summary": "Heroic · raw 18 → 19 +5 = 24 · 1 Advantage / 0 Threat",
+    "by": "aero",
+    "formula": "1d20+5",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 20,
+      "rolled": [
+       18
+      ],
+      "kept": [
+       18
+      ],
+      "original": [
+       18
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 18,
+    "modifier": 5,
+    "total": 24,
+    "resolution": {
+     "schema": "genesis-experimental-resolution/1",
+     "settings": {
+      "temperature": "heroic",
+      "narrative_consequences": true
+     },
+     "eligible": true,
+     "kind": "attack",
+     "roll": {
+      "selected_raw_d20": 18,
+      "effective_d20": 19,
+      "modifier": 5,
+      "other_dice_total": 0,
+      "total": 24,
+      "attack_critical": false,
+      "automatic_attack_miss": false,
+      "raw_original": [
+       18
+      ],
+      "raw_alternate": null,
+      "temperature": "heroic",
+      "critical_policy": "original_faces_attack_only/1"
+     },
+     "narrative": {
+      "face": 5,
+      "advantage": 1,
+      "threat": 0
+     }
+    }
+   },
+   {
+    "roll_id": "roll_t1_2",
+    "purpose": "Lightsaber damage to the near hound",
+    "summary": "1d8+3 [2] +3 = 5",
+    "by": "aero",
+    "formula": "1d8+3",
+    "mode": "normal",
+    "dice": [
+     {
+      "sign": 1,
+      "sides": 8,
+      "rolled": [
+       2
+      ],
+      "kept": [
+       2
+      ],
+      "original": [
+       2
+      ]
+     }
+    ],
+    "alternate": null,
+    "raw_total": 2,
+    "modifier": 3,
+    "total": 5,
+    "resolution": {
+     "schema": "genesis-experimental-resolution/1",
+     "settings": {
+      "temperature": "heroic",
+      "narrative_consequences": true
+     },
+     "eligible": false,
+     "kind": "damage",
+     "roll": {
+      "selected_raw_d20": null,
+      "effective_d20": null,
+      "modifier": 3,
+      "other_dice_total": 2,
+      "total": 5,
+      "attack_critical": false,
+      "automatic_attack_miss": false,
+      "raw_original": null,
+      "raw_alternate": null,
+      "temperature": "regular",
+      "critical_policy": "original_faces_attack_only/1"
+     },
+     "narrative": null
+    }
+   }
+  ],
   "dice_history": [],
   "turn_context": {
    "actor": "aero",
@@ -21,25 +144,27 @@
    "mode": "combat",
    "round": 1,
    "budget": {
-    "action": 1,
+    "action": 0,
     "bonus_action": 1,
     "reaction": 1,
-    "movement_ft": 30,
-    "object_interaction": 1
+    "movement_ft": 20,
+    "object_interaction": 0
    },
    "speed_ft": 30,
    "resources": {
     "force_points": 3
    },
-   "state_flags": [],
+   "state_flags": [
+    "saber_ignited"
+   ],
    "flag_labels": {
     "saber_ignited": "an ignited lightsaber"
    },
-   "position_label": "mid-floor, Wick 10 ft behind you",
+   "position_label": "within reach of the near hound, Wick 20 ft behind you",
    "hands": {
     "right": {
      "item": "lightsaber",
-     "label": "the unlit lightsaber hilt"
+     "label": "the ignited lightsaber"
     },
     "left": null
    },
@@ -47,25 +172,25 @@
     {
      "id": "d1",
      "approach": "assertive",
-     "text": "Wick, stay behind me.",
+     "text": "Wick, stay back. I've got this one.",
      "extended": false
     },
     {
      "id": "d2",
      "approach": "tactical",
-     "text": "Wick, shoot the near one if it comes at us.",
+     "text": "Wick, watch the far one. Shout if it heads your way.",
      "extended": false
     },
     {
      "id": "d3",
      "approach": "calming",
-     "text": "Easy. Hold your fire until I say.",
+     "text": "Steady, Wick. Breathe. Keep your pistol up.",
      "extended": false
     },
     {
      "id": "d4",
      "approach": "investigative",
-     "text": "Wick, what's behind those crates? Can you see it?",
+     "text": "Wick, keep an eye on those crates. Tell me if anything moves.",
      "extended": false
     }
    ],
@@ -128,23 +253,7 @@
      ]
     }
    ],
-   "objects": [
-    {
-     "id": "ignite_saber",
-     "label": "Ignite the lightsaber",
-     "grants": [
-      "saber_ignited"
-     ],
-     "unless": [
-      "saber_ignited"
-     ],
-     "aliases": [
-      "ignite",
-      "light my saber",
-      "ignite my lightsaber"
-     ]
-    }
-   ],
+   "objects": [],
    "movement": [
     {
      "id": "hold",
@@ -153,28 +262,12 @@
      "leaves_reach_of": []
     },
     {
-     "id": "to_near_hound",
-     "label": "Close on the near hound",
-     "feet": 10,
-     "leaves_reach_of": [],
-     "distance_after": {
-      "hound_1": 5,
-      "hound_2": 30,
-      "wick": 20
-     },
-     "ends_at": "within reach of the near hound",
-     "aliases": [
-      "close on the near hound",
-      "advance",
-      "charge",
-      "close in"
-     ]
-    },
-    {
      "id": "back_to_wick",
-     "label": "Step back beside Wick",
-     "feet": 10,
-     "leaves_reach_of": [],
+     "label": "Fall back beside Wick",
+     "feet": 20,
+     "leaves_reach_of": [
+      "hound_1"
+     ],
      "distance_after": {
       "hound_1": 25,
       "hound_2": 50,
@@ -185,24 +278,8 @@
       "beside wick",
       "back to wick",
       "fall back",
-      "step back"
-     ]
-    },
-    {
-     "id": "to_crates",
-     "label": "Move to the crate line on the left",
-     "feet": 20,
-     "leaves_reach_of": [],
-     "distance_after": {
-      "hound_1": 20,
-      "hound_2": 45,
-      "wick": 20
-     },
-     "ends_at": "at the crate line",
-     "aliases": [
-      "crates",
-      "crate line",
-      "to the crates"
+      "step back",
+      "retreat"
      ]
     }
    ],
@@ -229,9 +306,10 @@
      "id": "hound_1",
      "label": "The near sim hound",
      "short": "the near hound",
-     "distance_ft": 15,
+     "distance_ft": 5,
      "hostile": true,
      "conditions": [],
+     "wounded": "a glowing cut across its flank",
      "aliases": [
       "near hound",
       "near one",
@@ -243,7 +321,7 @@
      "id": "hound_2",
      "label": "The far sim hound",
      "short": "the far hound",
-     "distance_ft": 40,
+     "distance_ft": 30,
      "hostile": true,
      "conditions": [],
      "aliases": [
@@ -255,7 +333,7 @@
     {
      "id": "wick",
      "label": "Wick",
-     "distance_ft": 10,
+     "distance_ft": 20,
      "hostile": false,
      "conditions": [],
      "aliases": [
@@ -267,9 +345,12 @@
    ],
    "notes": [
     "TEST BUILD, not canon. Wick is an ally, not a party member: the GM runs his turn after yours.",
-    "The near hound is 15 ft ahead, the far one 40 ft. Something moved behind the crates on your left; you have not seen it.",
-    "Your turn stays open across submissions until you say “end my turn” or nothing is left to spend."
+    "Your blade is lit and your action is spent. You have 20 ft of movement left; your reaction is unused.",
+    "The near hound is cut but still standing, 5 ft from you. The far hound is 30 ft off by the right wall. Wick is 20 ft behind you. Something moved behind the crates on your left; you have not seen it.",
+    "Falling back beside Wick leaves the near hound's reach.",
+    "Your turn stays open until you say “end my turn” or nothing is left to spend."
    ],
+   "equipment_from_ledger": true,
    "encounter": {
     "mode": "combat",
     "round": 1,
@@ -285,11 +366,11 @@
       "control": "player",
       "conditions": [],
       "budget": {
-       "action": 1,
+       "action": 0,
        "bonus_action": null,
        "reaction": 1,
-       "object_interaction": 1,
-       "movement_ft": 30,
+       "object_interaction": 0,
+       "movement_ft": 20,
        "speed_ft": 30
       },
       "ready": null,
@@ -373,11 +454,215 @@
     "mode_since": "evt_0004",
     "mode_reason": "the drill program starts"
    },
-   "context_id": "evt_0006"
+   "context_id": "evt_0018",
+   "equipment": [
+    {
+     "id": "lightsaber",
+     "label": "the indigo lightsaber",
+     "state": "held",
+     "home_state": "holstered",
+     "home": "left hip for right-hand draw",
+     "where": "right hand",
+     "hands": 1,
+     "active_when": "saber_ignited",
+     "aliases": [
+      "lightsaber",
+      "saber",
+      "blade"
+     ],
+     "established": [
+      "energy blade, range 5 feet",
+      "lit: light source"
+     ]
+    },
+    {
+     "id": "blaster",
+     "label": "the blaster pistol",
+     "state": "holstered",
+     "home_state": "holstered",
+     "home": "right hip for left-hand draw",
+     "where": "right hip for left-hand draw",
+     "hands": 1,
+     "aliases": [
+      "blaster",
+      "pistol"
+     ]
+    },
+    {
+     "id": "robes",
+     "label": "robes and synthweave mantle",
+     "state": "worn",
+     "fixed": true,
+     "aliases": [
+      "robes",
+      "mantle"
+     ]
+    },
+    {
+     "id": "security_kit",
+     "label": "security Kit",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "Enables physical-security Technology checks at +3; no blanket advantage and no double proficiency.",
+     "aliases": [
+      "security kit"
+     ]
+    },
+    {
+     "id": "meditation_kit",
+     "label": "meditation Kit",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "Once per long rest during an uninterrupted short rest, restore up to 2 spent Force Points.",
+     "aliases": [
+      "meditation kit"
+     ]
+    },
+    {
+     "id": "backpack",
+     "label": "backpack",
+     "state": "worn",
+     "home_state": "worn",
+     "home": "on Aero's back",
+     "where": "on Aero's back",
+     "quantity": 1,
+     "note": "mundane storage",
+     "aliases": [
+      "backpack"
+     ],
+     "hands": 2
+    },
+    {
+     "id": "bedroll",
+     "label": "bedroll",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "mundane sleeping equipment",
+     "aliases": [
+      "bedroll"
+     ]
+    },
+    {
+     "id": "compact_mess_kit",
+     "label": "compact mess kit",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "mundane eating and cooking equipment",
+     "aliases": [
+      "compact mess kit"
+     ]
+    },
+    {
+     "id": "ration_pack",
+     "label": "ration pack",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 10,
+     "note": "one ordinary field ration each",
+     "aliases": [
+      "ration pack"
+     ]
+    },
+    {
+     "id": "canteen",
+     "label": "canteen",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "mundane water container",
+     "aliases": [
+      "canteen"
+     ]
+    },
+    {
+     "id": "compact_jedi_glowrod",
+     "label": "compact Jedi glowrod",
+     "state": "attached",
+     "home_state": "attached",
+     "home": "belt clip",
+     "where": "belt clip",
+     "quantity": 1,
+     "note": "adjustable cool-white illumination with magnetic belt clip; no automatic combat benefit",
+     "aliases": [
+      "compact jedi glowrod"
+     ]
+    },
+    {
+     "id": "syntherope",
+     "label": "syntherope",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "50 feet of mundane utility rope",
+     "aliases": [
+      "syntherope",
+      "synthrope",
+      "syntherope",
+      "rope"
+     ]
+    },
+    {
+     "id": "basic_fire_starting_tool",
+     "label": "basic fire-starting tool",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "ordinary fire-starting where conditions permit",
+     "aliases": [
+      "basic fire-starting tool"
+     ]
+    },
+    {
+     "id": "personal_comlink",
+     "label": "personal comlink",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 1,
+     "note": "ordinary communications where networks permit",
+     "aliases": [
+      "personal comlink"
+     ]
+    },
+    {
+     "id": "blaster_ammunition",
+     "label": "blaster ammunition",
+     "state": "stored",
+     "home_state": "stored",
+     "home": "backpack",
+     "where": "backpack",
+     "quantity": 50,
+     "note": "50 total shots; pistol capacity 12",
+     "aliases": [
+      "blaster ammunition"
+     ]
+    }
+   ]
   },
-  "revision": 4,
-  "ledger_head": "evt_0006",
-  "turn_no": 0,
+  "revision": 14,
+  "ledger_head": "evt_0018",
+  "turn_no": 1,
   "scene": {
    "title": "Sim Deck: Drill Seven (TEST, not canon)",
    "location": "Holo-sim deck",
@@ -385,9 +670,11 @@
    "atmosphere": [
     "noncanonical test build",
     "combat, round 1",
-    "two sim hounds in sight",
+    "indigo blade lit",
+    "near hound wounded, 5 ft away",
+    "far hound by the right wall",
     "something behind the crates",
-    "Wick 10 ft behind you"
+    "Wick 20 ft behind you"
    ]
   },
   "feed": [
@@ -396,6 +683,18 @@
     "event_id": "evt_0002",
     "time": "Sim drill, round 1",
     "text": "NONCANONICAL TEST DRILL. Nothing here is part of the Hask Meadow story.\n\nThe sim deck has dressed itself as a long barn: plank walls, a packed-earth floor, a line of crates down the left side. The air smells of hot emitters, not hay. You stand in the middle of the floor with your lightsaber hilt unlit in your right hand. Wick is ten feet behind you with the blaster pistol in both hands, pointed at the floor the way you showed him.\n\nTwo grey shapes resolve out of the far dark. The near one stops fifteen feet ahead of you, head low, flickering faintly at the edges. The far one hangs back forty feet off, pacing the right-hand wall. Somewhere behind the crates on your left, claws tick once on the floor and stop.\n\nA flat voice from the ceiling: *Drill seven. Three constructs. Begin.*\n\nIt is your turn. Wick acts after you, on his own; the hounds act after him."
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0007",
+    "time": "Sim drill, round 1",
+    "text": "I ignite my lightsaber, close on the near hound and strike the near hound."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0016",
+    "time": "Sim drill, round 1",
+    "text": "The hilt hums in your right hand and the indigo blade snaps alight, washing the sim deck's grid floor in violet. You close the gap in three quick strides, and the near hound's projected hide flickers as it crouches to meet you. Your cut lands clean, a bright seam scored across its flank, and the construct staggers, its outline stuttering where the blade passed. It is hurt, but it is still on its feet, a hand's breadth beyond your blade tip. Behind you, Wick's breathing is loud in the quiet; the far hound paces the right wall, and something behind the crates on your left has gone still. Your action is spent, but your turn is not over: you still have ground to cover if you want it."
    }
   ],
   "journal": [
@@ -405,6 +704,48 @@
     "kind": "turn_start",
     "knowledge": "fact",
     "text": "Aero's turn begins (round 1)."
+   },
+   {
+    "event_id": "evt_0009",
+    "time": "Sim drill, round 1",
+    "kind": "object_interaction",
+    "knowledge": "fact",
+    "text": "Aero ignites the lightsaber in his right hand."
+   },
+   {
+    "event_id": "evt_0010",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero's free object interaction is used."
+   },
+   {
+    "event_id": "evt_0011",
+    "time": "Sim drill, round 1",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero closes 10 ft to within reach of the near hound."
+   },
+   {
+    "event_id": "evt_0012",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero spends 10 ft of movement."
+   },
+   {
+    "event_id": "evt_0013",
+    "time": "Sim drill, round 1",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "Aero's lightsaber strike hits the near hound and scores a burning cut across its flank; it stays up."
+   },
+   {
+    "event_id": "evt_0015",
+    "time": "Sim drill, round 1",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero's action is used."
    }
   ],
   "suggestions": [],
@@ -645,46 +986,54 @@
   },
   "history": {
    "feed": {
-    "total": 1,
-    "shown": 1,
+    "total": 3,
+    "shown": 3,
     "omitted": 0,
     "first_shown": "evt_0002",
     "pages": [
      {
       "id": "feed-0001",
-      "count": 1,
+      "count": 3,
       "first": "evt_0002",
-      "last": "evt_0002",
-      "hash": "1cc856b237e24ea7"
+      "last": "evt_0016",
+      "hash": "2e9daa269e32f9c8"
      }
     ]
    },
    "journal": {
-    "total": 1,
-    "shown": 1,
+    "total": 7,
+    "shown": 7,
     "omitted": 0,
     "first_shown": "evt_0005",
     "pages": [
      {
       "id": "journal-0001",
-      "count": 1,
+      "count": 7,
       "first": "evt_0005",
-      "last": "evt_0005",
-      "hash": "bc954d90d0915a85"
+      "last": "evt_0015",
+      "hash": "06e9e1ec79ff0904"
      }
     ],
     "observations": 0
    },
    "budget_bytes": 96000,
    "target_bytes": 84000,
-   "bytes": 12389,
-   "revision": 4,
+   "bytes": 19119,
+   "revision": 14,
    "page_budget_bytes": 150000,
    "dice_history": {
-    "total": 0,
+    "total": 2,
     "shown": 0,
-    "omitted": 0,
-    "pages": []
+    "omitted": 2,
+    "pages": [
+     {
+      "id": "dice_history-0001",
+      "count": 2,
+      "first": "evt_0013",
+      "last": "evt_0013",
+      "hash": "a16e0e4df5003acb"
+     }
+    ]
    },
    "chapters": {
     "total": 0,
