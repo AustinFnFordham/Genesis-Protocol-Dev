@@ -179,6 +179,7 @@ li.halt { list-style: none; margin: 6px 0 6px -22px; padding: 6px 10px; border: 
 .palnav { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; position: sticky; top: 0; z-index: 2; background: var(--panel); padding: 4px 0; }
 .palnav::-webkit-scrollbar { display: none; }
 .chip.mini { flex: 0 0 auto; min-height: 44px; padding: 10px 14px; text-decoration: none; color: var(--fg); font-size: 13px; }
+.chip.mini[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
 .note.added { color: var(--good); min-height: 1em; } .note.deferred { color: var(--amber); }
 .palgrp, .plan { scroll-margin-top: 56px; }
 details.howto { border: 1px dashed var(--line); border-radius: 3px; padding: 6px 8px; display: grid; gap: 4px; }
