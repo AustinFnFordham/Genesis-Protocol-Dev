@@ -37,6 +37,10 @@ const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; consol
     await page.reload(); await page.waitForSelector("#submitTurn");
     const kept = await page.evaluate(() => Object.keys(window.__store).filter((k) => k.startsWith("actions/")).length);
     ok(kept === 1, "preview state survives a reload (iPad tab switching)");
+    await page.goto(`http://127.0.0.1:${port}/diagnostics.html`);
+    const diag = await page.locator("body").innerText();
+    ok(/Genesis Development \/ Test Environment/.test(diag) && /attempted_unjustified_harm/.test(diag) && /evaluate_observer_reaction/.test(diag), "diagnostics page shows the pure evaluators on fixtures");
+    await page.goto(`http://127.0.0.1:${port}/`); await page.waitForSelector("#submitTurn");
     if (process.argv[2]) await page.screenshot({ path: process.argv[2], fullPage: false });
     ok(errors.length === 0, "no page errors", errors.join(" | "));
   } finally { await browser.close(); srv.kill(); }

@@ -1,5 +1,5 @@
 {
- "milestone": "M3",
+ "milestone": "M7",
  "features": [
   {
    "id": "datapad_baseline",
@@ -24,6 +24,12 @@
    "name": "WHISPER context",
    "enabled": true,
    "note": "Optional private feelings, what Aero shows, motive, reflection and What-if prompts. Blank = not stated. No effect on morality."
+  },
+  {
+   "id": "whisper_algorithms",
+   "name": "Evidence, memory/appraisal, causal proposals",
+   "enabled": true,
+   "note": "Pure evaluators on noncanonical fixtures; see the diagnostics page. Not wired into play."
   }
  ],
  "unavailable": [
