@@ -1,24 +1,26 @@
 {
- "version": 2,
+ "version": 3,
  "data": {
   "experimental_resolution": {
    "enabled": true,
    "schema": "genesis-experimental-resolution/1"
   },
+  "features": {
+   "tb4_builder": true,
+   "tb4_taunt": true,
+   "whisper_context": true,
+   "whisper_review": true
+  },
+  "whisper": {
+   "pending": null,
+   "history": []
+  },
   "contest_declaration": {
-   "event_id": "evt_0007",
+   "event_id": "evt_0019",
    "steps": [
     {
      "id": "k0",
-     "label": "ignite_saber"
-    },
-    {
-     "id": "k1",
-     "label": "to_near_hound"
-    },
-    {
-     "id": "k2",
-     "label": "saber_attack"
+     "label": "back_to_wick"
     }
    ]
   },
@@ -30,110 +32,25 @@
   "campaign_id": "mobile-test-1",
   "rolls": [
    {
-    "roll_id": "roll_t1_1",
-    "purpose": "Aero strikes at the near hound with the lightsaber",
-    "summary": "Heroic · raw 18 → 19 +5 = 24 · 1 Advantage / 0 Threat",
-    "by": "aero",
-    "formula": "1d20+5",
-    "mode": "normal",
-    "dice": [
-     {
-      "sign": 1,
-      "sides": 20,
-      "rolled": [
-       18
-      ],
-      "kept": [
-       18
-      ],
-      "original": [
-       18
-      ]
-     }
-    ],
-    "alternate": null,
-    "raw_total": 18,
-    "modifier": 5,
-    "total": 24,
-    "resolution": {
-     "schema": "genesis-experimental-resolution/1",
-     "settings": {
-      "temperature": "heroic",
-      "narrative_consequences": true
-     },
-     "eligible": true,
-     "kind": "attack",
-     "roll": {
-      "selected_raw_d20": 18,
-      "effective_d20": 19,
-      "modifier": 5,
-      "other_dice_total": 0,
-      "total": 24,
-      "attack_critical": false,
-      "automatic_attack_miss": false,
-      "raw_original": [
-       18
-      ],
-      "raw_alternate": null,
-      "temperature": "heroic",
-      "critical_policy": "original_faces_attack_only/1"
-     },
-     "narrative": {
-      "face": 5,
-      "advantage": 1,
-      "threat": 0
-     }
-    }
+    "roll_id": "roll_t2_3",
+    "purpose": "The near hound snaps at Aero as he falls back out of its reach",
+    "summary": "total 23",
+    "by": "gm",
+    "redacted": true
    },
    {
-    "roll_id": "roll_t1_2",
-    "purpose": "Lightsaber damage to the near hound",
-    "summary": "1d8+3 [2] +3 = 5",
-    "by": "aero",
-    "formula": "1d8+3",
-    "mode": "normal",
-    "dice": [
-     {
-      "sign": 1,
-      "sides": 8,
-      "rolled": [
-       2
-      ],
-      "kept": [
-       2
-      ],
-      "original": [
-       2
-      ]
-     }
-    ],
-    "alternate": null,
-    "raw_total": 2,
-    "modifier": 3,
-    "total": 5,
-    "resolution": {
-     "schema": "genesis-experimental-resolution/1",
-     "settings": {
-      "temperature": "heroic",
-      "narrative_consequences": true
-     },
-     "eligible": false,
-     "kind": "damage",
-     "roll": {
-      "selected_raw_d20": null,
-      "effective_d20": null,
-      "modifier": 3,
-      "other_dice_total": 2,
-      "total": 5,
-      "attack_critical": false,
-      "automatic_attack_miss": false,
-      "raw_original": null,
-      "raw_alternate": null,
-      "temperature": "regular",
-      "critical_policy": "original_faces_attack_only/1"
-     },
-     "narrative": null
-    }
+    "roll_id": "roll_t2_4",
+    "purpose": "Bite damage from the near hound as Aero falls back (critical)",
+    "summary": "total 10",
+    "by": "gm",
+    "redacted": true
+   },
+   {
+    "roll_id": "roll_t2_5",
+    "purpose": "The near hound closes on Aero and bites",
+    "summary": "total 5",
+    "by": "gm",
+    "redacted": true
    }
   ],
   "dice_history": [],
@@ -142,13 +59,13 @@
    "actor_name": "Aero",
    "actor_conditions": [],
    "mode": "combat",
-   "round": 1,
+   "round": 2,
    "budget": {
-    "action": 0,
+    "action": 1,
     "bonus_action": 1,
     "reaction": 1,
-    "movement_ft": 20,
-    "object_interaction": 0
+    "movement_ft": 30,
+    "object_interaction": 1
    },
    "speed_ft": 30,
    "resources": {
@@ -160,7 +77,7 @@
    "flag_labels": {
     "saber_ignited": "an ignited lightsaber"
    },
-   "position_label": "within reach of the near hound, Wick 20 ft behind you",
+   "position_label": "beside Wick, the near hound within reach of you",
    "hands": {
     "right": {
      "item": "lightsaber",
@@ -172,25 +89,25 @@
     {
      "id": "d1",
      "approach": "assertive",
-     "text": "Wick, stay back. I've got this one.",
+     "text": "Wick, the far one's on your side. Shoot it if it comes in.",
      "extended": false
     },
     {
      "id": "d2",
      "approach": "tactical",
-     "text": "Wick, watch the far one. Shout if it heads your way.",
+     "text": "Wick, stay behind me. Back to back.",
      "extended": false
     },
     {
      "id": "d3",
      "approach": "calming",
-     "text": "Steady, Wick. Breathe. Keep your pistol up.",
+     "text": "I'm still standing. Keep your pistol up, Wick.",
      "extended": false
     },
     {
      "id": "d4",
      "approach": "investigative",
-     "text": "Wick, keep an eye on those crates. Tell me if anything moves.",
+     "text": "Wick, those crates. Did you see anything move?",
      "extended": false
     }
    ],
@@ -218,7 +135,7 @@
      "id": "burst",
      "slot": "action",
      "label": "Burst",
-     "detail": "5-ft radius centered on you; 0 Force Points; Dexterity save or 1d4 force damage and prone",
+     "detail": "5-ft radius centered on you; 0 Force Points; Dexterity save or 1d4 force damage and prone. Wick is within 5 ft of you.",
      "area_ft": 5,
      "cost": {
       "force_points": 0
@@ -251,6 +168,22 @@
       "listen",
       "search"
      ]
+    },
+    {
+     "id": "taunt",
+     "slot": "bonus_action",
+     "label": "Taunt",
+     "detail": "Bonus action, your own words. Your Charisma (Intimidation or Deception) vs its Wisdom (Insight). If you win, it has disadvantage on attacks against anyone but you until your next turn. It still chooses what it does.",
+     "needs_target": true,
+     "requires": [],
+     "cost": "bonus_action",
+     "aliases": [
+      "taunt",
+      "provoke",
+      "goad",
+      "jeer at"
+     ],
+     "granted_by": "campaign switch tb4_taunt (owner ruling 2026-11-17)"
     }
    ],
    "objects": [],
@@ -260,27 +193,6 @@
      "label": "Hold position",
      "feet": 0,
      "leaves_reach_of": []
-    },
-    {
-     "id": "back_to_wick",
-     "label": "Fall back beside Wick",
-     "feet": 20,
-     "leaves_reach_of": [
-      "hound_1"
-     ],
-     "distance_after": {
-      "hound_1": 25,
-      "hound_2": 50,
-      "wick": 0
-     },
-     "ends_at": "beside Wick",
-     "aliases": [
-      "beside wick",
-      "back to wick",
-      "fall back",
-      "step back",
-      "retreat"
-     ]
     }
    ],
    "reactions": [
@@ -321,7 +233,7 @@
      "id": "hound_2",
      "label": "The far sim hound",
      "short": "the far hound",
-     "distance_ft": 30,
+     "distance_ft": 20,
      "hostile": true,
      "conditions": [],
      "aliases": [
@@ -333,7 +245,7 @@
     {
      "id": "wick",
      "label": "Wick",
-     "distance_ft": 20,
+     "distance_ft": 5,
      "hostile": false,
      "conditions": [],
      "aliases": [
@@ -345,15 +257,17 @@
    ],
    "notes": [
     "TEST BUILD, not canon. Wick is an ally, not a party member: the GM runs his turn after yours.",
-    "Your blade is lit and your action is spent. You have 20 ft of movement left; your reaction is unused.",
-    "The near hound is cut but still standing, 5 ft from you. The far hound is 30 ft off by the right wall. Wick is 20 ft behind you. Something moved behind the crates on your left; you have not seen it.",
-    "Falling back beside Wick leaves the near hound's reach.",
+    "You are badly hurt: 1 of 11 hit points left. The near hound's bite tore into you as you fell back.",
+    "Round 2, your turn: action, bonus action, 30 ft of movement and your free object interaction are all available. Your blade is still lit.",
+    "The near hound is back within reach of you, 5 ft away, still cut across the flank. The far hound has come along the right wall and is about 15 ft from Wick, 20 ft from you.",
+    "Wick is 5 ft behind you, pistol up. Something moved behind the crates on your left earlier; you have not seen it.",
+    "Moving away from the near hound would leave its reach.",
     "Your turn stays open until you say “end my turn” or nothing is left to spend."
    ],
    "equipment_from_ledger": true,
    "encounter": {
     "mode": "combat",
-    "round": 1,
+    "round": 2,
     "current": "Aero",
     "next": "Wick",
     "order": [
@@ -366,11 +280,11 @@
       "control": "player",
       "conditions": [],
       "budget": {
-       "action": 0,
+       "action": 1,
        "bonus_action": null,
        "reaction": 1,
-       "object_interaction": 0,
-       "movement_ft": 20,
+       "object_interaction": 1,
+       "movement_ft": 30,
        "speed_ft": 30
       },
       "ready": null,
@@ -454,7 +368,7 @@
     "mode_since": "evt_0004",
     "mode_reason": "the drill program starts"
    },
-   "context_id": "evt_0018",
+   "context_id": "evt_0048",
    "equipment": [
     {
      "id": "lightsaber",
@@ -660,21 +574,22 @@
     }
    ]
   },
-  "revision": 14,
-  "ledger_head": "evt_0018",
-  "turn_no": 1,
+  "revision": 39,
+  "ledger_head": "evt_0048",
+  "turn_no": 2,
   "scene": {
    "title": "Sim Deck: Drill Seven (TEST, not canon)",
    "location": "Holo-sim deck",
-   "time": "Sim drill, round 1",
+   "time": "Sim drill, round 2",
    "atmosphere": [
     "noncanonical test build",
-    "combat, round 1",
+    "combat, round 2",
     "indigo blade lit",
-    "near hound wounded, 5 ft away",
-    "far hound by the right wall",
-    "something behind the crates",
-    "Wick 20 ft behind you"
+    "Aero badly hurt",
+    "near hound wounded, within reach",
+    "far hound close to Wick along the right wall",
+    "Wick right behind Aero",
+    "the crates silent"
    ]
   },
   "feed": [
@@ -695,6 +610,18 @@
     "event_id": "evt_0016",
     "time": "Sim drill, round 1",
     "text": "The hilt hums in your right hand and the indigo blade snaps alight, washing the sim deck's grid floor in violet. You close the gap in three quick strides, and the near hound's projected hide flickers as it crouches to meet you. Your cut lands clean, a bright seam scored across its flank, and the construct staggers, its outline stuttering where the blade passed. It is hurt, but it is still on its feet, a hand's breadth beyond your blade tip. Behind you, Wick's breathing is loud in the quiet; the far hound paces the right wall, and something behind the crates on your left has gone still. Your action is spent, but your turn is not over: you still have ground to cover if you want it."
+   },
+   {
+    "who": "player",
+    "event_id": "evt_0019",
+    "time": "Sim drill, round 2",
+    "text": "I fall back toward Wick and end my turn."
+   },
+   {
+    "who": "gm",
+    "event_id": "evt_0046",
+    "time": "Sim drill, round 2",
+    "text": "You give ground, the indigo blade held high between you and the near hound, jaw set. The construct does not let you go cleanly: as you step out of its reach it lunges, and its projected jaws close on you with a force the sim does not soften. Pain flares bright and hot, and you keep your feet only by the time you reach Wick's side. You are badly hurt, running on very little now.\n\nWick sees the blood and backs a step, putting you between himself and the hound; his pistol comes up, but he does not fire. The near hound is on you again a heartbeat later, closing the gap in a rush, and snaps at you. This time your blade is there, and its teeth close on nothing. Along the right wall the far hound lopes in toward Wick and pulls up short, a little out of reach, its gaze fixed on him. The crates on your left are silent.\n\nIt is your turn. The near hound is within reach of your blade, the far one is circling closer to Wick, and Wick is right behind you."
    }
   ],
   "journal": [
@@ -746,6 +673,153 @@
     "kind": "resource_spent",
     "knowledge": "fact",
     "text": "Aero's action is used."
+   },
+   {
+    "event_id": "evt_0022",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero falls back 20 ft to stand beside Wick, blade up."
+   },
+   {
+    "event_id": "evt_0023",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero spends 20 ft of movement."
+   },
+   {
+    "event_id": "evt_0024",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends its reaction."
+   },
+   {
+    "event_id": "evt_0025",
+    "time": "Sim drill, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "As Aero leaves its reach, the near hound lunges and its bite lands hard: a critical hit."
+   },
+   {
+    "event_id": "evt_0026",
+    "time": "Sim drill, round 2",
+    "kind": "hp_change",
+    "knowledge": "fact",
+    "text": "Aero takes 10 piercing damage (11 to 1)."
+   },
+   {
+    "event_id": "evt_0027",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "Aero ends his turn (bonus action unspent)."
+   },
+   {
+    "event_id": "evt_0028",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Wick's turn."
+   },
+   {
+    "event_id": "evt_0029",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Wick backs 5 ft away so Aero stands between him and the near hound, pistol up; he does not fire."
+   },
+   {
+    "event_id": "evt_0030",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Wick spends 5 ft of movement."
+   },
+   {
+    "event_id": "evt_0031",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "Wick ends his turn."
+   },
+   {
+    "event_id": "evt_0032",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "The near hound's turn."
+   },
+   {
+    "event_id": "evt_0033",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "The near hound closes 20 ft back to Aero."
+   },
+   {
+    "event_id": "evt_0034",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends 20 ft of movement."
+   },
+   {
+    "event_id": "evt_0035",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends its action."
+   },
+   {
+    "event_id": "evt_0036",
+    "time": "Sim drill, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "The near hound bites at Aero and misses."
+   },
+   {
+    "event_id": "evt_0037",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "The near hound ends its turn."
+   },
+   {
+    "event_id": "evt_0038",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "The far hound's turn."
+   },
+   {
+    "event_id": "evt_0039",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "The far hound lopes 40 ft along the right wall toward Wick and stops short of him."
+   },
+   {
+    "event_id": "evt_0040",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The far hound spends 40 ft of movement."
+   },
+   {
+    "event_id": "evt_0041",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "The far hound ends its turn."
+   },
+   {
+    "event_id": "evt_0045",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Round 2: Aero's turn."
    }
   ],
   "suggestions": [],
@@ -986,52 +1060,52 @@
   },
   "history": {
    "feed": {
-    "total": 3,
-    "shown": 3,
+    "total": 5,
+    "shown": 5,
     "omitted": 0,
     "first_shown": "evt_0002",
     "pages": [
      {
       "id": "feed-0001",
-      "count": 3,
+      "count": 5,
       "first": "evt_0002",
-      "last": "evt_0016",
-      "hash": "2e9daa269e32f9c8"
+      "last": "evt_0046",
+      "hash": "54cc504536a6257d"
      }
     ]
    },
    "journal": {
-    "total": 7,
-    "shown": 7,
+    "total": 28,
+    "shown": 28,
     "omitted": 0,
     "first_shown": "evt_0005",
     "pages": [
      {
       "id": "journal-0001",
-      "count": 7,
+      "count": 28,
       "first": "evt_0005",
-      "last": "evt_0015",
-      "hash": "06e9e1ec79ff0904"
+      "last": "evt_0045",
+      "hash": "a4bf2a3ef5f42976"
      }
     ],
     "observations": 0
    },
    "budget_bytes": 96000,
    "target_bytes": 84000,
-   "bytes": 19119,
-   "revision": 14,
+   "bytes": 22793,
+   "revision": 39,
    "page_budget_bytes": 150000,
    "dice_history": {
-    "total": 2,
+    "total": 5,
     "shown": 0,
-    "omitted": 2,
+    "omitted": 5,
     "pages": [
      {
       "id": "dice_history-0001",
-      "count": 2,
+      "count": 5,
       "first": "evt_0013",
-      "last": "evt_0013",
-      "hash": "a16e0e4df5003acb"
+      "last": "evt_0036",
+      "hash": "6fa627a1025c2c34"
      }
     ]
    },
@@ -1048,10 +1122,18 @@
     "pages": []
    },
    "relationship_evidence": {
-    "total": 0,
+    "total": 1,
     "shown": 0,
-    "omitted": 0,
-    "pages": []
+    "omitted": 1,
+    "pages": [
+     {
+      "id": "relationship_evidence-0001",
+      "count": 1,
+      "first": "evt_0019",
+      "last": "evt_0019",
+      "hash": "008886e5cc8bf5f3"
+     }
+    ]
    }
   }
  }
