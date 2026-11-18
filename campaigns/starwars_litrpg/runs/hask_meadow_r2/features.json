@@ -2,7 +2,8 @@
  "campaign_id": "hask_meadow_r2",
  "switches": {
   "tb4_builder": true,
-  "tb4_taunt": true
+  "tb4_taunt": true,
+  "whisper_context": true
  },
  "owner_basis": "Owner instruction 2026-11-17: move finished TB4 milestones into the live app behind on/off switches. Set a switch to false (or delete it) to turn the feature off. tb4_taunt: owner-ratified contested check 2026-11-17."
 }
