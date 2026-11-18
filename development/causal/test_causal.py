@@ -65,3 +65,26 @@ else:
     raise AssertionError("depth bound")
 assert (snap, rules) == frozen, "inputs never mutated"
 print("causal tests ok")
+
+# ---- owner decision 4: the four approved families ----
+heard = {"event_id": "evt_0920", "kind": "speech", "accepted": True, "actor": "thug", "knowledge_type": "report", "known_to": ["aero", "wick", "mira"],
+         "details": {"speaker": "thug", "subject": "wick", "predicate": "took", "object": "crates"}}
+ex = C.resolve(heard, snap, rules)
+ex_p = [p for p in ex["proposals"] if p["family"] == "information_exposure"]
+assert sorted(p["target"] for p in ex_p) == ["aero", "mira", "wick"], ex
+for p in ex_p:
+    assert p["triggering_event"] == "evt_0920" and p["evidence"][0] == "evt_0920" and p["prerequisites"] == ["speech_heard"] and p["owning_domain"] == "knowledge" and p["affected"]
+mem = [p for p in r["proposals"] if p["family"] == "memory_appraisal"]
+assert len(mem) == 1 and mem[0]["owning_domain"] == "whisper" and mem[0]["target"] == "aero", r
+rel = [p for p in r["proposals"] if p["family"] == "relationship_candidate"]
+assert rel and all(p["requested_transition"] == "evaluate_observer_reaction" for p in rel), "relationship family proposes an evaluation, never a change"
+taunt = {"event_id": "evt_0930", "kind": "taunt_resolved", "accepted": True, "actor": "aero", "known_to": ["aero", "thug"], "details": {"target": "thug", "taunt_success": True}}
+t = C.resolve(taunt, snap, rules)
+assert [(p["family"], p["parameters"]["condition"]) for p in t["proposals"]] == [("approved_status", "taunted")], t
+assert any("not explicitly approved" in x["reason"] for x in t["rejected"]), "a status nobody approved is refused"
+assert any("may not write to atomic_conditions" in x["reason"] for x in t["rejected"]), "a family may only use its own domains"
+lost = dict(taunt, event_id="evt_0931", details={"target": "thug", "taunt_success": False})
+assert C.resolve(lost, snap, rules)["proposals"] == [], "a lost Taunt has no status"
+for p in ex_p + mem + rel + t["proposals"]:
+    assert p["commits"] is False and "not an inevitable one" in p["note"]
+print("causal family tests ok")
