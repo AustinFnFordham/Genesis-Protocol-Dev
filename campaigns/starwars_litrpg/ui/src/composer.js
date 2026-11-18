@@ -9,11 +9,11 @@
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "", carried: false,
              temperature: "regular", narrativeConsequences: false,
              sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [],
-                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "", endTurn: false } };
+                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "", endTurn: false, tb4custom: {}, style: "" } };
   }
   function upgradeSel(s) {  // drafts saved by older versions keep working
     s.steps = s.steps || []; s.nseq = s.nseq || 1; s.labels = s.labels || [""]; s.active = s.active || { seq: 0 };
-    s.nextId = s.nextId || 1; s.sayDraft = s.sayDraft || ""; s.actDraft = s.actDraft || "";
+    s.nextId = s.nextId || 1; s.sayDraft = s.sayDraft || ""; s.actDraft = s.actDraft || ""; s.tb4custom = s.tb4custom || {}; s.style = s.style || "";
     s.steps = s.steps.map(function (x) {
       if (x.type === "say") x = s.dialogue === "own" ? { type: "speech", text: s.own || "" } : { type: "speech", option: s.dialogue };
       if (!x.id) x.id = "s" + (s.nextId++); if (x.seq == null) x.seq = 0; return x;
@@ -122,9 +122,11 @@
     d.objects = s.objects.filter(function (o) { return byId(c.objects, o); });
     d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
     if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
+    if (TB4on()) GenesisTB4.apply(d, s);   // Turn Builder 4 custom boxes (switchable, src/tb4.js)
     if (endsTurnNow(c)) d.end_turn = true;   // the player's explicit word; a submission alone never ends a turn
     return d;
   }
+  function TB4on() { return typeof GenesisTB4 !== "undefined" && GenesisTB4.enabled(view); }
   function newId() { return "s" + (ui.sel.nextId++); }
   function fromDecl(st, seqMap, authorize) {
     var x = { id: newId(), seq: seqMap(st.seq || 0), type: st.type };
@@ -157,7 +159,8 @@
     s.movement = d.movement ? d.movement.option : "hold";
     s.objects = (d.objects || []).slice(); s.reactions = (d.reactions || []).slice();
     s.endTurn = d.end_turn === true;
-    ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).join(" "); saveUi();
+    var tb4used = typeof GenesisTB4 !== "undefined" ? GenesisTB4.restore(d, s) : [];
+    ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).filter(function (u) { return tb4used.indexOf(u) < 0; }).join(" "); saveUi();
   }
   function turnText(d, r) {
     if (ui.mode === "write") return ui.write.trim();
@@ -171,7 +174,8 @@
       }
       return out.join("\n");
     }
-    return r.preview.map(function (p) { return p.text; }).join("; ") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
+    var tb4s = TB4on() ? GenesisTB4.summary(ui.sel) : "";
+    return r.preview.map(function (p) { return p.text; }).join("; ") + (tb4s ? (r.preview.length ? "; " : "") + tb4s : "") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
   }
 
   function radio(group, value, checked, label, small, tag, disabled, why) {
@@ -482,7 +486,9 @@
       var ca = c.reaction_prompt ? {} : combatAvail(c);
       if (c.reaction_prompt) h += "<!-- reaction prompt: slot builder hidden -->";
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
+      var tb4 = TB4on(), tbx = function (cat) { return tb4 ? GenesisTB4.extras(cat, c, s, ca) : ""; };
       if (!c.reaction_prompt) {
+      if (tb4) h += GenesisTB4.styleBar(s);
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -493,21 +499,22 @@
           if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
           if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
           return x;
-        }).join("") + "</fieldset>";
+        }).join("") + tbx("action") + "</fieldset>";
       var bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-      if (bon.length) h += '<fieldset class="grp"><legend>Bonus action</legend>' + radio("bonus", "", !s.bonus, "None") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + "</fieldset>";
+      if (bon.length || tb4) h += '<fieldset class="grp"><legend>Bonus action</legend>' + (bon.length ? radio("bonus", "", !s.bonus, "None") : "") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + tbx("bonus_action") + "</fieldset>";
+      if (tb4) h += GenesisTB4.secondaryFieldset(c, s, ca);
       h += '<fieldset class="grp"><legend>Movement</legend>' + (c.movement || []).map(function (m) {
         var risk = c.mode === "combat" && (m.leaves_reach_of || []).length ? "opportunity attack risk" : "", w = m.id === "hold" ? [false, ""] : why("move:" + m.id);
         return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk, w[0], w[1]);
-      }).join("") + "</fieldset>";
-      if ((c.objects || []).filter(function (o) { return !o.gear; }).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      }).join("") + tbx("movement") + "</fieldset>";
+      if ((c.objects || []).filter(function (o) { return !o.gear; }).length || tb4) h += '<fieldset class="grp"><legend>Object interaction</legend>' + (c.objects || []).filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + tbx("object") + "</fieldset>";
       }
       if (c.reaction_prompt) {
         var rp = c.reaction_prompt;
         h += '<fieldset class="grp reactnow"><legend>Reaction needed now</legend><div class="check warn"><b>' + esc(rp.trigger || "Something is happening") + "</b>" + (rp.detail ? "<div>" + esc(rp.detail) + "</div>" : "") + '<div class="note">It is not your turn. Choose one reaction, or none; the GM resolves it under the rules.</div></div>' +
           (c.reactions || []).filter(function (o) { return (rp.options || []).indexOf(o.id) >= 0; }).map(function (o) { return radio("reactnow", o.id, s.reactions[0] === o.id, o.label, o.detail || ""); }).join("") +
           radio("reactnow", "__none", !!s.declineReaction, "Do not react") + "</fieldset>";
-      } else if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
+      } else if ((c.reactions || []).length || tb4) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + (c.reactions || []).map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + tbx("reaction") + "</fieldset>";
       if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
     if (c.mode === "combat" && !c.reaction_prompt) h += '<fieldset class="grp"><legend>Turn</legend><label class="opt"><input type="checkbox" id="endTurn"' + (ui.sel.endTurn ? " checked" : "") +
@@ -524,7 +531,7 @@
       '<div class="row"><button class="btn primary" id="submitAlt"' + (busy || phase ? " disabled" : "") + '>Submit this option</button><button class="btn" id="discardAlt">Discard</button><span class="note" id="altMsg"></span></div></div>';
   }
   function canSubmitNow(r, busy) {
-    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt || endsTurnNow(ctxOf(view)));
+    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt || endsTurnNow(ctxOf(view)) || (TB4on() && GenesisTB4.hasCustom(ui.sel)));
   }
   function fixCount(r, stat) {
     var n = r.errors.filter(function (e) { return !e.step_id; }).length;
@@ -910,6 +917,7 @@
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
     on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
+    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {

@@ -115,6 +115,9 @@ def public_roll(r, rid, purpose, kept):
     return {"roll_id": rid, "purpose": purpose, "summary": f'total {r.get("final_total")}', "by": "gm", "redacted": True}
 
 
+FEATURE_SWITCHES = ("tb4_builder", "tb4_taunt", "whisper_context")
+
+
 def build(ev=None, campaign_dir=None, campaign_id=None):
     if ev is None:
         ev = public_events(campaign_dir) if campaign_dir else la.player_events()
@@ -220,6 +223,13 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         if config.get("enabled") is True and config.get("campaign_id") == campaign_id and (config.get("canonical") is False or (
                 config.get("canonical") is True and isinstance(config.get("owner_adopted"), str))):
             experimental["experimental_resolution"] = {"enabled": True, "schema": "genesis-experimental-resolution/1"}
+    # Owner on/off switches for separately removable features (TB4-WHISPER initiative). Only known keys, only booleans.
+    features_path = rdir / "features.json"
+    if features_path.exists():
+        raw = json.loads(features_path.read_text()).get("switches", {})
+        known = {k: raw[k] for k in FEATURE_SWITCHES if isinstance(raw.get(k), bool)}
+        if known:
+            experimental["features"] = known
     return {
         **experimental,
         "contest_declaration": contest,
