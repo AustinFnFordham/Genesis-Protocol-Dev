@@ -1,0 +1,5 @@
+{
+ "campaign_id": "hask_meadow_r2",
+ "switches": {"tb4_builder": true},
+ "owner_basis": "Owner instruction 2026-11-17: move finished TB4 milestones into the live app behind on/off switches. Set a switch to false (or delete it) to turn the feature off."
+}
