@@ -1,0 +1,20 @@
+{
+ "version": 1,
+ "data": {
+  "kind": "relationship_evidence",
+  "page": 1,
+  "id": "relationship_evidence-0001",
+  "count": 1,
+  "first": "evt_0019",
+  "last": "evt_0019",
+  "hash": "008886e5cc8bf5f3",
+  "entries": [
+   {
+    "event_id": "evt_0019",
+    "text": "aero's declaration m8e2e-1794970143",
+    "knowledge": "fact"
+   }
+  ],
+  "campaign_id": "mobile-test-1"
+ }
+}
