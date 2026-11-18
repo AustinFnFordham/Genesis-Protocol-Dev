@@ -3,6 +3,7 @@
  "switches": {
   "tb4_builder": true,
   "tb4_taunt": true,
-  "whisper_context": true
+  "whisper_context": true,
+  "whisper_review": true
  }
 }
