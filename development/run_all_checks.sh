@@ -20,6 +20,7 @@ timed "$U/test_datapad_review_options.cjs" node $U/test_datapad_review_options.c
 timed "development/test_player_experience.cjs" node development/test_player_experience.cjs
 timed "development/test_dice_history_ui.cjs" node development/test_dice_history_ui.cjs $P $Q/dice_ui
 timed "development/experimental_resolution/test_controls.cjs" node development/experimental_resolution/test_controls.cjs
+timed "$U/test_intent_plans.cjs" node $U/test_intent_plans.cjs $P $Q/state_round1.json
 timed "$U/test_tb4.cjs" node $U/test_tb4.cjs $P $Q/state_round1.json
 timed "$U/test_tb4_taunt.cjs" node $U/test_tb4_taunt.cjs $P $Q/state_round1.json
 timed "$U/test_whisper_ui.cjs" node $U/test_whisper_ui.cjs $P $Q/state_round1.json

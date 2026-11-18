@@ -227,11 +227,12 @@
     if (c.mode !== "combat") return '<div class="note">Scene: no initiative and no action economy. Group what Aero intends into sequences, in order. The GM plays the whole plan in one pass and stops only when the world interrupts or something needs your decision. Hands, gear, distance and time still apply.</div>';
     var b = c.budget || {}, u = r.used;
     function p(name, used, txt) { return '<span class="pill ' + (used ? "used" : "ok") + '">' + name + ": " + txt + "</span>"; }
-    return '<div class="budget">' + p("Action", u.action >= (b.action || 1), u.action >= (b.action || 1) ? "Used" : "Available") +
-      p("Movement", u.movement_ft > 0, (b.movement_ft - u.movement_ft) + "/" + b.movement_ft + " ft") +
-      p("Bonus", u.bonus_action >= (b.bonus_action || 1), u.bonus_action ? "Used" : ((c.options || []).some(function (o) { return o.slot === "bonus_action"; }) ? "Available" : "None eligible")) +
-      p("Reaction", u.reaction > 0, u.reaction ? "Reserved" : "Available") +
-      p("Object", u.object_interaction > 0, u.object_interaction ? "Used" : "Available") + "</div>";
+    function cap(k, fallback) { return b[k] == null ? fallback : b[k]; }
+    function slot(name, k, fallback) { var total = cap(k, fallback), planned = u[k] || 0;
+      return p(name, planned >= total, Math.max(0, total - planned) + " remaining" + (planned ? " · " + planned + " planned" : "")); }
+    return '<div class="budget">' + slot("Action", "action", 1) +
+      p("Movement", u.movement_ft > 0, Math.max(0, cap("movement_ft", c.speed_ft || 0) - u.movement_ft) + "/" + cap("movement_ft", c.speed_ft || 0) + " ft remaining") +
+      slot("Bonus", "bonus_action", 1) + slot("Reaction", "reaction", 1) + slot("Object", "object_interaction", 1) + "</div>";
   }
   function checkPanel(r) {
     var cls = r.legal ? (r.needs_confirmation ? "warn" : "") : "bad";
@@ -468,6 +469,13 @@
     return out;
   }
 
+  function actionEditors(o, s, c) {
+    var x = "";
+    if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
+    if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
+    return x;
+  }
+
   function renderTurn(v) {
     var c = ctxOf(v), busy = activeAction();
     if (!c) return renderLegacy(v, busy);
@@ -491,7 +499,8 @@
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
       var tb4 = TB4on(), tbx = function (cat) { return tb4 ? GenesisTB4.extras(cat, c, s, ca) : ""; };
       if (!c.reaction_prompt) {
-      if (tb4) h += GenesisTB4.styleBar(s);
+      if (tb4) h += GenesisTB4.styleBar(s) + GenesisTB4.intentPanel(c, s, ca) + (byId(c.options, s.action) ? actionEditors(byId(c.options, s.action), s, c) : "") +
+        '<details id="mechanicsCatalog"' + (s.catalogOpen ? ' open' : '') + '><summary style="min-height:44px;padding:10px 0">Full mechanics catalog · dialogue, actions, movement, equipment and supporting activities</summary>';
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -499,10 +508,9 @@
         (c.options || []).filter(function (o) { return o.slot === "action"; }).map(function (o) {
           var tag = (o.requires || []).length ? "needs " + o.requires.map(function (q) { return (c.flag_labels || {})[q] || q; }).join(", ") : "", w = why("action:" + o.id);
           var x = radio("action", o.id, s.action === o.id, o.label, o.detail || (o.area_ft ? o.area_ft + "-ft radius" : o.reach_ft ? "reach " + o.reach_ft + " ft" : ""), tag, w[0], w[1]);
-          if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
-          if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
+          if (!tb4) x += actionEditors(o, s, c);
           return x;
-        }).join("") + tbx("action") + "</fieldset>";
+        }).join("") + (tb4 ? "" : tbx("action")) + "</fieldset>";
       var bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
       if (bon.length || tb4) h += '<fieldset class="grp"><legend>Bonus action</legend>' + (bon.length ? radio("bonus", "", !s.bonus, "None") : "") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + tbx("bonus_action") + "</fieldset>";
       if (tb4) h += GenesisTB4.secondaryFieldset(c, s, ca);
@@ -520,6 +528,7 @@
       } else if ((c.reactions || []).length || tb4) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + (c.reactions || []).map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + tbx("reaction") + "</fieldset>";
       if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
+    if (ui.mode === "build" && !scene && TB4on() && !c.reaction_prompt) h += "</details>";
     if (c.mode === "combat" && !c.reaction_prompt) h += '<fieldset class="grp"><legend>Turn</legend><label class="opt"><input type="checkbox" id="endTurn"' + (ui.sel.endTurn ? " checked" : "") +
       '><span class="lbl">End my turn after this<small>Leave it off to keep your turn open: the GM resolves what you submit and you go on with what is left.</small></span></label></fieldset>';
     h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
@@ -920,7 +929,7 @@
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
     on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
-    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
+    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed, persist: saveUi });
     if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
     if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse });
     bindLive();

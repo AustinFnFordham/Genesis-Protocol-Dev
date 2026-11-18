@@ -58,9 +58,10 @@ const MOCK = src.match(/const MOCK = `([\s\S]*?)`;/)[1];
     ok(await page.locator("#w_own").count() + await page.locator('input[data-g="dialogue"][value="own"]').count() > 0, "speech keeps its own-words line");
     ok(await page.locator("[data-tb4pick]").count() > 0, "suggestions shown");
     // a suggestion selects the existing radio (no second validator)
-    const first = page.locator('[data-tb4cat-sugg="action"] [data-tb4pick]').first();
+    const first = page.locator('[data-tb4cat-sugg="action"] [data-tb4pick^="action|"]').first();
     if (await first.count()) { const v0 = (await first.getAttribute("data-tb4pick")).split("|")[1]; await first.click(); await page.waitForTimeout(150);
       ok(await page.locator(`input[data-g="action"][value="${v0}"]`).isChecked(), "tapping a suggestion selects that option in the normal list"); }
+    await page.locator("#mechanicsCatalog > summary").click();
     await page.locator('input[data-g="action"][value=""]').check(); await page.waitForTimeout(100);
     const words = "Pin the hound with my boot and say “stay”, low and steady";
     await page.fill("#w_tb4_action", words);

@@ -9,6 +9,7 @@ it never writes it. Usage: export_state.py [--out FILE]
 import argparse, json, re, sys
 from pathlib import Path
 import yaml
+from hp_compat import hp_delta
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "api_bridge"))
@@ -149,7 +150,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     skills = [{"name": k.replace("_", " "), "mod": v["modifier"]} for k, v in sheet["proficiencies"]["skills"].items()]
     # Ledger overlay: the sheet runtime is static, so Aero's current HP is max + sum of public hp_change deltas (clamped).
     hp_max = dfn["maximum_hp"]
-    hp_now = max(0, min(hp_max, dfn["current_hp"] + sum(e["details"].get("delta", 0) for e in ev
+    hp_now = max(0, min(hp_max, dfn["current_hp"] + sum(hp_delta(e["details"]) for e in ev
                  if e["kind"] == "hp_change" and e["details"].get("target") == ACTIVE_ACTOR)))
     cond_ev = [e for e in ev if e["kind"] == "condition_change" and e["details"].get("target") == ACTIVE_ACTOR]
     conditions = cond_ev[-1]["details"].get("conditions", []) if cond_ev else dfn.get("conditions", [])

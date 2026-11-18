@@ -634,7 +634,7 @@
     });
     return c;
   }
-  function validate(declIn, ctx) {
+  function validate(declIn, ctx, checkingAlternative) {
     ctx = withEquipment(ctx);
     var decl = normalize(declIn, ctx), combat = ctx.mode === "combat";
     var ps = paths(decl.steps), errors = [], warnings = [], info = [], trace = {}, used = null, speechAction = false;
@@ -698,7 +698,7 @@
                          : { code: "TURN_CONTINUES", message: "Your turn continues after this. Left: " + left.join(", ") + ". Say “end my turn” when you are done." });
     }
     var confirm = warnings.filter(function (w) { return !w.advisory; });
-    var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
+    var alternatives = !checkingAlternative && errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
     return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,
              errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives, ends_turn: endsTurn,
              steps: decl.steps, halts: halts, trace: decl.steps.length ? flat(decl.steps).map(function (s) { return trace[s.id]; }).filter(Boolean) : [], paths: ps.length };
@@ -876,13 +876,13 @@
     decl.actions.forEach(function (a) {
       var d = clone(decl); d.actions = [a]; d.source = "composer";
       if (d.objects.length > 1) d.objects = d.objects.slice(0, 1);
-      var v = validate(d, ctx);
+      var v = validate(d, ctx, true);
       if (v.legal) out.push({ label: describe(d, ctx), declaration: d, warnings: v.warnings.map(function (w) { return w.message; }) });
     });
     if (decl.movement && byId(ctx.options, "disengage")) {
       var d2 = clone(decl); delete d2.steps; d2.actions = [{ option: "disengage", target: null, trigger: null }]; d2.source = "composer";
       if (d2.objects.length > 1) d2.objects = d2.objects.slice(0, 1);
-      if (validate(d2, ctx).legal) out.push({ label: describe(d2, ctx), declaration: d2, warnings: [] });
+      if (validate(d2, ctx, true).legal) out.push({ label: describe(d2, ctx), declaration: d2, warnings: [] });
     }
     return out.slice(0, 4);
   }

@@ -1,5 +1,5 @@
 {
- "milestone": "M9",
+ "milestone": "M11",
  "features": [
   {
    "id": "datapad_baseline",
@@ -11,7 +11,7 @@
    "id": "tb4_builder",
    "name": "Turn Builder 4",
    "enabled": true,
-   "note": "Custom box in every combat category, Secondary activity (not an extra action), deterministic suggestions with an optional play style."
+   "note": "Intent-first contextual plans, editable intentions, full mechanics catalog, explicit remaining budgets; deterministic public options only."
   },
   {
    "id": "tb4_taunt",

@@ -1,0 +1,36 @@
+name: M11 isolated verification
+on:
+  push:
+    branches: ['dev/m11-intent-first-work']
+  pull_request:
+    branches: ['integration/tb4-whisper-v01']
+permissions:
+  contents: read
+jobs:
+  regression:
+    # Standard runner in this public repository: no paid/larger runners or deployment.
+    if: github.repository == 'AustinFnFordham/Genesis-Protocol-Dev' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated test dependencies
+        run: |
+          python3 -m pip install -r development/preview/requirements.txt
+          npm install --prefix development/.qa/deps --no-audit --no-fund --ignore-scripts playwright@1.62.1 jsdom@31.0.1
+          development/.qa/deps/node_modules/.bin/playwright install --with-deps chromium
+      - name: Verify full regressions and real HTTP preview
+        env:
+          NODE_PATH: ${{ github.workspace }}/development/.qa/deps/node_modules
+        run: |
+          bash development/run_all_checks.sh
+          node development/preview/test_intent_dom.cjs
+      - name: Print check report
+        if: always()
+        run: cat development/.qa/check_results.json
