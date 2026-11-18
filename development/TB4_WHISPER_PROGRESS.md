@@ -56,7 +56,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | M1 Turn Builder 4 UI | COMPLETE | `tb4/m1-turn-builder` @ `78a5b80` | `1f743e5` | **Yes**: `litrpg/campaign-scaffold` @ `a88df71`, switch `tb4_builder` on, main Datapad v11 |
 | M2 Action economy, Taunt | COMPLETE | `tb4/m2-action-economy` | `f6879a7` | **Yes**: `litrpg/campaign-scaffold` @ `c58abff`, switch `tb4_taunt` on, main Datapad v12 |
 | M3 WHISPER context | COMPLETE | `tb4/m3-whisper` | `03e9f71` | **Yes**: `litrpg/campaign-scaffold` @ `0eb060f`, switch `whisper_context` on, main Datapad v13 |
-| M4 Algorithm A | NOT STARTED | | | |
+| M4 Algorithm A | COMPLETE (pure evaluator) | `tb4/m4-evidence` | `a4fc246` | Code only, not wired to play (no in-force authority yet) |
 | M5 Algorithm B | NOT STARTED | | | |
 | M6 Algorithm C | NOT STARTED | | | |
 | M7 Integration / UAT | NOT STARTED | | | |
@@ -125,10 +125,20 @@ the runbook says so. If it slips, the only reader of the public ledger is still 
 Owner decision still open (contract §9.3): whether any WHISPER field ever becomes a canonical character-state event.
 Currently: GM-only record of what the player stated, nothing canonical about Aero's psychology.
 
+## M4 — Algorithm A: evidence-grounded knowledge (pure)
+Files: `development/whisper/evidence.py`, `development/whisper/fixtures/cmp001_ten_missing_crates.json` (CMP-001),
+`development/whisper/test_evidence.py`. Envelopes are derived views over accepted events (ledger `knowledge_type`,
+`visibility`, `known_to`), never stored. Visibility is enforced first: `gm_only` only for the GM (and NPCs who were part
+of it, GM-side), `pc_private` only for the player/PC, NPC knowledge only through exposure (`known_to`/authorship).
+Claims stay claims (TB4-16), absent observers know nothing (TB4-17), private context never reaches NPCs (TB4-18),
+unknown entities refused (TB4-19), retractions marked per listener. Diagnostic: `python3 development/whisper/evidence.py
+development/whisper/fixtures/cmp001_ten_missing_crates.json npc:dockworker_7` (or `player`, `gm`).
+Not done (needs owner/architecture decision): feeding these envelopes into NPC prompts or the live GM context.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M4 (Algorithm A: evidence envelopes, pure + fixtures, CMP-001) on `tb4/m4-evidence` from the integration HEAD.
+Start M5 (Algorithm B: episodic memory + appraisal candidates, TB4-MORAL-001) on `tb4/m5-memory` from the integration HEAD.
