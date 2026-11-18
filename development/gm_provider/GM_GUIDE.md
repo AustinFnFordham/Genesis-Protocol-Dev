@@ -126,3 +126,13 @@ Answer with the JSON object only.
   than Aero. It never forces an attack or a move: the target still acts from its own motives, and may simply leave. A
   target that cannot perceive Aero or understand the taunt is refused before any roll (`needs_revision`, reason given).
   Without the switch, a taunt is ordinary speech (free, no mechanical effect) or custom text the GM adjudicates.
+
+## WHISPER context (switch `whisper_context`)
+**WHISPER context (switch `whisper_context`, 2026-11-17).** `declaration.whisper` (schema `genesis-whisper-context/1`) is
+  the player's own statement of how Aero feels (`felt_emotion`), what he lets show (`expression`), why (`motive`) and a
+  private `reflection`. Absent or `unspecified` means not stated: never narrate him as calm, cold or numb because of it.
+  It is PC-private: NPCs and the world react only to what Aero shows (`expression`, when they can perceive him) and to
+  what he does. Never let an NPC know or act on felt emotion, motive or reflection. It costs nothing, is not an act, and
+  never changes morality or alignment by itself. Do not copy it into public events: write `player_declaration` with the
+  declaration minus `whisper` and add a `gm_only` event `whisper_context {action_id, context}` in the hidden ledger
+  (`development/whisper/whisper.py public_declaration`). Never contradict a feeling the player stated.

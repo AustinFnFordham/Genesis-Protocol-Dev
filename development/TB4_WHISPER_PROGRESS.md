@@ -54,7 +54,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 |---|---|---|---|---|
 | M0 Baseline, fixtures, preview | COMPLETE | `tb4/m0-baseline` @ `37a102b` | `2598d59` | Not needed (dev tooling only) |
 | M1 Turn Builder 4 UI | COMPLETE | `tb4/m1-turn-builder` @ `78a5b80` | `1f743e5` | **Yes**: `litrpg/campaign-scaffold` @ `a88df71`, switch `tb4_builder` on, main Datapad v11 |
-| M2 Action economy, Taunt | NOT STARTED | | | |
+| M2 Action economy, Taunt | COMPLETE | `tb4/m2-action-economy` | `f6879a7` | **Yes**: `litrpg/campaign-scaffold` @ `c58abff`, switch `tb4_taunt` on, main Datapad v12 |
 | M3 WHISPER context | NOT STARTED | | | |
 | M4 Algorithm A | NOT STARTED | | | |
 | M5 Algorithm B | NOT STARTED | | | |
@@ -95,10 +95,25 @@ revision still 1125). Main Datapad republished (v11); live `view/state` got `fea
 Known gap: the test campaign's worker runs code from `staging/mobile-test` (`b2d59bb`), whose export does not publish
 switches yet; merge integration into `staging/mobile-test` before the next real test-worker round trip.
 
+## M2 — Taunt (switch `tb4_taunt`) and action-economy guards
+Files: `campaigns/starwars_litrpg/ui/tb4_rules.py` (new, removable: grant + `resolve_taunt`), call in `export_state.build`,
+Taunt fields in `src/tb4.js`, runbook + `development/gm_provider/GM_GUIDE.md` resolution text,
+tests `ui/test_taunt_rules.py`, `ui/test_tb4_taunt.cjs`.
+Mechanics: exactly the owner ruling above. Grant appears only in combat with a visible hostile; ties go to the target;
+the effect never compels. Without the switch Taunt is `UNKNOWN_OPTION` (TB4-04) and insults stay free speech (TB4-05).
+Already covered by existing suites (unchanged): scene→combat transitions, interrupted/continuing turns, conditional
+sequences, reaction prompts (`test_scene_sequencing.py`, `test_sequencer.py`, `test_datapad_sequencer_ui.cjs`), NPC
+cooperation objects (`test_action_economy.py`), per-actor budgets (`development/encounter/*`).
+Tests: `suites=48 failed=0`.
+Live: switch added to the run's `features.json`; live `view/state` v90 carries the Taunt option and switches (the
+published turn context was only appended to, GM options untouched). Ledger untouched (revision 1125).
+Test env: `staging/mobile-test` now runs integration code (`a1aef18`), switches on; its gateway publishes them on the
+next commit (the test Datapad state was patched to match meanwhile, v4).
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M2 on `tb4/m2-action-economy` from the integration HEAD (Taunt behind `tb4_taunt`, owner-ratified contested check).
+Start M3 (WHISPER start-of-turn context, switch `whisper_context`) on `tb4/m3-whisper` from the integration HEAD.
