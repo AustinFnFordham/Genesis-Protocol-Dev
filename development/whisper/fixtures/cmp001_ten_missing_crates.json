@@ -1,0 +1,33 @@
+{
+ "fixture": "CMP-001 Ten Missing Crates (noncanonical, TB4-WHISPER-001 §7.2)",
+ "entities": ["aero", "wick", "dockmaster_orren", "neri", "sera", "smuggler_kesh", "crates_ten", "dock_7",
+              "dockworker_1", "dockworker_2", "dockworker_3", "dockworker_4", "dockworker_5", "dockworker_6",
+              "dockworker_7", "dockworker_8", "dockworker_9", "dockworker_10", "dockworker_11", "dockworker_12"],
+ "events": [
+  {"event_id": "evt_0001", "world_time": "Day 1, dawn", "kind": "world_state", "visibility": "player", "knowledge_type": "fact",
+   "known_to": [], "actor": "gm", "summary": "Ten crates are missing from Dock 7.",
+   "details": {"subject": "crates_ten", "predicate": "missing_from", "object": "dock_7"}},
+  {"event_id": "evt_0002", "world_time": "Day 1, night (before)", "kind": "world_state", "visibility": "gm_only", "knowledge_type": "fact",
+   "known_to": ["smuggler_kesh"], "actor": "gm", "summary": "Kesh moved the crates onto his skiff.",
+   "details": {"subject": "smuggler_kesh", "predicate": "took", "object": "crates_ten"}},
+  {"event_id": "evt_0003", "world_time": "Day 1, morning", "kind": "speech", "visibility": "player", "knowledge_type": "report",
+   "known_to": ["aero", "sera", "dockworker_1", "dockworker_2", "dockworker_3", "dockworker_4", "dockworker_5", "dockworker_6",
+                "dockworker_7", "dockworker_8", "dockworker_9", "dockworker_10", "dockworker_11", "dockworker_12"],
+   "actor": "dockmaster_orren", "summary": "Orren, loudly: 'The dockworkers stole them.'",
+   "details": {"speaker": "dockmaster_orren", "subject": "dockworker_1", "predicate": "took", "object": "crates_ten",
+               "claim_about": "dockworkers", "channel": "heard"}},
+  {"event_id": "evt_0004", "world_time": "Day 1, morning", "kind": "observation", "visibility": "player", "knowledge_type": "fact",
+   "known_to": ["aero"], "actor": "aero", "summary": "Aero sees fresh skiff-runner marks on the pier edge.",
+   "details": {"observer": "aero", "subject": "dock_7", "predicate": "shows", "object": "skiff_marks"}},
+  {"event_id": "evt_0005", "world_time": "Day 1, morning", "kind": "whisper_context", "visibility": "gm_only", "knowledge_type": "fact",
+   "known_to": [], "actor": "aero", "summary": "Player's private WHISPER context",
+   "details": {"context": {"schema": "genesis-whisper-context/1", "source": "player_explicit", "visibility": "pc_private",
+               "felt_emotion": ["anger"], "expression": {"style": "masked", "text": "polite nod"}, "motive": "find who framed them", "reflection": null}}},
+  {"event_id": "evt_0006", "world_time": "Day 1, noon", "kind": "speech", "visibility": "player", "knowledge_type": "report",
+   "known_to": ["dockmaster_orren", "aero"], "actor": "sera", "summary": "Sera: 'Orren lies when he's scared.'",
+   "details": {"speaker": "sera", "subject": "dockmaster_orren", "predicate": "lies_when", "object": "scared", "channel": "heard"}},
+  {"event_id": "evt_0007", "world_time": "Day 1, noon", "kind": "correction", "visibility": "player", "knowledge_type": "report",
+   "known_to": ["aero", "sera"], "actor": "dockmaster_orren", "summary": "Orren takes it back: 'I don't know who took them.'",
+   "details": {"speaker": "dockmaster_orren", "retracts": "evt_0003", "channel": "heard"}}
+ ]
+}
