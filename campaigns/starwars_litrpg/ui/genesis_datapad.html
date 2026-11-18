@@ -847,7 +847,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     });
     return c;
   }
-  function validate(declIn, ctx) {
+  function validate(declIn, ctx, checkingAlternative) {
     ctx = withEquipment(ctx);
     var decl = normalize(declIn, ctx), combat = ctx.mode === "combat";
     var ps = paths(decl.steps), errors = [], warnings = [], info = [], trace = {}, used = null, speechAction = false;
@@ -911,7 +911,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
                          : { code: "TURN_CONTINUES", message: "Your turn continues after this. Left: " + left.join(", ") + ". Say “end my turn” when you are done." });
     }
     var confirm = warnings.filter(function (w) { return !w.advisory; });
-    var alternatives = errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
+    var alternatives = !checkingAlternative && errors.some(function (e) { return e.code === "ACTION_CONFLICT"; }) ? alternativesFor(decl, ctx) : [];
     return { contract: VERSION, legal: errors.length === 0, needs_confirmation: errors.length === 0 && confirm.length > 0,
              errors: errors, warnings: warnings, info: info, preview: preview, used: used, alternatives: alternatives, ends_turn: endsTurn,
              steps: decl.steps, halts: halts, trace: decl.steps.length ? flat(decl.steps).map(function (s) { return trace[s.id]; }).filter(Boolean) : [], paths: ps.length };
@@ -1089,13 +1089,13 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     decl.actions.forEach(function (a) {
       var d = clone(decl); d.actions = [a]; d.source = "composer";
       if (d.objects.length > 1) d.objects = d.objects.slice(0, 1);
-      var v = validate(d, ctx);
+      var v = validate(d, ctx, true);
       if (v.legal) out.push({ label: describe(d, ctx), declaration: d, warnings: v.warnings.map(function (w) { return w.message; }) });
     });
     if (decl.movement && byId(ctx.options, "disengage")) {
       var d2 = clone(decl); delete d2.steps; d2.actions = [{ option: "disengage", target: null, trigger: null }]; d2.source = "composer";
       if (d2.objects.length > 1) d2.objects = d2.objects.slice(0, 1);
-      if (validate(d2, ctx).legal) out.push({ label: describe(d2, ctx), declaration: d2, warnings: [] });
+      if (validate(d2, ctx, true).legal) out.push({ label: describe(d2, ctx), declaration: d2, warnings: [] });
     }
     return out.slice(0, 4);
   }
@@ -1313,14 +1313,68 @@ var GenesisTB4 = (function () {
   }
   // avail: map "type:option" -> {status, reasons} from the shared validator (turn_contract availability). Pure.
   function suggest(c, cat, style, avail) {
-    var re = STYLES[style || ""] || null, out = [];
+    var re = STYLES[style || ""] || null, out = [], seen = {};
     candidates(c, cat).forEach(function (k, i) {
-      var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice/.test(a.status) ? "needs_adjudication" : "known_legal";
+      var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice|unknown|risky/.test(a.status) ? "needs_adjudication" : "known_legal";
       var score = (st === "known_legal" ? 20 : st === "needs_adjudication" ? 10 : 0) + (re && re.test(k.id + " " + k.label) ? 5 : 0) - (k.id === "hold" ? 3 : 0);
       out.push({ id: k.id, group: k.group, label: k.label, status: st, reason: a && a.reasons && a.reasons[0] || "", score: score, order: i });
     });
     out.sort(function (x, y) { return y.score - x.score || x.order - y.order || (x.id < y.id ? -1 : 1); });
+    out = out.filter(function (x) { var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+      if (seen[key]) return false; seen[key] = true; return true; });
     return out.filter(function (x) { return x.status !== "blocked"; }).slice(0, 4).concat(out.filter(function (x) { return x.status === "blocked"; }).slice(0, 1));
+  }
+
+  // M11: plans are derived only from public, published capabilities. They are proposals,
+  // never grants or adjudication. The existing availability/validator owns costs and reach.
+  function plans(c, sel, avail) {
+    var seen = {}, out = [], foes = (c.visible || []).filter(function (v) { return v.hostile; });
+    ["action", "bonus_action", "movement", "object"].forEach(function (cat) {
+      suggest(c, cat, sel.style, avail).forEach(function (x) {
+        var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+        var availabilityKey = (cat === "movement" ? "move" : cat === "object" ? "object" : cat) + ":" + x.id;
+        // Disabled mechanics stay discoverable in the catalog, never as a dead plan button.
+        if (avail && avail[availabilityKey] && /needs_step|needs_choice|not_here/.test(avail[availabilityKey].status)) return;
+        if (x.status === "blocked" || x.id === "hold" || seen[key]) return;
+        var slot = cat === "action" ? "action" : cat === "bonus_action" ? "bonus_action" : cat === "movement" ? "movement_ft" : "object_interaction";
+        if (c.mode === "combat" && c.budget && c.budget[slot] === 0) return;
+        seen[key] = true;
+        var defensive = /dodge|disengage|cover|retreat|guard/i.test(x.id + " " + x.label);
+        var reason = x.reason || (cat === "movement" ? "Published route; reach and opportunity risks are checked." : "Available capability in this scene; edit before submitting.");
+        if (foes.length && defensive) { x.score += 4; reason = "Known threat: " + foes.map(function (v) { return v.label; }).join(", ") + ". " + reason; }
+        var support = null, label = x.label;
+        // A defensive activity plus a published retreat/cover route is a real composite
+        // plan only when the shared validator accepts the whole proposed combination.
+        // This never moves an NPC, invents a destination, or silently selects a target.
+        var T = typeof GenesisTurn !== "undefined" ? GenesisTurn : (typeof require === "function" ? require("../turn_contract.js") : null);
+        if (cat === "action" && defensive && foes.length && T) {
+          (c.movement || []).some(function (m) {
+            if (m.id === "hold" || !/back|retreat|cover/i.test(m.id + " " + m.label)) return false;
+            var d = T.emptyDecl(c); d.actions = [{option:x.id}]; d.movement = {option:m.id};
+            try { if (!T.validate(d, c).legal) return false; } catch (e) { return false; }
+            support = {group:"movement", id:m.id}; label += "; " + m.label; return true;
+          });
+        }
+        var source = (c.options || []).filter(function (o) { return o.id === x.id; })[0];
+        if (source && (source.needs_target || source.needs_trigger)) {
+          x = Object.assign({}, x, {status:"needs_adjudication"});
+          reason += source.needs_target ? " Choose your target." : " Specify your trigger.";
+        }
+        out.push(Object.assign({}, x, { label:label, category: cat, reason: reason, support:support }));
+      });
+    });
+    return out.sort(function (a, b) { return b.score - a.score || a.order - b.order; }).slice(0, 4);
+  }
+  function intentPanel(c, sel, avail) {
+    var ps = plans(c, sel, avail), selected = (c.options || []).filter(function (o) { return o.id === sel.action; })[0];
+    var h = '<section class="grp" id="intentPlans"><h3 style="margin:0">What do you want to achieve?</h3><p class="note">Choose a starting plan or write your intention. Edit it and combine supporting activities below. Nothing executes until you submit; custom costs need GM review.</p>';
+    h += '<div data-tb4cat-sugg="action">' + ps.map(function (x) {
+      return '<button type="button" class="btn" style="display:block;width:100%;text-align:left;white-space:normal;margin:6px 0" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.support ? ' data-tb4support="' + esc(x.support.group + "|" + x.support.id) + '"' : "") + '><b>' + esc(x.label) + '</b><small style="display:block">' + esc(x.reason) + ' · ' + STLABEL[x.status] + '</small></button>';
+    }).join("") + '</div>';
+    h += '<div class="note">Current plan: ' + esc(selected ? selected.label : "No primary action selected") + (sel.movement && sel.movement !== "hold" ? " · " + esc(((c.movement || []).filter(function (m) { return m.id === sel.movement; })[0] || {}).label || sel.movement) : "") + '</div>';
+    if (selected) h += '<button type="button" class="btn" data-tb4pick="action|">Clear primary action</button>';
+    h += extras("action", c, sel, avail);
+    return h + '</section>';
   }
 
   function styleBar(sel) {
@@ -1332,10 +1386,7 @@ var GenesisTB4 = (function () {
   function extras(cat, c, sel, avail) {
     ensure(sel);
     var meta = CATS.filter(function (x) { return x.id === cat; })[0]; if (!meta) return "";
-    var sg = meta.group ? suggest(c, cat, sel.style, avail) : [], h = "";
-    if (sg.length) h += '<div class="tb4sugg" data-tb4cat-sugg="' + cat + '"><span class="note" style="margin:0">Suggested:</span> ' + sg.map(function (x) {
-      return '<button type="button" class="chip mini' + (x.status === "blocked" ? " off" : "") + '" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.status === "blocked" ? " disabled" : "") +
-        ' title="' + esc(x.reason) + '">' + esc(x.label) + ' <small class="tag">' + STLABEL[x.status] + "</small></button>"; }).join(" ") + "</div>";
+    var h = "";
     if (cat === "bonus_action" && sel.bonus === "taunt" && (c.options || []).some(function (o) { return o.id === "taunt"; })) h += tauntFields(c, sel);
     h += '<label class="tb4custom" style="display:block;margin-top:6px"><small>Custom ' + esc(meta.label.toLowerCase()) + " · " + esc(meta.hint) + '</small><input class="txt" id="w_tb4_' + cat + '" data-tb4cat="' + cat + '" placeholder="Your own words" value="' + esc(sel.tb4custom[cat] || "") + '"></label>';
     return h;
@@ -1387,6 +1438,8 @@ var GenesisTB4 = (function () {
   // Event wiring; hooks: onSoft(fn) for typing, onChanged() for a re-render.
   function bind(root, sel, hooks) {
     ensure(sel);
+    var catalogue = root.querySelector("#mechanicsCatalog");
+    if (catalogue) catalogue.addEventListener("toggle", function () { sel.catalogOpen = catalogue.open; if (hooks.persist) hooks.persist(); });
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4cat]"), function (el) {
       el.addEventListener("input", hooks.soft(function (v) { sel.tb4custom[el.getAttribute("data-tb4cat")] = v; }));
     });
@@ -1400,12 +1453,15 @@ var GenesisTB4 = (function () {
     });
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4pick]"), function (b) {
       b.addEventListener("click", function () {
-        var p = b.getAttribute("data-tb4pick").split("|"), inp = root.querySelector('input[data-g="' + p[0] + '"][value="' + (window.CSS && CSS.escape ? CSS.escape(p[1]) : p[1]) + '"]');
+        var p = b.getAttribute("data-tb4pick").split("|"), inp = root.querySelector('input[' + (/objects|reactions/.test(p[0]) ? "data-c" : "data-g") + '="' + p[0] + '"][value="' + (window.CSS && CSS.escape ? CSS.escape(p[1]) : p[1]) + '"]');
         if (inp && !inp.disabled) { if (inp.type === "checkbox") inp.checked = !inp.checked; else inp.checked = true; inp.dispatchEvent(new Event("change", { bubbles: true })); }
+        var support = b.getAttribute("data-tb4support");
+        if (support) { var q = support.split("|"), move = root.querySelector('input[data-g="' + q[0] + '"][value="' + q[1] + '"]');
+          if (move && !move.disabled) { move.checked = true; move.dispatchEvent(new Event("change", {bubbles:true})); } }
       });
     });
   }
-  return { CATS: CATS, enabled: enabled, suggest: suggest, styleBar: styleBar, extras: extras, secondaryFieldset: secondaryFieldset,
+  return { plans: plans, intentPanel: intentPanel, CATS: CATS, enabled: enabled, suggest: suggest, styleBar: styleBar, extras: extras, secondaryFieldset: secondaryFieldset,
            apply: apply, hasCustom: hasCustom, summary: summary, restore: restore, bind: bind, customList: customList };
 })();
 /* WHISPER start-of-turn context (TB4-WHISPER-001 §2.4, §3.2), switchable and removable.
@@ -1743,11 +1799,12 @@ var GenesisWhisper = (function () {
     if (c.mode !== "combat") return '<div class="note">Scene: no initiative and no action economy. Group what Aero intends into sequences, in order. The GM plays the whole plan in one pass and stops only when the world interrupts or something needs your decision. Hands, gear, distance and time still apply.</div>';
     var b = c.budget || {}, u = r.used;
     function p(name, used, txt) { return '<span class="pill ' + (used ? "used" : "ok") + '">' + name + ": " + txt + "</span>"; }
-    return '<div class="budget">' + p("Action", u.action >= (b.action || 1), u.action >= (b.action || 1) ? "Used" : "Available") +
-      p("Movement", u.movement_ft > 0, (b.movement_ft - u.movement_ft) + "/" + b.movement_ft + " ft") +
-      p("Bonus", u.bonus_action >= (b.bonus_action || 1), u.bonus_action ? "Used" : ((c.options || []).some(function (o) { return o.slot === "bonus_action"; }) ? "Available" : "None eligible")) +
-      p("Reaction", u.reaction > 0, u.reaction ? "Reserved" : "Available") +
-      p("Object", u.object_interaction > 0, u.object_interaction ? "Used" : "Available") + "</div>";
+    function cap(k, fallback) { return b[k] == null ? fallback : b[k]; }
+    function slot(name, k, fallback) { var total = cap(k, fallback), planned = u[k] || 0;
+      return p(name, planned >= total, Math.max(0, total - planned) + " remaining" + (planned ? " · " + planned + " planned" : "")); }
+    return '<div class="budget">' + slot("Action", "action", 1) +
+      p("Movement", u.movement_ft > 0, Math.max(0, cap("movement_ft", c.speed_ft || 0) - u.movement_ft) + "/" + cap("movement_ft", c.speed_ft || 0) + " ft remaining") +
+      slot("Bonus", "bonus_action", 1) + slot("Reaction", "reaction", 1) + slot("Object", "object_interaction", 1) + "</div>";
   }
   function checkPanel(r) {
     var cls = r.legal ? (r.needs_confirmation ? "warn" : "") : "bad";
@@ -1984,6 +2041,13 @@ var GenesisWhisper = (function () {
     return out;
   }
 
+  function actionEditors(o, s, c) {
+    var x = "";
+    if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
+    if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
+    return x;
+  }
+
   function renderTurn(v) {
     var c = ctxOf(v), busy = activeAction();
     if (!c) return renderLegacy(v, busy);
@@ -2007,7 +2071,8 @@ var GenesisWhisper = (function () {
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
       var tb4 = TB4on(), tbx = function (cat) { return tb4 ? GenesisTB4.extras(cat, c, s, ca) : ""; };
       if (!c.reaction_prompt) {
-      if (tb4) h += GenesisTB4.styleBar(s);
+      if (tb4) h += GenesisTB4.styleBar(s) + GenesisTB4.intentPanel(c, s, ca) + (byId(c.options, s.action) ? actionEditors(byId(c.options, s.action), s, c) : "") +
+        '<details id="mechanicsCatalog"' + (s.catalogOpen ? ' open' : '') + '><summary style="min-height:44px;padding:10px 0">Full mechanics catalog · dialogue, actions, movement, equipment and supporting activities</summary>';
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -2015,10 +2080,9 @@ var GenesisWhisper = (function () {
         (c.options || []).filter(function (o) { return o.slot === "action"; }).map(function (o) {
           var tag = (o.requires || []).length ? "needs " + o.requires.map(function (q) { return (c.flag_labels || {})[q] || q; }).join(", ") : "", w = why("action:" + o.id);
           var x = radio("action", o.id, s.action === o.id, o.label, o.detail || (o.area_ft ? o.area_ft + "-ft radius" : o.reach_ft ? "reach " + o.reach_ft + " ft" : ""), tag, w[0], w[1]);
-          if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
-          if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
+          if (!tb4) x += actionEditors(o, s, c);
           return x;
-        }).join("") + tbx("action") + "</fieldset>";
+        }).join("") + (tb4 ? "" : tbx("action")) + "</fieldset>";
       var bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
       if (bon.length || tb4) h += '<fieldset class="grp"><legend>Bonus action</legend>' + (bon.length ? radio("bonus", "", !s.bonus, "None") : "") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + tbx("bonus_action") + "</fieldset>";
       if (tb4) h += GenesisTB4.secondaryFieldset(c, s, ca);
@@ -2036,6 +2100,7 @@ var GenesisWhisper = (function () {
       } else if ((c.reactions || []).length || tb4) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + (c.reactions || []).map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + tbx("reaction") + "</fieldset>";
       if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
+    if (ui.mode === "build" && !scene && TB4on() && !c.reaction_prompt) h += "</details>";
     if (c.mode === "combat" && !c.reaction_prompt) h += '<fieldset class="grp"><legend>Turn</legend><label class="opt"><input type="checkbox" id="endTurn"' + (ui.sel.endTurn ? " checked" : "") +
       '><span class="lbl">End my turn after this<small>Leave it off to keep your turn open: the GM resolves what you submit and you go on with what is left.</small></span></label></fieldset>';
     h += "</fieldset>" + '<div id="liveCheck">' + checkPanel(r) + "</div>";
@@ -2436,7 +2501,7 @@ var GenesisWhisper = (function () {
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
     on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
-    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
+    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed, persist: saveUi });
     if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
     if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse });
     bindLive();

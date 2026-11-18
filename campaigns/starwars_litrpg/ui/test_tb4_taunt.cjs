@@ -44,6 +44,7 @@ const MOCK = fs.readFileSync(path.join(__dirname, "test_datapad_ui.cjs"), "utf8"
     const state = JSON.parse(JSON.stringify(st)); state.features = { tb4_builder: true, tb4_taunt: true }; state.turn_context = on; state.processor = null;
     await page.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock: MOCK, st: state });
     await page.goto("file://" + path.resolve(pageFile)); await page.waitForSelector("#submitTurn");
+    await page.locator("#mechanicsCatalog > summary").click();
     await page.locator('input[data-g="bonus"][value="taunt"]').check(); await page.waitForTimeout(200);
     ok(await page.locator("#w_tb4_taunt_words").count() === 1 && /Wisdom \(Insight\)/.test(await page.locator(".tb4taunt").innerText()), "choosing Taunt asks for target, check and exact words, and states the ruling");
     await page.selectOption("#w_tb4_taunt_target", foe);

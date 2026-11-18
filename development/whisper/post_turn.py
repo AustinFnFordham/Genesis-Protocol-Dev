@@ -12,6 +12,10 @@ Ledger lane: `whisper_review` and `whisper_response` are ordinary ledger events,
 (seen by the owner only; never by NPCs — evidence.py treats every whisper_* kind as pc_private).
 """
 import hashlib
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "campaigns/starwars_litrpg/ui"))
+from hp_compat import hp_delta
 
 REVIEW, RESPONSE = "whisper_review", "whisper_response"
 CHOICES = ("accept", "edit", "reject", "defer", "custom")
@@ -77,7 +81,7 @@ def propose(action_events, prior_events, pc="aero"):
         cands.append({"candidate_id": _cid(basis, theme), "theme": theme, "kind": kind, "proposed": proposed,
                       "explanation": why, "evidence": [e["event_id"] for e in ev], "uses_player_context": list(uses)})
 
-    hurt = [e for e in outcomes if e["kind"] == "hp_change" and _d(e).get("target") == pc and (_d(e).get("delta") or 0) < 0]
+    hurt = [e for e in outcomes if e["kind"] == "hp_change" and _d(e).get("target") == pc and hp_delta(_d(e)) < 0]
     if hurt:
         add("pain_and_shock", "temporary", "The hit stays with him for a while: shaken, hurting.",
             "Aero took damage this turn.", hurt)

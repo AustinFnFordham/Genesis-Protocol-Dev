@@ -225,3 +225,47 @@ Datapad v15. Turn them on in `campaigns/starwars_litrpg/runs/hask_meadow_r2/feat
    `npc_knowledge` on for Hask Meadow.
 2. Next agent: run one real test-worker turn with `npc_knowledge` on and check the GM used `npc_knowledge` for Wick/hounds.
 3. Then: wire causal proposals (families 1–2 first) into the GM context as suggestions, behind a switch.
+
+## M11 — Intent-first builder (ChatGPT Work, 2026-11-18; verification in progress)
+Base verified remotely: `0fc859b0de13f7d33f0e18690d08dd70834b2f2e`; isolated branch `dev/m11-intent-first-work`.
+M0–M10 preserved. No live merge, Artifact publication, worker trigger, or campaign writes authorized by this task.
+
+Implementation:
+- `ui/src/tb4.js`: ≤4 deduplicated contextual editable plan recommendations, using only published public options,
+  the shared validator's availability, visible threats, equipment prerequisites and explicitly chosen style.
+  A defensive action may include a published retreat/cover route only if the shared validator accepts the combination.
+  Picking a card edits the existing builder; it never executes a turn. Target/trigger selection remains explicit.
+- `ui/src/composer.js`: default plan-first combat builder, collapsed full mechanics catalog (including supporting
+  activities and custom categories), persistent disclosure state, editable custom intent, selected target/trigger
+  editors outside the catalog. Scene sequencer and reaction prompts retain their existing flows; Taunt and WHISPER remain.
+  All budget badges use null-aware capacities, explicit remaining/planned quantities and respect zero.
+- `ui/turn_contract.js`: prevent alternative-generation recursion while validating an alternative. Zero-action
+  overspending returns ACTION_CONFLICT rather than overflowing into the UI's check-unavailable fallback; no costs or
+  legality rules changed. Existing two-argument callers retain their API.
+- Historical HP: inspected `staging/mobile-test` public `evt_0026`: target aero, `amount:-10`, hp_before 11, hp_after 1.
+  Recommended and implemented a **read-only projection compatibility shim** (`ui/hp_compat.py`): signed integer
+  legacy amount only when delta is absent; explicit delta (including zero) wins; no sign guessed from narration.
+  Exporter and WHISPER appraisal share it. New writes still require delta through HP_CHANGE_SHAPE.
+  No accepted event, dice, or prior review is rewritten. Existing missed reviews are not automatically backfilled.
+- Preview: pinned PyYAML dependency + devcontainer install step, M11 banner, `development/preview/IPAD_PREVIEW.md`.
+  Existing port 8080 forwarding remains private. No second application or campaign store introduced.
+
+Local evidence:
+- Full suite: 58 suites, 41 pass (38 Python; RNG audits; build equality). 17 Chromium-dependent suites cannot launch:
+  expected bundled browser absent; installed system Chromium rejects Unix socket creation with EPERM under this
+  executor. These are **not browser passes**. The full runner report is in ignored `development/.qa/check_results.json`.
+- M11 pure tests pass; actual preview JS functional DOM tests pass (choose/edit/combine, disclosure persistence,
+  mock submission literal intent, zero-budget subscription refresh). DOM is not a substitute for visual Safari testing.
+- HP compatibility tests pass: signed legacy damage, modern delta precedence, immutable inputs, actual public exporter,
+  and WHISPER pain appraisal citing the original event.
+- Real local HTTP requests return 200 for `/`, `/diagnostics.html`, `/build.json`; embedded state is fixture-only.
+- `.github/workflows/m11-verification.yml` prepares full Chromium regression on standard free public-repo runners,
+  read-only repository permissions, no deployment/secrets/artifact storage. Remote execution not yet claimed.
+
+Preview blocker: no Codespaces controls in connector; cloud browser signed out at GitHub login. Cannot verify account
+allowance or create a private forwarded URL. No Codespace, billing change, paid resource, or working iPad link claimed.
+
+Recovery: fetch this branch, read this section and `development/preview/IPAD_PREVIEW.md`, install preview requirements,
+run `bash development/run_all_checks.sh` with Playwright Chromium available. Run the additional functional DOM test with
+jsdom on NODE_PATH. Continue remote regression, then integration-only merge if verified; create/resume the personal
+2-core Codespace only within available allowance. Keep 8080 private. Do not touch the live branch or test/live ledgers.

@@ -1,0 +1,2 @@
+# Preview-only dependency. No model APIs or gateway credentials.
+PyYAML==6.0.3

@@ -38,14 +38,68 @@ var GenesisTB4 = (function () {
   }
   // avail: map "type:option" -> {status, reasons} from the shared validator (turn_contract availability). Pure.
   function suggest(c, cat, style, avail) {
-    var re = STYLES[style || ""] || null, out = [];
+    var re = STYLES[style || ""] || null, out = [], seen = {};
     candidates(c, cat).forEach(function (k, i) {
-      var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice/.test(a.status) ? "needs_adjudication" : "known_legal";
+      var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice|unknown|risky/.test(a.status) ? "needs_adjudication" : "known_legal";
       var score = (st === "known_legal" ? 20 : st === "needs_adjudication" ? 10 : 0) + (re && re.test(k.id + " " + k.label) ? 5 : 0) - (k.id === "hold" ? 3 : 0);
       out.push({ id: k.id, group: k.group, label: k.label, status: st, reason: a && a.reasons && a.reasons[0] || "", score: score, order: i });
     });
     out.sort(function (x, y) { return y.score - x.score || x.order - y.order || (x.id < y.id ? -1 : 1); });
+    out = out.filter(function (x) { var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+      if (seen[key]) return false; seen[key] = true; return true; });
     return out.filter(function (x) { return x.status !== "blocked"; }).slice(0, 4).concat(out.filter(function (x) { return x.status === "blocked"; }).slice(0, 1));
+  }
+
+  // M11: plans are derived only from public, published capabilities. They are proposals,
+  // never grants or adjudication. The existing availability/validator owns costs and reach.
+  function plans(c, sel, avail) {
+    var seen = {}, out = [], foes = (c.visible || []).filter(function (v) { return v.hostile; });
+    ["action", "bonus_action", "movement", "object"].forEach(function (cat) {
+      suggest(c, cat, sel.style, avail).forEach(function (x) {
+        var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+        var availabilityKey = (cat === "movement" ? "move" : cat === "object" ? "object" : cat) + ":" + x.id;
+        // Disabled mechanics stay discoverable in the catalog, never as a dead plan button.
+        if (avail && avail[availabilityKey] && /needs_step|needs_choice|not_here/.test(avail[availabilityKey].status)) return;
+        if (x.status === "blocked" || x.id === "hold" || seen[key]) return;
+        var slot = cat === "action" ? "action" : cat === "bonus_action" ? "bonus_action" : cat === "movement" ? "movement_ft" : "object_interaction";
+        if (c.mode === "combat" && c.budget && c.budget[slot] === 0) return;
+        seen[key] = true;
+        var defensive = /dodge|disengage|cover|retreat|guard/i.test(x.id + " " + x.label);
+        var reason = x.reason || (cat === "movement" ? "Published route; reach and opportunity risks are checked." : "Available capability in this scene; edit before submitting.");
+        if (foes.length && defensive) { x.score += 4; reason = "Known threat: " + foes.map(function (v) { return v.label; }).join(", ") + ". " + reason; }
+        var support = null, label = x.label;
+        // A defensive activity plus a published retreat/cover route is a real composite
+        // plan only when the shared validator accepts the whole proposed combination.
+        // This never moves an NPC, invents a destination, or silently selects a target.
+        var T = typeof GenesisTurn !== "undefined" ? GenesisTurn : (typeof require === "function" ? require("../turn_contract.js") : null);
+        if (cat === "action" && defensive && foes.length && T) {
+          (c.movement || []).some(function (m) {
+            if (m.id === "hold" || !/back|retreat|cover/i.test(m.id + " " + m.label)) return false;
+            var d = T.emptyDecl(c); d.actions = [{option:x.id}]; d.movement = {option:m.id};
+            try { if (!T.validate(d, c).legal) return false; } catch (e) { return false; }
+            support = {group:"movement", id:m.id}; label += "; " + m.label; return true;
+          });
+        }
+        var source = (c.options || []).filter(function (o) { return o.id === x.id; })[0];
+        if (source && (source.needs_target || source.needs_trigger)) {
+          x = Object.assign({}, x, {status:"needs_adjudication"});
+          reason += source.needs_target ? " Choose your target." : " Specify your trigger.";
+        }
+        out.push(Object.assign({}, x, { label:label, category: cat, reason: reason, support:support }));
+      });
+    });
+    return out.sort(function (a, b) { return b.score - a.score || a.order - b.order; }).slice(0, 4);
+  }
+  function intentPanel(c, sel, avail) {
+    var ps = plans(c, sel, avail), selected = (c.options || []).filter(function (o) { return o.id === sel.action; })[0];
+    var h = '<section class="grp" id="intentPlans"><h3 style="margin:0">What do you want to achieve?</h3><p class="note">Choose a starting plan or write your intention. Edit it and combine supporting activities below. Nothing executes until you submit; custom costs need GM review.</p>';
+    h += '<div data-tb4cat-sugg="action">' + ps.map(function (x) {
+      return '<button type="button" class="btn" style="display:block;width:100%;text-align:left;white-space:normal;margin:6px 0" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.support ? ' data-tb4support="' + esc(x.support.group + "|" + x.support.id) + '"' : "") + '><b>' + esc(x.label) + '</b><small style="display:block">' + esc(x.reason) + ' · ' + STLABEL[x.status] + '</small></button>';
+    }).join("") + '</div>';
+    h += '<div class="note">Current plan: ' + esc(selected ? selected.label : "No primary action selected") + (sel.movement && sel.movement !== "hold" ? " · " + esc(((c.movement || []).filter(function (m) { return m.id === sel.movement; })[0] || {}).label || sel.movement) : "") + '</div>';
+    if (selected) h += '<button type="button" class="btn" data-tb4pick="action|">Clear primary action</button>';
+    h += extras("action", c, sel, avail);
+    return h + '</section>';
   }
 
   function styleBar(sel) {
@@ -57,10 +111,7 @@ var GenesisTB4 = (function () {
   function extras(cat, c, sel, avail) {
     ensure(sel);
     var meta = CATS.filter(function (x) { return x.id === cat; })[0]; if (!meta) return "";
-    var sg = meta.group ? suggest(c, cat, sel.style, avail) : [], h = "";
-    if (sg.length) h += '<div class="tb4sugg" data-tb4cat-sugg="' + cat + '"><span class="note" style="margin:0">Suggested:</span> ' + sg.map(function (x) {
-      return '<button type="button" class="chip mini' + (x.status === "blocked" ? " off" : "") + '" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.status === "blocked" ? " disabled" : "") +
-        ' title="' + esc(x.reason) + '">' + esc(x.label) + ' <small class="tag">' + STLABEL[x.status] + "</small></button>"; }).join(" ") + "</div>";
+    var h = "";
     if (cat === "bonus_action" && sel.bonus === "taunt" && (c.options || []).some(function (o) { return o.id === "taunt"; })) h += tauntFields(c, sel);
     h += '<label class="tb4custom" style="display:block;margin-top:6px"><small>Custom ' + esc(meta.label.toLowerCase()) + " · " + esc(meta.hint) + '</small><input class="txt" id="w_tb4_' + cat + '" data-tb4cat="' + cat + '" placeholder="Your own words" value="' + esc(sel.tb4custom[cat] || "") + '"></label>';
     return h;
@@ -112,6 +163,8 @@ var GenesisTB4 = (function () {
   // Event wiring; hooks: onSoft(fn) for typing, onChanged() for a re-render.
   function bind(root, sel, hooks) {
     ensure(sel);
+    var catalogue = root.querySelector("#mechanicsCatalog");
+    if (catalogue) catalogue.addEventListener("toggle", function () { sel.catalogOpen = catalogue.open; if (hooks.persist) hooks.persist(); });
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4cat]"), function (el) {
       el.addEventListener("input", hooks.soft(function (v) { sel.tb4custom[el.getAttribute("data-tb4cat")] = v; }));
     });
@@ -125,12 +178,15 @@ var GenesisTB4 = (function () {
     });
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4pick]"), function (b) {
       b.addEventListener("click", function () {
-        var p = b.getAttribute("data-tb4pick").split("|"), inp = root.querySelector('input[data-g="' + p[0] + '"][value="' + (window.CSS && CSS.escape ? CSS.escape(p[1]) : p[1]) + '"]');
+        var p = b.getAttribute("data-tb4pick").split("|"), inp = root.querySelector('input[' + (/objects|reactions/.test(p[0]) ? "data-c" : "data-g") + '="' + p[0] + '"][value="' + (window.CSS && CSS.escape ? CSS.escape(p[1]) : p[1]) + '"]');
         if (inp && !inp.disabled) { if (inp.type === "checkbox") inp.checked = !inp.checked; else inp.checked = true; inp.dispatchEvent(new Event("change", { bubbles: true })); }
+        var support = b.getAttribute("data-tb4support");
+        if (support) { var q = support.split("|"), move = root.querySelector('input[data-g="' + q[0] + '"][value="' + q[1] + '"]');
+          if (move && !move.disabled) { move.checked = true; move.dispatchEvent(new Event("change", {bubbles:true})); } }
       });
     });
   }
-  return { CATS: CATS, enabled: enabled, suggest: suggest, styleBar: styleBar, extras: extras, secondaryFieldset: secondaryFieldset,
+  return { plans: plans, intentPanel: intentPanel, CATS: CATS, enabled: enabled, suggest: suggest, styleBar: styleBar, extras: extras, secondaryFieldset: secondaryFieldset,
            apply: apply, hasCustom: hasCustom, summary: summary, restore: restore, bind: bind, customList: customList };
 })();
 if (typeof module !== "undefined") module.exports = GenesisTB4;
