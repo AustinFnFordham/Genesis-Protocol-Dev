@@ -55,7 +55,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | M0 Baseline, fixtures, preview | COMPLETE | `tb4/m0-baseline` @ `37a102b` | `2598d59` | Not needed (dev tooling only) |
 | M1 Turn Builder 4 UI | COMPLETE | `tb4/m1-turn-builder` @ `78a5b80` | `1f743e5` | **Yes**: `litrpg/campaign-scaffold` @ `a88df71`, switch `tb4_builder` on, main Datapad v11 |
 | M2 Action economy, Taunt | COMPLETE | `tb4/m2-action-economy` | `f6879a7` | **Yes**: `litrpg/campaign-scaffold` @ `c58abff`, switch `tb4_taunt` on, main Datapad v12 |
-| M3 WHISPER context | NOT STARTED | | | |
+| M3 WHISPER context | COMPLETE | `tb4/m3-whisper` | `03e9f71` | **Yes**: `litrpg/campaign-scaffold` @ `0eb060f`, switch `whisper_context` on, main Datapad v13 |
 | M4 Algorithm A | NOT STARTED | | | |
 | M5 Algorithm B | NOT STARTED | | | |
 | M6 Algorithm C | NOT STARTED | | | |
@@ -110,10 +110,25 @@ published turn context was only appended to, GM options untouched). Ledger untou
 Test env: `staging/mobile-test` now runs integration code (`a1aef18`), switches on; its gateway publishes them on the
 next commit (the test Datapad state was patched to match meanwhile, v4).
 
+## M3 — WHISPER start-of-turn context (switch `whisper_context`)
+Files: `campaigns/starwars_litrpg/ui/src/whisper.js` (new, removable), hooks in `composer.js` (`WHon()`/`WHapply()`),
+`build_datapad.py`, chip pressed style in `src/head.html`, `development/whisper/whisper.py` (pure boundaries),
+`development/gm_provider/gateway.py` (strips `whisper` from the public `player_declaration`, adds a `gm_only`
+`whisper_context` event), runbook + GM guide text. Tests: `development/whisper/test_whisper_context.py`,
+`ui/test_whisper_ui.cjs`, `test_gateway.Interchange.test_whisper_context_never_enters_the_public_ledger`. `suites=50 failed=0`.
+Behaviour: optional felt emotion (chips + own words), what Aero shows (open / controlled / masked + text), motive, private
+reflection. Blank = no `whisper` key at all (TB4-10). A context alone cannot be submitted as a turn. What-if prompts are
+static; reading them writes nothing (TB4-12); "Use as my reflection" is the only way one becomes text. Observers see only
+the expression (TB4-11/18). No morality, alignment or diagnosis is derived (TB4-26/28). No numbers.
+Live path caveat: the live worker (runbook, not the gateway) must strip `whisper` itself when writing `player_declaration`;
+the runbook says so. If it slips, the only reader of the public ledger is still the owner, but it is a defect to report.
+Owner decision still open (contract §9.3): whether any WHISPER field ever becomes a canonical character-state event.
+Currently: GM-only record of what the player stated, nothing canonical about Aero's psychology.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M3 (WHISPER start-of-turn context, switch `whisper_context`) on `tb4/m3-whisper` from the integration HEAD.
+Start M4 (Algorithm A: evidence envelopes, pure + fixtures, CMP-001) on `tb4/m4-evidence` from the integration HEAD.
