@@ -403,6 +403,41 @@ class Interchange(Base):
             self.gw.whisper("review", action_id=action["action_id"])
         self.healthy()
 
+    def test_npc_knowledge_view_is_actor_scoped(self):
+        """Owner decision 3: the GM's NPC context holds only what each NPC witnessed, heard or was part of;
+        claims stay claims; no player WHISPER context; no GM-only fact the NPC was not part of. Switch off: absent."""
+        def seeded(move, context):
+            if move["type"] == "commit":
+                move["proposal"]["events"] += [
+                    {"kind": "speech", "actor": "orren", "summary": "Orren: 'Wick took the crates.'", "knowledge_type": "report",
+                     "known_to": ["wick", "aero"], "details": {"speaker": "orren", "subject": "wick", "predicate": "took", "object": "crates", "channel": "heard"}},
+                    {"kind": "world_fact", "visibility": "gm_only", "actor": "gm", "summary": "Kesh actually took the crates.",
+                     "known_to": ["kesh"], "details": {"subject": "kesh", "predicate": "took", "object": "crates"}}]
+            return move
+        self.gw.select_provider("claude")
+        self.n += 1
+        action = staging.declare(self.gw, f"stage-{self.n:04d}", text=INSPECT)
+        action["declaration"]["whisper"] = {"schema": "genesis-whisper-context/1", "source": "player_explicit", "visibility": "pc_private",
+                                             "felt_emotion": ["anger"], "expression": {"style": "masked", "text": "polite"}, "motive": "PRIVATE_MOTIVE_CANARY", "reflection": None}
+        self.gw.submit(action)
+        self.assertEqual(run_turn(self.gw, script("claude", seeded))["outcome"], "committed")
+        self.act(INSPECT)
+        self.gw.claim("claude", "run-k")
+        self.assertNotIn("npc_knowledge", self.gw.context("claude", "run-k"), "switch off: no NPC view")
+        self.gw.release("claude", "run-k", "test")
+        (self.gw.campaign / "features.json").write_text(json.dumps({"switches": {"npc_knowledge": True}}))
+        self.gw.claim("claude", "run-k2")
+        view = self.gw.context("claude", "run-k2")["npc_knowledge"]["by_npc"]
+        wick = view.get("wick", [])
+        claims = [x for x in wick if x["type"] == "claim"]
+        self.assertTrue(claims and "Wick took the crates" in claims[0]["summary"] and claims[0]["provenance"] == "speaker:orren", wick)
+        self.assertFalse([x for x in wick if x["type"] == "fact" and "Kesh" in x["summary"]], "no GM-only fact Wick was not part of")
+        self.assertIn("Kesh actually took the crates.", [x["summary"] for x in view.get("kesh", [])], "Kesh knows what he did")
+        self.assertNotIn("PRIVATE_MOTIVE_CANARY", json.dumps(view), "the player's WHISPER context never reaches an NPC")
+        self.assertNotIn("anger", json.dumps(view))
+        self.gw.release("claude", "run-k2", "test")
+        self.healthy()
+
     def test_successor_cannot_replace_tables_or_reroll(self):
         action, _ = self.act(INSPECT, provider="claude")
         self.gw.claim("claude", "run-a")

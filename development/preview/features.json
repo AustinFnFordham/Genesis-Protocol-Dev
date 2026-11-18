@@ -1,5 +1,5 @@
 {
- "milestone": "M8",
+ "milestone": "M9",
  "features": [
   {
    "id": "datapad_baseline",
@@ -36,6 +36,12 @@
    "name": "WHISPER after-turn review",
    "enabled": true,
    "note": "Suggestions with evidence after a consequential turn; Accept / Edit / Reject / Later / your own words. Preview shows a sample review."
+  },
+  {
+   "id": "npc_knowledge",
+   "name": "NPC knowledge view (GM side)",
+   "enabled": true,
+   "note": "The GM's context lists, per NPC, only what it witnessed, heard or was part of. Not visible in the player page; see diagnostics."
   }
  ],
  "unavailable": [
