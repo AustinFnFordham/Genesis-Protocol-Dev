@@ -59,7 +59,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | M4 Algorithm A | COMPLETE (pure evaluator) | `tb4/m4-evidence` | `a4fc246` | Code only, not wired to play (no in-force authority yet) |
 | M5 Algorithm B | COMPLETE (pure evaluator) | `tb4/m5-memory` | `34ccb6c` | Code only, not wired to play |
 | M6 Algorithm C | COMPLETE (pure evaluator) | `tb4/m6-causal` | `a5dac51` | Code only, not wired to play |
-| M7 Integration / UAT | NOT STARTED | | | |
+| M7 Integration / UAT | COMPLETE | `tb4/m7-integration`, `tb4/m7-fixes` | `fe36923`, `ee155c2` | **Yes** (code + fixes): `litrpg/campaign-scaffold` @ `67249c9`, main Datapad v14 |
 
 ## M0 — Baseline, preview, fixtures
 Files: `.devcontainer/devcontainer.json`, `development/preview/{build_preview.py,serve_preview.py,features.json,test_preview.cjs}`,
@@ -151,10 +151,34 @@ Rules with status `candidate` never fire; the fixture marks two as `candidate_en
 Covers TB4-19, -20, -21, -22 and CIS-001 §4/§5 cases. Proposals carry `commits: False`; applying one means handing it to
 the existing gateway as a GM proposal (not implemented: needs owner ratification of rules and domain owners).
 
+## M7 — integration, recovery, UAT readiness
+- TB4-RECOVERY-001 / TB4-22: `test_gateway.Interchange.test_tb4_recovery_001_turn_builder_and_whisper_survive_a_crash_and_handoff`
+  (scripted providers: crash before commit, reroute to another provider, same dice bytes, one accepted declaration,
+  TB4 words unchanged, WHISPER only GM-side). Scripted provider identities are recorded as mocks (existing behaviour).
+- Preview diagnostics page (`development/preview/out/diagnostics.html`, linked from the banner) shows Algorithms A/B/C on
+  their fixtures. `test_preview.cjs` checks it.
+- Running the suite on the live branch found two real issues, fixed in `tb4/m7-fixes`: What-if buttons under the 44px
+  touch target; switch-off tests assumed a fixture without switches.
+- TB4-25 cost: no code path in the suite calls a model or paid API (scripted providers only; not network-instrumented).
+  New suites take 16.0 s of the 174.1 s full run (`development/.qa/check_results.json`).
+- Final: `suites=53 failed=0` on both `integration/tb4-whisper-v01` and `litrpg/campaign-scaffold`.
+- Protected path: integration branch `hask_meadow_r2` tree = baseline `96ca84d…` (unchanged). Live branch differs only
+  by the owner switch file `features.json`; ledger, hidden ledger and dice untouched (revision 1125).
+
+## UAT for the owner (iPad)
+1. Main Datapad (live) or the test Datapad: in combat, check the Custom box under each category, the Suggested chips and
+   the style buttons; submit a turn with your own words and see them in the GM's result.
+2. Bonus action → Taunt: pick a target, Intimidation or Deception, type your exact words.
+3. WHISPER panel: pick feelings, what Aero shows, why. Open What-if and close it (nothing should change).
+4. Codespaces: create a codespace on `integration/tb4-whisper-v01`, open port 8080, try the preview and its diagnostics link.
+Rate fun / agency / clarity 1–5 per item; note anything confusing with the turn and commit shown in the banner.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M7 (integration, TB4-RECOVERY-001, cross-provider fixture, UAT readiness) on `tb4/m7-integration` from the integration HEAD.
+All milestones M0–M7 complete. Next agent: wait for the owner's UAT notes; then the smallest next steps are
+(1) show WHISPER psychological candidates after a committed turn with accept/edit/reject/defer (needs decision §9.3),
+(2) feed Algorithm A envelopes into the GM's NPC context behind a switch, (3) owner ratification of causal rules.
