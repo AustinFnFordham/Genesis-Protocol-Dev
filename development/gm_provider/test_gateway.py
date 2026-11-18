@@ -138,6 +138,31 @@ class Base(unittest.TestCase):
 
 
 class Interchange(Base):
+    def test_whisper_context_never_enters_the_public_ledger(self):
+        claude = script("claude")
+        self.gw.select_provider("claude")
+        self.n += 1
+        action = staging.declare(self.gw, f"stage-{self.n:04d}", text=INSPECT)
+        ctx = {"schema": "genesis-whisper-context/1", "source": "player_explicit", "visibility": "pc_private",
+               "felt_emotion": ["fear"], "expression": {"style": "controlled", "text": "steady"}, "motive": "protect Wick",
+               "reflection": "If it gets past me it gets him."}
+        action["declaration"]["whisper"] = ctx
+        action["text"] = action["text"] + "\nWHISPER (private): feels fear; why: protect Wick"
+        self.gw.submit(action)
+        self.assertEqual(run_turn(self.gw, claude)["outcome"], "committed")
+        public = ledger.read_jsonl(self.gw.campaign / "records/events.jsonl")
+        hidden = ledger.read_jsonl(self.gw.campaign / "hidden/events.jsonl")
+        decl = [e for e in public if e["kind"] == "player_declaration" and e["details"]["action_id"] == action["action_id"]][0]
+        self.assertNotIn("whisper", decl["details"]["declaration"])
+        self.assertNotIn("WHISPER", decl["details"]["text"])
+        self.assertNotIn("protect Wick", json.dumps(public))
+        self.assertNotIn("protect Wick", json.dumps(self.gw.public_state()))
+        kept = [e for e in hidden if e["kind"] == "whisper_context"]
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(kept[0]["details"]["context"], ctx)
+        self.assertEqual(kept[0]["visibility"], "gm_only")
+        self.healthy()
+
     def test_extended_single_provider_play(self):
         claude = script("claude")
         self.gw.select_provider("claude")

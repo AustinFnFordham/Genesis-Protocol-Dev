@@ -1,5 +1,5 @@
 {
- "milestone": "M2",
+ "milestone": "M3",
  "features": [
   {
    "id": "datapad_baseline",
@@ -18,6 +18,12 @@
    "name": "Taunt (bonus action)",
    "enabled": true,
    "note": "Owner-ratified contested check: Charisma (Intimidation or Deception) vs Wisdom (Insight); on a win the target has disadvantage against anyone but Aero until his next turn. No forced attack."
+  },
+  {
+   "id": "whisper_context",
+   "name": "WHISPER context",
+   "enabled": true,
+   "note": "Optional private feelings, what Aero shows, motive, reflection and What-if prompts. Blank = not stated. No effect on morality."
   }
  ],
  "unavailable": [

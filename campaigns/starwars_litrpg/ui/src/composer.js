@@ -100,14 +100,14 @@
   }
   function endsTurnNow(c) { return !!(c && c.mode === "combat" && !c.reaction_prompt && ui.sel.endTurn); }
   function declaration(c) {
-    if (ui.mode === "write") { var w = T.parseFreeform(ui.write, c); if (endsTurnNow(c)) w.end_turn = true; return w; }
+    if (ui.mode === "write") { var w = T.parseFreeform(ui.write, c); if (endsTurnNow(c)) w.end_turn = true; return WHapply(w); }
     var d = T.emptyDecl(c), s = ui.sel;
     if (sceneMode(c)) {  // scene: ordered steps in visual sequences; speech lines are steps of their own
       d.steps = s.steps.map(cleanStep);
       d.sequences = s.labels.slice(0, s.nseq).map(function (l) { return { label: l || "" }; });
       if (!d.steps.some(function (x) { return x.type === "move"; }) && byId(c.movement, "hold")) d.movement = { option: "hold" };
       d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
-      return T.normalize(d, c);
+      return WHapply(T.normalize(d, c));
     }
     if (c.reaction_prompt) { d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); }).slice(0, 1); if (s.declineReaction) d.reaction_decline = true; d.movement = null; return d; }
     if (s.dialogue === "own" && s.own.trim()) d.speech = { option: null, text: s.own.trim(), approach: "freeform", extended: false };
@@ -124,8 +124,10 @@
     if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
     if (TB4on()) GenesisTB4.apply(d, s);   // Turn Builder 4 custom boxes (switchable, src/tb4.js)
     if (endsTurnNow(c)) d.end_turn = true;   // the player's explicit word; a submission alone never ends a turn
-    return d;
+    return WHapply(d);
   }
+  function WHon() { return typeof GenesisWhisper !== "undefined" && GenesisWhisper.enabled(view); }
+  function WHapply(d) { return WHon() ? GenesisWhisper.apply(d, ui.sel) : d; }   // WHISPER context (switchable, src/whisper.js)
   function TB4on() { return typeof GenesisTB4 !== "undefined" && GenesisTB4.enabled(view); }
   function newId() { return "s" + (ui.sel.nextId++); }
   function fromDecl(st, seqMap, authorize) {
@@ -140,6 +142,7 @@
   }
   function loadDeclaration(d, c, authorize) {
     var s = freshUi(c.context_id).sel;
+    if (typeof GenesisWhisper !== "undefined") GenesisWhisper.restore(d, s);
     if (sceneMode(c)) {
       ui.sel = s;
       var n = T.normalize(d, c), seqs = [];
@@ -174,8 +177,8 @@
       }
       return out.join("\n");
     }
-    var tb4s = TB4on() ? GenesisTB4.summary(ui.sel) : "";
-    return r.preview.map(function (p) { return p.text; }).join("; ") + (tb4s ? (r.preview.length ? "; " : "") + tb4s : "") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
+    var tb4s = TB4on() ? GenesisTB4.summary(ui.sel) : "", whs = WHon() ? GenesisWhisper.summary(ui.sel) : "";
+    return r.preview.map(function (p) { return p.text; }).join("; ") + (tb4s ? (r.preview.length ? "; " : "") + tb4s : "") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "") + (whs ? "\n" + whs : "");
   }
 
   function radio(group, value, checked, label, small, tag, disabled, why) {
@@ -473,7 +476,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      renderResolutionControls(v, busy || phase) + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + (WHon() && !c.reaction_prompt ? GenesisWhisper.panel(c, s) : "") + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -918,6 +921,7 @@
     on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
+    if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {
