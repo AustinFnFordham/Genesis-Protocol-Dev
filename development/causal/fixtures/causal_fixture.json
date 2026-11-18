@@ -1,0 +1,31 @@
+{
+ "fixture": "TB4 causal fixture (noncanonical): companion witness (CIS-001 §4) and barrel ignition (§5)",
+ "entities": ["aero", "wick", "mira", "thug", "barrel_1", "barrel_2", "lamp_oil", "water"],
+ "relationships": [
+  {"source": "wick", "type": "trusts", "target": "aero"},
+  {"source": "barrel_1", "type": "contains", "target": "lamp_oil"},
+  {"source": "barrel_2", "type": "contains", "target": "water"}
+ ],
+ "facts": {
+  "wick": {"convictions": ["no cruelty to the helpless"]},
+  "mira": {},
+  "barrel_1": {"combustible": true, "sealed": true},
+  "barrel_2": {"combustible": true},
+  "lamp_oil": {"volatile": true}
+ },
+ "rules": [
+  {"rule_id": "rule_companion_moral_reassessment", "status": "candidate_enabled", "trigger": "attack_resolved",
+   "bind": {"observer": "$each_witness"}, "all": ["observer_witnessed", "observer_holds_relevant_conviction", "ruled_morally_salient"],
+   "candidate": {"owning_domain": "relationship_engine", "requested_transition": "evaluate_observer_reaction", "target_role": "observer"}, "max_fanout": 6},
+  {"rule_id": "rule_ignition", "status": "candidate_enabled", "trigger": "fire_exposure", "bind": {"target": "$details.target"},
+   "all": ["ignition_source_present", "target_combustible"], "none": ["suppressed"],
+   "candidate": {"owning_domain": "material_environment", "requested_transition": "ignite"}},
+  {"rule_id": "rule_pressure_failure", "status": "candidate_enabled", "trigger": "status_burning", "bind": {"target": "$details.target"},
+   "all": ["target_burning", "target_sealed", "volatile_contents"],
+   "candidate": {"owning_domain": "material_environment", "requested_transition": "evaluate_pressure_failure"}},
+  {"rule_id": "rule_overreach", "status": "candidate_enabled", "trigger": "attack_resolved", "bind": {"target": "$details.target"},
+   "all": [], "candidate": {"owning_domain": "relationship_engine", "requested_transition": "spawn_nemesis"}},
+  {"rule_id": "rule_unratified", "status": "candidate", "trigger": "attack_resolved", "bind": {}, "all": [],
+   "candidate": {"owning_domain": "knowledge", "requested_transition": "record_exposure"}}
+ ]
+}
