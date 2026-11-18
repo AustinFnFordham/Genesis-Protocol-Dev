@@ -67,8 +67,9 @@ $G recovery       # an action already in flight? finish it (step 4/5) before tak
 6. **Row.** `$B row <action_id>` and `ArtifactData update` the row with that `patch` (status `committed`,
    `needs_revision` with the review and its alternatives, or `failed`). A review needs no mirror; a commit does.
 6b. **WHISPER (switch `whisper_review` in the campaign's `features.json`).** A row with `kind: "whisper_response"` is the
-   player's answer to a WHISPER suggestion: `$B submit /tmp/row.json` records it (no claim, no dice) and prints the row
-   `patch`; write it and go to 7. After a turn you committed (step 5), run `$G whisper-review <action_id>`; if it recorded
+   player's answer to a WHISPER suggestion. Skip steps 2–5 for it: run `$B submit /tmp/row.json` directly (no claim, no
+   lease, no dice); it records the answer and always prints a `patch` (committed, or failed with the reason). Write that
+   patch onto the row, mirror (step 5's `$B mirror` and writes) so the Datapad shows the history, and go to 7. After a turn you committed (step 5), run `$G whisper-review <action_id>`; if it recorded
    something, mirror again (step 5's mirror) so the player sees the suggestions.
 7. **Usage.** `ArtifactData set` collection `usage`, doc `$RUN`:
    `{"campaign_id":"mobile-test-1","action_id":<id or null>,"outcome":"committed|needs_revision|failed|noop","started_ms":$START,"finished_ms":<now>,"rolls":n,"events":n,"test_build":true}`.
