@@ -131,6 +131,10 @@ def build(milestone=None, out=None):
     state["processor"] = None
     state["preview_features"] = {f["id"]: f["enabled"] for f in features["features"]}
     state["features"] = {f["id"]: f["enabled"] for f in features["features"] if f["id"] in export_state.FEATURE_SWITCHES}
+    # Fixture switches are preview-local; use the same grant logic as real exports.
+    # Never write a features file into the accepted fixture campaign.
+    import tb4_rules
+    state["turn_context"] = tb4_rules.apply_switches(state["turn_context"], state["features"])
     if state["features"].get("whisper_review"):   # sample review from the TB4-MORAL-001 fixture (noncanonical)
         sys.path.insert(0, str(ROOT / "development/whisper"))
         import post_turn
