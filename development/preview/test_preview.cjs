@@ -24,6 +24,11 @@ const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; consol
     const html = await page.content();
     ok(!/hound_3/.test(html) && !/hask_meadow/.test(html), "no hidden fixture creature or live campaign in the page");
     ok(await page.locator(".composer").count() > 0, "composer renders from fixture state");
+    const granted = await page.evaluate(() => window.__store["view/state"].turn_context.options.filter(o => o.id === "taunt"));
+    ok(granted.length === 1 && granted[0].slot === "bonus_action", "enabled preview Taunt uses the shared bonus-action grant");
+    await page.locator("#mechanicsCatalog > summary").click();
+    ok(await page.getByText("Taunt", {exact:true}).isVisible(), "enabled Taunt is available in the mechanics catalog");
+    await page.locator("#mechanicsCatalog > summary").click();
     const sw = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     ok(sw <= 0, "no horizontal scroll at iPad width", sw);
     await page.locator('[data-mode="write"]').click().catch(() => {});
