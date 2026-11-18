@@ -226,7 +226,7 @@ Datapad v15. Turn them on in `campaigns/starwars_litrpg/runs/hask_meadow_r2/feat
 2. Next agent: run one real test-worker turn with `npc_knowledge` on and check the GM used `npc_knowledge` for Wick/hounds.
 3. Then: wire causal proposals (families 1–2 first) into the GM context as suggestions, behind a switch.
 
-## M11 — Intent-first builder (ChatGPT Work, 2026-11-18; verification in progress)
+## M11 — Intent-first builder (ChatGPT Work, 2026-11-18; COMPLETE)
 Base verified remotely: `0fc859b0de13f7d33f0e18690d08dd70834b2f2e`; isolated branch `dev/m11-intent-first-work`.
 M0–M10 preserved. No live merge, Artifact publication, worker trigger, or campaign writes authorized by this task.
 
@@ -250,7 +250,7 @@ Implementation:
 - Preview: pinned PyYAML dependency + devcontainer install step, M11 banner, `development/preview/IPAD_PREVIEW.md`.
   Existing port 8080 forwarding remains private. No second application or campaign store introduced.
 
-Local evidence:
+Initial local evidence (superseded by remote verification below):
 - Full suite: 58 suites, 41 pass (38 Python; RNG audits; build equality). 17 Chromium-dependent suites cannot launch:
   expected bundled browser absent; installed system Chromium rejects Unix socket creation with EPERM under this
   executor. These are **not browser passes**. The full runner report is in ignored `development/.qa/check_results.json`.
@@ -262,10 +262,45 @@ Local evidence:
 - `.github/workflows/m11-verification.yml` prepares full Chromium regression on standard free public-repo runners,
   read-only repository permissions, no deployment/secrets/artifact storage. Remote execution not yet claimed.
 
-Preview blocker: no Codespaces controls in connector; cloud browser signed out at GitHub login. Cannot verify account
-allowance or create a private forwarded URL. No Codespace, billing change, paid resource, or working iPad link claimed.
+Verified integration and private preview:
+- PR #1 merged verified M11 head `907e93b` into integration at `d6b3b50`. Remote Actions run 44366771681:
+  all 58 suites passed, plus the functional DOM test. Compare of the tested head to the integration merge had no file differences.
+- Real private Codespace: **glowing space xylophone** (`glowing-space-xylophone-65qvxqp9pvc54qq`), personal owner
+  AustinFnFordham, 2-core / 8 GB RAM. Integration branch only. Port **8080 / Private** verified through the editor.
+  Preview: https://glowing-space-xylophone-65qvxqp9pvc54qq-8080.app.github.dev/
+  Editor: https://glowing-space-xylophone-65qvxqp9pvc54qq.github.dev/
+- Owner completed secure browser authentication. Before creation the account showed 120 included core-hours and
+  15 GB Codespaces storage with $0 consumed, plus a $0 Codespaces budget with paid usage blocked. No billing,
+  payment method or budget settings changed. The initial automatic approval rejection was resolved by supplying
+  the actual free-allowance evidence; creation then succeeded through GitHub's ordinary UI.
+- Initial automatic preview startup did not leave a process or log. The documented manual command successfully
+  served the real Datapad; no new server/application/database was introduced.
+- Hosted smoke checks: correct M11/fixture/commit banner, contextual plan selection, custom primary + secondary
+  wording preserved literally, mechanics disclosure, optional WHISPER controls, simulated WHISPER edit, diagnostic
+  Algorithms A/B/C and reset. A normal submission displayed the explicit no-GM message and fixture revision
+  remained **4 / evt_0006**. This is a browser-local simulation, not a real GM-generated turn.
+- Hosted testing exposed a preview-only defect: switches were set after export, so the banner advertised Taunt
+  but the option was absent. Follow-up branch `dev/m11-private-preview-proof` uses the existing
+  `tb4_rules.apply_switches` on the in-memory preview context. No fixture feature file or accepted event changed.
+  PR #2 integrated this at **`337bfae`**, then the same Codespace fast-forwarded and rebuilt its served output.
+  Taunt was visibly present, rejected missing target, and became legal with a visible target and player words.
+- Follow-up Actions run 44371414962: all 58 suites passed (including the expanded HTTP preview checks). Its separate
+  DOM scenario failed because it retained a newly recommended, target-required Taunt while starting an independent
+  custom-plan case. The test now clears the builder between those cases; the corrected DOM test passes locally.
+  Follow-up head `a344967` carries only this test correction after the passing production-code suites.
+- Protected-path checks: M11 changed no run ledgers, dice, registry or shared character definitions. Live branch,
+  Hask Meadow, shared-0002 and separately hosted test campaign were not advanced or republished.
+- Native iPad Safari has not been operated by this executor. Owner testing remains the next step; no live release proposed.
 
-Recovery: fetch this branch, read this section and `development/preview/IPAD_PREVIEW.md`, install preview requirements,
-run `bash development/run_all_checks.sh` with Playwright Chromium available. Run the additional functional DOM test with
-jsdom on NODE_PATH. Continue remote regression, then integration-only merge if verified; create/resume the personal
-2-core Codespace only within available allowance. Keep 8080 private. Do not touch the live branch or test/live ledgers.
+Recovery:
+1. Open https://github.com/codespaces in iPad Safari and resume **glowing space xylophone**; do not create another.
+2. Open the private 8080 URL above. If it does not load, run in the editor terminal:
+   `python3 -B development/preview/serve_preview.py --host 0.0.0.0 --port 8080`.
+   If dependencies are missing: `python3 -m pip install -r development/preview/requirements.txt`.
+   An address-in-use message means the existing server may already be running; check Ports first.
+3. For code updates preserve a dirty worktree, verify branch `integration/tb4-whisper-v01`, then use
+   `git pull --ff-only` and `python3 -B development/preview/build_preview.py`. The running server serves those
+   rebuilt files; refresh Safari. Never pull integration into the live branch.
+4. Keep port visibility Private and paid usage blocked. Stop the Codespace when finished; stopped storage still
+   consumes the shared allowance. Reset preview state affects browser-local simulation only.
+5. Code rollback is an integration-only revert of the relevant PR merge. Never reset or rewrite campaign history.
