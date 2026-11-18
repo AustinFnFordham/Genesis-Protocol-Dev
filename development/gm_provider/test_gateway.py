@@ -360,6 +360,49 @@ class Interchange(Base):
         self.assertEqual(run_turn(self.gw, script("gpt"))["outcome"], "nothing", "nothing left to resolve twice")
         self.healthy()
 
+    def test_whisper_post_turn_review_end_to_end(self):
+        """Owner decisions 1-2: after a consequential committed turn the gateway proposes WHISPER candidates; the player's
+        answer is recorded; only confirmed answers enter the private history; nothing reaches NPC knowledge."""
+        (self.gw.campaign / "features.json").write_text(json.dumps({"switches": {"whisper_review": True, "whisper_context": True}}))
+        def failed_rescue(move, context):
+            if move["type"] == "commit":
+                step = context["declaration"]["steps"][0]["id"]
+                move["proposal"]["events"].append({"kind": "check_resolved", "actor": "aero", "summary": "Aero's reach falls short.",
+                                                   "details": {"step_id": step, "actor": "aero", "act": "rescue", "target": "wick", "success": False}})
+            return move
+        self.gw.select_provider("claude")
+        self.n += 1
+        action = staging.declare(self.gw, f"stage-{self.n:04d}", text=INSPECT)
+        action["declaration"]["whisper"] = {"schema": "genesis-whisper-context/1", "source": "player_explicit", "visibility": "pc_private",
+                                             "felt_emotion": ["fear"], "expression": "unspecified", "motive": "save Wick", "reflection": None}
+        self.gw.submit(action)
+        self.assertEqual(run_turn(self.gw, script("claude", failed_rescue))["outcome"], "committed")
+        out = self.gw.whisper("review", action_id=action["action_id"])
+        self.assertEqual(out["recorded"], "whisper_review")
+        self.assertEqual(self.gw.whisper("review", action_id=action["action_id"])["recorded"], None, "reviewed once only")
+        state = self.gw.public_state()["state"]
+        pend = state["whisper"]["pending"]
+        cand = pend["candidates"][0]
+        self.assertIn("save Wick", cand["explanation"], "the motive came from the GM-side context, not the public ledger")
+        self.assertNotIn("save Wick", json.dumps([e for e in ledger.read_jsonl(self.gw.campaign / "records/events.jsonl") if e["kind"] == "player_declaration"]))
+        with self.assertRaises(Refused):
+            self.gw.whisper("respond", review_id=pend["review_id"], candidate_id=cand["candidate_id"], choice="edit", text="")
+        self.gw.whisper("respond", review_id=pend["review_id"], candidate_id=cand["candidate_id"], choice="defer")
+        self.assertIsNotNone(self.gw.public_state()["state"]["whisper"]["pending"], "defer keeps it open")
+        self.gw.whisper("respond", review_id=pend["review_id"], candidate_id=cand["candidate_id"], choice="edit",
+                        text="He replays the moment his fingers closed on nothing.")
+        st = self.gw.public_state()["state"]["whisper"]
+        self.assertIsNone(st["pending"])
+        self.assertEqual([h["text"] for h in st["history"]], ["He replays the moment his fingers closed on nothing."])
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import evidence
+        envs = evidence.envelopes(ledger.read_jsonl(self.gw.campaign / "records/events.jsonl"))
+        self.assertFalse([x for x in evidence.knows(envs, "wick") if x["type"] == "intention"], "NPCs never get WHISPER")
+        (self.gw.campaign / "features.json").write_text(json.dumps({"switches": {}}))
+        with self.assertRaises(Refused):
+            self.gw.whisper("review", action_id=action["action_id"])
+        self.healthy()
+
     def test_successor_cannot_replace_tables_or_reroll(self):
         action, _ = self.act(INSPECT, provider="claude")
         self.gw.claim("claude", "run-a")

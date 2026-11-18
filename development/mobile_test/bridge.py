@@ -67,6 +67,12 @@ def cmd_submit(a):
     raw = json.loads(Path(a.row).read_text())
     row = raw.get("data", raw)
     action_id = a.id or raw.get("id") or row.get("action_id")
+    if row.get("kind") == "whisper_response" and row.get("campaign_id") == env["campaign_id"]:   # player's WHISPER answer: no GM turn
+        w = row.get("whisper") or {}
+        out = gateway().whisper("respond", review_id=w.get("review_id"), candidate_id=w.get("candidate_id"),
+                                choice=w.get("choice"), text=w.get("text"))
+        print(json.dumps({"whisper": out, "patch": {"status": "committed", "event_id": out["events"][-1] if out.get("events") else None}}))
+        return 0
     if row.get("campaign_id") != env["campaign_id"]:
         print(json.dumps({"refused": "WRONG_CAMPAIGN", "patch": {"status": "failed", "error": "this action belongs to another campaign; the test worker handles only " + env["campaign_id"]}}))
         return 3

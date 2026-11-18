@@ -476,7 +476,7 @@
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      renderResolutionControls(v, busy || phase) + (WHon() && !c.reaction_prompt ? GenesisWhisper.panel(c, s) : "") + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(v) ? GenesisWhisper.reviewCard(v, s, !!(busy || phase)) : "") + (WHon() && !c.reaction_prompt ? GenesisWhisper.panel(c, s) : "") + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -922,6 +922,7 @@
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
     if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
+    if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {
@@ -1066,6 +1067,16 @@
     }, function (e) { phase = ""; render(); setMsg("Not saved (" + (e && e.code || "error") + "). Your turn is still here; try again."); });
   }
 
+  function saveWhisperResponse(w) {   // the player's WHISPER answer: a submission like a turn, but no dice and no act
+    if (!dbRef || activeAction() || phase) return;
+    var id = "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ref = dbRef.doc("actions/" + id);
+    var label = { accept: "Accepted", edit: "My words", reject: "Rejected", defer: "Later", custom: "My own response" }[w.choice];
+    var doc = { kind: "whisper_response", whisper: w, text: "WHISPER (private): " + label + (w.text ? ": " + w.text : ""), actor: view.active_actor || "aero",
+      campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, status: "submitted", created_ms: Date.now() };
+    phase = "validating"; render();
+    ref.set(doc).then(function () { localPending = { id: id, at: Date.now(), text: doc.text }; saveUi(); phase = ""; render(); notifyGM(id); },
+      function (e) { phase = ""; render(); setMsg("Not saved (" + (e && e.code || "error") + ")."); });
+  }
   function notifyGM(id) {
     if (!view.processor) { notifyState[id] = { ok: false, code: "no_processor" }; render(); return; }
     if (!mcpNs) { notifyState[id] = { ok: false, code: "mcp_unavailable" }; render(); return; }
