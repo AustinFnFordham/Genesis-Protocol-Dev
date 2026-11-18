@@ -1,13 +1,13 @@
 {
- "version": 2,
+ "version": 3,
  "data": {
   "kind": "journal",
   "page": 1,
   "id": "journal-0001",
-  "count": 7,
+  "count": 28,
   "first": "evt_0005",
-  "last": "evt_0015",
-  "hash": "06e9e1ec79ff0904",
+  "last": "evt_0045",
+  "hash": "a4bf2a3ef5f42976",
   "entries": [
    {
     "event_id": "evt_0005",
@@ -57,6 +57,153 @@
     "kind": "resource_spent",
     "knowledge": "fact",
     "text": "Aero's action is used."
+   },
+   {
+    "event_id": "evt_0022",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Aero falls back 20 ft to stand beside Wick, blade up."
+   },
+   {
+    "event_id": "evt_0023",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Aero spends 20 ft of movement."
+   },
+   {
+    "event_id": "evt_0024",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends its reaction."
+   },
+   {
+    "event_id": "evt_0025",
+    "time": "Sim drill, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "As Aero leaves its reach, the near hound lunges and its bite lands hard: a critical hit."
+   },
+   {
+    "event_id": "evt_0026",
+    "time": "Sim drill, round 2",
+    "kind": "hp_change",
+    "knowledge": "fact",
+    "text": "Aero takes 10 piercing damage (11 to 1)."
+   },
+   {
+    "event_id": "evt_0027",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "Aero ends his turn (bonus action unspent)."
+   },
+   {
+    "event_id": "evt_0028",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Wick's turn."
+   },
+   {
+    "event_id": "evt_0029",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "Wick backs 5 ft away so Aero stands between him and the near hound, pistol up; he does not fire."
+   },
+   {
+    "event_id": "evt_0030",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "Wick spends 5 ft of movement."
+   },
+   {
+    "event_id": "evt_0031",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "Wick ends his turn."
+   },
+   {
+    "event_id": "evt_0032",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "The near hound's turn."
+   },
+   {
+    "event_id": "evt_0033",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "The near hound closes 20 ft back to Aero."
+   },
+   {
+    "event_id": "evt_0034",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends 20 ft of movement."
+   },
+   {
+    "event_id": "evt_0035",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The near hound spends its action."
+   },
+   {
+    "event_id": "evt_0036",
+    "time": "Sim drill, round 2",
+    "kind": "attack_resolved",
+    "knowledge": "fact",
+    "text": "The near hound bites at Aero and misses."
+   },
+   {
+    "event_id": "evt_0037",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "The near hound ends its turn."
+   },
+   {
+    "event_id": "evt_0038",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "The far hound's turn."
+   },
+   {
+    "event_id": "evt_0039",
+    "time": "Sim drill, round 2",
+    "kind": "movement",
+    "knowledge": "fact",
+    "text": "The far hound lopes 40 ft along the right wall toward Wick and stops short of him."
+   },
+   {
+    "event_id": "evt_0040",
+    "time": "Sim drill, round 2",
+    "kind": "resource_spent",
+    "knowledge": "fact",
+    "text": "The far hound spends 40 ft of movement."
+   },
+   {
+    "event_id": "evt_0041",
+    "time": "Sim drill, round 2",
+    "kind": "turn_end",
+    "knowledge": "fact",
+    "text": "The far hound ends its turn."
+   },
+   {
+    "event_id": "evt_0045",
+    "time": "Sim drill, round 2",
+    "kind": "turn_start",
+    "knowledge": "fact",
+    "text": "Round 2: Aero's turn."
    }
   ],
   "campaign_id": "mobile-test-1"
