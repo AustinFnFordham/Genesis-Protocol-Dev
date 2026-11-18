@@ -72,7 +72,7 @@ const MOCK = fs.readFileSync(path.join(__dirname,'test_datapad_ui.cjs'),'utf8').
    // Fresh server context with zero slots: badges and recommendations must agree.
    await page.evaluate(()=>{const v=window.__store['view/state'];v.turn_context.context_id+='-zero';v.turn_context.budget={action:0,bonus_action:0,reaction:0,object_interaction:0,movement_ft:0};window.__notify();});
    await page.waitForTimeout(150);await page.waitForSelector('#submitTurn');
-   assert((await page.locator('.composer > .budget').first().innerText()).includes('Action: 0 remaining'));
+   assert.match(await page.locator('.composer > .budget').first().innerText(), /action:\s*0 remaining/i);
    assert.equal(await page.locator('#intentPlans [data-tb4pick]').count(),0);
    assert.deepEqual(errors,[]);await ctx.close();
   }
