@@ -176,12 +176,44 @@ Rate fun / agency / clarity 1–5 per item; note anything confusing with the tur
 ## Owner decisions 2026-11-17 (evening) — see contract Addendum A
 | # | Decision | Status |
 |---|---|---|
-| 1 | Private episodic history; long-term changes only on explicit player confirmation | M8 |
-| 2 | Post-turn WHISPER proposals with Accept / Edit / Reject / Defer / custom | M8 |
-| 3 | Actor-specific NPC knowledge view in the GM's NPC context, behind a switch | M9 |
-| 4 | Causal families 1–4 for bounded testing, proposals only, gateway for any commit | M10 (pending) |
+| 1 | Private episodic history; long-term changes only on explicit player confirmation | M8 COMPLETE, real E2E verified |
+| 2 | Post-turn WHISPER proposals with Accept / Edit / Reject / Defer / custom | M8 COMPLETE, real E2E verified |
+| 3 | Actor-specific NPC knowledge view in the GM's NPC context, behind a switch | M9 COMPLETE (gateway test; real-worker NPC use not yet observed) |
+| 4 | Causal families 1–4 for bounded testing, proposals only, gateway for any commit | M10 COMPLETE (pure; not wired to play) |
 Live gate: switches for M8–M10 stay **off** in Hask Meadow until their end-to-end tests (real worker round trip on the
 test campaign) are verified.
+
+## M8 — WHISPER post-turn review + private history (switch `whisper_review`)
+`development/whisper/post_turn.py`; `gateway.whisper("review"|"respond")` (between turns, shared side-commit helper with owner
+records); `whisper_review`/`whisper_response` are player-visible ledger events tagged `pc_private` (NPC evidence views exclude
+them); export publishes `state.whisper {pending, history}`; Datapad review card (Accept / Use my edit / Reject / Later / your
+own words); `gmctl whisper-review|whisper-respond`; test bridge handles `kind: whisper_response` rows. Long-term candidates
+appear only after 2+ confirmed experiences of the same theme. Tests: `test_post_turn.py`, `test_whisper_review.cjs`,
+gateway `test_whisper_post_turn_review_end_to_end`.
+**Real end-to-end on the test campaign (2026-11-18 UTC):** turn `m8e2e-1794970143` (Aero falls back, ends turn, private
+fear/motive) → cloud worker: near hound's opportunity attack (crit, 10), Wick's turn, each hound's turn, round 2 → review
+`evt_0049` published → answer row `w-e2e-1794971900` (edit) → worker recorded `evt_0050` → test Datapad shows it in history,
+pending cleared, no motive text in feed/journal. The rows were written by Claude in the Datapad's exact shape (the phone tap
+itself was not exercised).
+Bugs found and fixed by this round trip: (1) the gateway dropped `confirmed_warnings` before the dice resolver, so any
+turn with a confirmed risk could not roll (`test_confirmed_warning_dice.py`); (2) `hp_change` shape was undocumented —
+the GM wrote `amount`, the Datapad reads `delta`; now documented and enforced (`HP_CHANGE_SHAPE`). The test campaign's
+`evt_0026` keeps its accepted `amount` field (history is not rewritten), so the test Datapad still shows Aero at 11 HP
+and the review missed the damage; (3) the bridge gave no row patch for a refused WHISPER answer.
+
+## M9 — NPC knowledge in the GM context (switch `npc_knowledge`)
+`gateway.context` → `npc_knowledge.by_npc[npc]` (Algorithm A, visibility first, claims typed, retractions marked, never
+WHISPER, never GM-only facts the NPC was not part of). GM proposal events may now carry `known_to` and `knowledge_type`
+(validated); the test worker's GM already used `known_to` in the round trip above. Live path: `evidence.py <run dir> npc:<id>`.
+Test: gateway `test_npc_knowledge_view_is_actor_scoped`. Not yet observed: a real worker run with the switch on.
+
+## M10 — causal families (pure)
+`development/causal/causal.py` FAMILIES/APPROVED_STATUSES; proposals carry family, triggering event, evidence,
+prerequisites, affected entities, owning domain and "possible, not inevitable". Only `taunted` is an approved status.
+
+## Live status (Hask Meadow, `litrpg/campaign-scaffold` @ `1792078`)
+Code for M8–M10 and all fixes is live; switches `whisper_review` and `npc_knowledge` are **off** there (owner gate). Main
+Datapad v15. Turn them on in `campaigns/starwars_litrpg/runs/hask_meadow_r2/features.json` when you're satisfied.
 
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
@@ -189,6 +221,7 @@ test campaign) are verified.
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-All milestones M0–M7 complete. Next agent: wait for the owner's UAT notes; then the smallest next steps are
-(1) show WHISPER psychological candidates after a committed turn with accept/edit/reject/defer (needs decision §9.3),
-(2) feed Algorithm A envelopes into the GM's NPC context behind a switch, (3) owner ratification of causal rules.
+1. Owner: try the test Datapad (review card is live there) and decide whether to switch `whisper_review` /
+   `npc_knowledge` on for Hask Meadow.
+2. Next agent: run one real test-worker turn with `npc_knowledge` on and check the GM used `npc_knowledge` for Wick/hounds.
+3. Then: wire causal proposals (families 1–2 first) into the GM context as suggestions, behind a switch.
