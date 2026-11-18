@@ -173,6 +173,16 @@ the existing gateway as a GM proposal (not implemented: needs owner ratification
 4. Codespaces: create a codespace on `integration/tb4-whisper-v01`, open port 8080, try the preview and its diagnostics link.
 Rate fun / agency / clarity 1–5 per item; note anything confusing with the turn and commit shown in the banner.
 
+## Owner decisions 2026-11-17 (evening) — see contract Addendum A
+| # | Decision | Status |
+|---|---|---|
+| 1 | Private episodic history; long-term changes only on explicit player confirmation | M8 |
+| 2 | Post-turn WHISPER proposals with Accept / Edit / Reject / Defer / custom | M8 |
+| 3 | Actor-specific NPC knowledge view in the GM's NPC context, behind a switch | M9 |
+| 4 | Causal families 1–4 for bounded testing, proposals only, gateway for any commit | M10 (pending) |
+Live gate: switches for M8–M10 stay **off** in Hask Meadow until their end-to-end tests (real worker round trip on the
+test campaign) are verified.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
