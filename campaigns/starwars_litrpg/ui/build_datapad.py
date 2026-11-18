@@ -4,6 +4,7 @@
   src/head.html      styles + markup (unchanged look)
   turn_contract.js   the composite-turn contract, shared with the GM processor (inlined verbatim)
   src/core.js        state, character / gear / record renderers
+  src/tb4.js         Turn Builder 4 (switchable: view.features.tb4_builder)
   src/composer.js    turn composer, submission states, automatic GM start
 
 Usage: build_datapad.py [--title "Genesis Datapad"] [--out genesis_datapad.html]
@@ -15,6 +16,6 @@ ap = argparse.ArgumentParser(); ap.add_argument("--title", default="Genesis Data
 a = ap.parse_args()
 head = (H / "src" / "head.html").read_text(encoding="utf-8").replace("<title>Genesis Datapad</title>", f"<title>{a.title}</title>", 1)
 page = (head + "<script>\n" + (H / "turn_contract.js").read_text(encoding="utf-8").split("/* node CLI:")[0] + "\n</script>\n<script>\n"
-        + (H / "src" / "core.js").read_text(encoding="utf-8") + (H / "src" / "composer.js").read_text(encoding="utf-8"))
+        + (H / "src" / "core.js").read_text(encoding="utf-8") + (H / "src" / "tb4.js").read_text(encoding="utf-8").split("if (typeof module")[0] + (H / "src" / "composer.js").read_text(encoding="utf-8"))
 Path(a.out).write_text(page, encoding="utf-8")
 print(a.out, len(page))

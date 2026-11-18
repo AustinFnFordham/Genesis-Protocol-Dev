@@ -123,7 +123,7 @@ class Gateway:
         if not path.exists():
             return None
         config = json.loads(path.read_text())
-        return config if config.get("enabled") is True and config.get("canonical") is False else None
+        return config if engine.active(config) else None
 
     def _op_path(self, action_id):
         return self.campaign / "hidden/provider_ops" / (digest(action_id) + ".json")

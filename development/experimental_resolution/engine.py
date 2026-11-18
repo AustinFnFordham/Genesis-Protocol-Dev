@@ -4,6 +4,7 @@ An accepted write-ahead plan contains exact log suffixes and state replacements.
 Recovery completes those bytes; it never calls RNG again. Not a live worker.
 """
 import argparse
+import re
 import hashlib
 import importlib.util
 import json
@@ -38,11 +39,24 @@ def identity(action):
 
 def sandbox(campaign, action):
     config = json.loads((campaign / "experimental_resolution.json").read_text())
-    if config.get("enabled") is not True or config.get("canonical") is not False or config.get("campaign_id") != action.get("campaign_id"):
-        raise ValueError("explicit noncanonical experimental campaign configuration required")
-    if campaign.resolve().is_relative_to((ROOT / "campaigns/starwars_litrpg/runs").resolve()):
-        raise ValueError("original campaign directories are forbidden; use an isolated copy")
+    if config.get("enabled") is not True or config.get("campaign_id") != action.get("campaign_id"):
+        raise ValueError("explicit experimental campaign configuration required")
+    if config.get("canonical") is False:
+        if campaign.resolve().is_relative_to((ROOT / "campaigns/starwars_litrpg/runs").resolve()):
+            raise ValueError("original campaign directories are forbidden; use an isolated copy")
+    elif not adopted(config):
+        raise ValueError("a canonical campaign needs a dated owner adoption (owner_adopted) in its configuration")
     return config
+
+
+def adopted(config):
+    """Owner adoption into a live campaign (ruling 2026-11-15): canonical true plus a dated owner_adopted record."""
+    return (config.get("enabled") is True and config.get("canonical") is True and
+            isinstance(config.get("owner_adopted"), str) and bool(re.match(r"^\d{4}-\d{2}-\d{2}$", config["owner_adopted"])))
+
+
+def active(config):
+    return config.get("enabled") is True and (config.get("canonical") is False or adopted(config))
 
 
 def preflight(campaign, action):

@@ -1272,6 +1272,141 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       '<div class="panel"><h2>Objectives</h2>' + (v.objectives.length ? "<ul class='plain'>" + v.objectives.map(function (o) { return "<li>" + esc(o) + "</li>"; }).join("") + "</ul>" : '<div class="empty">None established. The GM has not set one, and you are free to choose your own.</div>') + "</div>" +
       '<div class="panel"><h2>Party</h2><ul class="plain">' + roster(v).map(function (p) { return '<li class="kv"><span>' + esc(p.name) + "</span><span>" + esc(p.role) + (p.mechanics === "pending" ? " · sheet pending" : "") + "</span></li>"; }).join("") + '</ul><div class="note" style="margin-top:8px">Companions join through play.</div></div>';
   }
+/* Turn Builder 4 (TB4-WHISPER-001 §2), switchable and removable.
+ * On only when the published state says view.features.tb4_builder === true. Remove this file, its line in
+ * build_datapad.py and the `TB4.` hooks in composer.js to take it out; nothing else depends on it.
+ *
+ * - Custom box in every combat category: literal player words, kept as written in declaration.tb4.custom and passed
+ *   to the GM as unmapped text (the existing validator and GM adjudicate cost; the UI label never sets a cost).
+ * - Secondary Activity: a grouping of supporting conduct, never an extra slot (its cost is ruled like any other text).
+ * - Suggestions: pure, deterministic, zero model calls; ranked from player-visible options only, ≤4 per category,
+ *   each marked known_legal / needs_adjudication / blocked, and Custom is always offered.
+ */
+var GenesisTB4 = (function () {
+  var CATS = [
+    { id: "action", label: "Primary action", group: "action", hint: "Your own action, in your words: what, how, at whom" },
+    { id: "bonus_action", label: "Bonus action", group: "bonus", hint: "Only if a feature gives you one; the GM checks it" },
+    { id: "secondary", label: "Secondary activity", group: null, hint: "Supporting words or gestures alongside your turn. Not an extra action: the GM rules its real cost" },
+    { id: "movement", label: "Movement", group: "movement", hint: "Exact path or destination" },
+    { id: "object", label: "Object interaction", group: "objects", hint: "Which object, which hand, how" },
+    { id: "reaction", label: "Reaction", group: "reactions", hint: "If <trigger>, then <response>" }
+  ];
+  // Explicit player style only (chosen on screen, never inferred). Keyword tags on GM-published option ids/labels.
+  var STYLES = { cautious: /dodge|disengage|hide|hold|back|cover|retreat|guard|wait|watch/i,
+                 bold: /attack|strike|burst|charge|slash|shoot|swing|rush|close|ignite/i,
+                 social: /ask|talk|say|call|taunt|warn|help|calm|persuad|intimidat|order/i,
+                 tactical: /ready|search|listen|look|insight|read|aim|study|scan|battle/i };
+  var STYLE_LABEL = { "": "No preference", cautious: "Cautious", bold: "Bold", social: "Social", tactical: "Tactical" };
+
+  function enabled(v) { return !!(v && v.features && v.features.tb4_builder === true); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function ensure(sel) { sel.tb4custom = sel.tb4custom || {}; sel.style = sel.style || ""; return sel; }
+
+  function candidates(c, cat) {
+    if (cat === "action") return (c.options || []).filter(function (o) { return o.slot === "action"; }).map(function (o) { return { key: "action:" + o.id, group: "action", id: o.id, label: o.label }; });
+    if (cat === "bonus_action") return (c.options || []).filter(function (o) { return o.slot === "bonus_action"; }).map(function (o) { return { key: "bonus_action:" + o.id, group: "bonus", id: o.id, label: o.label }; });
+    if (cat === "movement") return (c.movement || []).map(function (m) { return { key: "move:" + m.id, group: "movement", id: m.id, label: m.label }; });
+    if (cat === "object") return (c.objects || []).filter(function (o) { return !o.gear; }).map(function (o) { return { key: "object:" + o.id, group: "objects", id: o.id, label: o.label }; });
+    if (cat === "reaction") return (c.reactions || []).map(function (o) { return { key: "reaction:" + o.id, group: "reactions", id: o.id, label: o.label }; });
+    return [];
+  }
+  // avail: map "type:option" -> {status, reasons} from the shared validator (turn_contract availability). Pure.
+  function suggest(c, cat, style, avail) {
+    var re = STYLES[style || ""] || null, out = [];
+    candidates(c, cat).forEach(function (k, i) {
+      var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice/.test(a.status) ? "needs_adjudication" : "known_legal";
+      var score = (st === "known_legal" ? 20 : st === "needs_adjudication" ? 10 : 0) + (re && re.test(k.id + " " + k.label) ? 5 : 0) - (k.id === "hold" ? 3 : 0);
+      out.push({ id: k.id, group: k.group, label: k.label, status: st, reason: a && a.reasons && a.reasons[0] || "", score: score, order: i });
+    });
+    out.sort(function (x, y) { return y.score - x.score || x.order - y.order || (x.id < y.id ? -1 : 1); });
+    return out.filter(function (x) { return x.status !== "blocked"; }).slice(0, 4).concat(out.filter(function (x) { return x.status === "blocked"; }).slice(0, 1));
+  }
+
+  function styleBar(sel) {
+    ensure(sel);
+    return '<fieldset class="grp tb4style"><legend>How Aero tends to play (optional)</legend><div class="note" style="margin:0 0 6px">Only changes which suggestions come first. Nothing is learned from your play.</div><div class="row" style="flex-wrap:wrap;gap:6px">' +
+      Object.keys(STYLE_LABEL).map(function (k) { return '<button type="button" class="chip mini" data-tb4style="' + k + '" aria-pressed="' + (sel.style === k) + '">' + STYLE_LABEL[k] + "</button>"; }).join("") + "</div></fieldset>";
+  }
+  var STLABEL = { known_legal: "fits the rules", needs_adjudication: "GM checks", blocked: "not now" };
+  function extras(cat, c, sel, avail) {
+    ensure(sel);
+    var meta = CATS.filter(function (x) { return x.id === cat; })[0]; if (!meta) return "";
+    var sg = meta.group ? suggest(c, cat, sel.style, avail) : [], h = "";
+    if (sg.length) h += '<div class="tb4sugg" data-tb4cat-sugg="' + cat + '"><span class="note" style="margin:0">Suggested:</span> ' + sg.map(function (x) {
+      return '<button type="button" class="chip mini' + (x.status === "blocked" ? " off" : "") + '" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.status === "blocked" ? " disabled" : "") +
+        ' title="' + esc(x.reason) + '">' + esc(x.label) + ' <small class="tag">' + STLABEL[x.status] + "</small></button>"; }).join(" ") + "</div>";
+    if (cat === "bonus_action" && sel.bonus === "taunt" && (c.options || []).some(function (o) { return o.id === "taunt"; })) h += tauntFields(c, sel);
+    h += '<label class="tb4custom" style="display:block;margin-top:6px"><small>Custom ' + esc(meta.label.toLowerCase()) + " · " + esc(meta.hint) + '</small><input class="txt" id="w_tb4_' + cat + '" data-tb4cat="' + cat + '" placeholder="Your own words" value="' + esc(sel.tb4custom[cat] || "") + '"></label>';
+    return h;
+  }
+  // Taunt (switch tb4_taunt; owner ruling 2026-11-17). Only shown when the published context grants the option.
+  function tauntFields(c, sel) {
+    var t = sel.taunt = sel.taunt || { target: "", words: "", skill: "intimidation" };
+    var foes = (c.visible || []).filter(function (v) { return v.hostile; });
+    return '<div class="tb4taunt" style="margin:6px 0 0 4px"><label><small>Taunt whom</small><select class="txt" id="w_tb4_taunt_target" data-tb4taunt="target"><option value="">Choose a target</option>' +
+      foes.map(function (v) { return '<option value="' + esc(v.id) + '"' + (t.target === v.id ? " selected" : "") + ">" + esc(v.label) + (v.distance_ft != null ? " (~" + v.distance_ft + " ft)" : "") + "</option>"; }).join("") + "</select></label>" +
+      '<label><small>How (your check)</small><select class="txt" id="w_tb4_taunt_skill" data-tb4taunt="skill"><option value="intimidation"' + (t.skill !== "deception" ? " selected" : "") + '>Intimidation</option><option value="deception"' + (t.skill === "deception" ? " selected" : "") + ">Deception</option></select></label>" +
+      '<label><small>Your exact words or gesture</small><input class="txt" id="w_tb4_taunt_words" data-tb4taunt="words" placeholder="What Aero says or does to draw it" value="' + esc(t.words) + '"></label>' +
+      '<div class="note" style="margin:2px 0 0">Contested: your Charisma vs its Wisdom (Insight). If you win, it has disadvantage on attacks against anyone but you until your next turn. It still decides what it does.</div></div>';
+  }
+  function secondaryFieldset(c, sel, avail) {
+    return '<fieldset class="grp"><legend>Secondary activity</legend>' + extras("secondary", c, sel, avail) + "</fieldset>";
+  }
+  function customList(sel) {
+    ensure(sel);
+    return CATS.map(function (k) { var t = String(sel.tb4custom[k.id] || ""); return t.trim() ? { category: k.id, text: t.trim() } : null; }).filter(Boolean);
+  }
+  function hasCustom(sel) { return customList(sel).length > 0; }
+  // Adds the customs to a combat declaration. Literal text is kept as written; unmapped carries it to the GM.
+  function apply(d, sel) {
+    var list = customList(sel), b = (d.bonus_actions || [])[0];
+    if (b && b.option === "taunt") {
+      var t = sel.taunt || {};
+      b.target = t.target || null;
+      d.tb4 = d.tb4 || { schema: "genesis-turn-builder/4", custom: [] };
+      d.tb4.taunt = { target: t.target || null, skill: t.skill === "deception" ? "deception" : "intimidation", words: String(t.words || "").trim() };
+    }
+    if (!list.length) return d;
+    d.tb4 = d.tb4 || { schema: "genesis-turn-builder/4" }; d.tb4.custom = list;
+    d.unmapped = (d.unmapped || []).slice();
+    list.forEach(function (x) { if (d.unmapped.indexOf(x.text) < 0) d.unmapped.push(x.text); });
+    d.freeform = [d.freeform || ""].concat(list.map(function (x) { return x.text; })).filter(Boolean).join(" ");
+    return d;
+  }
+  function summary(sel) {
+    var t = sel.bonus === "taunt" && sel.taunt && sel.taunt.words ? ["Taunt (" + (sel.taunt.skill || "intimidation") + "): “" + String(sel.taunt.words).trim() + "”"] : [];
+    return t.concat(customList(sel).map(function (x) { var k = CATS.filter(function (y) { return y.id === x.category; })[0]; return k.label + " (custom): " + x.text; })).join("; ");
+  }
+  function restore(d, sel) {
+    ensure(sel); var used = [];
+    if (d.tb4 && d.tb4.taunt) sel.taunt = { target: d.tb4.taunt.target || "", skill: d.tb4.taunt.skill || "intimidation", words: d.tb4.taunt.words || "" };
+    ((d.tb4 && d.tb4.custom) || []).forEach(function (x) { if (CATS.some(function (k) { return k.id === x.category; })) { sel.tb4custom[x.category] = x.text; used.push(x.text); } });
+    return used;   // texts that belong to custom boxes, so the caller can keep them out of its general note
+  }
+  // Event wiring; hooks: onSoft(fn) for typing, onChanged() for a re-render.
+  function bind(root, sel, hooks) {
+    ensure(sel);
+    Array.prototype.forEach.call(root.querySelectorAll("[data-tb4cat]"), function (el) {
+      el.addEventListener("input", hooks.soft(function (v) { sel.tb4custom[el.getAttribute("data-tb4cat")] = v; }));
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-tb4taunt]"), function (el) {
+      var k = el.getAttribute("data-tb4taunt"), set = function (v) { sel.taunt = sel.taunt || {}; sel.taunt[k] = v; };
+      if (el.tagName === "SELECT") el.addEventListener("change", function () { set(el.value); hooks.changed(); });
+      else el.addEventListener("input", hooks.soft(set));
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-tb4style]"), function (b) {
+      b.addEventListener("click", function () { sel.style = b.getAttribute("data-tb4style"); hooks.changed(); });
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-tb4pick]"), function (b) {
+      b.addEventListener("click", function () {
+        var p = b.getAttribute("data-tb4pick").split("|"), inp = root.querySelector('input[data-g="' + p[0] + '"][value="' + (window.CSS && CSS.escape ? CSS.escape(p[1]) : p[1]) + '"]');
+        if (inp && !inp.disabled) { if (inp.type === "checkbox") inp.checked = !inp.checked; else inp.checked = true; inp.dispatchEvent(new Event("change", { bubbles: true })); }
+      });
+    });
+  }
+  return { CATS: CATS, enabled: enabled, suggest: suggest, styleBar: styleBar, extras: extras, secondaryFieldset: secondaryFieldset,
+           apply: apply, hasCustom: hasCustom, summary: summary, restore: restore, bind: bind, customList: customList };
+})();
   /* ===================== Turn composer (turn-contract/3) =====================
      Combat: slot builder with the full action economy (unavailable choices disabled with their reason).
      Scene: a cinematic plan. Visual sequences of ordered steps, a visible palette whose availability
@@ -1283,11 +1418,11 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     return { ctxId: ctxId, mode: "build", write: keepWrite || "", note: "", confirmed: false, draftId: "", carried: false,
              temperature: "regular", narrativeConsequences: false,
              sel: { dialogue: "silent", own: "", action: "", target: {}, trigger: "", bonus: "", movement: "hold", objects: [], reactions: [], steps: [],
-                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "", endTurn: false } };
+                    nseq: 1, labels: [""], active: { seq: 0 }, nextId: 1, sayDraft: "", actDraft: "", endTurn: false, tb4custom: {}, style: "" } };
   }
   function upgradeSel(s) {  // drafts saved by older versions keep working
     s.steps = s.steps || []; s.nseq = s.nseq || 1; s.labels = s.labels || [""]; s.active = s.active || { seq: 0 };
-    s.nextId = s.nextId || 1; s.sayDraft = s.sayDraft || ""; s.actDraft = s.actDraft || "";
+    s.nextId = s.nextId || 1; s.sayDraft = s.sayDraft || ""; s.actDraft = s.actDraft || ""; s.tb4custom = s.tb4custom || {}; s.style = s.style || "";
     s.steps = s.steps.map(function (x) {
       if (x.type === "say") x = s.dialogue === "own" ? { type: "speech", text: s.own || "" } : { type: "speech", option: s.dialogue };
       if (!x.id) x.id = "s" + (s.nextId++); if (x.seq == null) x.seq = 0; return x;
@@ -1396,9 +1531,11 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     d.objects = s.objects.filter(function (o) { return byId(c.objects, o); });
     d.reactions = s.reactions.filter(function (o) { return byId(c.reactions, o); });
     if (ui.note.trim()) { d.freeform = ui.note.trim(); d.unmapped = [ui.note.trim()]; }
+    if (TB4on()) GenesisTB4.apply(d, s);   // Turn Builder 4 custom boxes (switchable, src/tb4.js)
     if (endsTurnNow(c)) d.end_turn = true;   // the player's explicit word; a submission alone never ends a turn
     return d;
   }
+  function TB4on() { return typeof GenesisTB4 !== "undefined" && GenesisTB4.enabled(view); }
   function newId() { return "s" + (ui.sel.nextId++); }
   function fromDecl(st, seqMap, authorize) {
     var x = { id: newId(), seq: seqMap(st.seq || 0), type: st.type };
@@ -1431,7 +1568,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     s.movement = d.movement ? d.movement.option : "hold";
     s.objects = (d.objects || []).slice(); s.reactions = (d.reactions || []).slice();
     s.endTurn = d.end_turn === true;
-    ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).join(" "); saveUi();
+    var tb4used = typeof GenesisTB4 !== "undefined" ? GenesisTB4.restore(d, s) : [];
+    ui.sel = s; ui.mode = "build"; ui.confirmed = false; ui.note = (d.unmapped || []).filter(function (u) { return tb4used.indexOf(u) < 0; }).join(" "); saveUi();
   }
   function turnText(d, r) {
     if (ui.mode === "write") return ui.write.trim();
@@ -1445,7 +1583,8 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       }
       return out.join("\n");
     }
-    return r.preview.map(function (p) { return p.text; }).join("; ") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
+    var tb4s = TB4on() ? GenesisTB4.summary(ui.sel) : "";
+    return r.preview.map(function (p) { return p.text; }).join("; ") + (tb4s ? (r.preview.length ? "; " : "") + tb4s : "") + (ui.note.trim() ? ". Also: " + ui.note.trim() : "");
   }
 
   function radio(group, value, checked, label, small, tag, disabled, why) {
@@ -1756,7 +1895,9 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       var ca = c.reaction_prompt ? {} : combatAvail(c);
       if (c.reaction_prompt) h += "<!-- reaction prompt: slot builder hidden -->";
       function why(k) { var a = ca[k]; return a && /needs_step|needs_choice|not_here/.test(a.status) ? [true, (PTXT[a.status] + (a.reasons[0] ? ": " + a.reasons[0] : ""))] : [false, ""]; }
+      var tb4 = TB4on(), tbx = function (cat) { return tb4 ? GenesisTB4.extras(cat, c, s, ca) : ""; };
       if (!c.reaction_prompt) {
+      if (tb4) h += GenesisTB4.styleBar(s);
       h += '<fieldset class="grp"><legend>Dialogue</legend>' + (c.dialogue || []).map(function (o) { return radio("dialogue", o.id, s.dialogue === o.id, "“" + o.text + "”", o.approach + (o.extended ? " · extended, uses your action" : "")); }).join("") +
         radio("dialogue", "silent", s.dialogue === "silent", "Remain silent") + radio("dialogue", "own", s.dialogue === "own", "Write my own line") +
         (s.dialogue === "own" ? '<input class="txt" id="w_own" placeholder="What Aero says" value="' + esc(s.own) + '">' : "") + "</fieldset>";
@@ -1767,21 +1908,22 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
           if (s.action === o.id && o.needs_target) x += '<select class="txt" id="w_target" aria-label="Target"><option value="">Choose a target</option>' + (c.visible || []).map(function (t) { return '<option value="' + esc(t.id) + '"' + (s.target[o.id] === t.id ? " selected" : "") + ">" + esc(t.label) + " (~" + t.distance_ft + " ft)</option>"; }).join("") + "</select>";
           if (s.action === o.id && o.needs_trigger) x += '<input class="txt" id="w_trigger" placeholder="Trigger: ' + esc(o.default_trigger || "") + '" value="' + esc(s.trigger) + '">';
           return x;
-        }).join("") + "</fieldset>";
+        }).join("") + tbx("action") + "</fieldset>";
       var bon = (c.options || []).filter(function (o) { return o.slot === "bonus_action"; });
-      if (bon.length) h += '<fieldset class="grp"><legend>Bonus action</legend>' + radio("bonus", "", !s.bonus, "None") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + "</fieldset>";
+      if (bon.length || tb4) h += '<fieldset class="grp"><legend>Bonus action</legend>' + (bon.length ? radio("bonus", "", !s.bonus, "None") : "") + bon.map(function (o) { return radio("bonus", o.id, s.bonus === o.id, o.label, o.detail); }).join("") + tbx("bonus_action") + "</fieldset>";
+      if (tb4) h += GenesisTB4.secondaryFieldset(c, s, ca);
       h += '<fieldset class="grp"><legend>Movement</legend>' + (c.movement || []).map(function (m) {
         var risk = c.mode === "combat" && (m.leaves_reach_of || []).length ? "opportunity attack risk" : "", w = m.id === "hold" ? [false, ""] : why("move:" + m.id);
         return radio("movement", m.id, s.movement === m.id, m.label, m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? "~" + m.feet + " ft" : "", risk, w[0], w[1]);
-      }).join("") + "</fieldset>";
-      if ((c.objects || []).filter(function (o) { return !o.gear; }).length) h += '<fieldset class="grp"><legend>Object interaction</legend>' + c.objects.filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + "</fieldset>";
+      }).join("") + tbx("movement") + "</fieldset>";
+      if ((c.objects || []).filter(function (o) { return !o.gear; }).length || tb4) h += '<fieldset class="grp"><legend>Object interaction</legend>' + (c.objects || []).filter(function (o) { return !o.gear; }).map(function (o) { return check("objects", o.id, s.objects.indexOf(o.id) >= 0, o.label, "first one each turn is free"); }).join("") + tbx("object") + "</fieldset>";
       }
       if (c.reaction_prompt) {
         var rp = c.reaction_prompt;
         h += '<fieldset class="grp reactnow"><legend>Reaction needed now</legend><div class="check warn"><b>' + esc(rp.trigger || "Something is happening") + "</b>" + (rp.detail ? "<div>" + esc(rp.detail) + "</div>" : "") + '<div class="note">It is not your turn. Choose one reaction, or none; the GM resolves it under the rules.</div></div>' +
           (c.reactions || []).filter(function (o) { return (rp.options || []).indexOf(o.id) >= 0; }).map(function (o) { return radio("reactnow", o.id, s.reactions[0] === o.id, o.label, o.detail || ""); }).join("") +
           radio("reactnow", "__none", !!s.declineReaction, "Do not react") + "</fieldset>";
-      } else if ((c.reactions || []).length) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + c.reactions.map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + "</fieldset>";
+      } else if ((c.reactions || []).length || tb4) h += '<fieldset class="grp"><legend>Reactions (if triggered)</legend>' + (c.reactions || []).map(function (o) { return check("reactions", o.id, s.reactions.indexOf(o.id) >= 0, o.label, "if " + o.trigger); }).join("") + tbx("reaction") + "</fieldset>";
       if (!c.reaction_prompt) h += '<textarea id="w_note" placeholder="Anything else Aero does (optional). The GM checks it against the same rules." style="margin-top:10px;min-height:60px">' + esc(ui.note) + "</textarea>";
     }
     if (c.mode === "combat" && !c.reaction_prompt) h += '<fieldset class="grp"><legend>Turn</legend><label class="opt"><input type="checkbox" id="endTurn"' + (ui.sel.endTurn ? " checked" : "") +
@@ -1798,7 +1940,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
       '<div class="row"><button class="btn primary" id="submitAlt"' + (busy || phase ? " disabled" : "") + '>Submit this option</button><button class="btn" id="discardAlt">Discard</button><span class="note" id="altMsg"></span></div></div>';
   }
   function canSubmitNow(r, busy) {
-    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt || endsTurnNow(ctxOf(view)));
+    return !busy && status === "live" && r.legal && (!r.needs_confirmation || ui.confirmed) && (r.preview.length || (ui.mode === "write" && ui.write.trim()) || ui.note.trim() || !!ui.alt || endsTurnNow(ctxOf(view)) || (TB4on() && GenesisTB4.hasCustom(ui.sel)));
   }
   function fixCount(r, stat) {
     var n = r.errors.filter(function (e) { return !e.step_id; }).length;
@@ -2184,6 +2326,7 @@ a.btn { display: inline-flex; align-items: center; text-decoration: none; color:
     on("w_write", "input", soft(function (x) { ui.write = x; ls("datapad.draft", x); }));
     on("diceTemperature", "change", function (e) { ui.temperature = e.target.value; saveUi(); });
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
+    if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {

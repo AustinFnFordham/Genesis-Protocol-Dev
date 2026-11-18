@@ -5,7 +5,7 @@ replayable, survives interruption wherever the ledger does, and cannot disagree 
 Rules: campaigns/starwars_litrpg/creator/ENCOUNTER_RULING.md (provisional, scoped to this campaign).
 
 Events it reads (`details` shown):
-  encounter_start   {encounter_id, mode, participants: [participant...]}
+  encounter_start   {encounter_id, mode, participants: [participant...], round?}  round: first round (default 1; an encounter already under way)
   encounter_join    {participant}                       joins at its initiative; acts from its next slot
   encounter_leave   {actor_id, reason}
   encounter_mode    {mode: combat|standoff|scene, reason, cites: [event ids]}
@@ -176,10 +176,13 @@ def apply(state, event):
             fail("ALREADY_ACTIVE", "an encounter is already running")
         if d.get("mode", "combat") not in MODES:
             fail("BAD_MODE", "unknown encounter mode")
+        start = d.get("round", 1)
+        if type(start) is not int or start < 1:
+            fail("BAD_ROUND", "round is a whole number from 1 (an encounter already under way when it is first recorded)")
         party = state["party"]
         state = empty()
         state["party"] = party
-        state.update(active=True, encounter_id=d.get("encounter_id") or eid, mode=d.get("mode", "combat"), round=1,
+        state.update(active=True, encounter_id=d.get("encounter_id") or eid, mode=d.get("mode", "combat"), round=start,
                      mode_history=[{"mode": d.get("mode", "combat"), "at": eid, "reason": d.get("reason") or "encounter began"}])
         for raw in d.get("participants") or []:
             try:

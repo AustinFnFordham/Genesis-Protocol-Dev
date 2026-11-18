@@ -7,6 +7,8 @@ const {chromium}=require('playwright');
  const state=JSON.parse(fs.readFileSync(path.join(root,'development/.qa/ui/view/state.json')));
  state.turn_context=JSON.parse(fs.readFileSync(path.join(root,'campaigns/starwars_litrpg/ui/fixtures/hask_r2_sequencer.json')));
  state.processor=null;
+ assert.equal(state.experimental_resolution?.enabled,true,'live Hask Meadow carries the owner-adopted dice settings (2026-11-15)');
+ delete state.experimental_resolution; // start without them to check the controls appear only when enabled
  const browser=await chromium.launch(process.env.GENESIS_TEST_CHROMIUM?{executablePath:process.env.GENESIS_TEST_CHROMIUM}:{});
  try{
   const page=await browser.newPage({viewport:{width:390,height:844}});

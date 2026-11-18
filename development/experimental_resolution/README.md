@@ -1,6 +1,6 @@
 # Experimental dual-axis resolution
 
-Owner-proposed mechanics; sandbox-only and not activated in a live worker.
+Owner-proposed mechanics. Owner-adopted for the live campaign `hask_meadow_r2` on 2026-11-15 (marker `canonical: true` with a dated `owner_adopted`); every other campaign stays sandbox-only (`canonical: false`, isolated copy).
 The source roller's mulberry32, formula parser and face selection are reused.
 Existing raw roll fields retain their prior meaning and independent replay.
 The effective resolution is an additive, versioned projection, not a rewrite.

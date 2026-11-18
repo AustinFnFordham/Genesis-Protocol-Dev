@@ -329,5 +329,16 @@ roll.main(['1d20','--request-id','adapter-interlock','--campaign',sys.argv[2]])
 
 
 
+
+
+class OwnerAdoption(unittest.TestCase):
+    def test_owner_adoption_marker(self):
+        import engine
+        self.assertTrue(engine.active({"enabled": True, "canonical": False}))
+        self.assertTrue(engine.active({"enabled": True, "canonical": True, "owner_adopted": "2026-11-15"}))
+        self.assertFalse(engine.active({"enabled": True, "canonical": True}))
+        self.assertFalse(engine.active({"enabled": True, "canonical": True, "owner_adopted": "soon"}))
+
+
 if __name__ == "__main__":
     unittest.main()

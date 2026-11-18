@@ -1,0 +1,9 @@
+{
+ "campaign_id": "hask_meadow_r2",
+ "enabled": true,
+ "canonical": true,
+ "owner_adopted": "2026-11-15",
+ "owner_basis": "Owner instruction 2026-11-15: adopt Regular/Heroic/Legendary and the independent Narrative Consequences toggle in the live campaign. The dice advantage is for the player party (Aero and any party members), not for NPCs, enemies or monsters.",
+ "controlled_actors": ["aero"],
+ "schema": "genesis-experimental-resolution/1"
+}

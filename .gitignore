@@ -21,3 +21,4 @@ Thumbs.db
 Desktop.ini
 api_bridge/gm/campaigns/starwars_litrpg/
 development/mobile_test/fixture_campaign/hidden/.ledger_writer.lock
+development/preview/out/
