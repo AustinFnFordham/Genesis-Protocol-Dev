@@ -764,12 +764,7 @@ class Gateway:
             raise Refused("ENCOUNTER_RECORD", f"the committed encounter record does not fold: {error.message}")
         if problems:
             raise Refused("RECORD_REFUSED", problems[0]["message"], problems=problems)
-        run = f"owner-{now}"
-        lock = {"holder": run, "provider": "owner", "expires_ms": now + self.lease_ms, "acquired_ms": now}
-        try:
-            self.store.put("locks/" + self.id, lock, version)
-        except Conflict:
-            raise Refused("PROVIDER_BUSY", "the lease changed hands")
+        run, lock = self._side_lock(now, version)
         last = all_events[-1]
         shape = lambda k, summary, d, causes=None: {"session": last.get("session", 1), "turn_no": last.get("turn_no", 0), "world_time": last.get("world_time", ""),
                                                     "kind": k, "summary": summary, "actor": by, "visibility": "player", "knowledge_type": "fact",
@@ -786,7 +781,21 @@ class Gateway:
             if tracker:
                 context["encounter"] = tracker
             drafts.append(shape("turn_context", f"Turn context after the {kind.replace('_', ' ')} record", context, ["$1"]))
-        request = {"batch_id": f"{kind}-{now}", "expected_revision": len(all_events), "expected_head": last["event_id"], "events": drafts}
+        result, documents = self._side_commit(run, lock, all_events, drafts, f"{kind}-{now}")
+        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"], "encounter": encounter.public(after)}
+
+    # ---- records made between turns, without a provider (owner records, WHISPER player answers) ----
+    def _side_lock(self, now, version):
+        run = f"owner-{now}"
+        lock = {"holder": run, "provider": "owner", "expires_ms": now + self.lease_ms, "acquired_ms": now}
+        try:
+            self.store.put("locks/" + self.id, lock, version)
+        except Conflict:
+            raise Refused("PROVIDER_BUSY", "the lease changed hands")
+        return run, lock
+
+    def _side_commit(self, run, lock, all_events, drafts, batch_id):
+        request = {"batch_id": batch_id, "expected_revision": len(all_events), "expected_head": all_events[-1]["event_id"], "events": drafts}
         lease = self._lease_file(lock)
         try:
             result = batch.apply(self.campaign, request, lease, run, ledger)
@@ -805,7 +814,64 @@ class Gateway:
         state_version, current = self.store.read("view/state")
         if current != documents["state"]:
             self.store.put("view/state", documents["state"], state_version)
-        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"], "encounter": encounter.public(after)}
+        return result, documents
+
+    def _switch(self, name):
+        path = self.campaign / "features.json"
+        return path.exists() and json.loads(path.read_text()).get("switches", {}).get(name) is True
+
+    def whisper(self, op, **kw):
+        """WHISPER post-turn review (switch whisper_review; owner decisions 1-2, 2026-11-17).
+        op "review": propose candidates for a committed action (deterministic; nothing about the PC changes).
+        op "respond": record the player's accept / edit / reject / defer / custom answer. Both between turns only."""
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import post_turn
+        if not self._switch("whisper_review"):
+            raise Refused("SWITCH_OFF", "WHISPER review is switched off for this campaign")
+        if self._in_flight():
+            raise Refused("TURN_IN_FLIGHT", "WHISPER records are made between turns")
+        now = self.clock()
+        version, lock = self._lock()
+        if lock and lock.get("holder") and lock.get("expires_ms", 0) > now:
+            raise Refused("PROVIDER_BUSY", "a GM run holds the campaign lease")
+        all_events = ledger.load_all(self.campaign)
+        public = [e for e in all_events if e.get("visibility") != "gm_only"]
+        if op == "review":
+            action_id = kw["action_id"]
+            if any(e["kind"] == post_turn.REVIEW and (e.get("details") or {}).get("action_id") == action_id for e in public):
+                return {"recorded": None, "reason": "already reviewed"}
+            idx = [i for i, e in enumerate(public) if e["kind"] == "player_declaration" and (e.get("details") or {}).get("action_id") == action_id]
+            if not idx:
+                raise Refused("UNKNOWN_ACTION", "no committed declaration for that action")
+            start = idx[0]
+            end = next((i for i in range(start + 1, len(public)) if public[i]["kind"] == "player_declaration"), len(public))
+            hidden_ctx = next((e["details"]["context"] for e in all_events if e["kind"] == "whisper_context"
+                               and (e.get("details") or {}).get("action_id") == action_id), None)
+            action_events = [dict(e) for e in public[start:end]]
+            if hidden_ctx:   # the player's own start-of-turn context, read GM-side, never published by this
+                action_events[0] = dict(action_events[0], details=dict(action_events[0]["details"], whisper=hidden_ctx))
+            review = post_turn.propose(action_events, public[:start])
+            if not review:
+                return {"recorded": None, "reason": "not a consequential turn for the PC"}
+            kind, details, summary = post_turn.REVIEW, review, f"WHISPER suggestions after {action_id} (private, not canon)"
+        elif op == "respond":
+            rev = next((e for e in public if e["event_id"] == kw["review_id"] and e["kind"] == post_turn.REVIEW), None)
+            if not rev:
+                raise Refused("UNKNOWN_REVIEW", "no such WHISPER review")
+            try:
+                details = post_turn.response(rev, kw.get("candidate_id"), kw["choice"], kw.get("text"))
+            except ValueError as error:
+                raise Refused("BAD_RESPONSE", str(error))
+            kind, summary = post_turn.RESPONSE, f"Player's WHISPER answer ({details['choice']}) to {kw['review_id']} (private)"
+        else:
+            raise Refused("BAD_RECORD", "op is review or respond")
+        run, lock = self._side_lock(now, version)
+        last = all_events[-1]
+        draft = {"session": last.get("session", 1), "turn_no": last.get("turn_no", 0), "world_time": last.get("world_time", ""),
+                 "kind": kind, "summary": summary, "actor": "aero", "visibility": "player", "knowledge_type": "belief",
+                 "known_to": ["aero"], "caused_by": [], "roll_ids": [], "tags": ["pc_private", "whisper"], "details": details}
+        result, documents = self._side_commit(run, lock, all_events, [draft], f"{kind}-{now}")
+        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"]}
 
     def publish(self, provider, run):
         """Finish publication of a resolved action. Mechanical: any provider's run may do it; nothing is authored."""

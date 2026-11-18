@@ -31,7 +31,10 @@ def envelopes(events, entities=None):
                 "visibility": e.get("visibility", "player"), "known_to": list(e.get("known_to") or []),
                 "content": {k: d[k] for k in ("subject", "predicate", "object") if k in d}, "summary": e.get("summary")}
         kt, kind = e.get("knowledge_type"), e.get("kind")
-        if kind == "whisper_context":
+        if kind in ("whisper_review", "whisper_response"):   # the PC's private review lane: player only, never NPCs
+            out.append(dict(base, id=e["event_id"] + ":intention", type="intention", visibility="pc_private",
+                            provenance="player_explicit" if kind == "whisper_response" else "whisper_candidate", content={}))
+        elif kind == "whisper_context":
             out.append(dict(base, id=e["event_id"] + ":intention", type="intention", visibility="pc_private",
                             provenance="player_explicit", content={"context": d.get("context")}))
         elif kt == "report":

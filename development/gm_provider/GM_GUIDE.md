@@ -136,3 +136,14 @@ Answer with the JSON object only.
   never changes morality or alignment by itself. Do not copy it into public events: write `player_declaration` with the
   declaration minus `whisper` and add a `gm_only` event `whisper_context {action_id, context}` in the hidden ledger
   (`development/whisper/whisper.py public_declaration`). Never contradict a feeling the player stated.
+
+## WHISPER post-turn review (switch `whisper_review`)
+**WHISPER post-turn review (switch `whisper_review`, owner decisions 1–2, 2026-11-17).** After you commit and publish a
+  turn, run `python3 development/gm_provider/gmctl.py --shared <scope> whisper-review <action_id>` (gateway path) — it
+  proposes candidates deterministically and records a `whisper_review` (visibility player, tag pc_private) only when the turn
+  was consequential for Aero. Never write the suggestions yourself and never decide one for him. A row with
+  `kind: "whisper_response"` is the player's answer, not a turn: record it with
+  `gmctl ... whisper-respond <review_id> <candidate_id or -> <choice> ["text"]` (test worker: `bridge.py submit` does it),
+  write the row `committed`, and roll nothing. Only accepted, edited or custom answers enter Aero's private history; long-term
+  changes appear only as candidates and only after repeated confirmed experience. NPCs never see any of it.
+  Live Hask Meadow: switch off until the end-to-end test on the test campaign is verified.
