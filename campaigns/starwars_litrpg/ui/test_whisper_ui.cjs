@@ -12,7 +12,7 @@ const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; consol
     async function open(features, vp) {
       const page = await (await browser.newContext({ viewport: vp || { width: 820, height: 1180 } })).newPage();
       const errors = []; page.on("pageerror", (e) => errors.push(e.message));
-      const s = JSON.parse(JSON.stringify(st)); if (features) s.features = features; s.processor = null;
+      const s = JSON.parse(JSON.stringify(st)); delete s.features; if (features) s.features = features; s.processor = null;
       await page.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock: MOCK, st: s });
       await page.goto("file://" + path.resolve(pageFile)); await page.waitForSelector("#submitTurn");
       return { page, errors };
