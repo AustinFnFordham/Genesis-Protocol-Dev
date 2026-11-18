@@ -57,6 +57,9 @@ var GenesisTB4 = (function () {
     ["action", "bonus_action", "movement", "object"].forEach(function (cat) {
       suggest(c, cat, sel.style, avail).forEach(function (x) {
         var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+        var availabilityKey = (cat === "movement" ? "move" : cat === "object" ? "object" : cat) + ":" + x.id;
+        // Disabled mechanics stay discoverable in the catalog, never as a dead plan button.
+        if (avail && avail[availabilityKey] && /needs_step|needs_choice|not_here/.test(avail[availabilityKey].status)) return;
         if (x.status === "blocked" || x.id === "hold" || seen[key]) return;
         var slot = cat === "action" ? "action" : cat === "bonus_action" ? "bonus_action" : cat === "movement" ? "movement_ft" : "object_interaction";
         if (c.mode === "combat" && c.budget && c.budget[slot] === 0) return;

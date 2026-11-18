@@ -18,6 +18,7 @@ const zero = {...c, budget:{...c.budget, action:0, bonus_action:0, movement_ft:0
 assert.equal(TB.plans(zero, {}, availability).length, 0);
 const dup = {mode:'combat', budget:{action:1}, options:[{id:'a',slot:'action',label:'Watch carefully'},{id:'b',slot:'action',label:'Watch carefully'}]};
 assert.equal(TB.plans(dup, {}, {}).length, 1);
+assert.equal(TB.plans(dup, {}, {'action:a':{status:'needs_step'},'action:b':{status:'needs_choice'}}).length,0);
 assert.equal(TB.plans(dup, {}, {'action:a':{status:'not_here',reasons:['blocked']},'action:b':{status:'ok'}})[0].id,'b');
 // Composite plans preserve ordinary legality: a defensive action plus a published escape route.
 const bundleContext={actor:'aero',mode:'combat',budget:{action:1,bonus_action:1,movement_ft:30},visible:[{id:'foe',label:'Visible threat',hostile:true}],
