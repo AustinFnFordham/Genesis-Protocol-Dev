@@ -1,8 +1,8 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "action_id": "m8e2e-1794970143",
-  "status": "submitted",
+  "status": "processing",
   "created_ms": 1794970184143,
   "source": "freeform",
   "contract": "turn-contract/3",
@@ -62,7 +62,25 @@
      "by": "player",
      "at_ms": 1794970184143
     }
+   ],
+   "runs": [
+    {
+     "provider": "claude-session",
+     "run": "claude-session-1794970172",
+     "at_ms": 1794970188892
+    }
    ]
+  },
+  "processing": {
+   "run": "claude-session-1794970172",
+   "started_ms": 1794970192913,
+   "heartbeat_ms": 1794970192913,
+   "lease_ms": 595979,
+   "stage": "claimed",
+   "stage_started_ms": 1794970192913,
+   "stages": {
+    "claimed": 1794970192913
+   }
   }
  }
 }
