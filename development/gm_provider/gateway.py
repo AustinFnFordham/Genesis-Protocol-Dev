@@ -447,10 +447,32 @@ class Gateway:
                 "public_context": public_context, "revision": state["revision"], "ledger_head": state["ledger_head"],
                 "brief": brief.compact(gm_brief), "recent_private": [{k: e.get(k) for k in ("event_id", "kind", "summary", "details")} for e in hidden[-12:]],
                 "npc_last_evaluations": self._npc_last(),
+                **({"npc_knowledge": k} if (k := self._npc_knowledge()) is not None else {}),
                 "resolution": {"engine": "experimental" if self._marker() else "legacy", "settings": policy.settings(row)},
                 "operation": {"phase": self.phase(op, row), "tables": op["tables"] and op["tables"]["value"],
                               "rolls": {k: v["result"] for k, v in op["rolls"].items()},
                               "previous_runs": [{"provider": r["provider"], "took_over_at": r["took_over_at"]} for r in op["runs"][:-1]]}}
+
+    def _npc_knowledge(self, limit=15):
+        """Owner decision 3 (switch npc_knowledge): per NPC, only what it witnessed, heard, authored or was part of,
+        typed (fact / claim / speech / observation / belief / attempt / outcome) and cited. Never the player's WHISPER
+        context or review, never GM-only facts the NPC was not part of. Use this, not the whole record, when deciding
+        what an NPC knows, says or does."""
+        if not self._switch("npc_knowledge"):
+            return None
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import evidence
+        events = ledger.load_all(self.campaign)
+        envs = evidence.envelopes(events)
+        skip = {"aero", "gm", "owner", None, ""}
+        npcs = sorted({w for e in events for w in (e.get("known_to") or [])} | {e.get("actor") for e in events} - skip)
+        out = {}
+        for npc in npcs[:24]:
+            known = [x for x in evidence.knows(envs, npc) if x["type"] != "intention"]
+            out[npc] = [{"event_id": x["source_event"], "type": x["type"], "summary": x["summary"], "provenance": x["provenance"],
+                         **({"retracted": True} if x.get("retracted") else {})} for x in known[-limit:]]
+        return {"rule": "An NPC may act only on what its own list supports; a claim is not a fact; nothing outside its list.",
+                "by_npc": out}
 
     def _npc_last(self):
         out = {}
@@ -691,10 +713,10 @@ class Gateway:
                 raise Refused("PROPOSAL_REJECTED", "the proposal failed the shared validators; nothing was written", problems=problems)
             all_events = ledger.load_all(self.campaign)
             turn_no = json.loads((self.campaign / "hidden/dice_state.json").read_text())["turn_no"]
-            def event(kind, summary, details, visibility="player", actor="gm", causes=None, rolls=None):
+            def event(kind, summary, details, visibility="player", actor="gm", causes=None, rolls=None, known_to=None, knowledge="fact"):
                 return {"session": all_events[-1].get("session", 1), "turn_no": turn_no, "world_time": proposal["world_time"],
-                        "kind": kind, "summary": summary, "actor": actor, "visibility": visibility, "knowledge_type": "fact",
-                        "known_to": [], "caused_by": causes or [], "roll_ids": rolls or [], "tags": [], "details": details}
+                        "kind": kind, "summary": summary, "actor": actor, "visibility": visibility, "knowledge_type": knowledge,
+                        "known_to": list(known_to or []), "caused_by": causes or [], "roll_ids": rolls or [], "tags": [], "details": details}
             declaration, whisper_ctx = row.get("declaration"), None
             if isinstance(declaration, dict) and "whisper" in declaration:   # WHISPER context is PC-private: GM-only event
                 whisper_ctx = declaration["whisper"]
@@ -713,8 +735,16 @@ class Gateway:
                                     {"action_id": action_id, "context": whisper_ctx}, "gm_only", actor=row["actor"], causes=["$1"]))
             for draft in proposal["events"]:
                 rolls = [op["rolls"][k]["result"]["roll_id"] for k in draft.get("roll_keys", [])]
+                # Who perceived it and what kind of knowledge it is (owner decision 3): exposure records for NPC knowledge.
+                known_to = draft.get("known_to") or []
+                if not (isinstance(known_to, list) and all(isinstance(w, str) and w for w in known_to)):
+                    raise Refused("PROPOSAL_REJECTED", "known_to is a list of actor ids")
+                knowledge = draft.get("knowledge_type", "fact")
+                if knowledge not in ledger.KNOWLEDGE:
+                    raise Refused("PROPOSAL_REJECTED", f"knowledge_type is one of {sorted(ledger.KNOWLEDGE)}")
                 drafts.append(event(draft["kind"], str(draft.get("summary") or draft["kind"]), draft.get("details") or {},
-                                    draft.get("visibility", "player"), draft.get("actor", "gm"), draft.get("caused_by") or ["$1"], rolls))
+                                    draft.get("visibility", "player"), draft.get("actor", "gm"), draft.get("caused_by") or ["$1"], rolls,
+                                    known_to, knowledge))
             count = len(drafts)
             drafts.append(event("gm_narration", f"Narration for {action_id}", {"text": proposal["narration"]}, causes=["$1"]))
             if isinstance(proposal.get("scene_state"), dict):

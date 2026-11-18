@@ -147,3 +147,13 @@ Answer with the JSON object only.
   write the row `committed`, and roll nothing. Only accepted, edited or custom answers enter Aero's private history; long-term
   changes appear only as candidates and only after repeated confirmed experience. NPCs never see any of it.
   Live Hask Meadow: switch off until the end-to-end test on the test campaign is verified.
+
+## NPC knowledge (switch `npc_knowledge`)
+**NPC knowledge (switch `npc_knowledge`, owner decision 3, 2026-11-17).** Decide what an NPC knows, says or does only from
+  its own knowledge list: gateway path `context.npc_knowledge.by_npc[<id>]`; live path
+  `python3 development/whisper/evidence.py campaigns/starwars_litrpg/runs/<dir> npc:<id>`. A claim is a claim (the NPC may
+  believe it, doubt it or repeat it — never treat it as fact), a retraction is marked, and nothing outside the list may be
+  used. The player's WHISPER context and review are never in it. Record exposure as you go: every event an NPC perceives
+  carries `known_to` (actor ids who saw or heard it) and `knowledge_type` (`fact`, `report` for speech/claims, `belief`):
+  gateway proposal event fields `known_to` / `knowledge_type`; live `ledger.py add --known-to wick hound_1 --type report`.
+  NPC appraisals use the NPC's own identity, convictions, memories and circumstances, through `npc_evaluations` as before.
