@@ -50,6 +50,41 @@ var GenesisWhisper = (function () {
       WHAT_IF[mode].map(function (t, i) { return '<li>' + esc(t) + ' <button type="button" class="chip mini" data-whadopt="' + mode + ":" + i + '">Use as my reflection</button></li>'; }).join("") + "</ul></details>" +
       (filled ? '<button type="button" class="chip mini" id="whClear">Clear (back to not stated)</button>' : "") + "</details>";
   }
+  // Post-turn review (switch whisper_review; owner decisions 1-2). Suggestions only; the player answers.
+  function reviewOn(v) { return !!(v && v.features && v.features.whisper_review === true && v.whisper && v.whisper.pending); }
+  function reviewCard(v, sel, busy) {
+    var p = v.whisper.pending, ed = sel.whEdit = sel.whEdit || {};
+    var KIND = { temporary: "for now", long_term: "lasting — becomes part of who he is", prompt: "your words" };
+    return '<div class="check" id="whisperReview" style="margin-top:8px"><b>WHISPER · after that turn</b><div class="note">' + esc(p.note || "") + '</div>' +
+      p.candidates.map(function (c) {
+        var id = esc(c.candidate_id);
+        return '<div class="whcand" style="border-top:1px solid var(--line);padding-top:6px;margin-top:6px"><div><small class="tag">' + esc(KIND[c.kind] || c.kind) + "</small> " +
+          (c.proposed ? "<b>" + esc(c.proposed) + "</b>" : "<b>How does Aero feel about it?</b>") + '</div><div class="note">' + esc(c.explanation) + ' <small>(from ' + esc(c.evidence.join(", ")) + ")</small></div>" +
+          '<textarea id="w_whed_' + id + '" data-whedit="' + id + '" rows="2" placeholder="' + (c.proposed ? "Edit it into your own words" : "In your own words") + '">' + esc(ed[c.candidate_id] || "") + "</textarea>" +
+          '<div class="row" style="flex-wrap:wrap;gap:6px">' + (c.proposed ? '<button type="button" class="chip mini" data-whresp="' + id + '|accept"' + (busy ? " disabled" : "") + ">Accept</button>" : "") +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|edit"' + (busy ? " disabled" : "") + ">" + (c.proposed ? "Use my edit" : "Save my words") + "</button>" +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|reject"' + (busy ? " disabled" : "") + ">Reject</button>" +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|defer"' + (busy ? " disabled" : "") + ">Later</button></div></div>";
+      }).join("") +
+      '<div style="border-top:1px solid var(--line);padding-top:6px;margin-top:6px"><label><small>Or something else entirely, in your words</small><textarea id="w_whcustom" data-whedit="__custom" rows="2">' + esc(ed.__custom || "") + "</textarea></label>" +
+      '<button type="button" class="chip mini" data-whresp="__custom|custom"' + (busy ? " disabled" : "") + ">Save my own response</button></div>" +
+      '<div class="note">Nothing here changes Aero unless you choose it. Mechanical conditions still follow the rules.</div><span class="note" id="whMsg"></span></div>';
+  }
+  function bindReview(root, v, sel, hooks) {
+    var ed = sel.whEdit = sel.whEdit || {};
+    Array.prototype.forEach.call(root.querySelectorAll("[data-whedit]"), function (el) {
+      el.addEventListener("input", function () { ed[el.getAttribute("data-whedit")] = el.value; });
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-whresp]"), function (b) {
+      b.addEventListener("click", function () {
+        var p = b.getAttribute("data-whresp").split("|"), cid = p[0] === "__custom" ? null : p[0], choice = p[1];
+        var text = String(ed[p[0]] || "").trim();
+        if ((choice === "edit" || choice === "custom") && !text) { var m = root.querySelector("#whMsg"); if (m) m.textContent = "Write your words first."; return; }
+        hooks.respond({ review_id: v.whisper.pending.review_id, candidate_id: cid, choice: choice, text: choice === "edit" || choice === "custom" ? text : null });
+        delete ed[p[0]];
+      });
+    });
+  }
   function summary(sel) {
     var c = context(sel); if (!c) return "";
     return "WHISPER (private): " + [Array.isArray(c.felt_emotion) ? "feels " + c.felt_emotion.join(", ") : "", typeof c.expression === "object" ? "shows: " + c.expression.style + (c.expression.text ? " (" + c.expression.text + ")" : "") : "", c.motive !== "unspecified" ? "why: " + c.motive : ""].filter(Boolean).join("; ");
@@ -67,6 +102,6 @@ var GenesisWhisper = (function () {
       var p = b.getAttribute("data-whadopt").split(":"); w.reflection = (w.reflection ? w.reflection + "\n" : "") + WHAT_IF[p[0]][+p[1]]; hooks.changed(); }); });
     var cl = root.querySelector("#whClear"); if (cl) cl.addEventListener("click", function () { sel.whisper = null; ensure(sel); hooks.changed(); });
   }
-  return { FEELINGS: FEELINGS, WHAT_IF: WHAT_IF, enabled: enabled, context: context, apply: apply, restore: restore, panel: panel, summary: summary, bind: bind };
+  return { FEELINGS: FEELINGS, WHAT_IF: WHAT_IF, reviewOn: reviewOn, reviewCard: reviewCard, bindReview: bindReview, enabled: enabled, context: context, apply: apply, restore: restore, panel: panel, summary: summary, bind: bind };
 })();
 if (typeof module !== "undefined") module.exports = GenesisWhisper;

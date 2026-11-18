@@ -115,7 +115,7 @@ def public_roll(r, rid, purpose, kept):
     return {"roll_id": rid, "purpose": purpose, "summary": f'total {r.get("final_total")}', "by": "gm", "redacted": True}
 
 
-FEATURE_SWITCHES = ("tb4_builder", "tb4_taunt", "whisper_context")
+FEATURE_SWITCHES = ("tb4_builder", "tb4_taunt", "whisper_context", "whisper_review", "npc_knowledge")
 
 
 def build(ev=None, campaign_dir=None, campaign_id=None):
@@ -156,7 +156,7 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
     roster = build_roster(ev, idn["name"], f'{idn["species"]} {idn["class"]} · {idn["background"]} · {idn["current_rank"]}')
     # Turn context for the composer: the latest public turn_context event, only if nothing newer
     # than it has been committed except presentation events (otherwise it is stale and omitted).
-    PRESENT = {"gm_narration", "scene_state", "gm_suggestions", "turn_context"}
+    PRESENT = {"gm_narration", "scene_state", "gm_suggestions", "turn_context", "whisper_review", "whisper_response"}
     tc_idx = max((i for i, e in enumerate(ev) if e["kind"] == "turn_context"), default=None)
     turn_context = None
     if tc_idx is not None and all(e["kind"] in PRESENT for e in ev[tc_idx + 1:]):
@@ -233,6 +233,10 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
             sys.path.insert(0, str(Path(__file__).resolve().parent))
             import tb4_rules  # removable TB4 grants behind owner switches
             turn_context = tb4_rules.apply_switches(turn_context, known)
+            if known.get("whisper_review"):   # the PC's own private review and history (public ledger lane, tag pc_private)
+                sys.path.insert(0, str(ROOT / "development/whisper"))
+                import post_turn
+                experimental["whisper"] = {"pending": post_turn.pending(ev), "history": post_turn.history(ev)[-20:]}
     return {
         **experimental,
         "contest_declaration": contest,

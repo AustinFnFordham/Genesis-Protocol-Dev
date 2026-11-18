@@ -1460,6 +1460,41 @@ var GenesisWhisper = (function () {
       WHAT_IF[mode].map(function (t, i) { return '<li>' + esc(t) + ' <button type="button" class="chip mini" data-whadopt="' + mode + ":" + i + '">Use as my reflection</button></li>'; }).join("") + "</ul></details>" +
       (filled ? '<button type="button" class="chip mini" id="whClear">Clear (back to not stated)</button>' : "") + "</details>";
   }
+  // Post-turn review (switch whisper_review; owner decisions 1-2). Suggestions only; the player answers.
+  function reviewOn(v) { return !!(v && v.features && v.features.whisper_review === true && v.whisper && v.whisper.pending); }
+  function reviewCard(v, sel, busy) {
+    var p = v.whisper.pending, ed = sel.whEdit = sel.whEdit || {};
+    var KIND = { temporary: "for now", long_term: "lasting — becomes part of who he is", prompt: "your words" };
+    return '<div class="check" id="whisperReview" style="margin-top:8px"><b>WHISPER · after that turn</b><div class="note">' + esc(p.note || "") + '</div>' +
+      p.candidates.map(function (c) {
+        var id = esc(c.candidate_id);
+        return '<div class="whcand" style="border-top:1px solid var(--line);padding-top:6px;margin-top:6px"><div><small class="tag">' + esc(KIND[c.kind] || c.kind) + "</small> " +
+          (c.proposed ? "<b>" + esc(c.proposed) + "</b>" : "<b>How does Aero feel about it?</b>") + '</div><div class="note">' + esc(c.explanation) + ' <small>(from ' + esc(c.evidence.join(", ")) + ")</small></div>" +
+          '<textarea id="w_whed_' + id + '" data-whedit="' + id + '" rows="2" placeholder="' + (c.proposed ? "Edit it into your own words" : "In your own words") + '">' + esc(ed[c.candidate_id] || "") + "</textarea>" +
+          '<div class="row" style="flex-wrap:wrap;gap:6px">' + (c.proposed ? '<button type="button" class="chip mini" data-whresp="' + id + '|accept"' + (busy ? " disabled" : "") + ">Accept</button>" : "") +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|edit"' + (busy ? " disabled" : "") + ">" + (c.proposed ? "Use my edit" : "Save my words") + "</button>" +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|reject"' + (busy ? " disabled" : "") + ">Reject</button>" +
+          '<button type="button" class="chip mini" data-whresp="' + id + '|defer"' + (busy ? " disabled" : "") + ">Later</button></div></div>";
+      }).join("") +
+      '<div style="border-top:1px solid var(--line);padding-top:6px;margin-top:6px"><label><small>Or something else entirely, in your words</small><textarea id="w_whcustom" data-whedit="__custom" rows="2">' + esc(ed.__custom || "") + "</textarea></label>" +
+      '<button type="button" class="chip mini" data-whresp="__custom|custom"' + (busy ? " disabled" : "") + ">Save my own response</button></div>" +
+      '<div class="note">Nothing here changes Aero unless you choose it. Mechanical conditions still follow the rules.</div><span class="note" id="whMsg"></span></div>';
+  }
+  function bindReview(root, v, sel, hooks) {
+    var ed = sel.whEdit = sel.whEdit || {};
+    Array.prototype.forEach.call(root.querySelectorAll("[data-whedit]"), function (el) {
+      el.addEventListener("input", function () { ed[el.getAttribute("data-whedit")] = el.value; });
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-whresp]"), function (b) {
+      b.addEventListener("click", function () {
+        var p = b.getAttribute("data-whresp").split("|"), cid = p[0] === "__custom" ? null : p[0], choice = p[1];
+        var text = String(ed[p[0]] || "").trim();
+        if ((choice === "edit" || choice === "custom") && !text) { var m = root.querySelector("#whMsg"); if (m) m.textContent = "Write your words first."; return; }
+        hooks.respond({ review_id: v.whisper.pending.review_id, candidate_id: cid, choice: choice, text: choice === "edit" || choice === "custom" ? text : null });
+        delete ed[p[0]];
+      });
+    });
+  }
   function summary(sel) {
     var c = context(sel); if (!c) return "";
     return "WHISPER (private): " + [Array.isArray(c.felt_emotion) ? "feels " + c.felt_emotion.join(", ") : "", typeof c.expression === "object" ? "shows: " + c.expression.style + (c.expression.text ? " (" + c.expression.text + ")" : "") : "", c.motive !== "unspecified" ? "why: " + c.motive : ""].filter(Boolean).join("; ");
@@ -1477,7 +1512,7 @@ var GenesisWhisper = (function () {
       var p = b.getAttribute("data-whadopt").split(":"); w.reflection = (w.reflection ? w.reflection + "\n" : "") + WHAT_IF[p[0]][+p[1]]; hooks.changed(); }); });
     var cl = root.querySelector("#whClear"); if (cl) cl.addEventListener("click", function () { sel.whisper = null; ensure(sel); hooks.changed(); });
   }
-  return { FEELINGS: FEELINGS, WHAT_IF: WHAT_IF, enabled: enabled, context: context, apply: apply, restore: restore, panel: panel, summary: summary, bind: bind };
+  return { FEELINGS: FEELINGS, WHAT_IF: WHAT_IF, reviewOn: reviewOn, reviewCard: reviewCard, bindReview: bindReview, enabled: enabled, context: context, apply: apply, restore: restore, panel: panel, summary: summary, bind: bind };
 })();
   /* ===================== Turn composer (turn-contract/3) =====================
      Combat: slot builder with the full action economy (unavailable choices disabled with their reason).
@@ -1957,7 +1992,7 @@ var GenesisWhisper = (function () {
     var dis = busy ? " disabled" : "";
     var h = '<div class="panel composer"><div class="row" style="justify-content:space-between"><h2 style="margin:0">' + esc(c.actor_name || "Aero") + "’s turn" + (c.mode === "combat" ? " · round " + esc(c.round) : "") + "</h2>" +
       '<div class="seg" role="group" aria-label="Compose mode"><button data-mode="build" aria-pressed="' + (ui.mode === "build") + '">Build</button><button data-mode="write" aria-pressed="' + (ui.mode === "write") + '">Write</button></div></div>' +
-      renderResolutionControls(v, busy || phase) + (WHon() && !c.reaction_prompt ? GenesisWhisper.panel(c, s) : "") + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
+      renderResolutionControls(v, busy || phase) + (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(v) ? GenesisWhisper.reviewCard(v, s, !!(busy || phase)) : "") + (WHon() && !c.reaction_prompt ? GenesisWhisper.panel(c, s) : "") + renderEncounter(c) + budget(c, r) + renderAlt(busy) + renderPending(c) + ((c.notes || []).length ? '<div class="check warn" style="margin-top:8px"><b>What you notice</b>' + c.notes.map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("") + "</div>" : "") +
       (scene ? renderNow(c) : "") + "<fieldset" + dis + ' style="border:0;margin:0;padding:0;min-width:0">';
     if (ui.mode === "write") {
       h += '<textarea id="w_write" placeholder="Describe the whole plan in your own words, in order. Put speech in quotes." style="margin-top:10px">' + esc(ui.write) + "</textarea>" +
@@ -2403,6 +2438,7 @@ var GenesisWhisper = (function () {
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed });
     if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
+    if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {
@@ -2547,6 +2583,16 @@ var GenesisWhisper = (function () {
     }, function (e) { phase = ""; render(); setMsg("Not saved (" + (e && e.code || "error") + "). Your turn is still here; try again."); });
   }
 
+  function saveWhisperResponse(w) {   // the player's WHISPER answer: a submission like a turn, but no dice and no act
+    if (!dbRef || activeAction() || phase) return;
+    var id = "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ref = dbRef.doc("actions/" + id);
+    var label = { accept: "Accepted", edit: "My words", reject: "Rejected", defer: "Later", custom: "My own response" }[w.choice];
+    var doc = { kind: "whisper_response", whisper: w, text: "WHISPER (private): " + label + (w.text ? ": " + w.text : ""), actor: view.active_actor || "aero",
+      campaign_id: view.campaign_id || "starwars_litrpg", based_on_revision: view.revision, ledger_head: view.ledger_head, status: "submitted", created_ms: Date.now() };
+    phase = "validating"; render();
+    ref.set(doc).then(function () { localPending = { id: id, at: Date.now(), text: doc.text }; saveUi(); phase = ""; render(); notifyGM(id); },
+      function (e) { phase = ""; render(); setMsg("Not saved (" + (e && e.code || "error") + ")."); });
+  }
   function notifyGM(id) {
     if (!view.processor) { notifyState[id] = { ok: false, code: "no_processor" }; render(); return; }
     if (!mcpNs) { notifyState[id] = { ok: false, code: "mcp_unavailable" }; render(); return; }

@@ -1,5 +1,5 @@
 {
- "milestone": "M7",
+ "milestone": "M8",
  "features": [
   {
    "id": "datapad_baseline",
@@ -30,6 +30,12 @@
    "name": "Evidence, memory/appraisal, causal proposals",
    "enabled": true,
    "note": "Pure evaluators on noncanonical fixtures; see the diagnostics page. Not wired into play."
+  },
+  {
+   "id": "whisper_review",
+   "name": "WHISPER after-turn review",
+   "enabled": true,
+   "note": "Suggestions with evidence after a consequential turn; Accept / Edit / Reject / Later / your own words. Preview shows a sample review."
   }
  ],
  "unavailable": [
