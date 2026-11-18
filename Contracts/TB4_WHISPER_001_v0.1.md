@@ -395,3 +395,35 @@ Links below reference the inspected branch, not necessarily the current release.
 - [Chaos Doctrine](https://github.com/AustinFnFordham/Genesis-Protocol-Dev/blob/staging/mobile-test/Contracts/CHAOS_ORIGIN_AND_DESIGN_DOCTRINE.md)
 
 **End of TB4-WHISPER-001 v0.1.0.**
+
+---
+
+## Addendum A — Owner decisions 2026-11-17 (evening), recorded verbatim in intent
+
+Supersedes the matching open items in §9 (items 3, 4 and the AMD/causal gates as stated below). Everything else in v0.1.0 stands.
+
+1. **Permanent emotional records — approved with conditions.** WHISPER separates temporary states from meaningful long-term
+   experiences. Player-declared feelings may be kept in the PC's *private episodic history* with event sources, timestamps,
+   circumstances and visibility. Meaningful or repeated experiences may produce *candidates* for long-term development.
+   Permanent subjective states, personality changes, convictions and psychological interpretations for the PC require
+   explicit player confirmation. No automatic diagnosis, moralizing or personality rewrite. Mechanical stress, fatigue,
+   fear and other conditions remain under the gameplay rules and Atomic authority.
+2. **Post-turn emotional suggestions — approved.** After a consequential turn WHISPER evaluates accepted events, the PC's
+   established history, the start-of-turn context, declared intentions and actual outcomes, and may propose plausible
+   transitions with their supporting evidence. The player answers Accept / Edit / Reject / Defer, or writes a completely
+   custom response. Nothing is committed for the PC automatically. No numerical AMD coefficients, no automatic alignment.
+3. **Actor-specific NPC knowledge — approved.** Algorithm A feeds the GM's NPC context with strict actor-specific
+   visibility: an NPC knows only what observation, communication, memory, inference or another authorized source supports;
+   facts, claims, beliefs, observations and interpretations stay distinct; NPCs never receive the player's private WHISPER
+   feelings, intentions, reflections or GM-only knowledge. NPC appraisals use the NPC's own identity, knowledge, memories
+   and circumstances. Behind a testable switch, verified against the knowledge-boundary fixtures before live use.
+4. **Initial typed causal families — approved for bounded testing:** (1) information exposure and communication;
+   (2) event-grounded individual memory and appraisal; (3) evidence-grounded relationship consequence candidates;
+   (4) explicitly approved mechanical status effects. Every relationship resolves to a valid entity or campaign-local
+   instance. Every proposal names its triggering event, supporting evidence, prerequisites, affected entities and owning
+   domain. A possible consequence is not an inevitable one. No automatic commits to morality, personality, relationships,
+   factions, cultures or world state; no arbitrary weights, unrestricted recursion, invented NPC knowledge or automatic
+   nemesis generation. Legal effects go through the existing gateway and domain authority only.
+
+Live gating: Hask Meadow is not advanced and the new causal/psychological runtime behaviour is not enabled live until
+its end-to-end tests are verified.
