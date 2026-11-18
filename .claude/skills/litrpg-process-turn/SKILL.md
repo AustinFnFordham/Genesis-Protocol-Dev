@@ -61,6 +61,15 @@ Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/G
   `secondary` entry is supporting conduct, never an extra action or another actor's turn; if it would take the action, bonus
   action or movement Aero has already used, say so (`needs_revision`) rather than granting it. A `bonus_action` entry is a
   bonus action only if a feature grants one. Quote the player's words exactly when narrating speech.
+- **Taunt (switch `tb4_taunt`, owner ruling 2026-11-17; `campaigns/starwars_litrpg/ui/tb4_rules.py`).** When the published
+  context offers `taunt` and the player chose it: it costs Aero's bonus action; `declaration.tb4.taunt {target, skill, words}`
+  holds the check (Intimidation or Deception) and his exact words, quoted verbatim in narration. Roll two contested checks:
+  Aero's Charisma (chosen skill) and the target's Wisdom (Insight), both as rolls under their makers (the target's as a GM
+  roll on its own subject). Aero wins only on a higher total (ties go to the target). On a win commit a `condition_change`
+  on the target: `taunted` by Aero until the start of Aero's next turn — disadvantage on attack rolls against anyone other
+  than Aero. It never forces an attack or a move: the target still acts from its own motives, and may simply leave. A
+  target that cannot perceive Aero or understand the taunt is refused before any roll (`needs_revision`, reason given).
+  Without the switch, a taunt is ordinary speech (free, no mechanical effect) or custom text the GM adjudicates.
 - **Adopting the encounter tracker mid-fight (owner ruling 2026-11-15).** Hask Meadow was already in combat (round 11) before
   the tracker existed. On the first combat turn after this ruling, before anything else in the batch, commit `encounter_start`
   with `round` set to the current round and every participant per §3e (Aero; Wick as `allied_npc`, `control {decides: gm}`,

@@ -21,6 +21,7 @@ timed "development/test_player_experience.cjs" node development/test_player_expe
 timed "development/test_dice_history_ui.cjs" node development/test_dice_history_ui.cjs $P $Q/dice_ui
 timed "development/experimental_resolution/test_controls.cjs" node development/experimental_resolution/test_controls.cjs
 timed "$U/test_tb4.cjs" node $U/test_tb4.cjs $P $Q/state_round1.json
+timed "$U/test_tb4_taunt.cjs" node $U/test_tb4_taunt.cjs $P $Q/state_round1.json
 timed "development/preview/test_preview.cjs" node development/preview/test_preview.cjs
 timed "development/encounter/test_tracker_ui.cjs" node development/encounter/test_tracker_ui.cjs $P $Q/state_round1.json
 timed "rng_audit hask_meadow_r2" python3 -B .claude/skills/litrpg-dice/audit_rng.py campaigns/starwars_litrpg/runs/hask_meadow_r2
