@@ -438,6 +438,19 @@ class Interchange(Base):
         self.gw.release("claude", "run-k2", "test")
         self.healthy()
 
+    def test_hp_change_must_carry_a_signed_delta(self):
+        """Found on the test campaign 2026-11-18: an hp_change written as {amount: -10} left the Datapad's HP unchanged."""
+        def wrong(move, context):
+            if move["type"] == "commit":
+                move["proposal"]["events"].append({"kind": "hp_change", "actor": "gm", "summary": "Aero takes 10 damage.", "details": {"target": "aero", "amount": -10}})
+            return move
+        self.gw.select_provider("claude")
+        self.act(INSPECT)
+        out = run_turn(self.gw, script("claude", wrong))
+        self.assertNotEqual(out["outcome"], "committed", out)
+        self.assertIn("HP_CHANGE_SHAPE", json.dumps(out))
+        self.healthy()
+
     def test_successor_cannot_replace_tables_or_reroll(self):
         action, _ = self.act(INSPECT, provider="claude")
         self.gw.claim("claude", "run-a")
