@@ -1,0 +1,61 @@
+{
+ "fixture": "TB4-MORAL-001 (noncanonical, TB4-WHISPER-001 §7.2). Each case is a small accepted-event history.",
+ "cases": {
+  "attempted_harm_missed": [
+   {"event_id": "evt_0101", "kind": "condition_change", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "gm",
+    "summary": "The thug drops his blade and kneels, hands up.", "details": {"subject": "thug", "condition": "surrendered"}},
+   {"event_id": "evt_0102", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "aero",
+    "summary": "Aero swings at the kneeling thug.", "details": {"action_id": "m1", "act": "attack", "target": "thug", "whisper": {"motive": "make him pay"}}},
+   {"event_id": "evt_0103", "kind": "attack_resolved", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "aero",
+    "summary": "The blade passes over the thug's head.", "details": {"attacker": "aero", "target": "thug", "hit": false, "justification": "none_established"}}
+  ],
+  "attempted_harm_missed_defensive": [
+   {"event_id": "evt_0111", "kind": "condition_change", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "gm",
+    "summary": "The thug lunges at Wick with a blade.", "details": {"subject": "thug", "condition": "attacking_wick"}},
+   {"event_id": "evt_0112", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "Aero swings at the thug.", "details": {"action_id": "m1b", "act": "attack", "target": "thug", "whisper": {"motive": "protect Wick"}}},
+   {"event_id": "evt_0113", "kind": "attack_resolved", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "The blade passes over the thug's head.", "details": {"attacker": "aero", "target": "thug", "hit": false, "justification": "defense_of_other"}}
+  ],
+  "failed_rescue": [
+   {"event_id": "evt_0201", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "Aero dives for Wick's hand in the current.", "details": {"action_id": "m2", "act": "rescue", "target": "wick", "whisper": {"motive": "save Wick", "felt_emotion": ["fear"]}}},
+   {"event_id": "evt_0202", "kind": "check_resolved", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "His fingers close on nothing; Wick is swept away.", "details": {"actor": "aero", "act": "rescue", "target": "wick", "success": false}}
+  ],
+  "declined_help_aware_capable": [
+   {"event_id": "evt_0301", "kind": "observation", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "Aero sees a farmer pinned under a cart, calling for help.", "details": {"observer": "aero", "subject": "farmer", "predicate": "needs", "object": "help"}},
+   {"event_id": "evt_0302", "kind": "world_state", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "gm",
+    "summary": "Nothing threatens Aero here; the cart lifts with one strong push.", "details": {"subject": "aero", "capacity": "able", "risk": "low", "alternatives": ["lift", "call for help"]}},
+   {"event_id": "evt_0303", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "Aero walks on without stopping.", "details": {"action_id": "m3", "act": "leave", "target": "farmer"}}
+  ],
+  "declined_help_unaware": [
+   {"event_id": "evt_0311", "kind": "world_state", "visibility": "gm_only", "knowledge_type": "fact", "known_to": [], "actor": "gm",
+    "summary": "A farmer is pinned under a cart behind the barn, out of sight.", "details": {"subject": "farmer", "predicate": "needs", "object": "help"}},
+   {"event_id": "evt_0312", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero"], "actor": "aero",
+    "summary": "Aero walks on down the road.", "details": {"action_id": "m3b", "act": "leave", "target": "farmer"}}
+  ],
+  "compelled": [
+   {"event_id": "evt_0401", "kind": "world_state", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "gm",
+    "summary": "A blaster is pressed to Wick's head: 'Open the gate or he dies.'", "details": {"subject": "aero", "coercion": "threat_to_ally"}},
+   {"event_id": "evt_0402", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "aero",
+    "summary": "Aero opens the gate.", "details": {"action_id": "m4", "act": "open_gate", "target": "gate"}},
+   {"event_id": "evt_0403", "kind": "world_state", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "wick"], "actor": "gm",
+    "summary": "The raiders pour through the gate.", "details": {"subject": "raiders", "predicate": "entered", "object": "village"}}
+  ],
+  "anger_spares": [
+   {"event_id": "evt_0501", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "thug"], "actor": "aero",
+    "summary": "Aero lowers the saber and lets the thug go.", "details": {"action_id": "m5", "act": "spare", "target": "thug", "whisper": {"felt_emotion": ["anger"]}}}
+  ],
+  "anger_strikes_surrendered": [
+   {"event_id": "evt_0601", "kind": "condition_change", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "thug"], "actor": "gm",
+    "summary": "The thug kneels, hands up.", "details": {"subject": "thug", "condition": "surrendered"}},
+   {"event_id": "evt_0602", "kind": "player_declaration", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "thug"], "actor": "aero",
+    "summary": "Aero strikes the kneeling thug.", "details": {"action_id": "m6", "act": "attack", "target": "thug", "whisper": {"felt_emotion": ["anger"]}}},
+   {"event_id": "evt_0603", "kind": "attack_resolved", "visibility": "player", "knowledge_type": "fact", "known_to": ["aero", "thug"], "actor": "aero",
+    "summary": "The saber cuts.", "details": {"attacker": "aero", "target": "thug", "hit": true, "justification": "none_established"}}
+  ]
+ }
+}
