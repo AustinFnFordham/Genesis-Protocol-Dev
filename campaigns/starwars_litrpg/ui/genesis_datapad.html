@@ -1335,8 +1335,19 @@ var GenesisTB4 = (function () {
     if (sg.length) h += '<div class="tb4sugg" data-tb4cat-sugg="' + cat + '"><span class="note" style="margin:0">Suggested:</span> ' + sg.map(function (x) {
       return '<button type="button" class="chip mini' + (x.status === "blocked" ? " off" : "") + '" data-tb4pick="' + esc(x.group + "|" + x.id) + '"' + (x.status === "blocked" ? " disabled" : "") +
         ' title="' + esc(x.reason) + '">' + esc(x.label) + ' <small class="tag">' + STLABEL[x.status] + "</small></button>"; }).join(" ") + "</div>";
+    if (cat === "bonus_action" && sel.bonus === "taunt" && (c.options || []).some(function (o) { return o.id === "taunt"; })) h += tauntFields(c, sel);
     h += '<label class="tb4custom" style="display:block;margin-top:6px"><small>Custom ' + esc(meta.label.toLowerCase()) + " · " + esc(meta.hint) + '</small><input class="txt" id="w_tb4_' + cat + '" data-tb4cat="' + cat + '" placeholder="Your own words" value="' + esc(sel.tb4custom[cat] || "") + '"></label>';
     return h;
+  }
+  // Taunt (switch tb4_taunt; owner ruling 2026-11-17). Only shown when the published context grants the option.
+  function tauntFields(c, sel) {
+    var t = sel.taunt = sel.taunt || { target: "", words: "", skill: "intimidation" };
+    var foes = (c.visible || []).filter(function (v) { return v.hostile; });
+    return '<div class="tb4taunt" style="margin:6px 0 0 4px"><label><small>Taunt whom</small><select class="txt" id="w_tb4_taunt_target" data-tb4taunt="target"><option value="">Choose a target</option>' +
+      foes.map(function (v) { return '<option value="' + esc(v.id) + '"' + (t.target === v.id ? " selected" : "") + ">" + esc(v.label) + (v.distance_ft != null ? " (~" + v.distance_ft + " ft)" : "") + "</option>"; }).join("") + "</select></label>" +
+      '<label><small>How (your check)</small><select class="txt" id="w_tb4_taunt_skill" data-tb4taunt="skill"><option value="intimidation"' + (t.skill !== "deception" ? " selected" : "") + '>Intimidation</option><option value="deception"' + (t.skill === "deception" ? " selected" : "") + ">Deception</option></select></label>" +
+      '<label><small>Your exact words or gesture</small><input class="txt" id="w_tb4_taunt_words" data-tb4taunt="words" placeholder="What Aero says or does to draw it" value="' + esc(t.words) + '"></label>' +
+      '<div class="note" style="margin:2px 0 0">Contested: your Charisma vs its Wisdom (Insight). If you win, it has disadvantage on attacks against anyone but you until your next turn. It still decides what it does.</div></div>';
   }
   function secondaryFieldset(c, sel, avail) {
     return '<fieldset class="grp"><legend>Secondary activity</legend>' + extras("secondary", c, sel, avail) + "</fieldset>";
@@ -1348,19 +1359,27 @@ var GenesisTB4 = (function () {
   function hasCustom(sel) { return customList(sel).length > 0; }
   // Adds the customs to a combat declaration. Literal text is kept as written; unmapped carries it to the GM.
   function apply(d, sel) {
-    var list = customList(sel);
+    var list = customList(sel), b = (d.bonus_actions || [])[0];
+    if (b && b.option === "taunt") {
+      var t = sel.taunt || {};
+      b.target = t.target || null;
+      d.tb4 = d.tb4 || { schema: "genesis-turn-builder/4", custom: [] };
+      d.tb4.taunt = { target: t.target || null, skill: t.skill === "deception" ? "deception" : "intimidation", words: String(t.words || "").trim() };
+    }
     if (!list.length) return d;
-    d.tb4 = { schema: "genesis-turn-builder/4", custom: list };
+    d.tb4 = d.tb4 || { schema: "genesis-turn-builder/4" }; d.tb4.custom = list;
     d.unmapped = (d.unmapped || []).slice();
     list.forEach(function (x) { if (d.unmapped.indexOf(x.text) < 0) d.unmapped.push(x.text); });
     d.freeform = [d.freeform || ""].concat(list.map(function (x) { return x.text; })).filter(Boolean).join(" ");
     return d;
   }
   function summary(sel) {
-    return customList(sel).map(function (x) { var k = CATS.filter(function (y) { return y.id === x.category; })[0]; return k.label + " (custom): " + x.text; }).join("; ");
+    var t = sel.bonus === "taunt" && sel.taunt && sel.taunt.words ? ["Taunt (" + (sel.taunt.skill || "intimidation") + "): “" + String(sel.taunt.words).trim() + "”"] : [];
+    return t.concat(customList(sel).map(function (x) { var k = CATS.filter(function (y) { return y.id === x.category; })[0]; return k.label + " (custom): " + x.text; })).join("; ");
   }
   function restore(d, sel) {
     ensure(sel); var used = [];
+    if (d.tb4 && d.tb4.taunt) sel.taunt = { target: d.tb4.taunt.target || "", skill: d.tb4.taunt.skill || "intimidation", words: d.tb4.taunt.words || "" };
     ((d.tb4 && d.tb4.custom) || []).forEach(function (x) { if (CATS.some(function (k) { return k.id === x.category; })) { sel.tb4custom[x.category] = x.text; used.push(x.text); } });
     return used;   // texts that belong to custom boxes, so the caller can keep them out of its general note
   }
@@ -1369,6 +1388,11 @@ var GenesisTB4 = (function () {
     ensure(sel);
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4cat]"), function (el) {
       el.addEventListener("input", hooks.soft(function (v) { sel.tb4custom[el.getAttribute("data-tb4cat")] = v; }));
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-tb4taunt]"), function (el) {
+      var k = el.getAttribute("data-tb4taunt"), set = function (v) { sel.taunt = sel.taunt || {}; sel.taunt[k] = v; };
+      if (el.tagName === "SELECT") el.addEventListener("change", function () { set(el.value); hooks.changed(); });
+      else el.addEventListener("input", hooks.soft(set));
     });
     Array.prototype.forEach.call(root.querySelectorAll("[data-tb4style]"), function (b) {
       b.addEventListener("click", function () { sel.style = b.getAttribute("data-tb4style"); hooks.changed(); });

@@ -1,8 +1,28 @@
 {
- "milestone": "M1",
+ "milestone": "M2",
  "features": [
-  {"id": "datapad_baseline", "name": "Datapad baseline", "enabled": true, "note": "Live Datapad build: scene sequencer, combat composer, end turn, GM options, initiative tracker, dice settings, paged history."},
-  {"id": "tb4_builder", "name": "Turn Builder 4", "enabled": true, "note": "Custom box in every combat category, Secondary activity (not an extra action), deterministic suggestions with an optional play style."}
+  {
+   "id": "datapad_baseline",
+   "name": "Datapad baseline",
+   "enabled": true,
+   "note": "Live Datapad build: scene sequencer, combat composer, end turn, GM options, initiative tracker, dice settings, paged history."
+  },
+  {
+   "id": "tb4_builder",
+   "name": "Turn Builder 4",
+   "enabled": true,
+   "note": "Custom box in every combat category, Secondary activity (not an extra action), deterministic suggestions with an optional play style."
+  },
+  {
+   "id": "tb4_taunt",
+   "name": "Taunt (bonus action)",
+   "enabled": true,
+   "note": "Owner-ratified contested check: Charisma (Intimidation or Deception) vs Wisdom (Insight); on a win the target has disadvantage against anyone but Aero until his next turn. No forced attack."
+  }
  ],
- "unavailable": ["GM turns, dice and narration (no GM attached)", "authenticated MCP / Oracle gateway", "Hask Meadow and any live data"]
+ "unavailable": [
+  "GM turns, dice and narration (no GM attached)",
+  "authenticated MCP / Oracle gateway",
+  "Hask Meadow and any live data"
+ ]
 }
