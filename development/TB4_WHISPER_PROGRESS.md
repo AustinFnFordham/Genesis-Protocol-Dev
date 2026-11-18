@@ -58,7 +58,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | M3 WHISPER context | COMPLETE | `tb4/m3-whisper` | `03e9f71` | **Yes**: `litrpg/campaign-scaffold` @ `0eb060f`, switch `whisper_context` on, main Datapad v13 |
 | M4 Algorithm A | COMPLETE (pure evaluator) | `tb4/m4-evidence` | `a4fc246` | Code only, not wired to play (no in-force authority yet) |
 | M5 Algorithm B | COMPLETE (pure evaluator) | `tb4/m5-memory` | `34ccb6c` | Code only, not wired to play |
-| M6 Algorithm C | NOT STARTED | | | |
+| M6 Algorithm C | COMPLETE (pure evaluator) | `tb4/m6-causal` | `a5dac51` | Code only, not wired to play |
 | M7 Integration / UAT | NOT STARTED | | | |
 
 ## M0 — Baseline, preview, fixtures
@@ -143,10 +143,18 @@ Not done (owner/architecture decision): presenting PC candidates in the Datapad 
 and committing an accepted transition; NPC appraisals through `npc_review.py`. Justification labels
 (`defense_of_self/other`, `none_established`) are GM rulings expected on `attack_resolved` details — a convention to adopt.
 
+## M6 — Algorithm C: typed causal proposals (pure)
+Files: `development/causal/causal.py`, `fixtures/causal_fixture.json`, `test_causal.py`.
+Relation types fixture-local (`observes, communicates, believes, protects, threatens, depends_on, trusts, contains`) —
+not added to the global Registry ontology (owner gate CIS-001 §11). Domains/transitions are a small allow-list.
+Rules with status `candidate` never fire; the fixture marks two as `candidate_enabled` for testing only.
+Covers TB4-19, -20, -21, -22 and CIS-001 §4/§5 cases. Proposals carry `commits: False`; applying one means handing it to
+the existing gateway as a GM proposal (not implemented: needs owner ratification of rules and domain owners).
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M6 (Algorithm C: typed causal proposals, bounded, CIS-001 as proposal) on `tb4/m6-causal` from the integration HEAD.
+Start M7 (integration, TB4-RECOVERY-001, cross-provider fixture, UAT readiness) on `tb4/m7-integration` from the integration HEAD.
