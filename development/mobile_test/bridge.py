@@ -69,8 +69,12 @@ def cmd_submit(a):
     action_id = a.id or raw.get("id") or row.get("action_id")
     if row.get("kind") == "whisper_response" and row.get("campaign_id") == env["campaign_id"]:   # player's WHISPER answer: no GM turn
         w = row.get("whisper") or {}
-        out = gateway().whisper("respond", review_id=w.get("review_id"), candidate_id=w.get("candidate_id"),
-                                choice=w.get("choice"), text=w.get("text"))
+        try:
+            out = gateway().whisper("respond", review_id=w.get("review_id"), candidate_id=w.get("candidate_id"),
+                                    choice=w.get("choice"), text=w.get("text"))
+        except Refused as refusal:   # always hand the worker a row update, with the reason
+            print(json.dumps({"refused": refusal.code, "patch": {"status": "failed", "error": f"{refusal.code}: {refusal}"}}))
+            return 3
         print(json.dumps({"whisper": out, "patch": {"status": "committed", "event_id": out["events"][-1] if out.get("events") else None}}))
         return 0
     if row.get("campaign_id") != env["campaign_id"]:
