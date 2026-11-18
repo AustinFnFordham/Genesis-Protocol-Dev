@@ -94,6 +94,7 @@ def build(milestone=None, out=None):
                            "note": "Development preview: fixture data only, no GM attached, nothing is canonical."}
     state["processor"] = None
     state["preview_features"] = {f["id"]: f["enabled"] for f in features["features"]}
+    state["features"] = {f["id"]: f["enabled"] for f in features["features"] if f["id"] in export_state.FEATURE_SWITCHES}
     seed = {"view/state": state}
     html = PAGE.read_text()
     title_end = html.index("</title>") + len("</title>")
