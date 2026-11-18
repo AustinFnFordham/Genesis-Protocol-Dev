@@ -53,7 +53,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | # | Status | Branch / commits | Integration merge | Live? |
 |---|---|---|---|---|
 | M0 Baseline, fixtures, preview | COMPLETE | `tb4/m0-baseline` @ `37a102b` | `2598d59` | Not needed (dev tooling only) |
-| M1 Turn Builder 4 UI | NOT STARTED | | | |
+| M1 Turn Builder 4 UI | COMPLETE | `tb4/m1-turn-builder` @ `78a5b80` | `1f743e5` | **Yes**: `litrpg/campaign-scaffold` @ `a88df71`, switch `tb4_builder` on, main Datapad v11 |
 | M2 Action economy, Taunt | NOT STARTED | | | |
 | M3 WHISPER context | NOT STARTED | | | |
 | M4 Algorithm A | NOT STARTED | | | |
@@ -80,10 +80,25 @@ Tests: `bash development/run_all_checks.sh` → `suites=45 failed=0` (44 existin
 - What the preview is: the real Datapad page + fixture public state + in-browser storage. No GM, dice or network;
   submissions are stored and marked "preview only". Reset with the banner's "Reset preview state".
 
+## M1 — Turn Builder 4 (switch `tb4_builder`)
+Files: `campaigns/starwars_litrpg/ui/src/tb4.js` (new, removable), hooks in `src/composer.js` (all guarded by `TB4on()`),
+`build_datapad.py` (inlines tb4.js before composer.js), `export_state.py` (`FEATURE_SWITCHES`; reads `<run>/features.json`
+`switches`), `test_tb4.cjs` (22 checks), runbook note in `.claude/skills/litrpg-process-turn/SKILL.md`.
+What it does (combat Build mode): a Custom box in Primary, Bonus, Secondary activity, Movement, Object and Reaction;
+speech keeps "Write my own line". Literal words go to `declaration.tb4.custom` and `unmapped`. Secondary activity is never
+a slot. Up to four deterministic suggestions per category from published options only, marked fits the rules / GM checks /
+not now, ranked by an optional explicit play style (no learning). Scene mode already had a Custom step editor; unchanged.
+To remove: delete `src/tb4.js`, its line in `build_datapad.py`, and the `TB4on()` hooks; or set the switch false.
+Tests: `bash development/run_all_checks.sh` → `suites=46 failed=0`.
+Live: switch file `campaigns/starwars_litrpg/runs/hask_meadow_r2/features.json` (new file only; ledger untouched,
+revision still 1125). Main Datapad republished (v11); live `view/state` got `features` (v89). Test Datapad v2 + switch.
+Known gap: the test campaign's worker runs code from `staging/mobile-test` (`b2d59bb`), whose export does not publish
+switches yet; merge integration into `staging/mobile-test` before the next real test-worker round trip.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M1 on `tb4/m1-turn-builder` from the integration HEAD.
+Start M2 on `tb4/m2-action-economy` from the integration HEAD (Taunt behind `tb4_taunt`, owner-ratified contested check).
