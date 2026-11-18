@@ -17,14 +17,15 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   const first=q('#intentPlans [data-tb4pick]'),[group,id]=first.dataset.tb4pick.split('|');first.click();await wait(50);
   assert(q(`input[${/objects|reactions/.test(group)?"data-c":"data-g"}="${group}"][value="${id}"]`).checked);
   assert(!q('#mechanicsCatalog').open);
+  // Recommended grants may require explicit targets (e.g. Taunt); start the independent custom-plan case cleanly.
+  q('#clearTurn').click();await wait(50);
   fill('#w_tb4_action','Watch the door while I cover Wick.');await wait(350);
   q('#mechanicsCatalog').open=true;await wait(30);
   fill('#w_tb4_secondary','Signal Wick to keep close.');await wait(350);
   q('[data-tb4style="bold"]').click();await wait(50);
   assert(q('#mechanicsCatalog').open);
   assert.equal(q('#w_tb4_action').value,'Watch the door while I cover Wick.');
-  // Clear the primary and submit a literal custom plan; only mock/local data may change.
-  const clear=d.querySelector('#intentPlans [data-tb4pick="action|"]');if(clear)clear.click();await wait(50);
+  // Submit a literal custom plan; only mock/local data may change.
   assert(!q('#submitTurn').disabled);q('#submitTurn').click();await wait(700);
   const row=Object.entries(w.__store).find(([k])=>k.startsWith('actions/'))[1];
   assert.equal(row.campaign_id,'mobile-test-1');assert.equal(row.preview,true);
