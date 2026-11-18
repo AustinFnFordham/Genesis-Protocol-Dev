@@ -1,0 +1,68 @@
+{
+ "version": 1,
+ "data": {
+  "action_id": "m8e2e-1794970143",
+  "status": "submitted",
+  "created_ms": 1794970184143,
+  "source": "freeform",
+  "contract": "turn-contract/3",
+  "confirmed_warnings": true,
+  "actor": "aero",
+  "campaign_id": "mobile-test-1",
+  "based_on_revision": 14,
+  "ledger_head": "evt_0018",
+  "context_id": "evt_0018",
+  "declaration": {
+   "actions": [],
+   "actor": "aero",
+   "bonus_actions": [],
+   "end_turn": true,
+   "freeform": "I fall back toward Wick and end my turn.",
+   "movement": {
+    "option": "back_to_wick"
+   },
+   "objects": [],
+   "reactions": [],
+   "source": "freeform",
+   "speech": null,
+   "steps": [
+    {
+     "id": "k0",
+     "option": "back_to_wick",
+     "seq": 0,
+     "type": "move"
+    }
+   ],
+   "unmapped": [],
+   "whisper": {
+    "expression": {
+     "style": "controlled",
+     "text": "jaw set, saber up"
+    },
+    "felt_emotion": [
+     "fear"
+    ],
+    "motive": "keep Wick covered",
+    "reflection": null,
+    "schema": "genesis-whisper-context/1",
+    "source": "player_explicit",
+    "visibility": "pc_private"
+   }
+  },
+  "text": "I fall back toward Wick and end my turn.\nWHISPER (private): feels fear; shows: controlled (jaw set, saber up); why: keep Wick covered",
+  "resolution_settings": {
+   "temperature": "regular",
+   "narrative_consequences": false
+  },
+  "gm": {
+   "provider": "claude-session",
+   "route": [
+    {
+     "provider": "claude-session",
+     "by": "player",
+     "at_ms": 1794970184143
+    }
+   ]
+  }
+ }
+}
