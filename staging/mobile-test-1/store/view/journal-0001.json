@@ -1,13 +1,13 @@
 {
- "version": 4,
+ "version": 5,
  "data": {
   "kind": "journal",
   "page": 1,
   "id": "journal-0001",
-  "count": 29,
+  "count": 30,
   "first": "evt_0005",
-  "last": "evt_0049",
-  "hash": "7fb1360937f4d905",
+  "last": "evt_0050",
+  "hash": "da283909ed54d40b",
   "entries": [
    {
     "event_id": "evt_0005",
@@ -211,6 +211,13 @@
     "kind": "whisper_review",
     "knowledge": "belief",
     "text": "WHISPER suggestions after m8e2e-1794970143 (private, not canon)"
+   },
+   {
+    "event_id": "evt_0050",
+    "time": "Sim drill, round 2",
+    "kind": "whisper_response",
+    "knowledge": "belief",
+    "text": "Player's WHISPER answer (edit) to [event reference] (private)"
    }
   ],
   "campaign_id": "mobile-test-1"
