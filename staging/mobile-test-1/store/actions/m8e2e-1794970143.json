@@ -1,5 +1,5 @@
 {
- "version": 5,
+ "version": 6,
  "data": {
   "action_id": "m8e2e-1794970143",
   "status": "processing",
@@ -69,7 +69,12 @@
      "run": "claude-session-1794970172",
      "at_ms": 1794970188892
     }
-   ]
+   ],
+   "released": {
+    "provider": "claude-session",
+    "reason": "released by gmctl",
+    "at_ms": 1794970325095
+   }
   },
   "processing": {
    "run": "claude-session-1794970172",
