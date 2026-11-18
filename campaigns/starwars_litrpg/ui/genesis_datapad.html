@@ -1315,13 +1315,13 @@ var GenesisTB4 = (function () {
   function suggest(c, cat, style, avail) {
     var re = STYLES[style || ""] || null, out = [], seen = {};
     candidates(c, cat).forEach(function (k, i) {
-      var canonicalLabel = String(k.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-      if (seen[canonicalLabel]) return; seen[canonicalLabel] = true;
       var a = (avail || {})[k.key], st = !a ? "known_legal" : /not_here/.test(a.status) ? "blocked" : /needs_step|needs_choice|unknown|risky/.test(a.status) ? "needs_adjudication" : "known_legal";
       var score = (st === "known_legal" ? 20 : st === "needs_adjudication" ? 10 : 0) + (re && re.test(k.id + " " + k.label) ? 5 : 0) - (k.id === "hold" ? 3 : 0);
       out.push({ id: k.id, group: k.group, label: k.label, status: st, reason: a && a.reasons && a.reasons[0] || "", score: score, order: i });
     });
     out.sort(function (x, y) { return y.score - x.score || x.order - y.order || (x.id < y.id ? -1 : 1); });
+    out = out.filter(function (x) { var key = String(x.label).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+      if (seen[key]) return false; seen[key] = true; return true; });
     return out.filter(function (x) { return x.status !== "blocked"; }).slice(0, 4).concat(out.filter(function (x) { return x.status === "blocked"; }).slice(0, 1));
   }
 

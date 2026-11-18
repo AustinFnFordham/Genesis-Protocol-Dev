@@ -18,6 +18,16 @@ const zero = {...c, budget:{...c.budget, action:0, bonus_action:0, movement_ft:0
 assert.equal(TB.plans(zero, {}, availability).length, 0);
 const dup = {mode:'combat', budget:{action:1}, options:[{id:'a',slot:'action',label:'Watch carefully'},{id:'b',slot:'action',label:'Watch carefully'}]};
 assert.equal(TB.plans(dup, {}, {}).length, 1);
+assert.equal(TB.plans(dup, {}, {'action:a':{status:'not_here',reasons:['blocked']},'action:b':{status:'ok'}})[0].id,'b');
+// Composite plans preserve ordinary legality: a defensive action plus a published escape route.
+const bundleContext={actor:'aero',mode:'combat',budget:{action:1,bonus_action:1,movement_ft:30},visible:[{id:'foe',label:'Visible threat',hostile:true}],
+ options:[{id:'dodge',label:'Dodge',slot:'action'}],movement:[{id:'hold',label:'Hold',feet:0},{id:'back',label:'Fall back to cover',feet:10}]};
+const bundle=TB.plans(bundleContext, {}, {})[0];
+assert.equal(bundle.support.id,'back');
+const combo=T.emptyDecl(bundleContext);combo.actions=[{option:bundle.id}];combo.movement={option:bundle.support.id};
+assert(T.validate(combo,bundleContext).legal);
+const noMove={...bundleContext,budget:{...bundleContext.budget,movement_ft:0}};
+assert.equal(TB.plans(noMove, {}, {})[0].support,null);
 const privatePoison = {...c, hidden:{secret:'PRIVATE_POISON'}, whisper:{motive:'PRIVATE_MOTIVE'}};
 assert(!JSON.stringify(TB.plans(privatePoison, {}, availability)).includes('PRIVATE_'));
 // A public blocked option is never promoted by a style preference.
@@ -59,8 +69,8 @@ const MOCK = fs.readFileSync(path.join(__dirname,'test_datapad_ui.cjs'),'utf8').
    assert.equal(await page.locator('#w_tb4_action').inputValue(),text);
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
    // Fresh server context with zero slots: badges and recommendations must agree.
-   await page.evaluate(()=>{const v=window.__store['view/state'];v.turn_context.context_id+='-zero';v.turn_context.budget={action:0,bonus_action:0,reaction:0,object_interaction:0,movement_ft:0};});
-   await page.reload();await page.waitForSelector('#submitTurn');
+   await page.evaluate(()=>{const v=window.__store['view/state'];v.turn_context.context_id+='-zero';v.turn_context.budget={action:0,bonus_action:0,reaction:0,object_interaction:0,movement_ft:0};window.__notify();});
+   await page.waitForTimeout(150);await page.waitForSelector('#submitTurn');
    assert((await page.locator('.composer > .budget').first().innerText()).includes('Action: 0 remaining'));
    assert.equal(await page.locator('#intentPlans [data-tb4pick]').count(),0);
    assert.deepEqual(errors,[]);await ctx.close();
