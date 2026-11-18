@@ -1,0 +1,9 @@
+{
+  "name": "Genesis dev preview (TB4 + WHISPER)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "hostRequirements": { "cpus": 2 },
+  "forwardPorts": [8080],
+  "portsAttributes": { "8080": { "label": "Genesis dev preview", "onAutoForward": "openBrowser", "visibility": "private" } },
+  "postStartCommand": "nohup python3 -B development/preview/serve_preview.py --host 0.0.0.0 --port 8080 > /tmp/genesis-preview.log 2>&1 &",
+  "customizations": { "codespaces": { "openFiles": ["development/TB4_WHISPER_PROGRESS.md"] } }
+}
