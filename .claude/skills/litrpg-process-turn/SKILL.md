@@ -55,6 +55,12 @@ Read first: `campaigns/starwars_litrpg/CAMPAIGN_CHARTER.md`, the run's `hidden/G
   Advantage or Threat may be spent only on effects that follow from committed events; it never creates facts or acts for
   Aero. A retry with the same `roll_key` returns the accepted roll; a new key for the same step and kind is refused (no rerolls).
   Regular/off rows keep `roll.py` exactly as before.
+- **Turn Builder 4 entries (switch `tb4_builder`, 2026-11-17).** `declaration.tb4.custom [{category, text}]` holds the player's
+  literal words per category (action, bonus_action, secondary, movement, object, reaction); the same texts are in `unmapped`.
+  Adjudicate each from its words like any free text: its real cost comes from the rules, never from the category label. A
+  `secondary` entry is supporting conduct, never an extra action or another actor's turn; if it would take the action, bonus
+  action or movement Aero has already used, say so (`needs_revision`) rather than granting it. A `bonus_action` entry is a
+  bonus action only if a feature grants one. Quote the player's words exactly when narrating speech.
 - **Adopting the encounter tracker mid-fight (owner ruling 2026-11-15).** Hask Meadow was already in combat (round 11) before
   the tracker existed. On the first combat turn after this ruling, before anything else in the batch, commit `encounter_start`
   with `round` set to the current round and every participant per §3e (Aero; Wick as `allied_npc`, `control {decides: gm}`,
