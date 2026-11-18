@@ -12,7 +12,7 @@ const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; consol
 // ---- pure ----
 const st = JSON.parse(fs.readFileSync(stateFile));
 const c = st.turn_context;
-ok(!TB4.enabled(st) && !TB4.enabled({ features: { tb4_builder: "yes" } }) && TB4.enabled({ features: { tb4_builder: true } }), "switch: only an explicit true turns TB4 on");
+ok(!TB4.enabled({}) && !TB4.enabled({ features: {} }) && !TB4.enabled({ features: { tb4_builder: "yes" } }) && TB4.enabled({ features: { tb4_builder: true } }), "switch: only an explicit true turns TB4 on");
 const s1 = TB4.suggest(c, "action", "", {}), s2 = TB4.suggest(c, "action", "", {});
 ok(JSON.stringify(s1) === JSON.stringify(s2) && s1.filter((x) => x.status !== "blocked").length <= 4, "suggestions are deterministic and at most four", s1.length);
 const ids = new Set((c.options || []).map((o) => o.id).concat((c.movement || []).map((m) => m.id), (c.objects || []).map((o) => o.id), (c.reactions || []).map((o) => o.id)));
@@ -42,7 +42,7 @@ const MOCK = src.match(/const MOCK = `([\s\S]*?)`;/)[1];
     async function open(features, vp) {
       const page = await (await browser.newContext({ viewport: vp || { width: 820, height: 1180 }, hasTouch: true })).newPage();
       const errors = []; page.on("pageerror", (e) => errors.push(e.message));
-      const state = JSON.parse(JSON.stringify(st)); if (features) state.features = features; state.processor = null;
+      const state = JSON.parse(JSON.stringify(st)); delete state.features; if (features) state.features = features; state.processor = null;
       await page.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock: MOCK, st: state });
       await page.goto("file://" + path.resolve(pageFile)); await page.waitForSelector("#submitTurn");
       return { page, errors };

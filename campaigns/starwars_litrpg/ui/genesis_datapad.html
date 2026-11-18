@@ -1457,8 +1457,8 @@ var GenesisWhisper = (function () {
       '<label><small>Why: Aero’s intention or motive</small><input class="txt" id="w_wh_motive" data-wh="motive" placeholder="e.g. protect Wick, not prove anything" value="' + esc(w.motive) + '"></label>' +
       '<label><small>Private reflection (only you and the GM)</small><textarea id="w_wh_reflection" data-wh="reflection" rows="2">' + esc(w.reflection) + "</textarea></label>" +
       '<details class="whatif" id="whatIf"><summary>What if…? (thought experiments, not Aero’s thoughts)</summary><div class="note">Reading these records nothing. Use one only if you want it as your own reflection; doing something is a separate choice in your turn.</div><ul>' +
-      WHAT_IF[mode].map(function (t, i) { return '<li>' + esc(t) + ' <button type="button" class="btn mini" data-whadopt="' + mode + ":" + i + '">Use as my reflection</button></li>'; }).join("") + "</ul></details>" +
-      (filled ? '<button type="button" class="btn mini" id="whClear">Clear (back to not stated)</button>' : "") + "</details>";
+      WHAT_IF[mode].map(function (t, i) { return '<li>' + esc(t) + ' <button type="button" class="chip mini" data-whadopt="' + mode + ":" + i + '">Use as my reflection</button></li>'; }).join("") + "</ul></details>" +
+      (filled ? '<button type="button" class="chip mini" id="whClear">Clear (back to not stated)</button>' : "") + "</details>";
   }
   function summary(sel) {
     var c = context(sel); if (!c) return "";
