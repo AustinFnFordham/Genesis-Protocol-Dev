@@ -695,7 +695,12 @@ class Gateway:
                 return {"session": all_events[-1].get("session", 1), "turn_no": turn_no, "world_time": proposal["world_time"],
                         "kind": kind, "summary": summary, "actor": actor, "visibility": visibility, "knowledge_type": "fact",
                         "known_to": [], "caused_by": causes or [], "roll_ids": rolls or [], "tags": [], "details": details}
-            details = {"action_id": action_id, "text": row.get("text", ""), "declaration": row.get("declaration")}
+            declaration, whisper_ctx = row.get("declaration"), None
+            if isinstance(declaration, dict) and "whisper" in declaration:   # WHISPER context is PC-private: GM-only event
+                whisper_ctx = declaration["whisper"]
+                declaration = {k: v for k, v in declaration.items() if k != "whisper"}
+            public_text = "\n".join(line for line in str(row.get("text", "")).split("\n") if not line.startswith("WHISPER (private):"))
+            details = {"action_id": action_id, "text": public_text, "declaration": declaration}
             if policy.settings(row) != policy.DEFAULT:
                 details["resolution_settings"] = policy.settings(row)
             drafts = [event("player_declaration", f"{row['actor']}'s declaration {action_id}", details, actor=row["actor"]),
@@ -703,6 +708,9 @@ class Gateway:
                             dict(op["tables"]["value"], gm_provider={"committed_by": provider, "runs": [r["provider"] for r in op["runs"]],
                                                            "identities": [dict(r.get("identity") or {}, provider=r["provider"], run=r["run"]) for r in op["runs"]]}),
                             "gm_only", causes=["$1"])]
+            if whisper_ctx is not None:
+                drafts.append(event("whisper_context", f"Player's private WHISPER context for {action_id}",
+                                    {"action_id": action_id, "context": whisper_ctx}, "gm_only", actor=row["actor"], causes=["$1"]))
             for draft in proposal["events"]:
                 rolls = [op["rolls"][k]["result"]["roll_id"] for k in draft.get("roll_keys", [])]
                 drafts.append(event(draft["kind"], str(draft.get("summary") or draft["kind"]), draft.get("details") or {},
