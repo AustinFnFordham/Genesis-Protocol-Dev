@@ -318,6 +318,48 @@ class Interchange(Base):
         self.assertIn("claude private table", ruling["details"]["tables"])
         self.healthy()
 
+    def test_tb4_recovery_001_turn_builder_and_whisper_survive_a_crash_and_handoff(self):
+        """TB4-22 / TB4-RECOVERY-001: TB4 custom words, Taunt fields and WHISPER context ride through a crash and a
+        provider handoff unchanged; dice are not rerolled; exactly one result; WHISPER stays out of the public ledger."""
+        self.n += 1
+        action = staging.declare(self.gw, f"stage-{self.n:04d}", text=INSPECT, provider="claude")
+        tb4 = {"schema": "genesis-turn-builder/4", "custom": [{"category": "secondary", "text": "Keep one eye on the door, verbatim."}],
+               "taunt": {"target": None, "skill": "deception", "words": "You call that a drill?"}}
+        whisper = {"schema": "genesis-whisper-context/1", "source": "player_explicit", "visibility": "pc_private",
+                   "felt_emotion": ["doubt"], "expression": "unspecified", "motive": "learn what the remote hides", "reflection": None}
+        action["declaration"]["tb4"] = tb4
+        action["declaration"]["whisper"] = whisper
+        action["declaration"]["unmapped"] = list(action["declaration"].get("unmapped", [])) + ["Keep one eye on the door, verbatim."]
+        self.gw.submit(action)
+        def crash(kind, move):
+            if kind == "commit":
+                raise KeyboardInterrupt("worker killed before commit")
+        with self.assertRaises(KeyboardInterrupt):
+            run_turn(self.gw, script("claude"), run="run-a", interrupt=crash)
+        rolls = self.rolls_for(action["action_id"])
+        dice = (self.gw.campaign / "hidden/dice_state.json").read_bytes()
+        self.clock.expire(self.gw)
+        self.gw.reroute(action["action_id"], "gpt")
+        seen = {}
+        def watch(move, context):
+            seen["declaration"] = context["declaration"]
+            return None
+        out = run_turn(self.gw, script("gpt", watch), run="run-b")
+        self.assertEqual(out["outcome"], "committed", out)
+        self.assertEqual(seen["declaration"]["tb4"], tb4, "the successor sees the player's TB4 words unchanged")
+        self.assertEqual(seen["declaration"]["whisper"], whisper, "and the private context, GM-side")
+        self.assertEqual(self.rolls_for(action["action_id"]), rolls)
+        self.assertEqual((self.gw.campaign / "hidden/dice_state.json").read_bytes(), dice)
+        public = ledger.read_jsonl(self.gw.campaign / "records/events.jsonl")
+        decls = [e for e in public if e["kind"] == "player_declaration" and e["details"]["action_id"] == action["action_id"]]
+        self.assertEqual(len(decls), 1, "exactly one accepted declaration")
+        self.assertEqual(decls[0]["details"]["declaration"]["tb4"], tb4)
+        self.assertNotIn("whisper", decls[0]["details"]["declaration"])
+        hidden = [e for e in ledger.read_jsonl(self.gw.campaign / "hidden/events.jsonl") if e["kind"] == "whisper_context"]
+        self.assertEqual(len(hidden), 1)
+        self.assertEqual(run_turn(self.gw, script("gpt"))["outcome"], "nothing", "nothing left to resolve twice")
+        self.healthy()
+
     def test_successor_cannot_replace_tables_or_reroll(self):
         action, _ = self.act(INSPECT, provider="claude")
         self.gw.claim("claude", "run-a")

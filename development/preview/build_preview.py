@@ -65,7 +65,8 @@ BANNER = """<div id="devEnvBanner" role="note" style="position:sticky;top:0;z-in
 padding:8px max(16px,env(safe-area-inset-left,0px));font:13px/1.4 system-ui,sans-serif">
 <b>Genesis Development / Test Environment</b> · milestone <b>__MILESTONE__</b> · code <code>__SHA__</code> · fixture <b>__FIXTURE__</b> (noncanonical)
 <details style="margin-top:4px"><summary>Features and limits</summary><div>__FEATURES__</div>
-<div style="margin-top:4px"><button type="button" onclick="window.__resetPreview()" style="font:inherit">Reset preview state</button></div></details></div>"""
+<div style="margin-top:4px"><button type="button" onclick="window.__resetPreview()" style="font:inherit">Reset preview state</button>
+ · <a href="diagnostics.html" style="color:inherit">WHISPER / evidence / causal diagnostics</a></div></details></div>"""
 
 
 def git_sha():
@@ -82,6 +83,35 @@ def features_html(features):
         rows.append(f"<li><b>{f['name']}</b> — {state}. {f['note']}</li>")
     rows.append("<li><b>Not available here</b> — " + "; ".join(features["unavailable"]) + ".</li>")
     return "<ul style='margin:4px 0;padding-left:18px'>" + "".join(rows) + "</ul>"
+
+
+def diagnostics_page(sha, milestone):
+    """Static read-out of the pure evaluators (M4–M6) on their noncanonical fixtures. No model calls."""
+    import html as H
+    sys.path.insert(0, str(ROOT / "development/whisper")); sys.path.insert(0, str(ROOT / "development/causal"))
+    import evidence, appraisal, causal  # noqa: E402
+    W = ROOT / "development/whisper/fixtures"
+    cmp = json.loads((W / "cmp001_ten_missing_crates.json").read_text())
+    envs = evidence.envelopes(cmp["events"], cmp["entities"])
+    rows = []
+    for who in ("player", ("npc", "dockworker_7"), ("npc", "neri"), ("npc", "smuggler_kesh")):
+        got = evidence.retrieve(envs, who)
+        rows.append(f"<h3>{H.escape(str(who))}</h3><ul>" + "".join(
+            f"<li><code>{x['source_event']}</code> <b>{x['type']}</b>{' (retracted)' if x.get('retracted') else ''} — {H.escape(x['summary'] or '')}</li>" for x in got) + ("</ul>" if got else "<li>nothing</li></ul>"))
+    moral = json.loads((W / "tb4_moral_001.json").read_text())["cases"]
+    mrows = "".join(f"<tr><td>{H.escape(k)}</td><td>{H.escape(appraisal.moral(v)['finding'])}</td><td>{H.escape(appraisal.psychological(v)[0]['candidate'])}</td></tr>" for k, v in moral.items())
+    cf = json.loads((ROOT / "development/causal/fixtures/causal_fixture.json").read_text())
+    snap = {"relationships": cf["relationships"], "facts": cf["facts"]}
+    ev = {"event_id": "evt_0900", "kind": "attack_resolved", "accepted": True, "actor": "aero", "known_to": ["aero", "wick", "mira"],
+          "details": {"attacker": "aero", "target": "thug", "moral_finding": "unjustified_harm"}}
+    r = causal.resolve(ev, snap, cf["rules"])
+    crow = "<pre style='white-space:pre-wrap'>" + H.escape(json.dumps(r, indent=1)) + "</pre>"
+    return ("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Genesis diagnostics</title>"
+            "<body style='font:15px/1.5 system-ui,sans-serif;max-width:860px;margin:auto;padding:16px'>"
+            f"<p style='background:#3b2f00;color:#ffe9a8;padding:8px'><b>Genesis Development / Test Environment</b> · {milestone} · code <code>{sha}</code> · noncanonical fixtures · pure evaluators, nothing is committed</p>"
+            "<p><a href='./'>← back to the preview Datapad</a></p><h2>Algorithm A — who knows what (CMP-001 Ten Missing Crates)</h2>" + "".join(rows) +
+            "<h2>Algorithm B — appraisal candidates (TB4-MORAL-001)</h2><table border=1 cellpadding=4 style='border-collapse:collapse'><tr><th>case</th><th>moral finding</th><th>PC candidate (proposed)</th></tr>" + mrows + "</table>"
+            "<h2>Algorithm C — causal proposals (Aero strikes a surrendered thug; Wick and Mira watch)</h2>" + crow + "</body>")
 
 
 def build(milestone=None, out=None):
@@ -107,6 +137,7 @@ def build(milestone=None, out=None):
     out = Path(out or Path(__file__).with_name("out"))
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(page)
+    (out / "diagnostics.html").write_text(diagnostics_page(sha, milestone))
     (out / "build.json").write_text(json.dumps({"milestone": milestone, "code_commit": sha, "fixture": FIXTURE_ID}, indent=1))
     return out / "index.html"
 
