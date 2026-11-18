@@ -52,7 +52,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 ## Milestones
 | # | Status | Branch / commits | Integration merge | Live? |
 |---|---|---|---|---|
-| M0 Baseline, fixtures, preview | COMPLETE (see below) | `tb4/m0-baseline` | see log | Not needed (dev tooling only) |
+| M0 Baseline, fixtures, preview | COMPLETE | `tb4/m0-baseline` @ `37a102b` | `2598d59` | Not needed (dev tooling only) |
 | M1 Turn Builder 4 UI | NOT STARTED | | | |
 | M2 Action economy, Taunt | NOT STARTED | | | |
 | M3 WHISPER context | NOT STARTED | | | |
