@@ -54,6 +54,12 @@ MOCK = r"""
       .sort(function(a, b){ return (b.data().created_ms || 0) - (a.data().created_ms || 0); }) }); }; subs.push(f); setTimeout(f, 5); return function(){}; },
     doc: function(id){ return ref(c + "/" + (id || Math.random().toString(36).slice(2))); } }; return q; }
   function previewGm(p){ setTimeout(function(){ var a = store[p]; if (!a || a.status !== "submitted") return;
+    if (a.kind === "whisper_response") { var v = store["view/state"], w = a.whisper, pend = v.whisper && v.whisper.pending;
+      if (pend) { if (["accept", "edit", "custom"].indexOf(w.choice) >= 0) { var c = pend.candidates.filter(function(x){ return x.candidate_id === w.candidate_id; })[0];
+          v.whisper.history.push({ text: w.text || (c && c.proposed), theme: c ? c.theme : "custom", player_confirmed: true }); }
+        if (w.choice !== "defer") pend.candidates = pend.candidates.filter(function(x){ return w.candidate_id && x.candidate_id !== w.candidate_id; });
+        if (!pend.candidates.length) v.whisper.pending = null; }
+      a.status = "committed"; a.preview = true; notify(); return; }
     a.status = "failed"; a.error = "Preview only: no GM is attached to this page. Your declaration was kept exactly as submitted."; a.preview = true; notify(); }, 400); }
   var db = { doc: ref, collection: coll };
   var mcp = { callTool: function(){ return Promise.reject({ code: "preview_no_gm", message: "Development preview: no GM attached" }); } };
@@ -125,6 +131,13 @@ def build(milestone=None, out=None):
     state["processor"] = None
     state["preview_features"] = {f["id"]: f["enabled"] for f in features["features"]}
     state["features"] = {f["id"]: f["enabled"] for f in features["features"] if f["id"] in export_state.FEATURE_SWITCHES}
+    if state["features"].get("whisper_review"):   # sample review from the TB4-MORAL-001 fixture (noncanonical)
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import post_turn
+        cases = json.loads((ROOT / "development/whisper/fixtures/tb4_moral_001.json").read_text())["cases"]
+        review = post_turn.propose(cases["failed_rescue"], [])
+        state["whisper"] = {"pending": {"review_id": "preview_review", "action_id": review["action_id"], "candidates": review["candidates"],
+                                        "note": review["note"] + " (Preview sample from a test fixture.)"}, "history": []}
     seed = {"view/state": state}
     html = PAGE.read_text()
     title_end = html.index("</title>") + len("</title>")

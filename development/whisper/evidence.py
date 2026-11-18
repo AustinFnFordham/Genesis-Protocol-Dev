@@ -31,7 +31,10 @@ def envelopes(events, entities=None):
                 "visibility": e.get("visibility", "player"), "known_to": list(e.get("known_to") or []),
                 "content": {k: d[k] for k in ("subject", "predicate", "object") if k in d}, "summary": e.get("summary")}
         kt, kind = e.get("knowledge_type"), e.get("kind")
-        if kind == "whisper_context":
+        if kind in ("whisper_review", "whisper_response"):   # the PC's private review lane: player only, never NPCs
+            out.append(dict(base, id=e["event_id"] + ":intention", type="intention", visibility="pc_private",
+                            provenance="player_explicit" if kind == "whisper_response" else "whisper_candidate", content={}))
+        elif kind == "whisper_context":
             out.append(dict(base, id=e["event_id"] + ":intention", type="intention", visibility="pc_private",
                             provenance="player_explicit", content={"context": d.get("context")}))
         elif kt == "report":
@@ -98,8 +101,17 @@ def knows(envs, actor):
 
 if __name__ == "__main__":   # diagnostic: python3 evidence.py fixtures/cmp001_ten_missing_crates.json player|gm|npc:<id>
     import json, sys
-    fx = json.loads(open(sys.argv[1]).read())
+    from pathlib import Path
+    src = Path(sys.argv[1])
+    if src.is_dir():   # a campaign run directory: read its whole ledger (GM-side tool)
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / ".claude/skills/litrpg-ledger"))
+        import ledger
+        fx = {"events": ledger.load_all(src)}
+    else:
+        fx = json.loads(src.read_text())
     who = sys.argv[2] if len(sys.argv) > 2 else "player"
     viewer = ("npc", who[4:]) if who.startswith("npc:") else who
     for x in retrieve(envelopes(fx["events"], fx.get("entities")), viewer):
+        if isinstance(viewer, tuple) and x["type"] == "intention":
+            continue
         print(f"{x['source_event']}  {x['type']:<11} {'(retracted) ' if x.get('retracted') else ''}{x['summary']}")

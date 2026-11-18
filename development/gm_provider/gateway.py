@@ -447,10 +447,32 @@ class Gateway:
                 "public_context": public_context, "revision": state["revision"], "ledger_head": state["ledger_head"],
                 "brief": brief.compact(gm_brief), "recent_private": [{k: e.get(k) for k in ("event_id", "kind", "summary", "details")} for e in hidden[-12:]],
                 "npc_last_evaluations": self._npc_last(),
+                **({"npc_knowledge": k} if (k := self._npc_knowledge()) is not None else {}),
                 "resolution": {"engine": "experimental" if self._marker() else "legacy", "settings": policy.settings(row)},
                 "operation": {"phase": self.phase(op, row), "tables": op["tables"] and op["tables"]["value"],
                               "rolls": {k: v["result"] for k, v in op["rolls"].items()},
                               "previous_runs": [{"provider": r["provider"], "took_over_at": r["took_over_at"]} for r in op["runs"][:-1]]}}
+
+    def _npc_knowledge(self, limit=15):
+        """Owner decision 3 (switch npc_knowledge): per NPC, only what it witnessed, heard, authored or was part of,
+        typed (fact / claim / speech / observation / belief / attempt / outcome) and cited. Never the player's WHISPER
+        context or review, never GM-only facts the NPC was not part of. Use this, not the whole record, when deciding
+        what an NPC knows, says or does."""
+        if not self._switch("npc_knowledge"):
+            return None
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import evidence
+        events = ledger.load_all(self.campaign)
+        envs = evidence.envelopes(events)
+        skip = {"aero", "gm", "owner", None, ""}
+        npcs = sorted({w for e in events for w in (e.get("known_to") or [])} | {e.get("actor") for e in events} - skip)
+        out = {}
+        for npc in npcs[:24]:
+            known = [x for x in evidence.knows(envs, npc) if x["type"] != "intention"]
+            out[npc] = [{"event_id": x["source_event"], "type": x["type"], "summary": x["summary"], "provenance": x["provenance"],
+                         **({"retracted": True} if x.get("retracted") else {})} for x in known[-limit:]]
+        return {"rule": "An NPC may act only on what its own list supports; a claim is not a fact; nothing outside its list.",
+                "by_npc": out}
 
     def _npc_last(self):
         out = {}
@@ -553,7 +575,9 @@ class Gateway:
         self._stage((key, version, row), lock, run, "dice")
         purpose = f"[{row['action_id']}] {clean['purpose']}"
         if self._marker():
-            action = dict(self._identity(row), campaign_id=self.id)
+            # the player's confirmation of a known risk is part of what they submitted; without it a legal turn with a
+            # warning (e.g. an opportunity attack) could never roll (found on the test campaign, 2026-11-18)
+            action = dict(self._identity(row), campaign_id=self.id, confirmed_warnings=bool(row.get("confirmed_warnings")))
             try:
                 result = engine.execute(self.campaign, row["action_id"], action, dict(clean, mode=clean.get("mode", "normal"),
                                         rule_sources=clean.get("rule_sources") or ["GM ruling"],
@@ -691,10 +715,10 @@ class Gateway:
                 raise Refused("PROPOSAL_REJECTED", "the proposal failed the shared validators; nothing was written", problems=problems)
             all_events = ledger.load_all(self.campaign)
             turn_no = json.loads((self.campaign / "hidden/dice_state.json").read_text())["turn_no"]
-            def event(kind, summary, details, visibility="player", actor="gm", causes=None, rolls=None):
+            def event(kind, summary, details, visibility="player", actor="gm", causes=None, rolls=None, known_to=None, knowledge="fact"):
                 return {"session": all_events[-1].get("session", 1), "turn_no": turn_no, "world_time": proposal["world_time"],
-                        "kind": kind, "summary": summary, "actor": actor, "visibility": visibility, "knowledge_type": "fact",
-                        "known_to": [], "caused_by": causes or [], "roll_ids": rolls or [], "tags": [], "details": details}
+                        "kind": kind, "summary": summary, "actor": actor, "visibility": visibility, "knowledge_type": knowledge,
+                        "known_to": list(known_to or []), "caused_by": causes or [], "roll_ids": rolls or [], "tags": [], "details": details}
             declaration, whisper_ctx = row.get("declaration"), None
             if isinstance(declaration, dict) and "whisper" in declaration:   # WHISPER context is PC-private: GM-only event
                 whisper_ctx = declaration["whisper"]
@@ -713,8 +737,16 @@ class Gateway:
                                     {"action_id": action_id, "context": whisper_ctx}, "gm_only", actor=row["actor"], causes=["$1"]))
             for draft in proposal["events"]:
                 rolls = [op["rolls"][k]["result"]["roll_id"] for k in draft.get("roll_keys", [])]
+                # Who perceived it and what kind of knowledge it is (owner decision 3): exposure records for NPC knowledge.
+                known_to = draft.get("known_to") or []
+                if not (isinstance(known_to, list) and all(isinstance(w, str) and w for w in known_to)):
+                    raise Refused("PROPOSAL_REJECTED", "known_to is a list of actor ids")
+                knowledge = draft.get("knowledge_type", "fact")
+                if knowledge not in ledger.KNOWLEDGE:
+                    raise Refused("PROPOSAL_REJECTED", f"knowledge_type is one of {sorted(ledger.KNOWLEDGE)}")
                 drafts.append(event(draft["kind"], str(draft.get("summary") or draft["kind"]), draft.get("details") or {},
-                                    draft.get("visibility", "player"), draft.get("actor", "gm"), draft.get("caused_by") or ["$1"], rolls))
+                                    draft.get("visibility", "player"), draft.get("actor", "gm"), draft.get("caused_by") or ["$1"], rolls,
+                                    known_to, knowledge))
             count = len(drafts)
             drafts.append(event("gm_narration", f"Narration for {action_id}", {"text": proposal["narration"]}, causes=["$1"]))
             if isinstance(proposal.get("scene_state"), dict):
@@ -764,12 +796,7 @@ class Gateway:
             raise Refused("ENCOUNTER_RECORD", f"the committed encounter record does not fold: {error.message}")
         if problems:
             raise Refused("RECORD_REFUSED", problems[0]["message"], problems=problems)
-        run = f"owner-{now}"
-        lock = {"holder": run, "provider": "owner", "expires_ms": now + self.lease_ms, "acquired_ms": now}
-        try:
-            self.store.put("locks/" + self.id, lock, version)
-        except Conflict:
-            raise Refused("PROVIDER_BUSY", "the lease changed hands")
+        run, lock = self._side_lock(now, version)
         last = all_events[-1]
         shape = lambda k, summary, d, causes=None: {"session": last.get("session", 1), "turn_no": last.get("turn_no", 0), "world_time": last.get("world_time", ""),
                                                     "kind": k, "summary": summary, "actor": by, "visibility": "player", "knowledge_type": "fact",
@@ -786,7 +813,21 @@ class Gateway:
             if tracker:
                 context["encounter"] = tracker
             drafts.append(shape("turn_context", f"Turn context after the {kind.replace('_', ' ')} record", context, ["$1"]))
-        request = {"batch_id": f"{kind}-{now}", "expected_revision": len(all_events), "expected_head": last["event_id"], "events": drafts}
+        result, documents = self._side_commit(run, lock, all_events, drafts, f"{kind}-{now}")
+        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"], "encounter": encounter.public(after)}
+
+    # ---- records made between turns, without a provider (owner records, WHISPER player answers) ----
+    def _side_lock(self, now, version):
+        run = f"owner-{now}"
+        lock = {"holder": run, "provider": "owner", "expires_ms": now + self.lease_ms, "acquired_ms": now}
+        try:
+            self.store.put("locks/" + self.id, lock, version)
+        except Conflict:
+            raise Refused("PROVIDER_BUSY", "the lease changed hands")
+        return run, lock
+
+    def _side_commit(self, run, lock, all_events, drafts, batch_id):
+        request = {"batch_id": batch_id, "expected_revision": len(all_events), "expected_head": all_events[-1]["event_id"], "events": drafts}
         lease = self._lease_file(lock)
         try:
             result = batch.apply(self.campaign, request, lease, run, ledger)
@@ -805,7 +846,64 @@ class Gateway:
         state_version, current = self.store.read("view/state")
         if current != documents["state"]:
             self.store.put("view/state", documents["state"], state_version)
-        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"], "encounter": encounter.public(after)}
+        return result, documents
+
+    def _switch(self, name):
+        path = self.campaign / "features.json"
+        return path.exists() and json.loads(path.read_text()).get("switches", {}).get(name) is True
+
+    def whisper(self, op, **kw):
+        """WHISPER post-turn review (switch whisper_review; owner decisions 1-2, 2026-11-17).
+        op "review": propose candidates for a committed action (deterministic; nothing about the PC changes).
+        op "respond": record the player's accept / edit / reject / defer / custom answer. Both between turns only."""
+        sys.path.insert(0, str(ROOT / "development/whisper"))
+        import post_turn
+        if not self._switch("whisper_review"):
+            raise Refused("SWITCH_OFF", "WHISPER review is switched off for this campaign")
+        if self._in_flight():
+            raise Refused("TURN_IN_FLIGHT", "WHISPER records are made between turns")
+        now = self.clock()
+        version, lock = self._lock()
+        if lock and lock.get("holder") and lock.get("expires_ms", 0) > now:
+            raise Refused("PROVIDER_BUSY", "a GM run holds the campaign lease")
+        all_events = ledger.load_all(self.campaign)
+        public = [e for e in all_events if e.get("visibility") != "gm_only"]
+        if op == "review":
+            action_id = kw["action_id"]
+            if any(e["kind"] == post_turn.REVIEW and (e.get("details") or {}).get("action_id") == action_id for e in public):
+                return {"recorded": None, "reason": "already reviewed"}
+            idx = [i for i, e in enumerate(public) if e["kind"] == "player_declaration" and (e.get("details") or {}).get("action_id") == action_id]
+            if not idx:
+                raise Refused("UNKNOWN_ACTION", "no committed declaration for that action")
+            start = idx[0]
+            end = next((i for i in range(start + 1, len(public)) if public[i]["kind"] == "player_declaration"), len(public))
+            hidden_ctx = next((e["details"]["context"] for e in all_events if e["kind"] == "whisper_context"
+                               and (e.get("details") or {}).get("action_id") == action_id), None)
+            action_events = [dict(e) for e in public[start:end]]
+            if hidden_ctx:   # the player's own start-of-turn context, read GM-side, never published by this
+                action_events[0] = dict(action_events[0], details=dict(action_events[0]["details"], whisper=hidden_ctx))
+            review = post_turn.propose(action_events, public[:start])
+            if not review:
+                return {"recorded": None, "reason": "not a consequential turn for the PC"}
+            kind, details, summary = post_turn.REVIEW, review, f"WHISPER suggestions after {action_id} (private, not canon)"
+        elif op == "respond":
+            rev = next((e for e in public if e["event_id"] == kw["review_id"] and e["kind"] == post_turn.REVIEW), None)
+            if not rev:
+                raise Refused("UNKNOWN_REVIEW", "no such WHISPER review")
+            try:
+                details = post_turn.response(rev, kw.get("candidate_id"), kw["choice"], kw.get("text"))
+            except ValueError as error:
+                raise Refused("BAD_RESPONSE", str(error))
+            kind, summary = post_turn.RESPONSE, f"Player's WHISPER answer ({details['choice']}) to {kw['review_id']} (private)"
+        else:
+            raise Refused("BAD_RECORD", "op is review or respond")
+        run, lock = self._side_lock(now, version)
+        last = all_events[-1]
+        draft = {"session": last.get("session", 1), "turn_no": last.get("turn_no", 0), "world_time": last.get("world_time", ""),
+                 "kind": kind, "summary": summary, "actor": "aero", "visibility": "player", "knowledge_type": "belief",
+                 "known_to": ["aero"], "caused_by": [], "roll_ids": [], "tags": ["pc_private", "whisper"], "details": details}
+        result, documents = self._side_commit(run, lock, all_events, [draft], f"{kind}-{now}")
+        return {"recorded": kind, "events": result["events"], "revision": documents["state"]["revision"]}
 
     def publish(self, provider, run):
         """Finish publication of a resolved action. Mechanical: any provider's run may do it; nothing is authored."""
