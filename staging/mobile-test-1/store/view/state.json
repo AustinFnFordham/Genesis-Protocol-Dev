@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "data": {
   "experimental_resolution": {
    "enabled": true,
@@ -12,27 +12,21 @@
    "whisper_review": true
   },
   "whisper": {
-   "pending": {
-    "review_id": "evt_0049",
-    "action_id": "m8e2e-1794970143",
-    "candidates": [
-     {
-      "candidate_id": "wc_cec6479714",
-      "theme": "stated_feeling_after",
-      "kind": "temporary",
-      "proposed": "Still fear — or not, after how it went.",
-      "explanation": "You said he felt fear going in.",
-      "evidence": [
-       "evt_0025"
-      ],
-      "uses_player_context": [
-       "felt_emotion"
-      ]
-     }
-    ],
-    "note": "Suggestions only. Nothing changes for Aero unless you accept, edit or write your own."
-   },
-   "history": []
+   "pending": null,
+   "history": [
+    {
+     "entry_id": "evt_0050",
+     "theme": "stated_feeling_after",
+     "kind": "temporary",
+     "text": "The fear is gone; what is left is cold focus and a bite that will not stop bleeding.",
+     "sources": [
+      "evt_0025"
+     ],
+     "review_id": "evt_0049",
+     "world_time": "Sim drill, round 2",
+     "player_confirmed": true
+    }
+   ]
   },
   "contest_declaration": {
    "event_id": "evt_0019",
@@ -593,8 +587,8 @@
     }
    ]
   },
-  "revision": 40,
-  "ledger_head": "evt_0049",
+  "revision": 41,
+  "ledger_head": "evt_0050",
   "turn_no": 2,
   "scene": {
    "title": "Sim Deck: Drill Seven (TEST, not canon)",
@@ -846,6 +840,13 @@
     "kind": "whisper_review",
     "knowledge": "belief",
     "text": "WHISPER suggestions after m8e2e-1794970143 (private, not canon)"
+   },
+   {
+    "event_id": "evt_0050",
+    "time": "Sim drill, round 2",
+    "kind": "whisper_response",
+    "knowledge": "belief",
+    "text": "Player's WHISPER answer (edit) to [event reference] (private)"
    }
   ],
   "suggestions": [],
@@ -1101,25 +1102,25 @@
     ]
    },
    "journal": {
-    "total": 29,
-    "shown": 29,
+    "total": 30,
+    "shown": 30,
     "omitted": 0,
     "first_shown": "evt_0005",
     "pages": [
      {
       "id": "journal-0001",
-      "count": 29,
+      "count": 30,
       "first": "evt_0005",
-      "last": "evt_0049",
-      "hash": "7fb1360937f4d905"
+      "last": "evt_0050",
+      "hash": "da283909ed54d40b"
      }
     ],
     "observations": 0
    },
    "budget_bytes": 96000,
    "target_bytes": 84000,
-   "bytes": 23373,
-   "revision": 40,
+   "bytes": 23404,
+   "revision": 41,
    "page_budget_bytes": 150000,
    "dice_history": {
     "total": 5,
