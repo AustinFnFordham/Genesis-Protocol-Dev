@@ -1,8 +1,8 @@
 {
- "version": 12,
+ "version": 13,
  "data": {
   "action_id": "m8e2e-1794970143",
-  "status": "processing",
+  "status": "resolved",
   "created_ms": 1794970184143,
   "source": "freeform",
   "contract": "turn-contract/3",
@@ -84,16 +84,52 @@
   "processing": {
    "run": "claude-session-1794971037",
    "started_ms": 1794971042095,
-   "heartbeat_ms": 1794971203555,
-   "lease_ms": 595852,
-   "stage": "ledger",
-   "stage_started_ms": 1794971203555,
+   "heartbeat_ms": 1794971207613,
+   "lease_ms": 591794,
+   "stage": "narration",
+   "stage_started_ms": 1794971207613,
    "stages": {
     "claimed": 1794971042095,
     "context": 1794971046382,
     "dice": 1794971104461,
-    "ledger": 1794971203555
+    "ledger": 1794971203555,
+    "narration": 1794971207613
    }
+  },
+  "ledger_events": [
+   "evt_0019",
+   "evt_0020",
+   "evt_0021",
+   "evt_0022",
+   "evt_0023",
+   "evt_0024",
+   "evt_0025",
+   "evt_0026",
+   "evt_0027",
+   "evt_0028",
+   "evt_0029",
+   "evt_0030",
+   "evt_0031",
+   "evt_0032",
+   "evt_0033",
+   "evt_0034",
+   "evt_0035",
+   "evt_0036",
+   "evt_0037",
+   "evt_0038",
+   "evt_0039",
+   "evt_0040",
+   "evt_0041",
+   "evt_0042",
+   "evt_0043",
+   "evt_0044",
+   "evt_0045",
+   "evt_0046",
+   "evt_0047",
+   "evt_0048"
+  ],
+  "publication": {
+   "status": "pending"
   }
  }
 }
