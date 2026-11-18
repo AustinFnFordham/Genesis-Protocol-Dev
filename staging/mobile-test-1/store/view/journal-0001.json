@@ -1,13 +1,13 @@
 {
- "version": 3,
+ "version": 4,
  "data": {
   "kind": "journal",
   "page": 1,
   "id": "journal-0001",
-  "count": 28,
+  "count": 29,
   "first": "evt_0005",
-  "last": "evt_0045",
-  "hash": "a4bf2a3ef5f42976",
+  "last": "evt_0049",
+  "hash": "7fb1360937f4d905",
   "entries": [
    {
     "event_id": "evt_0005",
@@ -204,6 +204,13 @@
     "kind": "turn_start",
     "knowledge": "fact",
     "text": "Round 2: Aero's turn."
+   },
+   {
+    "event_id": "evt_0049",
+    "time": "Sim drill, round 2",
+    "kind": "whisper_review",
+    "knowledge": "belief",
+    "text": "WHISPER suggestions after m8e2e-1794970143 (private, not canon)"
    }
   ],
   "campaign_id": "mobile-test-1"
