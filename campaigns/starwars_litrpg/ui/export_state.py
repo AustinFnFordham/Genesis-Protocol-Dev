@@ -230,6 +230,9 @@ def build(ev=None, campaign_dir=None, campaign_id=None):
         known = {k: raw[k] for k in FEATURE_SWITCHES if isinstance(raw.get(k), bool)}
         if known:
             experimental["features"] = known
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import tb4_rules  # removable TB4 grants behind owner switches
+            turn_context = tb4_rules.apply_switches(turn_context, known)
     return {
         **experimental,
         "contest_declaration": contest,
