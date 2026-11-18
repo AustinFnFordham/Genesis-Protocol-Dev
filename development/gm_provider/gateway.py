@@ -575,7 +575,9 @@ class Gateway:
         self._stage((key, version, row), lock, run, "dice")
         purpose = f"[{row['action_id']}] {clean['purpose']}"
         if self._marker():
-            action = dict(self._identity(row), campaign_id=self.id)
+            # the player's confirmation of a known risk is part of what they submitted; without it a legal turn with a
+            # warning (e.g. an opportunity attack) could never roll (found on the test campaign, 2026-11-18)
+            action = dict(self._identity(row), campaign_id=self.id, confirmed_warnings=bool(row.get("confirmed_warnings")))
             try:
                 result = engine.execute(self.campaign, row["action_id"], action, dict(clean, mode=clean.get("mode", "normal"),
                                         rule_sources=clean.get("rule_sources") or ["GM ruling"],
