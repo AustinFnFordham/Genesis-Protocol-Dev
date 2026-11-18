@@ -1,13 +1,13 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "kind": "dice_history",
   "page": 1,
   "id": "dice_history-0001",
-  "count": 2,
+  "count": 5,
   "first": "evt_0013",
-  "last": "evt_0013",
-  "hash": "a16e0e4df5003acb",
+  "last": "evt_0036",
+  "hash": "6fa627a1025c2c34",
   "entries": [
    {
     "roll_id": "roll_t1_1",
@@ -120,6 +120,36 @@
     "event_id": "evt_0013",
     "time": "Sim drill, round 1",
     "turn_no": 1
+   },
+   {
+    "roll_id": "roll_t2_3",
+    "purpose": "The near hound snaps at Aero as he falls back out of its reach",
+    "summary": "total 23",
+    "by": "gm",
+    "redacted": true,
+    "event_id": "evt_0025",
+    "time": "Sim drill, round 2",
+    "turn_no": 2
+   },
+   {
+    "roll_id": "roll_t2_4",
+    "purpose": "Bite damage from the near hound as Aero falls back (critical)",
+    "summary": "total 10",
+    "by": "gm",
+    "redacted": true,
+    "event_id": "evt_0025",
+    "time": "Sim drill, round 2",
+    "turn_no": 2
+   },
+   {
+    "roll_id": "roll_t2_5",
+    "purpose": "The near hound closes on Aero and bites",
+    "summary": "total 5",
+    "by": "gm",
+    "redacted": true,
+    "event_id": "evt_0036",
+    "time": "Sim drill, round 2",
+    "turn_no": 2
    }
   ],
   "campaign_id": "mobile-test-1"
