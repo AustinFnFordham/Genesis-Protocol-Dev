@@ -660,6 +660,11 @@ class Gateway:
         problems.extend(encounter_problems)
         if isinstance(context, dict) and "encounter" in context:
             context = {k: v for k, v in context.items() if k != "encounter"}     # never taken from a provider; the gateway derives it
+        for e in events:   # the Datapad's HP and the WHISPER review read hp_change {target, delta}; nothing else is HP
+            if isinstance(e, dict) and e.get("kind") == "hp_change":
+                d = e.get("details") or {}
+                if not isinstance(d.get("target"), str) or type(d.get("delta")) is not int:
+                    bad("HP_CHANGE_SHAPE", "hp_change needs details.target (actor id) and details.delta (signed int: -10 for 10 damage)")
         cited = {k for e in events if isinstance(e, dict) for k in e.get("roll_keys", [])}
         for roll_key, known in op["rolls"].items():
             if roll_key not in cited:
