@@ -57,7 +57,7 @@ Integration branch: `integration/tb4-whisper-v01`. Milestone branches: `tb4/m<N>
 | M2 Action economy, Taunt | COMPLETE | `tb4/m2-action-economy` | `f6879a7` | **Yes**: `litrpg/campaign-scaffold` @ `c58abff`, switch `tb4_taunt` on, main Datapad v12 |
 | M3 WHISPER context | COMPLETE | `tb4/m3-whisper` | `03e9f71` | **Yes**: `litrpg/campaign-scaffold` @ `0eb060f`, switch `whisper_context` on, main Datapad v13 |
 | M4 Algorithm A | COMPLETE (pure evaluator) | `tb4/m4-evidence` | `a4fc246` | Code only, not wired to play (no in-force authority yet) |
-| M5 Algorithm B | NOT STARTED | | | |
+| M5 Algorithm B | COMPLETE (pure evaluator) | `tb4/m5-memory` | `34ccb6c` | Code only, not wired to play |
 | M6 Algorithm C | NOT STARTED | | | |
 | M7 Integration / UAT | NOT STARTED | | | |
 
@@ -135,10 +135,18 @@ unknown entities refused (TB4-19), retractions marked per listener. Diagnostic: 
 development/whisper/fixtures/cmp001_ten_missing_crates.json npc:dockworker_7` (or `player`, `gm`).
 Not done (needs owner/architecture decision): feeding these envelopes into NPC prompts or the live GM context.
 
+## M5 — Algorithm B: episodic memory and appraisal candidates (pure)
+Files: `development/whisper/appraisal.py`, `fixtures/tb4_moral_001.json` (TB4-MORAL-001), `test_appraisal.py`.
+`memories(events, actor)` (built on Algorithm A), `moral()`, `psychological()`, `social()`, `appraise()`.
+Covers TB4-13, -14, -15, -17, -26, -27, -28. Findings are labels with citations, never scores; `canonical: False`.
+Not done (owner/architecture decision): presenting PC candidates in the Datapad after a turn (accept/edit/reject/defer)
+and committing an accepted transition; NPC appraisals through `npc_review.py`. Justification labels
+(`defense_of_self/other`, `none_established`) are GM rulings expected on `attack_resolved` details — a convention to adopt.
+
 ## Open owner decisions
 - WHISPER fields: which become canonical events vs private projections (contract §9.3) — M3 keeps them private, noncanonical.
 - Long-term preference learning — default off (§9.4).
 - Light/dark mechanics, AMD weights (§9.5–9.6) — not implemented; no numbers invented.
 
 ## Next action
-Start M5 (Algorithm B: episodic memory + appraisal candidates, TB4-MORAL-001) on `tb4/m5-memory` from the integration HEAD.
+Start M6 (Algorithm C: typed causal proposals, bounded, CIS-001 as proposal) on `tb4/m6-causal` from the integration HEAD.
