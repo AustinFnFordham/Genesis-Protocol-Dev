@@ -1,9 +1,9 @@
 {
- "version": 25,
+ "version": 26,
  "data": {
-  "holder": null,
+  "holder": "owner-1794972849610",
   "provider": "owner",
-  "expires_ms": 0,
-  "released_ms": 1794971235378
+  "expires_ms": 1794973449610,
+  "acquired_ms": 1794972849610
  }
 }
