@@ -157,3 +157,6 @@ Answer with the JSON object only.
   carries `known_to` (actor ids who saw or heard it) and `knowledge_type` (`fact`, `report` for speech/claims, `belief`):
   gateway proposal event fields `known_to` / `knowledge_type`; live `ledger.py add --known-to wick hound_1 --type report`.
   NPC appraisals use the NPC's own identity, convictions, memories and circumstances, through `npc_evaluations` as before.
+
+## HP changes
+`hp_change` details are `{target, delta}` (signed int: `-10` for 10 damage); other descriptive fields are fine. The gateway refuses other shapes (`HP_CHANGE_SHAPE`); the Datapad's HP and WHISPER read `delta`.
