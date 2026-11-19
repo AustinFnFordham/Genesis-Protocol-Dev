@@ -1,8 +1,8 @@
 {
- "version": 1,
+ "version": 2,
  "data": {
   "action_id": "amwnlyn77dpqkkl",
-  "status": "submitted",
+  "status": "processing",
   "created_ms": 1795096310394,
   "source": "composer",
   "contract": "turn-contract/3",
@@ -70,7 +70,25 @@
      "by": "player",
      "at_ms": 1795096310394
     }
+   ],
+   "runs": [
+    {
+     "provider": "claude-session",
+     "run": "claude-session-1795096294",
+     "at_ms": 1795096316186
+    }
    ]
+  },
+  "processing": {
+   "run": "claude-session-1795096294",
+   "started_ms": 1795096321038,
+   "heartbeat_ms": 1795096321038,
+   "lease_ms": 595148,
+   "stage": "claimed",
+   "stage_started_ms": 1795096321038,
+   "stages": {
+    "claimed": 1795096321038
+   }
   }
  }
 }
