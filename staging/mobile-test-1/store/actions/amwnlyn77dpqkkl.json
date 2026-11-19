@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "data": {
   "action_id": "amwnlyn77dpqkkl",
   "status": "processing",
@@ -76,6 +76,11 @@
      "provider": "claude-session",
      "run": "claude-session-1795096294",
      "at_ms": 1795096316186
+    },
+    {
+     "provider": "claude-session",
+     "run": "claude-session-1795097366",
+     "at_ms": 1795097366850
     }
    ],
    "released": {
@@ -85,15 +90,14 @@
    }
   },
   "processing": {
-   "run": "claude-session-1795096294",
-   "started_ms": 1795096321038,
-   "heartbeat_ms": 1795096325834,
-   "lease_ms": 597747,
-   "stage": "context",
-   "stage_started_ms": 1795096325834,
+   "run": "claude-session-1795097366",
+   "started_ms": 1795097371458,
+   "heartbeat_ms": 1795097371458,
+   "lease_ms": 595392,
+   "stage": "claimed",
+   "stage_started_ms": 1795097371458,
    "stages": {
-    "claimed": 1795096321038,
-    "context": 1795096325834
+    "claimed": 1795097371458
    }
   }
  }
