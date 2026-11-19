@@ -1,8 +1,8 @@
 {
- "version": 6,
+ "version": 7,
  "data": {
   "action_id": "amwnlyn77dpqkkl",
-  "status": "processing",
+  "status": "needs_revision",
   "created_ms": 1795096310394,
   "source": "composer",
   "contract": "turn-contract/3",
@@ -92,14 +92,28 @@
   "processing": {
    "run": "claude-session-1795097366",
    "started_ms": 1795097371458,
-   "heartbeat_ms": 1795097376639,
-   "lease_ms": 597619,
-   "stage": "context",
-   "stage_started_ms": 1795097376639,
+   "heartbeat_ms": 1795097416241,
+   "lease_ms": 597429,
+   "stage": "rules",
+   "stage_started_ms": 1795097416241,
    "stages": {
     "claimed": 1795097371458,
-    "context": 1795097376639
+    "context": 1795097376639,
+    "rules": 1795097416241
    }
+  },
+  "review": {
+   "summary": "This turn could not be resolved as submitted. The Datapad sent Aero's declaration without its step list, so the drill cannot accept the rolls for his taunt and lightsaber attack. Nothing was rolled and nothing changed in the drill: Aero, Wick and the hounds are exactly where they were. Please submit the same turn again once the Datapad is fixed.",
+   "errors": [
+    {
+     "code": "NO_DECLARED_STEPS",
+     "message": "The submitted declaration carries no step list (only the composer fields), so Aero's taunt and lightsaber attack have no step to roll against. This is a Datapad submission fault, not a rules problem with what Aero declared."
+    }
+   ],
+   "warnings": [
+    "The free-text part (blocking and countering if the hound attacks during your turn) is conditional; when the turn is resubmitted the GM will stop and ask rather than decide it for Aero."
+   ],
+   "alternatives": []
   }
  }
 }
