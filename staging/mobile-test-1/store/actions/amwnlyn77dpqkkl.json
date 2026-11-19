@@ -1,0 +1,76 @@
+{
+ "version": 1,
+ "data": {
+  "action_id": "amwnlyn77dpqkkl",
+  "status": "submitted",
+  "created_ms": 1795096310394,
+  "source": "composer",
+  "contract": "turn-contract/3",
+  "confirmed_warnings": false,
+  "actor": "aero",
+  "campaign_id": "mobile-test-1",
+  "based_on_revision": 41,
+  "ledger_head": "evt_0050",
+  "context_id": "evt_0048",
+  "declaration": {
+   "actions": [
+    {
+     "option": "saber_attack",
+     "target": "hound_1",
+     "trigger": null
+    }
+   ],
+   "actor": "aero",
+   "bonus_actions": [
+    {
+     "option": "taunt",
+     "target": "hound_1"
+    }
+   ],
+   "end_turn": true,
+   "freeform": "I taunt first, then if I force the hound to attack during my turn I attempt to block and counter attack - aiming to cut the head off of the mutt.",
+   "movement": {
+    "option": "hold"
+   },
+   "objects": [],
+   "reactions": [
+    "sentinel_balance",
+    "opportunity_attack"
+   ],
+   "source": "composer",
+   "speech": {
+    "approach": "assertive",
+    "extended": false,
+    "option": "d1",
+    "text": "Wick, the far one's on your side. Shoot it if it comes in."
+   },
+   "tb4": {
+    "custom": [],
+    "schema": "genesis-turn-builder/4",
+    "taunt": {
+     "skill": "intimidation",
+     "target": "hound_1",
+     "words": "You mutt, I bet you couldn't bite like that again"
+    }
+   },
+   "unmapped": [
+    "I taunt first, then if I force the hound to attack during my turn I attempt to block and counter attack - aiming to cut the head off of the mutt."
+   ]
+  },
+  "text": "Say: “Wick, the far one's on your side. Shoot it if it comes in.” (free); Lightsaber attack → The near sim hound; Taunt; Hold position; If you fail a saving throw: Sentinel Balance; If a hostile you can see leaves your reach: Opportunity attack; Taunt (intimidation): “You mutt, I bet you couldn't bite like that again”. Also: I taunt first, then if I force the hound to attack during my turn I attempt to block and counter attack - aiming to cut the head off of the mutt.. End my turn.",
+  "resolution_settings": {
+   "temperature": "heroic",
+   "narrative_consequences": true
+  },
+  "gm": {
+   "provider": "claude-session",
+   "route": [
+    {
+     "provider": "claude-session",
+     "by": "player",
+     "at_ms": 1795096310394
+    }
+   ]
+  }
+ }
+}
