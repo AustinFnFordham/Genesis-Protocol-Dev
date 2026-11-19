@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "data": {
   "action_id": "amwnlyn77dpqkkl",
   "status": "processing",
@@ -82,12 +82,13 @@
   "processing": {
    "run": "claude-session-1795096294",
    "started_ms": 1795096321038,
-   "heartbeat_ms": 1795096321038,
-   "lease_ms": 595148,
-   "stage": "claimed",
-   "stage_started_ms": 1795096321038,
+   "heartbeat_ms": 1795096325834,
+   "lease_ms": 597747,
+   "stage": "context",
+   "stage_started_ms": 1795096325834,
    "stages": {
-    "claimed": 1795096321038
+    "claimed": 1795096321038,
+    "context": 1795096325834
    }
   }
  }
