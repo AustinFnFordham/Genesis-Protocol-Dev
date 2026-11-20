@@ -44,6 +44,7 @@ MOCK = r"""
   function notify(){ save(); subs.forEach(function(s){ s(); }); }
   window.__notify = notify;
   window.__resetPreview = function(){ try {
+    window.__genesisPreviewResetting = true;
     localStorage.removeItem(KEY);
     Object.keys(localStorage).filter(function(k){ return k.indexOf(window.__genesisPreviewNamespace) === 0; })
       .forEach(function(k){ localStorage.removeItem(k); });

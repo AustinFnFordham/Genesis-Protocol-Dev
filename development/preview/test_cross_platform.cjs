@@ -73,6 +73,7 @@ const results=[];
    const diag=await page.getByRole('link',{name:'WHISPER / evidence / causal diagnostics'}).getAttribute('href');
    const dr=await page.goto(origin+'/'+diag);assert.equal(dr.status(),200);assert.match(await page.locator('body').innerText(),/Algorithm A/);
    await page.goto(origin+'/');await page.waitForSelector('#intentPlans');
+   await page.locator('#w_tb4_action').fill('Discard this preview draft when resetting.');
    await page.evaluate(()=>localStorage.setItem('m12-unrelated','keep'));
    await page.locator('#devEnvBanner > details > summary').click();await page.getByRole('button',{name:'Reset preview state',exact:true}).click();
    await page.waitForSelector('#intentPlans');

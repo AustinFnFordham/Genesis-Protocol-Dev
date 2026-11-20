@@ -23,7 +23,7 @@
     return s;
   }
   var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) { upgradeSel(x.sel); return x; } } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
-  function saveUi() { ls("datapad.ui", JSON.stringify(ui)); }
+  function saveUi() { if (!window.__genesisPreviewResetting) ls("datapad.ui", JSON.stringify(ui)); }
   window.addEventListener("pagehide", saveUi);
   document.addEventListener("visibilitychange", function () { if (document.hidden) saveUi(); });
   var eqCache = { src: null, out: null };
