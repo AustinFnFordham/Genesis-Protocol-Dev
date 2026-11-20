@@ -20,18 +20,14 @@ Private-port authorization is separate from the GitHub repository connector. Do 
 /auth/postback or callback URL containing query parameters; those are temporary authorization redirects.
 Do not change the port to public, disable Safari cookie protections, add a paid budget, or create another host.
 
-## One-time update of this existing Codespace
-The previous checkout was `337bfae`. Preserve any local work first. With a clean checkout on
-`integration/tb4-whisper-v01`, run **once**:
+## Startup hook already applied
+On 2026-11-20 this existing Codespace was updated to integration `46e935d` and normally rebuilt.
+Automatic startup reported READY, repeated starts succeeded, and 8080 remained Private. No one-time terminal
+setup or second Codespace is needed. Use the task in step 2 if recovery is needed.
 
-```bash
-git pull --ff-only
-```
-
-Then run the Genesis task above. The old preview server lacks the new health endpoint; if the task reports a
-legacy/occupied port, inspect the named preview process before stopping it. It will not kill anything itself.
-Use **Codespaces: Rebuild Container** once to install the revised automatic startup hook in this existing
-Codespace. Rebuild does not create another Codespace. If you cannot rebuild now, the Genesis task still works.
+For future updates, preserve local work, confirm the integration branch and use `git pull --ff-only`.
+A changed devcontainer lifecycle configuration requires **Codespaces: Rebuild Container** once.
+The launcher refuses an occupied unrecognized port; inspect the process before stopping anything.
 
 Last-resort single command, from `/workspaces/Genesis-Protocol-Dev`:
 

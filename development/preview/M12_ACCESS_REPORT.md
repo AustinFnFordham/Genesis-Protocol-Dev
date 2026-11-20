@@ -17,8 +17,8 @@ M0–M11 are preserved. Branch: `dev/m12-cross-platform-access`. No campaign tur
 ## Repairs
 - Idempotent Linux launcher with serialized start, real health check, detached process, stable log and workspace
   identity. Occupied unrelated/legacy ports fail closed; no arbitrary process kill. Explicit working directory.
-- Editor task and postStart hook use the same command. Existing Codespace needs one rebuild to adopt changed
-  devcontainer lifecycle hooks; task/manual recovery works without creating another environment.
+- Editor task and postStart hook use the same command. Existing Codespace was rebuilt once through its ordinary Rebuild control to adopt changed
+  lifecycle hooks; task/manual recovery works without creating another environment.
 - HTTP root and index return nonempty UTF-8 text/html, Content-Length, inline disposition and no-store. HEAD has
   zero body by HTTP definition but the same nonzero Content-Length. Missing output produces HTML 503; bad paths 404.
 - Fixed route allowlist prevents directory or checkout exposure. Atomic output replacement prevents truncation
@@ -35,18 +35,33 @@ No GM, deterministic game rolls, campaign ledger writes, model calls, hidden GM 
 The authoritative Atomic validator, sequencer and Taunt mechanics are unchanged.
 
 ## Test matrix
-Results are filled after verification; do not treat a pending row as a pass.
+Verified source: `23e9a32f43d8c3e98470119b88164a79eb8a8e70`, merged through PR #3 at
+`46e935d54936de8895412dfcac2f8aadf2ce209b`. Integration merge has the exact tested source tree.
 
 | Runtime | Sizes / interaction | Status |
 |---|---|---|
-| Linux Chromium | iPhone 390x844 / 320x568 / 844x390; iPad 820x1180 / 1180x820; desktop 1440x900; touch/keyboard | Pending remote CI |
-| Linux WebKit | Same viewport/touch workflows | Pending remote CI; NOT native Safari |
-| Windows Chrome | Same responsive workflows on hosted Windows runner | Pending remote CI; NOT owner's Windows PC |
+| Linux Chromium | iPhone 390x844 / 320x568 / 844x390; iPad 820x1180 / 1180x820; desktop 1440x900; touch/keyboard | Passed: 6 responsive workflows |
+| Linux WebKit | Same viewport/touch workflows | Passed: 6 responsive workflows; NOT native Safari |
+| Windows Chrome | Same responsive workflows on hosted Windows runner | Passed: 6 responsive workflows; NOT owner's Windows PC |
 | Physical iPhone Safari | Auth redirects, download symptom, browser chrome, real keyboard | Pending owner verification |
 | Physical iPad Safari | Both orientations, Magic Keyboard, safe areas | Pending owner verification |
 
 Local Chromium download is blocked by HTTP 403 from the browser CDN. Installed system Chromium also failed to
 launch in this executor. Local DOM/HTTP tests are kept separate from browser-engine evidence.
+
+## Verification evidence
+- M12 Actions run 44815082525: Linux Chromium, Linux WebKit and Windows Chrome all succeeded, 18 workflows total.
+- Full regression Actions run 44815082535: `suites=59 failed=0`, plus functional DOM checks.
+- Browser workflows cover real HTTP HTML/assets, the noncanonical fixture, plans and exact custom speech/action/
+  movement persistence, focus/caret, keyboard navigation, simulated WHISPER, zero budgets, diagnostics, scoped
+  reset, rotation and overflow. No service worker or non-GET network submission.
+- Six local server tests pass: headers/HEAD/assets, route privacy, missing build, atomic publication, concurrent
+  idempotent starts, owned-process restart and refusal of an unrelated occupied port.
+- Protected run/creator/registry trees equal the base. Live branch remains `1792078eb6ed12a6a4697b709228dd4450c1439b`.
+- Original temporary server was confirmed to return HTTP 200, text/html and a nonempty body before new headers.
+  This further limits claims about the original iPhone incident: no attachment response was reproduced locally.
+- Work could not inspect the hosted private-port auth/redirect chain due to its URL-policy refusal. A successful
+  loopback HTTP check or CI workflow does not prove private-port authorization works on the owner's devices.
 
 ## Owner evidence needed if it still downloads
 Open the workspace first in ordinary Safari, sign into GitHub there, wait for the existing environment, then open
@@ -58,3 +73,12 @@ privacy protections as a diagnostic shortcut.
 Sources: GitHub documents private-port authentication cookies with a 3-hour expiry at
 https://docs.github.com/en/codespaces/reference/security-in-github-codespaces .
 That supports expiration as a hypothesis, not an established cause for this incident.
+
+## Applied environment verification
+On 2026-11-20 the clean existing Codespace fast-forwarded to integration `46e935d` and completed a normal
+Rebuild Container. Without manual server startup, `manage_preview.py status` reported READY. Two subsequent
+start calls returned READY; Ports identified one preview process (PID 260), port 8080, visibility Private.
+Root: HTTP 200; `text/html; charset=utf-8`; `Content-Disposition: inline`; `Cache-Control: no-store`;
+268694 bytes; M12 and `mobile-test-1` present. Health reported noncanonical M12 / mobile-test-1 / code 46e935d.
+Manifest and diagnostics also returned 200 with correct types and nonempty bodies. Checkout remained clean.
+This is server/forwarding evidence, not native Safari or hosted authorization/redirect verification.

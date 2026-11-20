@@ -305,7 +305,7 @@ Recovery:
    consumes the shared allowance. Reset preview state affects browser-local simulation only.
 5. Code rollback is an integration-only revert of the relevant PR merge. Never reset or rewrite campaign history.
 
-## M12 — cross-platform access (2026-11-20; verification in progress)
+## M12 — cross-platform access (2026-11-20; automated verification passed)
 Base heads verified through GitHub before edits: integration `23ba53d`, live `1792078`. Isolated branch
 `dev/m12-cross-platform-access`; M0–M11 retained. Existing Codespace only; no new host or Codespace.
 
@@ -321,3 +321,14 @@ Owner workflow and one-time hook adoption: `development/preview/IPAD_PREVIEW.md`
 
 Local server and DOM verification pass. Real Chromium/WebKit/Windows checks run on standard free public-repository
 runners; local browser CDN download is blocked and system Chromium did not launch. Native device gates remain pending.
+
+M12 verified source `23e9a32` merged via PR #3 at `46e935d` (identical tested tree). Actions 44815082535:
+**59 suites passed**, plus functional DOM. Actions 44815082525: **18 responsive browser workflows passed**
+across Linux Chromium/WebKit and hosted Windows Chrome. Native Safari, owner PC private authorization and
+Home Screen behavior remain pending. Protected campaign/creator/registry trees and live branch unchanged.
+M12 restart instructions in `development/preview/IPAD_PREVIEW.md` supersede the historical M11 manual-server recovery above.
+
+Existing Codespace fast-forwarded to `46e935d` and rebuilt normally. Automatic startup verified READY before
+any manual launch; repeated starts READY. Root 200 / UTF-8 HTML / inline / no-store / 268694 bytes; fixture
+mobile-test-1 and M12 verified. Port 8080 Private, one preview process, worktree clean. Original iPhone download
+root cause remains unknown; hosted auth redirects and physical devices remain outside the verified boundary.
