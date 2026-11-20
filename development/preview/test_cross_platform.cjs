@@ -36,6 +36,12 @@ const results=[];
    await page.locator('input[data-g="dialogue"][value="own"]').check();
    await page.locator('#w_own').fill('Wick, stay close.');
    await page.locator('#w_tb4_movement').fill('Step five feet along the crate line.');
+   if(touch){
+    await page.setViewportSize({width:height,height:width});
+    assert.equal(await page.locator('#w_tb4_action').inputValue(),'Watch the crate line while protecting Wick.');
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' rotated overflow');
+    await page.setViewportSize({width,height});
+   }
    await page.locator('#w_tb4_action').focus();await page.locator('#w_tb4_action').press('End');
    await page.evaluate(()=>{window.__notify();});
    await page.waitForTimeout(100);
