@@ -3,7 +3,7 @@
   var view = null, actions = [], dbRef = null, status = "connecting", err = "";
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } return ""; }
+  function ls(k, v) { k = (window.__genesisPreviewNamespace || "") + k; try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } return ""; }
   var selId = ls("datapad.member") || "aero";
   /* ---------- history: older narration and journal entries live in byte-bounded pages (view/feed-NNNN,
      view/journal-NNNN) named by the snapshot's manifest; they are fetched only when the player asks. ---------- */

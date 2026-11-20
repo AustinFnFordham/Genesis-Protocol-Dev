@@ -13,8 +13,10 @@ public state is the only data embedded, and the GM-only ledger is never read (ex
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,6 +32,7 @@ FEATURES = Path(__file__).with_name("features.json")
 
 MOCK = r"""
 (function(){
+  window.__genesisPreviewNamespace = "genesis-preview.";
   var KEY = "genesis-preview-store-v1";
   var seed = __SEED__;
   var store;
@@ -40,7 +43,12 @@ MOCK = r"""
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
   function notify(){ save(); subs.forEach(function(s){ s(); }); }
   window.__notify = notify;
-  window.__resetPreview = function(){ try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); };
+  window.__resetPreview = function(){ try {
+    window.__genesisPreviewResetting = true;
+    localStorage.removeItem(KEY);
+    Object.keys(localStorage).filter(function(k){ return k.indexOf(window.__genesisPreviewNamespace) === 0; })
+      .forEach(function(k){ localStorage.removeItem(k); });
+  } catch (e) {} location.reload(); };
   function snap(p){ return { exists: p in store, data: function(){ return JSON.parse(JSON.stringify(store[p])); }, id: p.split("/").pop() }; }
   function ref(p){ return { id: p.split("/").pop(), path: p,
     get: function(){ return Promise.resolve(snap(p)); },
@@ -97,16 +105,16 @@ def diagnostics_page(sha, milestone):
     sys.path.insert(0, str(ROOT / "development/whisper")); sys.path.insert(0, str(ROOT / "development/causal"))
     import evidence, appraisal, causal  # noqa: E402
     W = ROOT / "development/whisper/fixtures"
-    cmp = json.loads((W / "cmp001_ten_missing_crates.json").read_text())
+    cmp = json.loads((W / "cmp001_ten_missing_crates.json").read_text(encoding='utf-8'))
     envs = evidence.envelopes(cmp["events"], cmp["entities"])
     rows = []
     for who in ("player", ("npc", "dockworker_7"), ("npc", "neri"), ("npc", "smuggler_kesh")):
         got = evidence.retrieve(envs, who)
         rows.append(f"<h3>{H.escape(str(who))}</h3><ul>" + "".join(
             f"<li><code>{x['source_event']}</code> <b>{x['type']}</b>{' (retracted)' if x.get('retracted') else ''} — {H.escape(x['summary'] or '')}</li>" for x in got) + ("</ul>" if got else "<li>nothing</li></ul>"))
-    moral = json.loads((W / "tb4_moral_001.json").read_text())["cases"]
+    moral = json.loads((W / "tb4_moral_001.json").read_text(encoding='utf-8'))["cases"]
     mrows = "".join(f"<tr><td>{H.escape(k)}</td><td>{H.escape(appraisal.moral(v)['finding'])}</td><td>{H.escape(appraisal.psychological(v)[0]['candidate'])}</td></tr>" for k, v in moral.items())
-    cf = json.loads((ROOT / "development/causal/fixtures/causal_fixture.json").read_text())
+    cf = json.loads((ROOT / "development/causal/fixtures/causal_fixture.json").read_text(encoding='utf-8'))
     snap = {"relationships": cf["relationships"], "facts": cf["facts"]}
     ev = {"event_id": "evt_0900", "kind": "attack_resolved", "accepted": True, "actor": "aero", "known_to": ["aero", "wick", "mira"],
           "details": {"attacker": "aero", "target": "thug", "moral_finding": "unjustified_harm"}}
@@ -121,7 +129,7 @@ def diagnostics_page(sha, milestone):
 
 
 def build(milestone=None, out=None):
-    features = json.loads(FEATURES.read_text())
+    features = json.loads(FEATURES.read_text(encoding='utf-8'))
     milestone = milestone or features["milestone"]
     sha = git_sha()
     state = export_state.build(campaign_dir=FIXTURE, campaign_id=FIXTURE_ID)
@@ -138,25 +146,51 @@ def build(milestone=None, out=None):
     if state["features"].get("whisper_review"):   # sample review from the TB4-MORAL-001 fixture (noncanonical)
         sys.path.insert(0, str(ROOT / "development/whisper"))
         import post_turn
-        cases = json.loads((ROOT / "development/whisper/fixtures/tb4_moral_001.json").read_text())["cases"]
+        cases = json.loads((ROOT / "development/whisper/fixtures/tb4_moral_001.json").read_text(encoding='utf-8'))["cases"]
         review = post_turn.propose(cases["failed_rescue"], [])
         state["whisper"] = {"pending": {"review_id": "preview_review", "action_id": review["action_id"], "candidates": review["candidates"],
                                         "note": review["note"] + " (Preview sample from a test fixture.)"}, "history": []}
     seed = {"view/state": state}
-    html = PAGE.read_text()
+    html = PAGE.read_text(encoding='utf-8')
     title_end = html.index("</title>") + len("</title>")
     banner = (BANNER.replace("__MILESTONE__", milestone).replace("__SHA__", sha)
               .replace("__FIXTURE__", "Sim Deck: Drill Seven (mobile-test-1)").replace("__FEATURES__", features_html(features)))
     mock = MOCK.replace("__SEED__", json.dumps(seed).replace("</", "<\\/"))
     page = ("<!doctype html><html><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\">"
             + html[:title_end].replace("<title>Genesis Datapad</title>", "<title>Genesis Dev Preview</title>")
+            + '<meta name="theme-color" content="#0a6f8f"><meta name="apple-mobile-web-app-title" content="Genesis Preview">'
+            + '<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">'
+            + '<style>#devEnvBanner{overflow-wrap:anywhere} #devEnvBanner summary{min-height:44px}'
+              '@media(min-width:961px){.app{height:calc(100vh - var(--preview-banner-height,70px) - 10px);height:calc(100dvh - var(--preview-banner-height,70px) - 10px)}}'
+              '</style>'
             + "<script>" + mock + "</script></head><body>" + banner + html[title_end:] + "</body></html>")
+    page = page.replace('</body>', '<script>if(window.ResizeObserver){new ResizeObserver(function(es){document.documentElement.style.setProperty("--preview-banner-height",es[0].target.getBoundingClientRect().height+"px")}).observe(document.getElementById("devEnvBanner"));}</script></body>')
     out = Path(out or Path(__file__).with_name("out"))
     out.mkdir(parents=True, exist_ok=True)
-    (out / "index.html").write_text(page)
-    (out / "diagnostics.html").write_text(diagnostics_page(sha, milestone))
-    (out / "build.json").write_text(json.dumps({"milestone": milestone, "code_commit": sha, "fixture": FIXTURE_ID}, indent=1))
+    atomic_text(out / "index.html", page)
+    atomic_text(out / "diagnostics.html", diagnostics_page(sha, milestone))
+    atomic_text(out / "build.json", json.dumps({"milestone": milestone, "code_commit": sha, "fixture": FIXTURE_ID}, indent=1))
+    atomic_text(out / "manifest.webmanifest", json.dumps({"name": "Genesis Development Preview", "short_name": "Genesis Preview",
+        "start_url": "./", "scope": "./", "display": "browser", "theme_color": "#0a6f8f", "background_color": "#e9eef1",
+        "icons": [{"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}]}))
+    atomic_text(out / "icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="32" fill="#0a6f8f"/><text x="96" y="132" text-anchor="middle" fill="white" font-family="sans-serif" font-size="116">G</text></svg>')
     return out / "index.html"
+
+
+def atomic_text(path, text):
+    """A request during a rebuild sees complete old or complete new bytes, never a truncated file."""
+    if not text:
+        raise ValueError('Refusing empty preview output')
+    handle, name = tempfile.mkstemp(dir=path.parent, prefix='.building-')
+    try:
+        with os.fdopen(handle, 'w', encoding='utf-8') as stream:
+            stream.write(text)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(name, path)
+    finally:
+        if os.path.exists(name):
+            os.unlink(name)
 
 
 if __name__ == "__main__":

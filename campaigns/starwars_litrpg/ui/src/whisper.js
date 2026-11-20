@@ -73,7 +73,7 @@ var GenesisWhisper = (function () {
   function bindReview(root, v, sel, hooks) {
     var ed = sel.whEdit = sel.whEdit || {};
     Array.prototype.forEach.call(root.querySelectorAll("[data-whedit]"), function (el) {
-      el.addEventListener("input", function () { ed[el.getAttribute("data-whedit")] = el.value; });
+      el.addEventListener("input", function () { ed[el.getAttribute("data-whedit")] = el.value; if (hooks.persist) hooks.persist(); });
     });
     Array.prototype.forEach.call(root.querySelectorAll("[data-whresp]"), function (b) {
       b.addEventListener("click", function () {

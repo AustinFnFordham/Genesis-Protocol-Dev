@@ -14,7 +14,7 @@
       "visibility": "private"
     }
   },
-  "postStartCommand": "nohup python3 -B development/preview/serve_preview.py --host 0.0.0.0 --port 8080 > /tmp/genesis-preview.log 2>&1 &",
+  "postStartCommand": "python3 -B \"${containerWorkspaceFolder}/development/preview/manage_preview.py\" start",
   "customizations": {
     "codespaces": {
       "openFiles": [

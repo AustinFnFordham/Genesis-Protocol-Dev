@@ -23,7 +23,9 @@
     return s;
   }
   var ui = (function () { try { var x = JSON.parse(ls("datapad.ui") || "null"); if (x && x.sel) { upgradeSel(x.sel); return x; } } catch (e) {} return freshUi(null, ls("datapad.draft")); })();
-  function saveUi() { ls("datapad.ui", JSON.stringify(ui)); }
+  function saveUi() { if (!window.__genesisPreviewResetting) ls("datapad.ui", JSON.stringify(ui)); }
+  window.addEventListener("pagehide", saveUi);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) saveUi(); });
   var eqCache = { src: null, out: null };
   function ctxOf(v) {  // gear interactions (take out / put away / set down) are derived from the record's equipment
     var c = v && v.turn_context ? v.turn_context : null;
@@ -727,6 +729,7 @@
   }
 
   function render() {
+    var scrollKeep = Array.prototype.map.call(document.querySelectorAll('.col'), function (e) { return [e, e.scrollTop]; });
     var ae = document.activeElement, keep = ae && ae.id && /^w_/.test(ae.id) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
     if (!view) {
       $("colCenter").innerHTML = '<div class="panel"><h2>Genesis Datapad</h2><div class="empty">' + (status === "unavailable" ? "The campaign store is not reachable from this view. Open the page while signed in to Claude." : status === "error" ? esc(err) : "Connecting to the campaign ledger…") + "</div></div>";
@@ -791,6 +794,7 @@
     });
     bindCenter();
     if (keep && $(keep.id)) { var el = $(keep.id); try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } try { el.setSelectionRange(keep.s, keep.e); } catch (x) {} }
+    scrollKeep.forEach(function (p) { p[0].scrollTop = p[1]; });
     watchNewest();
   }
 
@@ -827,7 +831,7 @@
     function each(sel, fn) { Array.prototype.forEach.call(document.querySelectorAll(sel), fn); }
     function click(attr, fn) { each("[" + attr + "]", function (b) { b.addEventListener("click", function () { fn(b.getAttribute(attr), b); }); }); }
     var deb = null;
-    function soft(fn) { return function (e) { fn(e.target.value); ui.confirmed = false; ui.draftId = ""; autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { saveUi(); refreshLive(); }, 250); }; }
+    function soft(fn) { return function (e) { fn(e.target.value); ui.confirmed = false; ui.draftId = ""; saveUi(); autoGrow(e.target); clearTimeout(deb); deb = setTimeout(function () { refreshLive(); }, 250); }; }
     each("[data-mode]", function (b) { b.addEventListener("click", function () { ui.mode = b.getAttribute("data-mode"); changed(); }); });
     each("input[data-g]", function (el) { el.addEventListener("change", function () {
       var g = el.getAttribute("data-g");
@@ -931,7 +935,7 @@
     on("narrativeConsequences", "change", function (e) { ui.narrativeConsequences = e.target.value === "on"; saveUi(); });
     if (TB4on()) GenesisTB4.bind(document, ui.sel, { soft: soft, changed: changed, persist: saveUi });
     if (WHon()) GenesisWhisper.bind(document, ui.sel, { soft: soft, changed: changed });
-    if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse });
+    if (typeof GenesisWhisper !== "undefined" && GenesisWhisper.reviewOn(view)) GenesisWhisper.bindReview(document, view, ui.sel, { respond: saveWhisperResponse, persist: saveUi });
     bindLive();
     each(".composer textarea", autoGrow);
     each("[data-journal-section]", function (element) {
@@ -1104,6 +1108,14 @@
   });
 
   /* ---------- data: subscribe once ---------- */
+  function keyboardLayout() {
+    var active = document.activeElement, typing = active && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName);
+    var reduced = window.visualViewport && window.innerHeight - window.visualViewport.height > 150;
+    document.documentElement.classList.toggle('keyboard-open', !!(typing && reduced));
+  }
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', keyboardLayout);
+  document.addEventListener('focusin', keyboardLayout);
+  document.addEventListener('focusout', function () { setTimeout(keyboardLayout, 0); });
   var timer = setTimeout(function () { if (!view) { status = "error"; err = "The campaign store has not answered yet. It may be offline."; render(); } }, 10000);
   setInterval(function () {
     if (!view || !activeAction()) return;
