@@ -104,16 +104,16 @@ def diagnostics_page(sha, milestone):
     sys.path.insert(0, str(ROOT / "development/whisper")); sys.path.insert(0, str(ROOT / "development/causal"))
     import evidence, appraisal, causal  # noqa: E402
     W = ROOT / "development/whisper/fixtures"
-    cmp = json.loads((W / "cmp001_ten_missing_crates.json").read_text())
+    cmp = json.loads((W / "cmp001_ten_missing_crates.json").read_text(encoding='utf-8'))
     envs = evidence.envelopes(cmp["events"], cmp["entities"])
     rows = []
     for who in ("player", ("npc", "dockworker_7"), ("npc", "neri"), ("npc", "smuggler_kesh")):
         got = evidence.retrieve(envs, who)
         rows.append(f"<h3>{H.escape(str(who))}</h3><ul>" + "".join(
             f"<li><code>{x['source_event']}</code> <b>{x['type']}</b>{' (retracted)' if x.get('retracted') else ''} — {H.escape(x['summary'] or '')}</li>" for x in got) + ("</ul>" if got else "<li>nothing</li></ul>"))
-    moral = json.loads((W / "tb4_moral_001.json").read_text())["cases"]
+    moral = json.loads((W / "tb4_moral_001.json").read_text(encoding='utf-8'))["cases"]
     mrows = "".join(f"<tr><td>{H.escape(k)}</td><td>{H.escape(appraisal.moral(v)['finding'])}</td><td>{H.escape(appraisal.psychological(v)[0]['candidate'])}</td></tr>" for k, v in moral.items())
-    cf = json.loads((ROOT / "development/causal/fixtures/causal_fixture.json").read_text())
+    cf = json.loads((ROOT / "development/causal/fixtures/causal_fixture.json").read_text(encoding='utf-8'))
     snap = {"relationships": cf["relationships"], "facts": cf["facts"]}
     ev = {"event_id": "evt_0900", "kind": "attack_resolved", "accepted": True, "actor": "aero", "known_to": ["aero", "wick", "mira"],
           "details": {"attacker": "aero", "target": "thug", "moral_finding": "unjustified_harm"}}
@@ -128,7 +128,7 @@ def diagnostics_page(sha, milestone):
 
 
 def build(milestone=None, out=None):
-    features = json.loads(FEATURES.read_text())
+    features = json.loads(FEATURES.read_text(encoding='utf-8'))
     milestone = milestone or features["milestone"]
     sha = git_sha()
     state = export_state.build(campaign_dir=FIXTURE, campaign_id=FIXTURE_ID)
@@ -145,12 +145,12 @@ def build(milestone=None, out=None):
     if state["features"].get("whisper_review"):   # sample review from the TB4-MORAL-001 fixture (noncanonical)
         sys.path.insert(0, str(ROOT / "development/whisper"))
         import post_turn
-        cases = json.loads((ROOT / "development/whisper/fixtures/tb4_moral_001.json").read_text())["cases"]
+        cases = json.loads((ROOT / "development/whisper/fixtures/tb4_moral_001.json").read_text(encoding='utf-8'))["cases"]
         review = post_turn.propose(cases["failed_rescue"], [])
         state["whisper"] = {"pending": {"review_id": "preview_review", "action_id": review["action_id"], "candidates": review["candidates"],
                                         "note": review["note"] + " (Preview sample from a test fixture.)"}, "history": []}
     seed = {"view/state": state}
-    html = PAGE.read_text()
+    html = PAGE.read_text(encoding='utf-8')
     title_end = html.index("</title>") + len("</title>")
     banner = (BANNER.replace("__MILESTONE__", milestone).replace("__SHA__", sha)
               .replace("__FIXTURE__", "Sim Deck: Drill Seven (mobile-test-1)").replace("__FEATURES__", features_html(features)))

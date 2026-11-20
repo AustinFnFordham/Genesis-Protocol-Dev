@@ -37,6 +37,7 @@ jobs:
       - name: Browser workflows over real HTML HTTP
         env:
           NODE_PATH: ${{ github.workspace }}/development/.qa/deps/node_modules
+          PYTHONUTF8: '1'
           M12_ENGINE: ${{ matrix.engine }}
           M12_CHANNEL: ${{ matrix.channel }}
         run: node development/preview/test_cross_platform.cjs

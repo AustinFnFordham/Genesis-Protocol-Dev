@@ -25,7 +25,7 @@ const results=[];
    assert.match(await page.locator('#testBanner').innerText(),/mobile-test-1/);
    assert.equal(await page.locator('#mechanicsCatalog').getAttribute('open'),null);
    await page.getByRole('button',{name:/^Ignite the lightsaber Available/}).click();
-   assert.match(await page.locator('#colCenter').innerText(),/1 planned/);await page.locator('#clearTurn').click();
+   assert.match(await page.locator('#colCenter').innerText(),/1 planned/i);await page.locator('#clearTurn').click();
    await page.locator('#w_tb4_action').fill('Watch the crate line while protecting Wick.');
    // Immediate persistence: no debounce sleep before this assertion or navigation.
    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('genesis-preview.datapad.ui')).sel.tb4custom.action),
