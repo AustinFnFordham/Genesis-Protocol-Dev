@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "Genesis: Start or check private preview",
+    "type": "process",
+    "command": "python3",
+    "args": ["-B", "${workspaceFolder}/development/preview/manage_preview.py", "start"],
+    "options": {"cwd": "${workspaceFolder}"},
+    "problemMatcher": [],
+    "presentation": {"reveal": "always", "panel": "dedicated"}
+  }]
+}

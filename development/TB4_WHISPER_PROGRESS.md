@@ -304,3 +304,20 @@ Recovery:
 4. Keep port visibility Private and paid usage blocked. Stop the Codespace when finished; stopped storage still
    consumes the shared allowance. Reset preview state affects browser-local simulation only.
 5. Code rollback is an integration-only revert of the relevant PR merge. Never reset or rewrite campaign history.
+
+## M12 — cross-platform access (2026-11-20; verification in progress)
+Base heads verified through GitHub before edits: integration `23ba53d`, live `1792078`. Isolated branch
+`dev/m12-cross-platform-access`; M0–M11 retained. Existing Codespace only; no new host or Codespace.
+
+Current diagnosis: active Codespace checkout `337bfae`, but localhost:8080 connection refused. The owner's original
+zero-byte/download cause is not established. Work preview navigation encountered a browser URL-policy rejection
+before response inspection; this is not native Safari evidence. Full evidence/limitations and cross-device matrix:
+`development/preview/M12_ACCESS_REPORT.md`.
+
+Implementation: idempotent serialized Linux launcher + shared editor task/postStart, fixed HTTP routes/headers,
+nonempty/atomic static publication, immediate drafts and WHISPER edits, touch/focus/scroll/keyboard CSS, isolated
+preview namespace/reset, browser-mode manifest/icon (no service worker). Existing validator/sequencer unchanged.
+Owner workflow and one-time hook adoption: `development/preview/IPAD_PREVIEW.md`.
+
+Local server and DOM verification pass. Real Chromium/WebKit/Windows checks run on standard free public-repository
+runners; local browser CDN download is blocked and system Chromium did not launch. Native device gates remain pending.

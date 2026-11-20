@@ -1,4 +1,5 @@
 <title>Genesis Datapad</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -33,6 +34,7 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
+  margin: 0;
   background: var(--bg); color: var(--fg); font: 15px/1.5 var(--f-ui);
   padding-block: 10px 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
@@ -194,6 +196,27 @@ li.step .note.cond { margin-left: 30px; color: var(--amber); }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
 @media (min-width: 701px) { .only-phone { display: none !important; } }
 @media (max-width: 700px) { li.step:not(.open) > .ctl, li.step:not(.open) > input.cond-in { display: none; } }
+</style>
+<style>
+/* M12: keep native zoom/keyboard behavior; never shrink fields below iOS's 16px focus threshold. */
+html { -webkit-text-size-adjust: 100%; scroll-padding-block: 80px; }
+body { padding-top: max(10px, env(safe-area-inset-top, 0px)); }
+.col { scroll-padding-block: 16px 88px; overscroll-behavior-y: contain; }
+.panel, .chip, .opt .lbl, .note, .act q, .check { overflow-wrap: anywhere; }
+input, select, textarea { max-width: 100%; }
+select { font: 16px var(--f-ui); min-height: 44px; }
+details summary, .opt, .perf summary, .btn.mini { min-height: 44px; }
+button, summary { touch-action: manipulation; }
+.composer textarea, .case textarea.when, .ed textarea { overflow-y: auto; }
+.row > *, .seg, .pill { max-width: 100%; }
+.pill { white-space: normal; }
+.seg { flex-wrap: wrap; }
+@media(max-width:960px) {
+  .keyboard-open .tabbar { display: none; }
+  .keyboard-open .submitbar.sticky { position: static; }
+  .keyboard-open .jump-new { display: none; }
+}
+@media(max-height:500px) { .submitbar.sticky { position: static; } }
 </style>
 
 <div class="app" id="app" data-tab="scene">

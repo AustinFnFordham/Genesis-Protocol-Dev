@@ -1,0 +1,42 @@
+name: M12 cross-platform verification
+on:
+  pull_request:
+    branches: ['integration/tb4-whisper-v01']
+permissions:
+  contents: read
+jobs:
+  browser-matrix:
+    if: github.repository == 'AustinFnFordham/Genesis-Protocol-Dev' && github.event.repository.private == false
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            engine: chromium
+            channel: ''
+          - os: ubuntu-latest
+            engine: webkit
+            channel: ''
+          - os: windows-latest
+            engine: chromium
+            channel: chrome
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 -m pip install -r development/preview/requirements.txt
+      - run: npm install --prefix development/.qa/deps --no-audit --no-fund --ignore-scripts playwright@1.62.1
+      - if: runner.os == 'Linux'
+        run: development/.qa/deps/node_modules/.bin/playwright install --with-deps ${{ matrix.engine }}
+      - name: Browser workflows over real HTML HTTP
+        env:
+          NODE_PATH: ${{ github.workspace }}/development/.qa/deps/node_modules
+          M12_ENGINE: ${{ matrix.engine }}
+          M12_CHANNEL: ${{ matrix.channel }}
+        run: node development/preview/test_cross_platform.cjs

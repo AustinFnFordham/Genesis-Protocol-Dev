@@ -1,68 +1,66 @@
-# Private iPad development preview
+# Open Genesis on iPhone, iPad or Windows
 
-This runs the existing Datapad with Sim Deck: Drill Seven (`mobile-test-1`), a noncanonical public fixture.
-No GM is attached. Turn submission is stored in browser localStorage and explicitly fails as preview-only;
-WHISPER answers use a clearly simulated local review. No gateway credentials, hidden campaign data or live writes.
+**One place to bookmark:** https://github.com/codespaces/glowing-space-xylophone-65qvxqp9pvc54qq
 
-## Working private preview (verified 2026-11-18)
-- Preview: https://glowing-space-xylophone-65qvxqp9pvc54qq-8080.app.github.dev/
-- Editor: https://glowing-space-xylophone-65qvxqp9pvc54qq.github.dev/
-- Existing codespace: **glowing space xylophone**, personal owner AustinFnFordham, 2 cores / 8 GB RAM.
-- Branch: `integration/tb4-whisper-v01`; M11 integration `d6b3b50`, with verified preview grant fix `337bfae`.
-- Port **8080 / Private** was observed in the editor, with the documented Python preview process.
-- At creation, GitHub showed 120 included core-hours and 15 GB storage, both unused, and a $0 Codespaces budget
-  with paid usage blocked. No payment method, budget, or billing setting was changed. Recheck remaining allowance
-  before later use; this codespace consumes the shared free allowance. It is not an always-on service.
+Use ordinary **Safari** on iPhone/iPad, or **Edge/Chrome** on Windows. If ChatGPT shows a file/download view,
+copy the link and paste it into Safari's address bar; do not save the .dev address as a file.
 
-Open the Preview link in iPad Safari while signed into your GitHub account. If it has gone to sleep, resume the
-existing codespace at https://github.com/codespaces, wait for the editor to connect, then reopen the Preview link.
-Do not create a second codespace to restart this one. Stop it from the Codespaces page when finished.
+1. Open that workspace link and sign into GitHub in that same browser. Resume **glowing space xylophone** if it
+   has stopped; wait for the editor to connect. Do not create a second Codespace.
+2. The preview startup hook should report **READY**. If needed, editor menu → Terminal → Run Task →
+   **Genesis: Start or check private preview**. This task is safe to run repeatedly; no terminal typing is needed.
+3. Open the editor's **Ports** panel, find **8080 / Genesis dev preview**, verify **Private**, then choose
+   **Open in Browser**. Its canonical preview URL is:
+   https://glowing-space-xylophone-65qvxqp9pvc54qq-8080.app.github.dev/
+4. Check the gold **Genesis Development / Test Environment · M12** banner and **Sim Deck: Drill Seven
+   (mobile-test-1)**. The intent-first M11 builder remains. Nothing here is Hask Meadow.
 
-## Start on iPad
-1. Prefer the existing preview above. If recreating it is necessary, sign into your own GitHub account in Safari,
-   open this repository and select the verified branch `integration/tb4-whisper-v01`.
-2. Before creating anything, check GitHub Settings → Billing and licensing → Usage/Budgets for your personal
-   Codespaces allowance. Keep paid usage blocked. If included compute or storage is exhausted, stop;
-   do not add a payment method, increase a budget, or enable a paid overage for this preview.
-   GitHub Free includes 120 core-hours (=60 running hours at 2 cores) and 15 GB-month storage;
-   other codespaces share that allowance. A stopped codespace still consumes storage.
-3. Repository → Code → Codespaces → create on this branch; choose the **2-core** machine and personal billing owner.
-   Do not proceed if GitHub requires payment or shows unavailable free allowance.
-4. Wait for the Python devcontainer to finish. It installs the pinned preview dependency and starts port **8080**.
-5. Open the editor's **Ports** tab. Verify 8080 has **Private** visibility. Keep it private, then choose Open in Browser.
-   Use GitHub's supplied URL; a recreated codespace has a different hostname from the verified one above.
-6. Verify the gold **Genesis Development / Test Environment** banner names M11 and `mobile-test-1`.
-   Try a suggested plan; edit the Custom primary action; expand the Full mechanics catalog to combine movement,
-   speech, Taunt or other supporting activities. The shared validator still checks the complete declaration.
-7. Open Features and limits → diagnostics. Try the sample WHISPER review. A normal submitted turn must say
-   **Preview only: no GM is attached**. If you see live Hask Meadow or a real worker connection, stop.
+If GitHub asks you to sign in again, complete the ordinary sign-in in the same browser and reopen 8080 from Ports.
+Private-port authorization is separate from the GitHub repository connector. Do not bookmark a /pf-signin,
+/auth/postback or callback URL containing query parameters; those are temporary authorization redirects.
+Do not change the port to public, disable Safari cookie protections, add a paid budget, or create another host.
 
-## Restart after travel or sleep
-1. Open https://github.com/codespaces in Safari and resume the existing codespace. Do not create another each time.
-2. The first real Codespace did not leave the automatic preview process running. The following manual recovery
-   was verified. If the link does not load, open Terminal in the editor at `/workspaces/Genesis-Protocol-Dev`:
-   ```bash
-   python3 -m pip install -r development/preview/requirements.txt
-   python3 -B development/preview/serve_preview.py --host 0.0.0.0 --port 8080
-   ```
-   If it says address already in use, the first preview is already running: use Ports → 8080.
-3. Reopen its **private** forwarded URL while signed into GitHub. Stop the codespace when finished to save compute.
-4. To update code, first check `git status` and preserve any changes. Verify `git branch --show-current` is
-   `integration/tb4-whisper-v01`; stop if it is another branch. With a clean codespace on the integration branch:
-   `git pull --ff-only`, rebuild the Datapad (`python3 -B campaigns/starwars_litrpg/ui/build_datapad.py`), then restart
-   the preview process. If a conflict appears, stop and ask for development recovery; never reset campaign history.
-5. Browser-local preview state survives reloads. Features and limits → Reset preview state resets only the simulation.
+## One-time update of this existing Codespace
+The previous checkout was `337bfae`. Preserve any local work first. With a clean checkout on
+`integration/tb4-whisper-v01`, run **once**:
 
-## Verification boundary
-The owner completed secure Google and GitHub device verification; GitHub then created this Codespace through its
-normal UI. The hosted real Datapad loaded, with M11 and the fixture name in its banner. Plan selection, custom primary
-and secondary text, collapsed/expanded catalog, simulated submission, WHISPER edit, diagnostics and reset were exercised.
-The combined declaration retained the exact text, returned the explicit no-GM message and left fixture revision 4 /
-evt_0006 unchanged. The original M11 remote workflow passed all 58 suites plus the functional DOM check. The preview follow-up also
-passed all 58 suites, and its corrected independent custom-plan DOM case passes locally. Hosted Taunt was checked
-with missing-target rejection and legal preflight after entering target and exact words. This is real
-Chromium and hosted-preview evidence; native iPad Safari interaction still requires the owner's test. The preview
-does not advance the separately hosted mobile-test campaign or Hask Meadow.
+```bash
+git pull --ff-only
+```
 
-References: https://docs.github.com/en/billing/concepts/product-billing/github-codespaces
-and https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage
+Then run the Genesis task above. The old preview server lacks the new health endpoint; if the task reports a
+legacy/occupied port, inspect the named preview process before stopping it. It will not kill anything itself.
+Use **Codespaces: Rebuild Container** once to install the revised automatic startup hook in this existing
+Codespace. Rebuild does not create another Codespace. If you cannot rebuild now, the Genesis task still works.
+
+Last-resort single command, from `/workspaces/Genesis-Protocol-Dev`:
+
+```bash
+python3 -B development/preview/manage_preview.py start
+```
+
+If PyYAML is missing, run `python3 -m pip install -r development/preview/requirements.txt` once, then rerun the task.
+If the port is occupied by an unrecognized server, stop and inspect it; do not kill arbitrary processes.
+
+## Try the fixture
+- Select a plan, edit the custom primary action, and expand **Full mechanics catalog** to combine speech/movement.
+- Taunt requires a target and exact words. Costs still come from the shared validator.
+- A submitted turn must report **Preview only: no GM is attached**. The literal declaration stays in browser state.
+- WHISPER review is explicitly a simulated sample; edit/accept/reject changes only this browser's simulation.
+- **Features and limits → diagnostics** shows the noncanonical evaluator fixtures.
+- **Reset preview state** clears this preview's simulation/drafts, not campaigns, other websites or unrelated keys.
+
+Drafts persist in this browser, not across devices; they are not cloud-synced. Private browsing or clearing website
+storage can remove them. No offline gameplay is supported. On iOS, Safari → Share → Add to Home Screen can create
+an optional bookmark; it opens through the browser/authentication flow. Native installation/auth behavior is unverified.
+
+## Free usage and sleep
+Keep paid Codespaces usage blocked. The account had a $0 budget at creation; recheck current usage/budgets before
+extended sessions. Compute runs while the Codespace is active, including idle time until its configured timeout;
+stop it at https://github.com/codespaces when finished. Stopped Codespaces still consume storage allowance.
+If GitHub says free allowance is exhausted, stop and wait for renewal. Do not raise the budget or add billing.
+
+## If it still downloads or does not open
+See `M12_ACCESS_REPORT.md`. Exact cause of the original iPhone download remains unproven. Record browser/device
+version, whether you used Safari or an in-app view, and a screenshot without auth URL query parameters. Native
+Safari on the owner's physical iPhone/iPad must still be checked; viewport/WebKit emulation is not equivalent.
