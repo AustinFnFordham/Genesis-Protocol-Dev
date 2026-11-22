@@ -62,7 +62,7 @@
         if (p.effect.on_success === "feinted") pFeint[st.target] = w;
       }
       if (p.resolution && p.resolution.type === "attack" && T) {
-        var base = E.hasAdv(s, actorId, st.target, p, {}), adv = base.adv.slice(), dis = base.dis.slice();
+        var base = E.hasAdv(s, actorId, st.target, p, {}), adv = base.adv.slice(), dis = base.dis.slice().concat(E.rangeMods ? E.rangeMods(s, actorId, st.target, p) : []);
         if (insight[st.target]) { if (adv.indexOf("Battle Insight") < 0) adv.push("Battle Insight"); }
         if (T.conds.dodge_ready || T.conds.dodging) { if (dis.indexOf("dodging") < 0) dis.push(T.conds.dodging ? "dodging" : "readied dodge"); }
         var parryOpt = reactionLeft[st.target] > 0 && p.resolution.melee && E.reactionOptions(s, st.target, "melee_hit_on_me", { attacker: actorId, defender: st.target, depth: 0 });

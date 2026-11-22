@@ -32,6 +32,11 @@
     "default": true,
     "status": "sandbox_proposal",
     "note": "Descriptive feedback only. Grants nothing."
+   },
+   "ranged_in_melee_disadvantage": {
+    "default": false,
+    "status": "sandbox_proposal",
+    "text": "Disadvantage on ranged attacks while a visible enemy is within 5 ft. A common d20 rule, but not on Aero's sheet; off until the owner approves it."
    }
   },
   "trigger_depth_max": 1,
@@ -627,6 +632,261 @@
    },
    "rules": "Compound maneuver: 1 Main + 1 Secondary. One contest: your Dexterity (Acrobatics) vs its better of Athletics or Acrobatics. Win: disarmed AND prone. Lose: both actions are spent and nothing happens. No damage.",
    "source": "CC-003 proposal: Blade Bind & Strip (main) plus a sweep paid for with the Secondary Action (SA-001)"
+  },
+  "saber_strike_2h": {
+   "name": "Lightsaber Strike (two-handed)",
+   "maneuver": "Attack",
+   "technique": "Two-hand grip",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true,
+    "reach_ft": 5,
+    "target": "enemy",
+    "offhand_free": true
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d10+3",
+    "damage_type": "energy",
+    "melee": true
+   },
+   "rules": "Melee weapon attack +5 vs AC using both hands. Hit: 1d10+3 energy (versatile). Needs your off hand free: not holding the blaster and not grappling.",
+   "source": "aero_character_runtime.yml weapons: lightsaber damage two_handed 1d10+3 (versatile)"
+  },
+  "blaster_shot": {
+   "name": "Blaster Pistol Shot",
+   "maneuver": "Attack",
+   "technique": "Aimed shot",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "sidearm_held": true,
+    "ammo": 1,
+    "target": "enemy",
+    "max_range_ft": 160
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d6+3",
+    "damage_type": "energy",
+    "melee": false,
+    "ammo": 1,
+    "range": {
+     "normal": 40,
+     "long": 160
+    }
+   },
+   "rules": "Ranged weapon attack +5 vs AC, range 40/160 ft. Hit: 1d6+3 energy. Disadvantage beyond 40 ft (sheet). Uses 1 shot (capacity 12). Firing with an enemy adjacent has no penalty unless the 'ranged in melee' sandbox switch is on.",
+   "source": "aero_character_runtime.yml weapons: Standard Blaster Pistol (+5, 1d6+3, 40/160, capacity 12, reload: action)"
+  },
+  "draw_sidearm": {
+   "name": "Draw Blaster",
+   "maneuver": "Object",
+   "technique": "Off-hand draw",
+   "status": "sheet",
+   "cost": {
+    "object": 1
+   },
+   "requires": {
+    "sidearm_holstered": true
+   },
+   "rules": "Object interaction: draw the blaster pistol from the right hip into your left hand. Your off hand is then occupied (no two-handed grip, no grapple).",
+   "source": "aero_character_runtime.yml carry: right hip for left-hand draw; preferred_blaster_hand: left"
+  },
+  "holster_sidearm": {
+   "name": "Holster Blaster",
+   "maneuver": "Object",
+   "technique": "Off-hand holster",
+   "status": "sheet",
+   "cost": {
+    "object": 1
+   },
+   "requires": {
+    "sidearm_held": true
+   },
+   "rules": "Object interaction: holster the blaster, freeing your off hand.",
+   "source": "core object interaction"
+  },
+  "reload_sidearm": {
+   "name": "Reload Blaster",
+   "maneuver": "Reload",
+   "technique": "Power cell swap",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "sidearm_held": true,
+    "reloadable": true
+   },
+   "rules": "Main action: refill the pistol to 12 from your reserve (50 shots total).",
+   "source": "aero_character_runtime.yml reload: action; ammunition 50, capacity 12"
+  },
+  "burst": {
+   "name": "Burst",
+   "maneuver": "Force power",
+   "technique": "Force shockwave",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {},
+   "resolution": {
+    "type": "area_save",
+    "radius_ft": 5,
+    "save": "dex",
+    "dc": 12,
+    "damage": "1d4",
+    "damage_type": "force"
+   },
+   "rules": "Main action, 0 FP. Every other creature within 5 ft of you (allies too) makes a DEX save, DC 12. Fail: 1d4 force damage and knocked prone. Success: nothing.",
+   "source": "aero_character_runtime.yml powers: Burst (level 0, action, 0 FP, 5-ft radius; save, self-exclusion and prone rider are adopted table rulings)"
+  },
+  "grapple": {
+   "name": "Echani Grapple",
+   "maneuver": "Grapple",
+   "technique": "Echani hold",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy",
+    "offhand_free": true,
+    "not_grappled_by_me": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "martial",
+    "actor_bonus": 5,
+    "target_skill": "athletics_or_acrobatics"
+   },
+   "effect": {
+    "on_success": "grappled",
+    "note": "Its speed becomes 0 while you hold it. No damage, no advantage by itself. Moving away releases it."
+   },
+   "rules": "Special melee attack (uses your Main action here): with a free hand, a +5 martial check against its better of Athletics or Acrobatics. Success: grappled, speed 0. Deals no damage.",
+   "source": "aero_character_runtime.yml features: Echani Grappling Training (+5 vs Athletics/Acrobatics, free hand, no damage)"
+  },
+  "lightsaber_deflect": {
+   "name": "Lightsaber Deflect (Tier 1)",
+   "maneuver": "Deflect",
+   "technique": "Bolt catch",
+   "status": "sheet",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "ranged_energy_hit_on_me",
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true
+   },
+   "resolution": {
+    "type": "reduce",
+    "reduce": "1d10+2",
+    "redirect_bonus": 5,
+    "redirect_range_ft": 30
+   },
+   "rules": "Reaction when a ranged energy attack hits you while your blade is lit: reduce the damage by 1d10+2. If that reduces it to 0, you send the bolt back at the shooter (+5, within 30 ft); a hit deals the original rolled damage.",
+   "source": "aero_character_runtime.yml features: Lightsaber Deflect - Tier 1 (sandbox: the redirect targets the shooter)"
+  },
+  "force_connection": {
+   "name": "Force Connection (focused)",
+   "maneuver": "Force sense",
+   "technique": "Focused reading",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "target": "enemy",
+    "range_ft": 30
+   },
+   "effect": {
+    "sets_on_target": "focused_read",
+    "note": "Advantage on one Insight check to read it before the end of your next turn. No combat roll in this sandbox uses Insight, and Combat Discipline already gives Aero advantage on combat Insight, so this has no mechanical effect here."
+   },
+   "rules": "Main action: focus on one visible creature within 30 ft; advantage on one Insight check to read its emotional state or concealment. Cannot read thoughts or statistics.",
+   "source": "aero_character_runtime.yml features: Force Connection (focused, action, 30 ft)"
+  },
+  "sentinel_balance": {
+   "name": "Sentinel Balance",
+   "maneuver": "Force reflex",
+   "technique": "Steady",
+   "status": "sheet",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "failed_dex_or_cha_save",
+   "requires": {},
+   "resolution": {
+    "type": "save_bonus",
+    "bonus": "1d4"
+   },
+   "uses": {
+    "per": "long rest",
+    "max": 2
+   },
+   "rules": "Reaction after you fail a DEX or CHA save: add 1d4, possibly turning it into a success. 2 uses per long rest.",
+   "source": "aero_character_runtime.yml features: Sentinel Balance",
+   "inert_note": "Nothing in these three encounters forces Aero to make a DEX or CHA save, so it never triggers here."
+  },
+  "npc_blaster": {
+   "name": "Blaster Bolt",
+   "maneuver": "Attack",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "blaster",
+    "held": true,
+    "target": "enemy",
+    "max_range_ft": 120
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 4,
+    "damage": "1d6+2",
+    "damage_type": "energy",
+    "melee": false,
+    "range": {
+     "normal": 40,
+     "long": 120
+    }
+   },
+   "rules": "Ranged attack +4, 40/120 ft. Hit: 1d6+2 energy.",
+   "source": "fixture NPC (Malfunctioning Relay Droid, playtest 001)"
+  },
+  "npc_slam": {
+   "name": "Chassis Slam",
+   "maneuver": "Attack",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy"
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 3,
+    "damage": "1d4+1",
+    "damage_type": "kinetic",
+    "melee": true
+   },
+   "rules": "Melee +3. Hit: 1d4+1.",
+   "source": "fixture NPC"
   }
  },
  "forms": {
@@ -784,8 +1044,12 @@
      "slot": "secondary"
     },
     {
-     "pid": "saber_strike",
-     "slot": "main"
+     "pid": [
+      "saber_strike",
+      "saber_strike_2h"
+     ],
+     "slot": "main",
+     "main_hand": "lightsaber:lit"
     },
     {
      "pid": "flow_strike",
@@ -794,14 +1058,14 @@
    ],
    "links": [
     "A won feint gives the lightsaber strike advantage (feint profile).",
-    "Any melee attack this turn unlocks Echani Flow Strike (flow_strike requires after_melee_attack_this_turn)."
+    "The melee attack unlocks Echani Flow Strike (after_melee_attack_this_turn)."
    ],
    "basis": [
     "feint.effect.on_success=feinted",
     "engine hasAdv: feinted → advantage on next melee attack",
     "flow_strike.requires.after_melee_attack_this_turn"
    ],
-   "conditional": "The advantage exists only if the feint wins its contest. Flow Strike is unlocked by the strike being made, hit or miss, and it rolls normally (the feint's advantage is used up by the first attack)."
+   "conditional": "The advantage exists only if the feint wins its contest. Flow Strike is unlocked by the strike being made, hit or miss, and rolls normally."
   },
   {
    "id": "opening_cut",
@@ -814,13 +1078,35 @@
     {
      "pid": [
       "saber_strike",
-      "unarmed_strike"
+      "saber_strike_2h"
      ],
+     "slot": "main",
+     "main_hand": "lightsaber:lit"
+    }
+   ],
+   "links": [
+    "A won feint gives the lightsaber strike advantage."
+   ],
+   "basis": [
+    "feint.effect.on_success=feinted"
+   ],
+   "conditional": "Only if the feint wins its contest."
+  },
+  {
+   "id": "opening_strike",
+   "name": "Opening Strike",
+   "sequence": [
+    {
+     "pid": "feint",
+     "slot": "secondary"
+    },
+    {
+     "pid": "unarmed_strike",
      "slot": "main"
     }
    ],
    "links": [
-    "A won feint gives the next melee attack advantage."
+    "A won feint gives the unarmed strike advantage."
    ],
    "basis": [
     "feint.effect.on_success=feinted"
@@ -834,8 +1120,30 @@
     {
      "pid": [
       "saber_strike",
-      "unarmed_strike"
+      "saber_strike_2h"
      ],
+     "slot": "main",
+     "main_hand": "lightsaber:lit"
+    },
+    {
+     "pid": "flow_strike",
+     "slot": "bonus"
+    }
+   ],
+   "links": [
+    "The lightsaber strike unlocks Echani Flow Strike."
+   ],
+   "basis": [
+    "flow_strike.requires.after_melee_attack_this_turn"
+   ],
+   "conditional": "Two separate attack rolls; neither guarantees the other. Needs the lit blade in hand."
+  },
+  {
+   "id": "unarmed_flow",
+   "name": "Unarmed Flow",
+   "sequence": [
+    {
+     "pid": "unarmed_strike",
      "slot": "main"
     },
     {
@@ -844,12 +1152,12 @@
     }
    ],
    "links": [
-    "The melee attack unlocks Echani Flow Strike."
+    "The unarmed strike unlocks Echani Flow Strike."
    ],
    "basis": [
     "flow_strike.requires.after_melee_attack_this_turn"
    ],
-   "conditional": "Two separate attack rolls; neither guarantees the other."
+   "conditional": "Two separate attack rolls. A descriptive name only; Soul may propose a better one."
   },
   {
    "id": "read_and_strike",
@@ -865,10 +1173,12 @@
     {
      "pid": [
       "saber_strike",
+      "saber_strike_2h",
       "unarmed_strike",
-      "flow_strike"
+      "flow_strike",
+      "blaster_shot"
      ],
-     "slot": "main"
+     "slot": "any"
     }
    ],
    "links": [

@@ -76,5 +76,15 @@
       var g = guard(txt, F); return g.ok ? { source: "provider", beats: [{ from: F.map(function (f) { return f.i; }), text: String(txt) }], facts: F } : Object.assign(res, { provider_rejected: g.problems });
     }, function () { return Object.assign(res, { provider_rejected: ["provider failed"] }); });
   }
-  return { narrate: narrate, facts: facts, fallback: fallback, guard: guard };
+  // proposeComboName(confirmed, facts): an optional flavour name for a CONFIRMED combo, from what actually happened.
+  // Display only. It never becomes a mechanic, a registry entry or a bonus; the catalog name stays the record.
+  function proposeComboName(combo, F) {
+    var ev = F.filter(function (f) { return combo.events.indexOf(f.i) >= 0 || f.ev === "damage" || f.ev === "contest"; });
+    var crit = ev.some(function (f) { return f.crit; }), feint = ev.some(function (f) { return f.ev === "contest" && f.pid === "feint" && f.win; });
+    var blade = /saber|blade/.test(combo.id), hits = combo.hits || 0;
+    var head = crit ? "Starfall" : feint ? "False-Line" : blade ? "Indigo" : "Echani";
+    var tail = hits >= 2 ? "Cascade" : hits === 1 ? "Cut" : "Gambit";
+    return { name: head + " " + tail, source: "Soul proposal (deterministic fallback)", mechanical: false };
+  }
+  return { narrate: narrate, facts: facts, fallback: fallback, guard: guard, proposeComboName: proposeComboName };
 });

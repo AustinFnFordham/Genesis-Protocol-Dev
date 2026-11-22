@@ -1,106 +1,144 @@
-// CC-003 Tactical Composer in a real browser (desktop, iPad touch, phone touch). node test_playtest_ui.cjs
+// CC-004 Combat v0.4 in a real browser. Offline file (practice dice) + the preview server (Atomic dice, reconnect).
+// node test_playtest_ui.cjs
 const { chromium, devices } = require("playwright");
-const path = require("path");
-const { execFileSync } = require("child_process");
+const path = require("path"), fs = require("fs"), os = require("os");
+const { execFileSync, spawn } = require("child_process");
 const page = execFileSync("python3", ["-B", path.join(__dirname, "build_playtest.py")]).toString().trim();
-const url = "file://" + page;
-const P = require("./predict.js"), E = require("./engine.js");
+const fileUrl = "file://" + page;
+const P = require("./predict.js"), D = require("./turn_driver.js");
 let failures = 0;
-const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; console.log("FAIL", n, x || ""); } };
-async function answerReactions(p, choice) { for (let i = 0; i < 8; i++) { if (!(await p.locator("#react[open]").count())) return; const pos = p.locator("#reactBody [data-react]:not([data-react=''])"); if (choice === "first" && await pos.count()) await pos.first().click(); else await p.locator("#reactBody [data-react='']").click(); await p.waitForTimeout(100); } }
-async function idle(p) { await p.waitForFunction(() => !window.__genesisCombat.playing()); }
+const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; console.log("FAIL", n, x == null ? "" : JSON.stringify(x).slice(0, 300)); } };
+const G = (p, fn) => p.evaluate(fn);
 async function center(loc, fy) { const b = await loc.boundingBox(); return { x: b.x + b.width / 2, y: b.y + b.height * (fy == null ? 0.5 : fy) }; }
-async function mouseDrag(p, from, to) { const a = await center(from), b = await center(to); await p.mouse.move(a.x, a.y); await p.mouse.down(); for (let i = 1; i <= 12; i++) await p.mouse.move(a.x + (b.x - a.x) * i / 12, a.y + (b.y - a.y) * i / 12); await p.mouse.up(); await p.waitForTimeout(60); }
-async function touchDrag(p, cdp, from, to, fy) { await from.scrollIntoViewIfNeeded(); const a = await center(from); let b = await center(to);
+async function mouseDrag(p, from, to, fy) { await from.scrollIntoViewIfNeeded(); const a = await center(from); await p.mouse.move(a.x, a.y); await p.mouse.down(); let b; for (let i = 1; i <= 14; i++) { b = await center(to, fy); await p.mouse.move(a.x + (b.x - a.x) * i / 14, a.y + (b.y - a.y) * i / 14); } await p.mouse.up(); await p.waitForTimeout(60); }
+async function aboveDock(p, loc) { await loc.scrollIntoViewIfNeeded(); const b = await loc.boundingBox(), d = await p.locator("#dock").boundingBox(); if (d && d.y > 50 && b.y + b.height > d.y - 8) await p.evaluate((dy) => window.scrollBy(0, dy), b.y + b.height - d.y + 16); await p.waitForTimeout(50); }
+async function touchDrag(p, cdp, from, to, fy) { await aboveDock(p, from); const a = await center(from); let b;
   await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: a.x, y: a.y }] });
   for (let i = 1; i <= 14; i++) { b = await center(to, fy); await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: a.x + (b.x - a.x) * i / 14, y: a.y + (b.y - a.y) * i / 14 }] }); await p.waitForTimeout(16); }
   await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] }); await p.waitForTimeout(80); }
-const plan = (p) => p.evaluate(() => window.__genesisCombat.plan().map((s) => s.pid));
-async function setClose(p) { await p.evaluate(() => { const s = window.__genesisCombat.state(); s.dist["aero|ilsa"] = 5; }); await p.locator("#clear").click(); }
+const plan = (p) => G(p, () => window.__genesisCombat.plan().map((s) => s.pid));
+async function ready(p) { await p.waitForFunction(() => window.__genesisCombat && window.__genesisCombat.authority() && !window.__genesisCombat.busy() && document.querySelector("[data-card]"), null, { timeout: 15000 }); }
+async function closeIn(p) { await G(p, () => { const s = window.__genesisCombat.state(); Object.keys(s.dist).forEach((k) => s.dist[k] = 5); }); await p.locator("#clear").click(); }
+// Drive whatever the page is waiting for: reactions, Aero's Roll button; until not busy.
+async function drive(p, react) { for (let i = 0; i < 200; i++) { if (await p.locator("#react[open]").count()) { const pos = p.locator("#reactBody [data-react]:not([data-react=''])"); if (react !== "none" && await pos.count()) await pos.first().click(); else await p.locator("#reactBody [data-react='']").click(); }
+    const rb = p.locator("[data-roll]:not([disabled])"); if (await rb.count()) await rb.first().click();
+    if (!(await G(p, () => window.__genesisCombat.busy())) && !(await p.locator("#react[open]").count())) return; await p.waitForTimeout(60); } }
+async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (await G(p, () => !!window.__genesisCombat.state().over)) return true; await p.locator("#clear").click();
+    for (const c of ["recover_weapon", "move", "saber_strike", "unarmed_strike", "blaster_shot", "flow_strike"]) { const el = p.locator(`[data-card="${c}"][data-off="false"]`); if (await el.count()) { await el.click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); } }
+    if (await p.locator("#resolve").isDisabled()) { const any = p.locator(`[data-card][data-off="false"]`); if (await any.count()) await any.first().click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); }
+    if (!(await p.locator("#resolve").isDisabled())) { await p.locator("#resolve").click(); if (await p.locator("#confirm[open]").count()) await p.locator("#confirmYes").click(); } }
+  return G(p, () => !!window.__genesisCombat.state().over); }
 
 (async () => {
   const browser = await chromium.launch();
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "atomic-ui-")), port = 18000 + Math.floor(Math.random() * 2000);
+  const srv = spawn("python3", ["-B", path.join(__dirname, "../preview/serve_preview.py"), "--port", String(port)], { env: Object.assign({}, process.env, { GENESIS_ATOMIC_DIR: dir }), stdio: "ignore" });
   try {
-    // ---------------- desktop ----------------
-    const ctx = await browser.newContext({ viewport: { width: 1300, height: 1000 } });
+    // ================= desktop, offline file =================
+    const ctx = await browser.newContext({ viewport: { width: 1300, height: 950 } });
     const p = await ctx.newPage(); const errors = []; p.on("pageerror", (e) => errors.push(e.message));
-    await p.goto(url); await p.waitForSelector("[data-card]");
-    const banner = await p.locator("#devBanner").innerText();
-    ok(/Test Environment/.test(banner) && /noncanonical/.test(banner), "banner: test environment, noncanonical");
+    await p.goto(fileUrl); await ready(p);
+    ok((await G(p, () => window.__genesisCombat.authority())) === "offline-practice" && /NOT authoritative/.test(await p.locator("#theaterAuth").innerText()), "standalone file: dice are labelled offline practice, NOT authoritative");
     const groups = await p.$$eval("details.grp", (d) => d.map((x) => x.dataset.grp));
-    ok(JSON.stringify(groups) === JSON.stringify(["maneuvers", "main", "secondary", "bonus", "reactions", "moveobj", "free"]), "cards grouped by action economy, Maneuvers first", groups);
-    ok(await p.locator("details.grp[data-grp=maneuvers] [data-card=controlled_takedown] .c-main").count() && await p.locator("details.grp[data-grp=maneuvers] [data-card=controlled_takedown] .c-secondary").count(), "a maneuver shows every action type it consumes (Main + Secondary)");
-    ok(await p.locator("details.grp[data-grp=reactions] [data-reaction=parry]").count() && /Triggers when/.test(await p.locator("[data-reaction=parry]").innerText()) && /1\/1 this round/.test(await p.locator("[data-reaction=parry]").innerText()), "reactions show trigger, readiness and capacity (not turn steps)");
-    await p.locator("[data-filter=bonus]").click(); ok((await p.$$eval("details.grp", (d) => d.length)) === 1, "filter shows one group"); await p.locator("[data-filter=all]").click();
-    await p.locator("details.grp[data-grp=main] > summary").click(); ok(!(await p.locator("details.grp[data-grp=main]").evaluate((d) => d.open)), "groups collapse"); await p.locator("details.grp[data-grp=main] > summary").click();
-    ok(/HP 20 \/ 20/.test(await p.locator("[data-plate=ilsa]").innerText()) && /HP 11 \/ 11/.test(await p.locator("[data-plate=aero]").innerText()), "HP bars visible for Aero and the enemy");
-    ok(/Out of reach/.test(await p.locator('[data-card="saber_strike"]').innerText()), "unavailable card explains why");
-    await p.locator('[data-info="controlled_takedown"]').click(); ok(/compound: 1 Main \+ 1 Secondary/.test(await p.locator("#inspectBody").innerText()), "inspect shows compound cost"); await p.locator("#inspectClose").click();
-
-    // drag & drop with the mouse
-    await setClose(p);
-    await mouseDrag(p, p.locator('[data-card="saber_strike"]'), p.locator("#timeline"));
-    ok(JSON.stringify(await plan(p)) === '["saber_strike"]', "mouse: drag a card into the timeline");
-    await mouseDrag(p, p.locator('[data-card="feint"]'), p.locator("#timeline .step").first());
-    ok(JSON.stringify(await plan(p)) === '["feint","saber_strike"]', "mouse: drop position decides order (dropped above)", await plan(p));
-    await p.locator('[data-card="flow_strike"]').focus(); await p.keyboard.press("Enter");
-    ok(JSON.stringify(await plan(p)) === '["feint","saber_strike","flow_strike"]', "keyboard: Enter adds a focused card");
-    ok(await p.locator('[data-combo="echani_flow_line"]').count() === 1 && await p.locator(".step.combo").count() === 3, "combo recognized: Echani Flow Line, linked steps highlighted");
-    const combo = await p.locator(".comboBanner").innerText();
-    ok(/Legal sequence/i.test(combo) && /Synergy/i.test(combo) && /Predicted/i.test(combo) && /Cinematic/i.test(combo) && /Conditional/.test(combo), "combo separates legal / synergy / predicted / cinematic and says it is conditional");
-    // prediction numbers equal the module's exact math for the same state
-    const expected = await p.evaluate(() => JSON.stringify(window.__genesisCombat.state()));
-    const s0 = JSON.parse(expected), an = P.analyzePlan(s0, "aero", [{ pid: "feint", target: "ilsa" }, { pid: "saber_strike", target: "ilsa" }, { pid: "flow_strike", target: "ilsa" }]);
-    const predTxt = await p.locator("#pred").innerText(); const pc = (x) => Math.round(x * 100) + "%";
-    ok(predTxt.includes(pc(an.steps[0].success)) && predTxt.includes(pc(an.steps[1].hit)) && predTxt.includes(pc(an.steps[2].hit)), "prediction shows the exact engine-based percentages", [pc(an.steps[0].success), pc(an.steps[1].hit), predTxt.slice(0, 200)]);
-    await p.waitForSelector("[data-sim]"); ok(/400 seeded runs/.test(await p.locator("[data-sim]").innerText()) && /95%/.test(await p.locator("[data-sim]").innerText()), "simulation labeled with sample count and interval");
-    ok((await p.evaluate(() => JSON.stringify(window.__genesisCombat.state()))) === expected, "prediction did not touch authoritative dice or state");
-    ok(/read/i.test(predTxt) && /Mechanical/i.test(predTxt), "mechanical numbers and narrative read are labeled separately");
-    // reorder by keyboard and by drag; remove
-    await p.locator("#timeline .step").nth(2).focus(); await p.keyboard.press("Alt+ArrowUp");
-    ok(JSON.stringify(await plan(p)) === '["feint","flow_strike","saber_strike"]', "keyboard: Alt+Up reorders");
-    await mouseDrag(p, p.locator("#timeline .step").nth(1).locator(".ttl"), p.locator("#timeline .step").nth(2).locator(".sub"));
-    await mouseDrag(p, p.locator("#timeline .step").nth(2).locator(".ttl"), p.locator("#timeline .step").nth(1).locator(".ttl"));
-    const pl = await plan(p); ok(pl.length === 3 && pl[0] === "feint", "mouse: steps can be dragged to reorder", pl);
-    await p.locator("#timeline [data-rm]").first().click(); ok((await plan(p)).length === 2, "remove a step");
+    ok(JSON.stringify(groups) === JSON.stringify(["maneuvers", "attacks", "main", "secondary", "bonus", "reactions", "movement", "object", "free", "absent"]), "groups: Maneuvers, Attack, Main, Secondary, Bonus, Reactions, Movement, Object, Free, Not-on-sheet", groups);
+    const attacks = await p.$$eval("details[data-grp=attacks] [data-card]", (d) => d.map((x) => x.dataset.card).sort());
+    ok(JSON.stringify(attacks) === JSON.stringify(["blaster_shot", "grapple", "saber_strike", "saber_strike_2h", "unarmed_strike"]), "Attack selector lists every execution: saber 1H/2H, unarmed, blaster, grapple", attacks);
+    ok(/Draw your blaster pistol first/.test(await p.locator('[data-card="blaster_shot"]').innerText()), "unavailable blaster says why (draw it first)");
+    await p.locator("details[data-grp=absent] > summary").click();
+    ok(/Telekinesis/.test(await p.locator("details[data-grp=absent]").innerText()) && /Not on Aero's sheet/.test(await p.locator("details[data-grp=absent]").innerText()), "telekinesis appears as not on the sheet, with the reason");
+    ok(/never triggers here/.test(await p.locator("[data-reaction=sentinel_balance]").innerText()), "inert sheet reaction (Sentinel Balance) says why it never triggers");
+    // sticky composer: scroll the library; the timeline stays on screen
+    await p.locator("details[data-grp=object]").scrollIntoViewIfNeeded(); await p.mouse.wheel(0, 900); await p.waitForTimeout(150);
+    const tb = await p.locator("#timeline").boundingBox(); ok(tb && tb.y >= -2 && tb.y < 950, "sticky composer: the timeline stays visible while scrolling the library", tb);
+    // drag and drop with the timeline sticky
+    await closeIn(p);
+    await mouseDrag(p, p.locator('details[data-grp=attacks] [data-card="saber_strike"]'), p.locator("#timeline"));
+    await p.mouse.wheel(0, 1200); await p.waitForTimeout(100);
+    await mouseDrag(p, p.locator('[data-card="flow_strike"]'), p.locator("#timeline"), 0.95);
+    ok(JSON.stringify(await plan(p)) === '["saber_strike","flow_strike"]', "mouse drag from far down the library into the sticky timeline", await plan(p));
+    ok(await p.locator('[data-combo="blade_and_body"]').count() === 1 && /predicted synergy/.test(await p.locator(".comboBanner").innerText()), "Blade and Body shown as a PREDICTED synergy with the lit saber");
+    // disarmed: the same cards must not show Blade and Body
+    await G(p, () => { const a = window.__genesisCombat.state().actors.aero; a.dropped = JSON.parse(JSON.stringify(a.weapon)); a.weapon.held = false; a.weapon.ignited = false; });
+    await p.locator("#clear").click(); await p.locator('[data-card="unarmed_strike"]').click(); await p.locator('[data-card="flow_strike"]').click();
+    ok(await p.locator('[data-combo="blade_and_body"]').count() === 0 && await p.locator('[data-combo="unarmed_flow"]').count() === 1, "disarmed + unarmed: no Blade and Body (Unarmed Flow instead)");
+    ok(/Needs your lightsaber in hand/.test(await p.locator('[data-card="saber_strike"]').innerText()), "lightsaber card explains it needs the blade in hand");
+    await G(p, () => { const a = window.__genesisCombat.state().actors.aero; a.weapon.held = true; a.weapon.ignited = true; a.dropped = null; }); await p.locator("#clear").click();
+    // object vs main accounting: draw (object) + blaster shot (main)
+    await p.locator('[data-card="draw_sidearm"]').click(); ok(/Not enough object/i.test(await p.locator('[data-card="holster_sidearm"]').innerText()) || (await p.locator('[data-card="holster_sidearm"]').getAttribute("data-off")) === "true", "one object interaction per turn");
+    await p.locator('[data-card="blaster_shot"]').click(); ok(JSON.stringify(await plan(p)) === '["draw_sidearm","blaster_shot"]', "draw then shoot is a legal plan");
+    ok(/HAND|off hand/i.test(await p.locator('[data-card="saber_strike_2h"]').innerText()), "two-handed grip refused while the blaster is in the off hand");
     await p.locator("#clear").click();
-    // compound confirmation, only for compound
+    // compound confirmation; then rolls are the PLAYER's: nothing resolves until Roll is pressed
     await p.locator('[data-card="controlled_takedown"]').click(); await p.locator("#resolve").click();
-    ok(/Blade Bind & Takedown consumes 1 Main \+ 1 Secondary\. Continue\?/.test(await p.locator("#confirm").innerText()), "compound cost confirmation before commit");
-    await p.locator("#confirmNo").click(); ok((await plan(p)).length === 1 && !(await p.locator("#confirm[open]").count()), "Revise keeps the plan uncommitted");
-    await p.locator("#clear").click(); await p.locator('[data-card="saber_strike"]').click(); await p.locator("#resolve").click();
-    ok(!(await p.locator("#confirm[open]").count()), "ordinary action commits without a confirmation");
-    await answerReactions(p, "first"); await idle(p);
-    ok(await p.locator("#dice .roll").count() > 0 && /receipt r\d/.test(await p.locator("#dice").innerText()), "dice tray shows rolls with receipts");
-    ok(/= \d+/.test(await p.locator("#dice .calc").first().innerText()), "dice breakdown shows the calculation");
-    ok((await p.locator("#story .beat").count()) > 0, "Soul narration appears");
-    await p.locator("#txWrap > summary").click(); ok(/\[r\d+ 1d20/.test(await p.locator("#log").innerText()), "expandable mechanical transcript with receipts");
-    await p.locator("#fullMech").check(); ok(/budget/.test(await p.locator("[data-plate=ilsa]").innerText()), "full-mechanics debug view toggles");
-    // play a whole fight through the UI
-    for (let t = 0; t < 30; t++) { await idle(p); if (await p.evaluate(() => !!window.__genesisCombat.state().over)) break; await answerReactions(p, "first"); await idle(p);
-      if (await p.locator("#resolve").isDisabled()) { await p.locator("#clear").click(); for (const c of ["move", "saber_strike", "flow_strike"]) { const el = p.locator(`[data-card="${c}"][data-off="false"]`); if (await el.count()) { await el.click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); } } }
-      if (!(await p.locator("#resolve").isDisabled())) await p.locator("#resolve").click(); }
-    ok(await p.evaluate(() => !!window.__genesisCombat.state().over), "a full fight finishes through the UI");
-    ok(errors.length === 0, "no page errors on desktop", errors);
+    ok(/consumes 1 Main \+ 1 Secondary\. Continue\?/.test(await p.locator("#confirm").innerText()), "compound cost confirmation");
+    await p.locator("#confirmYes").click(); await p.waitForSelector("[data-roll]:not([disabled])");
+    const logBefore = await G(p, () => window.__genesisCombat.state().log.length); await p.waitForTimeout(600);
+    ok((await G(p, () => window.__genesisCombat.waitingRoll())) && (await G(p, () => window.__genesisCombat.state().log.length)) === logBefore, "the turn waits for the player's Roll button (no auto-roll for Aero)");
+    const card = await p.locator(".tcard.mine").last().innerText(); ok(/PLAYER — AERO/.test(await p.locator(".lane-tag.player").innerText()) && /martial|acrobatics/i.test(card) && /opposed by/.test(card), "player roll card shows purpose, dice and what it is opposed by", card);
+    await p.locator("[data-roll]:not([disabled])").first().dblclick().catch(() => {});
+    await drive(p);
+    const gmTitle = await p.locator("#laneGTitle").innerText(); ok(/^GM — ILSA VOHR/.test(gmTitle), "GM lane names the NPC", gmTitle);
+    ok(await p.locator(".tcard.gm").count() > 0, "the GM rolled Ilsa's dice in the GM lane");
+    const tape = await G(p, () => window.__genesisCombat.state().tape); ok(tape.every((d, i) => d.seq === i), "double-clicking Roll did not create extra dice (contiguous tape)");
+    ok(/receipt r\d+/.test(await p.locator(".tcard.mine .tc-res").first().innerText()), "rolls show their receipt");
+    // narration after mechanics
+    ok((await p.locator("#story .beat").count()) > 0, "Soul narration appears after the mechanics");
+    await p.locator("#txWrap > summary").click(); ok(/\[r\d+ 1d20/.test(await p.locator("#log").innerText()), "expandable mechanical transcript");
+    ok(await playOut(p), "a whole fight can be played through the UI (offline dice)");
+    ok(errors.length === 0, "no page errors (desktop offline)", errors);
+    await ctx.close();
 
-    // ---------------- touch: iPad and phone ----------------
+    // ================= touch: iPad and phone (offline file) =================
     for (const [label, dev] of [["iPad", devices["iPad (gen 7)"]], ["phone", devices["Pixel 5"]]]) {
       const c2 = await browser.newContext({ ...dev }); const q = await c2.newPage(); const errs = []; q.on("pageerror", (e) => errs.push(e.message));
-      await q.goto(url); await q.waitForSelector("[data-card]"); const cdp = await c2.newCDPSession(q);
-      await q.evaluate(() => { const s = window.__genesisCombat.state(); s.dist["aero|ilsa"] = 5; }); await q.locator("#clear").click();
-      await touchDrag(q, cdp, q.locator('[data-card="saber_strike"] .grip'), q.locator("#timeline"));
-      ok(JSON.stringify(await plan(q)) === '["saber_strike"]', label + ": touch drag (grip) into the timeline", await plan(q));
-      await touchDrag(q, cdp, q.locator('[data-card="feint"] .grip'), q.locator("#timeline .step").first(), 0.15);
-      ok(JSON.stringify(await plan(q)) === '["feint","saber_strike"]', label + ": touch drop position orders steps", await plan(q));
-      await q.locator('[data-card="flow_strike"]').tap(); ok((await plan(q)).length === 3, label + ": tap adds a card (accessible alternative)");
-      const sy = await q.evaluate(() => window.scrollY); await touchDrag(q, cdp, q.locator('[data-card="taunt"] .nm'), q.locator('[data-card="taunt"] .nm'));
-      ok((await plan(q)).length === 3, label + ": an ordinary short touch on a card body does not start a drag");
-      const wide = await q.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); ok(wide <= 1, label + ": no horizontal page scroll", wide);
-      const small = await q.$$eval("button:not([hidden]), .grip", (els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width && r.height && (r.height < 43.5 || r.width < 43.5); }).map((e) => e.outerHTML.slice(0, 60)));
+      await q.goto(fileUrl); await ready(q); const cdp = await c2.newCDPSession(q); await closeIn(q);
+      const vh = (await q.viewportSize()).height;
+      const dockBox = await q.locator("#dock").boundingBox();
+      if (label === "phone") ok(dockBox && dockBox.y + dockBox.height <= vh + 1 && dockBox.y > vh * 0.3, "phone: the composer is a bottom dock, always on screen", dockBox);
+      await q.locator('details[data-grp=object]').scrollIntoViewIfNeeded();
+      await touchDrag(q, cdp, q.locator('details[data-grp=attacks] [data-card="saber_strike"] .grip'), q.locator("#timeline"));
+      ok(JSON.stringify(await plan(q)) === '["saber_strike"]', label + ": touch drag into the timeline without chasing it", await plan(q));
+      await aboveDock(q, q.locator('[data-card="flow_strike"]')); await q.locator('[data-card="flow_strike"]').tap(); ok((await plan(q)).length === 2, label + ": tap adds a card");
+      await q.locator("#resolve").tap(); await q.waitForSelector("[data-roll]:not([disabled])"); const rb = await q.locator("[data-roll]:not([disabled])").first().boundingBox();
+      ok(rb && rb.y >= 0 && rb.y + rb.height <= vh + 1 && rb.height >= 44, label + ": the Roll button is on screen and thumb-sized", rb);
+      await drive(q);
+      const wide = await G(q, () => document.documentElement.scrollWidth - window.innerWidth); ok(wide <= 1, label + ": no horizontal page scroll", wide);
+      const small = await q.$$eval("button:not([hidden]), .grip", (els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width && r.height && getComputedStyle(e).visibility !== "hidden" && (r.height < 43.5 || r.width < 43.5); }).map((e) => e.outerHTML.slice(0, 70)));
       ok(small.length === 0, label + ": tap targets at least 44 px", small.slice(0, 4));
       ok(errs.length === 0, label + ": no page errors", errs);
       await c2.close();
     }
-  } finally { await browser.close(); }
+
+    // ================= preview server: Atomic dice, reconnect, no rerolls =================
+    const base = "http://127.0.0.1:" + port;
+    for (let i = 0; i < 80; i++) { try { await fetch(base + "/healthz"); break; } catch (e) { await new Promise((r) => setTimeout(r, 150)); } }
+    const c3 = await browser.newContext({ viewport: { width: 1300, height: 950 } }); const h = await c3.newPage(); const herr = []; h.on("pageerror", (e) => herr.push(e.message));
+    await h.goto(base + "/combat.html"); await ready(h);
+    ok((await G(h, () => window.__genesisCombat.authority())) === "atomic-sandbox" && /Atomic \(sandbox service\)/.test(await h.locator("#theaterAuth").innerText()), "preview server: dice come from the Atomic service");
+    await closeIn(h); for (const c of ["saber_strike", "flow_strike"]) await h.locator(`[data-card="${c}"]`).click(); await h.locator("#resolve").click(); await drive(h);
+    ok(await G(h, () => window.__genesisCombat.state().receipts.every((r) => r.authority === "atomic")), "every receipt is authority=atomic");
+    const sid = await G(h, () => window.__genesisCombat.session()); const hash1 = await G(h, () => JSON.stringify([window.__genesisCombat.state().log.length, window.__genesisCombat.state().tape, window.__genesisCombat.state().actors.aero.hp, window.__genesisCombat.state().actors.ilsa.hp]));
+    // NOTE: closeIn() changed distance in the page only, so the server replay differs from the page in where Aero stands; use a clean fight for the reconnect proof.
+    await h.locator("#reset").click(); await ready(h);
+    const sid2 = await G(h, () => window.__genesisCombat.session()); ok(sid2 && sid2 !== sid, "New fight opens a new Atomic session");
+    await h.locator('[data-card="move"]').click(); if (await h.locator("#pick[open]").count()) await h.locator("#pickBody button").first().click();
+    await h.locator('[data-card="saber_strike"]').click(); await h.locator("#resolve").click();
+    await h.waitForSelector("[data-roll]:not([disabled])"); await h.locator("[data-roll]:not([disabled])").first().click();
+    // wait for the next player die, or the end of the round; then reload mid-fight
+    for (let i = 0; i < 60 && !(await G(h, () => window.__genesisCombat.waitingRoll())) && (await G(h, () => window.__genesisCombat.busy())); i++) { if (await h.locator("#react[open]").count()) await h.locator("#reactBody [data-react='']").click(); await h.waitForTimeout(80); }
+    const tapeBefore = await G(h, () => window.__genesisCombat.state().tape.map((d) => d.value));
+    await h.reload(); await h.waitForFunction(() => window.__genesisCombat && window.__genesisCombat.session(), null, { timeout: 15000 });
+    ok((await G(h, () => window.__genesisCombat.session())) === sid2, "reload: the page reconnects to the same Atomic session");
+    ok(/Reconnected/.test(await h.locator("#connMsg").innerText()), "reload: says it rebuilt from the journal");
+    await drive(h);
+    const tapeAfter = await G(h, () => window.__genesisCombat.state().tape.map((d) => d.value));
+    ok(JSON.stringify(tapeAfter.slice(0, tapeBefore.length)) === JSON.stringify(tapeBefore), "reload: every die already drawn is reused (no reroll after reconnect)", [tapeBefore, tapeAfter]);
+    const j = await (await fetch(base + "/atomic/journal", { method: "POST", body: JSON.stringify({ session: sid2 }), headers: { "Content-Type": "application/json" } })).json();
+    const C = require("./catalog.json"), S = require("./scenarios.json"); const rb = D.replay(C, S, j);
+    const pageState = await G(h, () => JSON.parse(JSON.stringify(window.__genesisCombat.state())));
+    ok(!rb.pending && D.stateHash(rb.state) === D.stateHash(pageState), "the page's state equals a clean replay of the server journal (presentation wrote nothing into game state)");
+    ok(herr.length === 0, "no page errors (Atomic mode)", herr);
+    await c3.close();
+  } finally { srv.kill(); await browser.close(); }
   console.log(failures ? failures + " FAILED" : "all UI checks passed"); process.exit(failures ? 1 : 0);
 })();

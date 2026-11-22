@@ -19,7 +19,7 @@ def page(sha=None):
     src = (HERE / "playtest_src.html").read_text()
     data = lambda name: json.dumps(json.loads((HERE / name).read_text()), separators=(",", ":")).replace("</", "<\\/")
     js = lambda name: (HERE / name).read_text().replace("</script", "<\\/script")
-    return (src.replace("/*ENGINE*/", js("engine.js")).replace("/*PREDICT*/", js("predict.js")).replace("/*SOUL*/", js("soul.js"))
+    return (src.replace("/*ENGINE*/", js("engine.js")).replace("/*PREDICT*/", js("predict.js")).replace("/*SOUL*/", js("soul.js")).replace("/*DRIVER*/", js("turn_driver.js"))
                .replace("/*CATALOG*/", data("catalog.json")).replace("/*SCENARIOS*/", data("scenarios.json"))
                .replace("__SHA__", sha))
 

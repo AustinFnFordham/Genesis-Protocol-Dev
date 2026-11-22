@@ -54,7 +54,17 @@
     "move",
     "speak",
     "recover_weapon",
-    "toggle_blade"
+    "toggle_blade",
+    "saber_strike_2h",
+    "blaster_shot",
+    "draw_sidearm",
+    "holster_sidearm",
+    "reload_sidearm",
+    "burst",
+    "grapple",
+    "lightsaber_deflect",
+    "force_connection",
+    "sentinel_balance"
    ],
    "sandbox_proposal": [
     "flow_strike",
@@ -69,7 +79,33 @@
     "force_augment",
     "controlled_takedown"
    ]
-  }
+  },
+  "sidearm": {
+   "kind": "blaster",
+   "name": "blaster pistol",
+   "held": false,
+   "ammo": 12,
+   "capacity": 12,
+   "reserve": 38
+  },
+  "not_on_sheet": [
+   {
+    "name": "Minor Telekinesis",
+    "why": "Not on Aero's sheet. He knows two Level-0 powers: Battle Insight and Burst. The CC-002 notes say a Minor Telekinesis cost change needs owner approval."
+   },
+   {
+    "name": "Force Push / Pull (telekinesis)",
+    "why": "Not on Aero's sheet; no telekinesis power is known at Level 1."
+   },
+   {
+    "name": "Saber Ward",
+    "why": "Replaced on the sheet: the Level 1 list did not permit it."
+   },
+   {
+    "name": "Off-hand blaster + saber in one turn",
+    "why": "Only one Main action; the sheet grants no extra attack."
+   }
+  ]
  },
  "scenarios": {
   "duelist": {
@@ -182,6 +218,59 @@
       ]
      },
      "policy": "ambusher"
+    }
+   }
+  },
+  "relay_droid": {
+   "title": "Aero vs a malfunctioning relay droid",
+   "intro": "Floodlights stutter over the relay perimeter. A maintenance droid, optics flickering red, raises a bolted-on blaster thirty feet away.",
+   "initiative": [
+    "aero",
+    "droid"
+   ],
+   "distance": {
+    "aero|droid": 30
+   },
+   "actors": {
+    "droid": {
+     "id": "droid",
+     "name": "Malfunctioning Relay Droid",
+     "side": "enemy",
+     "controller": "npc",
+     "kind": "droid",
+     "understands": false,
+     "hp": 7,
+     "hp_max": 7,
+     "ac": 13,
+     "abilities": {
+      "str": 1,
+      "dex": 1,
+      "con": 0,
+      "int": -2,
+      "wis": -1,
+      "cha": -3
+     },
+     "skills": {
+      "athletics": 1,
+      "acrobatics": 1,
+      "insight": -1,
+      "perception": 1
+     },
+     "weapon": {
+      "kind": "blaster",
+      "held": true,
+      "name": "bolted blaster"
+     },
+     "policy": "gunner",
+     "grants": {
+      "sheet": [],
+      "sandbox_proposal": [
+       "npc_blaster",
+       "npc_slam",
+       "move"
+      ]
+     },
+     "status_note": "Sandbox proposal: HP 7 from the playtest's 'Malfunctioning Relay Droid 7hp'; AC 13 as shown there."
     }
    }
   }

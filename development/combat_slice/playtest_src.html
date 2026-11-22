@@ -148,6 +148,34 @@ body.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; 
 .tblwrap { overflow-x: auto; }
 .commit { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; } .commit .primary { flex: 1 1 200px; min-height: 52px; }
 
+/* sticky composer + mobile dock */
+@media (min-width: 921px) { .dock { position: sticky; top: max(8px, env(safe-area-inset-top, 0px)); max-height: calc(100vh - 16px); overflow: auto; overscroll-behavior: contain; } .dock-handle { display: none; } }
+@media (max-width: 920px) {
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; border-radius: 16px 16px 0 0; max-height: 48vh; overflow: auto; overscroll-behavior: contain; padding-top: 0; padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)); padding-left: max(14px, env(safe-area-inset-left, 0px)); padding-right: max(14px, env(safe-area-inset-right, 0px)); box-shadow: 0 -12px 30px rgba(0,0,0,.5); background: #151a26; }
+  .dock.collapsed .dock-body { display: none; }
+  .dock-handle { position: sticky; top: 0; z-index: 2; width: 100%; display: flex; justify-content: space-between; align-items: center; background: #151a26; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; font: 600 14px var(--display); letter-spacing: .08em; text-transform: uppercase; }
+  .wrap { padding-bottom: calc(var(--dock-h, 120px) + 24px); }
+  html { scroll-padding-bottom: calc(var(--dock-h, 120px) + 12px); }
+  body.dragging .dock { outline: 2px solid var(--saber); }
+}
+.theater { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+.lanes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin-top: 6px; }
+@media (max-width: 520px) { .lanes { grid-template-columns: minmax(0, 1fr); } }
+.lane { display: flex; flex-direction: column; gap: 8px; min-height: 60px; }
+.lane-tag { font: 700 12px var(--display); letter-spacing: .14em; margin: 0 0 4px; padding: 3px 8px; border-radius: 6px; display: inline-block; }
+.lane-tag.player { color: #0b0e15; background: #8fc0ff; } .lane-tag.gm { color: #0b0e15; background: #ff8f7a; }
+.lane-empty { color: var(--dim); font-size: 13px; margin: 0; }
+.tcard { border: 1px solid var(--line2); border-radius: 12px; padding: 8px 10px; background: var(--bg2); }
+.tcard.mine { border-color: rgba(143,192,255,.6); } .tcard.gm { border-color: rgba(255,143,122,.5); }
+.tc-p { font-size: 13px; color: var(--ink); font-weight: 600; } .tc-f, .tc-vs { font-size: 12.5px; color: var(--muted); } .tc-vs b { color: var(--ink); }
+.tc-dice { margin: 6px 0; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; } .res.hurt { color: var(--bad); } .die.idle { color: var(--dim); } .die.spin { animation: tumble .35s linear infinite; }
+.tc-res .calc { font: 13px var(--mono); } .tc-res .res { font: 700 15px var(--display); letter-spacing: .06em; text-transform: uppercase; }
+.rollbtn { width: 100%; margin-top: 6px; min-height: 52px; font-size: 18px; }
+.auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; } .auth.ok { color: var(--ok); } .auth.warn { color: var(--warn); }
+.lane-turn { font: 600 11px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); border-top: 1px dashed var(--line); padding-top: 4px; }
+.confirmed { border: 1px solid var(--ok); border-radius: 12px; padding: 8px 10px; font-size: 14px; background: rgba(87,217,154,.08); }
+.ref-card { cursor: default; opacity: .75; } .ref-card .why { color: var(--muted); }
+.sidearm { font-size: 12.5px; }
 /* story */
 .story { margin-top: 12px; } .beat { margin: 0 0 8px; font-size: 16px; line-height: 1.55; max-width: 72ch; }
 .turnhd { font: 600 12px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 14px 0 6px; }
@@ -159,13 +187,12 @@ dialog { border: 1px solid var(--line2); border-radius: 16px; background: var(--
 dialog::backdrop { background: rgba(4,6,12,.7); }
 @media (prefers-reduced-motion: reduce) { *, *::after { animation: none !important; transition: none !important; } }
 </style>
-<div id="devBanner" role="note"><b>Genesis Development / Test Environment</b> · CC-003 Tactical Composer · code <code id="sha">__SHA__</code> · <b>noncanonical</b>: no campaign, sheet or ledger is touched · values marked <i>Sandbox proposal</i> need owner approval · enemy HP is shown because this is a debug sandbox</div>
+<div id="devBanner" role="note"><b>Genesis Development / Test Environment</b> · CC-004 Combat v0.4 · code <code id="sha">__SHA__</code> · <b>noncanonical</b>: no campaign, sheet or ledger is touched · values marked <i>Sandbox proposal</i> need owner approval · enemy HP is shown because this is a debug sandbox</div>
 <div class="wrap">
   <header class="top">
     <div style="min-width:0"><h1 id="title">Genesis Tactical Composer</h1><p class="intro" id="intro"></p></div>
     <div class="row">
-      <label>Scenario <select id="scenario"><option value="duelist">Aero vs a skilled duelist</option><option value="predator">Aero vs an unfamiliar predator</option></select></label>
-      <label>Seed <input type="text" id="seed" inputmode="numeric" size="9"></label>
+      <label>Scenario <select id="scenario"><option value="duelist">Aero vs a skilled duelist</option><option value="predator">Aero vs an unfamiliar predator</option><option value="relay_droid">Aero vs a malfunctioning relay droid</option></select></label>
       <button id="reset">New fight</button>
     </div>
   </header>
@@ -178,7 +205,6 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   <section class="field" id="field" aria-label="Battlefield"></section>
   <div class="unseen" id="unseen"></div><div id="over"></div>
 
-  <section class="panel tray" aria-label="Dice tray"><div style="min-width:0"><h2>Dice</h2><div class="dice" id="dice" aria-live="polite"></div></div><button id="skip" class="ghost" hidden>Skip ▸▸</button></section>
 
   <div class="composer">
     <section class="panel" aria-labelledby="hcap">
@@ -187,18 +213,28 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
       <div id="groups"></div>
       <p class="muted" style="margin:8px 0 0"><small>Drag a card onto the turn timeline (mouse; on touch screens drag the ⠿ grip or touch-and-hold). Or tap a card, or focus it and press Enter. In the timeline: drag to reorder, Alt+↑/↓ or ▲▼ to move, Delete or ✕ to remove.</small></p>
     </section>
-    <section class="panel" aria-labelledby="tcap">
+    <section class="panel dock" id="dock" aria-labelledby="tcap">
+      <button class="dock-handle" id="dockHandle" aria-expanded="true" aria-controls="dockBody"><span id="dockSummary">Turn</span><span aria-hidden="true">▾</span></button>
+      <div class="dock-body" id="dockBody">
       <div class="row" style="justify-content:space-between"><h2 id="tcap">Turn timeline</h2><span id="budgetLine" class="row" style="gap:5px"></span></div>
       <ol class="timeline" id="timeline" aria-label="Planned steps, in order"></ol>
       <div id="combo"></div>
       <div class="pred" id="pred"></div>
       <div class="commit"><button class="primary" id="resolve">Commit turn</button><button id="clear">Clear</button></div>
-      <div id="planMsg" class="muted" role="status"></div>
+      <div id="planMsg" class="muted" role="status"></div><div id="connMsg" class="muted" role="status"></div>
+      <section class="theater" aria-label="Roll Theater">
+        <div class="row" style="justify-content:space-between"><h2>Roll Theater</h2><span id="theaterAuth"></span></div>
+        <div class="lanes">
+          <div class="lanecol"><p class="lane-tag player">PLAYER — AERO</p><div class="lane" id="laneP" aria-live="polite"></div></div>
+          <div class="lanecol"><p class="lane-tag gm" id="laneGTitle">GM — NPC</p><div class="lane" id="laneG" aria-live="polite"></div></div>
+        </div>
+      </section>
+      </div>
     </section>
   </div>
 
   <section class="panel story" aria-labelledby="scap">
-    <div class="row" style="justify-content:space-between"><h2 id="scap">The exchange</h2><small class="muted">Soul narration · deterministic fallback · describes accepted results only</small></div>
+    <div class="row" style="justify-content:space-between"><h2 id="scap">The exchange</h2><small class="muted">Soul narration · runs after the mechanics, never before them · describes accepted results only</small></div>
     <div class="storybox" id="story" aria-live="polite"></div>
     <details class="tx" id="txWrap"><summary>Mechanical transcript (every roll with its receipt)</summary><div class="log" id="log"></div></details>
   </section>
@@ -210,14 +246,15 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
 <script>/*ENGINE*/</script>
 <script>/*PREDICT*/</script>
 <script>/*SOUL*/</script>
+<script>/*DRIVER*/</script>
 <script>
 var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
 (function () {
   "use strict";
   var E = GenesisCombat, P = GenesisPredict, SOUL = GenesisSoul, $ = function (id) { return document.getElementById(id); };
-  var S = null, plan = [], pendingRun = null, scenarioId = "duelist", seed = 20261121, filter = "all", full = false, shownLog = 0, playing = null, simTimer = null, lastSim = null, display = {};
+  var S = null, plan = [], pendingRun = null, scenarioId = "duelist", filter = "all", full = false, shownLog = 0, playing = null, simTimer = null, lastSim = null, display = {};
   var switches = {}; Object.keys(CATALOG.ruleset.switches).forEach(function (k) { switches[k] = CATALOG.ruleset.switches[k].default; });
-  var openGroups = { maneuvers: true, main: true, secondary: true, bonus: true, reactions: true, moveobj: true, free: false };
+  var openGroups = { maneuvers: true, attacks: true, main: true, secondary: true, bonus: true, reactions: true, movement: true, object: true, free: false, absent: false };
   function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function pct(p) { return p == null ? "—" : (p * 100 >= 99.95 ? "100" : (p * 100).toFixed(p < 0.1 && p > 0 ? 1 : 0)) + "%"; }
   function each(root, sel, fn) { Array.prototype.forEach.call(root.querySelectorAll(sel), fn); }
@@ -231,55 +268,94 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   // ---------- grouping by action economy (from the profiles' own cost / trigger data) ----------
   var GROUPS = [
     { id: "maneuvers", name: "Maneuvers & Techniques", short: "Maneuvers", color: "var(--saber)", featured: true },
-    { id: "main", name: "Main actions", short: "Main", color: "var(--main)" }, { id: "secondary", name: "Secondary actions", short: "Secondary", color: "var(--secondary)" },
+    { id: "attacks", name: "Attack — every execution", short: "Attack", color: "var(--main)" },
+    { id: "main", name: "Other Main actions", short: "Main", color: "var(--main)" }, { id: "secondary", name: "Secondary actions", short: "Secondary", color: "var(--secondary)" },
     { id: "bonus", name: "Bonus actions", short: "Bonus", color: "var(--bonus)" }, { id: "reactions", name: "Reactions", short: "Reactions", color: "var(--reaction)" },
-    { id: "moveobj", name: "Movement & object interactions", short: "Move / Object", color: "var(--move)" }, { id: "free", name: "Free actions & speech", short: "Free", color: "var(--free)" }];
+    { id: "movement", name: "Movement", short: "Move", color: "var(--move)" }, { id: "object", name: "Object interactions", short: "Object", color: "var(--object)" },
+    { id: "free", name: "Free actions & speech", short: "Free", color: "var(--free)" }, { id: "absent", name: "Not on Aero's sheet", short: "Not available", color: "var(--dim)" }];
   function isManeuver(p) { return !p.trigger && (p.compound || (p.resolution && p.resolution.type === "contest" && p.maneuver !== "Social") || (p.effect && p.effect.sets) || /Setup|Disarm|Feint|Dodge|Provoke/.test(p.maneuver || "")); }
   function groupOf(pid) {
     var p = CATALOG.profiles[pid], c = p.cost || {};
-    if (p.trigger) return "reactions"; if (isManeuver(p)) return "maneuvers";
-    if (c.main) return "main"; if (c.secondary) return "secondary"; if (c.bonus) return "bonus"; if (c.movement_ft || c.object) return "moveobj"; return "free";
+    if (p.trigger) return "reactions";
+    if ((p.maneuver === "Attack" || p.maneuver === "Grapple") && c.main) return "attacks";
+    if (isManeuver(p)) return "maneuvers";
+    if (c.main) return "main"; if (c.secondary) return "secondary"; if (c.bonus) return "bonus"; if (c.movement_ft || p.id === "move") return "movement"; if (c.object) return "object"; return "free";
   }
   function accentOf(pid) { var c = CATALOG.profiles[pid].cost || {}; return c.main ? "var(--main)" : c.secondary ? "var(--secondary)" : c.bonus ? "var(--bonus)" : c.reaction ? "var(--reaction)" : c.movement_ft || c.object ? "var(--move)" : "var(--free)"; }
   function isCompound(pid) { var p = CATALOG.profiles[pid], c = p.cost || {}; return !!p.compound || ["main", "secondary", "bonus", "reaction"].filter(function (k) { return c[k]; }).length > 1; }
 
-  function newFight() { S = E.newState(CATALOG, SCENARIOS, scenarioId, { seed: seed, switches: switches }); plan = []; pendingRun = null; shownLog = 0; lastSim = null; stopPlayback(); $("dice").innerHTML = "<span class='muted' style='align-self:center'>No rolls yet. Every roll shows its dice, modifiers and receipt.</span>"; runNpcs(); settle(); }
+  // ---------- dice authority ----------
+  // Over the preview server, every die comes from the sandbox Atomic service (secret seed, journal, plan lock).
+  // As a standalone file there is no server: offline practice dice, clearly labelled NOT authoritative.
+  var DR = GenesisDriver, atomic = null, session = null, busy = false, narr = {}, narrQueue = [], liveLog = null;
+  function detectAtomic() {
+    var http = DR.HttpAtomic("");
+    var t = new Promise(function (res) { setTimeout(function () { res(null); }, 1500); });
+    if (location.protocol.indexOf("http") !== 0) return Promise.resolve(DR.OfflineAtomic());
+    return Promise.race([http.open({ scenario: "probe", switches: {} }).then(function () { return http; }, function () { return null; }), t]).then(function (a) { return a || DR.OfflineAtomic(); });
+  }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function newFight() {
+    stopTheater(); S = E.newState(CATALOG, SCENARIOS, scenarioId, { atomic: true, switches: switches }); plan = []; pendingRun = null; shownLog = 0; lastSim = null; narr = {}; busy = true; render();
+    atomic.open({ scenario: scenarioId, switches: switches }).then(function (o) { session = o.session; if (atomic.authoritative) lsSet("genesis.cc004.session", session); busy = false; resetTheater(); render(); return runNpcs(); }).catch(fatal);
+  }
+  function resume(sid) {   // reconnect: rebuild the exact state from the Atomic journal, then continue
+    return atomic.journal(sid).then(function (j) {
+      if (j.closed || !j.meta || !SCENARIOS.scenarios[j.meta.scenario]) throw new Error("no resumable session");
+      scenarioId = j.meta.scenario; $("scenario").value = scenarioId; switches = Object.assign(switches, j.meta.switches || {});
+      var rb = DR.replay(CATALOG, SCENARIOS, j); S = rb.state; session = sid; shownLog = S.log.length; resetTheater(); markNarration(true);
+      $("connMsg").textContent = "Reconnected: rebuilt from the Atomic journal (" + j.tape.length + " accepted dice, no rerolls).";
+      if (rb.pending) { busy = false; render(); return playTurn(rb.pending.actor, rb.pending.plan, rb.pending.choices).then(runNpcs); }
+      render(); return runNpcs();
+    });
+  }
+  function fatal(e) { busy = false; $("planMsg").textContent = "Atomic error: " + (e.code || "") + " " + e.message; render(); }
   function visibleEnemies() { var v = E.publicView(S, "aero"); return Object.keys(v.actors).filter(function (id) { return v.actors[id].side !== "party" && !v.actors[id].down; }); }
   function names() { var n = {}; Object.keys(S.actors).forEach(function (k) { n[k] = S.actors[k].name; }); return n; }
-  function myTurn() { return E.current(S) === "aero" && !S.over && !playing && !pendingRun; }
+  function myTurn() { return S && E.current(S) === "aero" && !S.over && !busy; }
 
-  // ---------- turn flow (everything through the engine) ----------
-  function run(actor, p, choices) {
-    var r = E.resolveTurn(S, actor, p, choices);
-    if (r.refused) { $("planMsg").textContent = "Not legal: " + r.refused.steps.filter(function (x) { return !x.ok; }).map(function (x) { return x.reasons.map(function (y) { return y.text; }).join(" "); }).join(" "); return false; }
-    if (r.paused) { pendingRun = { actor: actor, plan: p, choices: choices }; showReaction(r); return false; }
-    S = E.endTurn(r.state); pendingRun = null; return true;
+  // ---------- turn flow: the driver gets every die from Atomic; this page only presents and asks ----------
+  function playTurn(actor, p, choices) {
+    busy = true; liveLog = null; render();
+    var startLog = S.log.length, who = S.actors[actor];
+    ["laneP", "laneG"].forEach(function (id) { var L = $(id), e = L.querySelector(".lane-empty"); if (e) e.remove(); L.insertAdjacentHTML("beforeend", "<div class='lane-turn'>Round " + S.round + " · " + esc(who.name) + "'s turn</div>"); });
+    return DR.runTurn({ atomic: atomic, session: session }, S, actor, p, {
+      choices: choices,
+      playerRoll: function (need) { return theaterAsk(need); },
+      gmRoll: function (need) { return theaterGm(need); },
+      decide: function (pz, r) { return askReaction(pz, r); },
+      onDice: function (dice, need) { theaterDice(dice, need); },
+      onProgress: function (r) { liveProgress(r); }
+    }).then(function (res) {
+      if (res.refused) { busy = false; $("planMsg").textContent = "Not legal: " + res.refused.steps.filter(function (x) { return !x.ok; }).map(function (x) { return x.reasons.map(function (y) { return y.text; }).join(" "); }).join(" "); render(); return false; }
+      S = res.state; liveLog = null; busy = false;
+      var turnLog = S.log.slice(startLog); theaterSettle(turnLog, actor);
+      shownLog = S.log.length; queueNarration(res.turn_key, actor, turnLog);
+      if (actor === "aero") plan = [];
+      render(); return true;
+    }).catch(function (e) { fatal(e); return false; });
   }
   function runNpcs() {
-    var guard = 0;
-    while (!S.over && S.actors[E.current(S)].controller === "npc" && guard++ < 8) { var who = E.current(S); if (!run(who, E.npcPlan(S, who), {})) return false; }
-    return true;
+    if (!S || S.over || S.actors[E.current(S)].controller !== "npc") return Promise.resolve();
+    var who = E.current(S);
+    return playTurn(who, E.npcPlan(S, who), {}).then(function (ok) { if (ok) return runNpcs(); });
   }
-  function showReaction(r) {
-    var Pz = r.paused, att = S.actors[Pz.context.attacker], me = S.actors.aero, odds = "";
-    var LBL = { attack_declared_on_me: "is attacking you", melee_hit_on_me: "is about to hit you", melee_miss_on_me: "missed you — an opening", opportunity_attack: "is pulling away from you" };
-    var pre = (r.preview_receipts || []).map(function (rc) { return rollCard(rc, r.preview_log); }).join("");
-    if (Pz.kind === "melee_hit_on_me" && Pz.context.total != null) {
-      var turn = Pz.context.total < me.ac + 2;
-      odds = "<p><span class='label-mech'>Mechanical · certain</span> Their total is <b>" + Pz.context.total + "</b> vs your AC " + me.ac + ". Parry makes it AC " + (me.ac + 2) + ": it would <b class='" + (turn ? "ok'>turn this hit into a miss" : "bad'>not be enough") + "</b>.</p>";
-    }
-    if (Pz.kind === "attack_declared_on_me" && att) { var d = P.defenseOdds(S, Pz.context.attacker, "aero", Pz.context.pid); odds = "<p><span class='label-mech'>Mechanical · exact</span> Hits you " + pct(d.hit) + " as is; " + pct(d.dodge_hit) + " if you Dodge now (disadvantage).</p>"; }
-    if (Pz.kind === "melee_miss_on_me" && att) { var rp = CATALOG.profiles.riposte, a = P.attackOdds(rp.resolution.bonus, att.ac, "normal"); odds = "<p><span class='label-mech'>Mechanical · exact</span> Riposte: d20+" + rp.resolution.bonus + " vs AC " + att.ac + " hits " + pct(a.hit) + " before any parry of theirs.</p>"; }
-    $("reactBody").innerHTML = "<h2>Reaction</h2>" + (pre ? "<div class='dice' style='min-height:0'>" + pre + "</div>" : "") +
-      "<p style='font-size:17px'><b>" + esc(att ? att.name : "Someone") + "</b> " + (LBL[Pz.kind] || Pz.kind) + ". You have <b>" + me.reaction_left + " Reaction</b> this round.</p>" + odds +
-      Pz.options.map(function (pid) { var pr = CATALOG.profiles[pid]; return "<p><button class='primary' data-react='" + pid + "'>" + esc(pr.name) + "</button> <small class='muted'>" + esc(pr.rules) + "</small></p>"; }).join("") +
-      "<p><button data-react=''>Don't react (keep it)</button></p>";
-    var dlg = $("react"); if (!dlg.open) dlg.showModal();
-    each($("reactBody"), "[data-react]", function (b) {
-      b.onclick = function () { dlg.close(); var ch = Object.assign({}, pendingRun.choices); ch[Pz.key] = b.getAttribute("data-react") || null;
-        var was = pendingRun; pendingRun = null; if (run(was.actor, was.plan, ch)) { if (was.actor === "aero") plan = []; runNpcs(); } settle(); };
+  function askReaction(Pz, r) {
+    return new Promise(function (resolve) {
+      var att = S.actors[Pz.context.attacker], me = S.actors.aero, odds = "";
+      var LBL = { attack_declared_on_me: "is attacking you", melee_hit_on_me: "is about to hit you", melee_miss_on_me: "missed you — an opening", opportunity_attack: "is pulling away from you", ranged_energy_hit_on_me: "hit you with a blaster bolt" };
+      if (Pz.kind === "melee_hit_on_me" && Pz.context.total != null) { var turn = Pz.context.total < me.ac + 2; odds = "<p><span class='label-mech'>Mechanical · certain</span> Their total is <b>" + Pz.context.total + "</b> vs your AC " + me.ac + ". Parry makes it AC " + (me.ac + 2) + ": it would <b class='" + (turn ? "ok'>turn this hit into a miss" : "bad'>not be enough") + "</b>.</p>"; }
+      if (Pz.kind === "attack_declared_on_me" && att) { var d = P.defenseOdds(S, Pz.context.attacker, "aero", Pz.context.pid); odds = "<p><span class='label-mech'>Mechanical · exact</span> Hits you " + pct(d.hit) + " as is; " + pct(d.dodge_hit) + " if you Dodge now (disadvantage).</p>"; }
+      if (Pz.kind === "melee_miss_on_me" && att) { var rp = CATALOG.profiles.riposte, a = P.attackOdds(rp.resolution.bonus, att.ac, "normal"); odds = "<p><span class='label-mech'>Mechanical · exact</span> Riposte: d20+" + rp.resolution.bonus + " vs AC " + att.ac + " hits " + pct(a.hit) + " before any parry of theirs.</p>"; }
+      if (Pz.kind === "ranged_energy_hit_on_me") odds = "<p><span class='label-mech'>Mechanical</span> Incoming damage <b>" + Pz.context.damage + "</b>. Deflect reduces it by 1d10+2 (3–12): it stops completely " + pct(Math.max(0, Math.min(10, 13 - Pz.context.damage)) / 10) + " of the time, and then the bolt goes back at the shooter.</p>";
+      $("reactBody").innerHTML = "<p class='lane-tag player'>PLAYER — AERO · decision</p><h2>Reaction</h2>" +
+        "<p style='font-size:17px'><b>" + esc(att ? att.name : "Someone") + "</b> " + (LBL[Pz.kind] || Pz.kind) + ". You have <b>" + me.reaction_left + " Reaction</b> this round.</p>" + odds +
+        Pz.options.map(function (pid) { var pr = CATALOG.profiles[pid]; return "<p><button class='primary' data-react='" + pid + "'>" + esc(pr.name) + "</button> <small class='muted'>" + esc(pr.rules) + "</small></p>"; }).join("") +
+        "<p><button data-react=''>Don't react (keep it)</button></p>";
+      var dlg = $("react"); if (!dlg.open) dlg.showModal();
+      each($("reactBody"), "[data-react]", function (b) { b.onclick = function () { dlg.close(); resolve(b.getAttribute("data-react") || null); }; });
     });
-    render();
   }
   function commit() {
     if (!plan.length || !myTurn()) return;
@@ -291,56 +367,101 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     }
     doCommit();
   }
-  function doCommit() { if (run("aero", plan, {})) { plan = []; runNpcs(); } settle(); }
+  function doCommit() { var p = plan.slice(); openDock(true); playTurn("aero", p, {}).then(function (ok) { if (ok) return runNpcs(); }); }
 
-  // ---------- dice tray + playback (presentation only; the state is already final) ----------
-  function rollCard(r, logSrc) {
-    var foe = r.actor !== "aero", isD20 = /^1d20/.test(r.formula), faces;
-    if (isD20 && r.rolls.length === 2) { var keptIdx = r.mode === "advantage" ? (r.rolls[0] >= r.rolls[1] ? 0 : 1) : (r.rolls[0] <= r.rolls[1] ? 0 : 1);
-      faces = r.rolls.map(function (v, i) { return "<span class='die d20 tumble" + (i === keptIdx ? (v === 20 ? " nat20" : v === 1 ? " nat1" : "") : " drop") + "' title='" + (i === keptIdx ? "kept" : "dropped") + "'>" + v + "</span>"; }).join(""); }
-    else faces = r.rolls.map(function (v) { return "<span class='die tumble" + (isD20 ? " d20" + (v === 20 ? " nat20" : v === 1 ? " nat1" : "") : "") + "'>" + v + "</span>"; }).join("");
-    faces += r.extra.map(function (e) { return "<span class='die tumble' style='border-color:var(--fp);color:var(--fp)' title='" + esc(e.label) + "'>" + e.value + "</span>"; }).join("");
-    var mod = +((/[+-]\d+$/.exec(r.formula) || ["0"])[0]);
-    var calc = (r.rolls.length === 2 && isD20 ? "<em>kept</em> " : "") + r.kept + (mod ? " " + (mod > 0 ? "+" : "−") + Math.abs(mod) : "") + r.extra.map(function (e) { return " +" + e.value + " <em>" + esc(e.label) + "</em>"; }).join("") + " = <b>" + r.total + "</b>";
-    var res = outcomeOf(r, logSrc || S.log);
-    return "<div class='roll " + (foe ? "foe" : "aero") + "' data-receipt='" + r.receipt + "'><div class='p' title='" + esc(r.purpose) + "'>" + esc(r.purpose) + (r.mode !== "normal" ? "<span class='mode " + r.mode + "'>" + r.mode + "</span>" : "") + "</div>" +
-      "<div class='faces'>" + faces + "</div><div class='calc'>" + calc + " <em>(" + esc(r.formula) + ")</em></div>" + (res ? "<div class='res " + res.cls + "'>" + esc(res.text) + "</div>" : "") + "<div class='rc'>receipt " + r.receipt + " · die #" + r.seq + "</div></div>";
+  // ---------- Roll Theater: PLAYER lane (Aero's dice wait for the Roll button) and GM lane ----------
+  var theater = { cards: {}, waiting: null };
+  function resetTheater() { theater = { cards: {}, waiting: null }; $("laneP").innerHTML = "<p class='lane-empty'>Your rolls appear here. You roll them.</p>"; $("laneG").innerHTML = "<p class='lane-empty'>The GM rolls for the other side here.</p>"; $("theaterAuth").innerHTML = authBadge(); }
+  function stopTheater() { if (theater.waiting) theater.waiting = null; }
+  function authBadge() { return atomic && atomic.authoritative ? "<span class='auth ok'>Dice: Atomic (sandbox service) · session " + esc((session || "").slice(0, 8)) + "</span>" : "<span class='auth warn'>Dice: offline practice — NOT authoritative (no Atomic server here)</span>"; }
+  function vsText(need) {
+    var v = need.vs || {}, T = v.target && S.actors[v.target];
+    if (v.type === "ac") return "vs " + esc(T ? T.name : "") + " AC <b>" + v.value + "</b>" + (v.adv && v.adv.length ? " · advantage: " + esc(v.adv.join(", ")) : "") + (v.dis && v.dis.length ? " · disadvantage: " + esc(v.dis.join(", ")) : "");
+    if (v.type === "opposed") return "opposed by " + esc(T ? T.name : "") + "'s " + esc(v.skill);
+    if (v.type === "opposed_against") return "must beat <b>" + v.value + "</b>";
+    if (v.type === "dc") return "vs DC <b>" + v.value + "</b>";
+    if (v.type === "damage") return "damage to " + esc(T ? T.name : "");
+    if (v.type === "reduce") return "reduces " + v.against + " damage";
+    return "";
+  }
+  function cardHtml(need, mine) {
+    var who = S.actors[need.actor], diceLbl = need.dice.map(function (d) { return "d" + d.sides; }).join(" + ");
+    return "<div class='tcard " + (mine ? "mine" : "gm") + "' data-from='" + need.from + "'><div class='tc-p'>" + esc(need.purpose) + (need.mode !== "normal" ? " <span class='mode " + need.mode + "'>" + need.mode + "</span>" : "") + "</div>" +
+      "<div class='tc-f'><b>" + esc(need.formula) + "</b>" + (need.crit ? " · critical: dice doubled" : "") + (need.extra && need.extra.length ? " + " + esc(need.extra.join(", ")) + " d4" : "") + " · <span class='muted'>" + diceLbl + "</span></div>" +
+      "<div class='tc-vs'>" + vsText(need) + "</div><div class='faces tc-dice'>" + need.dice.map(function (d) { return "<span class='die" + (d.sides === 20 ? " d20" : "") + " idle'>?</span>"; }).join("") + "</div>" +
+      "<div class='tc-res'></div>" + (mine ? "<button class='primary rollbtn' data-roll='" + need.from + "'>Roll " + esc(diceLbl) + "</button>" : "<div class='muted tc-wait'>GM rolling for " + esc(who ? who.name : "") + "…</div>") + "</div>";
+  }
+  function lane(mine) { return $(mine ? "laneP" : "laneG"); }
+  function addCardTo(need, mine) { var L = lane(mine), e = L.querySelector(".lane-empty"); if (e) e.remove(); L.insertAdjacentHTML("beforeend", cardHtml(need, mine)); while (L.children.length > 10) L.removeChild(L.firstChild); var c = L.lastElementChild; theater.cards[need.from] = c; c.scrollIntoView({ block: "nearest" }); setLaneTitle(); return c; }
+  function setLaneTitle() { var foe = visibleEnemies()[0] || Object.keys(S.actors).filter(function (k) { return S.actors[k].side !== "party"; })[0]; $("laneGTitle").textContent = "GM — " + (foe ? S.actors[foe].name.toUpperCase() : "NPC"); }
+  function theaterAsk(need) {
+    openDock(true);
+    return new Promise(function (resolve) {
+      var c = theater.cards[need.from] || addCardTo(need, true), b = c.querySelector("[data-roll]");
+      theater.waiting = resolve; b.focus({ preventScroll: true });
+      b.onclick = function () { b.disabled = true; b.textContent = "Rolling…"; each(c, ".die", function (d) { d.classList.remove("idle"); d.classList.add("spin"); }); theater.waiting = null; resolve(); };
+      render();
+    });
+  }
+  function theaterGm(need) { addCardTo(need, false); var anim = $("animate").checked; return new Promise(function (res) { setTimeout(res, anim ? 420 : 0); }); }
+  function theaterDice(dice, need) {   // Atomic's accepted values land on the card
+    var c = theater.cards[need.from]; if (!c) return; var faces = c.querySelectorAll(".die");
+    need.dice.forEach(function (d, i) { var acc = dice.filter(function (x) { return x.seq === d.seq; })[0] || S.tape[d.seq]; var f = faces[i]; if (!f || !acc) return; f.classList.remove("idle", "spin"); f.classList.add("tumble"); f.textContent = acc.value; f.title = "Atomic roll " + (acc.roll_id || "") + " (" + acc.roller + ")"; });
+    var b = c.querySelector("[data-roll]"); if (b) b.remove(); var w = c.querySelector(".tc-wait"); if (w) w.remove();
+  }
+  // After each engine pass, fill totals and consequences from the accepted (preview) log and keep HP live.
+  function liveProgress(r) {
+    var recs = r.preview_receipts || r.receipts || [], L = r.preview_log || r.log || [];
+    liveLog = L;
+    recs.forEach(function (rc) { var c = theater.cards[rc.first_seq]; if (!c || c.dataset.done) return; fillResult(c, rc, L); });
+    display = {}; L.forEach(function (l) { if (l.ev === "damage") { display[l.target] = l.hp; } });
+    if (Object.keys(display).length) renderField();   // read-only: presentation never writes to accepted log entries
+  }
+  function fillResult(c, rc, L) {
+    var kept = rc.rolls.length === 2 && /^1d20/.test(rc.formula), faces = c.querySelectorAll(".die");
+    if (kept) { var ki = rc.mode === "advantage" ? (rc.rolls[0] >= rc.rolls[1] ? 0 : 1) : (rc.rolls[0] <= rc.rolls[1] ? 0 : 1); if (faces[1 - ki]) faces[1 - ki].classList.add("drop"); if (faces[ki] && rc.kept === 20) faces[ki].classList.add("nat20"); if (faces[ki] && rc.kept === 1) faces[ki].classList.add("nat1"); }
+    else if (/^1d20/.test(rc.formula) && faces[0]) { if (rc.kept === 20) faces[0].classList.add("nat20"); if (rc.kept === 1) faces[0].classList.add("nat1"); }
+    var mod = +((/[+-]\d+$/.exec(rc.formula) || ["0"])[0]);
+    var calc = (kept ? "kept " : "") + rc.kept + (mod ? " " + (mod > 0 ? "+" : "−") + Math.abs(mod) : "") + rc.extra.map(function (e) { return " +" + e.value + " " + esc(e.label); }).join("") + " = <b>" + rc.total + "</b>";
+    var out = outcomeOf(rc, L);
+    c.querySelector(".tc-res").innerHTML = "<div class='calc'>" + calc + "</div>" + (out ? "<div class='res " + out.cls + "'>" + esc(out.text) + "</div>" : "") + "<div class='rc'>receipt " + rc.receipt + " · " + (atomic && atomic.authoritative ? "Atomic die #" : "practice die #") + rc.first_seq + "</div>";
+    if (out && out.cls !== "") c.dataset.done = "1";
+  }
+  function theaterSettle(turnLog, actor) {   // final consequences + confirmed combos from RESOLVED events
+    var recs = {}; S.receipts.forEach(function (r) { recs[r.first_seq] = r; });
+    Object.keys(theater.cards).forEach(function (k) { var c = theater.cards[k], rc = recs[k]; if (rc) fillResult(c, rc, S.log); });
+    display = {};
+    if (actor === "aero") {
+      var cc = E.confirmedCombos(S, turnLog);
+      if (cc.length) { var F = SOUL.facts(turnLog, names());
+        lane(true).insertAdjacentHTML("beforeend", cc.map(function (c) { var nm = SOUL.proposeComboName(Object.assign({}, c, { events: c.events }), F); return "<div class='confirmed' role='status' data-confirmed='" + c.id + "'><span class='label-mech'>Confirmed combo</span> <b>" + esc(c.name) + "</b> · every link happened · " + c.hits + " of " + c.attacks + " attacks hit <small class='muted'>(from resolved events; no bonus beyond the rules)</small><br><span class='label-narr'>Soul calls it</span> <i>" + esc(nm.name) + "</i> <small class='muted'>— a name, not a mechanic</small></div>"; }).join("")); }
+    }
   }
   function outcomeOf(r, L) {   // read back from the accepted log, never recomputed
     var l = L.filter(function (x) { return x.receipt && x.receipt.split(",").indexOf(r.receipt) >= 0; })[0]; if (!l) return null;
-    if (l.ev === "attack") { var i = L.indexOf(l), nx = L.slice(i + 1, i + 4), dmg = nx.filter(function (x) { return x.ev === "damage" && x.attacker === l.attacker; })[0], par = nx.filter(function (x) { return x.ev === "parry"; })[0];
-      var ac = S.actors[l.defender].ac; if (!dmg && !nx.some(function (x) { return x.ev === "miss"; })) return { cls: "", text: "vs AC " + ac + " · awaiting reaction" };
+    if (l.ev === "attack") { var i = L.indexOf(l), nx = L.slice(i + 1, i + 5), dmg = nx.filter(function (x) { return x.ev === "damage" && x.attacker === l.attacker; })[0], par = nx.filter(function (x) { return x.ev === "parry"; })[0];
+      var ac = S.actors[l.defender].ac; if (!dmg && !nx.some(function (x) { return x.ev === "miss"; })) return { cls: "", text: (l.crit ? "Critical! " : "") + "vs AC " + ac + " · resolving…" };
       return l.crit ? { cls: "crit", text: "Critical hit" } : dmg ? { cls: "hit", text: "Hit · vs AC " + ac + (par ? " (parry not enough)" : "") } : { cls: "miss", text: (l.nat === 1 ? "Natural 1 · " : "") + "Miss · vs AC " + ac + (par && par.turned ? " + 2 parry" : "") }; }
-    if (l.ev === "damage") return { cls: "hit", text: l.amount + " damage" + (l.crit ? " (crit: dice doubled)" : "") };
-    if (l.ev === "contest") { var mine = r.receipt === l.receipt.split(",")[0]; return { cls: l.win === mine ? "hit" : "miss", text: l.a + " vs " + l.t + " · " + (mine ? (l.win ? "succeeds" : "fails") : (l.win ? "fails to resist" : "resists")) + (l.a === l.t ? " (tie → defender)" : "") }; }
+    if (l.ev === "damage") return { cls: l.target === "aero" ? "hurt" : "hit", text: l.amount + " damage → " + S.actors[l.target].name + " " + l.hp + "/" + l.hp_max + (l.crit ? " (crit: dice doubled)" : "") + (l.rolled != null && l.rolled !== l.amount ? " (rolled " + l.rolled + ")" : "") };
+    if (l.ev === "contest") { var mine = r.receipt === l.receipt.split(",")[0]; return { cls: l.win === mine ? "hit" : "miss", text: (mine ? l.a + " vs " + l.t : l.t + " vs " + l.a) + " · " + (mine ? (l.win ? "succeeds" : "fails") : (l.win ? "fails to resist" : "resists")) + (l.a === l.t ? " (tie → defender)" : "") }; }
+    if (l.ev === "save") return { cls: l.win ? "miss" : "hit", text: l.total + " vs DC " + l.dc + " · " + (l.win ? "saved" : "failed: prone") };
+    if (l.ev === "deflect") return { cls: "hit", text: "reduced by " + l.reduced + " → " + l.amount };
+    if (l.ev === "redirect") return { cls: l.hit ? "hit" : "miss", text: l.hit ? "sent back: hit" : "sent back: miss" };
     return null;
   }
-  function stopPlayback() { if (playing) { clearTimeout(playing.t); playing = null; } $("skip").hidden = true; display = {}; }
-  // settle(): after the engine accepted something, show it. HP bars replay the accepted damage events.
-  function settle() {
-    var events = S.log.slice(shownLog), from = shownLog; shownLog = S.log.length;
-    var rec = {}; S.receipts.forEach(function (r) { rec[r.receipt] = r; });
-    var steps = []; events.forEach(function (l) { if (l.receipt) l.receipt.split(",").forEach(function (id, k) { if (rec[id]) steps.push({ roll: rec[id], ev: k === 0 ? l : null }); }); else if (l.ev) steps.push({ ev: l }); });
-    var anim = $("animate").checked && !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) && steps.length > 0;
-    if (!anim) { stopPlayback(); steps.forEach(function (st) { if (st.roll) addRoll(st.roll); }); render(); return; }
-    stopPlayback();
-    Object.keys(S.actors).forEach(function (id) { display[id] = S.actors[id].hp; });
-    events.forEach(function (l) { if (l.ev === "damage") display[l.target] = Math.min(S.actors[l.target].hp_max, display[l.target] + l.amount); });
-    playing = { from: from }; $("skip").hidden = false; render();
-    var i = 0;
-    (function next() {
-      if (!playing) return;
-      if (i >= steps.length) { stopPlayback(); render(); return; }
-      var st = steps[i++], ev = st.ev;
-      if (st.roll) addRoll(st.roll);
-      if (ev && ev.ev === "damage") { display[ev.target] = ev.hp; renderField(); floater(ev.target, "−" + ev.amount, ev.crit ? "crit" : ""); }
-      if (ev && ev.ev === "miss") floater(ev.defender, "miss", "miss");
-      if (ev && ev.ev === "parry" && ev.turned) floater(ev.actor, "parried", "miss");
-      playing.t = setTimeout(next, st.roll ? 620 : 220);
-    })();
+  function stopPlayback() { display = {}; }
+  function floater() {}
+
+  // ---------- Soul narration: after mechanics, never blocking them ----------
+  function queueNarration(tk, actor, turnLog) {
+    var key = tk || ("t" + Object.keys(narr).length); narr[key] = { actor: actor, round: S.round, log: turnLog, beats: null, pending: true };
+    setTimeout(function () {
+      var n = SOUL.narrate(turnLog, names(), window.__genesisSoulProvider ? { provider: window.__genesisSoulProvider } : {});
+      Promise.resolve(n).then(function (out) { narr[key].beats = out.beats; narr[key].source = out.source; narr[key].pending = false; renderStory(); });
+    }, 0);
+    renderStory();
   }
-  function addRoll(r) { var d = $("dice"); if (!d.querySelector(".roll")) d.innerHTML = ""; d.insertAdjacentHTML("beforeend", rollCard(r)); while (d.children.length > 16) d.removeChild(d.firstChild); d.scrollLeft = d.scrollWidth; }
-  function floater(id, text, cls) { var el = document.querySelector("[data-plate='" + id + "']"); if (!el) return; var f = document.createElement("div"); f.className = "float " + (cls || ""); f.textContent = text; el.appendChild(f); if (cls !== "miss") { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); } setTimeout(function () { f.remove(); }, 1400); }
+  function markNarration() { narr = {}; var cur = null; S.log.forEach(function (l, i) { if (l.turn_start) { cur = "j" + i; narr[cur] = { actor: l.who, round: l.round, log: [], beats: null, pending: true }; } else if (cur) narr[cur].log.push(l); }); Object.keys(narr).forEach(function (k) { narr[k].beats = SOUL.narrate(narr[k].log, names()).beats; narr[k].pending = false; }); }
 
   // ---------- rendering ----------
   function render() {
@@ -348,7 +469,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     renderField();
     var v = E.publicView(S, "aero");
     $("unseen").textContent = v.unseen_presence || "";
-    $("over").innerHTML = S.over && !playing ? "<div class='over " + S.over + "'>" + (S.over === "victory" ? "Victory." : "Aero is down.") + " <button id='again'>Fight again</button></div>" : "";
+    $("over").innerHTML = S.over && !busy ? "<div class='over " + S.over + "'>" + (S.over === "victory" ? "Victory." : "Aero is down.") + " <button id='again'>Fight again</button></div>" : "";
     if ($("again")) $("again").onclick = newFight;
     renderGroups(); renderTimeline(); renderStory(); renderLog(v);
   }
@@ -361,7 +482,8 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
         "<div class='nm'>" + esc(a.name) + "<span class='tag'>" + (own ? "You" : a.distance + " ft away") + (a.down ? " · down" : "") + (cur === id && !S.over ? " · acting" : "") + "</span></div>" +
         "<div class='hp " + (r <= .3 ? "low" : r <= .6 ? "mid" : "") + "' role='meter' aria-valuemin='0' aria-valuemax='" + a.hp_max + "' aria-valuenow='" + hp + "' aria-label='" + esc(a.name) + " HP'><b style='width:" + (100 * Math.min(1, Math.max(hp, a.hp) / a.hp_max)) + "%'></b><i style='width:" + (100 * r) + "%'></i><span>HP " + hp + " / " + a.hp_max + "</span></div>" +
         "<div class='stats'><span>AC <b>" + real.ac + "</b></span>" + (own ? "<span>Force <b>" + a.fp + "</b>/" + real.fp_max + "</span>" : "") + "<span class='ready " + (real.reaction_left ? "yes" : "no") + "'>" + (real.reaction_left ? "Reaction ready" : "Reaction spent") + "</span>" +
-        (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? (a.weapon.ignited === false ? " (unlit)" : "") : " — <b class='bad'>dropped</b>") + "</span>" : "") + "</div>" +
+        (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? (a.weapon.ignited === false ? " (unlit)" : " (lit)") : " — <b class='bad'>dropped</b>") + "</span>" : "") +
+        (own && real.sidearm ? "<span class='sidearm'>" + esc(real.sidearm.name) + ": " + (real.sidearm.held ? "<b>in off hand</b>" : "holstered") + " · " + real.sidearm.ammo + "/" + real.sidearm.capacity + " (+" + real.sidearm.reserve + ")</span>" : "") + "</div>" +
         (a.conds.length ? "<div class='conds'>" + a.conds.map(function (c) { return "<span class='cond'>" + esc(c.replace("_", " ")) + "</span>"; }).join("") + "</div>" : "") +
         (pips ? "<div class='pips'>" + pips + "</div>" : "") + (full && !own && a.budget ? "<div class='math'>budget " + esc(JSON.stringify(a.budget)) + "</div>" : "") + "</div>";
     }).join("");
@@ -374,29 +496,28 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     if (r.target === "enemy" || r.target === "beast") return { pid: pid, target: foes[0] };
     return { pid: pid };
   }
-  function planProjection() {
-    var proj = E.project(S, "aero"), v = E.validatePlan(S, "aero", plan);
-    if (v.budget_after) { proj.budget = v.budget_after; proj.reaction_left = v.reaction_left; proj.fp = v.fp_after; }
-    plan.forEach(function (st, i) { if (v.steps[i] && v.steps[i].ok) { var p = CATALOG.profiles[st.pid]; if (p.resolution && p.resolution.melee) proj.melee_attacked = true; if (p.cap) proj.used["cap:" + p.cap.group] = (proj.used["cap:" + p.cap.group] || 0) + 1;
-      if (st.pid === "move" && st.target) proj.dist[[st.target, "aero"].sort().join("|")] = st.dest === "close" ? 5 : (proj.dist[[st.target, "aero"].sort().join("|")] || 60) + 15;
-      if (st.pid === "toggle_blade" && proj.weapon) proj.weapon.ignited = !proj.weapon.ignited; } });
-    return proj;
+  function planProjection() {   // the engine's own projection after the planned steps (one source of truth)
+    if (E.current(S) !== "aero") return E.project(S, "aero");
+    var v = E.validatePlan(S, "aero", plan); return v.proj || E.project(S, "aero");
   }
   function renderGroups() {
     var proj = planProjection(), foes = visibleEnemies(), mine = myTurn(), A = S.actors.aero;
     var by = {}; handProfiles().forEach(function (pid) { (by[groupOf(pid)] = by[groupOf(pid)] || []).push(pid); });
+    if ((SCENARIOS.aero.not_on_sheet || []).length) by.absent = SCENARIOS.aero.not_on_sheet.map(function (x, i) { return "absent:" + i; });
     $("filters").innerHTML = [{ id: "all", short: "All" }].concat(GROUPS).filter(function (g) { return g.id === "all" || by[g.id]; }).map(function (g) { return "<button data-filter='" + g.id + "' aria-pressed='" + (filter === g.id) + "'>" + esc(g.short) + "</button>"; }).join("");
     $("groups").innerHTML = GROUPS.filter(function (g) { return by[g.id] && (filter === "all" || filter === g.id); }).map(function (g) {
       var cards = by[g.id].map(function (pid) {
+        if (pid.indexOf("absent:") === 0) { var ab = SCENARIOS.aero.not_on_sheet[+pid.slice(7)];
+          return "<div class='card ref-card off' role='listitem' tabindex='0' data-absent='" + esc(ab.name) + "' aria-label='" + esc(ab.name + " — not available: " + ab.why) + "'><span class='stripe' style='background:var(--dim)'></span><span class='badge'>Not on sheet</span><span class='nm'>" + esc(ab.name) + "</span><span class='why'>" + esc(ab.why) + "</span></div>"; }
         var p = CATALOG.profiles[pid];
         if (p.trigger) {   // reactions are not turn steps: trigger, readiness and capacity
           var need = (p.requires || {}).condition;
           return "<div class='card react-card' role='listitem' data-reaction='" + pid + "' style='--accentc:var(--reaction)'><span class='stripe'></span><div class='hd'><span class='badge " + p.status + "'>" + (p.status === "sheet" ? "Sheet" : "Proposal") + "</span><button class='ibtn' data-info='" + pid + "' aria-label='Inspect " + esc(p.name) + "'>i</button></div>" +
             "<span class='nm'>" + esc(p.name) + "</span><span class='trig'>Triggers when: " + esc(p.trigger.replace(/_/g, " ").replace("on me", "on you")) + "</span>" +
-            (need ? "<span class='mv'>Needs " + esc(need.replace("_", " ")) + (A.conds[need] ? " ✓ set" : " — set it up first") + "</span>" : "<span class='mv'>You'll be asked when it triggers.</span>") +
+            (p.inert_note ? "<span class='why'>" + esc(p.inert_note) + "</span>" : need ? "<span class='mv'>Needs " + esc(need.replace("_", " ")) + (A.conds[need] ? " ✓ set" : " — set it up first") + "</span>" : "<span class='mv'>You'll be asked when it triggers.</span>") +
             "<div class='foot'>" + costChips(p.cost) + "<span class='ready " + (A.reaction_left ? "yes" : "no") + "'>" + A.reaction_left + "/1 this round</span></div></div>";
         }
-        var step = defaultStep(pid, foes), av = E.availability(S, "aero", pid, step, proj), why = !mine ? (playing ? "Resolving…" : S.over ? "The fight is over." : "Not your turn.") : av.ok ? "" : av.reasons[0].text;
+        var step = defaultStep(pid, foes), av = E.availability(S, "aero", pid, step, proj), why = !mine ? (busy ? "Resolving…" : S.over ? "The fight is over." : "Not your turn.") : av.ok ? "" : bestReason(av.reasons);
         return "<div class='card" + (why ? " off" : "") + "' role='listitem' tabindex='0' data-card='" + pid + "' data-off='" + !!why + "' style='--accentc:" + accentOf(pid) + "' aria-label='" + esc(p.name + " — " + (costWords(av.cost || p.cost || {}) || "free") + (why ? " — unavailable: " + why : "")) + "'>" +
           "<span class='stripe'></span><div class='hd'><span class='badge " + p.status + "'>" + (p.status === "sheet" ? "Sheet" : "Proposal") + "</span><button class='ibtn' data-info='" + pid + "' aria-label='Inspect " + esc(p.name) + "'>i</button></div>" +
           "<span class='nm'>" + esc(p.name) + "</span><span class='mv'>" + esc(p.maneuver) + (p.technique ? " · " + esc(p.technique) : "") + "</span>" + (why ? "<span class='why'>" + esc(why) + "</span>" : "") +
@@ -412,6 +533,10 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
       dnd(el, function () { return el.getAttribute("data-off") === "true" ? null : { kind: "card", pid: el.getAttribute("data-card") }; });
     });
     each($("groups"), "[data-info]", function (b) { b.onclick = function (e) { e.stopPropagation(); inspect(b.getAttribute("data-info")); }; });
+  }
+  function bestReason(rs) {   // the most specific reason first: equipment and conditions before spent resources
+    var spec = rs.filter(function (r) { return !/^NO_(MAIN|BONUS|SECONDARY|OBJECT|MOVEMENT_FT|REACTION|FP)$/.test(r.code); });
+    return (spec[0] || rs[0]).text;
   }
   function addCard(pid, at, focus) {
     var foes = visibleEnemies(), p = CATALOG.profiles[pid], r = p.requires || {};
@@ -455,7 +580,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
       return "<li class='step" + (sv.ok ? "" : " bad") + (i in inCombo ? " combo" + (inCombo[i] === 0 ? " first" : "") : "") + "' tabindex='0' data-step='" + i + "' aria-label='Step " + (i + 1) + ": " + esc(p.name) + (sv.ok ? "" : " (not legal)") + "'><span class='n'>" + (i + 1) + "</span><div style='min-width:0'><div class='ttl'>" + esc(p.name) + "<span class='muted' style='font:500 14px var(--text)'>" + tgt + "</span></div>" +
         "<div class='sub'>" + costChips(sv.cost || p.cost) + (odds ? " <span class='odds'>" + odds + "</span>" : "") + "</div>" + (sv.ok ? "" : "<div class='err'>" + esc(sv.reasons.map(function (r) { return r.text; }).join(" ")) + "</div>") + extra + "</div>" +
         "<div class='ctl'><button data-insp='" + i + "' aria-label='Inspect step " + (i + 1) + "'>i</button><button data-up='" + i + "' aria-label='Move step " + (i + 1) + " up'" + (i === 0 ? " disabled" : "") + ">▲</button><button data-dn='" + i + "' aria-label='Move step " + (i + 1) + " down'" + (i === plan.length - 1 ? " disabled" : "") + ">▼</button><button data-rm='" + i + "' aria-label='Remove step " + (i + 1) + "'>✕</button></div></li>";
-    }).join("") : "<li class='empty'>" + (mine ? "Drag cards here to build your turn. Nothing happens until you commit." : S.over ? "The fight is over." : playing ? "Resolving…" : "Waiting for the other side…") + "</li>";
+    }).join("") : "<li class='empty'>" + (mine ? "Drag cards here to build your turn. Nothing happens until you commit." : S.over ? "The fight is over." : busy ? "Resolving…" : "Waiting for the other side…") + "</li>";
     var T = $("timeline");
     each(T, "[data-up]", function (b) { b.onclick = function () { move(+b.getAttribute("data-up"), -1); }; });
     each(T, "[data-dn]", function (b) { b.onclick = function () { move(+b.getAttribute("data-dn"), 1); }; });
@@ -470,7 +595,8 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     });
     renderCombo(sy, an); renderPrediction(an, v);
     $("resolve").disabled = !mine || !plan.length || !v.legal;
-    $("planMsg").textContent = !mine ? (S.over ? "" : playing ? "Resolving…" : pendingRun ? "Waiting for your reaction." : "Waiting for the other side.") : plan.length && !v.legal ? "Fix the red steps first. The same rules judge every actor." : "";
+    if (!/^Atomic error/.test($("planMsg").textContent) || mine) $("planMsg").textContent = !mine ? (S.over ? "" : busy ? "Resolving — roll your dice in the Roll Theater when asked." : "Waiting for the other side.") : plan.length && !v.legal ? "Fix the red steps first. The same rules judge every actor." : "";
+    updateDock();
   }
   function move(i, d) { var j = i + d; if (j < 0 || j >= plan.length) return; var x = plan[i]; plan[i] = plan[j]; plan[j] = x; render(); var t = $("timeline").querySelectorAll(".step")[j]; if (t) t.focus(); }
   function simKey() { return JSON.stringify([S.rng, S.log.length, plan]); }
@@ -481,7 +607,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     var chain = c.steps.map(function (i) { var p = CATALOG.profiles[plan[i].pid], k = Object.keys(p.cost || {})[0] || "free"; return "<span class='lk c-" + k + "'>" + esc(CL[k] || "Free") + " · " + esc(p.name) + "</span>"; }).join("<span class='ar' aria-hidden='true'>→</span>");
     var pr = an && c.steps.map(function (i) { var a = an.steps[i]; return a.kind === "attack" ? esc(a.name) + " " + pct(a.hit) + (a.feint_conditional != null ? " (" + pct(a.if_feint_wins) + " if the feint lands, " + pct(a.if_feint_fails) + " if not)" : "") : a.kind === "contest" ? esc(a.name) + " " + pct(a.success) : ""; }).filter(Boolean).join(" · ");
     var cine = E.cinematicNote({ switches: { cinematic_judge: true } }, plan);
-    $("combo").innerHTML = "<div class='comboBanner' role='status' data-combo='" + c.id + "'><div class='row' style='justify-content:space-between'><span class='cn'>" + esc(c.name) + "</span><small class='muted'>combo recognized</small></div><div class='chain'>" + chain + "</div>" +
+    $("combo").innerHTML = "<div class='comboBanner' role='status' data-combo='" + c.id + "'><div class='row' style='justify-content:space-between'><span class='cn'>" + esc(c.name) + "</span><small class='muted'>predicted synergy — confirmed only by resolved events</small></div><div class='chain'>" + chain + "</div>" +
       "<dl class='layers'><dt>Legal sequence</dt><dd class='" + (c.legal ? "ok'>✓ every linked step passes the validator" : "bad'>✗ a linked step is not legal right now") + "</dd>" +
       "<dt>Synergy</dt><dd>" + c.links.map(esc).join(" ") + " <span class='warn'>Conditional: " + esc(c.conditional) + "</span></dd>" +
       "<dt>Predicted</dt><dd><span class='label-mech'>exact</span> " + (pr || "—") + (s ? "<br><span class='label-mech'>simulated</span> every attack in the line lands " + pct(s.full_combo.p) + " (95% " + pct(s.full_combo.lo) + "–" + pct(s.full_combo.hi) + ", n=" + s.samples + ")" : "") + "</dd>" +
@@ -511,10 +637,12 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
 
   // ---------- story (Soul) + transcript ----------
   function renderStory() {
-    var upto = playing ? playing.from : S.log.length, turns = [], cur = null;
-    S.log.slice(0, upto).forEach(function (l) { if (l.turn_start) { cur = { who: l.who, round: l.round, log: [] }; turns.push(cur); } else if (cur) cur.log.push(l); });
-    var html = turns.map(function (t) { var n = SOUL.narrate(t.log, names()); return n.beats.length ? "<div class='turnhd'>Round " + t.round + " · " + esc(S.actors[t.who].name) + "</div>" + n.beats.map(function (b) { return "<p class='beat'>" + esc(b.text) + "</p>"; }).join("") : ""; }).join("");
-    $("story").innerHTML = html || "<p class='muted'>" + (playing ? "…" : "The fight hasn't started.") + "</p>";
+    var keys = Object.keys(narr);
+    var html = keys.map(function (k) { var n = narr[k], who = S.actors[n.actor];
+      var head = "<div class='turnhd'>Round " + n.round + " · " + esc(who ? who.name : n.actor) + "</div>";
+      if (n.pending) return head + "<p class='beat muted' data-narrating='1'>Soul is narrating… (the mechanics above are already final)</p>";
+      return n.beats && n.beats.length ? head + n.beats.map(function (b) { return "<p class='beat'>" + esc(b.text) + "</p>"; }).join("") : ""; }).join("");
+    $("story").innerHTML = html || "<p class='muted'>The fight hasn't started.</p>";
     var st = $("story"); st.scrollTop = st.scrollHeight;
   }
   function renderLog(v) {
@@ -525,7 +653,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     }).join("") || "<p class='muted'>No events yet.</p>";
   }
   function renderSwitches() {
-    var LBL = { secondary_action: "Secondary action (SA-001)", battle_insight_bonus: "Battle Insight as Bonus", force_augmentation: "Force augmentation", cinematic_judge: "Cinematic notes" };
+    var LBL = { secondary_action: "Secondary action (SA-001)", battle_insight_bonus: "Battle Insight as Bonus", force_augmentation: "Force augmentation", cinematic_judge: "Cinematic notes", ranged_in_melee_disadvantage: "Ranged-in-melee disadvantage (proposal)" };
     $("switches").innerHTML = "<small class='muted'>Sandbox proposals; changing one restarts the fight.</small><br>" + Object.keys(switches).map(function (k) { return "<label><input type='checkbox' data-sw='" + k + "'" + (switches[k] ? " checked" : "") + "> " + (LBL[k] || k) + "</label>"; }).join("");
     each($("switches"), "[data-sw]", function (el) { el.onchange = function () { switches[el.getAttribute("data-sw")] = el.checked; newFight(); }; });
   }
@@ -556,7 +684,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   }
   function startGhost(st) {
     var g = st.el.cloneNode(true); g.classList.add("ghost-card"); g.style.width = Math.min(240, st.el.offsetWidth) + "px"; g.setAttribute("aria-hidden", "true"); document.body.appendChild(g); st.ghost = g;
-    document.body.classList.add("dragging"); st.el.style.opacity = ".35"; moveGhost(st.x, st.y); try { if (navigator.vibrate) navigator.vibrate(10); } catch (x) {}
+    document.body.classList.add("dragging"); openDock(true); st.el.style.opacity = ".35"; moveGhost(st.x, st.y); try { if (navigator.vibrate) navigator.vibrate(10); } catch (x) {}
   }
   function insertIndex(y) { var steps = $("timeline").querySelectorAll(".step"), i = 0; for (; i < steps.length; i++) { var r = steps[i].getBoundingClientRect(); if (y < r.top + r.height / 2) break; } return i; }
   function overTimeline(x, y) { var r = $("timeline").getBoundingClientRect(); return x >= r.left - 24 && x <= r.right + 24 && y >= r.top - 32 && y <= r.bottom + 32; }
@@ -578,13 +706,24 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   // ---------- wiring ----------
   $("resolve").onclick = commit; $("clear").onclick = function () { plan = []; render(); };
   $("confirmYes").onclick = function () { $("confirm").close(); doCommit(); }; $("confirmNo").onclick = function () { $("confirm").close(); };
-  $("reset").onclick = function () { seed = parseInt($("seed").value, 10) || 20261121; newFight(); };
+  $("reset").onclick = function () { lsSet("genesis.cc004.session", null); newFight(); };
   $("scenario").onchange = function () { scenarioId = $("scenario").value; newFight(); };
   $("fullMech").onchange = function () { full = $("fullMech").checked; render(); };
-  $("skip").onclick = function () { stopPlayback(); render(); };
+  // ---------- dock (sticky on desktop; bottom sheet on touch screens, so the drop zone is always on screen) ----------
+  var dockOpen = true;
+  function openDock(v) { dockOpen = v; $("dock").classList.toggle("collapsed", !v); $("dockHandle").setAttribute("aria-expanded", String(v)); }
+  function updateDock() { var v = E.validatePlan(S, "aero", plan); $("dockSummary").textContent = (busy ? "Resolving · " : "Turn · ") + plan.length + " step" + (plan.length === 1 ? "" : "s") + (plan.length && !v.legal ? " · fix red steps" : "") + (theater.waiting ? " · your roll!" : ""); }
+  $("dockHandle").onclick = function () { openDock(!dockOpen); };
+  function trackDock() { var h = window.matchMedia("(max-width: 920px)").matches ? $("dock").getBoundingClientRect().height : 0; document.documentElement.style.setProperty("--dock-h", Math.round(h) + "px"); }
+  try { new ResizeObserver(trackDock).observe($("dock")); } catch (e) {} window.addEventListener("resize", trackDock);
   $("inspectClose").onclick = function () { $("inspect").close(); }; $("pickCancel").onclick = function () { $("pick").close(); };
-  $("seed").value = seed;
-  window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; }, playing: function () { return !!playing; }, sim: function () { return currentSim(); } };
-  renderSwitches(); newFight();
+  window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; }, playing: function () { return busy; }, busy: function () { return busy; }, waitingRoll: function () { return !!theater.waiting; }, sim: function () { return currentSim(); }, authority: function () { return atomic && atomic.authority; }, session: function () { return session; } };
+  renderSwitches();
+  S = E.newState(CATALOG, SCENARIOS, scenarioId, { atomic: true, switches: switches }); busy = true;
+  detectAtomic().then(function (a) {
+    atomic = a; var sid = atomic.authoritative ? lsGet("genesis.cc004.session") : null;
+    if (sid) return resume(sid).catch(function () { lsSet("genesis.cc004.session", null); newFight(); });
+    newFight();
+  });
 })();
 </script>

@@ -7,6 +7,11 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import build_preview
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'combat_slice'))
+import atomic_service  # sandbox dice authority for /combat.html (noncanonical; journals under combat_slice/out/atomic)
+
+ATOMIC = None
 
 TYPES = {'.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8',
          '.webmanifest': 'application/manifest+json; charset=utf-8', '.svg': 'image/svg+xml'}
@@ -25,6 +30,33 @@ def handler_for(directory):
 
         def do_GET(self):
             self.respond(True)
+
+        def do_POST(self):
+            path = urlsplit(self.path).path
+            if not path.startswith('/atomic/'):
+                return self._json(404, {'error': 'NO_ROUTE'})
+            # JSON only: a cross-site page can't send application/json without a CORS preflight, which this server never grants.
+            if (self.headers.get('Content-Type') or '').split(';')[0].strip().lower() != 'application/json':
+                return self._json(415, {'error': 'JSON_ONLY'})
+            try:
+                n = int(self.headers.get('Content-Length') or 0)
+                if n > 65536:
+                    return self._json(413, {'error': 'TOO_LARGE'})
+                body = json.loads(self.rfile.read(n) or b'{}')
+            except (ValueError, OSError):
+                return self._json(400, {'error': 'BAD_JSON'})
+            status, data = atomic_service.handle(ATOMIC, path, body)
+            self._json(status, data)
+
+        def _json(self, status, obj):
+            data = json.dumps(obj).encode()
+            self.send_response(status)
+            self.send_header('Content-Type', TYPES['.json'])
+            self.send_header('Content-Length', str(len(data)))
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('X-Content-Type-Options', 'nosniff')
+            self.end_headers()
+            self.wfile.write(data)
 
         def respond(self, body):
             path = urlsplit(self.path).path
@@ -62,6 +94,8 @@ def main():
     ap.add_argument('--port', type=int, default=8080)
     ap.add_argument('--host', default='127.0.0.1')
     a = ap.parse_args()
+    global ATOMIC
+    ATOMIC = atomic_service.AtomicDice()
     page = build_preview.build()
     srv = http.server.ThreadingHTTPServer((a.host, a.port), handler_for(Path(page).parent))
     print(f'Genesis dev preview: http://{a.host}:{srv.server_port}/ (fixture only; keep forwarding private)', flush=True)
