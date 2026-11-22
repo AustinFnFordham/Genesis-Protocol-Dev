@@ -14,7 +14,7 @@ class WorktreeGuard:
         self.local = threading.RLock()
         self.depth = threading.local()
         with self:
-            marker = self.path.with_suffix('.generation.json')
+            marker = self.marker = self.path.with_suffix('.generation.json')
             if not marker.exists():
                 data = json.dumps({'generation': str(uuid.uuid4())}).encode()
                 fd = os.open(marker, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
@@ -24,7 +24,28 @@ class WorktreeGuard:
                 try: os.fsync(directory)
                 finally: os.close(directory)
             self.generation = json.loads(marker.read_text())['generation']
-        self.recovery_required = self.generation != expected_generation
+        self.expected_generation = expected_generation
+
+    @property
+    def recovery_reason(self):
+        """Check under the operation lock. A running worker cannot outlive its marker."""
+        try:
+            current = json.loads(self.marker.read_text())['generation']
+        except FileNotFoundError:
+            return 'marker_missing'
+        except (OSError, ValueError, KeyError, TypeError):
+            return 'marker_unreadable'
+        if current != self.generation:
+            return 'marker_changed'
+        if not self.expected_generation:
+            return 'generation_unpinned'
+        if current != self.expected_generation:
+            return 'generation_mismatch'
+        return None
+
+    @property
+    def recovery_required(self):
+        return self.recovery_reason is not None
 
     def __enter__(self):
         self.local.acquire()

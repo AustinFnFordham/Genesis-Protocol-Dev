@@ -41,7 +41,9 @@ class Verifier:
 
 def tools(gateway, writes=True):
     app = App({gateway.id: gateway}, {}, None, gm_tokens={adapter.PROVIDER: "test-server-only-gm-token"})
-    return adapter.GatewayTools(app, gateway.id, SUBJECT, writes=writes)
+    first = adapter.for_gateway(gateway)
+    guard = adapter.for_gateway(gateway, first.generation)
+    return adapter.GatewayTools(app, gateway.id, SUBJECT, writes=writes, guard=guard)
 
 
 # OAuth validity, issuer outage and URL tests now live in test_mobile_reconciliation.py
@@ -78,6 +80,32 @@ class Adapter(Base):
             self.tools.writes = False
             self.assertEqual(adapter.result(lambda: self.tools.gm("claim", "run")).structuredContent["error"]["code"], "WRITES_DISABLED")
             handler.assert_not_called()
+
+    def test_disappearing_generation_blocks_an_already_started_worker(self):
+        self.act(HOLSTER, provider=adapter.PROVIDER)
+        self.assertFalse(self.tools.read("refresh")["read_only"])
+        self.tools.guard.marker.unlink()
+        with patch.object(self.tools.app, "gm") as handler:
+            outcome = adapter.result(lambda: self.tools.gm("claim", "run"))
+            self.assertEqual(outcome.structuredContent["error"]["code"], "STORAGE_RECOVERY_REQUIRED")
+            handler.assert_not_called()
+        status = self.tools.read("refresh")
+        self.assertTrue(status["read_only"])
+        self.assertEqual(status["storage_recovery_reason"], "marker_missing")
+        self.assertEqual(status["gm_write_blockers"], ["STORAGE_RECOVERY_REQUIRED"])
+        self.assertFalse(self.tools.guard.marker.exists())
+        self.assertFalse(self.gw.recovery()["lease"]["held"])
+
+    def test_refresh_distinguishes_all_write_blockers(self):
+        self.tools.guard = adapter.for_gateway(self.gw, "wrong-generation")
+        self.tools.writes = False
+        self.tools.app.gm_tokens.clear()
+        with patch("mcp_adapter.get_access_token", return_value=access(scopes=[adapter.READ])):
+            status = self.tools.read("refresh")
+        self.assertEqual(status["storage_recovery_reason"], "generation_mismatch")
+        self.assertEqual(status["gm_write_blockers"], [
+            "STORAGE_RECOVERY_REQUIRED", "WRITES_DISABLED", "INSUFFICIENT_SCOPE", "PROVIDER_NOT_CONFIGURED",
+        ])
 
     def test_existing_provider_routing_and_lease_controls_are_used(self):
         self.act(HOLSTER, provider="gemini-session")

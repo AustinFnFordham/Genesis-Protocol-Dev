@@ -148,13 +148,14 @@ import json,os,signal,subprocess,sys
 from pathlib import Path
 import staging
 from service import App
-from mcp_adapter import GatewayTools
+from mcp_adapter import GatewayTools, for_gateway
 from mcp.server.auth.middleware.auth_context import auth_context_var
 from mcp.server.auth.middleware.bearer_auth import AuthenticatedUser
 from test_mcp_adapter import access,SUBJECT
 from test_gateway import script
 gw=staging.open_shared(sys.argv[1],min_sync_s=0)
-tool=GatewayTools(App({gw.id:gw},{},None,gm_tokens={'gpt-session':'test-only-server-token'}),gw.id,SUBJECT,writes=True)
+guard=for_gateway(gw,for_gateway(gw).generation)
+tool=GatewayTools(App({gw.id:gw},{},None,gm_tokens={'gpt-session':'test-only-server-token'}),gw.id,SUBJECT,writes=True,guard=guard)
 auth_context_var.set(AuthenticatedUser(access()))
 assert tool.gm('claim','recovery-run')['http_status']==200
 ctx=tool.gm('context','recovery-run')['result'];move=script('gpt-session').step(ctx)
