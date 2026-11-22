@@ -1,0 +1,593 @@
+[
+  {
+    "id": "routine-holster",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-routine-holster",
+        "actor": "zara",
+        "text": "Holster the pistol.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "object",
+              "option": "holster_pistol"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": true,
+        "errors": [],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Your left hand holds a holsterable pistol. The automaton is disabled and takes no decision. This is a routine object interaction and frees the left hand. Fix interpretation before commit."
+        ]
+      },
+      "brief": "Your left hand holds a holsterable pistol. The automaton is disabled and takes no decision. This is a routine object interaction and frees the left hand. Fix interpretation before commit.",
+      "recent_private": [],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": null,
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "tables",
+      "interpretation": "holster.*(?:left|free)|(?:left|free).*holster",
+      "no_roll": true
+    }
+  },
+  {
+    "id": "unlearned-power",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-unlearned-power",
+        "actor": "zara",
+        "text": "Use Force Lightning.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "power",
+              "option": "lightning"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": false,
+        "errors": [
+          {
+            "code": "UNKNOWN_POWER",
+            "message": "Zara has no powers or explicit grants. The declaration cannot start. There are no authorized alternatives."
+          }
+        ],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Zara has no powers or explicit grants. The declaration cannot start. There are no authorized alternatives."
+        ]
+      },
+      "brief": "Zara has no powers or explicit grants. The declaration cannot start. There are no authorized alternatives.",
+      "recent_private": [],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": null,
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "review",
+      "code": "UNKNOWN_POWER"
+    }
+  },
+  {
+    "id": "reaction-owner",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-reaction-owner",
+        "actor": "zara",
+        "text": "Parry for the guard.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "reaction",
+              "option": "guard_parry"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": false,
+        "errors": [
+          {
+            "code": "ACTION_CONFLICT",
+            "message": "Parry and its reaction belong to the guard. Zara has no grant for this reaction. There are no authorized alternatives."
+          }
+        ],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Parry and its reaction belong to the guard. Zara has no grant for this reaction. There are no authorized alternatives."
+        ]
+      },
+      "brief": "Parry and its reaction belong to the guard. Zara has no grant for this reaction. There are no authorized alternatives.",
+      "recent_private": [],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": null,
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "review",
+      "code": "ACTION_CONFLICT"
+    }
+  },
+  {
+    "id": "npc-motive",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-npc-motive",
+        "actor": "zara",
+        "text": "Ask the dock guard to admit the courier.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "speech",
+              "option": "ask_guard"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": true,
+        "errors": [],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "The courier shows a valid permit at fixture_evt_7. Guard g1 is ordered to honor permits, and must decide; no uncertainty. Record exactly g1, with changes [fixture_evt_7] and the permit as the basis."
+        ]
+      },
+      "brief": "The courier shows a valid permit at fixture_evt_7. Guard g1 is ordered to honor permits, and must decide; no uncertainty. Record exactly g1, with changes [fixture_evt_7] and the permit as the basis.",
+      "recent_private": [],
+      "npc_last_evaluations": {
+        "g1": null
+      },
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": null,
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "tables",
+      "interpretation": "\\b(?:permit|admit)\\b",
+      "npcs": [
+        "g1"
+      ],
+      "npc_changes": [
+        "fixture_evt_7"
+      ],
+      "npc_basis": "permit",
+      "no_roll": true
+    }
+  },
+  {
+    "id": "request-roll",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-request-roll",
+        "actor": "zara",
+        "text": "Inspect the wax seal.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "action",
+              "option": "inspect_seal"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": true,
+        "errors": [],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Tables already fixed. The only legal request is s1.check, 1d20+2, kind check, actor Zara (id zara), DC 12, citing fixture_rule:seal. No die result is available."
+        ]
+      },
+      "brief": "Tables already fixed. The only legal request is s1.check, 1d20+2, kind check, actor Zara (id zara), DC 12, citing fixture_rule:seal. No die result is available.",
+      "recent_private": [],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": {
+          "interpretation": "Inspect seal with recorded check.",
+          "tables": "DC 12, failure leaves seal unreadable.",
+          "npc_evaluations": []
+        },
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "rolls",
+      "roll": {
+        "roll_key": "s1.check",
+        "step_id": "s1",
+        "formula": "1d20+2",
+        "kind": "check",
+        "requested_by": "zara",
+        "dc": 12,
+        "rule_sources": [
+          "fixture_rule:seal"
+        ]
+      }
+    }
+  },
+  {
+    "id": "choice-stop",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-choice-stop",
+        "actor": "zara",
+        "text": "Holster the pistol, then pick up the parcel if its seal is safe.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "object",
+              "option": "holster_pistol"
+            },
+            {
+              "id": "s2",
+              "type": "object",
+              "option": "pick_up_parcel",
+              "condition": {
+                "text": "the wax seal is safe to touch"
+              }
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": true,
+        "errors": [],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Accepted tables settle the holster only. Seal safety is unsettled. Commit equipment_change for s1, free the left hand, and preserve the exact condition and pending s2 as written. Do not make a roll or touch the parcel."
+        ]
+      },
+      "brief": "Accepted tables settle the holster only. Seal safety is unsettled. Commit equipment_change for s1, free the left hand, and preserve the exact condition and pending s2 as written. Do not make a roll or touch the parcel.",
+      "recent_private": [],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": {
+          "interpretation": "The routine holster succeeds. Stop before touching the parcel.",
+          "tables": "No roll required.",
+          "npc_evaluations": []
+        },
+        "rolls": {}
+      }
+    },
+    "expect": {
+      "type": "commit",
+      "steps": [
+        "s1"
+      ],
+      "event_kinds": [
+        "equipment_change"
+      ],
+      "pending": [
+        {
+          "id": "s2",
+          "type": "object",
+          "option": "pick_up_parcel",
+          "condition": {
+            "text": "the wax seal is safe to touch"
+          }
+        }
+      ],
+      "narration": [
+        "holster",
+        "(?:left hand|free)"
+      ],
+      "forbidden_narration": [
+        "you (?:pick up|take|open|touch)"
+      ]
+    }
+  },
+  {
+    "id": "receipt-and-secret",
+    "context": {
+      "fixture": "noncanonical",
+      "cursor": {
+        "revision": 7,
+        "ledger_head": "fixture_evt_7"
+      },
+      "action": {
+        "action_id": "fixture-receipt-and-secret",
+        "actor": "zara",
+        "text": "Inspect the wax seal.",
+        "declaration": {
+          "actor": "zara",
+          "steps": [
+            {
+              "id": "s1",
+              "type": "action",
+              "option": "inspect_seal"
+            }
+          ]
+        }
+      },
+      "validation": {
+        "legal": true,
+        "errors": [],
+        "warnings": [],
+        "halts": []
+      },
+      "public_context": {
+        "actor": "zara",
+        "actor_name": "Zara",
+        "mode": "scene",
+        "round": null,
+        "budget": {
+          "action": 1,
+          "bonus_action": 1,
+          "reaction": 1,
+          "object_interaction": 1,
+          "movement_ft": 30
+        },
+        "speed_ft": 30,
+        "resources": {},
+        "hands": {
+          "right": "practice saber",
+          "left": "pistol"
+        },
+        "options": [],
+        "notes": [
+          "Accepted roll failed. Commit one public observation for s1 which cites s1.check: seal stays unreadable. You can see the seal remains unreadable. No other consequences."
+        ]
+      },
+      "brief": "Accepted roll failed. Commit one public observation for s1 which cites s1.check: seal stays unreadable. You can see the seal remains unreadable. No other consequences.",
+      "recent_private": [
+        {
+          "fact": "The automaton has AC 17 and the hidden code is BLUE QUARANTINE. The failed check did not discover either."
+        }
+      ],
+      "npc_last_evaluations": {},
+      "resolution": {
+        "settings": {
+          "mode": "regular"
+        }
+      },
+      "operation": {
+        "tables": {
+          "interpretation": "Inspect seal with recorded check.",
+          "tables": "DC 12, failure leaves seal unreadable.",
+          "npc_evaluations": []
+        },
+        "rolls": {
+          "s1.check": {
+            "result": {
+              "roll_id": "fixture_roll_1",
+              "total": 8,
+              "success": false
+            }
+          }
+        }
+      }
+    },
+    "expect": {
+      "type": "commit",
+      "steps": [
+        "s1"
+      ],
+      "event_kinds": [
+        "observation"
+      ],
+      "narration": [
+        "seal",
+        "unreadable|cannot read|can.t read"
+      ],
+      "forbidden_narration": [
+        "breaks|shatters|opens"
+      ],
+      "private_patterns": [
+        "blue quarantine",
+        "(?:armor class|ac|dc|hit points)\\s*[:=]?\\s*(?:17|12)"
+      ]
+    }
+  }
+]

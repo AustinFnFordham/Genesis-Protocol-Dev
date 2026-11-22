@@ -1,0 +1,492 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic GM next move fixture contract",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "review"
+      ],
+      "properties": {
+        "type": {
+          "const": "review"
+        },
+        "review": {
+          "type": "object",
+          "required": [
+            "summary",
+            "errors",
+            "warnings",
+            "alternatives"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "message"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "alternatives": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "declaration"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "declaration": {
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "tables"
+      ],
+      "properties": {
+        "type": {
+          "const": "tables"
+        },
+        "tables": {
+          "type": "object",
+          "required": [
+            "interpretation",
+            "tables",
+            "npc_evaluations"
+          ],
+          "properties": {
+            "interpretation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tables": {
+              "type": "string",
+              "minLength": 1
+            },
+            "npc_evaluations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "npc",
+                  "since",
+                  "changes",
+                  "no_change_reason",
+                  "outcome_key",
+                  "repeat_reason",
+                  "basis"
+                ],
+                "properties": {
+                  "npc": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "since": {},
+                  "changes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "no_change_reason": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "outcome_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "repeat_reason": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "basis": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "rolls"
+      ],
+      "properties": {
+        "type": {
+          "const": "rolls"
+        },
+        "rolls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "roll_key",
+              "step_id",
+              "formula",
+              "kind",
+              "requested_by",
+              "purpose",
+              "rule_sources"
+            ],
+            "properties": {
+              "roll_key": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]{1,40}$"
+              },
+              "step_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "formula": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requested_by": {
+                "type": "string",
+                "minLength": 1
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rule_sources": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "mode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dc": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "proposal"
+      ],
+      "properties": {
+        "type": {
+          "const": "commit"
+        },
+        "proposal": {
+          "type": "object",
+          "required": [
+            "world_time",
+            "events",
+            "narration",
+            "scene_state",
+            "turn_context"
+          ],
+          "properties": {
+            "world_time": {
+              "type": "string",
+              "minLength": 1
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "summary",
+                  "actor",
+                  "visibility",
+                  "details",
+                  "roll_keys"
+                ],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "actor": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "visibility": {
+                    "enum": [
+                      "public",
+                      "gm_only"
+                    ]
+                  },
+                  "details": {
+                    "type": "object"
+                  },
+                  "roll_keys": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "narration": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scene_state": {
+              "type": "object",
+              "required": [
+                "summary",
+                "title",
+                "location",
+                "atmosphere"
+              ],
+              "properties": {
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "location": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "atmosphere": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "turn_context": {
+              "type": "object",
+              "required": [
+                "actor",
+                "actor_name",
+                "mode",
+                "round",
+                "budget",
+                "speed_ft",
+                "resources",
+                "dialogue",
+                "options",
+                "objects",
+                "movement",
+                "reactions",
+                "visible",
+                "notes",
+                "hands",
+                "equipment_from_ledger"
+              ],
+              "properties": {
+                "actor": {
+                  "const": "zara"
+                },
+                "actor_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "mode": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "round": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "budget": {
+                  "type": "object"
+                },
+                "speed_ft": {
+                  "type": "integer"
+                },
+                "resources": {
+                  "type": "object"
+                },
+                "dialogue": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "approach",
+                      "text"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "approach": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "minItems": 3,
+                  "maxItems": 5
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "movement": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "visible": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 0
+                },
+                "hands": {
+                  "type": "object"
+                },
+                "equipment_from_ledger": {
+                  "const": true
+                },
+                "pending_steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "minItems": 0
+                },
+                "pending_reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
