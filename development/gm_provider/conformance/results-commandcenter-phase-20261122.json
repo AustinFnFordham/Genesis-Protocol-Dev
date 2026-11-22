@@ -1,0 +1,525 @@
+{
+  "ollama_version": "0.40.16",
+  "inputs": {
+    "GM_GUIDE.md": "c8bb279b84a051a930b77f711e158d43031d0caf1d7c99ba6fb968491bf583a7",
+    "move.schema.json": "789cb86c4bd75939f63c0a7fb6e681ce986c9d5315c3d008ca1f60db2e5e9ca9",
+    "fixtures.json": "aab54c680d958ca04b962ac7ee753accb09272b1374d42b5e479ceafa4f7466d",
+    "harness.py": "aaf8429964ead5f2e731eecf2307e7f4ec9d15c426eb5a63bc07048dcfc305a8"
+  },
+  "temperature": 0,
+  "seed": 22,
+  "num_predict": 900,
+  "num_ctx": 4096,
+  "repeats": 2,
+  "repairs": 1,
+  "groups": [
+    {
+      "model": "qwen2.5:14b",
+      "digest": "7cdf5a0187d5c58cc5d369b255592f7841d1c4696d45a8c8a9489440385b22f6",
+      "mode": "phase",
+      "summary": {
+        "cases": 14,
+        "first_pass": 8,
+        "final_pass": 12,
+        "repaired": 4,
+        "repair_candidates": 6,
+        "first_error_categories": {
+          "FIDELITY": 4,
+          "CONTINUITY": 2,
+          "AGENCY": 2
+        },
+        "final_error_categories": {
+          "CONTINUITY": 2,
+          "AGENCY": 2
+        },
+        "attempts": 20,
+        "wall_p50_ms": 660.7,
+        "wall_p95_ms": 3848.5,
+        "first_load_ms": 4093.2
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 4660.1,
+              "load_ms": 4093.2,
+              "generated_tokens": 27,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 314.8,
+              "load_ms": 3.6,
+              "generated_tokens": 35,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 582.5,
+              "load_ms": 3.2,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 524.3,
+              "load_ms": 3.6,
+              "generated_tokens": 60,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 642.6,
+              "load_ms": 3.8,
+              "generated_tokens": 76,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 659.9,
+              "load_ms": 3.1,
+              "generated_tokens": 84,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 822.5,
+              "load_ms": 3.8,
+              "generated_tokens": 98,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 3618.8,
+              "load_ms": 3.6,
+              "generated_tokens": 470,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 3848.5,
+              "load_ms": 12,
+              "generated_tokens": 514,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 2642.5,
+              "load_ms": 3.2,
+              "generated_tokens": 338,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 282.1,
+              "load_ms": 3.7,
+              "generated_tokens": 27,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 309.4,
+              "load_ms": 3.6,
+              "generated_tokens": 35,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 580.8,
+              "load_ms": 3.3,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 520.5,
+              "load_ms": 3.3,
+              "generated_tokens": 60,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 642.9,
+              "load_ms": 3.8,
+              "generated_tokens": 76,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 661.5,
+              "load_ms": 3.9,
+              "generated_tokens": 84,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 819.9,
+              "load_ms": 3.7,
+              "generated_tokens": 98,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 3630.3,
+              "load_ms": 3.7,
+              "generated_tokens": 470,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 3839.2,
+              "load_ms": 3.8,
+              "generated_tokens": 514,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 2618.3,
+              "load_ms": 3.6,
+              "generated_tokens": 338,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "qwen2.5-coder:32b",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "mode": "phase",
+      "summary": {
+        "cases": 14,
+        "first_pass": 8,
+        "final_pass": 14,
+        "repaired": 6,
+        "repair_candidates": 6,
+        "first_error_categories": {
+          "FIDELITY": 4,
+          "CONTINUITY": 2
+        },
+        "final_error_categories": {},
+        "attempts": 20,
+        "wall_p50_ms": 1349.3000000000002,
+        "wall_p95_ms": 9764,
+        "first_load_ms": 4639.4
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 5670.3,
+              "load_ms": 4639.4,
+              "generated_tokens": 27,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 551,
+              "load_ms": 3.9,
+              "generated_tokens": 33,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1118.3,
+              "load_ms": 3.3,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1347.4,
+              "load_ms": 3.8,
+              "generated_tokens": 85,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 1271.3,
+              "load_ms": 3.8,
+              "generated_tokens": 80,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 1381.2,
+              "load_ms": 3.2,
+              "generated_tokens": 91,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1056.9,
+              "load_ms": 3.7,
+              "generated_tokens": 62,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 8640.2,
+              "load_ms": 3.1,
+              "generated_tokens": 588,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 9778.8,
+              "load_ms": 3.3,
+              "generated_tokens": 668,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 7291.6,
+              "load_ms": 3.6,
+              "generated_tokens": 493,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 521.8,
+              "load_ms": 3.6,
+              "generated_tokens": 27,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 629.9,
+              "load_ms": 3.9,
+              "generated_tokens": 39,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1118,
+              "load_ms": 3.1,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1351.2,
+              "load_ms": 11.5,
+              "generated_tokens": 85,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "FIDELITY: interpretation omits a required action consequence"
+              ],
+              "wall_ms": 1292.4,
+              "load_ms": 3.6,
+              "generated_tokens": 80,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 1388.2,
+              "load_ms": 3.6,
+              "generated_tokens": 91,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1054.6,
+              "load_ms": 3.4,
+              "generated_tokens": 62,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 8645.6,
+              "load_ms": 3.1,
+              "generated_tokens": 588,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [],
+              "wall_ms": 9764,
+              "load_ms": 3.7,
+              "generated_tokens": 668,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 7276.9,
+              "load_ms": 3.1,
+              "generated_tokens": 493,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

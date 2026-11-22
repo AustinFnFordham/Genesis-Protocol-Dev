@@ -50,3 +50,17 @@ previous published cursor. The local inference runtime has no gateway credential
 or provider identity. An approved broker and separate binding must be designed
 and reviewed before any local-model staging write. Compare accepted receipts and
 Git ancestry after every approved turn. On timeout consult accepted state first.
+
+## Phase-restricted comparison
+
+Use `--mode phase --repeats 2 --repairs 1` with the same models to reproduce
+the intervened benchmark. This mode exposes the move authorized by synthetic
+preflight and accepted operation state, then gives the model only that JSON
+Schema branch. It fixes the no-roll text for routine fixtures. It still grades
+the resulting move using the existing independent checks. These results measure
+scaffolded decisions. Use `--mode schema` or `--mode json` to retain free phase selection.
+
+`acceptance.py` checks redacted refresh pairs and accepted receipt equality.
+For real tests, use independently observed authenticated tool payloads rather
+than model-authored summaries. It does not implement recovery, authenticate
+any client, grant permissions or replace the existing authoritative gateway.
