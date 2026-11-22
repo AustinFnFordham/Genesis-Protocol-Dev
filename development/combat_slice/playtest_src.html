@@ -171,7 +171,7 @@ body.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; 
 .tc-dice { margin: 6px 0; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; } .res.hurt { color: var(--bad); } .die.idle { color: var(--dim); } .die.spin { animation: tumble .35s linear infinite; }
 .tc-res .calc { font: 13px var(--mono); } .tc-res .res { font: 700 15px var(--display); letter-spacing: .06em; text-transform: uppercase; }
 .rollbtn { width: 100%; margin-top: 6px; min-height: 52px; font-size: 18px; }
-.auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; } .auth.ok { color: var(--ok); } .auth.warn { color: var(--warn); }
+.auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; } .auth.ok { color: var(--ok); } .auth.warn { color: var(--warn); } .auth.bad { color: var(--bad); } .lane-turn .auth { font-size: 10px; margin-left: 4px; letter-spacing: .06em; }
 .lane-turn { font: 600 11px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); border-top: 1px dashed var(--line); padding-top: 4px; }
 .confirmed { border: 1px solid var(--ok); border-radius: 12px; padding: 8px 10px; font-size: 14px; background: rgba(87,217,154,.08); }
 .ref-card { cursor: default; opacity: .75; } .ref-card .why { color: var(--muted); }
@@ -221,7 +221,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
       <div id="combo"></div>
       <div class="pred" id="pred"></div>
       <div class="commit"><button class="primary" id="resolve">Commit turn</button><button id="clear">Clear</button></div>
-      <div id="planMsg" class="muted" role="status"></div><div id="connMsg" class="muted" role="status"></div>
+      <div id="planMsg" class="muted" role="status"></div><div id="connMsg" class="muted" role="status"></div><div id="errMsg" class="bad" role="alert"></div>
       <section class="theater" aria-label="Roll Theater">
         <div class="row" style="justify-content:space-between"><h2>Roll Theater</h2><span id="theaterAuth"></span></div>
         <div class="lanes">
@@ -305,12 +305,13 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
       if (j.closed || !j.meta || !SCENARIOS.scenarios[j.meta.scenario]) throw new Error("no resumable session");
       scenarioId = j.meta.scenario; $("scenario").value = scenarioId; switches = Object.assign(switches, j.meta.switches || {});
       var rb = DR.replay(CATALOG, SCENARIOS, j); S = rb.state; session = sid; shownLog = S.log.length; resetTheater(); markNarration(true);
+      if (atomic.state) atomic.state(sid).then(function (st) { $("connMsg").textContent += st.hash === DR.stateHash(S) ? " Server reconstruction matches (" + st.hash + ")." : " Server reconstruction differs; using the server's."; if (st.hash !== DR.stateHash(S) && !rb.pending) { S = st.state; render(); } }, function () {});
       $("connMsg").textContent = "Reconnected: rebuilt from the Atomic journal (" + j.tape.length + " accepted dice, no rerolls).";
       if (rb.pending) { busy = false; render(); return playTurn(rb.pending.actor, rb.pending.plan, rb.pending.choices).then(runNpcs); }
-      render(); return runNpcs();
+      busy = false; render(); return runNpcs();
     });
   }
-  function fatal(e) { busy = false; $("planMsg").textContent = "Atomic error: " + (e.code || "") + " " + e.message; render(); }
+  function fatal(e) { busy = false; render(); $("errMsg").textContent = "Atomic refused: " + (e.code || "") + " — " + e.message; }
   function visibleEnemies() { var v = E.publicView(S, "aero"); return Object.keys(v.actors).filter(function (id) { return v.actors[id].side !== "party" && !v.actors[id].down; }); }
   function names() { var n = {}; Object.keys(S.actors).forEach(function (k) { n[k] = S.actors[k].name; }); return n; }
   function myTurn() { return S && E.current(S) === "aero" && !S.over && !busy; }
@@ -319,7 +320,8 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   function playTurn(actor, p, choices) {
     busy = true; liveLog = null; render();
     var startLog = S.log.length, who = S.actors[actor];
-    ["laneP", "laneG"].forEach(function (id) { var L = $(id), e = L.querySelector(".lane-empty"); if (e) e.remove(); L.insertAdjacentHTML("beforeend", "<div class='lane-turn'>Round " + S.round + " · " + esc(who.name) + "'s turn</div>"); });
+    var tkNow = DR.turnKey(S);
+    ["laneP", "laneG"].forEach(function (id) { var L = $(id), e = L.querySelector(".lane-empty"); if (e) e.remove(); L.insertAdjacentHTML("beforeend", "<div class='lane-turn' data-turn='" + tkNow + "'>Round " + S.round + " · " + esc(who.name) + "'s turn <span class='vbadge'></span></div>"); });
     return DR.runTurn({ atomic: atomic, session: session }, S, actor, p, {
       choices: choices,
       playerRoll: function (need) { return theaterAsk(need); },
@@ -329,7 +331,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
       onProgress: function (r) { liveProgress(r); }
     }).then(function (res) {
       if (res.refused) { busy = false; $("planMsg").textContent = "Not legal: " + res.refused.steps.filter(function (x) { return !x.ok; }).map(function (x) { return x.reasons.map(function (y) { return y.text; }).join(" "); }).join(" "); render(); return false; }
-      S = res.state; liveLog = null; busy = false;
+      S = res.state; liveLog = null; busy = false; markVerified(res.turn_key, res.verification);
       var turnLog = S.log.slice(startLog); theaterSettle(turnLog, actor);
       shownLog = S.log.length; queueNarration(res.turn_key, actor, turnLog);
       if (actor === "aero") plan = [];
@@ -344,10 +346,15 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   function askReaction(Pz, r) {
     return new Promise(function (resolve) {
       var att = S.actors[Pz.context.attacker], me = S.actors.aero, odds = "";
-      var LBL = { attack_declared_on_me: "is attacking you", melee_hit_on_me: "is about to hit you", melee_miss_on_me: "missed you — an opening", opportunity_attack: "is pulling away from you", ranged_energy_hit_on_me: "hit you with a blaster bolt" };
+      var LBL = { deflect_redirect: "", attack_declared_on_me: "is attacking you", melee_hit_on_me: "is about to hit you", melee_miss_on_me: "missed you — an opening", opportunity_attack: "is pulling away from you", ranged_energy_hit_on_me: "hit you with a blaster bolt" };
       if (Pz.kind === "melee_hit_on_me" && Pz.context.total != null) { var turn = Pz.context.total < me.ac + 2; odds = "<p><span class='label-mech'>Mechanical · certain</span> Their total is <b>" + Pz.context.total + "</b> vs your AC " + me.ac + ". Parry makes it AC " + (me.ac + 2) + ": it would <b class='" + (turn ? "ok'>turn this hit into a miss" : "bad'>not be enough") + "</b>.</p>"; }
       if (Pz.kind === "attack_declared_on_me" && att) { var d = P.defenseOdds(S, Pz.context.attacker, "aero", Pz.context.pid); odds = "<p><span class='label-mech'>Mechanical · exact</span> Hits you " + pct(d.hit) + " as is; " + pct(d.dodge_hit) + " if you Dodge now (disadvantage).</p>"; }
       if (Pz.kind === "melee_miss_on_me" && att) { var rp = CATALOG.profiles.riposte, a = P.attackOdds(rp.resolution.bonus, att.ac, "normal"); odds = "<p><span class='label-mech'>Mechanical · exact</span> Riposte: d20+" + rp.resolution.bonus + " vs AC " + att.ac + " hits " + pct(a.hit) + " before any parry of theirs.</p>"; }
+      if (Pz.kind === "deflect_redirect") {
+        $("reactBody").innerHTML = "<p class='lane-tag player'>PLAYER — AERO · decision</p><h2>Redirect the bolt?</h2><p style='font-size:17px'>The blade stopped all " + Pz.context.damage + " damage. Sheet: you may send it at <b>one visible creature within 30 ft</b> (+" + CATALOG.profiles.lightsaber_deflect.resolution.redirect_bonus + " to hit; a hit deals the original " + Pz.context.damage + ").</p>" +
+          Pz.options.map(function (id) { return "<p><button class='primary' data-react='" + id + "'>At " + esc(S.actors[id].name) + "</button> <small class='muted'>" + E.distance(S, "aero", id) + " ft" + (id === Pz.context.shooter ? " · the shooter" : "") + "</small></p>"; }).join("") + "<p><button data-react=''>Let it die on the blade</button></p>";
+        var dl = $("react"); if (!dl.open) dl.showModal(); each($("reactBody"), "[data-react]", function (b) { b.onclick = function () { dl.close(); resolve(b.getAttribute("data-react") || null); }; }); return;
+      }
       if (Pz.kind === "ranged_energy_hit_on_me") odds = "<p><span class='label-mech'>Mechanical</span> Incoming damage <b>" + Pz.context.damage + "</b>. Deflect reduces it by 1d10+2 (3–12): it stops completely " + pct(Math.max(0, Math.min(10, 13 - Pz.context.damage)) / 10) + " of the time, and then the bolt goes back at the shooter.</p>";
       $("reactBody").innerHTML = "<p class='lane-tag player'>PLAYER — AERO · decision</p><h2>Reaction</h2>" +
         "<p style='font-size:17px'><b>" + esc(att ? att.name : "Someone") + "</b> " + (LBL[Pz.kind] || Pz.kind) + ". You have <b>" + me.reaction_left + " Reaction</b> this round.</p>" + odds +
@@ -367,7 +374,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     }
     doCommit();
   }
-  function doCommit() { var p = plan.slice(); openDock(true); playTurn("aero", p, {}).then(function (ok) { if (ok) return runNpcs(); }); }
+  function doCommit() { var p = plan.slice(); openDock(true); $("errMsg").textContent = ""; playTurn("aero", p, {}).then(function (ok) { if (ok) return runNpcs(); }); }
 
   // ---------- Roll Theater: PLAYER lane (Aero's dice wait for the Roll button) and GM lane ----------
   var theater = { cards: {}, waiting: null };
@@ -450,6 +457,11 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     return null;
   }
   function stopPlayback() { display = {}; }
+  function markVerified(tk, v) {
+    var html = !v || v.offline ? "<span class='auth warn'>practice · not verified</span>" : v.verified ? "<span class='auth ok' title='server hash " + esc(v.server_hash) + "'>✓ server-verified</span>" : v.tamper ? "<span class='auth bad'>✗ result rejected — server's result applied</span>" : "";
+    each(document, "[data-turn='" + tk + "'] .vbadge", function (b) { b.innerHTML = html; });
+    if (v && v.tamper) $("planMsg").textContent = "The server rebuilt this turn from its own record and your page's result did not match. The server's result now stands.";
+  }
   function floater() {}
 
   // ---------- Soul narration: after mechanics, never blocking them ----------
@@ -595,7 +607,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     });
     renderCombo(sy, an); renderPrediction(an, v);
     $("resolve").disabled = !mine || !plan.length || !v.legal;
-    if (!/^Atomic error/.test($("planMsg").textContent) || mine) $("planMsg").textContent = !mine ? (S.over ? "" : busy ? "Resolving — roll your dice in the Roll Theater when asked." : "Waiting for the other side.") : plan.length && !v.legal ? "Fix the red steps first. The same rules judge every actor." : "";
+    $("planMsg").textContent = !mine ? (S.over ? "" : busy ? "Resolving — roll your dice in the Roll Theater when asked." : "Waiting for the other side.") : plan.length && !v.legal ? "Fix the red steps first. The same rules judge every actor." : "";
     updateDock();
   }
   function move(i, d) { var j = i + d; if (j < 0 || j >= plan.length) return; var x = plan[i]; plan[i] = plan[j]; plan[j] = x; render(); var t = $("timeline").querySelectorAll(".step")[j]; if (t) t.focus(); }

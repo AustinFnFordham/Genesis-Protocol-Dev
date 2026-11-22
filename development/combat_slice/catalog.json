@@ -36,7 +36,11 @@
    "ranged_in_melee_disadvantage": {
     "default": false,
     "status": "sandbox_proposal",
-    "text": "Disadvantage on ranged attacks while a visible enemy is within 5 ft. A common d20 rule, but not on Aero's sheet; off until the owner approves it."
+    "text": "Disadvantage on ranged attacks while a visible enemy is within 5 ft. A common d20 rule, but not on Aero's sheet; off until the owner approves it.",
+    "provenance": {
+     "source": "common d20 convention; NOT on Aero's runtime sheet",
+     "approval": "pending owner (GEP-001 §11.8)"
+    }
    }
   },
   "trigger_depth_max": 1,
@@ -46,7 +50,8 @@
     "status": "sandbox_proposal",
     "rules": "Melee attacks against a prone creature have advantage. A prone creature attacks with disadvantage. It stands at the start of its own turn, spending 15 ft of movement."
    }
-  }
+  },
+  "rules_version": "cc-sandbox-0.5"
  },
  "profiles": {
   "saber_strike": {
@@ -796,8 +801,8 @@
     "redirect_bonus": 5,
     "redirect_range_ft": 30
    },
-   "rules": "Reaction when a ranged energy attack hits you while your blade is lit: reduce the damage by 1d10+2. If that reduces it to 0, you send the bolt back at the shooter (+5, within 30 ft); a hit deals the original rolled damage.",
-   "source": "aero_character_runtime.yml features: Lightsaber Deflect - Tier 1 (sandbox: the redirect targets the shooter)"
+   "rules": "Reaction when a ranged energy attack hits you while your blade is lit: reduce the damage by 1d10+2. If that reduces it to 0, you may redirect the bolt at one visible creature you choose within 30 ft (+5); a hit deals the original rolled damage.",
+   "source": "aero_character_runtime.yml features: Lightsaber Deflect - Tier 1 (redirect target: player-chosen visible creature within 30 ft, per the sheet; corrected in CC-005)"
   },
   "force_connection": {
    "name": "Force Connection (focused)",
@@ -865,7 +870,12 @@
     }
    },
    "rules": "Ranged attack +4, 40/120 ft. Hit: 1d6+2 energy.",
-   "source": "fixture NPC (Malfunctioning Relay Droid, playtest 001)"
+   "source": "fixture NPC (Malfunctioning Relay Droid, playtest 001)",
+   "provenance": {
+    "numbers": "fixture",
+    "approval": "pending owner",
+    "note": "Sandbox fixture values for the relay droid; not canon."
+   }
   },
   "npc_slam": {
    "name": "Chassis Slam",
@@ -886,7 +896,12 @@
     "melee": true
    },
    "rules": "Melee +3. Hit: 1d4+1.",
-   "source": "fixture NPC"
+   "source": "fixture NPC",
+   "provenance": {
+    "numbers": "fixture",
+    "approval": "pending owner",
+    "note": "Sandbox fixture values for the relay droid; not canon."
+   }
   }
  },
  "forms": {

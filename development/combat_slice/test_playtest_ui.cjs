@@ -115,7 +115,13 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     const c3 = await browser.newContext({ viewport: { width: 1300, height: 950 } }); const h = await c3.newPage(); const herr = []; h.on("pageerror", (e) => herr.push(e.message));
     await h.goto(base + "/combat.html"); await ready(h);
     ok((await G(h, () => window.__genesisCombat.authority())) === "atomic-sandbox" && /Atomic \(sandbox service\)/.test(await h.locator("#theaterAuth").innerText()), "preview server: dice come from the Atomic service");
+    // a plan that is only legal because the page's own state was edited is refused by the server
     await closeIn(h); for (const c of ["saber_strike", "flow_strike"]) await h.locator(`[data-card="${c}"]`).click(); await h.locator("#resolve").click(); await drive(h);
+    ok(/ILLEGAL_PLAN/.test(await h.locator("#errMsg").innerText()), "server refuses a plan built on an edited page state (ILLEGAL_PLAN)", await h.locator("#errMsg").innerText());
+    await h.reload(); await ready(h);
+    await h.locator('[data-card="move"]').click(); if (await h.locator("#pick[open]").count()) await h.locator("#pickBody button").first().click();
+    for (const c of ["saber_strike", "flow_strike"]) await h.locator(`[data-card="${c}"]`).click(); await h.locator("#resolve").click(); await drive(h);
+    ok(await h.locator(".lane-turn .auth.ok").count() >= 1, "honest turns show the server-verified badge");
     ok(await G(h, () => window.__genesisCombat.state().receipts.every((r) => r.authority === "atomic")), "every receipt is authority=atomic");
     const sid = await G(h, () => window.__genesisCombat.session()); const hash1 = await G(h, () => JSON.stringify([window.__genesisCombat.state().log.length, window.__genesisCombat.state().tape, window.__genesisCombat.state().actors.aero.hp, window.__genesisCombat.state().actors.ilsa.hp]));
     // NOTE: closeIn() changed distance in the page only, so the server replay differs from the page in where Aero stands; use a clean fight for the reconnect proof.

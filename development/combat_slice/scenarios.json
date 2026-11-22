@@ -91,7 +91,7 @@
   "not_on_sheet": [
    {
     "name": "Minor Telekinesis",
-    "why": "Not on Aero's sheet. He knows two Level-0 powers: Battle Insight and Burst. The CC-002 notes say a Minor Telekinesis cost change needs owner approval."
+    "why": "Not on the runtime sheet (powers known: Battle Insight, Burst). CC-002 and the Capability contract cite a campaign-scoped Minor Telekinesis ruling for the live campaign; its provenance is unreconciled (GEP-001 §1), so this sandbox does not apply it."
    },
    {
     "name": "Force Push / Pull (telekinesis)",
@@ -270,7 +270,12 @@
        "move"
       ]
      },
-     "status_note": "Sandbox proposal: HP 7 from the playtest's 'Malfunctioning Relay Droid 7hp'; AC 13 as shown there."
+     "status_note": "Sandbox proposal: HP 7 from the playtest's 'Malfunctioning Relay Droid 7hp'; AC 13 as shown there.",
+     "provenance": {
+      "hp": "7 — playtest 001 'Malfunctioning Relay Droid 7hp'",
+      "ac": "13 — playtest 001 roll line 'vs 13'",
+      "approval": "sandbox fixture; pending owner"
+     }
     }
    }
   }

@@ -61,7 +61,7 @@ t("grapple: free hand, +5 vs Athletics/Acrobatics, speed 0, no damage; moving aw
 t("Lightsaber Deflect: only vs ranged energy, blade lit; reduces by 1d10+2; full stop sends it back", () => {
   let reduced = false, redirected = false;
   for (let seed = 1; seed < 200 && !(reduced && redirected); seed++) { const s = st("relay_droid", seed); s.order = ["droid", "aero"]; s.turn = 0;
-    const r = play(s, "droid", [{ pid: "npc_blaster", target: "aero" }], (p) => p.kind === "ranged_energy_hit_on_me" ? "lightsaber_deflect" : null);
+    const r = play(s, "droid", [{ pid: "npc_blaster", target: "aero" }], (p) => p.kind === "ranged_energy_hit_on_me" ? "lightsaber_deflect" : p.kind === "deflect_redirect" ? p.options[0] : null);
     const d = r.log.find((l) => l.ev === "deflect"); if (d) { reduced = true; assert(d.reduced >= 1); if (r.log.some((l) => l.ev === "redirect")) redirected = true; } }
   assert(reduced && redirected, "reduction and redirect both observed");
   const s = st("relay_droid"); s.actors.aero.weapon.ignited = false; s.order = ["droid", "aero"]; s.turn = 0;
@@ -118,5 +118,22 @@ t("Soul's combo name is a display-only proposal and leaves facts untouched", () 
 t("predictions use the same range rule as the engine (blaster beyond 40 ft = disadvantage)", () => {
   const Pr = require("./predict.js"); const s = st("relay_droid"); s.actors.aero.sidearm.held = true; s.dist["aero|droid"] = 60;
   const a = Pr.analyzePlan(s, "aero", [{ pid: "blaster_shot", target: "droid" }]).steps[0]; assert(a.dis.includes("long range")); assert(Math.abs(a.hit - Pr.attackOdds(5, 13, "disadvantage").hit) < 1e-12);
+});
+t("Deflect redirect: the PLAYER picks one visible creature within 30 ft, or declines (sheet; GEP-001 §11.8)", () => {
+  let offered = null, declinedOk = false;
+  for (let seed = 1; seed < 300 && !(offered && declinedOk); seed++) {
+    const s = st("relay_droid", seed); s.order = ["droid", "aero"]; s.turn = 0;
+    const r = play(s, "droid", [{ pid: "npc_blaster", target: "aero" }], (p) => { if (p.kind === "deflect_redirect") { offered = p; return null; } return p.kind === "ranged_energy_hit_on_me" ? "lightsaber_deflect" : null; });
+    if (offered && r.log.some((l) => l.ev === "redirect_declined")) declinedOk = !r.log.some((l) => l.ev === "redirect");
+  }
+  assert(offered, "a full stop offered the redirect choice"); assert.deepStrictEqual(offered.options, ["droid"], "only visible creatures within 30 ft (not Aero himself)");
+  assert(offered.actor === "aero" && offered.context.shooter === "droid"); assert(declinedOk, "declining sends nothing back");
+  const far = st("relay_droid", 1); far.dist["aero|droid"] = 45; far.order = ["droid", "aero"]; far.turn = 0; let off2 = null;
+  for (let seed = 1; seed < 300 && !off2; seed++) { const x = st("relay_droid", seed); x.dist["aero|droid"] = 45; x.order = ["droid", "aero"]; x.turn = 0; play(x, "droid", [{ pid: "npc_blaster", target: "aero" }], (p) => { if (p.kind === "deflect_redirect") off2 = p; return p.kind === "ranged_energy_hit_on_me" ? "lightsaber_deflect" : null; }); }
+  assert(!off2, "a shooter 45 ft away cannot be chosen; with no one in 30 ft there is no redirect offer");
+});
+t("every dice request carries its identity: actor, purpose, step, rules version, target", () => {
+  const s = E.newState(C, S, "duelist", { atomic: true }); s.dist["aero|ilsa"] = 5; const n = E.resolveTurn(s, "aero", [{ pid: "feint", target: "ilsa" }, { pid: "saber_strike", target: "ilsa" }], {}).need_dice;
+  assert(n.actor === "aero" && n.step === 0 && n.rules === "cc-sandbox-0.5" && n.target === "ilsa" && /Feint/.test(n.purpose), JSON.stringify(n));
 });
 setTimeout(() => { console.log(fail ? fail + " FAILED, " + pass + " passed" : "all " + pass + " passed"); process.exit(fail ? 1 : 0); }, 10);

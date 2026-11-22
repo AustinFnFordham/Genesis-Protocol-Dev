@@ -21,7 +21,9 @@
       commit: function (sid, tk, actor, plan) { return call("/atomic/commit", { session: sid, turn_key: tk, actor: actor, plan: plan }); },
       roll: function (sid, tk, ph, dice, roller, actor, purpose) { return call("/atomic/roll", { session: sid, turn_key: tk, plan_hash: ph, dice: dice, roller: roller, actor: actor, purpose: purpose }); },
       decide: function (sid, tk, key, choice) { return call("/atomic/decide", { session: sid, turn_key: tk, key: key, choice: choice }); },
-      journal: function (sid) { return call("/atomic/journal", { session: sid }); } };
+      journal: function (sid) { return call("/atomic/journal", { session: sid }); },
+      complete: function (sid, tk, hash) { return call("/atomic/complete", { session: sid, turn_key: tk, state_hash: hash }); },
+      state: function (sid) { return call("/atomic/state", { session: sid }); } };
   }
   // ---- Offline practice dice: same protocol, in the page. NOT authoritative; the UI says so. ----
   function OfflineAtomic() {
@@ -34,7 +36,8 @@
       commit: function (sid, tk, actor, plan) { var c = commits[tk]; if (c && c.h !== h(plan) && c.locked) return Promise.reject(Object.assign(new Error("PLAN_LOCKED"), { code: "PLAN_LOCKED" })); commits[tk] = c && c.h === h(plan) ? c : { h: h(plan), locked: false }; return Promise.resolve({ plan_hash: h(plan) }); },
       roll: function (sid, tk, ph, dice, roller) { var out = dice.map(function (d) { if (d.seq < tape.length) return tape[d.seq]; var r = { seq: d.seq, sides: d.sides, value: die(d.seq, d.sides), roll_id: "offline:" + d.seq, roller: roller }; tape.push(r); return r; }); commits[tk].locked = true; return Promise.resolve({ dice: out }); },
       decide: function (sid, tk, key, choice) { decisions[tk + "|" + key] = choice; return Promise.resolve({ choice: choice }); },
-      journal: function () { return Promise.resolve({ tape: tape, commits: [], decisions: [] }); } };
+      journal: function () { return Promise.resolve({ tape: tape, commits: [], decisions: [] }); },
+      complete: function () { return Promise.resolve({ verified: false, offline: true }); } };
   }
 
   // runTurn: resolve one actor's turn to completion. hooks:
@@ -66,7 +69,13 @@
           return at.decide(sid, tk, p.key, choice).then(function (d) { choices[p.key] = d.choice; return loop(); });
         });
       }
-      return Promise.resolve({ state: E.endTurn(r.state), log: r.log, receipts: r.receipts, tape: s.tape, turn_key: tk });
+      var done = E.endTurn(r.state), out = { state: done, log: r.log, receipts: r.receipts, tape: s.tape, turn_key: tk };
+      if (!at.complete) return Promise.resolve(out);
+      return at.complete(sid, tk, stateHash(done)).then(function (v) { out.verification = v; return out; }, function (e) {
+        if (e.code !== "STATE_MISMATCH" || !at.state) throw e;
+        // The server's reconstruction is authoritative: adopt it and report the divergence instead of the client's result.
+        return at.state(sid).then(function (st) { out.state = st.state; out.verification = { verified: false, tamper: true, server_hash: st.hash, error: e.message }; return out; });
+      });
     }
   }
 
@@ -83,7 +92,7 @@
       var ch = {}, r;
       for (var g = 0; g < 32; g++) {
         r = E.resolveTurn(s, c.actor, c.plan, ch);
-        if (r.paused) { var k = c.turn_key + "|" + r.paused.key; if (!(k in dec)) return { state: s, pending: { turn_key: c.turn_key, plan: c.plan, actor: c.actor, choices: ch } }; ch[r.paused.key] = dec[k]; continue; }
+        if (r.paused) { var k = c.turn_key + "|" + r.paused.key; if (!(k in dec)) return { state: s, pending: { turn_key: c.turn_key, plan: c.plan, actor: c.actor, choices: ch, paused: r.paused } }; ch[r.paused.key] = dec[k]; continue; }
         break;
       }
       if (r.need_dice) return { state: s, pending: { turn_key: c.turn_key, plan: c.plan, actor: c.actor, choices: ch, need_dice: r.need_dice } };

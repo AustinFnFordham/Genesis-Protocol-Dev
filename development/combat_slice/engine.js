@@ -39,7 +39,7 @@
     var f = parse(formula), rolls = [], kept, n = f.n * (opts.crit ? 2 : 1), pair = f.d === 20 && f.n === 1 && (opts.adv || opts.dis) && !(opts.adv && opts.dis);
     var mode = opts.adv && !opts.dis ? "advantage" : opts.dis && !opts.adv ? "disadvantage" : "normal";
     var sides = []; for (var i = 0; i < (pair ? 2 : n); i++) sides.push(f.d); (opts.extra || []).forEach(function (e) { sides.push(e.sides); });
-    var drawn = drawDice(s, sides, { actor: actor, purpose: purpose, formula: formula, mode: mode, crit: !!opts.crit, extra: (opts.extra || []).map(function (e) { return e.label; }), vs: opts.vs || null, kind: opts.kind || "check" });
+    var drawn = drawDice(s, sides, { step: s._step == null ? null : s._step, rules: s.catalog ? (s.catalog.ruleset.rules_version || s.catalog.ruleset.id) : null, target: opts.vs && opts.vs.target || null, actor: actor, purpose: purpose, formula: formula, mode: mode, crit: !!opts.crit, extra: (opts.extra || []).map(function (e) { return e.label; }), vs: opts.vs || null, kind: opts.kind || "check" });
     if (pair) { rolls = drawn.slice(0, 2); kept = opts.adv ? Math.max(rolls[0], rolls[1]) : Math.min(rolls[0], rolls[1]); }
     else { rolls = drawn.slice(0, n); kept = rolls.reduce(function (a, b) { return a + b; }, 0); }
     var extra = (opts.extra || []).map(function (e, j) { return { label: e.label, value: drawn[(pair ? 2 : n) + j] }; });
@@ -357,11 +357,16 @@
           if (c4) { D.reaction_left--; var dp = profile(s, c4), red = rollDice(s, defender, dp.name + " (reduce)", dp.resolution.reduce, { kind: "reduce", vs: { type: "reduce", against: amount } });
             var before = amount; amount = Math.max(0, amount - red.total);
             log(s, defender, D.name + " catches the bolt on the blade: " + before + " → " + amount + ".", { receipt: red.receipt, ev: "deflect", actor: defender, attacker: attacker, reduced: before - amount, amount: amount });
-            if (amount === 0 && !A.down && distance(s, defender, attacker) <= dp.resolution.redirect_range_ft) {
-              var rr = rollDice(s, defender, dp.name + " redirect → " + A.name, "1d20+" + dp.resolution.redirect_bonus, { kind: "attack", vs: { type: "ac", target: attacker, value: A.ac, adv: [], dis: [] } });
-              var rhit = rr.kept !== 1 && (rr.kept === 20 || rr.total >= A.ac);
-              log(s, defender, D.name + " sends it back at " + A.name + ": " + rr.total + (rhit ? " — hit for " + before + "." : " — miss."), { receipt: rr.receipt, ev: "redirect", actor: defender, target: attacker, hit: rhit, amount: rhit ? before : 0, total: rr.total });
-              if (rhit) { A.hp = Math.max(0, A.hp - before); log(s, defender, A.name + " takes " + before + " energy damage (" + A.hp + "/" + A.hp_max + ").", { ev: "damage", attacker: defender, target: attacker, pid: c4, amount: before, hp: A.hp, hp_max: A.hp_max, crit: false }); if (A.hp === 0) { A.down = true; log(s, attacker, A.name + " is down.", { ev: "down", actor: attacker }); } }
+            if (amount === 0) {
+              // Sheet: "redirect it at one visible creature within 30 ft". The defender's controller picks (or declines).
+              var cands = Object.keys(s.actors).filter(function (id) { var X = s.actors[id]; return id !== defender && !X.down && !X.conds.hidden && distance(s, defender, id) <= dp.resolution.redirect_range_ft; });
+              var tgt = cands.length ? decide(s, ctrl, defender, "deflect_redirect", cands, Object.assign({ damage: before, shooter: attacker }, ctx)) : null;
+              if (tgt) {
+                var X = s.actors[tgt], rr = rollDice(s, defender, dp.name + " redirect → " + X.name, "1d20+" + dp.resolution.redirect_bonus, { kind: "attack", vs: { type: "ac", target: tgt, value: X.ac, adv: [], dis: [] } });
+                var rhit = rr.kept !== 1 && (rr.kept === 20 || rr.total >= X.ac);
+                log(s, defender, D.name + " sends it at " + X.name + ": " + rr.total + (rhit ? " — hit for " + before + "." : " — miss."), { receipt: rr.receipt, ev: "redirect", actor: defender, target: tgt, hit: rhit, amount: rhit ? before : 0, total: rr.total });
+                if (rhit) { X.hp = Math.max(0, X.hp - before); log(s, defender, X.name + " takes " + before + " energy damage (" + X.hp + "/" + X.hp_max + ").", { ev: "damage", attacker: defender, target: tgt, pid: c4, amount: before, hp: X.hp, hp_max: X.hp_max, crit: false }); if (X.hp === 0) { X.down = true; log(s, tgt, X.name + " is down.", { ev: "down", actor: tgt }); } }
+              } else if (cands.length) log(s, defender, D.name + " lets the stopped bolt die on the blade.", { ev: "redirect_declined", actor: defender });
             } } }
       }
       D.hp = Math.max(0, D.hp - amount);
@@ -491,7 +496,7 @@
       log(s, actorId, a.name + "'s turn.", { turn_start: true });
       for (var i = 0; i < plan.length; i++) {
         if (a.down) { log(s, actorId, "Remaining steps cancelled: " + a.name + " is down.", { refused: true }); break; }
-        execStep(s, ctrl, actorId, plan[i]);
+        s._step = i; execStep(s, ctrl, actorId, plan[i]);
         checkOver(s);
         if (s.over) break;
       }
@@ -500,6 +505,7 @@
       if (e instanceof NeedDice) return { state: s0, need_dice: e.need, preview_log: s.log.slice(startLog), preview_receipts: s.receipts.slice(startRec) };
       throw e;
     }
+    delete s._step;
     return { state: s, log: s.log.slice(startLog), receipts: s.receipts.slice(startRec) };
   }
   // acceptDice: append Atomic-accepted values. Same seq + same value = no-op (idempotent retry); anything else is refused.
