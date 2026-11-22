@@ -114,9 +114,9 @@ class GenesisFastMCP(FastMCP):
     advertised scope catalog can include both without weakening authentication.
     """
 
-    def streamable_http_app(self, *args, **kwargs):
-        app = super().streamable_http_app(*args, **kwargs)
-        if self.settings.auth is None:
+    def streamable_http_app(self):
+        app = super().streamable_http_app()
+        if self.settings.auth is None or self.settings.auth.resource_server_url is None:
             return app
         from mcp.server.auth.routes import create_protected_resource_routes
 

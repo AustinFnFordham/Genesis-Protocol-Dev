@@ -135,6 +135,21 @@ class Adapter(Base):
             self.assertEqual(blocked.json()["result"]["structuredContent"]["error"]["code"], "INSUFFICIENT_SCOPE")
             self.assertFalse(self.gw.recovery()["lease"]["held"])
 
+    def test_scope_metadata_replacement_preserves_sdk_route_invariants(self):
+        server = adapter.create_server(self.tools, Verifier(), ISSUER, RESOURCE)
+        self.assertEqual(server.settings.auth.required_scopes, [adapter.READ])
+        expected_path = "/.well-known/oauth-protected-resource/mcp"
+        for app in (server.streamable_http_app(), server.streamable_http_app()):
+            routes = [route for route in app.router.routes if getattr(route, "path", None) == expected_path]
+            self.assertEqual(len(routes), 1)
+            self.assertEqual(routes[0].methods, {"GET", "OPTIONS", "HEAD"})
+
+        no_metadata = adapter.GenesisFastMCP("No protected resource metadata", token_verifier=Verifier(),
+            auth=adapter.AuthSettings(issuer_url=ISSUER, resource_server_url=None,
+                                      required_scopes=[adapter.READ]))
+        app = no_metadata.streamable_http_app()
+        self.assertNotIn(expected_path, [getattr(route, "path", None) for route in app.router.routes])
+
     def test_existing_provider_routing_and_lease_controls_are_used(self):
         self.act(HOLSTER, provider="gemini-session")
         out = self.tools.gm("claim", "run")
