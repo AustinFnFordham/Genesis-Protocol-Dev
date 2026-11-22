@@ -104,6 +104,38 @@ def _compact_state(state_doc: dict) -> dict:
         "recent_journal": journal[-2:],
     }
 
+class GenesisFastMCP(FastMCP):
+    """Advertise optional GM scope without requiring it for every MCP read.
+
+    The pinned MCP SDK uses AuthSettings.required_scopes for BOTH the global
+    BearerAuthMiddleware check and OAuth protected-resource metadata. Genesis
+    requires genesis:read globally; genesis:gm is only required by GM tools.
+    Replace the SDK-generated metadata route with the same SDK helper so the
+    advertised scope catalog can include both without weakening authentication.
+    """
+
+    def streamable_http_app(self, *args, **kwargs):
+        app = super().streamable_http_app(*args, **kwargs)
+        if self.settings.auth is None:
+            return app
+        from mcp.server.auth.routes import create_protected_resource_routes
+
+        replacements = create_protected_resource_routes(
+            resource_url=self.settings.auth.resource_server_url,
+            authorization_servers=[self.settings.auth.issuer_url],
+            scopes_supported=[READ, GM],
+        )
+        for replacement in replacements:
+            matches = [
+                index for index, route in enumerate(app.router.routes)
+                if getattr(route, "path", None) == replacement.path
+            ]
+            if len(matches) != 1:
+                raise RuntimeError("Expected one OAuth protected-resource metadata route")
+            app.router.routes[matches[0]] = replacement
+        return app
+
+
 class JWTVerifier:
     """Auth0 is the authorization server. This resource server only verifies JWTs.
 
@@ -251,7 +283,7 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
     resource, issuer = https_url(resource), https_url(issuer)
     if urlsplit(resource).path != "/mcp":
         raise ValueError("The MCP resource URL must end in /mcp at the origin root")
-    mcp = FastMCP("Genesis shared mobile staging", instructions=(
+    mcp = GenesisFastMCP("Genesis shared mobile staging", instructions=(
         "You are the GM; this service does not call a model. Start with genesis_refresh and the reference tools. "
         "Claim only a player-authorized pending request routed to your authenticated provider. Use one run ID, accepted tables and rolls. "
         "Never reroll, change player intent or bypass validation. Context is GM-private; narrate only committed public results. "
