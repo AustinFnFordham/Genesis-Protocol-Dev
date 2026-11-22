@@ -91,7 +91,7 @@
   "not_on_sheet": [
    {
     "name": "Minor Telekinesis",
-    "why": "Not on the runtime sheet (powers known: Battle Insight, Burst). CC-002 and the Capability contract cite a campaign-scoped Minor Telekinesis ruling for the live campaign; its provenance is unreconciled (GEP-001 §1), so this sandbox does not apply it."
+    "why": "Not a learned power and not on the shared sheet. It is a campaign feature (Jedi Fundamentals, owner ruling 2026-11-11) for starwars_litrpg, Hask Meadow run 2 onward. Turn on the campaign overlay to use it here."
    },
    {
     "name": "Force Push / Pull (telekinesis)",
@@ -274,7 +274,7 @@
      "provenance": {
       "hp": "7 — playtest 001 'Malfunctioning Relay Droid 7hp'",
       "ac": "13 — playtest 001 roll line 'vs 13'",
-      "approval": "sandbox fixture; pending owner"
+      "approval": "approved: sandbox fixture only (owner 2026-11-22)"
      }
     }
    }
