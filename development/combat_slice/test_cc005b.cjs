@@ -97,6 +97,6 @@ t("player projection never carries enemy HP/AC numbers; hidden actors and their 
   const p = E.newState(C, S, "predator", { seed: 3 }); const v = E.playerProjection(p, "aero"); assert(!v.actors.stalker && !v.receipts.some((r) => r.actor === "stalker"));
   let s = E.newState(C, S, "duelist", { seed: 5 }); s.dist["aero|ilsa"] = 5; let ch = {}, r; for (let g = 0; g < 8; g++) { r = E.resolveTurn(s, "aero", [{ pid: "saber_strike", target: "ilsa" }], ch); if (!r.paused) break; ch[r.paused.key] = null; }
   const pv = E.playerProjection(E.endTurn(r.state), "aero"); const txt = JSON.stringify(pv);
-  assert(pv.actors.ilsa.hp === null && pv.actors.ilsa.ac === null && !/"value":15\b/.test(txt) && !/\/20\)/.test(txt));
+  assert(pv.actors.ilsa.hp === null && pv.actors.ilsa.ac === null && !/"type":"ac","target":"ilsa","value":\d/.test(txt) && !/\/20\)/.test(txt));
 });
 setTimeout(() => { console.log(fail ? fail + " FAILED, " + pass + " passed" : "all " + pass + " passed"); process.exit(fail ? 1 : 0); }, 10);

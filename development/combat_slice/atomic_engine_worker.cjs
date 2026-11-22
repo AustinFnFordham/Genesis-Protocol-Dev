@@ -6,6 +6,7 @@
 const E = require("./engine.js"), D = require("./turn_driver.js");
 const C = require("./catalog.json"), S = require("./scenarios.json");
 const readline = require("readline");
+const PA = require("./player_api.js");
 // Server-trusted overlays come from the repository's own campaign rule files, never from the client.
 const OV = [require("./campaign_overlay.js").fromJediFundamentals(require("../../campaigns/starwars_litrpg/creator/jedi_fundamentals.json"))];
 function clone(x) { return JSON.parse(JSON.stringify(x)); }
@@ -14,15 +15,17 @@ function inspect(journal, candidate) {
   const rb = D.replay(clone(C), S, journal, OV), s = rb.state, out = { hash: D.stateHash(s), over: s.over || null, round: s.round };
   if (rb.pending) {
     const p = rb.pending; out.pending = { turn_key: p.turn_key, actor: p.actor };
-    if (p.need_dice) { const n = p.need_dice; out.pending.need = { dice: n.dice.filter((d) => !s.tape[d.seq]), actor: n.actor, controller: s.actors[n.actor].controller, purpose: n.purpose, step: n.step, rules: n.rules, target: n.target, kind: n.kind }; }
-    if (p.paused) out.pending.paused = { key: p.paused.key, actor: p.paused.actor, controller: s.actors[p.paused.actor].controller, kind: p.paused.kind, options: p.paused.options };
+    if (p.need_dice) { const n = p.need_dice; out.pending.need = { dice: n.dice.filter((d) => !s.tape[d.seq]), actor: n.actor, controller: s.actors[n.actor].controller, purpose: n.purpose, step: n.step, rules: n.rules, target: n.target, kind: n.kind, formula: n.formula, mode: n.mode, extra: n.extra, vs: n.vs }; }
+    if (p.paused) { const c = p.paused.context || {}; out.pending.paused = { key: p.paused.key, actor: p.paused.actor, controller: s.actors[p.paused.actor].controller, kind: p.paused.kind, options: p.paused.options,
+      public_context: { attacker: c.attacker || null, attacker_name: c.attacker && s.actors[c.attacker] ? s.actors[c.attacker].name : null, total: c.total != null ? c.total : null, damage: c.damage != null ? c.damage : null, shooter: c.shooter || null } }; }
   } else if (!s.over) {
     const a = E.current(s); out.next = { turn_key: D.turnKey(s), actor: a, controller: s.actors[a].controller };
     if (s.actors[a].controller === "npc") out.next.npc_plan = E.npcPlan(s, a);
   }
   if (candidate && candidate.actor && s.actors[candidate.actor]) { const v = E.validatePlan(s, candidate.actor, candidate.plan || []); out.validation = { legal: v.legal, reasons: (v.steps || []).filter((x) => !x.ok).map((x) => ({ step: x.i, pid: x.pid, codes: x.reasons.map((r) => r.code) })).concat((v.errors || []).map((e) => ({ codes: [e.code] }))) }; }
   if (candidate && candidate.want_state) out.state = s;
-  if (candidate && candidate.want_view) out.view = candidate.want_view === "gm" ? s : E.playerProjection(s, candidate.want_view);
+  if (candidate && candidate.want_view) out.view = candidate.want_view === "gm" ? s : candidate.thin ? PA.playerView(s, out.pending, S, (journal.meta || {}).scenario) : E.playerProjection(s, candidate.want_view);
+  if (candidate && candidate.preflight) out.preflight = PA.preflight(s, candidate.preflight);
   return out;
 }
 const rl = readline.createInterface({ input: process.stdin });

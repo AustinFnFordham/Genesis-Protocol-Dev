@@ -34,6 +34,18 @@ def build(out=None, sha=None, wrap=True):
     return out / "combat.html"
 
 
+def build_play(out=None, wrap=True):
+    """CC-005c thin PLAYER client: presentation code only. No engine, catalog, scenarios, predictions, driver or
+    narrator. Everything it shows (cards, odds, rolls, narration) comes from the server's player projection."""
+    out = Path(out or HERE / "out")
+    out.mkdir(parents=True, exist_ok=True)
+    body = (HERE / "play_src.html").read_text()
+    html = ("<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\">"
+            "</head><body>" + body + "</body></html>") if wrap else body
+    (out / "play.html").write_text(html)
+    return out / "play.html"
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--out")

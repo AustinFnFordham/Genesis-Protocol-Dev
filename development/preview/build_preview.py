@@ -80,7 +80,7 @@ padding:8px max(16px,env(safe-area-inset-left,0px));font:13px/1.4 system-ui,sans
 <b>Genesis Development / Test Environment</b> · milestone <b>__MILESTONE__</b> · code <code>__SHA__</code> · fixture <b>__FIXTURE__</b> (noncanonical)
 <details style="margin-top:4px"><summary>Features and limits</summary><div>__FEATURES__</div>
 <div style="margin-top:4px"><button type="button" onclick="window.__resetPreview()" style="font:inherit">Reset preview state</button>
- · <a href="diagnostics.html" style="color:inherit">WHISPER / evidence / causal diagnostics</a> · <a href="combat.html" style="color:inherit">CC-002 combat playtest</a></div></details></div>"""
+ · <a href="diagnostics.html" style="color:inherit">WHISPER / evidence / causal diagnostics</a> · <a href="combat.html" style="color:inherit">CC-002 combat playtest</a> · <a href="play.html" style="color:inherit">thin player client</a></div></details></div>"""
 
 
 def git_sha():
@@ -172,6 +172,7 @@ def build(milestone=None, out=None):
     sys.path.insert(0, str(ROOT / "development/combat_slice"))
     import build_playtest   # CC-002 sandbox combat slice (noncanonical, self-contained)
     atomic_text(out / "combat.html", (build_playtest.build(out / ".combat_tmp", sha)).read_text())
+    atomic_text(out / "play.html", (build_playtest.build_play(out / ".combat_tmp")).read_text())   # CC-005c thin player client
     atomic_text(out / "build.json", json.dumps({"milestone": milestone, "code_commit": sha, "fixture": FIXTURE_ID}, indent=1))
     atomic_text(out / "manifest.webmanifest", json.dumps({"name": "Genesis Development Preview", "short_name": "Genesis Preview",
         "start_url": "./", "scope": "./", "display": "browser", "theme_color": "#0a6f8f", "background_color": "#e9eef1",

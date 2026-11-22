@@ -662,6 +662,8 @@
     v.log = v.log.filter(function (l) { return visible(l.actor) && visible(l.attacker) && visible(l.target) && visible(l.defender); }).map(function (l) {
       var c = clone(l), tgt = c.target && s.actors[c.target];
       if (c.ev === "damage" && tgt && tgt.side !== side) { delete c.hp; delete c.hp_max; c.text = tgt.name + " takes " + c.amount + " " + (c.text.match(/ (\w+) damage/) || [, ""])[1] + " damage."; }
+      var who = c.attacker || c.actor;   // others' internal capability ids stay server-side; the observed move name is enough
+      if (c.pid && who && s.actors[who] && s.actors[who].side !== side) { c.move = s.catalog.profiles[c.pid] ? s.catalog.profiles[c.pid].name : null; delete c.pid; }
       return c;
     });
     v.receipts = v.receipts.filter(function (r) { return visible(r.actor); }).map(function (r) {

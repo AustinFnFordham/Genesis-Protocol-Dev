@@ -1,0 +1,252 @@
+<title>Genesis Duel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Thin PLAYER client (CC-005c). This page contains no engine, rules catalog, scenario data or NPC numbers:
+   everything it shows comes from the server's player projection (/atomic/view, /atomic/preflight). */
+:root { color-scheme: dark;
+  --bg: #0b0e15; --bg2: #10141e; --panel: #151a26; --panel2: #1b2131; --line: #2a3246; --line2: #38425c; --ink: #e9ecf4; --muted: #9aa3b8; --dim: #6c748a;
+  --main: #f0b44c; --secondary: #3fd0c2; --bonus: #b78cff; --reaction: #ff6b6b; --move: #5aa8ff; --object: #a7b0c4; --fp: #7fe3ff; --free: #8fd18f;
+  --ok: #57d99a; --bad: #ff7a72; --warn: #f3c25b; --prop: #c99bf0; --sheet: #7fc4e6; --saber: #8a7dff; --player: #8fc0ff; --gm: #ff8f7a;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif; --text: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: radial-gradient(1000px 500px at 80% -10%, #1a1f3a 0%, transparent 60%), var(--bg); background-color: var(--bg); color: var(--ink); font: 15px/1.45 var(--text); }
+button, input, select { font: inherit; color: inherit; }
+button { min-height: 44px; min-width: 44px; border-radius: 10px; border: 1px solid var(--line2); background: var(--panel2); padding: 0 12px; cursor: pointer; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.primary { background: linear-gradient(180deg, #8a7dff, #6555e8); border-color: #9b90ff; color: #fff; font: 600 16px var(--display); letter-spacing: .08em; text-transform: uppercase; }
+:focus-visible { outline: 3px solid var(--fp); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; letter-spacing: .04em; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.muted { color: var(--muted); } .bad { color: var(--bad); } .ok { color: var(--ok); } .warn { color: var(--warn); }
+.wrap { max-width: 1280px; margin: 0 auto; padding-block: 8px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#banner { font-size: 12px; background: #2b2200; color: #ffe9a8; padding-block: 6px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 12px; margin-top: 10px; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: rgba(21,26,38,.92); border: 1px solid var(--line); border-radius: 16px; padding: 12px; min-width: 0; }
+.plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
+.plate { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; background: var(--panel); }
+.plate.party { border-color: rgba(143,192,255,.5); } .plate.enemy { border-color: rgba(255,143,122,.45); }
+.plate .nm { font: 700 20px var(--display); } .tag { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.hp { height: 14px; border-radius: 7px; background: #0a0d14; border: 1px solid var(--line2); overflow: hidden; margin: 6px 0; position: relative; }
+.hp i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, #2fbf7a, #6ef0aa); transition: width .5s; }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--muted); } .stats b { color: var(--ink); }
+.cond { font-size: 11.5px; padding: 1px 7px; border-radius: 6px; background: rgba(243,194,91,.14); color: var(--warn); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 6px 0 10px; }
+.card { border-radius: 12px; padding: 8px 10px; background: linear-gradient(170deg, #222a3f, #161b29 70%); border: 1px solid var(--line2); text-align: left; min-height: 96px; display: flex; flex-direction: column; gap: 4px; }
+.card .n { font: 700 16px var(--display); } .card .why { font-size: 12px; color: var(--bad); } .card[aria-disabled=true] { opacity: .55; }
+.cost { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 6px; border: 1px solid currentColor; display: inline-block; margin-right: 3px; }
+.c-main { color: var(--main); } .c-secondary { color: var(--secondary); } .c-bonus { color: var(--bonus); } .c-reaction { color: var(--reaction); } .c-movement_ft { color: var(--move); } .c-object { color: var(--object); } .c-fp { color: var(--fp); } .c-free { color: var(--free); }
+.badge { font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; border: 1px solid; border-radius: 5px; padding: 0 5px; align-self: flex-start; }
+.badge.sheet { color: var(--sheet); } .badge.sandbox_proposal { color: var(--prop); } .badge.campaign_ruling { color: var(--fp); }
+details.grp > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; font: 600 13px var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+ol.plan { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+ol.plan li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--line2); background: var(--panel2); }
+ol.plan li.bad { border-color: var(--bad); } ol.plan .ctl { display: flex; gap: 4px; }
+.odds { font: 600 13px var(--mono); color: var(--fp); }
+.combo { border: 1px solid var(--saber); border-radius: 12px; padding: 8px 10px; background: rgba(138,125,255,.1); font-size: 13px; margin: 6px 0; }
+.combo b { font: 700 18px var(--display); letter-spacing: .08em; }
+.lanes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; } @media (max-width: 520px) { .lanes { grid-template-columns: minmax(0, 1fr); } }
+.lane-tag { font: 700 12px var(--display); letter-spacing: .14em; padding: 3px 8px; border-radius: 6px; color: #0b0e15; display: inline-block; }
+.lane-tag.player { background: var(--player); } .lane-tag.gm { background: var(--gm); }
+.roll { border: 1px solid var(--line2); border-radius: 12px; padding: 8px 10px; background: var(--bg2); margin-top: 6px; font-size: 13px; }
+.roll.p { border-color: rgba(143,192,255,.6); } .roll.g { border-color: rgba(255,143,122,.5); }
+.dice { display: flex; gap: 6px; margin: 4px 0; flex-wrap: wrap; } .die { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; background: #2b3350; font: 700 16px var(--mono); }
+.die.d20 { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #3c3580; border-radius: 0; } .die.drop { opacity: .35; }
+.checkpoint { border: 2px solid var(--player); border-radius: 14px; padding: 10px 12px; margin: 8px 0; background: rgba(143,192,255,.08); }
+.checkpoint .primary { width: 100%; min-height: 54px; font-size: 19px; margin-top: 8px; }
+.beat { margin: 0 0 6px; font-size: 15.5px; line-height: 1.55; max-width: 72ch; } .turnhd { font: 600 11px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 10px 0 4px; }
+.story { max-height: 320px; overflow: auto; }
+.rc { font: 11px var(--mono); color: var(--dim); }
+dialog { border: 1px solid var(--line2); border-radius: 16px; background: var(--panel); color: var(--ink); max-width: min(560px, calc(100vw - 32px)); padding: 16px; }
+dialog::backdrop { background: rgba(4,6,12,.7); }
+.auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+<div id="banner" role="note"><b>Genesis — PLAYER client (thin)</b> · noncanonical sandbox · everything shown here (cards, odds, rolls, narration) comes from the server's player view; this page ships no engine, rules catalog or enemy data.</div>
+<div class="wrap">
+  <div class="row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:space-between;margin-top:8px">
+    <div style="min-width:0"><h1 id="title">Genesis Duel</h1><p class="muted" id="intro" style="margin:2px 0 0;max-width:70ch"></p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <label>Encounter <select id="scenario"><option value="duelist">Skilled duelist</option><option value="predator">Unfamiliar predator</option><option value="relay_droid">Relay droid</option></select></label>
+      <button id="newFight">New fight</button>
+    </div>
+  </div>
+  <section class="plates" id="plates" aria-label="Combatants"></section>
+  <div id="over"></div>
+  <div class="grid">
+    <section class="panel" aria-labelledby="hAb"><h2 id="hAb">Your abilities</h2><div id="groups"></div></section>
+    <section class="panel" aria-labelledby="hPl">
+      <h2 id="hPl">Your turn</h2>
+      <div id="checkpoint"></div>
+      <ol class="plan" id="plan" aria-label="Planned steps"></ol>
+      <div id="combo"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="commit" style="flex:1 1 200px;min-height:50px">Commit turn</button><button id="clear">Clear</button></div>
+      <p id="msg" class="muted" role="status"></p><p id="err" class="bad" role="alert"></p>
+      <h2 style="margin-top:12px">Roll Theater <span id="auth"></span></h2>
+      <div class="lanes"><div><span class="lane-tag player">PLAYER — AERO</span><div id="laneP" aria-live="polite"></div></div><div><span class="lane-tag gm" id="laneGT">GM</span><div id="laneG" aria-live="polite"></div></div></div>
+    </section>
+  </div>
+  <section class="panel" style="margin-top:12px" aria-labelledby="hEx"><h2 id="hEx">The exchange</h2><div class="story" id="story"></div>
+    <details><summary class="muted" style="min-height:44px;display:flex;align-items:center">Transcript (player-visible)</summary><div id="log" style="font-size:13px"></div></details></section>
+</div>
+<dialog id="dlg"><div id="dlgBody"></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button id="dlgCancel">Cancel</button></div></dialog>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var session = null, token = null, V = null, plan = [], pf = null, busy = false, scenario = "duelist", narrated = {};
+  function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pct(p) { return Math.round(p * 100) + "%"; }
+  function each(r, sel, fn) { Array.prototype.forEach.call(r.querySelectorAll(sel), fn); }
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+  // ---------- the only data source: the server ----------
+  function api(path, body) {
+    return fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({ session: session, token: token }, body || {})) })
+      .then(function (r) { return r.json().then(function (j) { if (r.status >= 400) { var e = new Error(j.text || j.error); e.code = j.error; throw e; } return j; }); });
+  }
+  function open() {
+    return api("/atomic/open", { session: undefined, token: undefined, scenario: scenario, client: "player" }).then(function (o) {
+      session = o.session; token = o.player_token;   // the server issues this client a player token only
+      ls("genesis.play.session", session); ls("genesis.play.token", token); ls("genesis.play.scenario", scenario);
+      narrated = {}; plan = []; pf = null; $("laneP").innerHTML = ""; $("laneG").innerHTML = ""; $("story").innerHTML = "";
+      return advance();
+    });
+  }
+  function refresh() { return api("/atomic/view", { thin: true }).then(function (r) { V = r.view; V.next = r.next; render(); return V; }); }
+  // Let the server (as GM) run everything up to the next player checkpoint, then show it.
+  function advance() {
+    busy = true; render();
+    return api("/atomic/gm_step").then(function (g) { busy = false; return refresh().then(function () { return g; }); }).catch(fail);
+  }
+  function fail(e) { busy = false; $("err").textContent = "Server refused: " + (e.code || "") + " — " + e.message; render(); }
+  // ---------- rendering ----------
+  var CL = { main: "Main", secondary: "Secondary", bonus: "Bonus", reaction: "Reaction", movement_ft: "Move", object: "Object", fp: "FP" };
+  function chips(c) { var k = Object.keys(c || {}); return k.length ? k.map(function (x) { return "<span class='cost c-" + x + "'>" + (x === "movement_ft" ? (c[x] === "distance" ? "Move" : c[x] + " ft") : CL[x]) + "</span>"; }).join("") : "<span class='cost c-free'>Free</span>"; }
+  function groupOf(c) { if (c.reaction) return "Reactions"; if ((c.maneuver === "Attack" || c.maneuver === "Grapple") && c.cost.main) return "Attack"; if (c.compound || /Feint|Disarm|Dodge|Setup|Provoke/.test(c.maneuver || "")) return "Maneuvers & Techniques";
+    if (c.cost.main) return "Main"; if (c.cost.secondary) return "Secondary"; if (c.cost.bonus) return "Bonus"; if (c.pid === "move" || c.cost.movement_ft) return "Movement"; if (c.cost.object) return "Object"; return "Free & speech"; }
+  var ORDER = ["Maneuvers & Techniques", "Attack", "Main", "Secondary", "Bonus", "Reactions", "Movement", "Object", "Free & speech"];
+  function render() {
+    if (!V) return;
+    $("title").textContent = V.scenario.title || "Genesis Duel"; $("intro").textContent = V.scenario.intro || "";
+    $("auth").innerHTML = "<span class='auth ok'>server-authoritative · player view</span>";
+    $("plates").innerHTML = Object.keys(V.actors).map(function (id) {
+      var a = V.actors[id], own = id === V.me.id;
+      if (own) return "<div class='plate party'><div class='nm'>" + esc(a.name) + "<span class='tag'>you</span></div><div class='hp' role='meter' aria-label='HP' aria-valuenow='" + a.hp + "' aria-valuemax='" + a.hp_max + "'><i style='width:" + (100 * a.hp / a.hp_max) + "%'></i></div>" +
+        "<div class='stats'><span>HP <b>" + a.hp + "/" + a.hp_max + "</b></span><span>AC <b>" + a.ac + "</b></span><span>Force <b>" + a.fp + "/" + V.me.fp_max + "</b></span>" + (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? (a.weapon.ignited === false ? " (unlit)" : " (lit)") : " — <b class='bad'>dropped</b>") + "</span>" : "") +
+        (V.me.sidearm ? "<span>" + esc(V.me.sidearm.name) + ": " + (V.me.sidearm.held ? "in hand" : "holstered") + " " + V.me.sidearm.ammo + "/" + V.me.sidearm.capacity + "</span>" : "") + "</div></div>";
+      var k = a.ac_known || {}, ac = k.exact != null ? k.exact : k.ac_min != null && k.ac_max != null ? k.ac_min + "–" + k.ac_max : k.ac_min != null ? "≥ " + k.ac_min : k.ac_max != null ? "≤ " + k.ac_max : "unknown";
+      return "<div class='plate enemy' data-plate='" + id + "'><div class='nm'>" + esc(a.name) + "<span class='tag'>" + a.distance + " ft" + (a.down ? " · down" : "") + "</span></div><div class='stats'><span><b>" + esc(a.down ? "down" : a.condition) + "</b> (as you see it)</span><span>AC <b>" + esc(ac) + "</b> <small>learned</small></span>" +
+        (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? "" : " — dropped") + "</span>" : "") + "</div>" + (a.conds.length ? "<div>" + a.conds.map(function (c) { return "<span class='cond'>" + esc(c) + "</span>"; }).join(" ") + "</div>" : "") + "</div>";
+    }).join("") + (V.unseen_presence ? "<div class='plate'><span class='warn'>" + esc(V.unseen_presence) + "</span></div>" : "");
+    $("over").innerHTML = V.over ? "<p class='" + (V.over === "victory" ? "ok" : "bad") + "' style='font:700 22px var(--display)'>" + (V.over === "victory" ? "Victory." : "Aero is down.") + "</p>" : "";
+    renderCards(); renderPlan(); renderCheckpoint(); renderTheater(); renderStory();
+  }
+  function myPlanTurn() { return V && V.checkpoint.kind === "plan" && !busy; }
+  function renderCards() {
+    var list = plan.length && pf && pf.cards ? pf.cards : V.cards;   // cards judged after the planned steps (server preflight)
+    var by = {}; list.forEach(function (c) { (by[groupOf(c)] = by[groupOf(c)] || []).push(c); });
+    $("groups").innerHTML = ORDER.filter(function (g) { return by[g]; }).map(function (g) {
+      return "<details class='grp' open><summary>" + esc(g) + " <span class='muted'>" + by[g].length + "</span></summary><div class='cards'>" + by[g].map(function (c) {
+        var off = c.reaction || !c.available || !myPlanTurn();
+        return "<button class='card' data-pid='" + c.pid + "' aria-disabled='" + off + "' aria-label='" + esc(c.name + (c.reason ? " — unavailable: " + c.reason : "")) + "'><span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><span class='n'>" + esc(c.name) + "</span>" +
+          (c.reaction ? "<span class='muted' style='font-size:12px'>" + esc(c.inert_note || ("Triggers: " + c.trigger.replace(/_/g, " "))) + "</span>" : c.reason ? "<span class='why'>" + esc(c.reason) + "</span>" : "") + "<span>" + chips(c.cost_now || c.cost) + "</span></button>";
+      }).join("") + "</div></details>";
+    }).join("") + (V.not_on_sheet.length ? "<details class='grp'><summary>Not on Aero's sheet</summary>" + V.not_on_sheet.map(function (x) { return "<p><b>" + esc(x.name) + "</b> — <span class='muted'>" + esc(x.why) + "</span></p>"; }).join("") + "</details>" : "");
+    each($("groups"), "[data-pid]", function (b) { b.onclick = function () { if (b.getAttribute("aria-disabled") === "true") return; addStep(b.getAttribute("data-pid")); }; });
+  }
+  function foes() { return Object.keys(V.actors).filter(function (id) { return id !== V.me.id && !V.actors[id].down; }); }
+  function addStep(pid) {
+    var c = V.cards.filter(function (x) { return x.pid === pid; })[0], f = foes();
+    var put = function (st) { plan.push(st); preflight(); };
+    if (pid === "move") return choose("Move", f.map(function (id) { return { label: "Close on " + V.actors[id].name, step: { pid: pid, dest: "close", target: id } }; }).concat([{ label: "Withdraw 15 ft", step: { pid: pid, dest: "withdraw" } }]), put);
+    if (c.needs_object) { var opts = []; if (V.me.dropped) opts.push({ label: "Call your weapon back to your hand", step: { pid: pid, object: "own_weapon" } });
+      f.forEach(function (id) { var w = V.actors[id].weapon; if (w && !w.held) opts.push({ label: "Send " + V.actors[id].name + "'s dropped " + w.name + " 30 ft away", step: { pid: pid, object: id + "_weapon" } }); });
+      return choose("Minor Telekinesis", opts, put); }
+    if (c.needs_target && f.length > 1) return choose("Target", f.map(function (id) { return { label: V.actors[id].name + " (" + V.actors[id].distance + " ft)", step: { pid: pid, target: id } }; }), put);
+    put(c.needs_target ? { pid: pid, target: f[0] } : { pid: pid });
+  }
+  function choose(title, opts, cb) {
+    $("dlgBody").innerHTML = "<h2>" + esc(title) + "</h2>" + (opts.length ? opts.map(function (o, i) { return "<p><button data-o='" + i + "'>" + esc(o.label) + "</button></p>"; }).join("") : "<p>Nothing suitable right now.</p>");
+    $("dlg").showModal(); each($("dlgBody"), "[data-o]", function (b) { b.onclick = function () { $("dlg").close(); cb(opts[+b.getAttribute("data-o")].step); }; });
+  }
+  var pfSeq = 0, pfBusy = false;
+  function preflight() {   // only the newest answer counts; stale replies are dropped
+    var my = ++pfSeq; if (!plan.length) { pf = null; pfBusy = false; render(); return; }
+    pfBusy = true; pf = null; render();
+    var sent = JSON.stringify(plan);
+    api("/atomic/preflight", { plan: plan }).then(function (r) { if (my !== pfSeq || sent !== JSON.stringify(plan)) return; pf = r.preflight; pfBusy = false; render(); }).catch(function (e) { if (my === pfSeq) { pfBusy = false; fail(e); } });
+  }
+  function renderPlan() {
+    var name = function (pid) { var c = V.cards.filter(function (x) { return x.pid === pid; })[0]; return c ? c.name : pid; };
+    $("plan").innerHTML = plan.length ? plan.map(function (st, i) {
+      var s = pf && pf.steps[i] || {}, o = s.odds || {}, odds = o.hit_min != null ? pct(o.hit_min) + "–" + pct(o.hit_max) + " hit" + (o.assumed_unknown ? "*" : "") : o.hit != null ? pct(o.hit) + " hit" : o.contest ? "contest" : "";
+      return "<li class='" + (s.ok === false ? "bad" : "") + "' data-step='" + i + "'><div style='min-width:0'><b>" + (i + 1) + ". " + esc(name(st.pid)) + "</b>" + (st.target ? " → " + esc(V.actors[st.target] ? V.actors[st.target].name : st.target) : "") +
+        "<div>" + chips(s.cost) + " <span class='odds'>" + esc(odds) + "</span></div>" + (s.reasons && s.reasons.length ? "<div class='bad' style='font-size:12px'>" + esc(s.reasons.join(" ")) + "</div>" : "") + "</div>" +
+        "<div class='ctl'><button data-up='" + i + "' aria-label='Move step " + (i + 1) + " up'" + (i ? "" : " disabled") + ">▲</button><button data-dn='" + i + "' aria-label='Move step " + (i + 1) + " down'" + (i < plan.length - 1 ? "" : " disabled") + ">▼</button><button data-rm='" + i + "' aria-label='Remove step " + (i + 1) + "'>✕</button></div></li>";
+    }).join("") : "<li class='muted' style='border-style:dashed'>" + (myPlanTurn() ? "Tap abilities to build your turn." : busy ? "Resolving…" : V.checkpoint.kind === "waiting" ? "The other side is acting…" : "") + "</li>";
+    each($("plan"), "[data-up]", function (b) { b.onclick = function () { var i = +b.getAttribute("data-up"); var x = plan[i]; plan[i] = plan[i - 1]; plan[i - 1] = x; preflight(); }; });
+    each($("plan"), "[data-dn]", function (b) { b.onclick = function () { var i = +b.getAttribute("data-dn"); var x = plan[i]; plan[i] = plan[i + 1]; plan[i + 1] = x; preflight(); }; });
+    each($("plan"), "[data-rm]", function (b) { b.onclick = function () { plan.splice(+b.getAttribute("data-rm"), 1); preflight(); }; });
+    var sy = pf && pf.synergies && pf.synergies[0];
+    $("combo").innerHTML = sy ? "<div class='combo' data-combo='" + sy.id + "'><b>" + esc(sy.name) + "</b> <small class='muted'>predicted synergy</small><div>" + esc(sy.links.join(" ")) + "</div><div class='warn'>" + esc(sy.conditional) + "</div></div>" : "";
+    if (pf && pf.steps.some(function (s) { return s.odds && s.odds.assumed_unknown; })) $("combo").innerHTML += "<p class='muted' style='font-size:12px'>* range: its AC isn't known yet; you learn it from your own hits and misses.</p>";
+    $("commit").disabled = !myPlanTurn() || pfBusy || !pf || !pf.legal;
+  }
+  var advancing = false;
+  function renderCheckpoint() {
+    var cp = V.checkpoint, el = $("checkpoint"), sig = JSON.stringify([cp, busy]);
+    if (el.dataset.sig === sig) return;   // don't rebuild an unchanged prompt (keeps the Roll button stable under a finger)
+    el.dataset.sig = sig;
+    if (cp.kind === "roll") {
+      var vs = cp.vs || {}, k = vs.known, ac = k ? (k.exact != null ? k.exact : k.ac_min != null && k.ac_max != null ? k.ac_min + "–" + k.ac_max : k.ac_min != null ? "≥ " + k.ac_min : k.ac_max != null ? "≤ " + k.ac_max : "unknown") : null;
+      var vt = vs.type === "ac" ? "vs AC " + (vs.value != null ? vs.value : ac) : vs.type === "opposed" ? "opposed by their " + vs.skill : vs.type === "opposed_against" ? "must beat " + vs.value : vs.type === "dc" ? "vs DC " + vs.value : vs.type === "damage" ? "damage" : vs.type === "reduce" ? "reduces " + vs.against + " damage" : "";
+      el.innerHTML = "<div class='checkpoint' role='group' aria-label='Your roll'><span class='lane-tag player'>PLAYER — AERO · your roll</span><div style='margin-top:6px'><b>" + esc(cp.purpose) + "</b></div><div class='muted'>" + esc(cp.formula) + (cp.mode !== "normal" ? " · " + cp.mode : "") + " · " + esc(vt) + "</div>" +
+        "<div class='dice'>" + cp.dice.map(function (d) { return "<span class='die" + (d.sides === 20 ? " d20" : "") + "'>?</span>"; }).join("") + "</div><button class='primary' id='rollBtn'>Roll " + cp.dice.map(function (d) { return "d" + d.sides; }).join(" + ") + "</button></div>";
+      $("rollBtn").onclick = function () { $("rollBtn").disabled = true; api("/atomic/gm_step").then(function (g) { if (g.stopped !== "player_roll") return advance();
+          return api("/atomic/roll", { turn_key: g.turn_key, plan_hash: g.plan_hash, dice: g.need.dice, roller: "player", actor: g.need.actor, purpose: g.need.purpose }).then(advance); }).catch(fail); };
+      $("rollBtn").focus({ preventScroll: true });
+    } else if (cp.kind === "decision") {
+      var c = cp.context || {}, head = cp.decision === "deflect_redirect" ? "Redirect the bolt? (one visible creature within 30 ft)" : (c.attacker_name || "Someone") + ({ melee_hit_on_me: " is about to hit you" + (c.total != null ? " (total " + c.total + ")" : ""), melee_miss_on_me: " missed you — an opening", attack_declared_on_me: " is attacking you", ranged_energy_hit_on_me: " hit you with a bolt (" + c.damage + " damage)", opportunity_attack: " is pulling away" }[cp.decision] || "");
+      el.innerHTML = "<div class='checkpoint'><span class='lane-tag player'>PLAYER — AERO · decision</span><p style='font-size:16px'>" + esc(head) + "</p>" + cp.options.map(function (o) { return "<p><button class='primary' style='width:auto' data-opt='" + o.id + "'>" + esc(o.name) + (o.distance_ft != null ? " (" + o.distance_ft + " ft)" : "") + "</button> <small class='muted'>" + esc(o.rules || "") + "</small></p>"; }).join("") + "<p><button data-opt=''>" + (cp.decision === "deflect_redirect" ? "Let it die on the blade" : "Don't react") + "</button></p></div>";
+      each(el, "[data-opt]", function (b) { b.onclick = function () { api("/atomic/decide", { turn_key: cp.turn_key, key: cp.key, choice: b.getAttribute("data-opt") || null }).then(advance).catch(fail); }; });
+    } else el.innerHTML = cp.kind === "waiting" ? "<p class='muted'>" + (busy ? "The GM is resolving…" : "Waiting for the GM…") + "</p>" : "";
+    if (cp.kind === "waiting" && !busy && !advancing) { advancing = true; setTimeout(function () { advancing = false; advance(); }, 300); }
+  }
+  function renderTheater() {
+    var foeName = (foes()[0] && V.actors[foes()[0]].name) || "NPC"; $("laneGT").textContent = "GM — " + foeName.toUpperCase();
+    var recent = V.receipts.slice(-12), P = [], G = [];
+    recent.forEach(function (r) {
+      var mine = r.actor === V.me.id, isD20 = /^1d20/.test(r.formula), vs = r.vs || {}, k = vs.known, acT = vs.type === "ac" ? (vs.value != null ? "AC " + vs.value : "AC " + (k && k.exact != null ? k.exact : k && (k.ac_min != null || k.ac_max != null) ? (k.ac_min != null ? "≥" + k.ac_min : "") + (k.ac_max != null ? " ≤" + k.ac_max : "") : "?")) : "";
+      var faces = r.rolls.map(function (v, i) { var kept = r.rolls.length === 2 && isD20 ? ((r.mode === "advantage" ? (r.rolls[0] >= r.rolls[1] ? 0 : 1) : (r.rolls[0] <= r.rolls[1] ? 0 : 1)) === i) : true; return "<span class='die" + (isD20 ? " d20" : "") + (kept ? "" : " drop") + "'>" + v + "</span>"; }).join("") + r.extra.map(function (e) { return "<span class='die' title='" + esc(e.label) + "'>" + e.value + "</span>"; }).join("");
+      var html = "<div class='roll " + (mine ? "p" : "g") + "' data-receipt='" + r.receipt + "'><b>" + esc(r.purpose) + "</b>" + (r.mode !== "normal" ? " <span class='muted'>" + r.mode + "</span>" : "") + "<div class='dice'>" + faces + "</div>" + esc(r.formula) + " = <b>" + r.total + "</b>" + (acT ? " · " + esc(acT) : "") + "<div class='rc'>receipt " + r.receipt + " · Atomic die #" + r.first_seq + "</div></div>";
+      (mine ? P : G).push(html);
+    });
+    $("laneP").innerHTML = P.join("") || "<p class='muted'>Your rolls appear here.</p>"; $("laneG").innerHTML = G.join("") || "<p class='muted'>The GM's rolls appear here.</p>";
+  }
+  function renderStory() {
+    $("story").innerHTML = (V.story || []).map(function (t) { return "<div class='turnhd'>Round " + t.round + " · " + esc(t.who) + "</div>" + t.beats.map(function (x) { return "<p class='beat'>" + esc(x) + "</p>"; }).join(""); }).join("") || "<p class='muted'>The fight hasn't started.</p>";
+    $("story").scrollTop = $("story").scrollHeight;
+    $("log").innerHTML = V.log.map(function (l) { return "<p style='margin:2px 0" + (l.turn_start ? ";font-weight:600" : "") + "'>" + esc(l.text) + "</p>"; }).join("");
+    if (V.last_combos && V.last_combos.length) $("msg").innerHTML = V.last_combos.map(function (c) { return "Confirmed combo: <b>" + esc(c.name) + "</b> (" + c.hits + " of " + c.attacks + " attacks hit)"; }).join(" · ");
+  }
+  // ---------- actions ----------
+  $("commit").onclick = function () {
+    if (!pf || !pf.legal || !V.next) return;
+    var go = function () { $("err").textContent = ""; busy = true; render(); api("/atomic/commit", { turn_key: V.next.turn_key, actor: V.me.id, plan: plan }).then(function () { plan = []; pf = null; return advance(); }).catch(fail); };
+    if (pf.compound.length) { $("dlgBody").innerHTML = "<h2>Compound cost</h2>" + pf.compound.map(function (c) { return "<p style='font-size:17px'><b>" + esc(c.name) + "</b> consumes " + Object.keys(c.cost).map(function (k) { return c.cost[k] + " " + CL[k]; }).join(" + ") + ". Continue?</p>"; }).join("") + "<p><button class='primary' id='cYes'>Continue</button></p>"; $("dlg").showModal(); $("cYes").onclick = function () { $("dlg").close(); go(); }; return; }
+    go();
+  };
+  $("clear").onclick = function () { plan = []; pf = null; render(); };
+  $("dlgCancel").onclick = function () { $("dlg").close(); };
+  $("newFight").onclick = function () { scenario = $("scenario").value; open().catch(fail); };
+  window.__genesisPlay = { view: function () { return V; }, plan: function () { return plan; }, busy: function () { return busy || pfBusy; }, session: function () { return session; } };
+  // ---------- start or reconnect ----------
+  scenario = ls("genesis.play.scenario") || "duelist"; $("scenario").value = scenario;
+  session = ls("genesis.play.session"); token = ls("genesis.play.token");
+  (session && token ? refresh().then(function (v) { $("msg").textContent = "Reconnected to your fight (server state; nothing rerolled)."; if (v.checkpoint.kind === "waiting") return advance(); }) : Promise.reject(new Error("no session")))
+    .catch(function () { return open(); }).catch(fail);
+})();
+</script>

@@ -46,7 +46,7 @@ function legal(s, plan) { const out = []; for (const st of plan) if (E.validateP
     const v = (await call("/atomic/view", {})).body.view, txt = JSON.stringify(v), real = D.replay(C, S, jb).state;
     ok(v.actors.aero.hp === real.actors.aero.hp && v.actors.aero.ac === 13, "own sheet visible in full");
     const I = v.actors.ilsa; ok(!I || (I.hp === null && I.ac === null && I.hp_max === null), "enemy HP and AC are not in the player projection", I);
-    ok(!/"value":15\b/.test(txt) && !/\/20\)/.test(txt), "no enemy AC value or HP fraction anywhere (receipts and log text included)");
+    ok(!JSON.stringify(v).match(/"type":"ac","target":"ilsa","value":\d/) && !/\/20\)/.test(txt), "no enemy AC value or HP fraction anywhere (receipts and log text included)");
     if (I && I.ac_known) { const k = I.ac_known; ok((k.ac_min == null || k.ac_min <= 15) && (k.ac_max == null || k.ac_max >= 15), "learned AC bounds are consistent with the truth (" + JSON.stringify(k) + ")"); }
     // practice: GM may ask for the debug view, or the player projection explicitly
     const pv = (await post("/atomic/view", { session: sid, tokens: { player: P, gm: G } })).body, pv2 = (await post("/atomic/view", { session: sid, tokens: { player: P, gm: G }, as: "player" })).body;

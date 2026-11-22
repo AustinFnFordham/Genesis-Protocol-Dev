@@ -202,7 +202,7 @@ class AtomicDice:
         return sess
 
     # ---- API ----
-    def open(self, meta, mode='practice', encounter_id=None):
+    def open(self, meta, mode='practice', encounter_id=None, player_only=False):
         with self.lock:
             if mode not in ('practice', 'bound'):
                 raise AtomicError(400, 'BAD_MODE', 'mode is practice or bound')
@@ -226,8 +226,8 @@ class AtomicDice:
                 tmp = self.index_path.with_suffix('.tmp'); tmp.write_text(json.dumps(idx)); os.replace(tmp, self.index_path)
             out = {'session': sid, 'authority': 'atomic-sandbox', 'canonical': False, 'mode': mode, 'resumed': False,
                    'eligible_for_campaign_authority': mode == 'bound', 'player_token': ptok}
-            if mode == 'practice':
-                out['gm_token'] = gtok   # sandbox debug client may act as the GM's messenger; bound sessions never get it
+            if mode == 'practice' and not player_only:
+                out['gm_token'] = gtok   # sandbox debug client may act as the GM's messenger; bound and thin-player sessions never get it
             else:
                 self._gm_tokens[sid] = gtok   # kept in server memory only for the server-run GM
             return out
@@ -389,7 +389,7 @@ class AtomicDice:
             insp = self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'want_state': True})
             return {'hash': insp['hash'], 'state': insp['state'], 'pending': insp.get('pending'), 'over': insp.get('over')}
 
-    def view(self, sid, role):
+    def view(self, sid, role, thin=False):
         """Viewer-specific projection computed on the server: 'player' -> what Aero may know; 'gm' -> full (debug)."""
         with self.lock:
             if not self.engine:
@@ -397,13 +397,23 @@ class AtomicDice:
             sess = self._load(sid)
             if role == 'gm' and sess.meta.get('mode') == 'bound' and self.require_tokens:
                 raise AtomicError(403, 'DEBUG_NOT_AUTHORIZED', 'The full-mechanics view is only for practice sandbox sessions.')
-            insp = self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'want_view': 'gm' if role == 'gm' else 'aero'})
+            insp = self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'want_view': 'gm' if role == 'gm' else 'aero', 'thin': bool(thin) and role != 'gm'})
             pend = insp.get('pending')
             if pend and role != 'gm':   # don't leak GM-side purposes/targets of NPC dice before they resolve
                 if pend.get('need') and pend['need']['controller'] != 'player':
                     pend = {'turn_key': pend['turn_key'], 'actor': pend['actor'], 'waiting_on': 'gm'}
             return {'view': insp['view'], 'pending': pend, 'over': insp.get('over'), 'hash': insp['hash'] if role == 'gm' else None,
                     'next': ({'turn_key': insp['next']['turn_key'], 'actor': insp['next']['actor'], 'controller': insp['next']['controller']} if insp.get('next') else None)}
+
+    def preflight(self, sid, plan):
+        """Player-safe preflight of a proposed plan: legality, costs, synergies and odds ranges from known state."""
+        with self.lock:
+            if not self.engine:
+                raise AtomicError(503, 'ENGINE_UNAVAILABLE', 'No server-side engine.')
+            sess = self._load(sid)
+            if not isinstance(plan, list) or len(plan) > 12:
+                raise AtomicError(400, 'BAD_PLAN', 'A plan is a list of up to 12 steps.')
+            return self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'preflight': plan})['preflight']
 
     def gm_step(self, sid):
         """The server acts as the GM: commits the NPC's policy plan and rolls GM dice until the player is needed."""
@@ -416,6 +426,10 @@ class AtomicDice:
                     return {'stopped': 'closed'}
                 insp = self._inspect(sess)
                 if insp.get('over'):
+                    last = sess.active
+                    if last and last not in sess.verified and not insp.get('pending'):
+                        sess.verified[last] = {'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True}
+                        self._append(sess, {'op': 'verify', 'turn_key': last, 'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True})
                     return {'stopped': 'over', 'over': insp['over']}
                 pend = insp.get('pending')
                 if pend:
@@ -430,12 +444,11 @@ class AtomicDice:
                         return {'stopped': 'player_decision', 'turn_key': pend['turn_key'], 'paused': pend['paused']}
                     return {'stopped': 'unknown'}
                 nxt = insp['next']
+                last = sess.active
+                if last and last not in sess.verified:   # a finished turn the server reconstructed itself
+                    sess.verified[last] = {'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True}
+                    self._append(sess, {'op': 'verify', 'turn_key': last, 'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True})
                 if nxt['controller'] == 'player':
-                    # the previous (server-run) turn finished: record the server's own verification
-                    last = sess.active
-                    if last and last not in sess.verified and sess.commits[last]['actor'] != nxt['actor']:
-                        sess.verified[last] = {'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True}
-                        self._append(sess, {'op': 'verify', 'turn_key': last, 'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True})
                     return {'stopped': 'player_turn', 'turn_key': nxt['turn_key']}
                 self.commit(sid, nxt['turn_key'], nxt['actor'], nxt['npc_plan'])
             raise AtomicError(500, 'GM_LOOP', 'GM step did not settle.')
@@ -472,7 +485,7 @@ def handle(service, path, body):
             if camp not in (None, 'starwars_litrpg'):
                 return 400, {'error': 'BAD_CAMPAIGN', 'text': 'Unknown campaign overlay.'}
             return 200, service.open({'scenario': str(b.get('scenario', ''))[:40], 'switches': b.get('switches') or {}, 'campaign': camp},
-                                     str(b.get('mode') or 'practice'), b.get('encounter_id'))
+                                     str(b.get('mode') or 'practice'), b.get('encounter_id'), player_only=b.get('client') == 'player')
         if path == '/atomic/complete':
             service.require(b['session'], _toks(b), 'player', 'gm')
             return 200, service.complete(b['session'], str(b['turn_key']), str(b['state_hash']))
@@ -483,7 +496,10 @@ def handle(service, path, body):
             return 200, service.state(b['session'])
         if path == '/atomic/view':
             role = service.require(b['session'], _toks(b), 'player', 'gm') if b.get('as') != 'player' else service.require(b['session'], _toks(b), 'player', 'gm') and 'player'
-            return 200, service.view(b['session'], 'gm' if (role == 'gm' and b.get('as') != 'player') else 'player')
+            return 200, service.view(b['session'], 'gm' if (role == 'gm' and b.get('as') != 'player') else 'player', thin=bool(b.get('thin')))
+        if path == '/atomic/preflight':
+            service.require(b['session'], _toks(b), 'player')
+            return 200, {'preflight': service.preflight(b['session'], b.get('plan') or [])}
         if path == '/atomic/gm_step':
             service.require(b['session'], _toks(b), 'player', 'gm')
             return 200, service.gm_step(b['session'])

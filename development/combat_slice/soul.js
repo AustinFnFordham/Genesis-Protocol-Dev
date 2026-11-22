@@ -18,7 +18,7 @@
   function pick(list, key) { var h = 0; for (var i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) | 0; return list[Math.abs(h) % list.length]; }
   var MOVE = { saber_strike: ["the indigo blade snaps through a tight arc", "a clean cut of indigo light", "the saber hums into a short, honest line"],
                unarmed_strike: ["a palm strike drives in", "an Echani heel-strike lands"], flow_strike: ["the body follows the blade — an Echani kick rides the same motion", "his weight rolls through into a flowing Echani strike"],
-               npc_blade: ["the vibroblade darts in low", "a Makashi thrust, precise as a needle"], npc_riposte: ["the vibroblade answers before the parry has even finished"], riposte: ["the blade comes back on the rebound"],
+               npc_blade: ["the vibroblade darts in low", "a thrust, precise as a needle"], npc_riposte: ["the vibroblade answers before the parry has even finished"], riposte: ["the blade comes back on the rebound"],
                bite: ["jaws snap shut", "the stalker lunges, teeth first"], pounce: ["the stalker explodes out of cover"] };
   function verb(pid, key) { return pick(MOVE[pid] || ["the strike comes in"], key); }
   function hpWord(f) { var r = f.hp / f.hp_max; return f.hp === 0 ? "and it ends there" : r <= 0.25 ? "barely on their feet now" : r <= 0.5 ? "badly hurt" : "still standing"; }
