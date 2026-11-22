@@ -107,6 +107,49 @@ class Adapter(Base):
             "STORAGE_RECOVERY_REQUIRED", "WRITES_DISABLED", "INSUFFICIENT_SCOPE", "PROVIDER_NOT_CONFIGURED",
         ])
 
+    def test_readonly_oauth_token_can_read_but_cannot_run_gm(self):
+        self.act(HOLSTER, provider=adapter.PROVIDER)
+        class ReadVerifier:
+            async def verify_token(self, token):
+                return access(scopes=[adapter.READ]) if token == "test-oauth-token" else None
+
+        server = adapter.create_server(self.tools, ReadVerifier(), ISSUER, RESOURCE)
+        with TestClient(server.streamable_http_app(), base_url="https://genesis.example.invalid") as client:
+            metadata = client.get("/.well-known/oauth-protected-resource/mcp")
+            self.assertEqual(metadata.status_code, 200)
+            self.assertEqual(metadata.json()["scopes_supported"], [adapter.READ, adapter.GM])
+            headers = {
+                "accept": "application/json, text/event-stream",
+                "mcp-protocol-version": "2025-11-25",
+                "authorization": "Bearer test-oauth-token",
+            }
+            payload = {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                       "params": {"name": "genesis_refresh", "arguments": {}}}
+            read = client.post("/mcp", headers=headers, json=payload)
+            self.assertEqual(read.status_code, 200)
+            self.assertFalse(read.json()["result"].get("isError", False))
+            payload["params"] = {"name": "genesis_claim",
+                                 "arguments": {"run": "non-mutating-test", "model": "fixture", "session": "fixture"}}
+            blocked = client.post("/mcp", headers=headers, json=payload)
+            self.assertEqual(blocked.status_code, 200)
+            self.assertEqual(blocked.json()["result"]["structuredContent"]["error"]["code"], "INSUFFICIENT_SCOPE")
+            self.assertFalse(self.gw.recovery()["lease"]["held"])
+
+    def test_scope_metadata_replacement_preserves_sdk_route_invariants(self):
+        server = adapter.create_server(self.tools, Verifier(), ISSUER, RESOURCE)
+        self.assertEqual(server.settings.auth.required_scopes, [adapter.READ])
+        expected_path = "/.well-known/oauth-protected-resource/mcp"
+        for app in (server.streamable_http_app(), server.streamable_http_app()):
+            routes = [route for route in app.router.routes if getattr(route, "path", None) == expected_path]
+            self.assertEqual(len(routes), 1)
+            self.assertEqual(routes[0].methods, {"GET", "OPTIONS", "HEAD"})
+
+        no_metadata = adapter.GenesisFastMCP("No protected resource metadata", token_verifier=Verifier(),
+            auth=adapter.AuthSettings(issuer_url=ISSUER, resource_server_url=None,
+                                      required_scopes=[adapter.READ]))
+        app = no_metadata.streamable_http_app()
+        self.assertNotIn(expected_path, [getattr(route, "path", None) for route in app.router.routes])
+
     def test_existing_provider_routing_and_lease_controls_are_used(self):
         self.act(HOLSTER, provider="gemini-session")
         out = self.tools.gm("claim", "run")
@@ -177,6 +220,7 @@ class Adapter(Base):
             metadata = client.get("/.well-known/oauth-protected-resource/mcp")
             self.assertEqual(metadata.status_code, 200)
             self.assertEqual(metadata.json()["authorization_servers"], [ISSUER + "/"])
+            self.assertEqual(metadata.json()["scopes_supported"], [adapter.READ, adapter.GM])
             headers["authorization"] = "Bearer test-oauth-token"
             r = client.post("/mcp", headers=headers, json=envelope)
             self.assertEqual(r.status_code, 200, r.text)
