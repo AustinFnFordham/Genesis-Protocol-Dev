@@ -1,0 +1,25 @@
+{
+ "single_stream": {
+  "rolls": 200000,
+  "chi2_df19": 20.2,
+  "critical_999": 43.82,
+  "uniform": true,
+  "mean": 10.496,
+  "expected_mean": 10.5,
+  "lag1_autocorrelation": 0.00115
+ },
+ "across_seeds": {
+  "seeds": 20000,
+  "chi2_df19": 26.44,
+  "uniform": true,
+  "neighbour_equal_rate": 0.0494,
+  "expected_equal_rate": 0.05
+ },
+ "advantage": {
+  "rolls": 100000,
+  "adv_mean": 13.808,
+  "adv_expected": 13.825,
+  "dis_mean": 7.146,
+  "dis_expected": 7.175
+ }
+}

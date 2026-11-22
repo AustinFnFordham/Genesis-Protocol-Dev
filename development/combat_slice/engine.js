@@ -46,6 +46,7 @@
       a.profiles = [].concat((a.grants && a.grants.sheet) || [], (a.grants && a.grants.sandbox_proposal) || []);
       actors[id] = a;
     });
+    Object.keys(catalog.profiles).forEach(function (k) { catalog.profiles[k].id = k; });
     var s = { schema: "genesis-cc002-state/0.1", canonical: false, scenario: scenarioId, title: sc.title, intro: sc.intro,
               catalog: catalog, switches: switches, round: 1, order: sc.initiative.slice(), turn: 0, actors: actors,
               dist: clone(sc.distance), rng: { seed: opts.seed == null ? 20261121 : opts.seed, n: 0 }, receipts: [], log: [], trigger: 0, over: null };
@@ -62,6 +63,7 @@
     ["dodging", "dodge_ready", "taunted"].forEach(function (c) { if (a.conds[c] && a.conds[c].until === a.id) delete a.conds[c]; });
     Object.keys(s.actors).forEach(function (id) { var o = s.actors[id]; ["taunted"].forEach(function (c) { if (o.conds[c] && o.conds[c].until === a.id) delete o.conds[c]; }); });
     a.reaction_left = 1;
+    if (a.conds.prone) { delete a.conds.prone; a.budget.movement_ft = Math.max(0, (a.budget.movement_ft || 0) - 15); log(s, a.id, a.name + " gets up (15 ft of movement).", { ev: "stand", actor: a.id }); }
   }
   function distance(s, a, b) { if (a === b) return 0; var d = s.dist[key(a, b)]; return d == null ? 60 : d; }
   function setDistance(s, a, b, v) { s.dist[key(a, b)] = Math.max(5, v); }
@@ -177,6 +179,25 @@
     });
     return notes;
   }
+  // Synergy recognition: an ordered subsequence of plan steps (same target) that matches catalog.synergies.
+  // Recognition is presentation; the mechanical basis is the listed profile rules, and every link stays conditional.
+  function synergies(s, actorId, plan) {
+    var out = [], list = s.catalog.synergies || [], v = validatePlan(s, actorId, plan || []);
+    list.forEach(function (sy) {
+      var idx = [], j = 0, tgt = null;
+      for (var i = 0; i < (plan || []).length && j < sy.sequence.length; i++) {
+        var st = plan[i], want = sy.sequence[j];
+        if ([].concat(want.pid).indexOf(st.pid) < 0) continue;
+        if (st.target) { if (tgt && st.target !== tgt) continue; tgt = st.target; }
+        idx.push(i); j++;
+      }
+      if (j < sy.sequence.length) return;
+      var legal = idx.every(function (i) { return v.steps[i] && v.steps[i].ok; });
+      out.push({ id: sy.id, name: sy.name, steps: idx, target: tgt, legal: legal, links: sy.links, basis: sy.basis, conditional: sy.conditional });
+    });
+    // keep the most specific match when one synergy's steps contain another's
+    return out.filter(function (a) { return !out.some(function (b) { return b !== a && b.steps.length > a.steps.length && a.steps.every(function (i) { return b.steps.indexOf(i) >= 0; }); }); });
+  }
   function cinematicNote(s, plan) {   // descriptive only; grants nothing (switch cinematic_judge)
     if (!s.switches.cinematic_judge || !plan || !plan.length) return null;
     var ids = plan.map(function (p) { return p.pid; });
@@ -225,6 +246,8 @@
     var A = s.actors[attacker], D = s.actors[defender], adv = [], dis = [];
     if (p.resolution.advantage) adv.push("ambush");
     if (A.conds.hidden) adv.push("unseen");
+    if (D.conds.prone && p.resolution.melee) adv.push("prone target");
+    if (A.conds.prone) dis.push("attacking from the ground");
     var f = D.conds.feinted; if (f && f.by === attacker && p.resolution.melee) adv.push("feint");
     var bi = D.conds.insight; if (bi && bi.by === attacker) adv.push("Battle Insight");
     if (D.conds.dodging) dis.push("dodging");
@@ -239,7 +262,7 @@
     var ctx = { attacker: attacker, defender: defender, pid: pid, counter: !!p.resolution.counter || !!opts.counter, depth: opts.depth || 0 };
     // reaction window 1: attack declared (readied dodge)
     var dodged = false, o1 = reactionOptions(s, defender, "attack_declared_on_me", ctx);
-    if (o1.length) { var c1 = decide(s, ctrl, defender, "attack_declared_on_me", o1, ctx); if (c1) { D.reaction_left--; delete D.conds.dodge_ready; dodged = true; log(s, defender, D.name + " slips the line (Dodge): disadvantage on the attack."); } }
+    if (o1.length) { var c1 = decide(s, ctrl, defender, "attack_declared_on_me", o1, ctx); if (c1) { D.reaction_left--; delete D.conds.dodge_ready; dodged = true; log(s, defender, D.name + " slips the line (Dodge): disadvantage on the attack.", { ev: "dodge", actor: defender, attacker: attacker }); } }
     var ad = hasAdv(s, attacker, defender, p, { dodged: dodged });
     var extra = opts.augment ? [{ label: "Force-guided", sides: 4 }] : [];
     var r = rollDice(s, attacker, p.name + " → " + D.name, "1d20+" + p.resolution.bonus, { adv: ad.adv.length > 0, dis: ad.dis.length > 0, extra: extra });
@@ -247,28 +270,28 @@
     if (D.conds.feinted && D.conds.feinted.by === attacker && p.resolution.melee) delete D.conds.feinted;
     if (D.conds.insight && D.conds.insight.by === attacker) delete D.conds.insight;
     if (A.conds.wary) delete A.conds.wary;
-    if (A.conds.hidden) { delete A.conds.hidden; log(s, attacker, A.name + " is revealed!"); }
+    if (A.conds.hidden) { delete A.conds.hidden; log(s, attacker, A.name + " is revealed!", { ev: "revealed", actor: attacker }); }
     var nat = r.kept, crit = nat === 20, hit = nat !== 1 && (crit || r.total >= D.ac);
     var why = (ad.adv.length ? " (advantage: " + ad.adv.join(", ") + ")" : "") + (ad.dis.length ? " (disadvantage: " + ad.dis.join(", ") + ")" : "");
-    log(s, attacker, A.name + " — " + p.name + " at " + D.name + ": " + r.total + (crit ? " CRITICAL" : "") + why, { receipt: r.receipt });
+    log(s, attacker, A.name + " — " + p.name + " at " + D.name + ": " + r.total + (crit ? " CRITICAL" : "") + why, { receipt: r.receipt, ev: "attack", attacker: attacker, defender: defender, pid: pid, total: r.total, nat: nat, crit: crit, adv: ad.adv, dis: ad.dis, counter: ctx.counter, augment: !!opts.augment });
     // reaction window 2: would hit (parry)
     if (hit && !crit && p.resolution.melee) {
       var o2 = reactionOptions(s, defender, "melee_hit_on_me", ctx);
       if (o2.length) { var c2 = decide(s, ctrl, defender, "melee_hit_on_me", o2, Object.assign({ total: r.total }, ctx));
-        if (c2) { D.reaction_left--; var bonus = profile(s, c2).resolution.bonus; log(s, defender, D.name + " parries (+" + bonus + " AC)."); if (r.total < D.ac + bonus) hit = false; } }
+        if (c2) { D.reaction_left--; var bonus = profile(s, c2).resolution.bonus; log(s, defender, D.name + " parries (+" + bonus + " AC).", { ev: "parry", actor: defender, attacker: attacker, turned: r.total < D.ac + bonus }); if (r.total < D.ac + bonus) hit = false; } }
     }
     if (hit) {
       var dmg = rollDice(s, attacker, p.name + " damage", p.resolution.damage, { crit: crit });
       D.hp = Math.max(0, D.hp - dmg.total);
-      log(s, attacker, D.name + " takes " + dmg.total + " " + p.resolution.damage_type + " damage (" + D.hp + "/" + D.hp_max + ").", { receipt: dmg.receipt });
-      if (D.hp === 0) { D.down = true; log(s, defender, D.name + " is down."); }
+      log(s, attacker, D.name + " takes " + dmg.total + " " + p.resolution.damage_type + " damage (" + D.hp + "/" + D.hp_max + ").", { receipt: dmg.receipt, ev: "damage", attacker: attacker, target: defender, pid: pid, amount: dmg.total, hp: D.hp, hp_max: D.hp_max, crit: crit });
+      if (D.hp === 0) { D.down = true; log(s, defender, D.name + " is down.", { ev: "down", actor: defender }); }
     } else {
-      log(s, attacker, "Miss.");
+      log(s, attacker, "Miss.", { ev: "miss", attacker: attacker, defender: defender, pid: pid });
       // reaction window 3: missed (riposte) — fenced: never from a counter, bounded depth
       if (p.resolution.melee && !D.down) {
         var o3 = reactionOptions(s, defender, "melee_miss_on_me", ctx);
         if (o3.length) { var c3 = decide(s, ctrl, defender, "melee_miss_on_me", o3, ctx);
-          if (c3) { D.reaction_left--; log(s, defender, D.name + " ripostes!"); attack(s, ctrl, defender, attacker, c3, { counter: true, depth: (ctx.depth || 0) + 1 }); } }
+          if (c3) { D.reaction_left--; log(s, defender, D.name + " ripostes!", { ev: "riposte", actor: defender }); attack(s, ctrl, defender, attacker, c3, { counter: true, depth: (ctx.depth || 0) + 1 }); } }
       }
     }
     return { hit: hit, crit: crit, receipt: r.receipt };
@@ -281,7 +304,7 @@
     var a = rollDice(s, actorId, p.name + " (" + ask.replace("_", " ") + ")", "1d20" + (am >= 0 ? "+" : "") + am, { adv: !!(A.advantage_on && A.advantage_on[ask]) });
     var t = rollDice(s, targetId, "resists " + p.name + " (" + (tsk === "athletics_or_acrobatics" ? "athletics/acrobatics" : tsk) + ")", "1d20" + (tm >= 0 ? "+" : "") + tm, { adv: !!(T.advantage_on && T.advantage_on[tsk]) });
     var win = a.total > t.total;
-    log(s, actorId, A.name + " — " + p.name + ": " + a.total + " vs " + t.total + " → " + (win ? "success" : "fails"), { receipt: a.receipt + "," + t.receipt });
+    log(s, actorId, A.name + " — " + p.name + ": " + a.total + " vs " + t.total + " → " + (win ? "success" : "fails"), { receipt: a.receipt + "," + t.receipt, ev: "contest", actor: actorId, target: targetId, pid: p.id || null, a: a.total, t: t.total, win: win });
     return win;
   }
 
@@ -318,9 +341,10 @@
       var win = contest(s, actorId, step.target, p);
       if (win) {
         var eff = p.effect.on_success;
-        if (eff === "disarmed") { T.dropped = clone(T.weapon); T.weapon.held = false; if (T.weapon.kind === "lightsaber") T.weapon.ignited = false; log(s, step.target, T.name + "'s " + T.weapon.name + " is stripped away and lands 10 ft off."); }
-        else if (eff === "feinted") { T.conds.feinted = { by: actorId }; log(s, step.target, T.name + " bites on the feint."); }
+        if (eff === "disarmed") { T.dropped = clone(T.weapon); T.weapon.held = false; if (T.weapon.kind === "lightsaber") T.weapon.ignited = false; log(s, step.target, T.name + "'s " + T.weapon.name + " is stripped away and lands 10 ft off.", { ev: "disarm", actor: actorId, target: step.target }); }
+        else if (eff === "feinted") { T.conds.feinted = { by: actorId }; log(s, step.target, T.name + " bites on the feint.", { ev: "feinted", actor: actorId, target: step.target }); }
         else if (eff === "taunted") { T.conds.taunted = { by: actorId, until: actorId }; log(s, step.target, T.name + " is drawn to " + a.name + "."); }
+        else if (eff === "disarmed_prone") { T.dropped = clone(T.weapon); T.weapon.held = false; if (T.weapon.kind === "lightsaber") T.weapon.ignited = false; T.conds.prone = { by: actorId }; log(s, step.target, T.name + " is bound, stripped and swept to the ground; the " + T.weapon.name + " skids 10 ft off.", { ev: "takedown", actor: actorId, target: step.target }); }
         else if (eff === "wary") { T.conds.wary = { by: actorId }; log(s, step.target, T.name + " hesitates."); }
       } else if (step.pid === "feint") log(s, step.target, T.name + " reads the feint and does not commit.");
       return true;
@@ -339,7 +363,7 @@
       var choice = decide(s, ctrl, e, "opportunity_attack", melee.slice(0, 1), { attacker: actorId, defender: e, depth: 0 });
       if (choice) { E.reaction_left--; log(s, e, E.name + " takes an opportunity attack as " + a.name + " pulls away."); attack(s, ctrl, e, actorId, choice, { depth: 1 }); if (a.down) return true; }
     }
-    if (step.dest === "close") { setDistance(s, actorId, step.target, 5); log(s, actorId, a.name + " closes on " + s.actors[step.target].name + "."); }
+    if (step.dest === "close") { setDistance(s, actorId, step.target, 5); log(s, actorId, a.name + " closes on " + s.actors[step.target].name + ".", { ev: "close", actor: actorId, target: step.target }); }
     else { enemiesOf(s, actorId).forEach(function (e2) { setDistance(s, actorId, e2, distance(s, actorId, e2) + 15); }); log(s, actorId, a.name + " withdraws 15 ft."); }
     // a feint only holds while you stay engaged
     Object.keys(s.actors).forEach(function (t) { var f = s.actors[t].conds.feinted; if (f && (f.by === actorId || t === actorId) && distance(s, f.by, t) > 5) { delete s.actors[t].conds.feinted; log(s, t, "The feint's opening closes as the distance opens."); } });
@@ -412,17 +436,19 @@
   }
 
   // ---------------- public view: what the player may see ----------------
-  function publicView(s, viewer) {
-    viewer = viewer || "aero";
+  // opts.full_mechanics (sandbox debug only): enemy HP and budgets are shown. Campaign play must follow the adopted
+  // player-information policy instead. Hidden actors stay hidden either way.
+  function publicView(s, viewer, opts) {
+    viewer = viewer || "aero"; opts = opts || {}; var full = !!opts.full_mechanics, showHp = full || !!opts.show_enemy_hp;
     var actors = {};
     Object.keys(s.actors).forEach(function (id) {
       var a = s.actors[id];
       if (!visibleTo(s, viewer, id)) return;
       var own = a.side === s.actors[viewer].side;
       actors[id] = { id: id, name: a.name, side: a.side, kind: a.kind, down: a.down, distance: distance(s, viewer, id),
-                     hp: own ? a.hp : null, hp_max: own ? a.hp_max : null, condition: own ? null : (a.hp <= a.hp_max / 2 ? "bloodied" : a.hp < a.hp_max ? "hurt" : "unhurt"),
+                     hp: own || showHp ? a.hp : null, hp_max: own || showHp ? a.hp_max : null, ac: own || full ? a.ac : null, condition: own ? null : (a.hp <= a.hp_max / 2 ? "bloodied" : a.hp < a.hp_max ? "hurt" : "unhurt"),
                      conds: Object.keys(a.conds).filter(function (c) { return c !== "hidden"; }), weapon: a.weapon ? { name: a.weapon.name, held: a.weapon.held, ignited: a.weapon.ignited } : null,
-                     budget: own ? a.budget : null, reaction_left: own ? a.reaction_left : null, fp: own ? a.fp : null };
+                     budget: own || full ? a.budget : null, reaction_left: own || full ? a.reaction_left : null, fp: own ? a.fp : null };
     });
     var hiddenSeen = Object.keys(s.actors).some(function (id) { return !visibleTo(s, viewer, id); });
     return { canonical: false, round: s.round, current: current(s), actors: actors, unseen_presence: hiddenSeen ? "Something is out there you cannot see." : null,
@@ -430,6 +456,6 @@
   }
 
   return { newState: newState, validatePlan: validatePlan, availability: availability, resolveTurn: resolveTurn, endTurn: endTurn,
-           npcPlan: npcPlan, comboJudge: comboJudge, cinematicNote: cinematicNote, publicView: publicView, current: current,
+           npcPlan: npcPlan, comboJudge: comboJudge, synergies: synergies, hasAdv: hasAdv, reactionOptions: reactionOptions, cinematicNote: cinematicNote, publicView: publicView, current: current,
            distance: distance, project: project, _rollDice: rollDice };
 });

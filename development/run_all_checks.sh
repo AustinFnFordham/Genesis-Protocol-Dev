@@ -26,6 +26,7 @@ timed "$U/test_tb4_taunt.cjs" node $U/test_tb4_taunt.cjs $P $Q/state_round1.json
 timed "$U/test_whisper_ui.cjs" node $U/test_whisper_ui.cjs $P $Q/state_round1.json
 timed "$U/test_whisper_review.cjs" node $U/test_whisper_review.cjs $P $Q/state_round1.json
 timed "development/combat_slice/test_engine.cjs" node development/combat_slice/test_engine.cjs
+timed "development/combat_slice/test_cc003.cjs" node development/combat_slice/test_cc003.cjs
 timed "development/combat_slice/test_playtest_ui.cjs" node development/combat_slice/test_playtest_ui.cjs
 timed "development/preview/test_preview.cjs" node development/preview/test_preview.cjs
 timed "development/encounter/test_tracker_ui.cjs" node development/encounter/test_tracker_ui.cjs $P $Q/state_round1.json

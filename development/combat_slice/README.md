@@ -12,7 +12,7 @@ campaign, sheet, ledger, gateway, staging environment or turn-contract/3 behavio
   (open in any browser; no network).
 - Scenarios: **Aero vs a skilled duelist** (Ilsa Vohr, Makashi vibroblade: Feint, Parry, Riposte, Bind) and **Aero vs
   an unfamiliar predator** (hidden vrask stalker: pounce, uncertain perception, no free Animal Handling).
-- Tap cards to build an ordered turn; ▲▼ reorder; ⓘ inspects a card (rules, source, approval status). Every step is
+- Drag (or tap) cards into the turn timeline; ▲▼ / drag reorder; ⓘ inspects a card (rules, source, approval status). Every step is
   checked live by the engine. Reactions (Parry, Riposte, readied Dodge, opportunity attacks) are offered when they
   trigger — the game pauses and asks; nothing is chosen for Aero. Sandbox switches and a seed are at the top.
 
@@ -140,6 +140,20 @@ inconsistent (`1 Maneuver`, `1 Bonus_Action`, `1 Bonus Action`, `Special (part o
 dice that no Genesis character has. 10 are starship-scale and belong in a separate catalog. The 27-entry quarantined
 catalog has no stable id/urid. Nothing was promoted; four drafts were *reworked* into sandbox profiles above.
 
+## CC-003: Tactical Composer, synergy, prediction, balance (branch `dev/cc003-tactical-composer`)
+
+| Piece | File | Notes |
+|---|---|---|
+| Composer UI | `playtest_src.html` | Cards are grouped by action economy: Maneuvers & Techniques first, then Main, Secondary, Bonus, Reactions, Move/Object and Free. Groups are filterable and collapsible. Pointer-event drag and drop (mouse; on touch, the ⠿ grip or touch-and-hold) into an ordered timeline, with tap/Enter, Alt+↑/↓ and Delete as alternatives. Compound costs are confirmed before commit. Dice tray animates every receipt. HP bars are shown for Aero **and enemies**. Full-mechanics debug toggle. |
+| Synergy | `catalog.json` `synergies` + `engine.synergies()` | Data-driven, ordered, same-target subsequences: Echani Flow Line, Opening Cut, Blade and Body, Read and Strike. Each one lists the profile rules it rests on and its condition. The combo panel separates *legal sequence / synergy / predicted / cinematic*. |
+| Prediction | `predict.js` | **Exact:** d20 with advantage, disadvantage and crits; dice-sum damage distributions; contests (ties go to the defender); the NPC Parry window; riposte risk; incoming threat. **Seeded simulation:** the whole turn runs on a cloned state with a separate seed, n=400 in the UI, reported with Wilson 95% intervals. Authoritative dice are never used. Narrative "read" is words only. |
+| Soul | `soul.js` | `narrate(turnLog, names, {provider})`. Receives frozen facts copied from the accepted log, never the state. Deterministic fallback text. An optional AI provider's text is accepted only if `guard` finds no invented numbers. The mechanical transcript stays beneath it. |
+| New proposal | `controlled_takedown` | **Blade Bind & Takedown:** 1 Main + 1 Secondary, one contest; on a win the target is disarmed and prone. Prone: melee attacks against it have advantage, its own attacks have disadvantage, and standing costs 15 ft. |
+| Debug view | `publicView(s, v, {show_enemy_hp, full_mechanics})` | Default campaign view is unchanged: enemy HP still hidden. |
+| Audit | `audit/rng_audit.cjs`, `audit/balance_sim.cjs`, **`audit/BALANCE_REPORT.md`** | Dice are fair. Baseline duel win rate is 16% with simple play and 31% with tactical play; the predator is 40% / 64%. Riposte and Ilsa's round-1 thrust are the main causes of defeat. Recommended: intro Ilsa without Riposte (61%) or the P1 stat line (58%). |
+| Tests | `test_cc003.cjs` (21), `test_playtest_ui.cjs` (~45 checks, desktop + iPad/phone touch) | Exact odds are checked against the real engine empirically. Prediction and narration are shown never to mutate state or receipts. RNG and balance runs are reproducible. |
+
+
 ## Decisions that need the owner
 1. Adopt or change each **sandbox proposal** above (cost, numbers, trigger): Flow Strike, Feint, Parry (+2 AC),
    Riposte, Readied Dodge, Blade Bind, Tactical Glance, Force-Guided Strike (1 FP → +1d4), Battle Insight as Bonus.
@@ -151,6 +165,10 @@ catalog has no stable id/urid. Nothing was promoted; four drafts were *reworked*
 7. Called Shot / wound / nonlethal rules (not built), creature anatomy differences.
 8. Cinematic Momentum, Director's Cut and Legendary Moment (not built beyond a descriptive note).
 9. The two fixture opponents' stat lines (sandbox numbers).
+10. **CC-003 balance**: intro Ilsa without Riposte (P2) or with the softer P1 stat line; predator ambush as a stealth contest.
+11. **Blade Bind & Takedown** (1 Main + 1 Secondary, disarm + prone) and the **prone** rules.
+12. **Player-information policy** for campaign play: the sandbox shows enemy HP and odds; the campaign view hides HP by default.
+13. Which **synergies** become canon, and whether Registry/Chaos relationships should add any (none were invented here).
 
 ## Blockers and limits (honest)
 - Ranged, firearm, vibroweapon-style, thrown and starship profiles are not authored; Lightsaber Deflect (ranged) is on

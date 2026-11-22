@@ -1,0 +1,162 @@
+[
+ {
+  "label": "Baseline duel (simple play)",
+  "scenario": "duelist",
+  "style": "simple",
+  "note": "",
+  "fights": 1000,
+  "win_rate": 16.2,
+  "ci95": 2.3,
+  "avg_rounds": 2.1,
+  "avg_damage_taken": 10.15,
+  "avg_round1_damage": 8.24,
+  "aero_hit_rate": 46.2,
+  "enemy_hit_rate": 70.1,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Riposte: 324",
+   "Vibroblade Thrust in round 1: 256",
+   "Vibroblade Thrust: 89"
+  ]
+ },
+ {
+  "label": "Baseline duel (tactical play)",
+  "scenario": "duelist",
+  "style": "tactical",
+  "note": "",
+  "fights": 1000,
+  "win_rate": 30.5,
+  "ci95": 2.9,
+  "avg_rounds": 2.23,
+  "avg_damage_taken": 9.09,
+  "avg_round1_damage": 7.3,
+  "aero_hit_rate": 53.4,
+  "enemy_hit_rate": 61.5,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Riposte: 242",
+   "Vibroblade Thrust in round 1: 200",
+   "Vibroblade Thrust: 121"
+  ]
+ },
+ {
+  "label": "Baseline predator (simple)",
+  "scenario": "predator",
+  "style": "simple",
+  "note": "",
+  "fights": 1000,
+  "win_rate": 39.7,
+  "ci95": 3,
+  "avg_rounds": 2.32,
+  "avg_damage_taken": 9.12,
+  "avg_round1_damage": 7.14,
+  "aero_hit_rate": 65,
+  "enemy_hit_rate": 71.5,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Bite: 495",
+   "Bite (critical): 62",
+   "Pounce from hiding (critical) in round 1: 46"
+  ]
+ },
+ {
+  "label": "Baseline predator (tactical)",
+  "scenario": "predator",
+  "style": "tactical",
+  "note": "",
+  "fights": 1000,
+  "win_rate": 64,
+  "ci95": 3,
+  "avg_rounds": 2.21,
+  "avg_damage_taken": 7.39,
+  "avg_round1_damage": 6.06,
+  "aero_hit_rate": 67.9,
+  "enemy_hit_rate": 56.5,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Bite: 291",
+   "Pounce from hiding (critical) in round 1: 46",
+   "Bite (critical): 23"
+  ]
+ },
+ {
+  "label": "P1 Intro duelist: Ilsa AC 14, HP 16, blade +4 / 1d6+3 (tactical)",
+  "scenario": "duelist",
+  "style": "tactical",
+  "note": "sandbox proposal",
+  "fights": 1000,
+  "win_rate": 57.5,
+  "ci95": 3.1,
+  "avg_rounds": 2.27,
+  "avg_damage_taken": 6.98,
+  "avg_round1_damage": 5.7,
+  "aero_hit_rate": 58.6,
+  "enemy_hit_rate": 55.9,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Riposte: 167",
+   "Vibroblade Thrust in round 1: 118",
+   "Vibroblade Thrust: 71"
+  ]
+ },
+ {
+  "label": "P2 Intro duelist: Ilsa keeps stats, no Riposte (tactical)",
+  "scenario": "duelist",
+  "style": "tactical",
+  "note": "sandbox proposal",
+  "fights": 1000,
+  "win_rate": 61.1,
+  "ci95": 3,
+  "avg_rounds": 3.12,
+  "avg_damage_taken": 7.15,
+  "avg_round1_damage": 4.94,
+  "aero_hit_rate": 51.9,
+  "enemy_hit_rate": 64.6,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Vibroblade Thrust: 237",
+   "Vibroblade Thrust in round 1: 74",
+   "Vibroblade Thrust (critical) in round 1: 47"
+  ]
+ },
+ {
+  "label": "P3 Predator: Aero notices it first (not hidden at start)",
+  "scenario": "predator",
+  "style": "tactical",
+  "note": "sandbox proposal: stealth vs passive Perception decides",
+  "fights": 1000,
+  "win_rate": 86.4,
+  "ci95": 2.1,
+  "avg_rounds": 2.1,
+  "avg_damage_taken": 4.23,
+  "avg_round1_damage": 3.12,
+  "aero_hit_rate": 68.2,
+  "enemy_hit_rate": 47.6,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Bite: 101",
+   "Bite (critical) in round 1: 21",
+   "Bite (critical): 14"
+  ]
+ },
+ {
+  "label": "P4 Predator: HP 11, bite 1d6+2",
+  "scenario": "predator",
+  "style": "tactical",
+  "note": "sandbox proposal",
+  "fights": 1000,
+  "win_rate": 79,
+  "ci95": 2.5,
+  "avg_rounds": 1.82,
+  "avg_damage_taken": 6.1,
+  "avg_round1_damage": 5.04,
+  "aero_hit_rate": 68.8,
+  "enemy_hit_rate": 61,
+  "timeouts": 0,
+  "defeat_causes": [
+   "Bite: 168",
+   "Pounce from hiding (critical) in round 1: 26",
+   "Bite (critical): 16"
+  ]
+ }
+]

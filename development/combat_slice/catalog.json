@@ -35,7 +35,13 @@
    }
   },
   "trigger_depth_max": 1,
-  "reaction_note": "One ordinary Reaction per round. A Riposte can never trigger another Riposte (trigger fence); a spent Reaction stays spent."
+  "reaction_note": "One ordinary Reaction per round. A Riposte can never trigger another Riposte (trigger fence); a spent Reaction stays spent.",
+  "conditions": {
+   "prone": {
+    "status": "sandbox_proposal",
+    "rules": "Melee attacks against a prone creature have advantage. A prone creature attacks with disadvantage. It stands at the start of its own turn, spending 15 ft of movement."
+   }
+  }
  },
  "profiles": {
   "saber_strike": {
@@ -110,7 +116,7 @@
     "max": 1
    },
    "rules": "After a melee attack this turn: one unarmed follow-up, +5 to hit, 1d4 kinetic (no Dexterity to damage).",
-   "source": "CC-002 \u00a72 proposal (new Bonus profile)"
+   "source": "CC-002 §2 proposal (new Bonus profile)"
   },
   "feint": {
    "name": "Weapon Feint",
@@ -140,7 +146,7 @@
     "max": 1
    },
    "rules": "Contest: your Charisma (Deception) vs its Wisdom (Insight). Win: advantage on your next melee attack against it this turn. Lose: it read you; nothing else. Never an automatic hit.",
-   "source": "Draft power_feinting_attack (superiority-dice based; not used) reworked per CC-002 \u00a72"
+   "source": "Draft power_feinting_attack (superiority-dice based; not used) reworked per CC-002 §2"
   },
   "parry": {
    "name": "Parry",
@@ -204,7 +210,7 @@
     "note": "Until your next turn you may spend your Reaction to impose disadvantage on one attack roll against you."
    },
    "rules": "Secondary: get ready. Later, Reaction when attacked: that attack roll has disadvantage. Still one Reaction per round.",
-   "source": "CC-002 \u00a72 Readied Dodge (Novice tier). Dodge percentages 50/66.7/83.3/98% are NOT used."
+   "source": "CC-002 §2 Readied Dodge (Novice tier). Dodge percentages 50/66.7/83.3/98% are NOT used."
   },
   "dodge_reaction": {
    "name": "Dodge (readied)",
@@ -267,7 +273,7 @@
     "note": "Its weapon lands 10 ft away. A hit is not needed; damage is not dealt."
    },
    "rules": "Contest: your Dexterity (Acrobatics) vs its better of Strength (Athletics) or Dexterity (Acrobatics). Win: its held weapon is stripped and lands 10 ft away. No damage.",
-   "source": "Draft power_disarming_blow (superiority die) reworked; CC-002 \u00a74 Blade Bind"
+   "source": "Draft power_disarming_blow (superiority die) reworked; CC-002 §4 Blade Bind"
   },
   "battle_insight": {
    "name": "Battle Insight",
@@ -308,7 +314,7 @@
     "note": "As Battle Insight."
    },
    "rules": "Bonus-action Battle Insight (switch battle_insight_bonus; off by default).",
-   "source": "CC-002 \u00a72 proposed conversion"
+   "source": "CC-002 §2 proposed conversion"
   },
   "taunt": {
    "name": "Taunt",
@@ -357,7 +363,7 @@
     "max": 1
    },
    "rules": "Secondary: Wisdom (Perception) +4 against anything hiding nearby. Once per turn; no rerolls.",
-   "source": "CC-002 \u00a72 Tactical Glance (Secondary focused scan)"
+   "source": "CC-002 §2 Tactical Glance (Secondary focused scan)"
   },
   "calm_beast": {
    "name": "Calm the Animal (untrained)",
@@ -422,7 +428,7 @@
     "max": 1
    },
    "rules": "Spend 1 Force Point when declaring a lightsaber strike or Riposte: +1d4 to that attack roll. Once per turn. Grants no new power.",
-   "source": "CC-002 \u00a71.7 augmentation proposal"
+   "source": "CC-002 §1.7 augmentation proposal"
   },
   "npc_blade": {
    "name": "Vibroblade Thrust",
@@ -591,6 +597,36 @@
    },
    "rules": "Ignite or switch off your lightsaber (one object interaction).",
    "source": "turn-contract/3 objects"
+  },
+  "controlled_takedown": {
+   "name": "Blade Bind & Takedown",
+   "maneuver": "Disarm + Trip",
+   "technique": "Bind, strip, sweep",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1,
+    "secondary": 1
+   },
+   "compound": true,
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true,
+    "reach_ft": 5,
+    "target": "enemy",
+    "target_holds_weapon": true,
+    "secondary_action": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "acrobatics",
+    "target_skill": "athletics_or_acrobatics"
+   },
+   "effect": {
+    "on_success": "disarmed_prone",
+    "note": "Its weapon lands 10 ft away and it is knocked prone. Melee attacks against a prone creature have advantage; it attacks with disadvantage until it stands (15 ft of its movement at the start of its turn)."
+   },
+   "rules": "Compound maneuver: 1 Main + 1 Secondary. One contest: your Dexterity (Acrobatics) vs its better of Athletics or Acrobatics. Win: disarmed AND prone. Lose: both actions are spent and nothing happens. No damage.",
+   "source": "CC-003 proposal: Blade Bind & Strip (main) plus a sweep paid for with the Secondary Action (SA-001)"
   }
  },
  "forms": {
@@ -694,7 +730,7 @@
    "techniques": []
   },
   "trakata": {
-   "name": "Tr\u00e0kata",
+   "name": "Tràkata",
    "lore": "Switching the blade off and on mid-fight.",
    "configs": [
     "single",
@@ -737,5 +773,111 @@
   "unarmed": "no weapon",
   "blaster_pistol": "blaster pistol",
   "vibroblade": "vibroblade"
- }
+ },
+ "synergies": [
+  {
+   "id": "echani_flow_line",
+   "name": "Echani Flow Line",
+   "sequence": [
+    {
+     "pid": "feint",
+     "slot": "secondary"
+    },
+    {
+     "pid": "saber_strike",
+     "slot": "main"
+    },
+    {
+     "pid": "flow_strike",
+     "slot": "bonus"
+    }
+   ],
+   "links": [
+    "A won feint gives the lightsaber strike advantage (feint profile).",
+    "Any melee attack this turn unlocks Echani Flow Strike (flow_strike requires after_melee_attack_this_turn)."
+   ],
+   "basis": [
+    "feint.effect.on_success=feinted",
+    "engine hasAdv: feinted → advantage on next melee attack",
+    "flow_strike.requires.after_melee_attack_this_turn"
+   ],
+   "conditional": "The advantage exists only if the feint wins its contest. Flow Strike is unlocked by the strike being made, hit or miss, and it rolls normally (the feint's advantage is used up by the first attack)."
+  },
+  {
+   "id": "opening_cut",
+   "name": "Opening Cut",
+   "sequence": [
+    {
+     "pid": "feint",
+     "slot": "secondary"
+    },
+    {
+     "pid": [
+      "saber_strike",
+      "unarmed_strike"
+     ],
+     "slot": "main"
+    }
+   ],
+   "links": [
+    "A won feint gives the next melee attack advantage."
+   ],
+   "basis": [
+    "feint.effect.on_success=feinted"
+   ],
+   "conditional": "Only if the feint wins its contest."
+  },
+  {
+   "id": "blade_and_body",
+   "name": "Blade and Body",
+   "sequence": [
+    {
+     "pid": [
+      "saber_strike",
+      "unarmed_strike"
+     ],
+     "slot": "main"
+    },
+    {
+     "pid": "flow_strike",
+     "slot": "bonus"
+    }
+   ],
+   "links": [
+    "The melee attack unlocks Echani Flow Strike."
+   ],
+   "basis": [
+    "flow_strike.requires.after_melee_attack_this_turn"
+   ],
+   "conditional": "Two separate attack rolls; neither guarantees the other."
+  },
+  {
+   "id": "read_and_strike",
+   "name": "Read and Strike",
+   "sequence": [
+    {
+     "pid": [
+      "battle_insight",
+      "battle_insight_bonus"
+     ],
+     "slot": "main"
+    },
+    {
+     "pid": [
+      "saber_strike",
+      "unarmed_strike",
+      "flow_strike"
+     ],
+     "slot": "main"
+    }
+   ],
+   "links": [
+    "Battle Insight gives advantage on your next attack against that target."
+   ],
+   "basis": [
+    "battle_insight: conds.insight → advantage"
+   ],
+   "conditional": "Automatic once Battle Insight resolves; the attack still rolls."
+  }
+ ]
 }

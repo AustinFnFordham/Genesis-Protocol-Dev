@@ -1,4 +1,4 @@
-"""Build the CC-002 combat playtest page (noncanonical, self-contained, no network).
+"""Build the CC-002/CC-003 combat playtest page (Tactical Composer) (noncanonical, self-contained, no network).
 python3 development/combat_slice/build_playtest.py [--out DIR]   -> DIR/combat.html (default development/combat_slice/out)
 The dev preview server also serves it at /combat.html (development/preview)."""
 import argparse
@@ -18,7 +18,8 @@ def page(sha=None):
             sha = "unknown"
     src = (HERE / "playtest_src.html").read_text()
     data = lambda name: json.dumps(json.loads((HERE / name).read_text()), separators=(",", ":")).replace("</", "<\\/")
-    return (src.replace("/*ENGINE*/", (HERE / "engine.js").read_text().replace("</script", "<\\/script"))
+    js = lambda name: (HERE / name).read_text().replace("</script", "<\\/script")
+    return (src.replace("/*ENGINE*/", js("engine.js")).replace("/*PREDICT*/", js("predict.js")).replace("/*SOUL*/", js("soul.js"))
                .replace("/*CATALOG*/", data("catalog.json")).replace("/*SCENARIOS*/", data("scenarios.json"))
                .replace("__SHA__", sha))
 

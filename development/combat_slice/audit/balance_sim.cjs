@@ -4,7 +4,7 @@
 const E = require("../engine.js");
 const C = require("../catalog.json");
 const S0 = require("../scenarios.json");
-const N = +(process.argv.find((a) => /^\d+$/.test(a)) || 2000);
+let N = +(process.argv.find((a) => /^\d+$/.test(a)) || 2000);
 const clone = (x) => JSON.parse(JSON.stringify(x));
 
 // ---- Aero strategies (what a player might do; the engine decides legality) ----
@@ -80,6 +80,7 @@ const configs = [
   ["P3 Predator: Aero notices it first (not hidden at start)", variant((s) => { s.scenarios.predator.actors.stalker.hidden = false; s.scenarios.predator.initiative = ["aero", "stalker"]; }), "predator", "tactical", "sandbox proposal: stealth vs passive Perception decides"],
   ["P4 Predator: HP 11, bite 1d6+2", variant((s) => { Object.assign(s.scenarios.predator.actors.stalker, { hp: 11, hp_max: 11 }); s.__bite = "1d6+2"; }), "predator", "tactical", "sandbox proposal"],
 ];
+function runAll() {
 const results = [];
 for (const [label, sc, id, style, note] of configs) {
   const cat = clone(C);
@@ -89,6 +90,11 @@ for (const [label, sc, id, style, note] of configs) {
   results.push(run(label, sc, id, style, {}, note));
   Object.keys(C.profiles).forEach((k) => delete C.profiles[k]); Object.assign(C.profiles, savedC);
 }
-if (process.argv.includes("--json")) console.log(JSON.stringify(results, null, 1));
-else { console.log(`${N} fights per configuration, seeds 1..${N}`); for (const r of results) console.log(JSON.stringify(r)); }
-module.exports = { results, fight, aeroPlan };
+return results;
+}
+if (require.main === module) {
+  const results = runAll();
+  if (process.argv.includes("--json")) console.log(JSON.stringify(results, null, 1));
+  else { console.log(`${N} fights per configuration, seeds 1..${N}`); for (const r of results) console.log(JSON.stringify(r)); }
+}
+module.exports = { runAll, run, fight, aeroPlan, configs, setN: (n) => { N = n; } };
