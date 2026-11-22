@@ -1,0 +1,263 @@
+<title>Genesis Combat Playtest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root { --bg: #f4f2ee; --panel: #ffffff; --ink: #1d2230; --muted: #5b6272; --line: #d9d4ca; --accent: #3a49c9; --accent-fg: #fff;
+  --ok: #1f7a4a; --bad: #a3302a; --warn: #8a5a00; --prop: #7b3fa8; --sheet: #2f6f8f; --chip: #eceae4; --banner: #3b2f00; --banner-fg: #ffe9a8;
+  --enemy: #8a2b2b; --party: #23558a; --shadow: 0 1px 3px rgba(20,24,40,.12); color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #11131a; --panel: #1a1d27; --ink: #e8e6e1; --muted: #a2a7b5; --line: #2e3242;
+  --accent: #8d98ff; --accent-fg: #0d0f17; --ok: #5fcf93; --bad: #ff8a80; --warn: #f0c05a; --prop: #c99bf0; --sheet: #7fc4e6; --chip: #252938; --enemy: #ff9a9a; --party: #9cc7ff; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #11131a; --panel: #1a1d27; --ink: #e8e6e1; --muted: #a2a7b5; --line: #2e3242; --accent: #8d98ff; --accent-fg: #0d0f17;
+  --ok: #5fcf93; --bad: #ff8a80; --warn: #f0c05a; --prop: #c99bf0; --sheet: #7fc4e6; --chip: #252938; --enemy: #ff9a9a; --party: #9cc7ff; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px 40px; }
+#devBanner { background: var(--banner); color: var(--banner-fg); font-size: 13px; padding-block: 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font-size: 20px; margin: 10px 0 2px; text-wrap: balance; } h2 { font-size: 15px; margin: 0 0 8px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; box-shadow: var(--shadow); min-width: 0; }
+.grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 12px; margin-top: 12px; }
+@media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button, select, input { font: inherit; color: inherit; }
+button { min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--chip); padding: 0 14px; cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible, .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+select, input[type=text] { min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); padding: 0 10px; max-width: 100%; }
+.intro { color: var(--muted); margin: 2px 0 0; }
+.actors { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.actor { border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.actor.party { border-left: 4px solid var(--party); } .actor.enemy { border-left: 4px solid var(--enemy); }
+.actor.turn { box-shadow: 0 0 0 2px var(--accent); }
+.meter { height: 8px; background: var(--chip); border-radius: 4px; overflow: hidden; margin: 4px 0; } .meter > i { display: block; height: 100%; background: var(--ok); }
+.pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.pill { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); }
+.pill.zero { opacity: .55; text-decoration: line-through; }
+.hand { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.card { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 8px; background: var(--panel); min-height: 132px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; text-align: left; }
+.card.off { opacity: .55; } .card .nm { font-weight: 650; } .card .mv { font-size: 12px; color: var(--muted); }
+.card .why { font-size: 12px; color: var(--bad); } .card .cost { display: flex; gap: 4px; flex-wrap: wrap; margin-top: auto; }
+.cost span { font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--chip); border: 1px solid var(--line); }
+.badge { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 6px; align-self: flex-start; }
+.badge.sheet { color: var(--sheet); border: 1px solid var(--sheet); } .badge.sandbox_proposal { color: var(--prop); border: 1px solid var(--prop); }
+.card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+.card .info { min-height: 44px; min-width: 44px; padding: 0; border-radius: 50%; font-size: 14px; flex: none; margin: -4px -4px 0 0; }
+.plan { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; counter-reset: st; }
+.plan li { border: 1px solid var(--line); border-radius: 10px; padding: 8px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.plan li::before { counter-increment: st; content: counter(st); font-weight: 700; color: var(--muted); width: 1.4em; text-align: center; }
+.plan li.bad { border-color: var(--bad); } .plan .sub { font-size: 12px; color: var(--muted); } .plan .err { font-size: 12px; color: var(--bad); }
+.plan .ctl { display: flex; gap: 4px; } .plan .ctl button { min-width: 44px; padding: 0; }
+.judge { margin-top: 10px; font-size: 13px; } .judge li { margin: 2px 0; } .judge .conflict { color: var(--warn); } .judge .risk { color: var(--warn); }
+.cine { font-style: italic; color: var(--muted); }
+.log { max-height: 420px; overflow: auto; font-size: 13.5px; } .log p { margin: 3px 0; } .log .turn { margin-top: 8px; font-weight: 650; }
+.log .refused { color: var(--bad); } .log .speech { font-style: italic; }
+.rc { font-size: 11.5px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--ink); max-width: min(560px, calc(100vw - 32px)); padding: 16px; }
+dialog::backdrop { background: rgba(10,12,20,.55); }
+.unseen { color: var(--warn); font-size: 13px; margin-top: 6px; }
+.over { font-size: 18px; font-weight: 700; padding: 10px; border-radius: 10px; background: var(--chip); margin-top: 10px; }
+.switches label { display: inline-flex; gap: 6px; align-items: center; min-height: 44px; margin-right: 10px; }
+.switches input { width: 20px; height: 20px; }
+small.muted { color: var(--muted); }
+</style>
+<div id="devBanner" role="note"><b>Genesis Development / Test Environment</b> · CC-002 sandbox combat slice · code <code id="sha">__SHA__</code> · <b>noncanonical</b>: no campaign, sheet or ledger is touched · values marked <i>Sandbox proposal</i> need owner approval</div>
+<div class="wrap">
+  <h1 id="title">Genesis Combat Playtest</h1>
+  <p class="intro" id="intro"></p>
+  <div class="panel" style="margin-top:10px">
+    <div class="row">
+      <label>Scenario <select id="scenario"><option value="duelist">Aero vs a skilled duelist</option><option value="predator">Aero vs an unfamiliar predator</option></select></label>
+      <label>Seed <input type="text" id="seed" inputmode="numeric" size="8"></label>
+      <button id="reset">New fight</button>
+    </div>
+    <div class="switches" id="switches"></div>
+  </div>
+  <div class="panel" style="margin-top:12px"><h2>Battlefield</h2><div class="actors" id="actors"></div><div class="unseen" id="unseen"></div><div id="over"></div></div>
+  <div class="grid">
+    <div class="panel"><h2>Your hand</h2><div class="hand" id="hand" role="list"></div></div>
+    <div class="panel"><h2>Your turn, in order</h2>
+      <ol class="plan" id="plan"></ol>
+      <p id="empty" class="intro">Tap cards to add them. Use ▲ ▼ to reorder. Nothing happens until you resolve.</p>
+      <div class="judge"><b>Combo Judge — Atomic</b> <small class="muted">(rules facts only, no score)</small><ul id="judge"></ul><div id="cine" class="cine"></div></div>
+      <div class="row" style="margin-top:10px"><button class="primary" id="resolve">Resolve turn</button><button id="clear">Clear plan</button></div>
+      <div id="planMsg" class="intro"></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:12px"><h2>What happened</h2><div class="log" id="log" aria-live="polite"></div></div>
+</div>
+<dialog id="inspect"><div id="inspectBody"></div><div class="row" style="justify-content:flex-end;margin-top:12px"><button id="inspectClose">Close</button></div></dialog>
+<dialog id="pick"><div id="pickBody"></div><div class="row" style="justify-content:flex-end;margin-top:12px"><button id="pickCancel">Cancel</button></div></dialog>
+<dialog id="react"><div id="reactBody"></div></dialog>
+<script>/*ENGINE*/</script>
+<script>
+var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
+(function () {
+  var E = GenesisCombat, $ = function (id) { return document.getElementById(id); };
+  var S = null, plan = [], pendingRun = null, scenarioId = "duelist", seed = 20261121;
+  var switches = {}; Object.keys(CATALOG.ruleset.switches).forEach(function (k) { switches[k] = CATALOG.ruleset.switches[k].default; });
+  function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var CL = { main: "Main", bonus: "Bonus", secondary: "Secondary", reaction: "Reaction", movement_ft: "ft", object: "Object", fp: "FP" };
+  function costChips(c) { var out = []; Object.keys(c || {}).forEach(function (k) { var v = c[k]; out.push("<span>" + (k === "movement_ft" ? (v === "distance" ? "move" : v + " ft") : (v > 1 ? v + " " : "") + CL[k]) + "</span>"); }); return out.length ? out.join("") : "<span>free</span>"; }
+  function newFight() { S = E.newState(CATALOG, SCENARIOS, scenarioId, { seed: seed, switches: switches }); plan = []; pendingRun = null; runNpcs(); render(); }
+  function visibleEnemies() { var v = E.publicView(S, "aero"); return Object.keys(v.actors).filter(function (id) { return v.actors[id].side !== "party" && !v.actors[id].down; }); }
+
+  // ---------- turn flow (all through the engine) ----------
+  function run(actor, p, choices) {
+    var r = E.resolveTurn(S, actor, p, choices);
+    if (r.refused) { $("planMsg").textContent = "Not legal: " + r.refused.steps.filter(function (x) { return !x.ok; }).map(function (x) { return x.reasons.map(function (y) { return y.text; }).join(" "); }).join(" "); return false; }
+    if (r.paused) { pendingRun = { actor: actor, plan: p, choices: choices }; showReaction(r); return false; }
+    S = E.endTurn(r.state); pendingRun = null; return true;
+  }
+  function runNpcs() {
+    var guard = 0;
+    while (!S.over && S.actors[E.current(S)].controller === "npc" && guard++ < 8) {
+      var who = E.current(S), p = E.npcPlan(S, who);
+      if (!run(who, p, {})) return false;   // paused for a player reaction
+    }
+    return true;
+  }
+  function showReaction(r) {
+    var P = r.paused, v = E.publicView(S, "aero"), att = S.actors[P.context.attacker];
+    var LBL = { attack_declared_on_me: "is attacking you", melee_hit_on_me: "is about to hit you", melee_miss_on_me: "missed you", opportunity_attack: "is pulling away from you" };
+    var pre = (r.preview_log || []).slice(-3).map(function (l) { return "<p class='rc'>" + esc(l.text) + "</p>"; }).join("");
+    $("reactBody").innerHTML = "<h2>Reaction</h2>" + pre + "<p><b>" + esc(att ? att.name : "Someone") + "</b> " + (LBL[P.kind] || P.kind) + ". You have <b>1 Reaction</b>. Use it?</p>" +
+      P.options.map(function (pid) { var pr = CATALOG.profiles[pid]; return "<p><button class='primary' data-react='" + pid + "'>" + esc(pr.name) + "</button> <small class='muted'>" + esc(pr.rules) + "</small></p>"; }).join("") +
+      "<p><button data-react=''>Don't react</button></p>";
+    var d = $("react"); if (!d.open) d.showModal();
+    Array.prototype.forEach.call($("reactBody").querySelectorAll("[data-react]"), function (b) {
+      b.onclick = function () {
+        d.close(); var ch = Object.assign({}, pendingRun.choices); ch[P.key] = b.getAttribute("data-react") || null;
+        var was = pendingRun; if (run(was.actor, was.plan, ch)) { if (was.actor === "aero") plan = []; runNpcs(); } render();
+      };
+    });
+  }
+
+  // ---------- rendering ----------
+  function render() {
+    var sc = SCENARIOS.scenarios[scenarioId]; $("title").textContent = sc.title; $("intro").textContent = sc.intro;
+    var v = E.publicView(S, "aero"), cur = E.current(S);
+    $("actors").innerHTML = Object.keys(v.actors).map(function (id) {
+      var a = v.actors[id], own = a.side === "party";
+      return "<div class='actor " + a.side + (cur === id ? " turn" : "") + "'><b>" + esc(a.name) + "</b>" + (a.down ? " · <b>down</b>" : "") + (own ? "" : " · " + a.distance + " ft · " + esc(a.condition)) +
+        (own ? "<div class='meter' aria-label='HP " + a.hp + " of " + a.hp_max + "'><i style='width:" + Math.round(100 * a.hp / a.hp_max) + "%'></i></div><div>HP " + a.hp + "/" + a.hp_max + " · Force Points " + a.fp + "</div>" : "") +
+        (a.weapon ? "<div><small class='muted'>" + esc(a.weapon.name) + (a.weapon.held ? (a.weapon.ignited === false ? " (unlit)" : "") : " — <b>dropped</b>") + "</small></div>" : "") +
+        (a.conds.length ? "<div class='pills'>" + a.conds.map(function (c) { return "<span class='pill'>" + esc(c.replace("_", " ")) + "</span>"; }).join("") + "</div>" : "") +
+        (own && a.budget ? "<div class='pills'>" + ["main", "bonus", "secondary", "reaction", "movement_ft", "object"].map(function (k) { var n = k === "reaction" ? a.reaction_left : a.budget[k]; return "<span class='pill" + (n ? "" : " zero") + "'>" + CL[k] + (k === "movement_ft" ? " " + n : " " + n) + "</span>"; }).join("") + "</div>" : "") + "</div>";
+    }).join("");
+    $("unseen").textContent = v.unseen_presence || "";
+    $("over").innerHTML = S.over ? "<div class='over'>" + (S.over === "victory" ? "Victory." : "Aero is down.") + " <button id='again'>Fight again</button></div>" : "";
+    if ($("again")) $("again").onclick = newFight;
+    renderHand(); renderPlan(); renderLog(v);
+  }
+  function handProfiles() { return S.actors.aero.profiles.filter(function (pid) { var p = CATALOG.profiles[pid]; return p && !p.trigger && pid !== "force_augment"; }); }
+  function renderHand() {
+    var proj = planProjection(), foes = visibleEnemies(), myTurn = E.current(S) === "aero" && !S.over;
+    $("hand").innerHTML = handProfiles().map(function (pid) {
+      var p = CATALOG.profiles[pid], step = defaultStep(pid, foes), av = E.availability(S, "aero", pid, step, proj);
+      var why = !myTurn ? "Not your turn." : av.ok ? "" : av.reasons[0].text;
+      return "<div class='card" + (why ? " off" : "") + "' role='listitem' tabindex='0' data-card='" + pid + "' data-off='" + !!why + "' aria-label='" + esc(p.name + (why ? " — unavailable: " + why : "")) + "'><span class='top'><span class='badge " + p.status + "'>" + (p.status === "sheet" ? "Sheet" : "Sandbox proposal") + "</span><button class='info' data-info='" + pid + "' aria-label='Inspect " + esc(p.name) + "'>i</button></span>" +
+        "<span class='nm'>" + esc(p.name) + "</span><span class='mv'>" + esc(p.maneuver) + (p.technique ? " · " + esc(p.technique) : "") + "</span>" + (why ? "<span class='why'>" + esc(why) + "</span>" : "") +
+        "<span class='cost'>" + costChips(av.cost || p.cost) + "</span></div>";
+    }).join("") + reactionCards();
+    Array.prototype.forEach.call($("hand").querySelectorAll("[data-card]"), function (el) {
+      var go = function (e) { if (e.target.closest("[data-info]")) return; if (el.getAttribute("data-off") === "true") return; addCard(el.getAttribute("data-card")); };
+      el.onclick = go; el.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(e); } };
+    });
+    Array.prototype.forEach.call($("hand").querySelectorAll("[data-info]"), function (b) { b.onclick = function (e) { e.stopPropagation(); inspect(b.getAttribute("data-info")); }; });
+  }
+  function reactionCards() {
+    var r = S.actors.aero.profiles.filter(function (pid) { return CATALOG.profiles[pid] && CATALOG.profiles[pid].trigger; });
+    if (!r.length) return "";
+    return "<div class='card off' style='cursor:default' role='listitem'><span class='nm'>Reactions</span><span class='mv'>You'll be asked when they trigger: " + r.map(function (p) { return esc(CATALOG.profiles[p].name); }).join(", ") + ".</span><span class='cost'><span>1 Reaction per round</span></span></div>";
+  }
+  function defaultStep(pid, foes) {
+    var p = CATALOG.profiles[pid], r = p.requires || {};
+    if (pid === "move") return { pid: pid, dest: foes.length ? "close" : "withdraw", target: foes[0] };
+    if (pid === "speak") return { pid: pid, text: "" };
+    if (r.target === "enemy" || r.target === "beast") return { pid: pid, target: foes[0] };
+    return { pid: pid };
+  }
+  function planProjection() {   // the engine's own projection after the current plan
+    var proj = E.project(S, "aero");
+    var v = E.validatePlan(S, "aero", plan);
+    if (v.budget_after) { proj.budget = v.budget_after; proj.reaction_left = v.reaction_left; proj.fp = v.fp_after; }
+    var replay = E.project(S, "aero");   // melee/caps/distances: re-walk legal steps
+    plan.forEach(function (st, i) { if (v.steps[i] && v.steps[i].ok) { if (CATALOG.profiles[st.pid].resolution && CATALOG.profiles[st.pid].resolution.melee) proj.melee_attacked = true; var cap = CATALOG.profiles[st.pid].cap; if (cap) proj.used["cap:" + cap.group] = (proj.used["cap:" + cap.group] || 0) + 1;
+      if (st.pid === "move" && st.target) proj.dist[[st.target, "aero"].sort().join("|")] = st.dest === "close" ? 5 : (proj.dist[[st.target, "aero"].sort().join("|")] || 60) + 15;
+      if (st.pid === "toggle_blade" && proj.weapon) proj.weapon.ignited = !proj.weapon.ignited; } });
+    return proj;
+  }
+  function addCard(pid) {
+    var foes = visibleEnemies(), p = CATALOG.profiles[pid], r = p.requires || {};
+    if (pid === "move") return pickMove(foes);
+    if ((r.target === "enemy" || r.target === "beast") && foes.length > 1) return pickTarget(pid, foes);
+    plan.push(defaultStep(pid, foes)); render();
+  }
+  function pickTarget(pid, foes) {
+    $("pickBody").innerHTML = "<h2>Target</h2>" + foes.map(function (f) { return "<p><button data-t='" + f + "'>" + esc(S.actors[f].name) + " (" + E.distance(S, "aero", f) + " ft)</button></p>"; }).join("");
+    $("pick").showModal();
+    Array.prototype.forEach.call($("pickBody").querySelectorAll("[data-t]"), function (b) { b.onclick = function () { $("pick").close(); plan.push({ pid: pid, target: b.getAttribute("data-t") }); render(); }; });
+  }
+  function pickMove(foes) {
+    $("pickBody").innerHTML = "<h2>Move</h2>" + foes.map(function (f) { return "<p><button data-close='" + f + "'>Close on " + esc(S.actors[f].name) + "</button></p>"; }).join("") + "<p><button data-close=''>Withdraw 15 ft</button> <small class='muted'>Leaving reach provokes.</small></p>";
+    $("pick").showModal();
+    Array.prototype.forEach.call($("pickBody").querySelectorAll("[data-close]"), function (b) { b.onclick = function () { $("pick").close(); var t = b.getAttribute("data-close"); plan.push(t ? { pid: "move", dest: "close", target: t } : { pid: "move", dest: "withdraw" }); render(); }; });
+  }
+  function inspect(pid) {
+    var p = CATALOG.profiles[pid];
+    $("inspectBody").innerHTML = "<span class='badge " + p.status + "'>" + (p.status === "sheet" ? "On Aero's sheet" : "Sandbox proposal — needs owner approval") + "</span><h2 style='margin-top:8px'>" + esc(p.name) + "</h2>" +
+      "<p><b>" + esc(p.maneuver) + "</b>" + (p.technique ? " · " + esc(p.technique) : "") + "</p><p>" + esc(p.rules) + "</p>" +
+      (p.effect && p.effect.note ? "<p>" + esc(p.effect.note) + "</p>" : "") + "<p class='cost'>" + costChips(p.cost) + (p.trigger ? " <span>trigger: " + esc(p.trigger.replace(/_/g, " ")) + "</span>" : "") + "</p>" +
+      "<p><small class='muted'>Source: " + esc(p.source) + "</small></p>" + (p.cap ? "<p><small class='muted'>Limit: " + p.cap.max + " per " + p.cap.per + "</small></p>" : "");
+    $("inspect").showModal();
+  }
+  function renderPlan() {
+    var v = E.validatePlan(S, "aero", plan), myTurn = E.current(S) === "aero" && !S.over;
+    $("empty").hidden = plan.length > 0;
+    $("plan").innerHTML = plan.map(function (st, i) {
+      var p = CATALOG.profiles[st.pid], sv = v.steps[i] || { ok: false, reasons: [] };
+      var tgt = st.target ? " → " + esc(S.actors[st.target].name) : st.pid === "move" ? " → withdraw" : "";
+      var extra = "";
+      if (st.pid === "speak") extra = "<input type='text' data-say='" + i + "' placeholder='What Aero says' value='" + esc(st.text) + "' style='width:100%;margin-top:4px'>";
+      if ((st.pid === "saber_strike") && S.actors.aero.profiles.indexOf("force_augment") >= 0) extra = "<label style='display:flex;gap:6px;align-items:center;min-height:44px'><input type='checkbox' data-aug='" + i + "'" + (st.augment ? " checked" : "") + " style='width:20px;height:20px'> Force-guided (1 FP, +1d4) <span class='badge sandbox_proposal'>proposal</span></label>";
+      return "<li class='" + (sv.ok ? "" : "bad") + "'><div><b>" + esc(p.name) + "</b>" + tgt + "<div class='sub'>" + costChips(sv.cost || p.cost).replace(/<span>/g, "").split("</span>").filter(Boolean).join(" · ") + "</div>" +
+        (sv.ok ? "" : "<div class='err'>" + esc(sv.reasons.map(function (r) { return r.text; }).join(" ")) + "</div>") + extra + "</div>" +
+        "<div class='ctl'><button data-up='" + i + "' aria-label='Move up'" + (i === 0 ? " disabled" : "") + ">▲</button><button data-dn='" + i + "' aria-label='Move down'" + (i === plan.length - 1 ? " disabled" : "") + ">▼</button><button data-rm='" + i + "' aria-label='Remove'>✕</button></div></li>";
+    }).join("");
+    var j = E.comboJudge(S, "aero", plan);
+    $("judge").innerHTML = j.length ? j.map(function (n) { return "<li class='" + n.kind + "'>" + esc(n.text) + "</li>"; }).join("") : "<li><small class='muted'>Nothing to note yet.</small></li>";
+    var c = E.cinematicNote(S, plan); $("cine").textContent = c ? "Cinematic (no mechanical effect): " + c : "";
+    $("resolve").disabled = !myTurn || !plan.length || !v.legal;
+    $("planMsg").textContent = !myTurn ? (S.over ? "" : "Waiting for the other side.") : plan.length && !v.legal ? "Fix the red steps first. The same rules judge every actor." : "";
+    Array.prototype.forEach.call($("plan").querySelectorAll("[data-up]"), function (b) { b.onclick = function () { var i = +b.getAttribute("data-up"); var x = plan[i]; plan[i] = plan[i - 1]; plan[i - 1] = x; render(); }; });
+    Array.prototype.forEach.call($("plan").querySelectorAll("[data-dn]"), function (b) { b.onclick = function () { var i = +b.getAttribute("data-dn"); var x = plan[i]; plan[i] = plan[i + 1]; plan[i + 1] = x; render(); }; });
+    Array.prototype.forEach.call($("plan").querySelectorAll("[data-rm]"), function (b) { b.onclick = function () { plan.splice(+b.getAttribute("data-rm"), 1); render(); }; });
+    Array.prototype.forEach.call($("plan").querySelectorAll("[data-say]"), function (el) { el.oninput = function () { plan[+el.getAttribute("data-say")].text = el.value; }; });
+    Array.prototype.forEach.call($("plan").querySelectorAll("[data-aug]"), function (el) { el.onchange = function () { plan[+el.getAttribute("data-aug")].augment = el.checked; render(); }; });
+  }
+  function renderLog(v) {
+    var rec = {}; v.receipts.forEach(function (r) { rec[r.receipt] = r; });
+    var el = $("log");
+    el.innerHTML = v.log.map(function (l) {
+      var d = "";
+      if (l.receipt) d = " <span class='rc'>" + l.receipt.split(",").map(function (id) { var r = rec[id]; if (!r) return "";
+        var own = r.actor === "aero"; return "[" + id + " " + esc(r.formula) + (own ? " · dice " + r.rolls.join("/") + (r.extra.length ? " +" + r.extra.map(function (e) { return e.label + " " + e.value; }).join(" ") : "") : "") + " = " + r.total + (r.mode !== "normal" ? " · " + r.mode : "") + "]"; }).join(" ") + "</span>";
+      return "<p class='" + (l.turn_start ? "turn" : "") + (l.refused ? " refused" : "") + (l.speech ? " speech" : "") + "'>" + esc(l.text) + d + "</p>";
+    }).join("") || "<p class='intro'>The fight hasn't started.</p>";
+    el.scrollTop = el.scrollHeight;
+  }
+  function renderSwitches() {
+    var LBL = { secondary_action: "Secondary action (SA-001)", battle_insight_bonus: "Battle Insight as Bonus", force_augmentation: "Force augmentation", cinematic_judge: "Cinematic notes" };
+    $("switches").innerHTML = "<small class='muted'>Sandbox switches (proposals; restarting the fight applies them):</small><br>" + Object.keys(switches).map(function (k) { return "<label><input type='checkbox' data-sw='" + k + "'" + (switches[k] ? " checked" : "") + "> " + (LBL[k] || k) + "</label>"; }).join("");
+    Array.prototype.forEach.call($("switches").querySelectorAll("[data-sw]"), function (el) { el.onchange = function () { switches[el.getAttribute("data-sw")] = el.checked; newFight(); }; });
+  }
+  $("resolve").onclick = function () { if (run("aero", plan, {})) { plan = []; runNpcs(); } render(); };
+  $("clear").onclick = function () { plan = []; render(); };
+  $("reset").onclick = function () { seed = parseInt($("seed").value, 10) || 20261121; newFight(); };
+  $("scenario").onchange = function () { scenarioId = $("scenario").value; newFight(); };
+  $("inspectClose").onclick = function () { $("inspect").close(); };
+  $("pickCancel").onclick = function () { $("pick").close(); };
+  $("seed").value = seed;
+  window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; } };
+  renderSwitches(); newFight();
+})();
+</script>

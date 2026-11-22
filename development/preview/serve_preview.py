@@ -10,7 +10,7 @@ import build_preview
 
 TYPES = {'.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8',
          '.webmanifest': 'application/manifest+json; charset=utf-8', '.svg': 'image/svg+xml'}
-ROUTES = {'/': 'index.html', '/index.html': 'index.html', '/diagnostics.html': 'diagnostics.html',
+ROUTES = {'/': 'index.html', '/index.html': 'index.html', '/diagnostics.html': 'diagnostics.html', '/combat.html': 'combat.html',
           '/build.json': 'build.json', '/manifest.webmanifest': 'manifest.webmanifest', '/icon.svg': 'icon.svg'}
 
 
