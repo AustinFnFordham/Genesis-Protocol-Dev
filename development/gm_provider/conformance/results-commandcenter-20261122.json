@@ -1,0 +1,651 @@
+{
+  "ollama_version": "0.40.16",
+  "inputs": {
+    "GM_GUIDE.md": "c8bb279b84a051a930b77f711e158d43031d0caf1d7c99ba6fb968491bf583a7",
+    "move.schema.json": "789cb86c4bd75939f63c0a7fb6e681ce986c9d5315c3d008ca1f60db2e5e9ca9",
+    "fixtures.json": "fbe7cd95fdaef631a4d3c92ce3cd704dc20621cf02bca309839269667af01e23"
+  },
+  "temperature": 0,
+  "seed": 22,
+  "num_predict": 900,
+  "num_ctx": 4096,
+  "repeats": 1,
+  "repairs": 1,
+  "groups": [
+    {
+      "model": "qwen2.5:14b",
+      "digest": "7cdf5a0187d5c58cc5d369b255592f7841d1c4696d45a8c8a9489440385b22f6",
+      "mode": "json",
+      "summary": {
+        "cases": 7,
+        "first_pass": 3,
+        "final_pass": 3,
+        "repaired": 0,
+        "repair_candidates": 4,
+        "first_error_categories": {
+          "SCHEMA": 4,
+          "PHASE": 2
+        },
+        "final_error_categories": {
+          "SCHEMA": 4,
+          "PHASE": 2
+        },
+        "attempts": 11,
+        "wall_p50_ms": 2168.4,
+        "wall_p95_ms": 4642.2,
+        "first_load_ms": 2313.4
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue failed minItems",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 4642.2,
+              "load_ms": 2313.4,
+              "generated_tokens": 279,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.2 failed type",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 2269.2,
+              "load_ms": 4,
+              "generated_tokens": 308,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 570.2,
+              "load_ms": 3.4,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 506.7,
+              "load_ms": 3.2,
+              "generated_tokens": 60,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue failed minItems",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 1995.9,
+              "load_ms": 4.2,
+              "generated_tokens": 269,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue failed minItems",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 1987.2,
+              "load_ms": 3.6,
+              "generated_tokens": 269,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 710.8,
+              "load_ms": 4.2,
+              "generated_tokens": 86,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.2 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.3 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.4 failed type",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 4051,
+              "load_ms": 3.1,
+              "generated_tokens": 554,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.2 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.3 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.4 failed type",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 4094.8,
+              "load_ms": 3.4,
+              "generated_tokens": 554,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.2 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.3 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.4 failed type",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 2196.9,
+              "load_ms": 3.7,
+              "generated_tokens": 294,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context.dialogue.0 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.1 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.2 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.3 failed type",
+                "SCHEMA: proposal.turn_context.dialogue.4 failed type",
+                "SCHEMA: proposal.turn_context.movement failed type"
+              ],
+              "wall_ms": 2168.4,
+              "load_ms": 3.1,
+              "generated_tokens": 294,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "qwen2.5:14b",
+      "digest": "7cdf5a0187d5c58cc5d369b255592f7841d1c4696d45a8c8a9489440385b22f6",
+      "mode": "schema",
+      "summary": {
+        "cases": 7,
+        "first_pass": 4,
+        "final_pass": 4,
+        "repaired": 0,
+        "repair_candidates": 3,
+        "first_error_categories": {
+          "PHASE": 2,
+          "CONTINUITY": 1,
+          "AGENCY": 1
+        },
+        "final_error_categories": {
+          "PHASE": 2,
+          "CONTINUITY": 1,
+          "AGENCY": 1
+        },
+        "attempts": 10,
+        "wall_p50_ms": 3019.3500000000004,
+        "wall_p95_ms": 4060.5,
+        "first_load_ms": 3.6
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 3105.3,
+              "load_ms": 3.6,
+              "generated_tokens": 412,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 3007.8,
+              "load_ms": 3.7,
+              "generated_tokens": 411,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 561.3,
+              "load_ms": 3.1,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 523.6,
+              "load_ms": 3.6,
+              "generated_tokens": 60,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 3153.8,
+              "load_ms": 3.3,
+              "generated_tokens": 409,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 3030.9,
+              "load_ms": 3.2,
+              "generated_tokens": 408,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 688.2,
+              "load_ms": 3.6,
+              "generated_tokens": 80,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 3798.6,
+              "load_ms": 3.3,
+              "generated_tokens": 507,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "AGENCY: commit only the declared executable prefix and supported consequences",
+                "CONTINUITY: preserve the exact pending steps and omit context_id",
+                "CONTINUITY: explain the player-visible reason to stop"
+              ],
+              "wall_ms": 4060.5,
+              "load_ms": 3.8,
+              "generated_tokens": 553,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 2479.9,
+              "load_ms": 3.6,
+              "generated_tokens": 322,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "qwen2.5-coder:32b",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "mode": "json",
+      "summary": {
+        "cases": 7,
+        "first_pass": 3,
+        "final_pass": 3,
+        "repaired": 0,
+        "repair_candidates": 4,
+        "first_error_categories": {
+          "SCHEMA": 4,
+          "PHASE": 2
+        },
+        "final_error_categories": {
+          "MECHANICS": 1,
+          "SCHEMA": 3
+        },
+        "attempts": 11,
+        "wall_p50_ms": 3364,
+        "wall_p95_ms": 8396.6,
+        "first_load_ms": 4580.7
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.events.0 failed additionalProperties",
+                "SCHEMA: proposal.turn_context failed required",
+                "SCHEMA: proposal.turn_context.pending_reason failed type"
+              ],
+              "wall_ms": 8396.6,
+              "load_ms": 4580.7,
+              "generated_tokens": 225,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "MECHANICS: routine action requires no roll or table"
+              ],
+              "wall_ms": 643.8,
+              "load_ms": 3.1,
+              "generated_tokens": 40,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1110.8,
+              "load_ms": 3.6,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1279.3,
+              "load_ms": 3.7,
+              "generated_tokens": 81,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context",
+                "SCHEMA: proposal.events.0 failed required",
+                "SCHEMA: proposal.turn_context failed required",
+                "SCHEMA: proposal.turn_context.pending_reason failed type"
+              ],
+              "wall_ms": 5015.7,
+              "load_ms": 3.8,
+              "generated_tokens": 345,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "SCHEMA: tables.npc_evaluations.0.outcome_key failed type"
+              ],
+              "wall_ms": 1888.7,
+              "load_ms": 3.3,
+              "generated_tokens": 128,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1078.9,
+              "load_ms": 3.1,
+              "generated_tokens": 66,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context failed required"
+              ],
+              "wall_ms": 7287.9,
+              "load_ms": 4.2,
+              "generated_tokens": 502,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context failed required"
+              ],
+              "wall_ms": 7121.1,
+              "load_ms": 3.8,
+              "generated_tokens": 493,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context failed required",
+                "SCHEMA: proposal.turn_context.pending_reason failed minLength"
+              ],
+              "wall_ms": 3376.5,
+              "load_ms": 4.1,
+              "generated_tokens": 227,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "SCHEMA: proposal.turn_context failed required"
+              ],
+              "wall_ms": 3364,
+              "load_ms": 3.1,
+              "generated_tokens": 232,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "qwen2.5-coder:32b",
+      "digest": "b92d6a0bd47ee79114298de0177bf920c05a706d12633950b3936778492bef41",
+      "mode": "schema",
+      "summary": {
+        "cases": 7,
+        "first_pass": 5,
+        "final_pass": 5,
+        "repaired": 0,
+        "repair_candidates": 2,
+        "first_error_categories": {
+          "PHASE": 2
+        },
+        "final_error_categories": {
+          "MECHANICS": 2
+        },
+        "attempts": 9,
+        "wall_p50_ms": 1901,
+        "wall_p95_ms": 10150.2,
+        "first_load_ms": 3.1
+      },
+      "rows": [
+        {
+          "fixture": "routine-holster",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 4790.2,
+              "load_ms": 3.1,
+              "generated_tokens": 324,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "MECHANICS: routine action requires no roll or table"
+              ],
+              "wall_ms": 657.4,
+              "load_ms": 3.1,
+              "generated_tokens": 40,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "unlearned-power",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1119.8,
+              "load_ms": 3.2,
+              "generated_tokens": 69,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "reaction-owner",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1274.7,
+              "load_ms": 3.3,
+              "generated_tokens": 81,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "npc-motive",
+          "attempts": [
+            {
+              "errors": [
+                "PHASE: use tables for the committed context"
+              ],
+              "wall_ms": 7087.9,
+              "load_ms": 3.1,
+              "generated_tokens": 487,
+              "done_reason": "stop"
+            },
+            {
+              "errors": [
+                "MECHANICS: routine action requires no roll or table"
+              ],
+              "wall_ms": 1901,
+              "load_ms": 3.3,
+              "generated_tokens": 128,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "request-roll",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 1041,
+              "load_ms": 3.6,
+              "generated_tokens": 62,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "choice-stop",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 10150.2,
+              "load_ms": 3.3,
+              "generated_tokens": 701,
+              "done_reason": "stop"
+            }
+          ]
+        },
+        {
+          "fixture": "receipt-and-secret",
+          "attempts": [
+            {
+              "errors": [],
+              "wall_ms": 4847.4,
+              "load_ms": 3.1,
+              "generated_tokens": 325,
+              "done_reason": "stop"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
