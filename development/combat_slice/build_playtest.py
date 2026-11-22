@@ -19,7 +19,7 @@ def page(sha=None):
     src = (HERE / "playtest_src.html").read_text()
     data = lambda name: json.dumps(json.loads((HERE / name).read_text()), separators=(",", ":")).replace("</", "<\\/")
     js = lambda name: (HERE / name).read_text().replace("</script", "<\\/script")
-    return (src.replace("/*ENGINE*/", js("engine.js")).replace("/*PREDICT*/", js("predict.js")).replace("/*SOUL*/", js("soul.js")).replace("/*DRIVER*/", js("turn_driver.js"))
+    return (src.replace("/*ENGINE*/", js("engine.js")).replace("/*PREDICT*/", js("predict.js")).replace("/*SOUL*/", js("soul.js")).replace("/*DRIVER*/", js("turn_driver.js")).replace("/*OVERLAY*/", js("campaign_overlay.js")).replace("/*JEDI_FUNDAMENTALS*/", (HERE.parent.parent / "campaigns/starwars_litrpg/creator/jedi_fundamentals.json").read_text())
                .replace("/*CATALOG*/", data("catalog.json")).replace("/*SCENARIOS*/", data("scenarios.json"))
                .replace("__SHA__", sha))
 

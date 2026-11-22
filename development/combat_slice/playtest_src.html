@@ -101,7 +101,7 @@ details.grp > summary::before { content: "▸"; color: var(--dim); transition: t
 .cost { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 6px; border: 1px solid currentColor; background: rgba(0,0,0,.25); }
 .c-main { color: var(--main); } .c-secondary { color: var(--secondary); } .c-bonus { color: var(--bonus); } .c-reaction { color: var(--reaction); } .c-movement_ft { color: var(--move); } .c-object { color: var(--object); } .c-fp { color: var(--fp); } .c-free { color: var(--free); }
 .badge { font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; padding: 1px 6px; border-radius: 5px; border: 1px solid; }
-.badge.sheet { color: var(--sheet); } .badge.sandbox_proposal { color: var(--prop); }
+.badge.sheet { color: var(--sheet); } .badge.sandbox_proposal { color: var(--prop); } .badge.campaign_ruling { color: var(--fp); }
 .ibtn { min-height: 44px; min-width: 44px; padding: 0; border-radius: 50%; font: 600 15px var(--display); flex: none; margin: -6px -6px 0 0; background: rgba(0,0,0,.25); }
 .grip { position: absolute; right: 4px; bottom: 4px; width: 44px; height: 44px; display: grid; place-items: center; color: var(--dim); touch-action: none; cursor: grab; border-radius: 10px; font-size: 18px; }
 .card.off .grip { display: none; }
@@ -199,6 +199,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   <div class="row toggles" style="margin-top:6px">
     <label><input type="checkbox" id="fullMech"> Full mechanics (debug)</label>
     <label><input type="checkbox" id="animate" checked> Animate dice</label>
+    <label title="Owner ruling 2026-11-11, campaigns/starwars_litrpg/creator/jedi_fundamentals.json"><input type="checkbox" id="campaignOverlay"> Campaign overlay: starwars_litrpg (Jedi Fundamentals)</label>
     <details class="sw"><summary>Sandbox switches</summary><div class="switches" id="switches"></div></details>
   </div>
 
@@ -247,8 +248,9 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
 <script>/*PREDICT*/</script>
 <script>/*SOUL*/</script>
 <script>/*DRIVER*/</script>
+<script>/*OVERLAY*/</script>
 <script>
-var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
+var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI_FUNDAMENTALS*/;
 (function () {
   "use strict";
   var E = GenesisCombat, P = GenesisPredict, SOUL = GenesisSoul, $ = function (id) { return document.getElementById(id); };
@@ -287,6 +289,8 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   // ---------- dice authority ----------
   // Over the preview server, every die comes from the sandbox Atomic service (secret seed, journal, plan lock).
   // As a standalone file there is no server: offline practice dice, clearly labelled NOT authoritative.
+  var OVERLAYS = [GenesisOverlay.fromJediFundamentals(JEDI_FUNDAMENTALS)], campaign = null;
+  function stateOpts() { return { atomic: true, switches: switches, campaign: campaign, overlays: OVERLAYS }; }
   var DR = GenesisDriver, atomic = null, session = null, busy = false, narr = {}, narrQueue = [], liveLog = null;
   function detectAtomic() {
     var http = DR.HttpAtomic("");
@@ -297,14 +301,14 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function newFight() {
-    stopTheater(); S = E.newState(CATALOG, SCENARIOS, scenarioId, { atomic: true, switches: switches }); plan = []; pendingRun = null; shownLog = 0; lastSim = null; narr = {}; busy = true; render();
-    atomic.open({ scenario: scenarioId, switches: switches }).then(function (o) { session = o.session; if (atomic.authoritative) lsSet("genesis.cc004.session", session); busy = false; resetTheater(); render(); return runNpcs(); }).catch(fatal);
+    stopTheater(); S = E.newState(CATALOG, SCENARIOS, scenarioId, stateOpts()); plan = []; pendingRun = null; shownLog = 0; lastSim = null; narr = {}; busy = true; render();
+    atomic.open({ scenario: scenarioId, switches: switches, campaign: campaign }).then(function (o) { session = o.session; if (atomic.authoritative) lsSet("genesis.cc004.session", session); busy = false; resetTheater(); render(); return runNpcs(); }).catch(fatal);
   }
   function resume(sid) {   // reconnect: rebuild the exact state from the Atomic journal, then continue
     return atomic.journal(sid).then(function (j) {
       if (j.closed || !j.meta || !SCENARIOS.scenarios[j.meta.scenario]) throw new Error("no resumable session");
       scenarioId = j.meta.scenario; $("scenario").value = scenarioId; switches = Object.assign(switches, j.meta.switches || {});
-      var rb = DR.replay(CATALOG, SCENARIOS, j); S = rb.state; session = sid; shownLog = S.log.length; resetTheater(); markNarration(true);
+      campaign = j.meta.campaign || null; $("campaignOverlay").checked = !!campaign; var rb = DR.replay(CATALOG, SCENARIOS, j, OVERLAYS); S = rb.state; session = sid; shownLog = S.log.length; resetTheater(); markNarration(true);
       if (atomic.state) atomic.state(sid).then(function (st) { $("connMsg").textContent += st.hash === DR.stateHash(S) ? " Server reconstruction matches (" + st.hash + ")." : " Server reconstruction differs; using the server's."; if (st.hash !== DR.stateHash(S) && !rb.pending) { S = st.state; render(); } }, function () {});
       $("connMsg").textContent = "Reconnected: rebuilt from the Atomic journal (" + j.tape.length + " accepted dice, no rerolls).";
       if (rb.pending) { busy = false; render(); return playTurn(rb.pending.actor, rb.pending.plan, rb.pending.choices).then(runNpcs); }
@@ -505,6 +509,9 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     var p = CATALOG.profiles[pid], r = p.requires || {};
     if (pid === "move") return { pid: pid, dest: foes.length ? "close" : "withdraw", target: foes[0] };
     if (pid === "speak") return { pid: pid, text: "" };
+    if (pid === "minor_telekinesis") { var A0 = S.actors.aero; if (A0.dropped) return { pid: pid, object: "own_weapon" };
+      var loose = Object.keys(S.actors).filter(function (id) { return id !== "aero" && S.actors[id].dropped && !S.actors[id].dropped.far; })[0];
+      return { pid: pid, object: loose ? loose + "_weapon" : null }; }
     if (r.target === "enemy" || r.target === "beast") return { pid: pid, target: foes[0] };
     return { pid: pid };
   }
@@ -515,7 +522,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   function renderGroups() {
     var proj = planProjection(), foes = visibleEnemies(), mine = myTurn(), A = S.actors.aero;
     var by = {}; handProfiles().forEach(function (pid) { (by[groupOf(pid)] = by[groupOf(pid)] || []).push(pid); });
-    if ((SCENARIOS.aero.not_on_sheet || []).length) by.absent = SCENARIOS.aero.not_on_sheet.map(function (x, i) { return "absent:" + i; });
+    if ((SCENARIOS.aero.not_on_sheet || []).length) by.absent = SCENARIOS.aero.not_on_sheet.map(function (x, i) { return "absent:" + i; }).filter(function (k) { return !(A.profiles.indexOf("minor_telekinesis") >= 0 && /Minor Telekinesis/.test(SCENARIOS.aero.not_on_sheet[+k.slice(7)].name)); });
     $("filters").innerHTML = [{ id: "all", short: "All" }].concat(GROUPS).filter(function (g) { return g.id === "all" || by[g.id]; }).map(function (g) { return "<button data-filter='" + g.id + "' aria-pressed='" + (filter === g.id) + "'>" + esc(g.short) + "</button>"; }).join("");
     $("groups").innerHTML = GROUPS.filter(function (g) { return by[g.id] && (filter === "all" || filter === g.id); }).map(function (g) {
       var cards = by[g.id].map(function (pid) {
@@ -531,7 +538,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
         }
         var step = defaultStep(pid, foes), av = E.availability(S, "aero", pid, step, proj), why = !mine ? (busy ? "Resolving…" : S.over ? "The fight is over." : "Not your turn.") : av.ok ? "" : bestReason(av.reasons);
         return "<div class='card" + (why ? " off" : "") + "' role='listitem' tabindex='0' data-card='" + pid + "' data-off='" + !!why + "' style='--accentc:" + accentOf(pid) + "' aria-label='" + esc(p.name + " — " + (costWords(av.cost || p.cost || {}) || "free") + (why ? " — unavailable: " + why : "")) + "'>" +
-          "<span class='stripe'></span><div class='hd'><span class='badge " + p.status + "'>" + (p.status === "sheet" ? "Sheet" : "Proposal") + "</span><button class='ibtn' data-info='" + pid + "' aria-label='Inspect " + esc(p.name) + "'>i</button></div>" +
+          "<span class='stripe'></span><div class='hd'><span class='badge " + p.status + "'>" + (p.status === "sheet" ? "Sheet" : p.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><button class='ibtn' data-info='" + pid + "' aria-label='Inspect " + esc(p.name) + "'>i</button></div>" +
           "<span class='nm'>" + esc(p.name) + "</span><span class='mv'>" + esc(p.maneuver) + (p.technique ? " · " + esc(p.technique) : "") + "</span>" + (why ? "<span class='why'>" + esc(why) + "</span>" : "") +
           "<div class='foot'>" + costChips(av.cost || p.cost) + (isCompound(pid) ? "<span class='cost' style='color:var(--warn)'>compound</span>" : "") + "</div><span class='grip' aria-hidden='true'>⠿</span></div>";
       }).join("");
@@ -554,6 +561,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     var foes = visibleEnemies(), p = CATALOG.profiles[pid], r = p.requires || {};
     var put = function (st) { var i = at == null || at > plan.length ? plan.length : at; plan.splice(i, 0, st); render(); var t = $("timeline").querySelectorAll(".step")[i]; if (t) { t.classList.add("just"); if (focus) t.focus({ preventScroll: false }); } };
     if (pid === "move") return pickMove(foes, put);
+    if (pid === "minor_telekinesis") return pickObject(put);
     if ((r.target === "enemy" || r.target === "beast") && foes.length > 1) return pickTarget(pid, foes, put);
     put(defaultStep(pid, foes));
   }
@@ -561,6 +569,15 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
     $("pickBody").innerHTML = "<h2>Target</h2>" + foes.map(function (f) { return "<p><button data-t='" + f + "'>" + esc(S.actors[f].name) + " (" + E.distance(S, "aero", f) + " ft)</button></p>"; }).join("");
     $("pick").showModal();
     each($("pickBody"), "[data-t]", function (b) { b.onclick = function () { $("pick").close(); put({ pid: pid, target: b.getAttribute("data-t") }); }; });
+  }
+  function pickObject(put) {
+    var A = S.actors.aero, opts = [];
+    if (A.dropped) opts.push({ object: "own_weapon", label: "Call your " + A.dropped.name + " back to your hand" });
+    Object.keys(S.actors).forEach(function (id) { var X = S.actors[id]; if (id !== "aero" && X.dropped && !X.dropped.far) opts.push({ object: id + "_weapon", label: "Send " + X.name + "'s dropped " + X.dropped.name + " 30 ft away" }); });
+    $("pickBody").innerHTML = "<h2>Minor Telekinesis</h2><p class='muted'>One visible, unattended object (10 lb or less) within 30 ft. Never a creature, never anything held.</p>" +
+      (opts.length ? opts.map(function (o) { return "<p><button data-obj='" + o.object + "'>" + esc(o.label) + "</button></p>"; }).join("") : "<p>No loose object in reach right now.</p>");
+    $("pick").showModal();
+    each($("pickBody"), "[data-obj]", function (b) { b.onclick = function () { $("pick").close(); put({ pid: "minor_telekinesis", object: b.getAttribute("data-obj") }); }; });
   }
   function pickMove(foes, put) {
     $("pickBody").innerHTML = "<h2>Move</h2>" + foes.map(function (f) { return "<p><button data-close='" + f + "'>Close on " + esc(S.actors[f].name) + "</button></p>"; }).join("") + "<p><button data-close=''>Withdraw 15 ft</button> <small class='muted'>Leaving reach provokes an opportunity attack.</small></p>";
@@ -721,6 +738,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   $("reset").onclick = function () { lsSet("genesis.cc004.session", null); newFight(); };
   $("scenario").onchange = function () { scenarioId = $("scenario").value; newFight(); };
   $("fullMech").onchange = function () { full = $("fullMech").checked; render(); };
+  $("campaignOverlay").onchange = function () { campaign = $("campaignOverlay").checked ? "starwars_litrpg" : null; lsSet("genesis.cc004.session", null); newFight(); };
   // ---------- dock (sticky on desktop; bottom sheet on touch screens, so the drop zone is always on screen) ----------
   var dockOpen = true;
   function openDock(v) { dockOpen = v; $("dock").classList.toggle("collapsed", !v); $("dockHandle").setAttribute("aria-expanded", String(v)); }
@@ -731,7 +749,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/;
   $("inspectClose").onclick = function () { $("inspect").close(); }; $("pickCancel").onclick = function () { $("pick").close(); };
   window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; }, playing: function () { return busy; }, busy: function () { return busy; }, waitingRoll: function () { return !!theater.waiting; }, sim: function () { return currentSim(); }, authority: function () { return atomic && atomic.authority; }, session: function () { return session; } };
   renderSwitches();
-  S = E.newState(CATALOG, SCENARIOS, scenarioId, { atomic: true, switches: switches }); busy = true;
+  S = E.newState(CATALOG, SCENARIOS, scenarioId, stateOpts()); busy = true;
   detectAtomic().then(function (a) {
     atomic = a; var sid = atomic.authoritative ? lsGet("genesis.cc004.session") : null;
     if (sid) return resume(sid).catch(function () { lsSet("genesis.cc004.session", null); newFight(); });

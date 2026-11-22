@@ -28,6 +28,7 @@ timed "$U/test_whisper_review.cjs" node $U/test_whisper_review.cjs $P $Q/state_r
 timed "development/combat_slice/test_engine.cjs" node development/combat_slice/test_engine.cjs
 timed "development/combat_slice/test_cc003.cjs" node development/combat_slice/test_cc003.cjs
 timed "development/combat_slice/test_cc004.cjs" node development/combat_slice/test_cc004.cjs
+timed "development/combat_slice/test_cc005b.cjs" node development/combat_slice/test_cc005b.cjs
 timed "development/combat_slice/test_atomic_service.py" python3 -B development/combat_slice/test_atomic_service.py
 timed "development/combat_slice/test_atomic_flow.cjs" node development/combat_slice/test_atomic_flow.cjs
 timed "development/combat_slice/test_cc005_server.cjs" node development/combat_slice/test_cc005_server.cjs

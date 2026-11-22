@@ -62,12 +62,19 @@
       a.conds = {}; if (a.hidden) a.conds.hidden = true; delete a.hidden;
       a.used = {}; a.down = false; a.dropped = null; a.reaction_left = 1;
       a.profiles = [].concat((a.grants && a.grants.sheet) || [], (a.grants && a.grants.sandbox_proposal) || []);
+      a.campaign_grants = [];
+      // Campaign-grant overlay (e.g. Jedi Fundamentals): applies ONLY when the session's campaign is in the rule's scope
+      // AND the rule names this character. Never edits the sheet or powers_known.
+      (opts.overlays || []).forEach(function (ov) {
+        if (!ov || ov.campaign !== opts.campaign) return;
+        (ov.granted_to || []).forEach(function (g) { if (g.character === a.id && catalog.profiles[ov.profile] && a.profiles.indexOf(ov.profile) < 0) { a.profiles.push(ov.profile); a.campaign_grants.push({ profile: ov.profile, rule: ov.rule, version: ov.version, status: ov.status, granted_by: g.granted_by, source: ov.doc }); } });
+      });
       actors[id] = a;
     });
     Object.keys(catalog.profiles).forEach(function (k) { catalog.profiles[k].id = k; });
     var s = { schema: "genesis-cc002-state/0.1", canonical: false, scenario: scenarioId, title: sc.title, intro: sc.intro,
               catalog: catalog, switches: switches, round: 1, order: sc.initiative.slice(), turn: 0, actors: actors,
-              dist: clone(sc.distance), rng: { mode: opts.atomic ? "atomic" : "local", seed: opts.atomic ? null : (opts.seed == null ? 20261121 : opts.seed), n: 0 }, tape: [], receipts: [], log: [], trigger: 0, over: null };
+              dist: clone(sc.distance), campaign: opts.campaign || null, rng: { mode: opts.atomic ? "atomic" : "local", seed: opts.atomic ? null : (opts.seed == null ? 20261121 : opts.seed), n: 0 }, tape: [], receipts: [], log: [], trigger: 0, over: null };
     Object.keys(actors).forEach(function (id) { actors[id].budget = budgetFor(s); });   // everyone starts the round with a full budget
     startTurn(s);
     return s;
@@ -115,10 +122,11 @@
     if (r.switch && !s.switches[r.switch]) why.push({ code: "SWITCH_OFF", text: "Sandbox switch " + r.switch + " is off." });
     if (r.secondary_action && !s.switches.secondary_action) why.push({ code: "SA001_DISABLED", text: "Secondary Action (SA-001) is off in this ruleset." });
     var cost = costOf(s, actorId, pid, step, proj);
+    if (pid === "recover_weapon" && proj.dropped && proj.dropped.far) cost = Object.assign({}, cost, { movement_ft: 30 });   // flung by telekinesis: lands 30 ft away, not 10
     COST_KEYS.forEach(function (k) {
       if (!cost[k]) return;
       var have = k === "fp" ? proj.fp : k === "reaction" ? proj.reaction_left : proj.budget[k];
-      if ((have || 0) < cost[k]) why.push({ code: "NO_" + k.toUpperCase(), text: "Not enough " + label(k) + " left (" + (have || 0) + ")." });
+      if ((have || 0) < cost[k]) why.push(pid === "recover_weapon" && k === "movement_ft" && proj.dropped && proj.dropped.far ? { code: "WEAPON_FAR", text: "Your weapon lies 30 ft away: you need 30 ft of movement (" + (have || 0) + " left)." } : { code: "NO_" + k.toUpperCase(), text: "Not enough " + label(k) + " left (" + (have || 0) + ")." });
     });
     if (p.cap) { var used = proj.used["cap:" + p.cap.group] || 0; if (used >= p.cap.max) why.push({ code: "CAP_REACHED", text: "Already used this " + p.cap.per + "." }); }
     var w = proj.weapon;
@@ -134,6 +142,10 @@
     if (r.reloadable && sa && sa.held && sa.reserve < 1) why.push({ code: "NO_RESERVE", text: "No ammunition left to load." });
     if (r.offhand_free && ((sa && sa.held) || proj.conds.grappling)) why.push({ code: "HAND_OCCUPIED", text: (sa && sa.held ? "Your off hand holds the " + sa.name : "Your off hand is holding a grapple") + "; this needs a free hand." });
     if (r.no_ability && a.profiles.indexOf(pid) < 0) {}
+    if (r.telekinesis) {
+      var tko = tkObject(s, actorId, step, proj);
+      if (!tko.ok) why.push({ code: tko.code, text: tko.text });
+    }
     if (r.always_unavailable) why.push({ code: r.always_unavailable.code, text: r.always_unavailable.text });
     if (r.condition && !proj.conds[r.condition]) why.push({ code: "NEEDS_" + r.condition.toUpperCase(), text: r.condition === "hidden" ? "Needs to be hidden." : "Needs " + r.condition.replace("_", " ") + "." });
     if (r.after_melee_attack_this_turn && !proj.melee_attacked) why.push({ code: "NEEDS_MELEE_ATTACK_FIRST", text: "Only after a melee attack this turn." });
@@ -181,6 +193,7 @@
     if (p.resolution && p.resolution.ammo && proj.sidearm) proj.sidearm.ammo -= 1;
     if (pid === "reload_sidearm" && proj.sidearm) { var need = proj.sidearm.capacity - proj.sidearm.ammo, take = Math.min(need, proj.sidearm.reserve); proj.sidearm.ammo += take; proj.sidearm.reserve -= take; }
     if (pid === "grapple") proj.conds.grappling = { by: actorId };
+    if (pid === "minor_telekinesis" && step.object === "own_weapon" && proj.dropped) { proj.weapon = clone(proj.dropped); proj.weapon.held = true; if (proj.weapon.kind === "lightsaber") proj.weapon.ignited = false; proj.dropped = null; }
     if (pid === "recover_weapon" && proj.dropped) { proj.weapon = clone(proj.dropped); proj.weapon.held = true; if (proj.weapon.kind === "lightsaber") proj.weapon.ignited = false; proj.dropped = null; }
     if (p.effect && p.effect.sets) proj.conds[p.effect.sets] = { until: actorId };
   }
@@ -318,7 +331,10 @@
     if (p.resolution.melee) return [];
     var out = [], d = distance(s, attacker, defender);
     if (p.resolution.range && d > p.resolution.range.normal) out.push("long range");
-    if (s.switches.ranged_in_melee_disadvantage && enemiesOf(s, attacker).some(function (e) { return distance(s, attacker, e) <= 5 && !s.actors[e].conds.hidden; })) out.push("enemy within 5 ft");
+    // Opt-in sandbox rule (owner D4): a hostile within 5 ft that can see the attacker and is not incapacitated.
+    // Exceptions (tested): hostile down, hidden from the attacker's side (not perceiving), or incapacitated. Grappled or
+    // prone hostiles still count. Melee attacks are never affected.
+    if (s.switches.ranged_in_melee_disadvantage && enemiesOf(s, attacker).some(function (e) { var X = s.actors[e]; return distance(s, attacker, e) <= 5 && !X.down && !X.conds.hidden && !X.conds.incapacitated && !s.actors[attacker].conds.hidden; })) out.push("enemy within 5 ft");
     return out;
   }
   function attack(s, ctrl, attacker, defender, pid, opts) {
@@ -409,10 +425,18 @@
     if (step.pid === "move") return doMove(s, ctrl, actorId, step);
     if (step.pid === "speak") { log(s, actorId, a.name + ": “" + (step.text || "…") + "”", { speech: true }); return true; }
     if (step.pid === "toggle_blade") { a.weapon.ignited = !a.weapon.ignited; log(s, actorId, a.name + (a.weapon.ignited ? " ignites" : " deactivates") + " the blade."); return true; }
+    if (step.pid === "minor_telekinesis") {
+      var tk = tkObject(s, actorId, step, null);
+      if (tk.kind === "retrieve") { a.weapon = clone(a.dropped); a.weapon.held = true; if (a.weapon.kind === "lightsaber") a.weapon.ignited = false; a.dropped = null; log(s, actorId, a.name + " calls the " + a.weapon.name + " back to his hand through the Force (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "retrieve" }); return true; }
+      var O = s.actors[tk.owner]; O.dropped.far = true;
+      log(s, actorId, a.name + " sends " + O.name + "'s loose " + O.dropped.name + " skittering 30 ft away (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "reposition", target: tk.owner });
+      return true;
+    }
     if (step.pid === "draw_sidearm") { a.sidearm.held = true; log(s, actorId, a.name + " draws the " + a.sidearm.name + " (" + a.sidearm.ammo + "/" + a.sidearm.capacity + ").", { ev: "draw", actor: actorId }); return true; }
     if (step.pid === "holster_sidearm") { a.sidearm.held = false; log(s, actorId, a.name + " holsters the " + a.sidearm.name + ".", { ev: "holster", actor: actorId }); return true; }
     if (step.pid === "reload_sidearm") { var need = a.sidearm.capacity - a.sidearm.ammo, take = Math.min(need, a.sidearm.reserve); a.sidearm.ammo += take; a.sidearm.reserve -= take; log(s, actorId, a.name + " reloads: " + a.sidearm.ammo + "/" + a.sidearm.capacity + " (" + a.sidearm.reserve + " in reserve).", { ev: "reload", actor: actorId }); return true; }
     if (p.resolution && p.resolution.type === "area_save") return areaSave(s, ctrl, actorId, p);
+    if (step.pid === "recover_weapon" && a.dropped && a.dropped.far) log(s, actorId, a.name + " runs 30 ft to the flung weapon.", { ev: "move", actor: actorId });
     if (step.pid === "recover_weapon") { a.weapon = clone(a.dropped); a.weapon.held = true; if (a.weapon.kind === "lightsaber") a.weapon.ignited = false; a.dropped = null; log(s, actorId, a.name + " recovers the " + a.weapon.name + "."); return true; }
     if (p.effect && p.effect.sets_on_target && T) { T.conds[p.effect.sets_on_target] = { by: actorId }; log(s, actorId, a.name + " — " + p.name + " on " + T.name + ". " + p.effect.note, { ev: "effect", actor: actorId, target: step.target, pid: step.pid }); return true; }
     if (p.effect && p.effect.sets) { a.conds[p.effect.sets] = { until: actorId }; log(s, actorId, a.name + " — " + p.name + ". " + p.effect.note); return true; }
@@ -445,6 +469,27 @@
       return true;
     }
     return true;
+  }
+  // Jedi Fundamentals limits: one visible, UNATTENDED object (not held/worn/carried, not fixed), <= 10 lb, within 30 ft.
+  // In this slice the unattended objects are dropped weapons. step.object: "own_weapon" (retrieve) or "<actorId>_weapon"
+  // (reposition someone else's dropped weapon 30 ft further away). Nothing here damages, moves or disarms a creature.
+  function tkObject(s, actorId, step, proj) {
+    var lim = (s.catalog.profiles.minor_telekinesis || {}).limits || { max_weight_lb: 10, range_ft: 30 };
+    if (step.object === "own_weapon") {
+      var dw = proj ? proj.dropped : s.actors[actorId].dropped;
+      if (!dw) return { ok: false, code: "NO_UNATTENDED_OBJECT", text: "Nothing of yours is lying loose." };
+      if ((dw.weight_lb || 3) > lim.max_weight_lb) return { ok: false, code: "TOO_HEAVY", text: "Over 10 lb." };
+      if (dw.far && 30 > lim.range_ft) return { ok: false, code: "OUT_OF_RANGE", text: "Beyond 30 ft." };
+      return { ok: true, kind: "retrieve" };
+    }
+    var m = /^(.+)_weapon$/.exec(step.object || "");
+    if (!m || !s.actors[m[1]] || m[1] === actorId) return { ok: false, code: "NO_UNATTENDED_OBJECT", text: "No unattended object in reach (here, only dropped weapons count)." };
+    var T = s.actors[m[1]];
+    if (!T.dropped) return { ok: false, code: "ATTENDED_OBJECT", text: "It is held: Minor Telekinesis never takes attended objects or disarms." };
+    if (T.dropped.far) return { ok: false, code: "ALREADY_FAR", text: "Already out of easy reach." };
+    if ((T.dropped.weight_lb || 3) > lim.max_weight_lb) return { ok: false, code: "TOO_HEAVY", text: "Over 10 lb." };
+    if (distance(s, actorId, m[1]) + 10 > lim.range_ft) return { ok: false, code: "OUT_OF_RANGE", text: "The weapon lies beyond 30 ft." };
+    return { ok: true, kind: "reposition", owner: m[1] };
   }
   function areaSave(s, ctrl, actorId, p) {
     var a = s.actors[actorId], R = p.resolution;
@@ -551,7 +596,8 @@
       return plan;
     }
     // duelist: recover a dropped blade first; feint when it can; bind an armed foe when the blade is ready; else strike
-    if (a.dropped) return [{ pid: "recover_weapon" }];
+    if (a.dropped && !(a.dropped.far && (a.budget.movement_ft || 0) < 30)) return [{ pid: "recover_weapon" }];
+    if (a.dropped) return d > 5 ? [{ pid: "move", dest: "close", target: t }] : [];
     if (d > 5) plan.push({ pid: "move", dest: "close", target: t });
     var T = s.actors[t];
     if (s.switches.secondary_action && !(T.conds.feinted)) plan.push({ pid: "feint", target: t });

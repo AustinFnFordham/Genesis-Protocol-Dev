@@ -81,8 +81,8 @@
 
   // replay(journal): rebuild the exact state from the Atomic journal (commits in order, decisions, accepted tape).
   // Pure and synchronous. Any divergence (a die the journal doesn't have, a turn out of order) throws.
-  function replay(catalog, scenarios, journal) {
-    var m = journal.meta || {}, s = E.newState(catalog, scenarios, m.scenario, { atomic: true, switches: m.switches || {} });
+  function replay(catalog, scenarios, journal, overlays) {
+    var m = journal.meta || {}, s = E.newState(catalog, scenarios, m.scenario, { atomic: true, switches: m.switches || {}, campaign: m.campaign || null, overlays: overlays || [] });
     s = E.acceptDice(s, journal.tape || []);
     var dec = {}; (journal.decisions || []).forEach(function (d) { dec[d.turn_key + "|" + d.key] = d.choice; });
     var commits = journal.commits || [];

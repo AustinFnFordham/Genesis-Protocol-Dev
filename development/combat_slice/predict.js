@@ -54,6 +54,9 @@
     plan.forEach(function (st, i) {
       var p = s.catalog.profiles[st.pid], out = { index: i, pid: st.pid, name: p.name, legal: !!(v.steps[i] && v.steps[i].ok), kind: "other" };
       var T = st.target && s.actors[st.target];
+      // Movement-projected geometry: judge this step at the distances the engine projects after the earlier planned steps.
+      var pre = i ? E.validatePlan(s, actorId, plan.slice(0, i)).proj : null, sx = pre ? Object.assign({}, s, { dist: pre.dist }) : s;
+      if (T) out.distance_ft = E.distance(sx, actorId, st.target);
       if (p.resolution && p.resolution.type === "contest" && T) {
         var tsk = p.resolution.target_skill, am = skillOf(A, p.resolution.actor_skill);
         var tm = tsk === "athletics_or_acrobatics" ? Math.max(T.skills.athletics || 0, T.skills.acrobatics || 0) : skillOf(T, tsk);
@@ -62,7 +65,7 @@
         if (p.effect.on_success === "feinted") pFeint[st.target] = w;
       }
       if (p.resolution && p.resolution.type === "attack" && T) {
-        var base = E.hasAdv(s, actorId, st.target, p, {}), adv = base.adv.slice(), dis = base.dis.slice().concat(E.rangeMods ? E.rangeMods(s, actorId, st.target, p) : []);
+        var base = E.hasAdv(sx, actorId, st.target, p, {}), adv = base.adv.slice(), dis = base.dis.slice().concat(E.rangeMods ? E.rangeMods(sx, actorId, st.target, p) : []);
         if (insight[st.target]) { if (adv.indexOf("Battle Insight") < 0) adv.push("Battle Insight"); }
         if (T.conds.dodge_ready || T.conds.dodging) { if (dis.indexOf("dodging") < 0) dis.push(T.conds.dodging ? "dodging" : "readied dodge"); }
         var parryOpt = reactionLeft[st.target] > 0 && p.resolution.melee && E.reactionOptions(s, st.target, "melee_hit_on_me", { attacker: actorId, defender: st.target, depth: 0 });

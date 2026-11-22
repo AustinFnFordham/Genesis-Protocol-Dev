@@ -6,10 +6,12 @@
 const E = require("./engine.js"), D = require("./turn_driver.js");
 const C = require("./catalog.json"), S = require("./scenarios.json");
 const readline = require("readline");
+// Server-trusted overlays come from the repository's own campaign rule files, never from the client.
+const OV = [require("./campaign_overlay.js").fromJediFundamentals(require("../../campaigns/starwars_litrpg/creator/jedi_fundamentals.json"))];
 function clone(x) { return JSON.parse(JSON.stringify(x)); }
 function inspect(journal, candidate) {
   if (!S.scenarios[(journal.meta || {}).scenario]) return { error: "UNKNOWN_SCENARIO" };
-  const rb = D.replay(clone(C), S, journal), s = rb.state, out = { hash: D.stateHash(s), over: s.over || null, round: s.round };
+  const rb = D.replay(clone(C), S, journal, OV), s = rb.state, out = { hash: D.stateHash(s), over: s.over || null, round: s.round };
   if (rb.pending) {
     const p = rb.pending; out.pending = { turn_key: p.turn_key, actor: p.actor };
     if (p.need_dice) { const n = p.need_dice; out.pending.need = { dice: n.dice.filter((d) => !s.tape[d.seq]), actor: n.actor, controller: s.actors[n.actor].controller, purpose: n.purpose, step: n.step, rules: n.rules, target: n.target, kind: n.kind }; }

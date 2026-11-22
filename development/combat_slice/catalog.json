@@ -38,8 +38,18 @@
     "status": "sandbox_proposal",
     "text": "Disadvantage on ranged attacks while a visible enemy is within 5 ft. A common d20 rule, but not on Aero's sheet; off until the owner approves it.",
     "provenance": {
-     "source": "common d20 convention; NOT on Aero's runtime sheet",
-     "approval": "pending owner (GEP-001 §11.8)"
+     "source": "common d20 convention (ranged attack with a hostile within 5 ft); NOT on Aero's runtime sheet",
+     "approval": "owner 2026-11-22: approved for opt-in sandbox testing only; not globally promoted",
+     "rule": "Disadvantage on a ranged attack roll while a hostile creature within 5 ft of the attacker can see it and is not incapacitated.",
+     "exceptions": [
+      "hostile is down (0 HP)",
+      "hostile is hidden (not perceiving the attacker in this model)",
+      "hostile is incapacitated",
+      "the attacker is hidden from it",
+      "melee attacks are never affected",
+      "grappled or prone hostiles STILL count (not incapacitated)"
+     ],
+     "tests": "development/combat_slice/test_cc005b.cjs (ranged-in-melee cases)"
     }
    }
   },
@@ -902,6 +912,34 @@
     "approval": "pending owner",
     "note": "Sandbox fixture values for the relay droid; not canon."
    }
+  },
+  "minor_telekinesis": {
+   "name": "Minor Telekinesis (Jedi Fundamentals)",
+   "maneuver": "Force (campaign feature)",
+   "technique": "Gentle object handling",
+   "status": "campaign_ruling",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "telekinesis": true
+   },
+   "limits": {
+    "max_weight_lb": 10,
+    "range_ft": 30,
+    "objects_at_once": 1,
+    "force_point_cost": 0
+   },
+   "rules": "Gently lift, reposition, retrieve or manipulate one visible, unattended object of 10 lb or less within 30 ft. No Force Points. Outside combat, no roll unless the outcome is uncertain; in combat it uses your action. It cannot deal damage, move or disarm a creature, take anything held or worn, stop a projectile, or stand in for a Force power you have not learned. It is not Force Push or Force Pull. In this sandbox the loose objects are dropped weapons: retrieve your own, or send someone else's dropped weapon 30 ft away (they then need 30 ft of movement to recover it).",
+   "source": "campaigns/starwars_litrpg/creator/jedi_fundamentals.json (owner ruling 2026-11-11, approved_provisional); campaign starwars_litrpg only; not a Force power",
+   "never": [
+    "damage",
+    "moving or restraining a creature",
+    "disarming or taking attended objects",
+    "intercepting projectiles",
+    "substituting for an unlearned combat Force power"
+   ],
+   "sandbox_adaptation": "Repositioning a dropped weapon has a positional consequence only (30 ft of movement to recover). Genesis adaptation, pending owner review."
   }
  },
  "forms": {

@@ -47,6 +47,15 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     await p.locator("details[data-grp=absent] > summary").click();
     ok(/Telekinesis/.test(await p.locator("details[data-grp=absent]").innerText()) && /Not on Aero's sheet/.test(await p.locator("details[data-grp=absent]").innerText()), "telekinesis appears as not on the sheet, with the reason");
     ok(/never triggers here/.test(await p.locator("[data-reaction=sentinel_balance]").innerText()), "inert sheet reaction (Sentinel Balance) says why it never triggers");
+    // D1: campaign-grant overlay
+    await p.locator("#campaignOverlay").check(); await ready(p);
+    ok(/Campaign ruling/i.test(await p.locator('[data-card="minor_telekinesis"]').innerText()) && !/Minor Telekinesis/.test(await p.locator("details[data-grp=absent]").innerText()), "overlay on: Minor Telekinesis appears as a Campaign ruling card (not on the sheet)");
+    ok(/unattended|Nothing of yours/i.test(await p.locator('[data-card="minor_telekinesis"]').innerText()), "with nothing loose, Telekinesis explains why it is unavailable");
+    await G(p, () => { const s = window.__genesisCombat.state(); const a = s.actors.aero; a.dropped = JSON.parse(JSON.stringify(a.weapon)); a.weapon.held = false; a.weapon.ignited = false; }); await p.locator("#clear").click();
+    await p.locator('[data-card="minor_telekinesis"]').click(); await p.locator("#pickBody [data-obj='own_weapon']").click();
+    ok(JSON.stringify(await plan(p)) === '["minor_telekinesis"]' && /Main/.test(await p.locator("#timeline .step").first().innerText()), "Telekinesis picks a loose object and costs the Main action");
+    await p.locator("#campaignOverlay").uncheck(); await ready(p);
+    ok(await p.locator('[data-card="minor_telekinesis"]').count() === 0, "overlay off: no Telekinesis card");
     // sticky composer: scroll the library; the timeline stays on screen
     await p.locator("details[data-grp=object]").scrollIntoViewIfNeeded(); await p.mouse.wheel(0, 900); await p.waitForTimeout(150);
     const tb = await p.locator("#timeline").boundingBox(); ok(tb && tb.y >= -2 && tb.y < 950, "sticky composer: the timeline stays visible while scrolling the library", tb);

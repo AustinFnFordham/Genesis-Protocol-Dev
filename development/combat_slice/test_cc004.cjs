@@ -12,9 +12,11 @@ t("the attack selector covers lightsaber (1H and 2H), Echani unarmed, blaster sh
   const s = st("duelist", 1, 5); ["saber_strike", "saber_strike_2h", "unarmed_strike", "grapple"].forEach((pid) => assert.deepStrictEqual(why(s, pid, { target: "ilsa" }), [], pid));
   assert(why(s, "blaster_shot", { target: "ilsa" }).includes("SIDEARM_HOLSTERED"));
 });
-t("Force powers come from the sheet only: Battle Insight, Burst, Force Connection; no telekinesis", () => {
+t("Force powers come from the sheet only: Battle Insight, Burst, Force Connection; telekinesis only as the campaign-ruling overlay", () => {
   ["battle_insight", "burst", "force_connection"].forEach((pid) => assert(S.aero.grants.sheet.includes(pid)));
-  assert(!Object.keys(C.profiles).some((k) => /telekin/i.test(k)) && S.aero.not_on_sheet.some((x) => /Telekinesis/.test(x.name)), "telekinesis is listed as not on the sheet, with a reason");
+  const tk = Object.keys(C.profiles).filter((k) => /telekin/i.test(k)); assert.deepStrictEqual(tk, ["minor_telekinesis"]); assert.strictEqual(C.profiles.minor_telekinesis.status, "campaign_ruling");
+  assert(!S.aero.grants.sheet.includes("minor_telekinesis") && !S.aero.grants.sandbox_proposal.includes("minor_telekinesis"), "never on the sheet or proposal grants");
+  assert(S.aero.not_on_sheet.some((x) => /Telekinesis/.test(x.name) && /campaign feature/.test(x.why)), "without the overlay it is listed with the campaign-feature reason");
 });
 // ---- blaster: draw, range, ammo, reload ----
 t("drawing the blaster costs the object interaction and occupies the off hand", () => {

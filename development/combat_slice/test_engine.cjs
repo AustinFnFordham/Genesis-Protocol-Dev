@@ -20,10 +20,10 @@ function play(s, actor, plan, answers) {
 function legal(s, actor, plan) { return plan.filter((st, i) => E.validatePlan(s, actor, plan.slice(0, i + 1)).legal); }
 function adjacent(s) { s.dist["aero|ilsa"] = 5; return s; }
 
-t("data: every granted profile exists; every number is tagged sheet or sandbox_proposal", () => {
+t("data: every granted profile exists; every number is tagged sheet, sandbox_proposal or campaign_ruling (owner D1)", () => {
   for (const a of [S.aero, ...Object.values(S.scenarios).flatMap((x) => Object.values(x.actors))])
     for (const pid of [...(a.grants.sheet || []), ...(a.grants.sandbox_proposal || [])]) assert.ok(C.profiles[pid], pid);
-  for (const [pid, p] of Object.entries(C.profiles)) assert.ok(["sheet", "sandbox_proposal"].includes(p.status), pid);
+  for (const [pid, p] of Object.entries(C.profiles)) assert.ok(["sheet", "sandbox_proposal"].includes(p.status) || (p.status === "campaign_ruling" && /campaigns\/starwars_litrpg\/creator\//.test(p.source)), pid);
   assert.deepEqual(S.aero.grants.sheet.filter((p) => C.profiles[p].status !== "sheet"), [], "nothing proposed is passed off as a sheet grant");
 });
 t("Aero's numbers match his runtime sheet (AC 13, 11 HP, 3 FP, saber +5 1d8+3, unarmed +5 1d4+3)", () => {

@@ -382,7 +382,10 @@ def handle(service, path, body):
     try:
         b = body or {}
         if path == '/atomic/open':
-            return 200, service.open({'scenario': str(b.get('scenario', ''))[:40], 'switches': b.get('switches') or {}},
+            camp = b.get('campaign')
+            if camp not in (None, 'starwars_litrpg'):
+                return 400, {'error': 'BAD_CAMPAIGN', 'text': 'Unknown campaign overlay.'}
+            return 200, service.open({'scenario': str(b.get('scenario', ''))[:40], 'switches': b.get('switches') or {}, 'campaign': camp},
                                      str(b.get('mode') or 'practice'), b.get('encounter_id'))
         if path == '/atomic/complete':
             return 200, service.complete(b['session'], str(b['turn_key']), str(b['state_hash']))
