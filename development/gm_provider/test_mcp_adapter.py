@@ -81,6 +81,52 @@ class Adapter(Base):
             self.assertEqual(adapter.result(lambda: self.tools.gm("claim", "run")).structuredContent["error"]["code"], "WRITES_DISABLED")
             handler.assert_not_called()
 
+    def test_gm_scope_probe_never_mutates_and_requests_step_up(self):
+        self.act(HOLSTER, provider=adapter.PROVIDER)
+        before = self.gw.recovery()
+        with patch.object(self.tools.app, "gm", side_effect=AssertionError("probe called GM write")):
+            with patch("mcp_adapter.get_access_token", return_value=access(scopes=[adapter.READ])):
+                out = adapter.result(lambda: self.tools.gm_scope_probe())
+                self.assertTrue(out.isError)
+                self.assertEqual(out.structuredContent["error"]["code"], "INSUFFICIENT_SCOPE")
+                challenge = out.meta["mcp/www_authenticate"][0]
+                self.assertIn("error_description=", challenge)
+                self.assertIn("genesis:gm", challenge)
+            with patch("mcp_adapter.get_access_token", return_value=access()):
+                result = self.tools.gm_scope_probe()
+                self.assertTrue(result["gm_scope_granted"])
+                self.assertEqual(result["connection_provider"], "gpt-session")
+                self.assertTrue(result["gm_write_ready"])
+                self.assertEqual(result["gm_write_blockers"], [])
+        after = self.gw.recovery()
+        self.assertEqual(before["in_flight"], after["in_flight"])
+        self.assertEqual(before["lease"], after["lease"])
+
+    def test_gm_scope_probe_is_readonly_tool_with_gm_security_scheme(self):
+        class ReadVerifier:
+            async def verify_token(self, token):
+                return access(scopes=[adapter.READ]) if token == "test-oauth-token" else None
+
+        server = adapter.create_server(self.tools, ReadVerifier(), ISSUER, RESOURCE)
+        with TestClient(server.streamable_http_app(), base_url="https://genesis.example.invalid") as client:
+            headers = {"accept": "application/json, text/event-stream",
+                       "mcp-protocol-version": "2025-11-25",
+                       "authorization": "Bearer test-oauth-token"}
+            envelope = {"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+            listed = client.post("/mcp", headers=headers, json=envelope)
+            self.assertEqual(listed.status_code, 200)
+            tool = next(t for t in listed.json()["result"]["tools"] if t["name"] == "genesis_gm_scope_probe")
+            self.assertTrue(tool["annotations"]["readOnlyHint"])
+            self.assertIn(adapter.GM, tool["_meta"]["securitySchemes"][0]["scopes"])
+            envelope["method"] = "tools/call"
+            envelope["params"] = {"name": "genesis_gm_scope_probe", "arguments": {}}
+            blocked = client.post("/mcp", headers=headers, json=envelope)
+            self.assertEqual(blocked.status_code, 200)
+            payload = blocked.json()["result"]
+            self.assertTrue(payload["isError"])
+            self.assertEqual(payload["structuredContent"]["error"]["code"], "INSUFFICIENT_SCOPE")
+            self.assertIn("error_description=", payload["_meta"]["mcp/www_authenticate"][0])
+
     def test_disappearing_generation_blocks_an_already_started_worker(self):
         self.act(HOLSTER, provider=adapter.PROVIDER)
         self.assertFalse(self.tools.read("refresh")["read_only"])
