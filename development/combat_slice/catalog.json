@@ -1,0 +1,741 @@
+{
+ "schema": "genesis-cc002-sandbox-catalog/0.1",
+ "status": "NONCANONICAL SANDBOX. Every value tagged sandbox_proposal needs owner approval before any canonical use. Values tagged sheet are copied from api_bridge/gm/aero_character_runtime.yml (or SRD core actions) and change nothing there.",
+ "ruleset": {
+  "id": "cc002-sandbox-0.1",
+  "opt_in": "sandbox fixtures only; turn-contract/3 and every campaign are unchanged",
+  "budget": {
+   "main": 1,
+   "bonus": 1,
+   "secondary": 1,
+   "reaction": 1,
+   "movement_ft": 30,
+   "object": 1
+  },
+  "switches": {
+   "secondary_action": {
+    "default": true,
+    "status": "sandbox_proposal",
+    "note": "SA-001 Secondary budget. Off = legacy: Secondary budget 0 and every Secondary profile is refused (SA001_DISABLED)."
+   },
+   "battle_insight_bonus": {
+    "default": false,
+    "status": "sandbox_proposal",
+    "note": "Battle Insight as a Bonus action instead of Main. Level 0 is not itself a Bonus authorization."
+   },
+   "force_augmentation": {
+    "default": true,
+    "status": "sandbox_proposal",
+    "note": "Spend 1 Force Point to add 1d4 to one learned strike's attack roll; once per turn."
+   },
+   "cinematic_judge": {
+    "default": true,
+    "status": "sandbox_proposal",
+    "note": "Descriptive feedback only. Grants nothing."
+   }
+  },
+  "trigger_depth_max": 1,
+  "reaction_note": "One ordinary Reaction per round. A Riposte can never trigger another Riposte (trigger fence); a spent Reaction stays spent."
+ },
+ "profiles": {
+  "saber_strike": {
+   "name": "Lightsaber Strike",
+   "maneuver": "Attack",
+   "technique": "Standard cut",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true,
+    "reach_ft": 5,
+    "target": "enemy"
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d8+3",
+    "damage_type": "energy",
+    "melee": true
+   },
+   "rules": "Melee weapon attack +5 vs AC. Hit: 1d8+3 energy (one-handed).",
+   "source": "aero_character_runtime.yml weapons: Taron-forged lightsaber (+5, 1d8+3)"
+  },
+  "unarmed_strike": {
+   "name": "Echani Strike",
+   "maneuver": "Attack",
+   "technique": "Kick, knee or elbow",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy"
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d4+3",
+    "damage_type": "kinetic",
+    "melee": true
+   },
+   "rules": "Melee unarmed attack +5 vs AC. Hit: 1d4+3 kinetic. Needs no free hand.",
+   "source": "aero_character_runtime.yml Martial Arts Training / unarmed strike"
+  },
+  "flow_strike": {
+   "name": "Echani Flow Strike",
+   "maneuver": "Follow-up",
+   "technique": "Flow strike",
+   "status": "sandbox_proposal",
+   "cost": {
+    "bonus": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy",
+    "after_melee_attack_this_turn": true
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d4",
+    "damage_type": "kinetic",
+    "melee": true
+   },
+   "cap": {
+    "group": "flow_strike",
+    "per": "turn",
+    "max": 1
+   },
+   "rules": "After a melee attack this turn: one unarmed follow-up, +5 to hit, 1d4 kinetic (no Dexterity to damage).",
+   "source": "CC-002 \u00a72 proposal (new Bonus profile)"
+  },
+  "feint": {
+   "name": "Weapon Feint",
+   "maneuver": "Feint",
+   "technique": "Sell the false line",
+   "status": "sandbox_proposal",
+   "cost": {
+    "secondary": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy",
+    "secondary_action": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "deception",
+    "target_skill": "insight"
+   },
+   "effect": {
+    "on_success": "feinted",
+    "note": "Advantage on your next melee attack against that target this turn. Lost if the target leaves your reach first."
+   },
+   "cap": {
+    "group": "feint",
+    "per": "turn",
+    "max": 1
+   },
+   "rules": "Contest: your Charisma (Deception) vs its Wisdom (Insight). Win: advantage on your next melee attack against it this turn. Lose: it read you; nothing else. Never an automatic hit.",
+   "source": "Draft power_feinting_attack (superiority-dice based; not used) reworked per CC-002 \u00a72"
+  },
+  "parry": {
+   "name": "Parry",
+   "maneuver": "Parry",
+   "technique": "Blade redirect",
+   "status": "sandbox_proposal",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "melee_hit_on_me",
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true
+   },
+   "resolution": {
+    "type": "ac_bonus",
+    "bonus": 2
+   },
+   "rules": "Reaction when a melee attack would hit you while your blade is lit: +2 AC against that attack (it may miss instead).",
+   "source": "Draft parry uses superiority die + Dex (Aero has no superiority dice); proficiency-bonus redirect proposed instead"
+  },
+  "riposte": {
+   "name": "Riposte",
+   "maneuver": "Riposte",
+   "technique": "Punish the overextension",
+   "status": "sandbox_proposal",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "melee_miss_on_me",
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true,
+    "reach_ft": 5
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d8+3",
+    "damage_type": "energy",
+    "melee": true,
+    "counter": true
+   },
+   "rules": "Reaction when a melee attack against you misses: one lightsaber strike against the attacker. Uses your Reaction. A Riposte can never trigger another Riposte.",
+   "source": "Draft power_riposte (reaction after a missed melee attack)"
+  },
+  "readied_dodge": {
+   "name": "Readied Dodge",
+   "maneuver": "Dodge",
+   "technique": "Read the line",
+   "status": "sandbox_proposal",
+   "cost": {
+    "secondary": 1
+   },
+   "requires": {
+    "target": "self",
+    "secondary_action": true
+   },
+   "effect": {
+    "sets": "dodge_ready",
+    "note": "Until your next turn you may spend your Reaction to impose disadvantage on one attack roll against you."
+   },
+   "rules": "Secondary: get ready. Later, Reaction when attacked: that attack roll has disadvantage. Still one Reaction per round.",
+   "source": "CC-002 \u00a72 Readied Dodge (Novice tier). Dodge percentages 50/66.7/83.3/98% are NOT used."
+  },
+  "dodge_reaction": {
+   "name": "Dodge (readied)",
+   "maneuver": "Dodge",
+   "technique": "Slip",
+   "status": "sandbox_proposal",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "attack_declared_on_me",
+   "requires": {
+    "condition": "dodge_ready"
+   },
+   "resolution": {
+    "type": "disadvantage"
+   },
+   "rules": "Spend your Reaction: the attack against you has disadvantage.",
+   "source": "pairs with Readied Dodge"
+  },
+  "dodge_action": {
+   "name": "Dodge Action",
+   "maneuver": "Dodge",
+   "technique": "Full defense",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "target": "self"
+   },
+   "effect": {
+    "sets": "dodging",
+    "note": "Attacks against you have disadvantage until your next turn."
+   },
+   "rules": "Core action: until your next turn, attack rolls against you have disadvantage.",
+   "source": "SRD core action (turn-contract/3 core actions)"
+  },
+  "blade_bind": {
+   "name": "Blade Bind & Strip",
+   "maneuver": "Disarm",
+   "technique": "Bind, rotate, strip",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "lightsaber",
+    "ignited": true,
+    "reach_ft": 5,
+    "target": "enemy",
+    "target_holds_weapon": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "acrobatics",
+    "target_skill": "athletics_or_acrobatics"
+   },
+   "effect": {
+    "on_success": "disarmed",
+    "note": "Its weapon lands 10 ft away. A hit is not needed; damage is not dealt."
+   },
+   "rules": "Contest: your Dexterity (Acrobatics) vs its better of Strength (Athletics) or Dexterity (Acrobatics). Win: its held weapon is stripped and lands 10 ft away. No damage.",
+   "source": "Draft power_disarming_blow (superiority die) reworked; CC-002 \u00a74 Blade Bind"
+  },
+  "battle_insight": {
+   "name": "Battle Insight",
+   "maneuver": "Setup",
+   "technique": "Force read",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "range_ft": 30,
+    "target": "enemy",
+    "visible": true
+   },
+   "effect": {
+    "on_use": "insight_marked",
+    "note": "Advantage on your next attack against it (concentration, 1 minute). Does not stack with Feint advantage."
+   },
+   "rules": "Main action, 0 Force Points: one visible creature within 30 ft. Advantage on your next attack against it.",
+   "source": "aero_character_runtime.yml Battle Insight (Level 0, Main)"
+  },
+  "battle_insight_bonus": {
+   "name": "Battle Insight (quick)",
+   "maneuver": "Setup",
+   "technique": "Force read",
+   "status": "sandbox_proposal",
+   "cost": {
+    "bonus": 1
+   },
+   "requires": {
+    "range_ft": 30,
+    "target": "enemy",
+    "visible": true,
+    "switch": "battle_insight_bonus"
+   },
+   "effect": {
+    "on_use": "insight_marked",
+    "note": "As Battle Insight."
+   },
+   "rules": "Bonus-action Battle Insight (switch battle_insight_bonus; off by default).",
+   "source": "CC-002 \u00a72 proposed conversion"
+  },
+  "taunt": {
+   "name": "Taunt",
+   "maneuver": "Provoke",
+   "technique": "Draw it to you",
+   "status": "sheet",
+   "cost": {
+    "bonus": 1
+   },
+   "requires": {
+    "range_ft": 30,
+    "target": "enemy",
+    "visible": true,
+    "understands": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "intimidation",
+    "target_skill": "insight"
+   },
+   "effect": {
+    "on_success": "taunted",
+    "note": "Disadvantage on its attacks against anyone but you until your next turn. It still chooses what it does."
+   },
+   "rules": "Owner ruling 2026-11-17 (switch tb4_taunt): Charisma (Intimidation) vs Wisdom (Insight); ties go to the target.",
+   "source": "ui/tb4_rules.py"
+  },
+  "tactical_glance": {
+   "name": "Tactical Glance",
+   "maneuver": "Search",
+   "technique": "Scan",
+   "status": "sandbox_proposal",
+   "cost": {
+    "secondary": 1
+   },
+   "requires": {
+    "target": "self",
+    "secondary_action": true
+   },
+   "resolution": {
+    "type": "perception"
+   },
+   "cap": {
+    "group": "glance",
+    "per": "turn",
+    "max": 1
+   },
+   "rules": "Secondary: Wisdom (Perception) +4 against anything hiding nearby. Once per turn; no rerolls.",
+   "source": "CC-002 \u00a72 Tactical Glance (Secondary focused scan)"
+  },
+  "calm_beast": {
+   "name": "Calm the Animal (untrained)",
+   "maneuver": "Social",
+   "technique": "Steady voice",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "range_ft": 30,
+    "target": "beast",
+    "visible": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "animal_handling",
+    "target_skill": "wisdom"
+   },
+   "effect": {
+    "on_success": "wary",
+    "note": "It hesitates: disadvantage on its next attack."
+   },
+   "rules": "Untrained Wisdom (Animal Handling) +2. Aero has no Animal Handling training; dueling training does not grant it.",
+   "source": "aero_character_runtime.yml (no Animal Handling proficiency)"
+  },
+  "move": {
+   "name": "Move",
+   "maneuver": "Movement",
+   "status": "sheet",
+   "cost": {
+    "movement_ft": "distance"
+   },
+   "rules": "Close to 5 ft of a target, or withdraw. Leaving an enemy's reach lets it make an opportunity attack with its Reaction.",
+   "source": "SRD movement"
+  },
+  "speak": {
+   "name": "Speak",
+   "maneuver": "Free",
+   "status": "sheet",
+   "cost": {},
+   "rules": "Brief speech is free. Insults are just words: no debuff unless you use Taunt.",
+   "source": "turn-contract/3: ordinary speech is free"
+  },
+  "force_augment": {
+   "name": "Force-Guided Strike",
+   "maneuver": "Augmentation",
+   "status": "sandbox_proposal",
+   "cost": {
+    "fp": 1
+   },
+   "requires": {
+    "switch": "force_augmentation",
+    "augments": [
+     "saber_strike",
+     "riposte"
+    ]
+   },
+   "cap": {
+    "group": "augment",
+    "per": "turn",
+    "max": 1
+   },
+   "rules": "Spend 1 Force Point when declaring a lightsaber strike or Riposte: +1d4 to that attack roll. Once per turn. Grants no new power.",
+   "source": "CC-002 \u00a71.7 augmentation proposal"
+  },
+  "npc_blade": {
+   "name": "Vibroblade Thrust",
+   "maneuver": "Attack",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "vibroblade",
+    "held": true,
+    "reach_ft": 5,
+    "target": "enemy"
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d8+3",
+    "damage_type": "kinetic",
+    "melee": true
+   },
+   "rules": "Melee weapon attack +5. Hit: 1d8+3.",
+   "source": "fixture NPC"
+  },
+  "npc_parry": {
+   "name": "Parry",
+   "maneuver": "Parry",
+   "status": "sandbox_proposal",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "melee_hit_on_me",
+   "requires": {
+    "weapon_kind": "vibroblade",
+    "held": true
+   },
+   "resolution": {
+    "type": "ac_bonus",
+    "bonus": 2
+   },
+   "rules": "As Parry.",
+   "source": "fixture NPC (same profile shape as Aero's)"
+  },
+  "npc_riposte": {
+   "name": "Riposte",
+   "maneuver": "Riposte",
+   "status": "sandbox_proposal",
+   "cost": {
+    "reaction": 1
+   },
+   "trigger": "melee_miss_on_me",
+   "requires": {
+    "weapon_kind": "vibroblade",
+    "held": true,
+    "reach_ft": 5
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 5,
+    "damage": "1d8+3",
+    "damage_type": "kinetic",
+    "melee": true,
+    "counter": true
+   },
+   "rules": "As Riposte.",
+   "source": "fixture NPC"
+  },
+  "bite": {
+   "name": "Bite",
+   "maneuver": "Attack",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "reach_ft": 5,
+    "target": "enemy"
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 4,
+    "damage": "1d8+2",
+    "damage_type": "kinetic",
+    "melee": true
+   },
+   "rules": "Melee +4. Hit: 1d8+2.",
+   "source": "fixture creature"
+  },
+  "pounce": {
+   "name": "Pounce from hiding",
+   "maneuver": "Ambush",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1,
+    "movement_ft": 20
+   },
+   "requires": {
+    "condition": "hidden",
+    "target": "enemy",
+    "range_ft": 25
+   },
+   "resolution": {
+    "type": "attack",
+    "bonus": 4,
+    "damage": "1d8+2",
+    "damage_type": "kinetic",
+    "melee": true,
+    "advantage": true
+   },
+   "rules": "From hiding: leap up to 20 ft and bite with advantage. Reveals it.",
+   "source": "fixture creature"
+  },
+  "npc_bind": {
+   "name": "Bind & Wrench",
+   "maneuver": "Disarm",
+   "technique": "Vibroblade bind",
+   "status": "sandbox_proposal",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "weapon_kind": "vibroblade",
+    "held": true,
+    "reach_ft": 5,
+    "target": "enemy",
+    "target_holds_weapon": true
+   },
+   "resolution": {
+    "type": "contest",
+    "actor_skill": "acrobatics",
+    "target_skill": "athletics_or_acrobatics"
+   },
+   "effect": {
+    "on_success": "disarmed",
+    "note": "Its weapon lands 10 ft away."
+   },
+   "rules": "Same contest as Blade Bind & Strip, with a vibroblade.",
+   "source": "fixture NPC (mirror of Aero's technique)"
+  },
+  "recover_weapon": {
+   "name": "Recover Weapon",
+   "maneuver": "Object",
+   "status": "sheet",
+   "cost": {
+    "object": 1,
+    "movement_ft": 10
+   },
+   "requires": {
+    "target": "self",
+    "weapon_dropped": true
+   },
+   "rules": "Move to your dropped weapon (10 ft) and pick it up. A lightsaber comes back unlit.",
+   "source": "SRD object interaction + movement"
+  },
+  "toggle_blade": {
+   "name": "Ignite / Deactivate",
+   "maneuver": "Object",
+   "status": "sheet",
+   "cost": {
+    "object": 1
+   },
+   "requires": {
+    "target": "self",
+    "weapon_kind": "lightsaber",
+    "held": true
+   },
+   "rules": "Ignite or switch off your lightsaber (one object interaction).",
+   "source": "turn-contract/3 objects"
+  }
+ },
+ "forms": {
+  "_status": "Lore traditions are listed for compatibility only; none grants a mechanical bonus in this slice. Source-authored rules: none imported. Genesis proposals: marked per technique.",
+  "shii_cho": {
+   "name": "Form I: Shii-Cho",
+   "lore": "Foundational sweeping form; multi-opponent awareness.",
+   "configs": [
+    "single",
+    "two_handed",
+    "crossguard",
+    "saberstaff",
+    "dual"
+   ],
+   "techniques": []
+  },
+  "makashi": {
+   "name": "Form II: Makashi",
+   "lore": "Precision dueling; footwork and blade control.",
+   "configs": [
+    "single",
+    "curved_hilt",
+    "crossguard"
+   ],
+   "techniques": [
+    "feint",
+    "riposte",
+    "blade_bind",
+    "parry"
+   ]
+  },
+  "soresu": {
+   "name": "Form III: Soresu",
+   "lore": "Tight defensive guard.",
+   "configs": [
+    "single",
+    "two_handed",
+    "shoto"
+   ],
+   "techniques": [
+    "parry"
+   ]
+  },
+  "ataru": {
+   "name": "Form IV: Ataru",
+   "lore": "Acrobatic, Force-assisted aggression.",
+   "configs": [
+    "single",
+    "two_handed",
+    "shoto"
+   ],
+   "techniques": []
+  },
+  "shien_djem_so": {
+   "name": "Form V: Shien / Djem So",
+   "lore": "Power counters; Shien favors blaster redirection.",
+   "configs": [
+    "single",
+    "two_handed",
+    "reverse_grip"
+   ],
+   "techniques": [
+    "riposte"
+   ]
+  },
+  "niman": {
+   "name": "Form VI: Niman",
+   "lore": "Balanced form blending earlier forms with Force use.",
+   "configs": [
+    "single",
+    "dual",
+    "saberstaff"
+   ],
+   "techniques": []
+  },
+  "juyo_vaapad": {
+   "name": "Form VII: Juyo / Vaapad",
+   "lore": "Ferocious, unpredictable; dangerous discipline.",
+   "configs": [
+    "single",
+    "two_handed"
+   ],
+   "techniques": [],
+   "gate": "advanced training only"
+  },
+  "jar_kai": {
+   "name": "Jar'Kai",
+   "lore": "Two-blade fighting tradition.",
+   "configs": [
+    "dual"
+   ],
+   "techniques": []
+  },
+  "sokan": {
+   "name": "Sokan",
+   "lore": "Terrain and footwork in motion.",
+   "configs": [
+    "single",
+    "two_handed"
+   ],
+   "techniques": []
+  },
+  "trakata": {
+   "name": "Tr\u00e0kata",
+   "lore": "Switching the blade off and on mid-fight.",
+   "configs": [
+    "single",
+    "dual"
+   ],
+   "techniques": [],
+   "gate": "requires blade deactivation timing rules (not authored)"
+  },
+  "echani_flow": {
+   "name": "Echani Flow (unarmed)",
+   "lore": "Echani close combat.",
+   "configs": [
+    "unarmed",
+    "single"
+   ],
+   "techniques": [
+    "flow_strike",
+    "readied_dodge"
+   ]
+  },
+  "pistol_cqb": {
+   "name": "Pistol CQB",
+   "lore": "Close-quarters blaster handling.",
+   "configs": [
+    "blaster_pistol"
+   ],
+   "techniques": [],
+   "gate": "ranged profiles not authored in this slice"
+  }
+ },
+ "weapon_configs": {
+  "single": "one lightsaber, one hand",
+  "two_handed": "one lightsaber, two hands",
+  "curved_hilt": "curved-hilt lightsaber",
+  "crossguard": "crossguard lightsaber",
+  "saberstaff": "double-bladed",
+  "dual": "two lightsabers",
+  "shoto": "short blade",
+  "reverse_grip": "reverse grip",
+  "unarmed": "no weapon",
+  "blaster_pistol": "blaster pistol",
+  "vibroblade": "vibroblade"
+ }
+}

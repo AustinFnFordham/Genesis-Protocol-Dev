@@ -1,0 +1,188 @@
+{
+ "schema": "genesis-cc002-sandbox-scenarios/0.1",
+ "note": "Noncanonical fixtures. Aero's numbers are copied from api_bridge/gm/aero_character_runtime.yml; his extra grants are the sandbox 'Weapons-Master Apprentice' proposal (see README). The two opponents are original fixture characters.",
+ "aero": {
+  "id": "aero",
+  "name": "Aero",
+  "side": "party",
+  "controller": "player",
+  "kind": "humanoid",
+  "understands": true,
+  "hp": 11,
+  "hp_max": 11,
+  "ac": 13,
+  "fp": 3,
+  "fp_max": 3,
+  "abilities": {
+   "str": -1,
+   "dex": 3,
+   "con": 1,
+   "int": 1,
+   "wis": 2,
+   "cha": 2
+  },
+  "skills": {
+   "insight": 4,
+   "perception": 4,
+   "intimidation": 4,
+   "persuasion": 4,
+   "technology": 3,
+   "deception": 2,
+   "acrobatics": 3,
+   "athletics": -1,
+   "animal_handling": 2,
+   "stealth": 3
+  },
+  "advantage_on": {
+   "insight": "Combat Discipline (sheet): advantage on Insight when analyzing combat or opponents"
+  },
+  "weapon": {
+   "kind": "lightsaber",
+   "config": "single",
+   "held": true,
+   "ignited": true,
+   "name": "indigo lightsaber"
+  },
+  "grants": {
+   "sheet": [
+    "saber_strike",
+    "unarmed_strike",
+    "dodge_action",
+    "battle_insight",
+    "taunt",
+    "calm_beast",
+    "move",
+    "speak",
+    "recover_weapon",
+    "toggle_blade"
+   ],
+   "sandbox_proposal": [
+    "flow_strike",
+    "feint",
+    "parry",
+    "riposte",
+    "readied_dodge",
+    "dodge_reaction",
+    "blade_bind",
+    "tactical_glance",
+    "battle_insight_bonus",
+    "force_augment"
+   ]
+  }
+ },
+ "scenarios": {
+  "duelist": {
+   "title": "Aero vs a skilled duelist",
+   "intro": "A practice hall at dusk. Ilsa Vohr, a Makashi-trained mercenary, raises her vibroblade in a precise salute ten feet away.",
+   "distance": {
+    "aero|ilsa": 10
+   },
+   "initiative": [
+    "aero",
+    "ilsa"
+   ],
+   "actors": {
+    "ilsa": {
+     "id": "ilsa",
+     "name": "Ilsa Vohr",
+     "side": "enemy",
+     "controller": "npc",
+     "kind": "humanoid",
+     "understands": true,
+     "hp": 20,
+     "hp_max": 20,
+     "ac": 15,
+     "fp": 0,
+     "fp_max": 0,
+     "abilities": {
+      "str": 1,
+      "dex": 3,
+      "con": 1,
+      "int": 1,
+      "wis": 1,
+      "cha": 2
+     },
+     "skills": {
+      "deception": 5,
+      "insight": 3,
+      "athletics": 2,
+      "acrobatics": 5,
+      "perception": 3
+     },
+     "weapon": {
+      "kind": "vibroblade",
+      "config": "vibroblade",
+      "held": true,
+      "name": "vibroblade"
+     },
+     "form": "makashi",
+     "grants": {
+      "sandbox_proposal": [
+       "npc_blade",
+       "npc_bind",
+       "npc_parry",
+       "npc_riposte",
+       "feint",
+       "move",
+       "speak",
+       "recover_weapon"
+      ]
+     },
+     "policy": "duelist"
+    }
+   }
+  },
+  "predator": {
+   "title": "Aero vs an unfamiliar predator",
+   "intro": "Tall grass at the edge of a ravine. Something moved, then stopped. You have never seen this kind of hunter.",
+   "distance": {
+    "aero|stalker": 20
+   },
+   "initiative": [
+    "stalker",
+    "aero"
+   ],
+   "actors": {
+    "stalker": {
+     "id": "stalker",
+     "name": "Vrask stalker",
+     "public_name": "something in the grass",
+     "side": "enemy",
+     "controller": "npc",
+     "kind": "beast",
+     "understands": false,
+     "hp": 15,
+     "hp_max": 15,
+     "ac": 13,
+     "fp": 0,
+     "fp_max": 0,
+     "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": -2
+     },
+     "skills": {
+      "athletics": 4,
+      "acrobatics": 3,
+      "insight": 1,
+      "perception": 3,
+      "wisdom": 1
+     },
+     "hidden": true,
+     "stealth_dc": 15,
+     "grants": {
+      "sandbox_proposal": [
+       "bite",
+       "pounce",
+       "move"
+      ]
+     },
+     "policy": "ambusher"
+    }
+   }
+  }
+ }
+}
