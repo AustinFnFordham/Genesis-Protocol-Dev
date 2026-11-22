@@ -4,7 +4,7 @@ import json
 import unittest
 
 from jsonschema import Draft202012Validator
-from harness import FIXTURES, SCHEMA, load, run_case, score, summarize
+from harness import FIXTURES, SCHEMA, fixture_phase, load, phase_schema, run_case, score, summarize
 
 CASES = {c["id"]: c for c in load(FIXTURES)}
 SCHEMA_VALUE = load(SCHEMA)
@@ -81,6 +81,33 @@ class Conformance(unittest.TestCase):
         self.assertEqual(self.check(move, "choice-stop"), [])
         move["proposal"]["turn_context"]["pending_steps"] = []
         self.assertTrue(self.check(move, "choice-stop")[0].startswith("CONTINUITY"))
+
+    def test_phase_schema_is_derived_from_state_and_reused_on_repair(self):
+        for case in CASES.values():
+            phase = fixture_phase(case["context"])
+            self.assertEqual(phase, case["expect"]["type"])
+            branch = phase_schema(SCHEMA_VALUE, phase)
+            for other in ("review", "tables", "rolls", "commit"):
+                if other != phase:
+                    self.assertFalse(Draft202012Validator(branch).is_valid({"type": other}))
+        calls = []
+        def generate(messages, fmt):
+            calls.append(fmt)
+            return {"message": {"content": "invalid"}}
+        row = run_case(CASES["routine-holster"], generate, "guide", SCHEMA_VALUE, VALIDATOR, "phase", 2)
+        self.assertEqual(len(row["attempts"]), 3)
+        self.assertEqual(calls, [phase_schema(SCHEMA_VALUE, "tables")] * 3)
+
+    def test_phase_recovery_advances_only_on_accepted_receipt(self):
+        context = copy.deepcopy(CASES["request-roll"]["context"])
+        self.assertEqual(fixture_phase(context), "rolls")
+        context["operation"]["rolls"] = copy.deepcopy(CASES["receipt-and-secret"]["context"]["operation"]["rolls"])
+        serialized = json.dumps(context)
+        self.assertEqual(fixture_phase(json.loads(serialized)), "commit")
+        self.assertEqual(fixture_phase(json.loads(serialized)), "commit")
+        context["validation"]["legal"] = False
+        with self.assertRaises(ValueError):
+            fixture_phase(context)
 
     def test_repair_is_bounded_and_feedback_preserves_input(self):
         calls = []

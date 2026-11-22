@@ -57,7 +57,8 @@
       "resolution": {
         "settings": {
           "mode": "regular"
-        }
+        },
+        "fixture_routine": true
       },
       "operation": {
         "tables": null,
@@ -280,7 +281,8 @@
       "resolution": {
         "settings": {
           "mode": "regular"
-        }
+        },
+        "fixture_routine": true
       },
       "operation": {
         "tables": null,
@@ -358,7 +360,10 @@
       "resolution": {
         "settings": {
           "mode": "regular"
-        }
+        },
+        "fixture_required_roll_keys": [
+          "s1.check"
+        ]
       },
       "operation": {
         "tables": {
@@ -550,7 +555,10 @@
       "resolution": {
         "settings": {
           "mode": "regular"
-        }
+        },
+        "fixture_required_roll_keys": [
+          "s1.check"
+        ]
       },
       "operation": {
         "tables": {

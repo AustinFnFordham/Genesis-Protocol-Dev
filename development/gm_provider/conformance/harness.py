@@ -127,14 +127,42 @@ def request(path, payload=None, timeout=180):
         return json.load(response)
 
 
+def fixture_phase(context):
+    """Select a move from synthetic authority state, never from the grading oracle."""
+    operation = context["operation"]
+    if not context["validation"]["legal"]:
+        if operation["tables"] is not None or operation["rolls"]:
+            raise ValueError("Review is unavailable after mechanical acceptance")
+        return "review"
+    required = set(context["resolution"].get("fixture_required_roll_keys", []))
+    accepted = set(operation["rolls"])
+    if operation["tables"] is None:
+        if accepted:
+            raise ValueError("Receipts require accepted tables")
+        return "tables"
+    return "rolls" if required - accepted else "commit"
+
+
+def phase_schema(schema, phase):
+    return next(branch for branch in schema["oneOf"]
+                if branch["properties"]["type"]["const"] == phase)
+
+
 def run_case(case, generate, guide, schema, validator, mode, repairs):
     context = copy.deepcopy(case["context"])
     messages = [{"role": "system", "content": guide + "\nUse only the supplied synthetic context. No tools are available."},
                 {"role": "user", "content": json.dumps(context, ensure_ascii=False)}]
+    output_format = schema if mode == "schema" else "json"
+    if mode == "phase":
+        phase = fixture_phase(context)
+        output_format = phase_schema(schema, phase)
+        messages.append({"role": "user", "content": f"The authorized next move is {phase}."})
+        if phase == "tables" and context["resolution"].get("fixture_routine"):
+            messages[-1]["content"] += ' Use the exact tables text "No roll required."'
     attempts = []
     for index in range(repairs + 1):
         start = time.perf_counter()
-        reply = generate(messages, schema if mode == "schema" else "json")
+        reply = generate(messages, output_format)
         raw = reply["message"]["content"]
         errors = score(raw, case, validator)
         attempts.append({"errors": errors, "wall_ms": round((time.perf_counter() - start) * 1000, 1),
@@ -169,9 +197,9 @@ def summarize(rows):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", action="append", choices=MODELS, required=True)
-    parser.add_argument("--mode", action="append", choices=("json", "schema"), default=None)
+    parser.add_argument("--mode", action="append", choices=("json", "schema", "phase"), default=None)
     parser.add_argument("--repeats", type=int, choices=range(1, 6), default=1)
-    parser.add_argument("--repairs", type=int, choices=range(2), default=1)
+    parser.add_argument("--repairs", type=int, choices=range(3), default=1)
     parser.add_argument("--fixture", action="append")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
@@ -185,7 +213,7 @@ def main():
     validator = Draft202012Validator(schema)
     models = {item["name"]: item for item in request("/api/tags")["models"]}
     report = {"ollama_version": request("/api/version")["version"],
-              "inputs": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (GUIDE, SCHEMA, FIXTURES)},
+              "inputs": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (GUIDE, SCHEMA, FIXTURES, Path(__file__))},
               "temperature": 0, "seed": 22, "num_predict": 900, "num_ctx": 4096,
               "repeats": args.repeats, "repairs": args.repairs, "groups": []}
     for model in args.model:
