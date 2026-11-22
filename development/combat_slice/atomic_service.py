@@ -121,13 +121,37 @@ class Session:
 
 
 class AtomicDice:
-    def __init__(self, journal_dir=JOURNAL_DIR, engine=None):
+    def __init__(self, journal_dir=JOURNAL_DIR, engine=None, require_tokens=False):
         self.dir = Path(journal_dir)
         self.dir.mkdir(parents=True, exist_ok=True)
         self.sessions = {}
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()   # re-entrant: gm_step drives commit/roll as the GM
         self.engine = engine      # EngineWorker: enables server-side verification (CC-005)
         self.index_path = self.dir / 'encounters.json'
+        self.require_tokens = require_tokens
+        self._gm_tokens = {}   # preview server: True (CC-005b); unit tests of the bare service: False
+
+    # ---- role tokens (CC-005b) ----
+    @staticmethod
+    def _h(tok):
+        return hashlib.sha256(str(tok).encode()).hexdigest()
+
+    def role_of(self, sid, token):
+        """'player', 'gm' or None. Tokens are issued once at open and stored only as hashes in the journal."""
+        sess = self._load(sid)
+        t = sess.meta.get('_tokens') or {}
+        h = self._h(token) if token else None
+        return 'gm' if h and h == t.get('gm') else 'player' if h and h == t.get('player') else None
+
+    def require(self, sid, tokens, *roles):
+        """tokens: one token or a list. Returns the most privileged matching role among `roles`."""
+        if not self.require_tokens:
+            return 'gm'
+        have = {self.role_of(sid, t) for t in (tokens if isinstance(tokens, list) else [tokens]) if t}
+        for r in ('gm', 'player'):
+            if r in roles and r in have:
+                return r
+        raise AtomicError(401 if not (have - {None}) else 403, 'UNAUTHORIZED' if not (have - {None}) else 'FORBIDDEN_ROLE', 'This call needs a ' + ' or '.join(roles) + ' token.')
 
     def _index(self):
         try:
@@ -136,7 +160,7 @@ class AtomicDice:
             return {}
 
     def _jobj(self, sess):
-        return {'meta': sess.meta,
+        return {'meta': {k: v for k, v in sess.meta.items() if not k.startswith('_')},
                 'commits': [{'turn_key': k, 'actor': v['actor'], 'plan': v['plan']} for k, v in sess.commits.items()],
                 'decisions': [{'turn_key': k.split('|')[0], 'key': k.split('|')[1], 'choice': v} for k, v in sess.decisions.items()],
                 'tape': [{k2: d[k2] for k2 in ('seq', 'sides', 'value', 'roll_id', 'roller')} for d in sess.tape]}
@@ -192,15 +216,21 @@ class AtomicDice:
                             'closed': sess.closed, 'encounter_id': encounter_id}
             sid = secrets.token_hex(8)
             seed = secrets.randbits(31)
-            meta = dict(meta, mode=mode, encounter_id=encounter_id)
+            ptok, gtok = secrets.token_urlsafe(18), secrets.token_urlsafe(18)
+            meta = dict(meta, mode=mode, encounter_id=encounter_id, _tokens={'player': self._h(ptok), 'gm': self._h(gtok)})
             sess = Session(sid, meta, seed, self.dir / f'{sid}.jsonl')
             self._append(sess, {'op': 'open', 'meta': meta, 'seed': seed, 'canonical': False})
             self.sessions[sid] = sess
             if mode == 'bound':
                 idx = self._index(); idx[encounter_id] = sid
                 tmp = self.index_path.with_suffix('.tmp'); tmp.write_text(json.dumps(idx)); os.replace(tmp, self.index_path)
-            return {'session': sid, 'authority': 'atomic-sandbox', 'canonical': False, 'mode': mode, 'resumed': False,
-                    'eligible_for_campaign_authority': mode == 'bound'}
+            out = {'session': sid, 'authority': 'atomic-sandbox', 'canonical': False, 'mode': mode, 'resumed': False,
+                   'eligible_for_campaign_authority': mode == 'bound', 'player_token': ptok}
+            if mode == 'practice':
+                out['gm_token'] = gtok   # sandbox debug client may act as the GM's messenger; bound sessions never get it
+            else:
+                self._gm_tokens[sid] = gtok   # kept in server memory only for the server-run GM
+            return out
 
     def commit(self, sid, turn_key, actor, plan):
         with self.lock:
@@ -321,7 +351,7 @@ class AtomicDice:
         """Everything a reconnecting client needs to rebuild the exact state (never the seed)."""
         with self.lock:
             sess = self._load(sid)
-            return {'session': sid, 'meta': sess.meta, 'closed': sess.closed,
+            return {'session': sid, 'meta': {k: v for k, v in sess.meta.items() if not k.startswith('_')}, 'closed': sess.closed,
                     'commits': [{'turn_key': k, 'actor': v['actor'], 'plan': v['plan'], 'plan_hash': v['plan_hash']} for k, v in sess.commits.items()],
                     'decisions': [{'turn_key': k.split('|')[0], 'key': k.split('|')[1], 'choice': v} for k, v in sess.decisions.items()],
                     'tape': [{k2: d[k2] for k2 in ('seq', 'sides', 'value', 'roll_id', 'roller')} for d in sess.tape]}
@@ -359,6 +389,57 @@ class AtomicDice:
             insp = self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'want_state': True})
             return {'hash': insp['hash'], 'state': insp['state'], 'pending': insp.get('pending'), 'over': insp.get('over')}
 
+    def view(self, sid, role):
+        """Viewer-specific projection computed on the server: 'player' -> what Aero may know; 'gm' -> full (debug)."""
+        with self.lock:
+            if not self.engine:
+                raise AtomicError(503, 'ENGINE_UNAVAILABLE', 'No server-side engine.')
+            sess = self._load(sid)
+            if role == 'gm' and sess.meta.get('mode') == 'bound' and self.require_tokens:
+                raise AtomicError(403, 'DEBUG_NOT_AUTHORIZED', 'The full-mechanics view is only for practice sandbox sessions.')
+            insp = self.engine.inspect(self._jobj(sess), {'actor': '', 'plan': [], 'want_view': 'gm' if role == 'gm' else 'aero'})
+            pend = insp.get('pending')
+            if pend and role != 'gm':   # don't leak GM-side purposes/targets of NPC dice before they resolve
+                if pend.get('need') and pend['need']['controller'] != 'player':
+                    pend = {'turn_key': pend['turn_key'], 'actor': pend['actor'], 'waiting_on': 'gm'}
+            return {'view': insp['view'], 'pending': pend, 'over': insp.get('over'), 'hash': insp['hash'] if role == 'gm' else None,
+                    'next': ({'turn_key': insp['next']['turn_key'], 'actor': insp['next']['actor'], 'controller': insp['next']['controller']} if insp.get('next') else None)}
+
+    def gm_step(self, sid):
+        """The server acts as the GM: commits the NPC's policy plan and rolls GM dice until the player is needed."""
+        with self.lock:
+            if not self.engine:
+                raise AtomicError(503, 'ENGINE_UNAVAILABLE', 'No server-side engine.')
+            sess = self._load(sid)
+            for _ in range(200):
+                if sess.closed:
+                    return {'stopped': 'closed'}
+                insp = self._inspect(sess)
+                if insp.get('over'):
+                    return {'stopped': 'over', 'over': insp['over']}
+                pend = insp.get('pending')
+                if pend:
+                    c = sess.commits[pend['turn_key']]
+                    need = pend.get('need')
+                    if need and need['controller'] != 'player':
+                        self.roll(sid, pend['turn_key'], c['plan_hash'], need['dice'], 'gm', need['actor'], need.get('purpose') or '')
+                        continue
+                    if need:
+                        return {'stopped': 'player_roll', 'turn_key': pend['turn_key'], 'need': need, 'plan_hash': c['plan_hash']}
+                    if pend.get('paused'):
+                        return {'stopped': 'player_decision', 'turn_key': pend['turn_key'], 'paused': pend['paused']}
+                    return {'stopped': 'unknown'}
+                nxt = insp['next']
+                if nxt['controller'] == 'player':
+                    # the previous (server-run) turn finished: record the server's own verification
+                    last = sess.active
+                    if last and last not in sess.verified and sess.commits[last]['actor'] != nxt['actor']:
+                        sess.verified[last] = {'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True}
+                        self._append(sess, {'op': 'verify', 'turn_key': last, 'server_hash': insp['hash'], 'client_hash': 'server', 'ok': True})
+                    return {'stopped': 'player_turn', 'turn_key': nxt['turn_key']}
+                self.commit(sid, nxt['turn_key'], nxt['actor'], nxt['npc_plan'])
+            raise AtomicError(500, 'GM_LOOP', 'GM step did not settle.')
+
     def abandon(self, sid):
         """A bound session can be abandoned only as a recorded forfeit; it never yields a fresh seed."""
         with self.lock:
@@ -377,6 +458,11 @@ class AtomicDice:
             return {'closed': True, 'seed': sess.seed, 'note': 'Seed revealed after close for audit: every die is die_value(seed, seq, sides).'}
 
 
+def _toks(b):
+    t = b.get('tokens') or []
+    return ([b['token']] if b.get('token') else []) + (list(t.values()) if isinstance(t, dict) else list(t))
+
+
 def handle(service, path, body):
     """Route /atomic/* requests. Returns (status, dict)."""
     try:
@@ -388,20 +474,42 @@ def handle(service, path, body):
             return 200, service.open({'scenario': str(b.get('scenario', ''))[:40], 'switches': b.get('switches') or {}, 'campaign': camp},
                                      str(b.get('mode') or 'practice'), b.get('encounter_id'))
         if path == '/atomic/complete':
+            service.require(b['session'], _toks(b), 'player', 'gm')
             return 200, service.complete(b['session'], str(b['turn_key']), str(b['state_hash']))
         if path == '/atomic/state':
+            service.require(b['session'], _toks(b), 'gm')
+            if service.require_tokens and service._load(b['session']).meta.get('mode') == 'bound':
+                return 403, {'error': 'DEBUG_NOT_AUTHORIZED', 'text': 'Full state is only for practice sandbox sessions.'}
             return 200, service.state(b['session'])
+        if path == '/atomic/view':
+            role = service.require(b['session'], _toks(b), 'player', 'gm') if b.get('as') != 'player' else service.require(b['session'], _toks(b), 'player', 'gm') and 'player'
+            return 200, service.view(b['session'], 'gm' if (role == 'gm' and b.get('as') != 'player') else 'player')
+        if path == '/atomic/gm_step':
+            service.require(b['session'], _toks(b), 'player', 'gm')
+            return 200, service.gm_step(b['session'])
         if path == '/atomic/abandon':
+            service.require(b['session'], _toks(b), 'player', 'gm')
             return 200, service.abandon(b['session'])
         if path == '/atomic/commit':
+            sess = service._load(b['session'])
+            if service.engine and service.require_tokens:
+                insp = service._inspect(sess)
+                nxt = insp.get('next') or {}
+                pend = insp.get('pending') or {}
+                who = 'player' if (nxt.get('controller') == 'player' and nxt.get('actor') == b.get('actor')) or (pend and sess.commits.get(pend.get('turn_key'), {}).get('actor') == b.get('actor') and b.get('actor') == 'aero') else 'gm'
+                service.require(b['session'], _toks(b), who)
             return 200, service.commit(b['session'], str(b['turn_key']), str(b['actor']), b['plan'])
         if path == '/atomic/roll':
+            service.require(b['session'], _toks(b), 'player' if b.get('roller') == 'player' else 'gm')
             return 200, service.roll(b['session'], str(b['turn_key']), str(b['plan_hash']), b['dice'], b['roller'], str(b.get('actor', '')), str(b.get('purpose', '')))
         if path == '/atomic/decide':
+            service.require(b['session'], _toks(b), 'player')
             return 200, service.decide(b['session'], str(b['turn_key']), str(b['key']), b.get('choice'))
         if path == '/atomic/journal':
+            service.require(b['session'], _toks(b), 'player', 'gm')
             return 200, service.journal(b['session'])
         if path == '/atomic/close':
+            service.require(b['session'], _toks(b), 'gm')
             return 200, service.close(b['session'])
         return 404, {'error': 'NO_ROUTE'}
     except AtomicError as e:

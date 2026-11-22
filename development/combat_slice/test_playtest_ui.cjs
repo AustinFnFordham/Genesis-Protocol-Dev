@@ -131,6 +131,11 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     await h.locator('[data-card="move"]').click(); if (await h.locator("#pick[open]").count()) await h.locator("#pickBody button").first().click();
     for (const c of ["saber_strike", "flow_strike"]) await h.locator(`[data-card="${c}"]`).click(); await h.locator("#resolve").click(); await drive(h);
     ok(await h.locator(".lane-turn .auth.ok").count() >= 1, "honest turns show the server-verified badge");
+    // D3: player view renders enemy facts only from the server projection
+    await h.locator("#playerView").check(); await h.waitForTimeout(400);
+    const plateTxt = await h.locator("[data-plate=ilsa]").innerText();
+    ok(!/HP \d+ \/ \d+/.test(plateTxt) && !/AC 15\b/.test(plateTxt) && /learned from your attacks/.test(plateTxt), "player view: no enemy HP numbers or true AC; AC shown as learned bounds", plateTxt);
+    await h.locator("#playerView").uncheck();
     ok(await G(h, () => window.__genesisCombat.state().receipts.every((r) => r.authority === "atomic")), "every receipt is authority=atomic");
     const sid = await G(h, () => window.__genesisCombat.session()); const hash1 = await G(h, () => JSON.stringify([window.__genesisCombat.state().log.length, window.__genesisCombat.state().tape, window.__genesisCombat.state().actors.aero.hp, window.__genesisCombat.state().actors.ilsa.hp]));
     // NOTE: closeIn() changed distance in the page only, so the server replay differs from the page in where Aero stands; use a clean fight for the reconnect proof.
@@ -148,7 +153,8 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     await drive(h);
     const tapeAfter = await G(h, () => window.__genesisCombat.state().tape.map((d) => d.value));
     ok(JSON.stringify(tapeAfter.slice(0, tapeBefore.length)) === JSON.stringify(tapeBefore), "reload: every die already drawn is reused (no reroll after reconnect)", [tapeBefore, tapeAfter]);
-    const j = await (await fetch(base + "/atomic/journal", { method: "POST", body: JSON.stringify({ session: sid2 }), headers: { "Content-Type": "application/json" } })).json();
+    const toks = await G(h, () => window.__genesisCombat.tokens());
+    const j = await (await fetch(base + "/atomic/journal", { method: "POST", body: JSON.stringify({ session: sid2, tokens: toks }), headers: { "Content-Type": "application/json" } })).json();
     const C = require("./catalog.json"), S = require("./scenarios.json"); const rb = D.replay(C, S, j);
     const pageState = await G(h, () => JSON.parse(JSON.stringify(window.__genesisCombat.state())));
     ok(!rb.pending && D.stateHash(rb.state) === D.stateHash(pageState), "the page's state equals a clean replay of the server journal (presentation wrote nothing into game state)");

@@ -32,6 +32,7 @@ timed "development/combat_slice/test_cc005b.cjs" node development/combat_slice/t
 timed "development/combat_slice/test_atomic_service.py" python3 -B development/combat_slice/test_atomic_service.py
 timed "development/combat_slice/test_atomic_flow.cjs" node development/combat_slice/test_atomic_flow.cjs
 timed "development/combat_slice/test_cc005_server.cjs" node development/combat_slice/test_cc005_server.cjs
+timed "development/combat_slice/test_cc005b_server.cjs" node development/combat_slice/test_cc005b_server.cjs
 timed "development/combat_slice/test_playtest_ui.cjs" node development/combat_slice/test_playtest_ui.cjs
 timed "development/preview/test_preview.cjs" node development/preview/test_preview.cjs
 timed "development/encounter/test_tracker_ui.cjs" node development/encounter/test_tracker_ui.cjs $P $Q/state_round1.json

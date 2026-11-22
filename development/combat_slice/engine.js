@@ -636,7 +636,42 @@
              log: s.log.filter(function (e) { return !e.hidden; }), receipts: s.receipts, over: s.over, switches: s.switches };
   }
 
-  return { newState: newState, validatePlan: validatePlan, availability: availability, resolveTurn: resolveTurn, endTurn: endTurn,
+  // ---------------- viewer projection for live player mode (owner D3) ----------------
+  // What a player may know: own sheet in full; others only as perceived (no HP numbers, no AC/DC unless discovered).
+  // Discovered AC is a BOUND learned from the viewer side's own resolved attacks: a hit at total T => AC <= T;
+  // a clean miss (no parry, not a natural 1/20) at T => AC >= T+1. Hidden actors and their rolls are omitted.
+  function knowledge(s, viewer) {
+    var side = s.actors[viewer].side, k = {};
+    s.log.forEach(function (l, i) {
+      if (l.ev !== "attack" || !s.actors[l.attacker] || s.actors[l.attacker].side !== side || !s.actors[l.defender] || s.actors[l.defender].side === side) return;
+      if (l.nat === 20 || l.nat === 1) return;
+      var nx = []; for (var j = i + 1; j < s.log.length && j < i + 6 && s.log[j].ev !== "attack"; j++) nx.push(s.log[j]);   // only this attack's own outcome
+      var hit = nx.some(function (x) { return x.ev === "damage" && x.attacker === l.attacker && x.target === l.defender && x.pid === l.pid; }),
+          par = nx.some(function (x) { return x.ev === "parry" && x.actor === l.defender && x.attacker === l.attacker; });
+      var b = k[l.defender] = k[l.defender] || { ac_min: null, ac_max: null };
+      if (hit || par) b.ac_max = b.ac_max == null ? l.total : Math.min(b.ac_max, l.total);   // reached AC (a parry only happens to a would-be hit)
+      else b.ac_min = b.ac_min == null ? l.total + 1 : Math.max(b.ac_min, l.total + 1);
+    });
+    Object.keys(k).forEach(function (id) { var b = k[id]; b.exact = b.ac_min != null && b.ac_min === b.ac_max ? b.ac_min : null; });
+    return k;
+  }
+  function playerProjection(s, viewer) {
+    var v = publicView(s, viewer), side = s.actors[viewer].side, know = knowledge(s, viewer);
+    Object.keys(v.actors).forEach(function (id) { var a = v.actors[id]; if (a.side !== side) { a.hp = null; a.hp_max = null; a.ac = null; a.ac_known = know[id] || { ac_min: null, ac_max: null, exact: null }; a.budget = null; a.reaction_left = null; } });
+    var visible = function (id) { return !id || !!v.actors[id]; };
+    v.log = v.log.filter(function (l) { return visible(l.actor) && visible(l.attacker) && visible(l.target) && visible(l.defender); }).map(function (l) {
+      var c = clone(l), tgt = c.target && s.actors[c.target];
+      if (c.ev === "damage" && tgt && tgt.side !== side) { delete c.hp; delete c.hp_max; c.text = tgt.name + " takes " + c.amount + " " + (c.text.match(/ (\w+) damage/) || [, ""])[1] + " damage."; }
+      return c;
+    });
+    v.receipts = v.receipts.filter(function (r) { return visible(r.actor); }).map(function (r) {
+      var c = clone(r); if (c.vs && c.vs.type === "ac" && s.actors[c.vs.target] && s.actors[c.vs.target].side !== side) { delete c.vs.value; c.vs.known = know[c.vs.target] || null; } return c;
+    });
+    v.viewer = viewer; v.projection = "player"; delete v.switches;
+    return v;
+  }
+
+  return { newState: newState, playerProjection: playerProjection, knowledge: knowledge, validatePlan: validatePlan, availability: availability, resolveTurn: resolveTurn, endTurn: endTurn,
            acceptDice: acceptDice, _localDie: localDie, rangeMods: rangeMods, confirmedCombos: confirmedCombos, npcPlan: npcPlan, comboJudge: comboJudge, synergies: synergies, hasAdv: hasAdv, reactionOptions: reactionOptions, cinematicNote: cinematicNote, publicView: publicView, current: current,
            distance: distance, project: project, _rollDice: rollDice };
 });

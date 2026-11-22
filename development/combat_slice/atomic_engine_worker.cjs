@@ -22,6 +22,7 @@ function inspect(journal, candidate) {
   }
   if (candidate && candidate.actor && s.actors[candidate.actor]) { const v = E.validatePlan(s, candidate.actor, candidate.plan || []); out.validation = { legal: v.legal, reasons: (v.steps || []).filter((x) => !x.ok).map((x) => ({ step: x.i, pid: x.pid, codes: x.reasons.map((r) => r.code) })).concat((v.errors || []).map((e) => ({ codes: [e.code] }))) }; }
   if (candidate && candidate.want_state) out.state = s;
+  if (candidate && candidate.want_view) out.view = candidate.want_view === "gm" ? s : E.playerProjection(s, candidate.want_view);
   return out;
 }
 const rl = readline.createInterface({ input: process.stdin });

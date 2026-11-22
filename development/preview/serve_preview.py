@@ -95,7 +95,7 @@ def main():
     ap.add_argument('--host', default='127.0.0.1')
     a = ap.parse_args()
     global ATOMIC
-    ATOMIC = atomic_service.AtomicDice(engine=atomic_service.EngineWorker())
+    ATOMIC = atomic_service.AtomicDice(engine=atomic_service.EngineWorker(), require_tokens=True)
     page = build_preview.build()
     srv = http.server.ThreadingHTTPServer((a.host, a.port), handler_for(Path(page).parent))
     print(f'Genesis dev preview: http://{a.host}:{srv.server_port}/ (fixture only; keep forwarding private)', flush=True)

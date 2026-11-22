@@ -54,10 +54,13 @@ const hooks = (pick) => ({ playerRoll: async () => {}, gmRoll: async () => {}, d
     const b1 = await post("/atomic/open", { scenario: "duelist", mode: "bound", encounter_id: "sandbox.duel.encounter-7" });
     const b2 = await post("/atomic/open", { scenario: "duelist", mode: "bound", encounter_id: "sandbox.duel.encounter-7" });
     ok(b1.body.session === b2.body.session && b2.body.resumed, "bound encounter: opening again returns the SAME session (no new seed)", [b1.body, b2.body]);
-    const ab = await post("/atomic/abandon", { session: b1.body.session }); ok(ab.body.forfeit === true, "abandoning a bound encounter is a recorded forfeit");
+    ok(!!b1.body.player_token && !b1.body.gm_token, "a bound session hands the client a player token only (the GM stays on the server)", b1.body);
+    ok(!b2.body.player_token, "re-opening a bound encounter never re-issues tokens");
+    ok((await post("/atomic/abandon", { session: b1.body.session })).status === 401, "no token, no access");
+    const ab = await post("/atomic/abandon", { session: b1.body.session, token: b1.body.player_token }); ok(ab.body.forfeit === true, "abandoning a bound encounter is a recorded forfeit");
     const b3 = await post("/atomic/open", { scenario: "duelist", mode: "bound", encounter_id: "sandbox.duel.encounter-7" });
     ok(b3.body.session === b1.body.session && b3.body.closed === true, "after a forfeit the encounter stays closed; no fresh seed is issued", b3.body);
-    ok((await post("/atomic/commit", { session: b1.body.session, turn_key: "R1.T0.aero", actor: "aero", plan: [] })).body.error === "SESSION_CLOSED", "a forfeited encounter accepts nothing");
+    ok((await post("/atomic/commit", { session: b1.body.session, token: b1.body.player_token, turn_key: "R1.T0.aero", actor: "aero", plan: [] })).body.error === "SESSION_CLOSED", "a forfeited encounter accepts nothing");
     ok((await post("/atomic/open", { scenario: "duelist", mode: "bound" })).body.error === "NEED_ENCOUNTER", "bound sessions need an encounter id from the campaign authority");
     const p1 = await post("/atomic/open", { scenario: "duelist" }), p2 = await post("/atomic/open", { scenario: "duelist" });
     ok(p1.body.session !== p2.body.session && p1.body.mode === "practice" && p1.body.eligible_for_campaign_authority === false, "practice sessions get fresh seeds and are labelled ineligible for campaign authority");

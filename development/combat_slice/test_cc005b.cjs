@@ -87,4 +87,16 @@ t("odds after a planned withdrawal include the blaster's long-range disadvantage
   assert(a.distance_ft === 45 && a.dis.includes("long range"), JSON.stringify([a.distance_ft, a.dis]));
   const sim = P.simulate(s, "aero", plan, { n: 200 }); assert(sim, "the whole plan still simulates");
 });
+t("learned AC bounds always contain the true AC (200 seeded duels, all outcomes incl. parry/riposte)", () => {
+  for (let seed = 1; seed <= 200; seed++) { let s = E.newState(C, S, "duelist", { seed }); s.dist["aero|ilsa"] = 5;
+    for (let k = 0; k < 8 && !s.over; k++) { const a = E.current(s); const plan = a === "aero" ? [{ pid: "saber_strike", target: "ilsa" }, { pid: "flow_strike", target: "ilsa" }].filter((x, i, arr) => E.validatePlan(s, "aero", arr.slice(0, i + 1)).legal) : E.npcPlan(s, a);
+      let ch = {}, r; for (let g = 0; g < 10; g++) { r = E.resolveTurn(s, a, plan, ch); if (!r.paused) break; ch[r.paused.key] = r.paused.options[0]; } s = E.endTurn(r.state);
+      const b = E.knowledge(s, "aero").ilsa; if (b) assert((b.ac_min == null || b.ac_min <= 15) && (b.ac_max == null || b.ac_max >= 15), "seed " + seed + ": " + JSON.stringify(b)); } }
+});
+t("player projection never carries enemy HP/AC numbers; hidden actors and their rolls are omitted", () => {
+  const p = E.newState(C, S, "predator", { seed: 3 }); const v = E.playerProjection(p, "aero"); assert(!v.actors.stalker && !v.receipts.some((r) => r.actor === "stalker"));
+  let s = E.newState(C, S, "duelist", { seed: 5 }); s.dist["aero|ilsa"] = 5; let ch = {}, r; for (let g = 0; g < 8; g++) { r = E.resolveTurn(s, "aero", [{ pid: "saber_strike", target: "ilsa" }], ch); if (!r.paused) break; ch[r.paused.key] = null; }
+  const pv = E.playerProjection(E.endTurn(r.state), "aero"); const txt = JSON.stringify(pv);
+  assert(pv.actors.ilsa.hp === null && pv.actors.ilsa.ac === null && !/"value":15\b/.test(txt) && !/\/20\)/.test(txt));
+});
 setTimeout(() => { console.log(fail ? fail + " FAILED, " + pass + " passed" : "all " + pass + " passed"); process.exit(fail ? 1 : 0); }, 10);

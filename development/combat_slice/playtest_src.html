@@ -198,6 +198,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   </header>
   <div class="row toggles" style="margin-top:6px">
     <label><input type="checkbox" id="fullMech"> Full mechanics (debug)</label>
+    <label title="Enemy facts come only from the server's player projection (needs the preview server)"><input type="checkbox" id="playerView"> Player view (server projection)</label>
     <label><input type="checkbox" id="animate" checked> Animate dice</label>
     <label title="Owner ruling 2026-11-11, campaigns/starwars_litrpg/creator/jedi_fundamentals.json"><input type="checkbox" id="campaignOverlay"> Campaign overlay: starwars_litrpg (Jedi Fundamentals)</label>
     <details class="sw"><summary>Sandbox switches</summary><div class="switches" id="switches"></div></details>
@@ -289,7 +290,14 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   // ---------- dice authority ----------
   // Over the preview server, every die comes from the sandbox Atomic service (secret seed, journal, plan lock).
   // As a standalone file there is no server: offline practice dice, clearly labelled NOT authoritative.
-  var OVERLAYS = [GenesisOverlay.fromJediFundamentals(JEDI_FUNDAMENTALS)], campaign = null;
+  var OVERLAYS = [GenesisOverlay.fromJediFundamentals(JEDI_FUNDAMENTALS)], campaign = null, pmode = false, pview = null;
+  function refreshView() {   // the server's player projection (D3): the ONLY source of enemy facts in player view
+    if (!pmode || !atomic || !atomic.view || !session) { pview = null; return Promise.resolve(); }
+    return atomic.view(session, "player").then(function (r) { pview = r.view; renderField(); renderTimeline(); }, function () { pview = null; });
+  }
+  function enemyKnown(id) { return pview && pview.actors[id] ? pview.actors[id] : null; }
+  function acText(id) { var k = enemyKnown(id); if (!k) return "?"; var b = k.ac_known || {}; return b.exact != null ? String(b.exact) : b.ac_min != null && b.ac_max != null ? b.ac_min + "–" + b.ac_max : b.ac_min != null ? "≥ " + b.ac_min : b.ac_max != null ? "≤ " + b.ac_max : "unknown"; }
+  function hidesEnemy(id) { return pmode && S.actors[id] && S.actors[id].side !== "party"; }
   function stateOpts() { return { atomic: true, switches: switches, campaign: campaign, overlays: OVERLAYS }; }
   var DR = GenesisDriver, atomic = null, session = null, busy = false, narr = {}, narrQueue = [], liveLog = null;
   function detectAtomic() {
@@ -302,7 +310,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function newFight() {
     stopTheater(); S = E.newState(CATALOG, SCENARIOS, scenarioId, stateOpts()); plan = []; pendingRun = null; shownLog = 0; lastSim = null; narr = {}; busy = true; render();
-    atomic.open({ scenario: scenarioId, switches: switches, campaign: campaign }).then(function (o) { session = o.session; if (atomic.authoritative) lsSet("genesis.cc004.session", session); busy = false; resetTheater(); render(); return runNpcs(); }).catch(fatal);
+    atomic.open({ scenario: scenarioId, switches: switches, campaign: campaign }).then(function (o) { session = o.session; if (atomic.authoritative) { lsSet("genesis.cc004.session", session); lsSet("genesis.cc005b.tokens", JSON.stringify(atomic.getTokens(session) || {})); } busy = false; resetTheater(); render(); return runNpcs(); }).catch(fatal);
   }
   function resume(sid) {   // reconnect: rebuild the exact state from the Atomic journal, then continue
     return atomic.journal(sid).then(function (j) {
@@ -335,7 +343,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
       onProgress: function (r) { liveProgress(r); }
     }).then(function (res) {
       if (res.refused) { busy = false; $("planMsg").textContent = "Not legal: " + res.refused.steps.filter(function (x) { return !x.ok; }).map(function (x) { return x.reasons.map(function (y) { return y.text; }).join(" "); }).join(" "); render(); return false; }
-      S = res.state; liveLog = null; busy = false; markVerified(res.turn_key, res.verification);
+      S = res.state; liveLog = null; busy = false; markVerified(res.turn_key, res.verification); refreshView();
       var turnLog = S.log.slice(startLog); theaterSettle(turnLog, actor);
       shownLog = S.log.length; queueNarration(res.turn_key, actor, turnLog);
       if (actor === "aero") plan = [];
@@ -387,7 +395,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   function authBadge() { return atomic && atomic.authoritative ? "<span class='auth ok'>Dice: Atomic (sandbox service) · session " + esc((session || "").slice(0, 8)) + "</span>" : "<span class='auth warn'>Dice: offline practice — NOT authoritative (no Atomic server here)</span>"; }
   function vsText(need) {
     var v = need.vs || {}, T = v.target && S.actors[v.target];
-    if (v.type === "ac") return "vs " + esc(T ? T.name : "") + " AC <b>" + v.value + "</b>" + (v.adv && v.adv.length ? " · advantage: " + esc(v.adv.join(", ")) : "") + (v.dis && v.dis.length ? " · disadvantage: " + esc(v.dis.join(", ")) : "");
+    if (v.type === "ac") return "vs " + esc(T ? T.name : "") + " AC <b>" + (hidesEnemy(v.target) ? esc(acText(v.target)) : v.value) + "</b>" + (v.adv && v.adv.length ? " · advantage: " + esc(v.adv.join(", ")) : "") + (v.dis && v.dis.length ? " · disadvantage: " + esc(v.dis.join(", ")) : "");
     if (v.type === "opposed") return "opposed by " + esc(T ? T.name : "") + "'s " + esc(v.skill);
     if (v.type === "opposed_against") return "must beat <b>" + v.value + "</b>";
     if (v.type === "dc") return "vs DC <b>" + v.value + "</b>";
@@ -451,9 +459,9 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   function outcomeOf(r, L) {   // read back from the accepted log, never recomputed
     var l = L.filter(function (x) { return x.receipt && x.receipt.split(",").indexOf(r.receipt) >= 0; })[0]; if (!l) return null;
     if (l.ev === "attack") { var i = L.indexOf(l), nx = L.slice(i + 1, i + 5), dmg = nx.filter(function (x) { return x.ev === "damage" && x.attacker === l.attacker; })[0], par = nx.filter(function (x) { return x.ev === "parry"; })[0];
-      var ac = S.actors[l.defender].ac; if (!dmg && !nx.some(function (x) { return x.ev === "miss"; })) return { cls: "", text: (l.crit ? "Critical! " : "") + "vs AC " + ac + " · resolving…" };
+      var ac = hidesEnemy(l.defender) ? acText(l.defender) : S.actors[l.defender].ac; if (!dmg && !nx.some(function (x) { return x.ev === "miss"; })) return { cls: "", text: (l.crit ? "Critical! " : "") + "vs AC " + ac + " · resolving…" };
       return l.crit ? { cls: "crit", text: "Critical hit" } : dmg ? { cls: "hit", text: "Hit · vs AC " + ac + (par ? " (parry not enough)" : "") } : { cls: "miss", text: (l.nat === 1 ? "Natural 1 · " : "") + "Miss · vs AC " + ac + (par && par.turned ? " + 2 parry" : "") }; }
-    if (l.ev === "damage") return { cls: l.target === "aero" ? "hurt" : "hit", text: l.amount + " damage → " + S.actors[l.target].name + " " + l.hp + "/" + l.hp_max + (l.crit ? " (crit: dice doubled)" : "") + (l.rolled != null && l.rolled !== l.amount ? " (rolled " + l.rolled + ")" : "") };
+    if (l.ev === "damage") return { cls: l.target === "aero" ? "hurt" : "hit", text: l.amount + " damage → " + S.actors[l.target].name + (hidesEnemy(l.target) ? "" : " " + l.hp + "/" + l.hp_max) + (l.crit ? " (crit: dice doubled)" : "") + (l.rolled != null && l.rolled !== l.amount ? " (rolled " + l.rolled + ")" : "") };
     if (l.ev === "contest") { var mine = r.receipt === l.receipt.split(",")[0]; return { cls: l.win === mine ? "hit" : "miss", text: (mine ? l.a + " vs " + l.t : l.t + " vs " + l.a) + " · " + (mine ? (l.win ? "succeeds" : "fails") : (l.win ? "fails to resist" : "resists")) + (l.a === l.t ? " (tie → defender)" : "") }; }
     if (l.ev === "save") return { cls: l.win ? "miss" : "hit", text: l.total + " vs DC " + l.dc + " · " + (l.win ? "saved" : "failed: prone") };
     if (l.ev === "deflect") return { cls: "hit", text: "reduced by " + l.reduced + " → " + l.amount };
@@ -493,6 +501,9 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
     var v = E.publicView(S, "aero", { show_enemy_hp: true, full_mechanics: full }), cur = E.current(S);
     $("field").innerHTML = Object.keys(v.actors).map(function (id) {
       var a = v.actors[id], own = a.side === "party", real = S.actors[id], hp = display[id] != null ? display[id] : a.hp, r = hp / a.hp_max;
+      if (!own && pmode) { var k = enemyKnown(id); if (!k) return ""; return "<div class='plate " + a.side + (cur === id && !S.over ? " turn" : "") + "' data-plate='" + id + "'><div class='nm'>" + esc(k.name) + "<span class='tag'>" + k.distance + " ft away" + (k.down ? " · down" : "") + "</span></div>" +
+        "<div class='hp'><span>" + esc(k.down ? "down" : k.condition) + " <small class='muted'>(what Aero can see)</small></span></div><div class='stats'><span>AC <b>" + esc(acText(id)) + "</b> <small class='muted'>learned from your attacks</small></span>" + (k.weapon ? "<span>" + esc(k.weapon.name) + (k.weapon.held ? "" : " — <b class='bad'>dropped</b>") + "</span>" : "") + "</div>" +
+        (k.conds.length ? "<div class='conds'>" + k.conds.map(function (c) { return "<span class='cond'>" + esc(c.replace("_", " ")) + "</span>"; }).join("") + "</div>" : "") + "</div>"; }
       var pips = own && a.budget ? ["main", "secondary", "bonus", "reaction", "movement_ft", "object"].map(function (k) { var n = k === "reaction" ? a.reaction_left : a.budget[k]; return "<span class='pip c-" + k + (n ? "" : " zero") + "'>" + CL[k] + " " + n + (k === "movement_ft" ? " ft" : "") + "</span>"; }).join("") : "";
       return "<div class='plate " + a.side + (cur === id && !S.over ? " turn" : "") + "' data-plate='" + id + "'>" +
         "<div class='nm'>" + esc(a.name) + "<span class='tag'>" + (own ? "You" : a.distance + " ft away") + (a.down ? " · down" : "") + (cur === id && !S.over ? " · acting" : "") + "</span></div>" +
@@ -634,7 +645,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
     if (!sy.length) { $("combo").innerHTML = ""; return; }
     var c = sy[0], s = currentSim();
     var chain = c.steps.map(function (i) { var p = CATALOG.profiles[plan[i].pid], k = Object.keys(p.cost || {})[0] || "free"; return "<span class='lk c-" + k + "'>" + esc(CL[k] || "Free") + " · " + esc(p.name) + "</span>"; }).join("<span class='ar' aria-hidden='true'>→</span>");
-    var pr = an && c.steps.map(function (i) { var a = an.steps[i]; return a.kind === "attack" ? esc(a.name) + " " + pct(a.hit) + (a.feint_conditional != null ? " (" + pct(a.if_feint_wins) + " if the feint lands, " + pct(a.if_feint_fails) + " if not)" : "") : a.kind === "contest" ? esc(a.name) + " " + pct(a.success) : ""; }).filter(Boolean).join(" · ");
+    var pr = pmode ? "see the prediction table (ranges from learned AC)" : an && c.steps.map(function (i) { var a = an.steps[i]; return a.kind === "attack" ? esc(a.name) + " " + pct(a.hit) + (a.feint_conditional != null ? " (" + pct(a.if_feint_wins) + " if the feint lands, " + pct(a.if_feint_fails) + " if not)" : "") : a.kind === "contest" ? esc(a.name) + " " + pct(a.success) : ""; }).filter(Boolean).join(" · ");
     var cine = E.cinematicNote({ switches: { cinematic_judge: true } }, plan);
     $("combo").innerHTML = "<div class='comboBanner' role='status' data-combo='" + c.id + "'><div class='row' style='justify-content:space-between'><span class='cn'>" + esc(c.name) + "</span><small class='muted'>predicted synergy — confirmed only by resolved events</small></div><div class='chain'>" + chain + "</div>" +
       "<dl class='layers'><dt>Legal sequence</dt><dd class='" + (c.legal ? "ok'>✓ every linked step passes the validator" : "bad'>✗ a linked step is not legal right now") + "</dd>" +
@@ -647,17 +658,21 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
     var s = currentSim(), rows = [];
     if (an) rows = an.steps.filter(function (a) { return a.kind === "attack" || a.kind === "contest"; }).map(function (a) {
       if (a.kind === "contest") return "<tr><td><b>" + esc(a.name) + "</b><div class='math'>" + esc(full ? a.math : "opposed check") + "</div></td><td><span class='pct'>" + pct(a.success) + "</span><div class='bar'><i style='width:" + 100 * a.success + "%'></i></div>win</td><td>—</td><td><span class='label-narr'>read</span> " + P.assess(a.success) + "</td></tr>";
+      if (hidesEnemy(a.target)) { var kb = (enemyKnown(a.target) || {}).ac_known || {}, lo = kb.ac_min != null ? kb.ac_min : 10, hi = kb.ac_max != null ? kb.ac_max : 20, md = a.mode === "conditional" ? "normal" : a.mode, prof = CATALOG.profiles[a.pid].resolution;
+        var best = P.attackOdds(prof.bonus, lo, md).hit, worst = P.attackOdds(prof.bonus, hi, md).hit;
+        return "<tr><td><b>" + esc(a.name) + "</b><div class='math'>AC " + esc(acText(a.target)) + " (learned)" + (kb.ac_min == null || kb.ac_max == null ? "; unknown part assumed 10–20" : "") + "</div></td><td><span class='pct'>" + pct(worst) + "–" + pct(best) + "</span><div class='bar'><i style='width:" + 100 * worst + "%'></i></div>hit (range: its AC is not known exactly)</td><td><span class='pct'>" + a.damage.min + "–" + a.damage.max + "</span></td><td><span class='label-narr'>read</span> " + P.assess((best + worst) / 2) + "</td></tr>"; }
       var modeTxt = a.mode === "conditional" ? "advantage only if the feint lands" : a.mode + (a.adv.length ? " (" + a.adv.join(", ") + ")" : "") + (a.dis.length ? " (" + a.dis.join(", ") + ")" : "");
       return "<tr><td><b>" + esc(a.name) + "</b><div class='math'>" + esc(modeTxt) + (full ? "<br>" + esc(a.math) : "") + "</div></td><td><span class='pct'>" + pct(a.hit) + "</span><div class='bar'><i style='width:" + 100 * a.hit + "%'></i></div>hit · crit " + pct(a.crit) +
         (a.parry_bonus ? "<br><small class='muted'>their Parry turns " + pct(a.parried) + "</small>" : "") + (a.riposte_risk ? "<br><small class='bad'>riposte risk " + pct(a.riposte_risk) + "</small>" : "") + "</td>" +
         "<td><span class='pct'>" + a.damage.min + "–" + a.damage.max + "</span><br><small class='muted'>crit " + a.crit_damage.min + "–" + a.crit_damage.max + " · expected " + a.expected_damage.toFixed(1) + "</small></td><td><span class='label-narr'>read</span> " + P.assess(a.hit) + "</td></tr>";
     });
     $("pred").innerHTML = (rows.length ? "<div class='row' style='justify-content:space-between'><h3 class='muted'>Prediction</h3><small><span class='label-mech'>Mechanical</span> exact, from the engine's numbers · <span class='label-narr'>read</span> words only</small></div><div class='tblwrap'><table><thead><tr><th>Step</th><th>Chance</th><th>Damage</th><th>Assessment</th></tr></thead><tbody>" + rows.join("") + "</tbody></table></div>" : "") +
-      (s ? "<p style='font-size:13px;margin:8px 0 0' data-sim='1'><span class='label-mech'>Simulated</span> whole turn: " + s.samples + " seeded runs of the real engine on a copy (seed " + s.seed + "; your dice are untouched). " + (s.feint_success ? "Feint lands " + pct(s.feint_success.p) + " · " : "") + "every attack lands " + pct(s.full_combo.p) + " (95% " + pct(s.full_combo.lo) + "–" + pct(s.full_combo.hi) + ") · avg damage dealt " + s.avg_damage_dealt.toFixed(1) + " · taken this turn " + s.avg_damage_taken.toFixed(1) + (s.target_down.p > 0 ? " · drops the target " + pct(s.target_down.p) : "") + "</p>" : plan.length && v.legal ? "<p class='muted' style='font-size:13px'>Simulating…</p>" : "") + incomingHtml();
+      (s && !pmode ? "<p style='font-size:13px;margin:8px 0 0' data-sim='1'><span class='label-mech'>Simulated</span> whole turn: " + s.samples + " seeded runs of the real engine on a copy (seed " + s.seed + "; your dice are untouched). " + (s.feint_success ? "Feint lands " + pct(s.feint_success.p) + " · " : "") + "every attack lands " + pct(s.full_combo.p) + " (95% " + pct(s.full_combo.lo) + "–" + pct(s.full_combo.hi) + ") · avg damage dealt " + s.avg_damage_dealt.toFixed(1) + " · taken this turn " + s.avg_damage_taken.toFixed(1) + (s.target_down.p > 0 ? " · drops the target " + pct(s.target_down.p) : "") + "</p>" : plan.length && v.legal ? "<p class='muted' style='font-size:13px'>Simulating…</p>" : "") + incomingHtml();
     if (plan.length && v.legal && !s && myTurn()) { clearTimeout(simTimer); simTimer = setTimeout(function () { var k = simKey(); if (!plan.length) return; lastSim = { key: k, res: P.simulate(S, "aero", plan, { n: 400 }) }; renderTimeline(); }, 200); }
   }
   function incomingHtml() {
     var foes = visibleEnemies(); if (!foes.length || S.over) return "";
+    if (pmode) return "<p style='font-size:13px;margin:8px 0 0' class='muted'>Player view: enemy attack bonuses are not known, so no incoming odds are shown.</p>";
     return "<p style='font-size:13px;margin:8px 0 0'><span class='label-mech'>Incoming · exact</span> " + foes.map(function (f) {
       var F = S.actors[f], pid = F.profiles.indexOf("npc_blade") >= 0 && F.weapon && F.weapon.held ? "npc_blade" : F.profiles.indexOf("bite") >= 0 ? "bite" : null; if (!pid) return esc(F.name) + " is unarmed right now";
       var d = P.defenseOdds(S, f, "aero", pid); return esc(F.name) + "'s " + esc(CATALOG.profiles[pid].name) + " hits you " + pct(d.hit) + " for " + d.damage.min + "–" + d.damage.max + (S.actors.aero.profiles.indexOf("parry") >= 0 && CATALOG.profiles[pid].resolution.melee ? "; your Parry turns " + pct(d.parry_prevents) + " of its attacks" : "") + (S.actors.aero.profiles.indexOf("readied_dodge") >= 0 ? "; a readied Dodge cuts it to " + pct(d.dodge_hit) : "");
@@ -738,6 +753,7 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   $("reset").onclick = function () { lsSet("genesis.cc004.session", null); newFight(); };
   $("scenario").onchange = function () { scenarioId = $("scenario").value; newFight(); };
   $("fullMech").onchange = function () { full = $("fullMech").checked; render(); };
+  $("playerView").onchange = function () { pmode = $("playerView").checked && !!(atomic && atomic.authoritative); if ($("playerView").checked && !pmode) { $("playerView").checked = false; $("errMsg").textContent = "Player view needs the preview server (the projection is computed server-side)."; } refreshView().then(render); };
   $("campaignOverlay").onchange = function () { campaign = $("campaignOverlay").checked ? "starwars_litrpg" : null; lsSet("genesis.cc004.session", null); newFight(); };
   // ---------- dock (sticky on desktop; bottom sheet on touch screens, so the drop zone is always on screen) ----------
   var dockOpen = true;
@@ -747,11 +763,12 @@ var CATALOG = /*CATALOG*/, SCENARIOS = /*SCENARIOS*/, JEDI_FUNDAMENTALS = /*JEDI
   function trackDock() { var h = window.matchMedia("(max-width: 920px)").matches ? $("dock").getBoundingClientRect().height : 0; document.documentElement.style.setProperty("--dock-h", Math.round(h) + "px"); }
   try { new ResizeObserver(trackDock).observe($("dock")); } catch (e) {} window.addEventListener("resize", trackDock);
   $("inspectClose").onclick = function () { $("inspect").close(); }; $("pickCancel").onclick = function () { $("pick").close(); };
-  window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; }, playing: function () { return busy; }, busy: function () { return busy; }, waitingRoll: function () { return !!theater.waiting; }, sim: function () { return currentSim(); }, authority: function () { return atomic && atomic.authority; }, session: function () { return session; } };
+  window.__genesisCombat = { state: function () { return S; }, plan: function () { return plan; }, playing: function () { return busy; }, busy: function () { return busy; }, waitingRoll: function () { return !!theater.waiting; }, sim: function () { return currentSim(); }, authority: function () { return atomic && atomic.authority; }, session: function () { return session; }, tokens: function () { return atomic && atomic.getTokens ? atomic.getTokens(session) : null; } };
   renderSwitches();
   S = E.newState(CATALOG, SCENARIOS, scenarioId, stateOpts()); busy = true;
   detectAtomic().then(function (a) {
     atomic = a; var sid = atomic.authoritative ? lsGet("genesis.cc004.session") : null;
+    if (sid) { try { atomic.setTokens(sid, JSON.parse(lsGet("genesis.cc005b.tokens") || "{}")); } catch (e) {} }
     if (sid) return resume(sid).catch(function () { lsSet("genesis.cc004.session", null); newFight(); });
     newFight();
   });

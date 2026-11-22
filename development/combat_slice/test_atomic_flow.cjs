@@ -30,7 +30,7 @@ async function fight(scenario, atomic, opts) {
     ok(D.stateHash(rb.state) === D.stateHash(f.s) && !rb.pending, "reconnect: replaying the journal rebuilds the identical state");
     // 3. lost responses: the server processes the roll but the client never sees the answer; retry gets the same die
     let drop = 2; const flaky = D.HttpAtomic(base, async (u, init) => { const r = await fetch(u, init); if (/\/atomic\/roll$/.test(u) && drop-- > 0) throw new TypeError("network lost after server processed"); return r; });
-    const g = await fight("predator", flaky); const jg = await at.journal(g.ctx.session);
+    const g = await fight("predator", flaky); const jg = await flaky.journal(g.ctx.session);
     ok(!!g.s.over && D.stateHash(D.replay(C, S, jg).state) === D.stateHash(g.s), "lost roll responses are retried idempotently (same dice, same state)");
     ok(new Set(jg.tape.map((d) => d.seq)).size === jg.tape.length && jg.tape.every((d, i) => d.seq === i), "no duplicate or skipped dice in the journal after retries");
     // 4. interrupted mid-turn: commit + some dice, then the page dies; a new client resumes exactly there

@@ -10,14 +10,19 @@
   // ---- Atomic over HTTP (the preview server's /atomic/* routes). Retries are safe: every call is idempotent. ----
   function HttpAtomic(base, fetchImpl) {
     var f = fetchImpl || (typeof fetch !== "undefined" ? fetch.bind(typeof window !== "undefined" ? window : globalThis) : null);
+    var tokens = {};   // session -> {player, gm}: issued by the server at open; never invented by the client
     function call(path, body, tries) {
       tries = tries == null ? 3 : tries;
+      if (body && body.session && tokens[body.session]) body = Object.assign({ tokens: tokens[body.session] }, body);
       return f(base + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
         .then(function (r) { return r.json().then(function (j) { if (r.status >= 400) { var e = new Error(j.text || j.error); e.code = j.error; e.status = r.status; throw e; } return j; }); })
         .catch(function (e) { if (!e.status && tries > 1) return new Promise(function (res) { setTimeout(res, 300); }).then(function () { return call(path, body, tries - 1); }); throw e; });
     }
     return { authority: "atomic-sandbox", authoritative: true,
-      open: function (meta) { return call("/atomic/open", meta); },
+      open: function (meta) { return call("/atomic/open", meta).then(function (o) { if (o.session && (o.player_token || o.gm_token)) tokens[o.session] = { player: o.player_token, gm: o.gm_token }; return o; }); },
+      setTokens: function (sid, t) { tokens[sid] = t; }, getTokens: function (sid) { return tokens[sid]; },
+      view: function (sid, as) { return call("/atomic/view", { session: sid, as: as }); },
+      gmStep: function (sid) { return call("/atomic/gm_step", { session: sid }); },
       commit: function (sid, tk, actor, plan) { return call("/atomic/commit", { session: sid, turn_key: tk, actor: actor, plan: plan }); },
       roll: function (sid, tk, ph, dice, roller, actor, purpose) { return call("/atomic/roll", { session: sid, turn_key: tk, plan_hash: ph, dice: dice, roller: roller, actor: actor, purpose: purpose }); },
       decide: function (sid, tk, key, choice) { return call("/atomic/decide", { session: sid, turn_key: tk, key: key, choice: choice }); },
