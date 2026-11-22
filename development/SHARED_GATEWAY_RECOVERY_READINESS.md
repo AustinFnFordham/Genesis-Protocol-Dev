@@ -1,0 +1,29 @@
+# Shared gateway recovery readiness
+
+Base: `dev/shared-mobile-gateway-reconciled` at `09a3094`. Scope: the existing noncanonical `shared-1` authority. This development branch can be reviewed independently of cinematic combat and of the preview Codespace.
+
+## Observed on Nov 21, 2026 (Eastern)
+
+The hosted MCP authenticated the connection as `gpt-session` and returned public revision `40`, head `evt_0043`, digest `195d4cc4ebf6aa2de46d1a76af8f3b45cd5dd2bae0ef1603f67ed443c3650d1e`. It reported `read_only: true`, `storage_recovery_required: true` and `record_mid_write: false`. The exposed tools were refresh, Gemini-compatible refresh, public page and reference. Queued action `shared-0002` is still submitted to GPT, lease unheld, no fixed tables, accepted dice or accepted batch. Independent Git read found staging head `350c9da29ed2d7d667f147421d9d15b5471cd4d2`. The Work shell has no GitHub login. Host runtime Git permission was not measured by that shell.
+
+The reconciled code compares a local worktree marker to `GENESIS_STORAGE_GENERATION`. The older response alone cannot distinguish an initially unpinned host from a marker mismatch after replacement or storage loss. The deployment proposal intentionally starts with no pin and writes off, which would produce the observed shape. Confirm the actual host configuration before claiming a cause beyond the generation gate. `record_mid_write` describes campaign record consistency, independently of host generation approval.
+
+GitHub Codespaces listed `glowing space xylophone` active on `integration/tb4-whisper-v01`. This verifies editor availability and branch identity. The editor is the established preview environment; its existence does not identify the durable authority host or establish its OAuth and runtime Git permissions.
+
+## Candidate behavior
+
+The existing adapter reports `storage_recovery_reason` and `gm_write_blockers` separately. `read_only` reflects effective capability for the connected provider (host opt-in, guard, signed OAuth scope, configured server GM token). Discovery still omits mutators when the host switch or startup generation gate blocks them. Each GM operation rechecks the generation under the worktree lock before dispatch. If a running worker's marker disappears, changes or becomes unreadable, it refuses before touching the Gateway. Recovery checks never recreate that marker during a request. Readiness from refresh is a configuration check. It does not certify remote Git write access, branch protection, provider routing, lease acquisition or authorization to submit a new action.
+
+## Operator recovery on the existing host
+
+1. Leave GM writes disabled. Identify the exact deployed code and authority mount via the host operator surface. Preserve the current disk/worktree, including unconfirmed local receipts and Git metadata. Never reset, delete receipts, copy in a demo, or approve a generation just because refresh prints it.
+2. Inspect the existing authority checkout's branch, origin, working-tree status and local/remote ancestry without exposing credentials. Compare the staged action, lease, accepted tables/rolls/batch, ledger and published cursor to the authoritative remote. If the disk was replaced, reconcile the exact request and remote-accepted artifacts under the existing storage recovery contract before approving the replacement. A dirty/ahead checkout or uncertain push needs operator reconciliation before progressing. Do not reroll accepted dice.
+3. Verify the existing runtime Git identity can persist through the gateway. A separately approved isolated branch write from that same service identity can prove repository write transport. Check staging branch rules separately. Proof of staging persistence comes from a gateway-owned non-force transition observed from a fresh reader, not from a connector file write or a Codespace user credential.
+4. Once the operator has verified and approved the generation and any hosting action, confirm the host switch, provider-bound signed `genesis:gm` scope, server-held provider token and exposed mutation tools. Keep raw Git and GM credentials on the host. Verify the same public cursor from each connected session before a claim.
+5. Resume `shared-0002` only if still routed to GPT with a valid lease path. Reuse accepted work. Record the model and session attestation from the actual GPT session, then verify Git and public ledger heads. Gemini must refresh that outcome and take a new player-authorized declaration routed to `gemini-session`. Claude can use its existing documented session path. Do not switch the pending declaration merely to satisfy the sequence.
+
+## Acceptance evidence and future integration
+
+`shared-0001` is a published Claude turn at revision 40 with events `evt_0038`–`evt_0043`. It records provider `claude-session`, run `claude-s1`, an agent-session reference, `mock: false` and model attestation `claude-fable-5-2 (configured id; serving model may differ)`. That is a recorded attestation, not serving-model verification. GPT has an authenticated read from this Work session. No GPT or Gemini turn attestation was added. Fixture runs are never acceptance evidence.
+
+Reviewed `docs/cinematic-combat-capability-v0.2-20261121` at `329f05a`: the Character Capability & Mastery and Cinematic Combat & Maneuver contracts. When Claude's isolated gameplay prototype is accepted for integration, the gateway should carry the actor, ordered declarations and choices, ruleset/profile references, resource debits, reaction interruptions and immutable dice receipts through the same authority for PCs and NPCs. Carry deterministic resume identities across providers and expose only public state in refresh and page projections. Capability and mastery remain Registry- and ledger-backed, with legacy contract semantics preserved until opt-in. This branch changes neither resolver nor campaign data.

@@ -84,6 +84,29 @@ class BoundSessions(Base):
         with patch('mcp_adapter.get_access_token',return_value=token):self.assertEqual(self.tools.gm('claim','gemini-run',model='gpt-session',session='chatgpt')['http_status'],200)
         self.assertEqual(self.gw._lock()[1]['provider'],'gemini-session')
 
+    def test_signed_read_scope_cannot_claim_but_signed_gm_scope_can(self):
+        from starlette.testclient import TestClient
+
+        self.act(HOLSTER, provider="gpt-session")
+        signer = JWT()
+        signer.key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        server = adapter.create_server(self.tools, signer.verifier(), ISSUER, RESOURCE)
+        with TestClient(server.streamable_http_app(), base_url=RESOURCE.rsplit("/", 1)[0]) as client:
+            headers = {"accept": "application/json, text/event-stream",
+                       "mcp-protocol-version": "2025-11-25"}
+            claim = {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                     "params": {"name": "genesis_claim",
+                                "arguments": {"run": "signed-run", "model": "fixture", "session": "fixture"}}}
+            headers["authorization"] = "Bearer " + signer.token(scope="genesis:read")
+            denied = client.post("/mcp", headers=headers, json=claim).json()["result"]
+            self.assertTrue(denied["isError"])
+            self.assertEqual(denied["structuredContent"]["error"]["code"], "INSUFFICIENT_SCOPE")
+            self.assertFalse(self.gw.recovery()["lease"]["held"])
+            headers["authorization"] = "Bearer " + signer.token()
+            accepted = client.post("/mcp", headers=headers, json=claim).json()["result"]
+            self.assertFalse(accepted.get("isError", False), accepted)
+            self.assertEqual(self.gw.recovery()["lease"]["provider"], "gpt-session")
+
     def test_real_tcp_mcp_refresh_from_two_distinct_oauth_clients(self):
         import httpx,threading,uvicorn
         signer=JWT();signer.key=rsa.generate_private_key(public_exponent=65537,key_size=2048)
@@ -148,13 +171,14 @@ import json,os,signal,subprocess,sys
 from pathlib import Path
 import staging
 from service import App
-from mcp_adapter import GatewayTools
+from mcp_adapter import GatewayTools, for_gateway
 from mcp.server.auth.middleware.auth_context import auth_context_var
 from mcp.server.auth.middleware.bearer_auth import AuthenticatedUser
 from test_mcp_adapter import access,SUBJECT
 from test_gateway import script
 gw=staging.open_shared(sys.argv[1],min_sync_s=0)
-tool=GatewayTools(App({gw.id:gw},{},None,gm_tokens={'gpt-session':'test-only-server-token'}),gw.id,SUBJECT,writes=True)
+guard=for_gateway(gw,for_gateway(gw).generation)
+tool=GatewayTools(App({gw.id:gw},{},None,gm_tokens={'gpt-session':'test-only-server-token'}),gw.id,SUBJECT,writes=True,guard=guard)
 auth_context_var.set(AuthenticatedUser(access()))
 assert tool.gm('claim','recovery-run')['http_status']==200
 ctx=tool.gm('context','recovery-run')['result'];move=script('gpt-session').step(ctx)

@@ -1,5 +1,5 @@
 [Unit]
-Description=Genesis Oracle read-only staging pilot
+Description=Genesis Oracle shared staging gateway
 Wants=network-online.target
 After=network-online.target
 RequiresMountsFor=/var/data

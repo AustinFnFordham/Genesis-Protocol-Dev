@@ -21,15 +21,17 @@ def git(args, cwd, env):
 
 
 def prepare(data_root, env=None, repository=REPOSITORY, branch=BRANCH,
-            scope_relative='staging/shared-1', campaign_id='shared-1'):
+            scope_relative='staging/shared-1', campaign_id='shared-1', *, initialize_storage=True):
     env = dict(os.environ if env is None else env)
     root = Path(data_root); root.mkdir(parents=True, exist_ok=True)
     repo = root / 'authority'
     env.update(GIT_TERMINAL_PROMPT='0', GCM_INTERACTIVE='Never')
     if not repo.exists():
+        if not initialize_storage:
+            raise ValueError("Existing authority checkout required for write opt-in")
         # Clone only into a missing directory. Never overwrite an old checkout.
         git(['clone','--quiet','--single-branch','--branch',branch,repository,str(repo)], root, env)
-    with WorktreeGuard(repo / '.git/genesis-operation.lock'):
+    with WorktreeGuard(repo / '.git/genesis-operation.lock', initialize=initialize_storage):
         if git(['rev-parse','--abbrev-ref','HEAD'],repo,env) != branch:
             raise ValueError('Authority checkout branch does not match staging')
         if git(['remote','get-url','origin'],repo,env) != repository:

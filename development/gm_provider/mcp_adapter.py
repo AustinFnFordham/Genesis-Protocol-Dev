@@ -156,6 +156,18 @@ class GatewayTools:
             raise Refused("INSUFFICIENT_SCOPE", "GM writes require genesis:gm scope")
         return token
 
+    def write_blockers(self, token, recovery_reason):
+        blockers = []
+        if recovery_reason:
+            blockers.append("STORAGE_RECOVERY_REQUIRED")
+        if not self.writes:
+            blockers.append("WRITES_DISABLED")
+        if GM not in token.scopes:
+            blockers.append("INSUFFICIENT_SCOPE")
+        if not self.app.gm_tokens.get(token.claims["provider"]):
+            blockers.append("PROVIDER_NOT_CONFIGURED")
+        return blockers
+
     def read(self, kind, value=None, *, include_full_state=False, known_revision=None, known_ledger_head=None, known_public_sha256=None):
         token = self.authorize()
         with self.guard:
@@ -183,9 +195,12 @@ class GatewayTools:
                 view = {k: public[k] for k in ('pages','routing','in_flight')}
                 view.update(cursor=cursor, summary=_compact_state(public['state']))
                 if include_full_state: view['state'] = public['state']
+                recovery_reason = self.guard.recovery_reason
+                blockers = self.write_blockers(token, recovery_reason)
                 return {'audience':'player', 'public':view, 'recovery':recovery, 'changed':changed,
-                    'connection_provider':token.claims['provider'], 'read_only':not self.writes,
-                    'storage_generation':self.guard.generation, 'storage_recovery_required':self.guard.recovery_required}
+                    'connection_provider':token.claims['provider'], 'read_only':bool(blockers),
+                    'storage_generation':self.guard.generation, 'storage_recovery_required':recovery_reason is not None,
+                    'storage_recovery_reason':recovery_reason, 'gm_write_blockers':blockers}
             if kind == "page":
                 if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", value):
                     raise Refused("BAD_PAGE", "Use a page ID advertised by refresh")
@@ -204,6 +219,8 @@ class GatewayTools:
         if not isinstance(run, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", run):
             raise Refused("BAD_RUN", "Use one stable run ID per authorized GM attempt")
         with self.guard:
+            if self.guard.recovery_required:
+                raise Refused("STORAGE_RECOVERY_REQUIRED", "Stop and have the operator reconcile the authority worktree generation")
             # Reuse the exact existing token-scoped HTTP transport handler.
             status, payload = self.app.gm("POST", self.campaign_id, provider, verb,
                 {"authorization": "Bearer " + self.app.gm_tokens[provider]},
@@ -278,7 +295,7 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
     register("genesis_staging_refresh", refresh, "Same read-only refresh, with public digest and cursor checks for Gemini clients.", True)
     register("genesis_page", page, "Read a public history page ID advertised by genesis_refresh.", True)
     register("genesis_reference", reference, "Read authoritative guidance: " + ", ".join(REFERENCES) + ". No arbitrary file access.", True)
-    if tools.writes:
+    if tools.writes and not tools.guard.recovery_required:
         register("genesis_claim", claim, "Claim the existing player-authorized request routed to the authenticated client. Persists a lease; no replacement declaration.")
         register("genesis_context", context, "Get GM-private context for the held run. Renews lease and records processing stage; this is a write.")
         register("genesis_tables", tables, "Accept the session GM's interpretation and tables once, before dice. Reuse accepted work.")
@@ -304,8 +321,8 @@ def build(shared, env=None):
     verifier = JWTVerifier(issuer, resource, json.loads(env['GENESIS_MCP_CLIENT_PROVIDERS']), env['GENESIS_MCP_SUBJECT'])
     tokens = json.loads(env.get('GENESIS_GM_TOKENS') or '{}')
     app = App({gateway.id: gateway}, {}, None, gm_tokens=tokens)
-    guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'))
-    writes = env.get('GENESIS_MCP_ENABLE_WRITES') == '1' and not guard.recovery_required
+    writes = env.get('GENESIS_MCP_ENABLE_WRITES') == '1'
+    guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'), initialize=not writes)
     tools = GatewayTools(app, gateway.id, env['GENESIS_MCP_SUBJECT'], writes=writes, guard=guard)
     return create_server(tools, verifier, issuer, resource, host=env.get("GENESIS_MCP_HOST", "127.0.0.1"),
                          port=int(env.get("GENESIS_MCP_PORT", "8789")))
