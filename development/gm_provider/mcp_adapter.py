@@ -1,4 +1,4 @@
-"""OAuth-protected shared ChatGPT/Gemini tools for the existing shared staging gateway.
+"""OAuth-protected multi-provider GM tools for the existing shared staging gateway.
 
 No model execution, new store, or alternate commit path. Run on the persistence
 host; Git credentials and provider tokens stay there. Writes default to disabled.
@@ -30,6 +30,8 @@ from worktree_guard import for_gateway
 READ = "genesis:read"
 GM = "genesis:gm"
 PROVIDER = "gpt-session"
+BASE_PROVIDERS = frozenset({"gpt-session", "gemini-session"})
+SUPPORTED_PROVIDERS = BASE_PROVIDERS | {"codex-session"}
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCES = {
     "gm_guide": "development/gm_provider/GM_GUIDE.md",
@@ -146,10 +148,14 @@ class JWTVerifier:
         self.issuer, self.resource = https_url(issuer), https_url(resource)
         if not self.issuer.endswith('/') or urlsplit(self.issuer).path != '/':
             raise ValueError('Use the exact Auth0 tenant issuer, including its final slash')
+        # GPT/Gemini stay mandatory and independent; Codex is an opt-in THIRD client.
+        # Each Auth0 azp must map to one and only one server-authorized provider.
         if (not subject or not isinstance(clients, dict) or not clients
-                or any(not k or v not in {'gpt-session', 'gemini-session'} for k,v in clients.items())
-                or len(clients) != 2 or set(clients.values()) != {'gpt-session', 'gemini-session'}):
-            raise ValueError('Pin distinct OAuth client IDs to the two supported providers')
+                or any(not isinstance(k, str) or not k or not isinstance(v, str)
+                       or v not in SUPPORTED_PROVIDERS for k, v in clients.items())
+                or len(set(clients.values())) != len(clients)
+                or set(clients.values()) not in (BASE_PROVIDERS, SUPPORTED_PROVIDERS)):
+            raise ValueError('Pin distinct OAuth client IDs to GPT and Gemini, optionally Codex')
         self.clients, self.subject = dict(clients), subject
         self.keys = key_client or jwt.PyJWKClient(self.issuer + '.well-known/jwks.json', timeout=5)
 
@@ -180,7 +186,7 @@ class GatewayTools:
         token = get_access_token()
         if (not token or token.subject != self.subject or READ not in token.scopes
                 or not token.expires_at or token.expires_at <= time.time()
-                or (token.claims or {}).get("provider") not in {"gpt-session", "gemini-session"}):
+                or (token.claims or {}).get("provider") not in SUPPORTED_PROVIDERS):
             raise Refused("UNAUTHORIZED", "An authorized Genesis account is required")
         if write and not self.writes:
             raise Refused("WRITES_DISABLED", "GM writes require explicit host opt-in")
