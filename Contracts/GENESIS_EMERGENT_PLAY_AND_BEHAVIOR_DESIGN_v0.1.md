@@ -2,6 +2,8 @@
 **ID:** GEP-001 · **Version:** 0.1 · **Date:** 2026-11-22  
 **Status:** OWNER DESIGN DIRECTION CAPTURED; NONCANONICAL implementation proposal and acceptance contract. No gameplay rule, numeric modifier, schema migration, character grant, deployment or live-campaign change is authorized by this document.
 
+> **2026-11-22 owner-intent reconciliation:** `GENESIS_ACTION_COMPOSITION_AND_PATTERN_AMENDMENT_v0.1.md` supersedes this document's use of **Maneuver** as one validated execution. Maneuver now means a composed legal action sequence; repeated/conditional Maneuvers may become reviewed Tactics, and coordinated multi-PC sequences may become Team Maneuvers/Team Tactics. The amendment also narrows combat category projection so ungranted or empty categories are not displayed. The amendment is noncanonical and grants no mechanics.
+
 ## 0. Purpose and source boundaries
 
 Capture the owner's late-November 2026 playtest discoveries as durable, reviewable design input for the existing Genesis Protocol. The objective is to make actual play expressive, tactically deep, psychologically consequential, narratively continuous, and responsive without undermining deterministic adjudication. This is an ADDITION to existing architecture, not a mandate to rebuild the combat prototype or forge new parallel engines.
