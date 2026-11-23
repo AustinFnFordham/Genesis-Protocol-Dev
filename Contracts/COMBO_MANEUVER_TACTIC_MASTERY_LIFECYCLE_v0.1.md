@@ -4,6 +4,8 @@
 
 **Outcome-system continuation:** [SSRR-001](GENESIS_SPARK_STRAIN_RESOLVE_RUIN_OUTCOME_CONTRACT_v0.1.md) adopts the owner's Spark/Strain (minor immediate) and Resolve/Ruin (major banked) terminology and specifies two-axis outcomes, WHISPER authority and candidate spend policy. All numerical rolls/spends remain proposals until separately adopted.
 
+**Crucible integration (proposal only):** [GCD-001](GENESIS_CRUCIBLE_DICE_AND_PRESSURE_DESIGN_v0.1.md) defines candidate Agency/Entropy symbol checks and how per-component learned Maneuver bonuses may interact with Spark/Strain/Resolve/Ruin. Mastery advancement remains open-ended and may not be capped by a mobile dice-display limit. No particular die pool grants a new Maneuver without purchase and valid prerequisites.
+
 ## 0. Authority and correction
 This document corrects proposed terminology in CC-002 (Cinematic Combat v0.2), GEP-001 and previous assistant handoffs where they conflict with the owner's updated definitions. Existing canonical rules, actual character grants and pinned campaigns retain their authority until a later versioned, explicitly approved implementation. The older CC-002 used Maneuver to mean a tactical objective such as Feint, Disarm or Riposte. **New Genesis definition: a purchasable Maneuver is a specialized, prerequisite-gated composition of abilities with a distinct mechanical payoff.** Older one-action candidate entries must be reconciled as atomic abilities, techniques or composite Maneuvers, without silent migrations.
 
