@@ -71,7 +71,7 @@ class JWT(unittest.TestCase):
         for claims in ({"azp":"not-registered"},{"scope":"genesis:gm"},{"aud":"wrong-audience"},
                        {"sub":"wrong-owner"},{"exp":1},{"iss":"https://wrong.invalid/"}):
             with self.subTest(claims=claims):
-                self.assertIsNone(asyncio.run(optional.verify_token(self.token(azp="codex-client", **claims))))
+                self.assertIsNone(asyncio.run(optional.verify_token(self.token(**({"azp":"codex-client"} | claims)))))
 
     def test_opaque_authorization_code_never_accepted_before_or_after_restart(self):
         # One-time code exchange is owned by Auth0, not by this resource server.
