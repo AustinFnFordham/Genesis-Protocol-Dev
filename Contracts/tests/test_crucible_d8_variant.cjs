@@ -5,7 +5,7 @@ const model=JSON.parse(fs.readFileSync(path.join(__dirname,"../examples/crucible
 const a=Object.values(model.agency_faces),e=Object.values(model.entropy_faces);
 assert.equal(a.length,8);assert.equal(e.length,8);assert.ok(!model.banking?.major_face_auto_banked);
 function result(agency,entropy){
-let s=0,x=0,p=0,q,R=0,U=0;
+let s=0,x=0,p=0,q=0,R=0,U=0;
 for(const n of agency){const f=a[n-1];assert.ok(f);s+=f.success||0;p+=f.spark||0;R+=f.resolve_symbol||0;}
 for(const n of entropy){const f=e[n-1];assert.ok(f);x+=f.cancel_success||0;q+=f.strain||0;U+=f.ruin_symbol||0;}
 return {success_margin:s-x,success:s>x,spark:Math.max(0,p-q),strain:Math.max(0,q-p),resolve_symbols:R,ruin_symbols:U};
