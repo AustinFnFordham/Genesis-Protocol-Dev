@@ -1,0 +1,214 @@
+{
+  "schema_version": "genesis-crucible-d8-candidate/0.1",
+  "status": "noncanonical_fixture",
+  "source_contract": "Contracts/GENESIS_CRUCIBLE_DICE_D8_ALTERNATIVE_v0.1.md",
+  "source_d20_live_rules_unchanged": true,
+  "die_size": 8,
+  "agency_faces": {
+    "1": {},
+    "2": {
+      "success": 1
+    },
+    "3": {
+      "success": 1
+    },
+    "4": {
+      "spark": 1
+    },
+    "5": {
+      "success": 1,
+      "spark": 1
+    },
+    "6": {
+      "success": 1,
+      "spark": 1
+    },
+    "7": {
+      "spark": 2
+    },
+    "8": {
+      "success": 1,
+      "resolve_symbol": 1
+    }
+  },
+  "entropy_faces": {
+    "1": {},
+    "2": {
+      "cancel_success": 1
+    },
+    "3": {
+      "cancel_success": 1
+    },
+    "4": {
+      "strain": 1
+    },
+    "5": {
+      "cancel_success": 1,
+      "strain": 1
+    },
+    "6": {
+      "cancel_success": 1,
+      "strain": 1
+    },
+    "7": {
+      "strain": 2
+    },
+    "8": {
+      "cancel_success": 1,
+      "ruin_symbol": 1
+    }
+  },
+  "calculation": {
+    "success_margin": "sum(Agency.success)-sum(Entropy.cancel_success)",
+    "success_iff": "success_margin>=1",
+    "spark_remaining": "max(0,Agency.spark-Entropy.strain)",
+    "strain_remaining": "max(0,Entropy.strain-Agency.spark)",
+    "major_symbols": "uncancelable symbol counts, but ordinary success contributions may be canceled",
+    "converted_minor": "3 net symbols -> one eligible pool point; opt-in only"
+  },
+  "bank_policy": {
+    "auto_bank_major_symbols": false,
+    "qualification": "pending",
+    "per_roll_resource_limits": "pending",
+    "anti_farming": "accepted nonduplicate meaningfully-staked action"
+  },
+  "examples": [
+    {
+      "id": "major_symbols_uncancelable",
+      "agency": [
+        8,
+        1,
+        1
+      ],
+      "entropy": [
+        8,
+        1
+      ],
+      "expected": {
+        "success_margin": 0,
+        "success": false,
+        "spark": 0,
+        "strain": 0,
+        "resolve_symbols": 1,
+        "ruin_symbols": 1
+      }
+    },
+    {
+      "id": "minor_cancellation",
+      "agency": [
+        2,
+        3,
+        7
+      ],
+      "entropy": [
+        5,
+        6
+      ],
+      "expected": {
+        "success_margin": 0,
+        "success": false,
+        "spark": 0,
+        "strain": 0,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      }
+    },
+    {
+      "id": "d8_double_strain_converts",
+      "agency": [
+        2,
+        3,
+        1
+      ],
+      "entropy": [
+        7,
+        4
+      ],
+      "expected": {
+        "success_margin": 2,
+        "success": true,
+        "spark": 0,
+        "strain": 3,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      },
+      "optional_conversion": {
+        "strain_spent": 3,
+        "potential_ruin": 1
+      }
+    },
+    {
+      "id": "d8_double_spark_converts",
+      "agency": [
+        7,
+        7,
+        4
+      ],
+      "entropy": [
+        7,
+        1
+      ],
+      "expected": {
+        "success_margin": 0,
+        "success": false,
+        "spark": 3,
+        "strain": 0,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      },
+      "optional_conversion": {
+        "spark_spent": 3,
+        "potential_resolve": 1
+      }
+    },
+    {
+      "id": "success_with_strain",
+      "agency": [
+        2,
+        3,
+        5
+      ],
+      "entropy": [
+        7,
+        1
+      ],
+      "expected": {
+        "success_margin": 3,
+        "success": true,
+        "spark": 0,
+        "strain": 1,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      }
+    }
+  ],
+  "exact_rates": [
+    {
+      "pool": "3v2",
+      "success_pct": 54.901,
+      "nonzero_minor_pct": 76.303,
+      "spark3_pct": 11.353,
+      "strain3_pct": 1.807,
+      "resolve_symbol_pct": 33.008,
+      "ruin_symbol_pct": 23.438
+    },
+    {
+      "pool": "4v2",
+      "success_pct": 73.818,
+      "nonzero_minor_pct": 81.604,
+      "spark3_pct": 22.924,
+      "strain3_pct": 0.977,
+      "resolve_symbol_pct": 41.382,
+      "ruin_symbol_pct": 23.438
+    },
+    {
+      "pool": "3v3",
+      "success_pct": 33.749,
+      "nonzero_minor_pct": 76.894,
+      "spark3_pct": 6.938,
+      "strain3_pct": 6.938,
+      "resolve_symbol_pct": 33.008,
+      "ruin_symbol_pct": 33.008
+    }
+  ]
+}
