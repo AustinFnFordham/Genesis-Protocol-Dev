@@ -1,0 +1,161 @@
+{
+  "schema": "genesis-ssrr-outcome-examples/0.1",
+  "status": "noncanonical_fixture",
+  "authoritative": false,
+  "source_contract": "Contracts/GENESIS_SPARK_STRAIN_RESOLVE_RUIN_OUTCOME_CONTRACT_v0.1.md",
+  "axes": {
+    "objective": [
+      "success",
+      "failure",
+      "graded_if_approved"
+    ],
+    "consequence": [
+      "positive",
+      "neutral",
+      "negative"
+    ],
+    "magnitude": [
+      "minor",
+      "major"
+    ]
+  },
+  "currency_policy": {
+    "spark": {
+      "banked": false,
+      "kind": "immediate_positive_event"
+    },
+    "strain": {
+      "banked": false,
+      "kind": "immediate_negative_event"
+    },
+    "resolve": {
+      "banked": true,
+      "owner": "player_or_approved_party",
+      "kind": "major_positive_pool"
+    },
+    "ruin": {
+      "banked": true,
+      "owner": "gm_scene",
+      "kind": "major_negative_pool"
+    }
+  },
+  "sample_events": [
+    {
+      "event_id": "fixture01",
+      "actor": "aero",
+      "declared_objective": "counter designated enemy",
+      "objective": {
+        "result": "success",
+        "receipt_ref": "synthetic-attack-1"
+      },
+      "consequence": {
+        "valence": "negative",
+        "scale": "minor",
+        "label": "Strain",
+        "validated_effect_id": "example.exposed_stance",
+        "cost_window": "next_defensive_check",
+        "source_facts": [
+          "synthetic-feint-tell-1"
+        ],
+        "receipt_ref": "synthetic-chaos-1"
+      },
+      "resource_delta": [],
+      "narration_authority": "player_visible_accepted_facts_only"
+    },
+    {
+      "event_id": "fixture02",
+      "actor": "aero",
+      "declared_objective": "counter designated enemy",
+      "objective": {
+        "result": "failure",
+        "receipt_ref": "synthetic-attack-2"
+      },
+      "consequence": {
+        "valence": "positive",
+        "scale": "minor",
+        "label": "Spark",
+        "validated_effect_id": "example.ally_opening",
+        "cost_window": "next_connected_ally_action",
+        "source_facts": [
+          "synthetic-enemy-overextension-2"
+        ],
+        "receipt_ref": "synthetic-chaos-2"
+      },
+      "resource_delta": []
+    },
+    {
+      "event_id": "fixture03",
+      "actor": "aero",
+      "declared_objective": "escape from damaged fighter",
+      "objective": {
+        "result": "success",
+        "receipt_ref": "synthetic-piloting-1"
+      },
+      "consequence": {
+        "valence": "positive",
+        "scale": "major",
+        "label": "Resolve",
+        "validated_effect_id": "example.steadfast_rally",
+        "source_facts": [
+          "synthetic-rescue-1"
+        ],
+        "receipt_ref": "synthetic-chaos-3"
+      },
+      "resource_delta": [
+        {
+          "pool": "Resolve",
+          "owner": "aero",
+          "change": 1,
+          "earn_event_id": "fixture03"
+        }
+      ]
+    },
+    {
+      "event_id": "fixture04",
+      "actor": "gm_scene",
+      "declared_objective": "opponents continue pursuing",
+      "objective": {
+        "result": "failure",
+        "receipt_ref": "synthetic-pursuit-1"
+      },
+      "consequence": {
+        "valence": "negative",
+        "scale": "major",
+        "label": "Ruin",
+        "validated_effect_id": "example.already_grounded_bridge_hazard",
+        "source_facts": [
+          "synthetic-bridge-unstable"
+        ],
+        "receipt_ref": "synthetic-chaos-4"
+      },
+      "resource_delta": [
+        {
+          "pool": "Ruin",
+          "owner": "gm_scene",
+          "change": 1,
+          "earn_event_id": "fixture04"
+        }
+      ]
+    }
+  ],
+  "whisper_boundary": {
+    "strain_label_is_not_psychological_pressure": true,
+    "psychological_pressure_requires_separate_event_and_rule_version": true,
+    "pc_felt_emotion_requires_player_confirmation": true,
+    "max_psychological_pressure_not_sufficient_for_involuntary_action": true,
+    "ruin_cannot_force_pc_action_without_prospective_rule_whisper": true
+  },
+  "maneuver_example": {
+    "id": "example.mocking_crane.purchased",
+    "baseline_free_combo_ref": "example.combo.mocking_crane",
+    "requires_purchased_unlock": true,
+    "base_unique_benefit": "eligible_taunt_and_triggered_riposte_advantage_candidate",
+    "per_component_mastery_edges": [
+      "dodge_only_changes_dodge",
+      "taunt_only_changes_taunt",
+      "riposte_only_changes_riposte"
+    ],
+    "composite_milestone": "conditional_Resolve_earn_or_next_turn_advantage_candidate_only",
+    "scale_policy": "authored_future_nodes_open_ended_not_unlimited_modifiers"
+  }
+}
