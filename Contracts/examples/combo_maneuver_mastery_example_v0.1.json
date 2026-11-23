@@ -1,0 +1,325 @@
+{
+  "contract": "CMT-001/0.1",
+  "status": "noncanonical_example",
+  "authoritative": false,
+  "assumptions": "All node IDs, effects, proposed advantage, and progression currency require Registry mapping, source verification and owner approval.",
+  "rule_source_refs": [
+    "Contracts/COMBO_MANEUVER_TACTIC_MASTERY_LIFECYCLE_v0.1.md",
+    "Contracts/GENESIS_EMERGENT_PLAY_AND_BEHAVIOR_DESIGN_v0.1.md",
+    "Contracts/CINEMATIC_COMBAT_AND_MANEUVER_CONTRACT_v0.2.md (reference only on docs/cinematic-combat-capability-v0.2-20261121)"
+  ],
+  "action_budget_example": {
+    "main": 1,
+    "secondary": 1,
+    "bonus": 1,
+    "reaction": 1,
+    "movement_allocations": 1,
+    "object_interaction": "situation_dependent",
+    "free": "contextual_not_metered"
+  },
+  "profiles": [
+    {
+      "kind": "free_combo",
+      "id": "example.combo.mocking_crane",
+      "label": "The Mocking Crane (ordinary Combo)",
+      "name_policy": "player_or_soul_proposed_display_only",
+      "requires_owned": [
+        "dodge_action",
+        "taunt",
+        "riposte"
+      ],
+      "steps": [
+        {
+          "ability": "dodge_action",
+          "cost": {
+            "main": 1
+          },
+          "trigger": "declare"
+        },
+        {
+          "ability": "taunt",
+          "cost": {
+            "bonus": 1
+          },
+          "trigger": "declare",
+          "requires_player_expression": "speech_or_gesture"
+        },
+        {
+          "ability": "riposte",
+          "cost": {
+            "reaction": 1
+          },
+          "trigger": "only_if_eligible_opponent_attack_misses",
+          "requires_player_pre_authorization": true
+        }
+      ],
+      "predicted_synergy": true,
+      "mechanical_bonus_from_name": 0,
+      "can_seed_tactic_without_maneuver": true
+    },
+    {
+      "kind": "purchased_maneuver",
+      "id": "example.maneuver.mocking_crane",
+      "label": "The Mocking Crane",
+      "unlock": {
+        "requires_owned": [
+          "dodge_action",
+          "taunt",
+          "riposte"
+        ],
+        "requires_training": [
+          "pending_training_rule"
+        ],
+        "advancement_cost": {
+          "currency": "pending_owner_decision",
+          "amount": null
+        },
+        "receipt_required": true
+      },
+      "execution": {
+        "costs": {
+          "main": 1,
+          "bonus": 1
+        },
+        "reaction_reservation": 1,
+        "reaction_debit": "on_eligible_authorized_trigger_only",
+        "targeting": "one_designated_opponent",
+        "actual_step_plan_ref": "example.combo.mocking_crane"
+      },
+      "unique_benefit_vs_free_combo": {
+        "flourish_id": "example.flourish.baited_counter",
+        "type": "conditional_mechanical_advantage",
+        "effects": [
+          {
+            "eligible_roll": "taunt_contest",
+            "effect": "advantage",
+            "condition": "target_can_perceive_taunt_and_is_eligible"
+          },
+          {
+            "eligible_roll": "riposte_attack",
+            "effect": "advantage",
+            "condition": "same_target_attacks_and_misses_while_reserved_reaction_valid"
+          }
+        ],
+        "status": "proposal_requires_balance_validation"
+      },
+      "component_mastery_edges": [
+        {
+          "ability_id": "dodge_action",
+          "owned_mastery_node": "example.dodge.mastery",
+          "contributes": "enhanced_dodge_window_or_control",
+          "applies_only_if_owned": true,
+          "live_mechanic": "unapproved"
+        },
+        {
+          "ability_id": "taunt",
+          "owned_mastery_node": "example.taunt.mastery",
+          "contributes": "enhanced_eligible_provocation",
+          "applies_only_if_owned": true,
+          "live_mechanic": "unapproved"
+        },
+        {
+          "ability_id": "riposte",
+          "owned_mastery_node": "example.riposte.mastery",
+          "contributes": "enhanced_counter_control_or_precision",
+          "applies_only_if_owned": true,
+          "live_mechanic": "unapproved"
+        }
+      ],
+      "composite_mastery_edges": [
+        {
+          "requires_all": [
+            "example.dodge.mastery",
+            "example.taunt.mastery",
+            "example.riposte.mastery"
+          ],
+          "effect_options": [
+            {
+              "kind": "next_turn_conditional_advantage",
+              "condition": "fully_successful_authorized_maneuver",
+              "expiry": "pending"
+            },
+            {
+              "kind": "inspiration_like_resource",
+              "on": "verified_full_success",
+              "die": "pending",
+              "earn_limit": "pending",
+              "spend_policy": "pending"
+            }
+          ],
+          "grant": "not_automatic_owner_review_required"
+        },
+        {
+          "requires_all": [
+            "future_higher_dodge_node",
+            "future_higher_taunt_node",
+            "future_higher_riposte_node"
+          ],
+          "effect_options": [
+            {
+              "kind": "later_mastery_branch",
+              "description": "perpetual extensibility via separately authored and earned nodes"
+            }
+          ],
+          "grant": "not_automatic"
+        }
+      ],
+      "balance": {
+        "comparison_to_free_combo_required": true,
+        "risks": [
+          "target_may_ignore_provocation",
+          "reaction_reserved_unavailable_elsewhere",
+          "opponent_can_counter_with_observed_evidence"
+        ],
+        "no_infinite_reactions": true
+      }
+    },
+    {
+      "kind": "free_combo",
+      "id": "example.combo.serpents_passage",
+      "label": "Serpent's Passage (unlocked attempt)",
+      "requires_owned": [
+        "dodge_action",
+        "lightsaber_strike"
+      ],
+      "steps": [
+        {
+          "ability": "dodge_action",
+          "cost": {
+            "main": 1
+          }
+        },
+        {
+          "ability": "lightsaber_strike",
+          "cost": {
+            "main": 1
+          }
+        }
+      ],
+      "total_cost": {
+        "main": 2
+      },
+      "baseline_status": "illegal_with_only_one_main",
+      "mechanical_bonus_from_name": 0
+    },
+    {
+      "kind": "purchased_maneuver",
+      "id": "example.maneuver.serpents_passage",
+      "label": "Serpent's Passage",
+      "unlock": {
+        "requires_owned": [
+          "dodge_action",
+          "lightsaber_strike"
+        ],
+        "advancement_cost": {
+          "currency": "pending_owner_decision",
+          "amount": null
+        },
+        "receipt_required": true
+      },
+      "execution": {
+        "costs": {
+          "main": 1,
+          "secondary": 1
+        },
+        "effect": "guarded_single_strike_with_authored_defense_effect",
+        "no_extra_main": true
+      },
+      "unique_benefit_vs_free_combo": {
+        "type": "legal_cost_conversion",
+        "from": {
+          "main": 2
+        },
+        "to": {
+          "main": 1,
+          "secondary": 1
+        },
+        "status": "proposed_sandbox"
+      },
+      "component_mastery_edges": [
+        {
+          "ability_id": "dodge_action",
+          "owned_mastery_node": "example.dodge.mastery",
+          "contributes": "defense_component_only",
+          "applies_only_if_owned": true
+        },
+        {
+          "ability_id": "lightsaber_strike",
+          "owned_mastery_node": "example.lightsaber.mastery",
+          "contributes": "attack_component_only",
+          "applies_only_if_owned": true
+        }
+      ],
+      "composite_mastery_edges": [
+        {
+          "requires_all": [
+            "example.dodge.mastery",
+            "example.lightsaber.mastery"
+          ],
+          "grant": "additional_authored_conditional_effect_pending"
+        }
+      ],
+      "balance": {
+        "comparison_to_nearest_legal_baseline_required": true,
+        "risks": [
+          "secondary_budget_spent",
+          "target_can_interrupt",
+          "defense_is_specialized_not_free_full_dodge"
+        ]
+      }
+    }
+  ],
+  "tactic_examples": [
+    {
+      "kind": "emergent_tactic",
+      "id": "example.tactic.crane_repeat",
+      "source_refs": [
+        "example.combo.mocking_crane"
+      ],
+      "requires_maneuver_purchase": false,
+      "qualification": "accepted_distinct_context_evidence_and_player_intent",
+      "progression": "independent_mastery_candidate",
+      "no_automatic_mechanical_bonus": true
+    },
+    {
+      "kind": "team_tactic",
+      "id": "example.team_tactic.cross_cover",
+      "participants": [
+        "Aero",
+        "Varon",
+        "Rissa",
+        "Togruta"
+      ],
+      "actor_authorization": "each_PC_controls_own_actions",
+      "npc_motivation": "required_for_allied_NPCs",
+      "individual_action_budget": "never_shared_by_default",
+      "qualification": "approved_joint_evidence",
+      "status": "candidate_only"
+    }
+  ],
+  "outcome_contract": {
+    "primary_axis": [
+      "success",
+      "failure",
+      "authored_grades_when_supported"
+    ],
+    "chaos_axis": [
+      "opportunity",
+      "neutral",
+      "complication"
+    ],
+    "valid_mixed": [
+      "success+complication",
+      "failure+opportunity"
+    ],
+    "separate_flourish": true,
+    "authority": "atomic_verified_facts_plus_chaos_rules; soul_presentation_only"
+  },
+  "constraints": {
+    "mastery_progression": "open_ended_when_new_valid_nodes_earned",
+    "single_roll_stacking": "source_rules_apply",
+    "force_augmentation": "optional_per_source_granted_profile",
+    "roll_receipts": "atomic_only",
+    "campaign_writes": "none"
+  }
+}

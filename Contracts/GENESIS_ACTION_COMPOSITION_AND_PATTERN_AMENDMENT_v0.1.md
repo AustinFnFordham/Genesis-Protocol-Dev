@@ -10,6 +10,8 @@
 
 **Scope:** docs and noncanonical fixtures only. This amendment grants no action, proficiency, Force effect, budget, learned pattern, or live-campaign authority.
 
+**Owner clarification / precedence, 2026-11-22:** This amendment originally used *Maneuver* for any legal composed sequence. The owner now calls that a free **Combo**; an unlockable **Maneuver** is a purchased specialized composition with a distinct mechanical advantage. See [CMT-001](COMBO_MANEUVER_TACTIC_MASTERY_LIFECYCLE_v0.1.md) and [SSRR-001](GENESIS_SPARK_STRAIN_RESOLVE_RUIN_OUTCOME_CONTRACT_v0.1.md) before implementing its schema. The source-gap audit, off-hand/Throw/Force augmentation and authorization safeguards remain useful; its older terminology is superseded prospectively, not silently migrated.
+
 ## 0. Why this amendment exists
 
 The current documents and CC-005 sandbox contain useful pieces but do not yet encode the owner's distinctions consistently. In particular:
