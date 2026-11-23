@@ -2,6 +2,8 @@
 **ID:** GEP-001 · **Version:** 0.1 · **Date:** 2026-11-22  
 **Status:** OWNER DESIGN DIRECTION CAPTURED; NONCANONICAL implementation proposal and acceptance contract. No gameplay rule, numeric modifier, schema migration, character grant, deployment or live-campaign change is authorized by this document.
 
+**CMT-001 supersession (2026-11-22):** For the definitive proposed distinction among free Combos, purchased Maneuvers, evidence-grown Tactics, Team variants, independently accumulated component mastery and open-ended progression, see [Combo, Maneuver, Tactic and Team Mastery v0.1](COMBO_MANEUVER_TACTIC_MASTERY_LIFECYCLE_v0.1.md) and its [JSON example](examples/combo_maneuver_mastery_example_v0.1.json). CMT-001 corrects incompatible *proposal-level* terminology in this document but does not change live rules or grant character abilities.
+
 ## 0. Purpose and source boundaries
 
 Capture the owner's late-November 2026 playtest discoveries as durable, reviewable design input for the existing Genesis Protocol. The objective is to make actual play expressive, tactically deep, psychologically consequential, narratively continuous, and responsive without undermining deterministic adjudication. This is an ADDITION to existing architecture, not a mandate to rebuild the combat prototype or forge new parallel engines.
