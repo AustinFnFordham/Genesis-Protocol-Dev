@@ -2,6 +2,8 @@
 **Contract:** GCD-001 | **Version:** 0.1 owner-proposed design / simulation baseline | **Date:** 2026-11-22
 **NOT CANONICAL GAMEPLAY:** This is a candidate replacement or overlay for particular resolution scopes. No SW5e/d20 campaign roll, Hask Meadow, GM provider, accepted receipt, or staging cursor is modified by documenting it. Sources: owner-provided face map and spends, SSRR-001, CMT-001, ACP-001, TB4-WHISPER-001, existing `development/whisper` implementation.
 
+**Owner d8 challenge accepted as a candidate, NOT canon:** [GCD-001-A](GENESIS_CRUCIBLE_DICE_D8_ALTERNATIVE_v0.1.md) compares the exact updated d8 doubled-symbol model, d6 conditional major-banking gates, and a special-dice-only alternative. Its [d8 JSON fixture](examples/crucible_d8_variant_v0.1.json) and [Node probability tests](tests/test_crucible_d8_variant.cjs) are separate from the unchanged d6 candidate below. The d8 table's 'banked' rates only apply under automatic banking; symbol occurrence and qualified accrual are distinct.
+
 ## 0. Scope and structural decisions
 
 - **Atomic:** authentic dice faces, success arithmetic, net symbols, action and resource costs, immutable receipts, transaction/recovery and version.
