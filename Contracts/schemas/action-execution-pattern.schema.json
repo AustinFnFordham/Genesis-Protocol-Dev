@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://genesis-protocol.invalid/contracts/action-execution-pattern.schema.json",
+  "title": "Genesis action execution and learned-pattern authoring contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset_status", "projection_policy", "profiles", "patterns", "augmentations", "category_reconciliation"],
+  "properties": {
+    "schema_version": { "const": "acp-001.0.1" },
+    "dataset_status": { "enum": ["noncanonical_fixture", "candidate", "adopted"] },
+    "projection_policy": { "$ref": "#/$defs/projectionPolicy" },
+    "profiles": { "type": "array", "items": { "$ref": "#/$defs/executionProfile" } },
+    "patterns": { "type": "array", "items": { "$ref": "#/$defs/pattern" } },
+    "augmentations": { "type": "array", "items": { "$ref": "#/$defs/augmentation" } },
+    "category_reconciliation": { "type": "array", "items": { "$ref": "#/$defs/reconciliation" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_.:-]{2,127}$" },
+    "status": { "enum": ["source_gap", "proposed", "approved", "adopted", "deprecated"] },
+    "category": { "enum": ["main", "secondary", "bonus", "reaction", "movement", "object", "free"] },
+    "sourceControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_refs", "approval", "scope"],
+      "properties": {
+        "source_refs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 3 } },
+        "approval": { "enum": ["missing", "owner_direction_only", "sandbox_proposal", "approved", "adopted"] },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ruleset_ids", "campaign_ids"],
+          "properties": {
+            "ruleset_ids": { "type": "array", "items": { "type": "string" } },
+            "campaign_ids": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "main": { "type": "integer", "minimum": 0 },
+        "secondary": { "type": "integer", "minimum": 0 },
+        "bonus": { "type": "integer", "minimum": 0 },
+        "reaction": { "type": "integer", "minimum": 0 },
+        "object": { "type": "integer", "minimum": 0 },
+        "movement_ft": { "oneOf": [{ "type": "integer", "minimum": 0 }, { "const": "declared_distance" }] },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["resource_id", "amount"],
+            "properties": {
+              "resource_id": { "$ref": "#/$defs/id" },
+              "amount": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "grant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grant_status", "grant_kind", "grant_source_ids"],
+      "properties": {
+        "grant_status": { "enum": ["unresolved", "not_granted", "fixture_granted", "granted"] },
+        "grant_kind": { "enum": ["capability", "execution_profile", "capacity", "none"] },
+        "grant_source_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "predicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "key", "operator", "value"],
+      "properties": {
+        "kind": { "enum": ["trigger", "equipment", "hand_state", "target", "range", "resource", "proficiency", "status", "consent", "visibility", "object_instance"] },
+        "key": { "type": "string", "minLength": 1 },
+        "operator": { "enum": ["eq", "neq", "gte", "lte", "contains", "exists", "in"] },
+        "value": {}
+      }
+    },
+    "proficiencyRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_ids", "missing_result", "decision_status"],
+      "properties": {
+        "required_ids": { "type": "array", "items": { "type": "string" } },
+        "missing_result": { "enum": ["blocked", "disadvantage", "ruleset_defined", "not_applicable"] },
+        "decision_status": { "enum": ["source_gap", "candidate", "approved", "adopted"] }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "attack_rolls", "effect_components", "proficiency"],
+      "properties": {
+        "mode": { "enum": ["attack", "contest", "save", "automatic", "composition_only", "ruleset_defined"] },
+        "attack_rolls": { "type": "integer", "minimum": 0 },
+        "effect_components": { "type": "array", "items": { "type": "string" } },
+        "proficiency": { "$ref": "#/$defs/proficiencyRule" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "executionProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "status", "capability_id", "taxonomy", "action_category", "cost", "grant", "prerequisites", "resolution", "source_control"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "status": { "$ref": "#/$defs/status" },
+        "capability_id": { "type": "string", "minLength": 3 },
+        "taxonomy": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "action_category": { "$ref": "#/$defs/category" },
+        "cost": { "$ref": "#/$defs/cost" },
+        "grant": { "$ref": "#/$defs/grant" },
+        "prerequisites": { "type": "array", "items": { "$ref": "#/$defs/predicate" } },
+        "resolution": { "$ref": "#/$defs/resolution" },
+        "usage_limit": { "type": "string" },
+        "source_control": { "$ref": "#/$defs/sourceControl" }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "actor_binding", "profile_id", "timing_group", "target_binding", "condition"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "actor_binding": { "type": "string", "minLength": 1 },
+        "profile_id": { "type": "string", "minLength": 3 },
+        "timing_group": { "type": "string", "minLength": 1 },
+        "target_binding": { "type": "string", "minLength": 1 },
+        "condition": { "type": "string", "minLength": 1 }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "pattern_kind", "status", "objective", "participants", "steps", "per_actor_cost_forecast", "revalidation", "evidence", "promotion", "source_control"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "version": { "type": "string" },
+        "pattern_kind": { "enum": ["maneuver", "tactic", "team_maneuver", "team_tactic"] },
+        "status": { "$ref": "#/$defs/status" },
+        "objective": { "type": "string", "minLength": 3 },
+        "participants": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "steps": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/step" } },
+        "per_actor_cost_forecast": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/cost" } },
+        "revalidation": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "promotion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decision", "review_required", "grants_mechanical_bonus"],
+          "properties": {
+            "decision": { "enum": ["not_evaluated", "candidate", "approved", "rejected"] },
+            "review_required": { "type": "boolean" },
+            "grants_mechanical_bonus": { "type": "boolean" }
+          }
+        },
+        "source_control": { "$ref": "#/$defs/sourceControl" }
+      }
+    },
+    "augmentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "status", "target_profile_ids", "target_components", "timing", "cost", "grant", "usage_limit", "stacking", "source_control"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "version": { "type": "string" },
+        "status": { "$ref": "#/$defs/status" },
+        "target_profile_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "target_components": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "timing": { "type": "string", "minLength": 3 },
+        "cost": { "$ref": "#/$defs/cost" },
+        "grant": { "$ref": "#/$defs/grant" },
+        "usage_limit": { "type": "string", "minLength": 3 },
+        "stacking": { "type": "string", "minLength": 3 },
+        "source_control": { "$ref": "#/$defs/sourceControl" }
+      }
+    },
+    "projectionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category_visibility", "ungranted_profile_visibility", "blocked_profile_visibility", "empty_category_behavior", "hidden_state_policy"],
+      "properties": {
+        "category_visibility": { "const": "requires_granted_and_currently_or_conditionally_executable_profile" },
+        "ungranted_profile_visibility": { "const": "never_in_combat_selector" },
+        "blocked_profile_visibility": { "const": "only_inside_already_visible_category_when_owned_actionable_and_spoiler_safe" },
+        "empty_category_behavior": { "const": "hide" },
+        "hidden_state_policy": { "const": "never_counts_toward_visibility" }
+      }
+    },
+    "reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "observed_category", "owner_category", "status", "notes"],
+      "properties": {
+        "capability": { "type": "string", "minLength": 2 },
+        "observed_category": { "type": "string" },
+        "owner_category": { "type": "string" },
+        "status": { "enum": ["aligned", "source_gap", "taxonomy_conflict", "profile_missing"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

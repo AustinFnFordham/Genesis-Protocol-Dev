@@ -1,0 +1,263 @@
+{
+  "schema_version": "acp-001.0.1",
+  "dataset_status": "noncanonical_fixture",
+  "projection_policy": {
+    "category_visibility": "requires_granted_and_currently_or_conditionally_executable_profile",
+    "ungranted_profile_visibility": "never_in_combat_selector",
+    "blocked_profile_visibility": "only_inside_already_visible_category_when_owned_actionable_and_spoiler_safe",
+    "empty_category_behavior": "hide",
+    "hidden_state_policy": "never_counts_toward_visibility"
+  },
+  "profiles": [
+    {
+      "id": "profile.offhand_blaster_bonus.candidate",
+      "version": "0.1.0",
+      "status": "source_gap",
+      "capability_id": "capability.blaster_pistol_attack",
+      "taxonomy": ["attack", "ranged", "off_hand", "dual_weapon"],
+      "action_category": "bonus",
+      "cost": { "bonus": 1, "resources": [{ "resource_id": "ammo.blaster_pistol", "amount": 1 }] },
+      "grant": { "grant_status": "unresolved", "grant_kind": "execution_profile", "grant_source_ids": [] },
+      "prerequisites": [
+        { "kind": "trigger", "key": "eligible_attack_completed_this_turn", "operator": "eq", "value": true },
+        { "kind": "hand_state", "key": "off_hand_holds_blaster_pistol", "operator": "eq", "value": true },
+        { "kind": "resource", "key": "ammo.blaster_pistol", "operator": "gte", "value": 1 },
+        { "kind": "target", "key": "target_is_legal_enemy", "operator": "eq", "value": true }
+      ],
+      "resolution": {
+        "mode": "attack",
+        "attack_rolls": 1,
+        "effect_components": ["attack_roll", "weapon_damage", "ammo_debit"],
+        "proficiency": {
+          "required_ids": ["proficiency.blaster_pistol", "proficiency.off_hand_or_dual_weapon:TBD"],
+          "missing_result": "disadvantage",
+          "decision_status": "candidate"
+        },
+        "notes": ["Owner proposes disadvantage when appropriate proficiency is absent.", "Ability modifier on off-hand damage remains unresolved."]
+      },
+      "usage_limit": "At most once per eligible trigger unless an adopted source grants otherwise.",
+      "source_control": {
+        "source_refs": ["owner conversation 2026-11-22", "development/combat_slice/catalog.json:blaster_shot"],
+        "approval": "owner_direction_only",
+        "scope": { "ruleset_ids": [], "campaign_ids": [] }
+      }
+    },
+    {
+      "id": "profile.offhand_saber_bonus.candidate",
+      "version": "0.1.0",
+      "status": "source_gap",
+      "capability_id": "capability.lightsaber_attack",
+      "taxonomy": ["attack", "melee", "off_hand", "dual_weapon"],
+      "action_category": "bonus",
+      "cost": { "bonus": 1 },
+      "grant": { "grant_status": "unresolved", "grant_kind": "execution_profile", "grant_source_ids": [] },
+      "prerequisites": [
+        { "kind": "trigger", "key": "eligible_attack_completed_this_turn", "operator": "eq", "value": true },
+        { "kind": "hand_state", "key": "off_hand_holds_ignited_lightsaber", "operator": "eq", "value": true },
+        { "kind": "target", "key": "target_within_reach", "operator": "eq", "value": true }
+      ],
+      "resolution": {
+        "mode": "attack",
+        "attack_rolls": 1,
+        "effect_components": ["attack_roll", "weapon_damage"],
+        "proficiency": {
+          "required_ids": ["proficiency.lightsaber", "proficiency.dual_lightsaber:TBD"],
+          "missing_result": "disadvantage",
+          "decision_status": "candidate"
+        },
+        "notes": ["Two-weapon damage modifier and configuration compatibility require a source decision."]
+      },
+      "usage_limit": "At most once per eligible trigger unless an adopted source grants otherwise.",
+      "source_control": {
+        "source_refs": ["owner conversation 2026-11-22", "CC-002 v0.2 weapon configuration requirements"],
+        "approval": "owner_direction_only",
+        "scope": { "ruleset_ids": [], "campaign_ids": [] }
+      }
+    },
+    {
+      "id": "profile.echani_flow_bonus.observed_proposal",
+      "version": "0.1.0",
+      "status": "proposed",
+      "capability_id": "capability.echani_unarmed_attack",
+      "taxonomy": ["attack", "melee", "unarmed", "follow_up"],
+      "action_category": "bonus",
+      "cost": { "bonus": 1 },
+      "grant": { "grant_status": "fixture_granted", "grant_kind": "execution_profile", "grant_source_ids": ["cc002-sandbox-0.1"] },
+      "prerequisites": [
+        { "kind": "trigger", "key": "melee_attack_completed_this_turn", "operator": "eq", "value": true },
+        { "kind": "range", "key": "target_distance_ft", "operator": "lte", "value": 5 }
+      ],
+      "resolution": {
+        "mode": "attack",
+        "attack_rolls": 1,
+        "effect_components": ["attack_roll", "unarmed_damage_without_dex_modifier"],
+        "proficiency": {
+          "required_ids": ["feature.martial_arts_training"],
+          "missing_result": "blocked",
+          "decision_status": "candidate"
+        },
+        "notes": ["Kick, knee, or elbow means no false empty-hand requirement."]
+      },
+      "usage_limit": "One per eligible Bonus in the CC-005 sandbox fixture.",
+      "source_control": {
+        "source_refs": ["development/combat_slice/catalog.json:flow_strike", "CC-002 v0.2 §2"],
+        "approval": "sandbox_proposal",
+        "scope": { "ruleset_ids": ["cc002-sandbox-0.1"], "campaign_ids": [] }
+      }
+    },
+    {
+      "id": "profile.throw_carried_object_main.candidate",
+      "version": "0.1.0",
+      "status": "source_gap",
+      "capability_id": "capability.improvised_throw",
+      "taxonomy": ["attack", "object_use", "thrown", "improvised"],
+      "action_category": "main",
+      "cost": { "main": 1 },
+      "grant": { "grant_status": "unresolved", "grant_kind": "capability", "grant_source_ids": [] },
+      "prerequisites": [
+        { "kind": "object_instance", "key": "declared_object_is_held_or_carried_and_available", "operator": "eq", "value": true },
+        { "kind": "hand_state", "key": "throwing_limb_available", "operator": "eq", "value": true },
+        { "kind": "target", "key": "declared_target_and_purpose_are_legal", "operator": "eq", "value": true }
+      ],
+      "resolution": {
+        "mode": "ruleset_defined",
+        "attack_rolls": 1,
+        "effect_components": ["object_instance_transfer", "range", "accuracy", "damage_or_utility", "breakage", "recovery"],
+        "proficiency": {
+          "required_ids": ["proficiency.improvised_or_thrown_object:TBD"],
+          "missing_result": "disadvantage",
+          "decision_status": "candidate"
+        },
+        "notes": ["A lantern is an example object, not a free generic projectile.", "Bonus/Secondary Quick Throw requires its own granted profile."]
+      },
+      "usage_limit": "One declared object instance per execution.",
+      "source_control": {
+        "source_refs": ["owner conversation 2026-11-22", "CC-002 v0.2 §2 Quick Throw / Improvised Throw"],
+        "approval": "owner_direction_only",
+        "scope": { "ruleset_ids": [], "campaign_ids": [] }
+      }
+    }
+  ],
+  "patterns": [
+    {
+      "id": "maneuver.saber_and_offhand_blaster.candidate",
+      "version": "0.1.0",
+      "pattern_kind": "maneuver",
+      "status": "source_gap",
+      "objective": "Strike with the saber and fire the off-hand blaster in one declared turn sequence.",
+      "participants": ["actor:self"],
+      "steps": [
+        { "id": "step.saber", "actor_binding": "actor:self", "profile_id": "catalog:saber_strike", "timing_group": "dual_weapon_exchange", "target_binding": "target:declared_1", "condition": "always" },
+        { "id": "step.blaster", "actor_binding": "actor:self", "profile_id": "profile.offhand_blaster_bonus.candidate", "timing_group": "dual_weapon_exchange", "target_binding": "target:declared_2_or_1", "condition": "first step resolves and trigger remains legal" }
+      ],
+      "per_actor_cost_forecast": { "actor:self": { "main": 1, "bonus": 1, "resources": [{ "resource_id": "ammo.blaster_pistol", "amount": 1 }] } },
+      "revalidation": ["before each roll", "after interruption", "before ammo debit and effect commit"],
+      "evidence": [],
+      "promotion": { "decision": "not_evaluated", "review_required": true, "grants_mechanical_bonus": false },
+      "source_control": { "source_refs": ["owner conversation 2026-11-22"], "approval": "owner_direction_only", "scope": { "ruleset_ids": [], "campaign_ids": [] } }
+    },
+    {
+      "id": "maneuver.dual_saber_exchange.candidate",
+      "version": "0.1.0",
+      "pattern_kind": "maneuver",
+      "status": "source_gap",
+      "objective": "Attack with a primary saber and an off-hand saber with explicit two-weapon accounting.",
+      "participants": ["actor:self"],
+      "steps": [
+        { "id": "step.primary_saber", "actor_binding": "actor:self", "profile_id": "catalog:saber_strike", "timing_group": "dual_saber_exchange", "target_binding": "target:declared_1", "condition": "always" },
+        { "id": "step.offhand_saber", "actor_binding": "actor:self", "profile_id": "profile.offhand_saber_bonus.candidate", "timing_group": "dual_saber_exchange", "target_binding": "target:declared_2_or_1", "condition": "first step resolves and trigger remains legal" }
+      ],
+      "per_actor_cost_forecast": { "actor:self": { "main": 1, "bonus": 1 } },
+      "revalidation": ["before each roll", "after interruption", "after weapon loss or hand-state change"],
+      "evidence": [],
+      "promotion": { "decision": "not_evaluated", "review_required": true, "grants_mechanical_bonus": false },
+      "source_control": { "source_refs": ["owner conversation 2026-11-22"], "approval": "owner_direction_only", "scope": { "ruleset_ids": [], "campaign_ids": [] } }
+    },
+    {
+      "id": "team_maneuver.aero_varon_rissa_togruta.skeleton",
+      "version": "0.1.0",
+      "pattern_kind": "team_maneuver",
+      "status": "source_gap",
+      "objective": "Represent coordinated PC actions without pooling authority or resources.",
+      "participants": ["pc:aero", "pc:varon", "pc:rissa", "pc:togruta:TBD"],
+      "steps": [
+        { "id": "step.aero", "actor_binding": "pc:aero", "profile_id": "profile:TBD", "timing_group": "team_sequence", "target_binding": "target:TBD", "condition": "controller consents and profile is legal" },
+        { "id": "step.varon", "actor_binding": "pc:varon", "profile_id": "profile:TBD", "timing_group": "team_sequence", "target_binding": "target:TBD", "condition": "controller consents and profile is legal" },
+        { "id": "step.rissa", "actor_binding": "pc:rissa", "profile_id": "profile:TBD", "timing_group": "team_sequence", "target_binding": "target:TBD", "condition": "controller consents and profile is legal" },
+        { "id": "step.togruta", "actor_binding": "pc:togruta:TBD", "profile_id": "profile:TBD", "timing_group": "team_sequence", "target_binding": "target:TBD", "condition": "identity resolves, controller consents, and profile is legal" }
+      ],
+      "per_actor_cost_forecast": { "pc:aero": {}, "pc:varon": {}, "pc:rissa": {}, "pc:togruta:TBD": {} },
+      "revalidation": ["at each actor turn/reaction window", "after communication or visibility changes", "after any participant declines or becomes unavailable"],
+      "evidence": [],
+      "promotion": { "decision": "not_evaluated", "review_required": true, "grants_mechanical_bonus": false },
+      "source_control": { "source_refs": ["owner conversation 2026-11-22"], "approval": "owner_direction_only", "scope": { "ruleset_ids": [], "campaign_ids": [] } }
+    },
+    {
+      "id": "tactic.learned_pattern.skeleton",
+      "version": "0.1.0",
+      "pattern_kind": "tactic",
+      "status": "proposed",
+      "objective": "Promote repeated or combined conditional Maneuver evidence into a reusable plan without granting mechanics.",
+      "participants": ["actor:self"],
+      "steps": [
+        { "id": "step.setup", "actor_binding": "actor:self", "profile_id": "profile:TBD", "timing_group": "conditional_plan", "target_binding": "target:TBD", "condition": "live preconditions pass" },
+        { "id": "step.followup", "actor_binding": "actor:self", "profile_id": "profile:TBD", "timing_group": "conditional_plan", "target_binding": "target:TBD", "condition": "setup outcome and resources permit" }
+      ],
+      "per_actor_cost_forecast": { "actor:self": {} },
+      "revalidation": ["on selection", "before every step", "after every interrupt"],
+      "evidence": ["accepted_event_ids:TBD", "maneuver_instance_ids:TBD", "diversity_and_player_intent_review:TBD"],
+      "promotion": { "decision": "candidate", "review_required": true, "grants_mechanical_bonus": false },
+      "source_control": { "source_refs": ["Contracts/GENESIS_EMERGENT_PLAY_AND_BEHAVIOR_DESIGN_v0.1.md §5", "owner conversation 2026-11-22"], "approval": "owner_direction_only", "scope": { "ruleset_ids": [], "campaign_ids": [] } }
+    },
+    {
+      "id": "team_tactic.learned_coordination.skeleton",
+      "version": "0.1.0",
+      "pattern_kind": "team_tactic",
+      "status": "proposed",
+      "objective": "Promote repeated coordinated Team Maneuvers into a consented reusable team plan.",
+      "participants": ["role:initiator", "role:partner"],
+      "steps": [
+        { "id": "step.initiator", "actor_binding": "role:initiator", "profile_id": "profile:TBD", "timing_group": "team_conditional_plan", "target_binding": "target:TBD", "condition": "controller consents and live preconditions pass" },
+        { "id": "step.partner", "actor_binding": "role:partner", "profile_id": "profile:TBD", "timing_group": "team_conditional_plan", "target_binding": "target:TBD", "condition": "partner independently consents and trigger is observed" }
+      ],
+      "per_actor_cost_forecast": { "role:initiator": {}, "role:partner": {} },
+      "revalidation": ["per participant", "per turn/reaction window", "after any communication, target, or control change"],
+      "evidence": ["team_maneuver_instance_ids:TBD", "participant_consent:TBD", "coordination_diversity_review:TBD"],
+      "promotion": { "decision": "candidate", "review_required": true, "grants_mechanical_bonus": false },
+      "source_control": { "source_refs": ["owner conversation 2026-11-22"], "approval": "owner_direction_only", "scope": { "ruleset_ids": [], "campaign_ids": [] } }
+    }
+  ],
+  "augmentations": [
+    {
+      "id": "augmentation.force_guided_strike.observed_sandbox_proposal",
+      "version": "0.1.0",
+      "status": "proposed",
+      "target_profile_ids": ["catalog:saber_strike", "catalog:riposte"],
+      "target_components": ["attack_roll"],
+      "timing": "Declare with the targeted attack before its roll.",
+      "cost": { "resources": [{ "resource_id": "force_points", "amount": 1 }] },
+      "grant": { "grant_status": "fixture_granted", "grant_kind": "execution_profile", "grant_source_ids": ["cc002-sandbox-0.1:force_augmentation_switch"] },
+      "usage_limit": "Once per turn; +1d4 to the named attack roll only.",
+      "stacking": "Does not grant a power or stack beyond its authored once-per-turn use.",
+      "source_control": { "source_refs": ["development/combat_slice/catalog.json:force_augment", "CC-002 v0.2 §1.7"], "approval": "sandbox_proposal", "scope": { "ruleset_ids": ["cc002-sandbox-0.1"], "campaign_ids": [] } }
+    }
+  ],
+  "category_reconciliation": [
+    { "capability": "Dodge Action", "observed_category": "main", "owner_category": "main", "status": "aligned", "notes": "Current core profile agrees." },
+    { "capability": "Battle Insight", "observed_category": "main; bonus variant proposed", "owner_category": "secondary", "status": "profile_missing", "notes": "No Secondary execution profile is authored." },
+    { "capability": "Blade Bind & Strip", "observed_category": "main profile with maneuver label Disarm", "owner_category": "maneuver", "status": "taxonomy_conflict", "notes": "Needs composition semantics without changing current profile by inference." },
+    { "capability": "Lightsaber Strike", "observed_category": "main", "owner_category": "main", "status": "aligned", "notes": "One-handed profile agrees." },
+    { "capability": "Echani Strike", "observed_category": "main", "owner_category": "main", "status": "aligned", "notes": "Off-hand/follow-up profile is distinct." },
+    { "capability": "Lightsaber Strike (two-handed)", "observed_category": "main", "owner_category": "main", "status": "aligned", "notes": "Requires off hand free." },
+    { "capability": "Blaster Pistol Shot", "observed_category": "main", "owner_category": "main", "status": "aligned", "notes": "Off-hand follow-up profile is missing and separate." },
+    { "capability": "Echani Grapple", "observed_category": "main", "owner_category": "secondary", "status": "profile_missing", "notes": "Requires approved alternate profile." },
+    { "capability": "Calm the Animal (untrained)", "observed_category": "main", "owner_category": "secondary", "status": "profile_missing", "notes": "Requires approved alternate profile." },
+    { "capability": "Reload Blaster", "observed_category": "main", "owner_category": "secondary", "status": "source_gap", "notes": "Current sheet says reload action; resolve before adoption." },
+    { "capability": "Burst", "observed_category": "main", "owner_category": "secondary", "status": "profile_missing", "notes": "Requires approved alternate profile." },
+    { "capability": "Force Connection (focused)", "observed_category": "main", "owner_category": "secondary", "status": "profile_missing", "notes": "Requires approved alternate profile." },
+    { "capability": "Minor Telekinesis (Jedi Fundamentals)", "observed_category": "main, campaign-scoped", "owner_category": "bonus", "status": "profile_missing", "notes": "Never globalize the provisional campaign grant." },
+    { "capability": "Blade Bind & Takedown", "observed_category": "main + secondary compound profile", "owner_category": "maneuver", "status": "taxonomy_conflict", "notes": "Represent as a Maneuver template over legal steps or an explicitly wrapped compound profile." },
+    { "capability": "Weapon Feint", "observed_category": "secondary", "owner_category": "secondary", "status": "aligned", "notes": "May participate as a Maneuver step." },
+    { "capability": "Readied Dodge", "observed_category": "secondary setup + reaction", "owner_category": "secondary", "status": "aligned", "notes": "Keep trigger and Reaction accounting explicit." }
+  ]
+}
