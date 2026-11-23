@@ -1,9 +1,13 @@
 # Genesis Protocol — Action Composition, Maneuvers, Tactics, and Team Patterns
 
-**ID:** ACP-001  
-**Version:** 0.1 owner-direction amendment  
-**Date:** 2026-11-22  
-**Status:** OWNER INTENT CAPTURED; DATA-CONTRACT PROPOSAL; NOT ADOPTED GAMEPLAY  
+**ID:** ACP-001
+
+**Version:** 0.1 owner-direction amendment
+
+**Date:** 2026-11-22
+
+**Status:** OWNER INTENT CAPTURED; DATA-CONTRACT PROPOSAL; NOT ADOPTED GAMEPLAY
+
 **Scope:** docs and noncanonical fixtures only. This amendment grants no action, proficiency, Force effect, budget, learned pattern, or live-campaign authority.
 
 ## 0. Why this amendment exists
