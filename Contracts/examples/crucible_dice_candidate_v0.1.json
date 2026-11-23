@@ -1,0 +1,201 @@
+{
+  "schema_version": "genesis-crucible-candidate/0.1",
+  "status": "noncanonical_fixture",
+  "source_contract": "Contracts/GENESIS_CRUCIBLE_DICE_AND_PRESSURE_DESIGN_v0.1.md",
+  "units": "fair_independent_d6",
+  "success_rule_candidate": "signed_success_margin>=1",
+  "agency_die": {
+    "1": {
+      "blank": 1
+    },
+    "2": {
+      "success": 1
+    },
+    "3": {
+      "success": 1
+    },
+    "4": {
+      "spark": 1
+    },
+    "5": {
+      "success": 1,
+      "spark": 1
+    },
+    "6": {
+      "success": 1,
+      "resolve_symbol": 1
+    }
+  },
+  "entropy_die": {
+    "1": {
+      "blank": 1
+    },
+    "2": {
+      "cancel_success": 1
+    },
+    "3": {
+      "cancel_success": 1
+    },
+    "4": {
+      "strain": 1
+    },
+    "5": {
+      "cancel_success": 1,
+      "strain": 1
+    },
+    "6": {
+      "cancel_success": 1,
+      "ruin_symbol": 1
+    }
+  },
+  "cancellation_policy": {
+    "signed_success_margin": "sum(success)-sum(cancel_success)",
+    "net_spark": "max(spark-strain,0)",
+    "net_strain": "max(strain-spark,0)",
+    "major_symbols": "uncancelable_symbols; numerical success contributions can cancel"
+  },
+  "banking": {
+    "major_face_auto_banked": false,
+    "policy": "pending_owner_decision",
+    "resolve_owner": "player",
+    "ruin_owner": "gm_scene",
+    "anti_farming": "distinct material stakes and accepted event receipt required",
+    "optional_conversion": {
+      "spark_to_resolve": 3,
+      "strain_to_ruin": 3,
+      "consume_net_symbols_first": true,
+      "simultaneous_immediate_spend_forbidden": true,
+      "enabled_by_default": false
+    },
+    "candidate_pool_cap": 5
+  },
+  "conscience_die": {
+    "implemented": false,
+    "face_map": null,
+    "eligible_when": "prospectively_authorized_material_choice_and_player_intent",
+    "sacrifice_survival_not_good_evil": true
+  },
+  "mastery_d8": {
+    "implemented": false,
+    "face_map": null,
+    "upgrade_policy": "separately source-authorized"
+  },
+  "examples": [
+    {
+      "id": "success_strain",
+      "actor": "aero",
+      "agency_faces": [
+        2,
+        3,
+        1
+      ],
+      "entropy_faces": [
+        4,
+        5
+      ],
+      "expected": {
+        "signed_success_margin": 1,
+        "success": true,
+        "net_spark": 0,
+        "net_strain": 2,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      }
+    },
+    {
+      "id": "failure_spark",
+      "actor": "aero",
+      "agency_faces": [
+        4,
+        5,
+        1
+      ],
+      "entropy_faces": [
+        2,
+        3
+      ],
+      "expected": {
+        "signed_success_margin": -1,
+        "success": false,
+        "net_spark": 2,
+        "net_strain": 0,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      }
+    },
+    {
+      "id": "majors_both_not_canceled",
+      "actor": "aero",
+      "agency_faces": [
+        6,
+        1,
+        1
+      ],
+      "entropy_faces": [
+        6,
+        1
+      ],
+      "expected": {
+        "signed_success_margin": 0,
+        "success": false,
+        "net_spark": 0,
+        "net_strain": 0,
+        "resolve_symbols": 1,
+        "ruin_symbols": 1
+      }
+    },
+    {
+      "id": "three_to_one_candidate",
+      "actor": "aero",
+      "agency_faces": [
+        4,
+        4,
+        4,
+        5
+      ],
+      "entropy_faces": [
+        1
+      ],
+      "expected": {
+        "signed_success_margin": 1,
+        "success": true,
+        "net_spark": 4,
+        "net_strain": 0,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      },
+      "candidate_conversion": {
+        "consume_spark": 3,
+        "remaining_spark": 1,
+        "potential_resolve_if_eligible": 1
+      }
+    },
+    {
+      "id": "minor_cancel",
+      "actor": "aero",
+      "agency_faces": [
+        4,
+        5,
+        2
+      ],
+      "entropy_faces": [
+        4,
+        2
+      ],
+      "expected": {
+        "signed_success_margin": 1,
+        "success": true,
+        "net_spark": 1,
+        "net_strain": 0,
+        "resolve_symbols": 0,
+        "ruin_symbols": 0
+      }
+    }
+  ],
+  "guardrails": {
+    "no_forced_pc_action": true,
+    "no_automatic_psych_condition_from_any_strain": true,
+    "no_raw_long_lived_tokens_in_clients": true,
+    "model_writes_cannot_change_dice": true
+  }
+}

@@ -3,6 +3,8 @@
 **Status:** Owner selected terminology and design direction; mechanic examples PROPOSED, not activated or balanced.
 **Scope:** Oracle/Hask Meadow/shared-0002 are protected; no adopted dice rule, advancement grant, campaign migration or live resource pool is created by this document.
 
+**Crucible and WHISPER extensions (proposal, not adopted):** See [GCD-001](GENESIS_CRUCIBLE_DICE_AND_PRESSURE_DESIGN_v0.1.md) for the owner's exact Agency/Entropy d6 symbols, Spark/Strain cancellation, major resource economics and mathematical benchmarks; see [WCP-001](GENESIS_WHISPER_CRUCIBLE_PRESSURE_AND_ADAPTATION_v0.1.md) for psychological privacy, fatigue and conscience/adaptation boundaries. These extend this contract without changing existing d20 rules.
+
 ## 0. Relationship to CMT-001, ACP-001 and WHISPER
 This contract reconciles two otherwise incompatible draft definitions:
 - ACP-001 currently calls ANY legal sequence of action steps a "Maneuver"; the owner has since clarified that this is an ordinary **Combo** or generic composition.
