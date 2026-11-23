@@ -46,6 +46,33 @@ class JWT(unittest.TestCase):
             with self.subTest(changes=changes):self.assertIsNone(asyncio.run(self.verifier().verify_token(self.token(**changes))))
         bad=jwt.encode({'sub':fixture.SUBJECT},'owner-login-is-not-the-server-signing-key',algorithm='HS256')
         self.assertIsNone(asyncio.run(self.verifier().verify_token(bad)))
+    def test_codex_opt_in_third_client_is_bound_and_does_not_impersonate_existing_providers(self):
+        # The third provider is allowed ONLY when explicitly configured, and
+        # can never reuse an existing Auth0 azp or become gpt-session.
+        signing_key = self.key.public_key()
+        class Keys:
+            def get_signing_key_from_jwt(self, token):
+                return type("Key", (), {"key": signing_key})()
+        third = dict(CLIENTS, **{"codex-client": "codex-session"})
+        optional = adapter.JWTVerifier(ISSUER, RESOURCE, third, fixture.SUBJECT, key_client=Keys())
+        for client, expected in third.items():
+            result = asyncio.run(optional.verify_token(self.token(azp=client)))
+            self.assertEqual(result.claims["provider"], expected)
+        self.assertIsNone(asyncio.run(self.verifier().verify_token(self.token(azp="codex-client"))))
+        for invalid in (
+            {"chatgpt-client":"gpt-session", "gemini-client":"gemini-session", "other":"gpt-session"},
+            {"chatgpt-client":"gpt-session", "other":"codex-session"},
+            {"chatgpt-client":"gpt-session", "gemini-client":"gemini-session", "other":"unknown-session"},
+            {"chatgpt-client":"gpt-session", "gemini-client":"gemini-session", "other":"codex-session", "other2":"codex-session"},
+            {"chatgpt-client":"gpt-session", "gemini-client":"gemini-session", "other":"codex-session", 42:"codex-session"},
+        ):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                adapter.JWTVerifier(ISSUER, RESOURCE, invalid, fixture.SUBJECT, key_client=Keys())
+        for claims in ({"azp":"not-registered"},{"scope":"genesis:gm"},{"aud":"wrong-audience"},
+                       {"sub":"wrong-owner"},{"exp":1},{"iss":"https://wrong.invalid/"}):
+            with self.subTest(claims=claims):
+                self.assertIsNone(asyncio.run(optional.verify_token(self.token(azp="codex-client", **claims))))
+
     def test_opaque_authorization_code_never_accepted_before_or_after_restart(self):
         # One-time code exchange is owned by Auth0, not by this resource server.
         for _ in range(2):self.assertIsNone(asyncio.run(self.verifier().verify_token('previously-used-authorization-code')))
@@ -75,6 +102,24 @@ class BoundSessions(Base):
                 with self.assertRaises(adapter.Refused):self.tools.read('refresh',known_revision=cursor['revision'],known_ledger_head='wrong-head')
                 self.assertIn('state',self.tools.read('refresh',include_full_state=True)['public']);outputs.append(cursor)
         self.assertEqual(*outputs);self.assertEqual(self.gw.action_status(action['action_id'])['status'],'submitted')
+    def test_codex_readonly_projection_does_not_claim_gpt_action_or_reveal_private_state(self):
+        action,_=self.act(HOLSTER,provider="gpt-session")
+        token=fixture.access(scopes=[adapter.READ])
+        token.claims={"provider":"codex-session"}
+        before=self.gw.recovery()
+        with patch("mcp_adapter.get_access_token",return_value=token):
+            result=self.tools.read("refresh")
+            self.assertEqual(result["connection_provider"],"codex-session")
+            self.assertTrue(result["read_only"])
+            self.assertIn("INSUFFICIENT_SCOPE",result["gm_write_blockers"])
+            self.assertIn("PROVIDER_NOT_CONFIGURED",result["gm_write_blockers"])
+            self.assertFalse(result["recovery"]["lease"]["held"])
+            with patch.object(self.tools.app,"gm",side_effect=AssertionError("read-only Codex reached GM operation")):
+                blocked=adapter.result(lambda:self.tools.gm("claim","codex-run"))
+                self.assertEqual(blocked.structuredContent["error"]["code"],"INSUFFICIENT_SCOPE")
+        self.assertEqual(self.gw.recovery()["in_flight"],before["in_flight"])
+        self.assertEqual(self.gw.action_status(action["action_id"])["status"],"submitted")
+
     def test_provider_is_bound_to_token_not_model_or_session(self):
         self.act(HOLSTER,provider='gemini-session')
         with patch('mcp_adapter.get_access_token',return_value=fixture.access()):
