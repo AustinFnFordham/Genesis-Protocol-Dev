@@ -2,6 +2,8 @@
 **ID:** CMT-001 | **Version:** 0.1 | **Date:** 2026-11-22 | **Status:** owner-approved design direction; quantitative mechanics sandbox proposals, not live rules.
 **Starting commit:** CC-005c 16b4750445ed34b31093b879983e1555204d5983. This branch documents decisions ONLY. No changes to Oracle, Hask Meadow, shared-0002, existing abilities or live dice.
 
+**Outcome-system continuation:** [SSRR-001](GENESIS_SPARK_STRAIN_RESOLVE_RUIN_OUTCOME_CONTRACT_v0.1.md) adopts the owner's Spark/Strain (minor immediate) and Resolve/Ruin (major banked) terminology and specifies two-axis outcomes, WHISPER authority and candidate spend policy. All numerical rolls/spends remain proposals until separately adopted.
+
 ## 0. Authority and correction
 This document corrects proposed terminology in CC-002 (Cinematic Combat v0.2), GEP-001 and previous assistant handoffs where they conflict with the owner's updated definitions. Existing canonical rules, actual character grants and pinned campaigns retain their authority until a later versioned, explicitly approved implementation. The older CC-002 used Maneuver to mean a tactical objective such as Feint, Disarm or Riposte. **New Genesis definition: a purchasable Maneuver is a specialized, prerequisite-gated composition of abilities with a distinct mechanical payoff.** Older one-action candidate entries must be reconciled as atomic abilities, techniques or composite Maneuvers, without silent migrations.
 
