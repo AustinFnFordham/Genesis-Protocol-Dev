@@ -15,7 +15,7 @@ from git_errors import GitFailure
 from worktree_guard import WorktreeGuard
 
 DATA_ROOT = Path("/var/data")
-PROVIDERS = {"gpt-session", "gemini-session"}
+PROVIDERS = {"gpt-session", "gemini-session", "codex-session"}  # codex-session is opt-in, never impersonates GPT/Gemini
 
 
 def configure(env):
