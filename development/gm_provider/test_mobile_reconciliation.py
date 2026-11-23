@@ -120,6 +120,18 @@ class BoundSessions(Base):
         self.assertEqual(self.gw.recovery()["in_flight"],before["in_flight"])
         self.assertEqual(self.gw.action_status(action["action_id"])["status"],"submitted")
 
+    def test_codex_with_gm_scope_cannot_claim_gpt_routed_action(self):
+        action,_=self.act(HOLSTER,provider="gpt-session")
+        self.tools.app.gm_tokens["codex-session"]="test-server-codex-token"
+        token=fixture.access()
+        token.claims={"provider":"codex-session"}
+        with patch("mcp_adapter.get_access_token",return_value=token):
+            out=self.tools.gm("claim","isolated-codex-run",model="gpt-session",session="gpt-session")
+        self.assertEqual(out["http_status"],409)
+        self.assertEqual(out["result"]["error"]["code"],"NOT_ROUTED_HERE")
+        self.assertEqual(self.gw.action_status(action["action_id"])["status"],"submitted")
+        self.assertFalse(self.gw.recovery()["lease"]["held"])
+
     def test_provider_is_bound_to_token_not_model_or_session(self):
         self.act(HOLSTER,provider='gemini-session')
         with patch('mcp_adapter.get_access_token',return_value=fixture.access()):
