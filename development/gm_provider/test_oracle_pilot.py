@@ -56,6 +56,21 @@ class OracleRunner(unittest.TestCase):
                 with self.subTest(invalid=invalid), self.assertRaises(ValueError):
                     oracle.configure({**write_env(), "GENESIS_GM_TOKENS": invalid})
 
+    def test_codex_gm_token_is_optional_distinct_and_unknown_providers_still_refused(self):
+        with patch.object(oracle.Path, "is_mount", return_value=True):
+            # Staging with only GPT remains fully backwards compatible.
+            self.assertTrue(oracle.configure(write_env()))
+            # A third provider is allowed only by explicit host-side token setup.
+            configured={**write_env(), "GENESIS_GM_TOKENS":
+                '{"gpt-session":"test-gpt-token","codex-session":"test-codex-token"}'}
+            self.assertTrue(oracle.configure(configured))
+            for bad in (
+                '{"gpt-session":"test-gpt-token","codex-session":"test-gpt-token"}',
+                '{"gpt-session":"test-gpt-token","unexpected-session":"test-unknown-token"}',
+            ):
+                with self.subTest(bad=bad), self.assertRaises(ValueError):
+                    oracle.configure({**write_env(), "GENESIS_GM_TOKENS": bad})
+
     def test_generation_continuity_and_dry_run_against_real_git(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
