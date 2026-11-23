@@ -188,6 +188,15 @@ class GatewayTools:
             raise Refused("INSUFFICIENT_SCOPE", "GM writes require genesis:gm scope")
         return token
 
+    def gm_scope_probe(self):
+        """Read-only OAuth step-up probe; never lease, roll or access GM context."""
+        token = self.authorize()
+        if GM not in token.scopes:
+            raise Refused("INSUFFICIENT_SCOPE", "GM authorization requires genesis:gm")
+        blockers = self.write_blockers(token, self.guard.recovery_reason)
+        return {"connection_provider": token.claims["provider"], "gm_scope_granted": True,
+                "gm_write_ready": not bool(blockers), "gm_write_blockers": blockers}
+
     def write_blockers(self, token, recovery_reason):
         blockers = []
         if recovery_reason:
@@ -271,7 +280,7 @@ def result(call):
         data, failed = error.as_dict(), True
         if error.code in {"UNAUTHORIZED", "INSUFFICIENT_SCOPE"}:
             scopes = READ if error.code == "UNAUTHORIZED" else READ + " " + GM
-            metadata = {"mcp/www_authenticate": [f'Bearer error="insufficient_scope", scope="{scopes}"']}
+            metadata = {"mcp/www_authenticate": [f'Bearer error="insufficient_scope", error_description="Genesis authorization needs these scopes", scope="{scopes}"']}
     except Exception:
         # SDK error formatting must not echo paths, private context or credentials.
         data, failed = {"error": {"code": "GATEWAY_UNAVAILABLE", "message": "Stop and inspect server-side recovery; do not reroll"}}, True
@@ -293,12 +302,14 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
         transport_security=TransportSecuritySettings(allowed_hosts=[urlsplit(resource).netloc, "127.0.0.1:*", "localhost:*"],
                                                      allowed_origins=["https://chatgpt.com", "https://gemini.google.com", resource.rsplit("/", 1)[0]]))
 
-    def register(name, function, description, readonly=False, destructive=False):
-        scopes = [READ] if readonly else [READ, GM]
+    def register(name, function, description, readonly=False, destructive=False, require_gm=False):
+        scopes = [READ, GM] if require_gm or not readonly else [READ]
         mcp.tool(name=name, description=description, annotations=ToolAnnotations(readOnlyHint=readonly,
                  destructiveHint=destructive, openWorldHint=False),
                  meta={"securitySchemes": [{"type": "oauth2", "scopes": scopes}]})(function)
 
+    def gm_scope_probe() -> CallToolResult:
+        return result(lambda: tools.gm_scope_probe())
     def refresh(include_full_state: bool = False, known_revision: int | None = None,
                 known_ledger_head: str | None = None, known_public_sha256: str | None = None) -> CallToolResult:
         return result(lambda: tools.read('refresh', include_full_state=include_full_state, known_revision=known_revision,
@@ -323,6 +334,7 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
         return result(lambda: tools.gm("publish", run))
     def release(run: str) -> CallToolResult:
         return result(lambda: tools.gm("release", run))
+    register("genesis_gm_scope_probe", gm_scope_probe, "Read-only check of GM scope and write blockers. Triggers OAuth step-up if genesis:gm is missing. No lease, dice, or campaign write.", True, require_gm=True)
     register("genesis_refresh", refresh, "Read public staging state, request status and recovery flags. No lease or turn mutation.", True)
     register("genesis_staging_refresh", refresh, "Same read-only refresh, with public digest and cursor checks for Gemini clients.", True)
     register("genesis_page", page, "Read a public history page ID advertised by genesis_refresh.", True)
