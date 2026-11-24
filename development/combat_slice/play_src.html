@@ -11,7 +11,7 @@
   --ok: #57d99a; --bad: #ff7a72; --warn: #f3c25b; --prop: #c99bf0; --sheet: #7fc4e6; --saber: #8a7dff; --player: #8fc0ff; --gm: #ff8f7a;
   --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif; --text: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace; }
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
 body { margin: 0; background: radial-gradient(1000px 500px at 80% -10%, #1a1f3a 0%, transparent 60%), var(--bg); background-color: var(--bg); color: var(--ink); font: 15px/1.45 var(--text); }
 button, input, select { font: inherit; color: inherit; }
 button { min-height: 44px; min-width: 44px; border-radius: 10px; border: 1px solid var(--line2); background: var(--panel2); padding: 0 12px; cursor: pointer; }
@@ -21,12 +21,49 @@ button.primary { background: linear-gradient(180deg, #8a7dff, #6555e8); border-c
 h1, h2, h3 { font-family: var(--display); margin: 0; letter-spacing: .04em; }
 h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
 .muted { color: var(--muted); } .bad { color: var(--bad); } .ok { color: var(--ok); } .warn { color: var(--warn); }
-.wrap { max-width: 1280px; margin: 0 auto; padding-block: 8px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-#banner { font-size: 12px; background: #2b2200; color: #ffe9a8; padding-block: 6px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 12px; margin-top: 10px; }
-@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+/* ---- single-screen shell (Milestone A): the document never scrolls; regions scroll on their own ---- */
+.app { height: 100vh; height: 100dvh; display: grid; gap: 8px; padding-top: max(6px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(10px, env(safe-area-inset-left, 0px)); padding-right: max(10px, env(safe-area-inset-right, 0px));
+  grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr) auto auto; grid-template-areas: "hd" "tabs" "pane" "cp" "dock"; }
+.hd { grid-area: hd; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.hd h1 { font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+.chip { font: 600 11px var(--display); letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line2); color: var(--muted); white-space: nowrap; }
+.chip.live { color: var(--ok); border-color: rgba(87,217,154,.5); } .chip.work { color: var(--warn); border-color: rgba(243,194,91,.5); } .chip.down { color: var(--bad); border-color: rgba(255,122,114,.5); }
+details.menu { position: relative; } details.menu > summary { list-style: none; min-height: 44px; min-width: 44px; display: grid; place-items: center; border: 1px solid var(--line2); border-radius: 10px; background: var(--panel2); cursor: pointer; padding: 0 10px; }
+details.menu > summary::-webkit-details-marker { display: none; }
+details.menu .pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: min(320px, calc(100vw - 24px)); background: var(--panel); border: 1px solid var(--line2); border-radius: 14px; padding: 12px; display: grid; gap: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+.pop label { display: grid; gap: 4px; } .pop select { min-height: 44px; border-radius: 10px; border: 1px solid var(--line2); background: var(--panel2); padding: 0 8px; }
+.tabs { grid-area: tabs; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 3px; }
+.tabs button { border: 0; background: transparent; font: 600 14px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.tabs button[aria-selected=true] { background: var(--panel2); color: var(--ink); box-shadow: inset 0 -2px 0 var(--saber); }
+.tabs .n { font: 600 11px var(--mono); color: var(--fp); margin-left: 4px; }
+.zone { min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.zl { grid-area: pane; } .zc { grid-area: pane; } .zr { grid-area: pane; }
+.app[data-tab=actions] .zc, .app[data-tab=actions] .zr, .app[data-tab=scene] .zl, .app[data-tab=scene] .zr, .app[data-tab=turn] .zl, .app[data-tab=turn] .zc { display: none; }
+#checkpoint { grid-area: cp; min-width: 0; max-height: 58dvh; overflow: auto; } #checkpoint:empty { display: none; }
+#checkpoint .checkpoint { margin: 0; box-shadow: 0 -8px 30px rgba(0,0,0,.45); }
+.dock { grid-area: dock; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; background: var(--panel); border: 1px solid var(--line2); border-radius: 14px; padding: 6px; }
+.dock .sum { min-width: 0; font-size: 12.5px; color: var(--muted); padding-left: 4px; overflow: hidden; } .dock .sum b { color: var(--ink); }
+.dock .sum .st { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dock #commit { min-height: 48px; min-width: 132px; }
+/* medium: actions/scene share one pane; the turn column is always on screen */
+@media (min-width: 700px) {
+  .app { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "hd hd" "tabs cp" "pane cp" "pane zr" "pane dock"; }
+  .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: start; } .tabs [data-tab=turn] { display: none; }
+  .zr { grid-area: zr; display: block !important; } #checkpoint { max-height: 46dvh; }
+  .app[data-tab=turn] .zl { display: block; }
+}
+/* wide (iPad landscape, desktop): three zones — Actions | Scene | Decision */
+@media (min-width: 1100px) {
+  .app { grid-template-columns: minmax(300px, 360px) minmax(0, 1fr) minmax(320px, 400px); grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "hd hd hd" "zl zc cp" "zl zc zr" "zl zc dock"; }
+  .tabs { display: none; } .zl { grid-area: zl; display: block !important; } .zc { grid-area: zc; display: flex !important; flex-direction: column; }
+}
+.zc .story { flex: 1 1 auto; }
 .panel { background: rgba(21,26,38,.92); border: 1px solid var(--line); border-radius: 16px; padding: 12px; min-width: 0; }
-.plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
+.zone.panel { padding: 10px; } .zone > h2 { position: sticky; top: -10px; background: rgba(21,26,38,.97); padding: 8px 0 6px; margin-top: -8px; z-index: 2; }
+.plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 6px; }
 .plate { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; background: var(--panel); }
 .plate.party { border-color: rgba(143,192,255,.5); } .plate.enemy { border-color: rgba(255,143,122,.45); }
 .plate .nm { font: 700 20px var(--display); } .tag { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
@@ -57,40 +94,47 @@ ol.plan li.bad { border-color: var(--bad); } ol.plan .ctl { display: flex; gap: 
 .die.d20 { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #3c3580; border-radius: 0; } .die.drop { opacity: .35; }
 .checkpoint { border: 2px solid var(--player); border-radius: 14px; padding: 10px 12px; margin: 8px 0; background: rgba(143,192,255,.08); }
 .checkpoint .primary { width: 100%; min-height: 54px; font-size: 19px; margin-top: 8px; }
+.checkpoint.decide { border-color: var(--reaction); background: rgba(255,107,107,.08); }
 .beat { margin: 0 0 6px; font-size: 15.5px; line-height: 1.55; max-width: 72ch; } .turnhd { font: 600 11px var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 10px 0 4px; }
-.story { max-height: 320px; overflow: auto; }
+.story { min-height: 120px; }
 .rc { font: 11px var(--mono); color: var(--dim); }
 dialog { border: 1px solid var(--line2); border-radius: 16px; background: var(--panel); color: var(--ink); max-width: min(560px, calc(100vw - 32px)); padding: 16px; }
 dialog::backdrop { background: rgba(4,6,12,.7); }
 .auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
-<div id="banner" role="note"><b>Genesis — PLAYER client (thin)</b> · noncanonical sandbox · everything shown here (cards, odds, rolls, narration) comes from the server's player view; this page ships no engine, rules catalog or enemy data.</div>
-<div class="wrap">
-  <div class="row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:space-between;margin-top:8px">
-    <div style="min-width:0"><h1 id="title">Genesis Duel</h1><p class="muted" id="intro" style="margin:2px 0 0;max-width:70ch"></p></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<div class="app" id="app" data-tab="actions">
+  <header class="hd">
+    <h1 id="title">Genesis Duel</h1>
+    <span class="chip" id="conn" role="status">connecting</span>
+    <details class="menu" id="menu"><summary aria-label="Encounter menu">☰</summary><div class="pop">
+      <p class="muted" style="margin:0;font-size:12px"><b>Genesis — PLAYER client (thin)</b> · noncanonical sandbox. Everything shown (cards, odds, rolls, narration) comes from the server's player view; this page ships no engine, rules catalog or enemy data.</p>
       <label>Encounter <select id="scenario"><option value="duelist">Skilled duelist</option><option value="predator">Unfamiliar predator</option><option value="relay_droid">Relay droid</option></select></label>
       <button id="newFight">New fight</button>
-    </div>
-  </div>
-  <section class="plates" id="plates" aria-label="Combatants"></section>
-  <div id="over"></div>
-  <div class="grid">
-    <section class="panel" aria-labelledby="hAb"><h2 id="hAb">Your abilities</h2><div id="groups"></div></section>
-    <section class="panel" aria-labelledby="hPl">
-      <h2 id="hPl">Your turn</h2>
-      <div id="checkpoint"></div>
-      <ol class="plan" id="plan" aria-label="Planned steps"></ol>
-      <div id="combo"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="commit" style="flex:1 1 200px;min-height:50px">Commit turn</button><button id="clear">Clear</button></div>
-      <p id="msg" class="muted" role="status"></p><p id="err" class="bad" role="alert"></p>
-      <h2 style="margin-top:12px">Roll Theater <span id="auth"></span></h2>
-      <div class="lanes"><div><span class="lane-tag player">PLAYER — AERO</span><div id="laneP" aria-live="polite"></div></div><div><span class="lane-tag gm" id="laneGT">GM</span><div id="laneG" aria-live="polite"></div></div></div>
-    </section>
-  </div>
-  <section class="panel" style="margin-top:12px" aria-labelledby="hEx"><h2 id="hEx">The exchange</h2><div class="story" id="story"></div>
-    <details><summary class="muted" style="min-height:44px;display:flex;align-items:center">Transcript (player-visible)</summary><div id="log" style="font-size:13px"></div></details></section>
+      <span id="auth"></span>
+    </div></details>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" data-tab="actions" aria-selected="true">Actions</button><button role="tab" data-tab="scene" aria-selected="false">Scene</button><button role="tab" data-tab="turn" aria-selected="false">Turn<span class="n" id="tabN"></span></button>
+  </nav>
+  <section class="zone zl panel" id="zoneActions" aria-labelledby="hAb"><h2 id="hAb">Your abilities</h2><div id="groups"></div></section>
+  <section class="zone zc panel" id="zoneScene" aria-labelledby="hEx">
+    <p class="muted" id="intro" style="margin:0 0 4px;font-size:13.5px"></p>
+    <section class="plates" id="plates" aria-label="Combatants"></section>
+    <div id="over"></div>
+    <h2 id="hEx" style="margin-top:8px">The exchange</h2><div class="story" id="story" aria-live="polite"></div>
+    <details><summary class="muted" style="min-height:44px;display:flex;align-items:center">Transcript (player-visible)</summary><div id="log" style="font-size:13px"></div></details>
+  </section>
+  <section id="checkpoint" aria-live="assertive"></section>
+  <section class="zone zr panel" id="zoneTurn" aria-labelledby="hPl">
+    <h2 id="hPl">Your turn</h2>
+    <ol class="plan" id="plan" aria-label="Planned steps"></ol>
+    <div id="combo"></div>
+    <p id="msg" class="muted" role="status"></p><p id="err" class="bad" role="alert"></p>
+    <h2 style="margin-top:8px">Roll Theater</h2>
+    <div class="lanes"><div><span class="lane-tag player">PLAYER — AERO</span><div id="laneP"></div></div><div><span class="lane-tag gm" id="laneGT">GM</span><div id="laneG"></div></div></div>
+  </section>
+  <footer class="dock" aria-label="Turn controls"><div class="sum" id="planSum"></div><button id="clear">Clear</button><button class="primary" id="commit">Commit turn</button></footer>
 </div>
 <dialog id="dlg"><div id="dlgBody"></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button id="dlgCancel">Cancel</button></div></dialog>
 <script>
@@ -103,9 +147,14 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   function each(r, sel, fn) { Array.prototype.forEach.call(r.querySelectorAll(sel), fn); }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
   // ---------- the only data source: the server ----------
+  var inflight = 0;
+  function conn(state, text) { var c = $("conn"); c.className = "chip " + state; c.textContent = text; }
   function api(path, body) {
+    inflight++; conn("work", "working");
     return fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({ session: session, token: token }, body || {})) })
-      .then(function (r) { return r.json().then(function (j) { if (r.status >= 400) { var e = new Error(j.text || j.error); e.code = j.error; throw e; } return j; }); });
+      .then(function (r) { return r.json().then(function (j) { if (r.status >= 400) { var e = new Error(j.text || j.error); e.code = j.error; throw e; } return j; }); })
+      .then(function (j) { if (--inflight === 0) conn("live", "live"); return j; },
+            function (e) { inflight = Math.max(0, inflight - 1); if (e.code) conn("live", "live"); else conn("down", "offline — retry"); throw e; });
   }
   function open() {
     return api("/atomic/open", { session: undefined, token: undefined, scenario: scenario, client: "player" }).then(function (o) {
@@ -119,9 +168,10 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   // Let the server (as GM) run everything up to the next player checkpoint, then show it.
   function advance() {
     busy = true; render();
-    return api("/atomic/gm_step").then(function (g) { busy = false; return refresh().then(function () { return g; }); }).catch(fail);
+    // busy stays set until the NEW view is on screen, so a stale prompt is never actionable
+    return api("/atomic/gm_step").then(function (g) { return refresh().then(function () { busy = false; render(); return g; }); }).catch(fail);
   }
-  function fail(e) { busy = false; $("err").textContent = "Server refused: " + (e.code || "") + " — " + e.message; render(); }
+  function fail(e) { busy = false; if (!e.code) $("err").textContent = "Connection lost — your planned steps are kept here. " + (e.message || ""); else $("err").textContent = "Server refused: " + e.code + " — " + e.message; render(); }
   // ---------- rendering ----------
   var CL = { main: "Main", secondary: "Secondary", bonus: "Bonus", reaction: "Reaction", movement_ft: "Move", object: "Object", fp: "FP" };
   function chips(c) { var k = Object.keys(c || {}); return k.length ? k.map(function (x) { return "<span class='cost c-" + x + "'>" + (x === "movement_ft" ? (c[x] === "distance" ? "Move" : c[x] + " ft") : CL[x]) + "</span>"; }).join("") : "<span class='cost c-free'>Free</span>"; }
@@ -142,7 +192,19 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
         (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? "" : " — dropped") + "</span>" : "") + "</div>" + (a.conds.length ? "<div>" + a.conds.map(function (c) { return "<span class='cond'>" + esc(c) + "</span>"; }).join(" ") + "</div>" : "") + "</div>";
     }).join("") + (V.unseen_presence ? "<div class='plate'><span class='warn'>" + esc(V.unseen_presence) + "</span></div>" : "");
     $("over").innerHTML = V.over ? "<p class='" + (V.over === "victory" ? "ok" : "bad") + "' style='font:700 22px var(--display)'>" + (V.over === "victory" ? "Victory." : "Aero is down.") + "</p>" : "";
-    renderCards(); renderPlan(); renderCheckpoint(); renderTheater(); renderStory();
+    renderCards(); renderPlan(); renderCheckpoint(); renderTheater(); renderStory(); renderDock();
+  }
+  // ---- shell: tabs (narrow screens) and the always-visible dock ----
+  function setTab(t) { $("app").dataset.tab = t; ls("genesis.play.tab", t); each(document, ".tabs [data-tab]", function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-tab") === t)); }); }
+  each(document, ".tabs [data-tab]", function (b) { b.onclick = function () { setTab(b.getAttribute("data-tab")); }; });
+  function renderDock() {
+    var CLS = { main: "Main", secondary: "Secondary", bonus: "Bonus", object: "Object", movement_ft: "Move", reaction: "Reaction" };
+    var me = V.actors[V.me.id] || {}, b = plan.length && pf ? pf.budget_after : me.budget, left = b ? Object.keys(CLS).filter(function (k) { return b[k] != null; }).map(function (k) { return CLS[k] + " " + (k === "movement_ft" ? b[k] + " ft" : b[k]); }).join(" · ") : "";
+    var st = !plan.length ? (myPlanTurn() ? "No steps planned" : V.over ? "Fight over" : busy ? "Resolving…" : V.checkpoint.kind === "roll" ? "Waiting for your roll" : V.checkpoint.kind === "decision" ? "Waiting for your decision" : "Other side acting")
+      : pfBusy || !pf ? "Checking with the server…" : pf.legal ? "<span class='ok'>✓ Legal</span> · " + plan.length + " step" + (plan.length > 1 ? "s" : "") : "<span class='bad'>✗ Not legal</span> — " + esc((pf.steps.filter(function (x) { return x.ok === false; })[0] || { reasons: [""] }).reasons[0] || "");
+    $("planSum").innerHTML = "<span class='st'>" + st + "</span><span class='st'>" + (left ? (plan.length ? "After plan: " : "Left: ") + esc(left) : "") + (me.fp != null ? " · FP " + me.fp + (plan.length && pf && pf.fp_after != null ? "→" + pf.fp_after : "") : "") + "</span>";
+    $("tabN").textContent = plan.length ? plan.length : "";
+    $("clear").disabled = !plan.length;
   }
   function myPlanTurn() { return V && V.checkpoint.kind === "plan" && !busy; }
   function renderCards() {
@@ -202,17 +264,17 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
     el.dataset.sig = sig;
     if (cp.kind === "roll") {
       var vs = cp.vs || {}, k = vs.known, ac = k ? (k.exact != null ? k.exact : k.ac_min != null && k.ac_max != null ? k.ac_min + "–" + k.ac_max : k.ac_min != null ? "≥ " + k.ac_min : k.ac_max != null ? "≤ " + k.ac_max : "unknown") : null;
-      var vt = vs.type === "ac" ? "vs AC " + (vs.value != null ? vs.value : ac) : vs.type === "opposed" ? "opposed by their " + vs.skill : vs.type === "opposed_against" ? "must beat " + vs.value : vs.type === "dc" ? "vs DC " + vs.value : vs.type === "damage" ? "damage" : vs.type === "reduce" ? "reduces " + vs.against + " damage" : "";
+      var vt = vs.type === "ac" ? "vs AC " + (vs.value != null ? vs.value : ac || "unknown — you learn it from your own hits and misses") : vs.type === "opposed" ? "opposed by their " + vs.skill : vs.type === "opposed_against" ? "must beat " + vs.value : vs.type === "dc" ? "vs DC " + vs.value : vs.type === "damage" ? "damage" : vs.type === "reduce" ? "reduces " + vs.against + " damage" : "";
       el.innerHTML = "<div class='checkpoint' role='group' aria-label='Your roll'><span class='lane-tag player'>PLAYER — AERO · your roll</span><div style='margin-top:6px'><b>" + esc(cp.purpose) + "</b></div><div class='muted'>" + esc(cp.formula) + (cp.mode !== "normal" ? " · " + cp.mode : "") + " · " + esc(vt) + "</div>" +
-        "<div class='dice'>" + cp.dice.map(function (d) { return "<span class='die" + (d.sides === 20 ? " d20" : "") + "'>?</span>"; }).join("") + "</div><button class='primary' id='rollBtn'>Roll " + cp.dice.map(function (d) { return "d" + d.sides; }).join(" + ") + "</button></div>";
-      $("rollBtn").onclick = function () { $("rollBtn").disabled = true; api("/atomic/gm_step").then(function (g) { if (g.stopped !== "player_roll") return advance();
+        "<div class='dice'>" + cp.dice.map(function (d) { return "<span class='die" + (d.sides === 20 ? " d20" : "") + "'>?</span>"; }).join("") + "</div><button class='primary' id='rollBtn'" + (busy ? " disabled" : "") + ">" + (busy ? "Rolling…" : "Roll " + cp.dice.map(function (d) { return "d" + d.sides; }).join(" + ")) + "</button></div>";
+      $("rollBtn").onclick = function () { if (busy) return; busy = true; render(); api("/atomic/gm_step").then(function (g) { if (g.stopped !== "player_roll") return advance();
           return api("/atomic/roll", { turn_key: g.turn_key, plan_hash: g.plan_hash, dice: g.need.dice, roller: "player", actor: g.need.actor, purpose: g.need.purpose }).then(advance); }).catch(fail); };
-      $("rollBtn").focus({ preventScroll: true });
+      if (!busy) $("rollBtn").focus({ preventScroll: true });
     } else if (cp.kind === "decision") {
       var c = cp.context || {}, head = cp.decision === "deflect_redirect" ? "Redirect the bolt? (one visible creature within 30 ft)" : (c.attacker_name || "Someone") + ({ melee_hit_on_me: " is about to hit you" + (c.total != null ? " (total " + c.total + ")" : ""), melee_miss_on_me: " missed you — an opening", attack_declared_on_me: " is attacking you", ranged_energy_hit_on_me: " hit you with a bolt (" + c.damage + " damage)", opportunity_attack: " is pulling away" }[cp.decision] || "");
-      el.innerHTML = "<div class='checkpoint'><span class='lane-tag player'>PLAYER — AERO · decision</span><p style='font-size:16px'>" + esc(head) + "</p>" + cp.options.map(function (o) { return "<p><button class='primary' style='width:auto' data-opt='" + o.id + "'>" + esc(o.name) + (o.distance_ft != null ? " (" + o.distance_ft + " ft)" : "") + "</button> <small class='muted'>" + esc(o.rules || "") + "</small></p>"; }).join("") + "<p><button data-opt=''>" + (cp.decision === "deflect_redirect" ? "Let it die on the blade" : "Don't react") + "</button></p></div>";
-      each(el, "[data-opt]", function (b) { b.onclick = function () { api("/atomic/decide", { turn_key: cp.turn_key, key: cp.key, choice: b.getAttribute("data-opt") || null }).then(advance).catch(fail); }; });
-    } else el.innerHTML = cp.kind === "waiting" ? "<p class='muted'>" + (busy ? "The GM is resolving…" : "Waiting for the GM…") + "</p>" : "";
+      el.innerHTML = "<div class='checkpoint decide'><span class='lane-tag player'>PLAYER — AERO · decision</span><p style='font-size:16px'>" + esc(head) + "</p>" + cp.options.map(function (o) { return "<p><button class='primary' style='width:auto' data-opt='" + o.id + "'" + (busy ? " disabled" : "") + ">" + esc(o.name) + (o.distance_ft != null ? " (" + o.distance_ft + " ft)" : "") + "</button> <small class='muted'>" + esc(o.rules || "") + "</small></p>"; }).join("") + "<p><button data-opt=''" + (busy ? " disabled" : "") + ">" + (cp.decision === "deflect_redirect" ? "Let it die on the blade" : "Don't react") + "</button></p></div>";
+      each(el, "[data-opt]", function (b) { b.onclick = function () { if (busy) return; busy = true; render(); api("/atomic/decide", { turn_key: cp.turn_key, key: cp.key, choice: b.getAttribute("data-opt") || null }).then(advance).catch(fail); }; });
+    } else el.innerHTML = cp.kind === "waiting" ? "<div class='checkpoint' style='border-color:var(--gm);background:rgba(255,143,122,.06)'><span class='lane-tag gm'>GM</span> <span class='muted'>" + (busy ? "The GM is resolving…" : "Waiting for the GM…") + "</span></div>" : "";
     if (cp.kind === "waiting" && !busy && !advancing) { advancing = true; setTimeout(function () { advancing = false; advance(); }, 300); }
   }
   function renderTheater() {
@@ -241,9 +303,10 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   };
   $("clear").onclick = function () { plan = []; pf = null; render(); };
   $("dlgCancel").onclick = function () { $("dlg").close(); };
-  $("newFight").onclick = function () { scenario = $("scenario").value; open().catch(fail); };
+  $("newFight").onclick = function () { $("menu").open = false; scenario = $("scenario").value; open().catch(fail); };
   window.__genesisPlay = { view: function () { return V; }, plan: function () { return plan; }, busy: function () { return busy || pfBusy; }, session: function () { return session; } };
   // ---------- start or reconnect ----------
+  setTab(ls("genesis.play.tab") || "actions");
   scenario = ls("genesis.play.scenario") || "duelist"; $("scenario").value = scenario;
   session = ls("genesis.play.session"); token = ls("genesis.play.token");
   (session && token ? refresh().then(function (v) { $("msg").textContent = "Reconnected to your fight (server state; nothing rerolled)."; if (v.checkpoint.kind === "waiting") return advance(); }) : Promise.reject(new Error("no session")))
