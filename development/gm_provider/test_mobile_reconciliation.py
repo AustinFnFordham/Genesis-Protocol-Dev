@@ -20,7 +20,7 @@ import mcp_adapter as adapter
 from worktree_guard import WorktreeGuard
 import test_mcp_adapter as fixture
 import test_shared_store as shared
-from test_gateway import Base, INSPECT, HOLSTER, QA, ledger
+from test_gateway import Base, INSPECT, HOLSTER, QA, ledger, script
 import staging
 ISSUER='https://genesis-test.auth0.com/'
 RESOURCE='https://genesis.example.invalid/mcp'
@@ -29,11 +29,11 @@ CLIENTS={'chatgpt-client':'gpt-session','gemini-client':'gemini-session'}
 class JWT(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.key=rsa.generate_private_key(public_exponent=65537,key_size=2048)
-    def verifier(self):
+    def verifier(self, clients=CLIENTS):
         key=self.key.public_key()
         class Keys:
             def get_signing_key_from_jwt(self,token):return type('Key',(),{'key':key})()
-        return adapter.JWTVerifier(ISSUER,RESOURCE,CLIENTS,fixture.SUBJECT,key_client=Keys())
+        return adapter.JWTVerifier(ISSUER,RESOURCE,clients,fixture.SUBJECT,key_client=Keys())
     def token(self,**changes):
         claims=dict(iss=ISSUER,aud=RESOURCE,sub=fixture.SUBJECT,azp='chatgpt-client',iat=int(time.time()),exp=int(time.time())+300,scope='genesis:read genesis:gm')
         claims.update(changes)
@@ -163,6 +163,50 @@ class BoundSessions(Base):
             accepted = client.post("/mcp", headers=headers, json=claim).json()["result"]
             self.assertFalse(accepted.get("isError", False), accepted)
             self.assertEqual(self.gw.recovery()["lease"]["provider"], "gpt-session")
+
+    def test_signed_codex_turn_resumes_with_one_accepted_roll(self):
+        provider = "codex-session"
+        action, _ = self.act(INSPECT, provider=provider)
+        signer = JWT()
+        signer.key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        verifier = signer.verifier(dict(CLIENTS, **{"codex-client": provider}))
+        token = asyncio.run(verifier.verify_token(signer.token(azp="codex-client")))
+        self.assertEqual(token.claims["provider"], provider)
+
+        with patch("mcp_adapter.get_access_token", return_value=token):
+            blocked = adapter.result(lambda: self.tools.gm("claim", "codex-first"))
+            self.assertEqual(blocked.structuredContent["error"]["code"], "PROVIDER_NOT_CONFIGURED")
+            self.assertFalse(self.gw.recovery()["lease"]["held"])
+            self.tools.app.gm_tokens[provider] = "fixture-only-codex-credential"
+            self.assertTrue(self.tools.gm_scope_probe()["gm_write_ready"])
+
+            def gm(verb, run, body=None):
+                result = self.tools.gm(verb, run, body)
+                self.assertEqual(result["http_status"], 200, result)
+                return result["result"]
+
+            first, resumed = "codex-first", "codex-resumed"
+            scripted = script(provider)
+            gm("claim", first)
+            table_move = scripted.step(gm("context", first))
+            gm("tables", first, table_move["tables"])
+            roll_move = scripted.step(gm("context", first))
+            self.assertEqual(len(roll_move["rolls"]), 1)
+            request = roll_move["rolls"][0]
+            receipt = gm("roll", first, request)["result"]
+            gm("release", first)
+            self.assertFalse(self.gw.recovery()["lease"]["held"])
+
+            gm("claim", resumed)
+            self.assertEqual(gm("roll", resumed, request)["result"], receipt)
+            commit = scripted.step(gm("context", resumed))
+            result = gm("commit", resumed, commit["proposal"])
+            self.assertEqual(result["status"], "committed")
+            self.assertEqual(result["publication"]["status"], "published")
+            self.assertFalse(self.gw.recovery()["lease"]["held"])
+            self.assertEqual(self.tools.read("refresh")["connection_provider"], provider)
+        rolls = ledger.read_jsonl(self.gw.campaign / "records/roll_log.jsonl")
+        self.assertEqual(sum(action["action_id"] in row["purpose"] for row in rolls), 1)
 
     def test_real_tcp_mcp_refresh_from_two_distinct_oauth_clients(self):
         import httpx,threading,uvicorn

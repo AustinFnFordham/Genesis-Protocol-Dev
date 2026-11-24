@@ -10,11 +10,12 @@ import uuid
 
 HERE = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(HERE), str(HERE.parent)]
-from start import git, prepare
+from start import BRANCH, REPOSITORY, git, prepare
 from git_errors import GitFailure
 from worktree_guard import WorktreeGuard
 
 DATA_ROOT = Path("/var/data")
+CAMPAIGN_ID = "shared-1"
 PROVIDERS = {"gpt-session", "gemini-session", "codex-session"}  # codex-session is opt-in, never impersonates GPT/Gemini
 
 
@@ -75,28 +76,67 @@ def verify_write_startup(repo, env):
     return None
 
 
+def existing_authority(repo, env):
+    """Validate local authority while holding its existing operation lock."""
+    import staging
+
+    if not (repo / ".git").is_dir():
+        raise ValueError("Existing authority checkout required")
+    guard = WorktreeGuard(repo / ".git/genesis-operation.lock",
+                          env.get("GENESIS_STORAGE_GENERATION"),
+                          initialize=False, require_lock=True)
+    readonly_git = dict(env, GIT_OPTIONAL_LOCKS="0")
+    with guard:
+        if guard.recovery_required:
+            return None, guard.recovery_reason
+        if git(["symbolic-ref", "--short", "HEAD"], repo, readonly_git) != BRANCH:
+            raise ValueError("Unexpected authority branch")
+        if git(["remote", "get-url", "origin"], repo, readonly_git) != REPOSITORY:
+            raise ValueError("Unexpected authority origin")
+        if git(["status", "--porcelain", "--untracked-files=all"], repo, readonly_git):
+            raise ValueError("Authority checkout is dirty")
+        head = git(["rev-parse", "HEAD"], repo, readonly_git)
+        upstream = git(["rev-parse", "--verify", f"refs/remotes/origin/{BRANCH}"], repo, readonly_git)
+        if head != upstream:
+            raise ValueError("Authority needs explicit reconciliation")
+        scope = repo / "staging" / CAMPAIGN_ID
+        gateway = staging.open_shared(scope)
+        if gateway.id != CAMPAIGN_ID or gateway.store.repo != repo.resolve():
+            raise ValueError("Unexpected campaign authority")
+        with gateway.store.local_snapshot():
+            if gateway.recovery()["record_mid_write"]:
+                return None, "record_mid_write"
+        return scope, None
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Check configuration without starting MCP")
+    operations = parser.add_mutually_exclusive_group()
+    operations.add_argument("--check", action="store_true", help="Validate existing authority without serving")
+    operations.add_argument("--reconcile", action="store_true",
+                            help="Explicitly prepare and synchronize authority without serving")
     args = parser.parse_args(argv)
     os.umask(0o077)
     try:
         write_requested = configure(os.environ)
         repo = DATA_ROOT / "authority"
-        if write_requested:
-            # A new authority directory must be initialized and reviewed in read-only mode.
-            if not (repo / ".git").is_dir():
-                raise ValueError("Existing authority checkout required for write opt-in")
-            recovery = verify_storage(repo, os.environ)
-            if recovery:
-                return storage_blocked(recovery)
-        scope = prepare(DATA_ROOT, initialize_storage=not write_requested)
-        if write_requested:
-            recovery = verify_write_startup(repo, os.environ)
-            if recovery:
-                return storage_blocked(recovery)
+        if args.reconcile:
+            if write_requested:
+                recovery = verify_storage(repo, os.environ, require_lock=True)
+                if recovery:
+                    return storage_blocked(recovery)
+            prepare(DATA_ROOT, initialize_storage=not write_requested)
+            if write_requested:
+                recovery = verify_write_startup(repo, os.environ)
+                if recovery:
+                    return storage_blocked(recovery)
+            print("Authority reconciliation completed.")
+            return 0
+        scope, recovery = existing_authority(repo, os.environ)
+        if recovery:
+            return storage_blocked(recovery)
         from mcp_adapter import build
-        server = build(scope)
+        server = build(scope, local_reads=True)
     except GitFailure as error:
         print(json.dumps(error.as_dict()), file=sys.stderr)
         return 2
@@ -105,15 +145,15 @@ def main(argv=None):
               file=sys.stderr)
         return 2
     if args.check:
-        print("Configuration checked. Git probe was dry-run in write mode; no refs updated.")
+        print("Existing authority and configuration checked.")
         return 0
     server.run(transport="streamable-http")
     return 0
 
 
-def verify_storage(repo, env):
+def verify_storage(repo, env, *, require_lock=False):
     with WorktreeGuard(repo / ".git/genesis-operation.lock", env["GENESIS_STORAGE_GENERATION"],
-                       initialize=False) as guard:
+                       initialize=False, require_lock=require_lock) as guard:
         return guard.recovery_reason
 
 

@@ -7,6 +7,7 @@ writes; `SqliteStore` is the staging/self-hosted one. The live Datapad database 
 only through Claude's ArtifactData tool, so no adapter for it exists outside a Claude session
 (see development/PROVIDER_INTERCHANGE.md, release gate G1).
 """
+from contextlib import contextmanager
 import json
 import sqlite3
 import threading
@@ -84,6 +85,18 @@ class GitStore:
         name, _, mail = author.partition(" <")
         self.identity = ["-c", f"user.name={name}", "-c", f"user.email={mail.rstrip('>')}", "-c", "commit.gpgsign=false"]
         self.guard = threading.RLock()
+        self.reading_snapshot = False
+
+    @contextmanager
+    def local_snapshot(self):
+        """Read the existing checkout without reconciling remote Git state."""
+        with self.guard:
+            previous = self.reading_snapshot
+            self.reading_snapshot = True
+            try:
+                yield
+            finally:
+                self.reading_snapshot = previous
 
     def _git_at(self, cwd, *args, check=True):
         operation = next((a for a in args if a in OPERATIONS), "git")
@@ -106,6 +119,8 @@ class GitStore:
     def sync(self, force=False):
         """Bring the clone up to the shared branch. Local uncommitted work is kept when it does not overlap."""
         with self.guard:
+            if self.reading_snapshot:
+                return
             if not force and self._time.monotonic() - self.last_sync < self.min_sync_s:
                 return
             self.last_sync = 0.0

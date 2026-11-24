@@ -4,6 +4,7 @@ No model execution, new store, or alternate commit path. Run on the persistence
 host; Git credentials and provider tokens stay there. Writes default to disabled.
 """
 import argparse
+from contextlib import nullcontext
 import hmac
 import hashlib
 import json
@@ -176,10 +177,11 @@ class JWTVerifier:
 
 
 class GatewayTools:
-    def __init__(self, app, campaign_id, subject, writes=False, guard=None):
+    def __init__(self, app, campaign_id, subject, writes=False, guard=None, *, local_reads=False):
         if set(app.gateways) != {campaign_id} or not subject:
             raise ValueError("Bind one staging campaign and an authorized owner subject")
         self.app, self.campaign_id, self.subject, self.writes = app, campaign_id, subject, writes
+        self.local_reads = local_reads
         self.guard = guard or for_gateway(app.gateways[campaign_id])
 
     def authorize(self, write=False):
@@ -217,8 +219,9 @@ class GatewayTools:
 
     def read(self, kind, value=None, *, include_full_state=False, known_revision=None, known_ledger_head=None, known_public_sha256=None):
         token = self.authorize()
-        with self.guard:
-            gateway = self.app.gateways[self.campaign_id]
+        gateway = self.app.gateways[self.campaign_id]
+        snapshot = gateway.store.local_snapshot() if self.local_reads else nullcontext()
+        with self.guard, snapshot:
             if kind == "refresh":
                 # No claim, renewal, table acceptance, recovery mutation or publication.
                 sync = getattr(gateway.store, "sync", None)
@@ -357,7 +360,7 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
     return mcp
 
 
-def build(shared, env=None):
+def build(shared, env=None, *, local_reads=False):
     import staging
     env = os.environ if env is None else env
     # This entry point can only open an existing explicitly noncanonical scope.
@@ -372,8 +375,10 @@ def build(shared, env=None):
     tokens = json.loads(env.get('GENESIS_GM_TOKENS') or '{}')
     app = App({gateway.id: gateway}, {}, None, gm_tokens=tokens)
     writes = env.get('GENESIS_MCP_ENABLE_WRITES') == '1'
-    guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'), initialize=not writes)
-    tools = GatewayTools(app, gateway.id, env['GENESIS_MCP_SUBJECT'], writes=writes, guard=guard)
+    guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'),
+                        initialize=not writes and not local_reads, require_lock=local_reads)
+    tools = GatewayTools(app, gateway.id, env['GENESIS_MCP_SUBJECT'], writes=writes,
+                         guard=guard, local_reads=local_reads)
     return create_server(tools, verifier, issuer, resource, host=env.get("GENESIS_MCP_HOST", "127.0.0.1"),
                          port=int(env.get("GENESIS_MCP_PORT", "8789")))
 

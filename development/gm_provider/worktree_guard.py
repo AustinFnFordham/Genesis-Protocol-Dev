@@ -8,9 +8,11 @@ import uuid
 
 
 class WorktreeGuard:
-    def __init__(self, path, expected_generation=None, *, initialize=True):
+    def __init__(self, path, expected_generation=None, *, initialize=True, require_lock=False):
         self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.require_lock = require_lock
+        if not require_lock:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
         self.local = threading.RLock()
         self.depth = threading.local()
         with self:
@@ -58,7 +60,8 @@ class WorktreeGuard:
         self.local.acquire()
         try:
             if not getattr(self.depth, 'count', 0):
-                self.depth.fd = os.open(self.path, os.O_CREAT | os.O_RDWR, 0o600)
+                flags = os.O_RDWR if self.require_lock else os.O_CREAT | os.O_RDWR
+                self.depth.fd = os.open(self.path, flags, 0o600)
                 fcntl.flock(self.depth.fd, fcntl.LOCK_EX)
             self.depth.count = getattr(self.depth, 'count', 0) + 1
             return self
@@ -76,11 +79,11 @@ class WorktreeGuard:
             self.local.release()
 
 
-def for_gateway(gateway, expected_generation=None, *, initialize=True):
+def for_gateway(gateway, expected_generation=None, *, initialize=True, require_lock=False):
     store = gateway.store
     if hasattr(store, 'repo'):
         path = Path(store._git('rev-parse', '--git-path', 'genesis-operation.lock').strip())
         if not path.is_absolute(): path = store.repo / path
     else:  # Isolated test stores only; production build always requires GitStore.
         path = gateway.campaign.parent / 'test-operation.lock'
-    return WorktreeGuard(path, expected_generation, initialize=initialize)
+    return WorktreeGuard(path, expected_generation, initialize=initialize, require_lock=require_lock)

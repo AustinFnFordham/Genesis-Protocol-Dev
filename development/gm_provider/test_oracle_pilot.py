@@ -1,10 +1,15 @@
 import importlib.util
+import json
 import os
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
+
+import test_shared_store as shared_fixture
+from test_gateway import HOLSTER
+from test_mcp_adapter import access
 import uuid
 
 RUNNER = Path(__file__).resolve().parent / "deploy/oracle/run.py"
@@ -107,6 +112,97 @@ class OracleRunner(unittest.TestCase):
             oracle.git(["remote", "add", "origin", str(repo / "missing-remote")], repo, os.environ)
             with self.assertRaises(oracle.GitFailure):
                 oracle.verify_write_startup(repo, write_env(guard.generation))
+
+
+class RuntimeAuthority(unittest.TestCase):
+    setUp = shared_fixture.Shared.setUp
+    tearDown = shared_fixture.Shared.tearDown
+    clone = shared_fixture.Shared.clone
+
+    def test_restart_preserves_authority_even_with_new_remote_commit(self):
+        gateway = self.player
+        row = oracle.CAMPAIGN_ID + "-0001"
+        import staging
+        gateway.submit(staging.declare(gateway, row, text=HOLSTER, provider="gpt-session"))
+        repo = gateway.store.repo
+        branch = oracle.BRANCH
+        remote = self.root / "oracle-origin.git"
+        shared_fixture.git(self.root, "init", "--bare", str(remote))
+        gateway.store._git("remote", "remove", "origin")
+        gateway.store._git("branch", "-m", branch)
+        gateway.store._git("remote", "add", "origin", str(remote))
+        scope = repo / "staging" / oracle.CAMPAIGN_ID
+        gateway.store._git("mv", "staging/env", str(scope))
+        manifest = scope / "environment.json"
+        environment = json.loads(manifest.read_text())
+        environment["campaign_id"] = oracle.CAMPAIGN_ID
+        manifest.write_text(json.dumps(environment))
+        action = scope / "store/actions" / (row + ".json")
+        data = json.loads(action.read_text())
+        data["data"]["campaign_id"] = oracle.CAMPAIGN_ID
+        action.write_text(json.dumps(data))
+        gateway.store._git("add", "staging")
+        gateway.store._git(*gateway.store.identity, "commit", "-qm", "Oracle fixture")
+        gateway.store._git("push", "-q", "origin", branch)
+        guard = oracle.WorktreeGuard(repo / ".git/genesis-operation.lock")
+        other = self.root / "remote-update"
+        shared_fixture.git(self.root, "clone", "-qb", branch, str(remote), str(other))
+        shared_fixture.git(other, "-c", "user.name=t", "-c", "user.email=t@t.invalid",
+                           "commit", "--allow-empty", "-qm", "remote-only update")
+        shared_fixture.git(other, "push", "-q", "origin", "HEAD:" + branch)
+
+        def snapshot():
+            paths = [*scope.rglob("*"), *(repo / ".git").iterdir()]
+            return (gateway.store._git("rev-parse", "HEAD"),
+                    gateway.store._git("for-each-ref"),
+                    {path: path.read_bytes() for path in paths if path.is_file()})
+
+        env = write_env(guard.generation)
+        env.update(GENESIS_MCP_CLIENT_PROVIDERS='{"fixture":"gpt-session","fixture-gemini":"gemini-session"}',
+                   GENESIS_MCP_ISSUER="https://issuer.example.invalid/",
+                   GENESIS_MCP_SUBJECT="owner-fixture")
+        before = snapshot()
+        with patch.object(oracle, "DATA_ROOT", self.root), \
+                patch.object(oracle, "BRANCH", branch), \
+                patch.object(oracle, "REPOSITORY", str(remote)), \
+                patch.object(oracle.Path, "is_mount", return_value=True), \
+                patch.object(oracle.os, "umask"), \
+                patch.dict(oracle.os.environ, env), \
+                patch("mcp_adapter.create_server") as server:
+            repo.rename(self.root / "authority")
+            try:
+                self.assertEqual(oracle.main([]), 0)
+                self.assertEqual(oracle.main([]), 0)
+                self.assertEqual(server.return_value.run.call_count, 2)
+                self.assertEqual(oracle.main(["--check"]), 0)
+                self.assertEqual(server.return_value.run.call_count, 2)
+                tools = server.call_args.args[0]
+                token = access()
+                token.subject = env["GENESIS_MCP_SUBJECT"]
+                with patch("mcp_adapter.get_access_token", return_value=token):
+                    refreshed = tools.read("refresh")
+                pending = refreshed["recovery"]["in_flight"]
+                self.assertEqual((pending["action_id"], pending["status"], pending["provider"]),
+                                 (row, "submitted", "gpt-session"))
+                self.assertFalse(refreshed["recovery"]["lease"]["held"])
+                mounted = self.root / "authority"
+                dirty = mounted / "unexpected.txt"
+                dirty.touch()
+                try:
+                    self.assertEqual(oracle.main(["--check"]), 2)
+                finally:
+                    dirty.unlink()
+                self.assertEqual(oracle.existing_authority(mounted, write_env())[1],
+                                 "generation_mismatch")
+            finally:
+                (self.root / "authority").rename(repo)
+        self.assertEqual(snapshot(), before)
+
+    def test_missing_authority_is_not_initialized(self):
+        repo = self.root / "missing"
+        with self.assertRaises(ValueError):
+            oracle.existing_authority(repo, write_env())
+        self.assertFalse(repo.exists())
 
 
 if __name__ == "__main__":
