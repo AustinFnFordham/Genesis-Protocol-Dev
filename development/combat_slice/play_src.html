@@ -61,6 +61,9 @@ details.menu .pop { position: absolute; right: 0; top: calc(100% + 6px); z-index
   .tabs { display: none; } .zl { grid-area: zl; display: block !important; } .zc { grid-area: zc; display: flex !important; flex-direction: column; }
 }
 .zc .story { flex: 1 1 auto; }
+.story .turn { opacity: .72; } .story .turn.latest { opacity: 1; border-left: 3px solid var(--saber); padding-left: 10px; margin-left: -2px; }
+.over { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; border: 1px solid var(--line2); border-radius: 12px; padding: 8px 12px; margin-top: 8px; }
+.tabs button.attn { color: var(--player); } .tabs button.attn::after { content: ""; width: 8px; height: 8px; border-radius: 4px; background: var(--player); display: inline-block; margin-left: 6px; vertical-align: 2px; }
 /* ---- action category rail (Milestone B) ---- */
 .zl.panel { padding: 0; display: grid !important; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
 .app[data-tab=scene] .zl.panel, .app[data-tab=turn] .zl.panel { display: none !important; }
@@ -225,11 +228,12 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
       return "<div class='plate enemy' data-plate='" + id + "'><div class='nm'>" + esc(a.name) + "<span class='tag'>" + a.distance + " ft" + (a.down ? " · down" : "") + "</span></div><div class='stats'><span><b>" + esc(a.down ? "down" : a.condition) + "</b> (as you see it)</span><span>AC <b>" + esc(ac) + "</b> <small>learned</small></span>" +
         (a.weapon ? "<span>" + esc(a.weapon.name) + (a.weapon.held ? "" : " — dropped") + "</span>" : "") + "</div>" + (a.conds.length ? "<div>" + a.conds.map(function (c) { return "<span class='cond'>" + esc(c) + "</span>"; }).join(" ") + "</div>" : "") + "</div>";
     }).join("") + (V.unseen_presence ? "<div class='plate'><span class='warn'>" + esc(V.unseen_presence) + "</span></div>" : "");
-    $("over").innerHTML = V.over ? "<p class='" + (V.over === "victory" ? "ok" : "bad") + "' style='font:700 22px var(--display)'>" + (V.over === "victory" ? "Victory." : "Aero is down.") + "</p>" : "";
+    $("over").innerHTML = V.over ? "<div class='over'><span class='" + (V.over === "victory" ? "ok" : "bad") + "' style='font:700 22px var(--display)'>" + (V.over === "victory" ? "Victory." : esc(V.me.name) + " is down.") + "</span><button id='again'>New fight</button></div>" : "";
+    if ($("again")) $("again").onclick = function () { open().catch(fail); };
     renderCards(); renderPlan(); renderCheckpoint(); renderTheater(); renderStory(); renderDock();
   }
   // ---- shell: tabs (narrow screens) and the always-visible dock ----
-  function setTab(t) { $("app").dataset.tab = t; ls("genesis.play.tab", t); each(document, ".tabs [data-tab]", function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-tab") === t)); }); }
+  function setTab(t) { $("app").dataset.tab = t; if (t === "scene" && V) $("app").dataset.seen = (V.story || []).length; ls("genesis.play.tab", t); each(document, ".tabs [data-tab]", function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-tab") === t)); }); }
   each(document, ".tabs [data-tab]", function (b) { b.onclick = function () { setTab(b.getAttribute("data-tab")); }; });
   function renderDock() {
     var CLS = { main: "Main", secondary: "Secondary", bonus: "Bonus", object: "Object", movement_ft: "Move", reaction: "Reaction" };
@@ -238,6 +242,8 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
       : pfBusy || !pf ? "Checking with the server…" : pf.legal ? "<span class='ok'>✓ Legal</span> · " + plan.length + " step" + (plan.length > 1 ? "s" : "") : "<span class='bad'>✗ Not legal</span> — " + esc((pf.steps.filter(function (x) { return x.ok === false; })[0] || { reasons: [""] }).reasons[0] || "");
     $("planSum").innerHTML = "<span class='st'>" + st + "</span><span class='st'>" + (left ? (plan.length ? "After plan: " : "Left: ") + esc(left) : "") + (me.fp != null ? " · FP " + me.fp + (plan.length && pf && pf.fp_after != null ? "→" + pf.fp_after : "") : "") + "</span>";
     $("tabN").textContent = plan.length ? plan.length : "";
+    var turns = (V.story || []).length, seen = +($("app").dataset.seen || 0); if ($("app").dataset.tab === "scene" || $("app").dataset.tab === undefined) { $("app").dataset.seen = turns; seen = turns; }
+    var sc = document.querySelector(".tabs [data-tab=scene]"); sc.classList.toggle("attn", turns > seen); sc.setAttribute("aria-label", "Scene" + (turns > seen ? " (new narration)" : ""));
     $("clear").disabled = !plan.length;
   }
   function myPlanTurn() { return V && V.checkpoint.kind === "plan" && !busy; }
@@ -374,7 +380,8 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
     $("laneP").innerHTML = P.join("") || "<p class='muted'>Your rolls appear here.</p>"; $("laneG").innerHTML = G.join("") || "<p class='muted'>The GM's rolls appear here.</p>";
   }
   function renderStory() {
-    $("story").innerHTML = (V.story || []).map(function (t) { return "<div class='turnhd'>Round " + t.round + " · " + esc(t.who) + "</div>" + t.beats.map(function (x) { return "<p class='beat'>" + esc(x) + "</p>"; }).join(""); }).join("") || "<p class='muted'>The fight hasn't started.</p>";
+    var ST = V.story || [];
+    $("story").innerHTML = ST.map(function (t, i) { return "<div class='turn" + (i === ST.length - 1 ? " latest" : "") + "'><div class='turnhd'>Round " + t.round + " · " + esc(t.who) + (i === ST.length - 1 ? " · latest" : "") + "</div>" + t.beats.map(function (x) { return "<p class='beat'>" + esc(x) + "</p>"; }).join("") + "</div>"; }).join("") || "<p class='muted'>The fight hasn't started.</p>";
     $("story").scrollTop = $("story").scrollHeight;
     $("log").innerHTML = V.log.map(function (l) { return "<p style='margin:2px 0" + (l.turn_start ? ";font-weight:600" : "") + "'>" + esc(l.text) + "</p>"; }).join("");
     if (V.last_combos && V.last_combos.length) $("msg").innerHTML = V.last_combos.map(function (c) { return "Confirmed combo: <b>" + esc(c.name) + "</b> (" + c.hits + " of " + c.attacks + " attacks hit)"; }).join(" · ");

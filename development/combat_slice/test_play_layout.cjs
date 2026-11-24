@@ -53,6 +53,9 @@ async function showCard(p, pid) {   // reach a card the way a player would: swit
       ok(g.offscreen.length === 0, name + ": planning — no region clipped by the viewport", g.offscreen);
       ok(g.small.length === 0, name + ": planning — every control ≥ 44 px", g.small.slice(0, 3));
       ok(await inView(p, "#commit"), name + ": Commit is on screen");
+      const zones = await G(p, () => ["zoneActions", "zoneScene", "zoneTurn"].map((id) => { const e = document.getElementById(id), r = e.getBoundingClientRect(); return getComputedStyle(e).display === "none" || !r.width ? null : [id, Math.round(r.left)]; }).filter(Boolean));
+      const W = (dev.viewport || {}).width, want = W >= 1100 ? 3 : W >= 700 ? 2 : 1;
+      ok(zones.length === want && zones.every((z, i) => !i || z[1] > zones[i - 1][1]), name + ": " + want + " zone(s) side by side for a " + W + " px wide screen", zones);
       await showCard(p, "move"); ok(await p.locator('[data-pid="move"]').isVisible(), name + ": abilities reachable");
       await p.screenshot({ path: path.join(shots, name + "-1-plan.png") });
       // build and commit a real turn (close the distance, then strike)
