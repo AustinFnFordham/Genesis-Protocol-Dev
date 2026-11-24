@@ -5,8 +5,19 @@
 const E = require("./engine.js"), P = require("./predict.js"), SOUL = require("./soul.js");
 const VIEWER = "aero";
 function clone(x) { return JSON.parse(JSON.stringify(x)); }
+// Action-economy category, derived from the profile's own data (cost, trigger, maneuver) — never from its display name.
+const CATEGORIES = ["maneuver", "attack", "main", "secondary", "bonus", "reaction", "movement", "object", "free"];
+function categoryOf(p, pid) {
+  const c = p.cost || {}, m = p.maneuver || "";
+  if (p.trigger) return "reaction";
+  if (p.compound || /^(Feint|Disarm|Dodge|Setup|Provoke)/.test(m)) return "maneuver";
+  if ((m === "Attack" || m === "Grapple") && c.main) return "attack";
+  if (c.main) return "main"; if (c.secondary) return "secondary"; if (c.bonus) return "bonus";
+  if (pid === "move" || c.movement_ft) return "movement"; if (c.object) return "object";
+  return "free";
+}
 function cardOf(p, pid) {   // own capability card: the player's own sheet data (safe to show)
-  return { pid, name: p.name, maneuver: p.maneuver, technique: p.technique || null, status: p.status, cost: p.cost || {}, trigger: p.trigger || null,
+  return { pid, name: p.name, category: categoryOf(p, pid), maneuver: p.maneuver, technique: p.technique || null, status: p.status, cost: p.cost || {}, trigger: p.trigger || null,
            rules: p.rules, source: p.source, compound: !!p.compound, inert_note: p.inert_note || null, needs_target: !!(p.requires && (p.requires.target === "enemy" || p.requires.target === "beast")),
            needs_object: !!(p.requires && p.requires.telekinesis), resolution: p.resolution && p.resolution.type === "attack" ? { bonus: p.resolution.bonus, damage: p.resolution.damage, melee: p.resolution.melee } : null };
 }
@@ -77,4 +88,4 @@ function playerView(s, pending, scenarios, scenarioId) {
   v.story = turns.map((t) => ({ round: t.round, who: names[t.who] || "Someone", beats: SOUL.narrate(t.log, names).beats.map((b) => b.text) })).filter((t) => t.beats.length);
   return v;
 }
-module.exports = { cards, preflight, playerView };
+module.exports = { CATEGORIES, categoryOf, cards, preflight, playerView };

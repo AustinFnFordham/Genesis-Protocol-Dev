@@ -9,6 +9,11 @@ const base = "http://127.0.0.1:" + port;
 const FORBIDDEN = [/"ac":15\b/, /"hp_max":20\b/, /"hp":20\b/, /stealth_dc/, /"skills"/, /"grants"/, /"profiles"/, /npc_plan/, /"seed"/, /gm_token/, /"deception":/, /"insight":3/, /"form":/, /resolveTurn/, /GenesisCombat/, /npc_blade/, /npc_parry/, /npc_riposte/];
 const G = (p, fn) => p.evaluate(fn);
 async function ready(p) { await p.waitForFunction(() => window.__genesisPlay && window.__genesisPlay.view() && !window.__genesisPlay.busy(), null, { timeout: 20000 }); }
+async function show(p, pid) {   // open the card's category on the rail (cards of other categories are hidden)
+  const c = p.locator(`[data-pid="${pid}"]`); if (!(await c.count()) || (await c.isVisible())) return;
+  const t = p.locator('.tabs [data-tab="actions"]'); if (await t.isVisible()) await t.click();
+  const cat = await c.getAttribute("data-cat"); if (cat && !(await c.isVisible())) await p.locator(`[data-rail="${cat}"]`).click();
+}
 async function drive(p) {   // answer every player checkpoint until it is our planning turn or the fight ends
   for (let i = 0; i < 300; i++) {
     await ready(p); const k = await G(p, () => window.__genesisPlay.view().checkpoint.kind);
@@ -30,9 +35,18 @@ async function drive(p) {   // answer every player checkpoint until it is our pl
     await p.goto(base + "/play.html"); await ready(p);
     ok((await G(p, () => window.__genesisPlay.view().checkpoint.kind)) === "plan", "a fresh duel starts at Aero's planning checkpoint");
     ok(/Out of reach/.test(await p.locator('[data-pid="saber_strike"]').innerText()), "server-computed reasons on cards");
+    // category rail: categories come from the server's card data; one category shown at a time; disabled cards stay inspectable
+    const cats = await G(p, () => window.__genesisPlay.view().cards.map((c) => [c.pid, c.category]));
+    ok(cats.every((x) => typeof x[1] === "string" && x[1]) && new Set(cats.map((x) => x[1])).size >= 4, "every card carries a server-assigned category", cats);
+    ok(await G(p, () => [...document.querySelectorAll("[data-rail]")].every((r) => window.__genesisPlay.view().cards.some((c) => c.category === r.dataset.rail) || r.dataset.rail === "off")), "the rail lists only categories present in the server's cards");
+    ok(await G(p, () => { const sel = document.querySelector("[data-rail][aria-selected=true]").dataset.rail; return [...document.querySelectorAll(".card[data-pid]")].every((c) => (c.dataset.cat === sel) === !c.hidden); }), "only the selected category's cards are shown");
+    ok(await G(p, () => { const r = window.__genesisPlay.view().cards.filter((c) => c.reaction); return r.every((c) => c.category === "reaction"); }), "reactions stay their own category (not merged with look-alikes)");
+    await show(p, "saber_strike"); await p.locator('[data-pid="saber_strike"]').click({ force: true });   /* aria-disabled: Playwright would refuse; a finger does not */ await p.waitForSelector("#drawer[open]");
+    ok(/Can't use now:.*Out of reach/s.test(await p.locator("#drawerBody").innerText()) && (await G(p, () => window.__genesisPlay.plan().length)) === 0, "tapping a disabled card explains why (and adds nothing)");
+    await p.locator("#drawerClose").click();
     ok(!(await G(p, () => localStorage.getItem("genesis.play.token") === null)) && !(await G(p, () => JSON.stringify(localStorage).includes("gm"))), "only the player token is kept; no GM token in the client");
     // build a turn by tapping; preflight is server-side
-    const tap = async (pid) => { await ready(p); await p.locator(`[data-pid="${pid}"]`).click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); };
+    const tap = async (pid) => { await ready(p); await show(p, pid); await p.locator(`[data-pid="${pid}"]`).click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); };
     for (const c of ["move", "feint", "saber_strike", "flow_strike"]) await tap(c);
     await p.waitForFunction(() => document.querySelector("[data-combo]"));
     ok(/Echani Flow Line/.test(await p.locator("#combo").innerText()), "server-predicted synergy shown");
@@ -51,9 +65,9 @@ async function drive(p) {   // answer every player checkpoint until it is our pl
     let result = null;
     for (let t = 0; t < 40 && !result; t++) {
       const k = await drive(p); if (k === "over") { result = await G(p, () => window.__genesisPlay.view().over); break; }
-      for (const c of ["recover_weapon", "move", "saber_strike", "unarmed_strike", "flow_strike"]) { await ready(p); const b = p.locator(`[data-pid="${c}"][aria-disabled="false"]`); if (await b.count()) { await b.click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); } }
+      for (const c of ["recover_weapon", "move", "saber_strike", "unarmed_strike", "flow_strike"]) { await ready(p); const b = p.locator(`[data-pid="${c}"][aria-disabled="false"]`); if (await b.count()) { await show(p, c); await b.click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); } }
       await ready(p);
-      if (await p.locator("#commit").isDisabled()) { const any = p.locator('[data-pid][aria-disabled="false"]').first(); if (await any.count()) { await any.click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); } }
+      if (await p.locator("#commit").isDisabled()) { const any = p.locator('[data-pid][aria-disabled="false"]').first(); if (await any.count()) { await show(p, await any.getAttribute("data-pid")); await any.click(); if (await p.locator("#dlg[open]").count()) await p.locator("#dlgBody [data-o]").first().click(); await ready(p); } }
       if (!(await p.locator("#commit").isDisabled())) { await p.locator("#commit").click(); if (await p.locator("#cYes").count()) await p.locator("#cYes").click(); }
     }
     ok(!!result, "a whole duel played in the thin client (" + result + ")");

@@ -61,6 +61,26 @@ details.menu .pop { position: absolute; right: 0; top: calc(100% + 6px); z-index
   .tabs { display: none; } .zl { grid-area: zl; display: block !important; } .zc { grid-area: zc; display: flex !important; flex-direction: column; }
 }
 .zc .story { flex: 1 1 auto; }
+/* ---- action category rail (Milestone B) ---- */
+.zl.panel { padding: 0; display: grid !important; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
+.app[data-tab=scene] .zl.panel, .app[data-tab=turn] .zl.panel { display: none !important; }
+.rail { display: flex; gap: 6px; overflow-x: auto; padding: 8px; border-bottom: 1px solid var(--line); scrollbar-width: thin; overscroll-behavior-x: contain; }
+.rail button { flex: 0 0 auto; display: grid; justify-items: start; align-content: center; gap: 1px; padding: 4px 10px; min-height: 48px; border-radius: 10px; text-align: left; border-left: 4px solid var(--cat, var(--line2)); }
+.rail button .rl { font: 700 14px var(--display); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.rail button .rn { font: 600 11px var(--mono); color: var(--muted); }
+.rail button[aria-selected=true] { background: #2a3350; border-color: var(--cat, var(--line2)); box-shadow: 0 0 0 1px var(--cat, var(--line2)); }
+.rail button.none .rn { color: var(--dim); }
+.catpane { min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 8px 10px 12px; }
+.catpane .cathd { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 6px; } .catpane .cathd h2 { font-size: 14px; color: var(--ink); }
+.card[hidden] { display: none !important; }
+@media (min-width: 1100px) {   /* wide: the rail stands vertically beside the cards */
+  .zl.panel { grid-template-rows: minmax(0, 1fr); grid-template-columns: 118px minmax(0, 1fr); }
+  .rail { flex-direction: column; overflow-x: hidden; overflow-y: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+  .rail button { width: 100%; }
+  .catpane .cards { grid-template-columns: minmax(0, 1fr); }
+}
+.cat-maneuver { --cat: var(--saber); } .cat-attack { --cat: var(--main); } .cat-main { --cat: var(--main); } .cat-secondary { --cat: var(--secondary); } .cat-bonus { --cat: var(--bonus); }
+.cat-reaction { --cat: var(--reaction); } .cat-movement { --cat: var(--move); } .cat-object { --cat: var(--object); } .cat-free { --cat: var(--free); } .cat-off { --cat: var(--dim); }
 .panel { background: rgba(21,26,38,.92); border: 1px solid var(--line); border-radius: 16px; padding: 12px; min-width: 0; }
 .zone.panel { padding: 10px; } .zone > h2 { position: sticky; top: -10px; background: rgba(21,26,38,.97); padding: 8px 0 6px; margin-top: -8px; z-index: 2; }
 .plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 6px; }
@@ -100,6 +120,8 @@ ol.plan li.bad { border-color: var(--bad); } ol.plan .ctl { display: flex; gap: 
 .rc { font: 11px var(--mono); color: var(--dim); }
 dialog { border: 1px solid var(--line2); border-radius: 16px; background: var(--panel); color: var(--ink); max-width: min(560px, calc(100vw - 32px)); padding: 16px; }
 dialog::backdrop { background: rgba(4,6,12,.7); }
+dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 80dvh; overflow: auto; border-radius: 18px 18px 0 0; padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 1100px) { dialog.drawer { margin: 0 0 0 auto; height: 100dvh; max-height: none; width: 420px; border-radius: 18px 0 0 18px; } }
 .auth { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
@@ -117,7 +139,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   <nav class="tabs" role="tablist" aria-label="Views">
     <button role="tab" data-tab="actions" aria-selected="true">Actions</button><button role="tab" data-tab="scene" aria-selected="false">Scene</button><button role="tab" data-tab="turn" aria-selected="false">Turn<span class="n" id="tabN"></span></button>
   </nav>
-  <section class="zone zl panel" id="zoneActions" aria-labelledby="hAb"><h2 id="hAb">Your abilities</h2><div id="groups"></div></section>
+  <section class="zone zl panel" id="zoneActions" aria-label="Your abilities"><nav class="rail" id="rail" role="tablist" aria-label="Action categories"></nav><div class="catpane" id="groups"></div></section>
   <section class="zone zc panel" id="zoneScene" aria-labelledby="hEx">
     <p class="muted" id="intro" style="margin:0 0 4px;font-size:13.5px"></p>
     <section class="plates" id="plates" aria-label="Combatants"></section>
@@ -136,6 +158,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   </section>
   <footer class="dock" aria-label="Turn controls"><div class="sum" id="planSum"></div><button id="clear">Clear</button><button class="primary" id="commit">Commit turn</button></footer>
 </div>
+<dialog id="drawer" class="drawer" aria-label="Details"><div id="drawerBody"></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button id="drawerClose">Close</button></div></dialog>
 <dialog id="dlg"><div id="dlgBody"></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button id="dlgCancel">Cancel</button></div></dialog>
 <script>
 (function () {
@@ -175,9 +198,10 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   // ---------- rendering ----------
   var CL = { main: "Main", secondary: "Secondary", bonus: "Bonus", reaction: "Reaction", movement_ft: "Move", object: "Object", fp: "FP" };
   function chips(c) { var k = Object.keys(c || {}); return k.length ? k.map(function (x) { return "<span class='cost c-" + x + "'>" + (x === "movement_ft" ? (c[x] === "distance" ? "Move" : c[x] + " ft") : CL[x]) + "</span>"; }).join("") : "<span class='cost c-free'>Free</span>"; }
-  function groupOf(c) { if (c.reaction) return "Reactions"; if ((c.maneuver === "Attack" || c.maneuver === "Grapple") && c.cost.main) return "Attack"; if (c.compound || /Feint|Disarm|Dodge|Setup|Provoke/.test(c.maneuver || "")) return "Maneuvers & Techniques";
-    if (c.cost.main) return "Main"; if (c.cost.secondary) return "Secondary"; if (c.cost.bonus) return "Bonus"; if (c.pid === "move" || c.cost.movement_ft) return "Movement"; if (c.cost.object) return "Object"; return "Free & speech"; }
-  var ORDER = ["Maneuvers & Techniques", "Attack", "Main", "Secondary", "Bonus", "Reactions", "Movement", "Object", "Free & speech"];
+  // categories come from the server's card data (card.category); the client only labels and orders them
+  var CATS = [["maneuver", "Maneuvers", "Maneuvers & techniques"], ["attack", "Attack", "Attacks"], ["main", "Main", "Main actions"], ["secondary", "Secondary", "Secondary activities"], ["bonus", "Bonus", "Bonus actions"],
+              ["reaction", "Reactions", "Reactions"], ["movement", "Move", "Movement"], ["object", "Object", "Object interactions"], ["free", "Free", "Free actions & speech"], ["off", "Off-sheet", "Not on Aero's sheet"]];
+  var cat = null;
   function render() {
     if (!V) return;
     $("title").textContent = V.scenario.title || "Genesis Duel"; $("intro").textContent = V.scenario.intro || "";
@@ -209,15 +233,35 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   function myPlanTurn() { return V && V.checkpoint.kind === "plan" && !busy; }
   function renderCards() {
     var list = plan.length && pf && pf.cards ? pf.cards : V.cards;   // cards judged after the planned steps (server preflight)
-    var by = {}; list.forEach(function (c) { (by[groupOf(c)] = by[groupOf(c)] || []).push(c); });
-    $("groups").innerHTML = ORDER.filter(function (g) { return by[g]; }).map(function (g) {
-      return "<details class='grp' open><summary>" + esc(g) + " <span class='muted'>" + by[g].length + "</span></summary><div class='cards'>" + by[g].map(function (c) {
+    var by = {}; list.forEach(function (c) { (by[c.category] = by[c.category] || []).push(c); });
+    if (V.not_on_sheet.length) by.off = V.not_on_sheet;
+    var cats = CATS.filter(function (k) { return by[k[0]]; });
+    if (!cat || !by[cat]) { var saved = ls("genesis.play.cat"); cat = saved && by[saved] ? saved : (cats.filter(function (k) { return k[0] !== "off" && by[k[0]].some(function (c) { return c.available; }); })[0] || cats[0] || [null])[0]; }
+    var usable = function (k) { return k === "off" ? 0 : by[k].filter(function (c) { return c.available || (c.reaction && c.ready); }).length; };
+    var railSig = JSON.stringify([cat, cats.map(function (k) { return [k[0], usable(k[0]), by[k[0]].length]; })]);
+    if ($("rail").dataset.sig !== railSig) {   // rebuild only on change, so the rail doesn't jump under a finger
+      $("rail").dataset.sig = railSig;
+      $("rail").innerHTML = cats.map(function (k) { var u = usable(k[0]);
+        return "<button role='tab' class='cat-" + k[0] + (u ? "" : " none") + "' data-rail='" + k[0] + "' aria-selected='" + (k[0] === cat) + "' aria-label='" + esc(k[2] + ": " + (k[0] === "off" ? by[k[0]].length + " listed" : u + " of " + by[k[0]].length + " usable now")) + "'><span class='rl'>" + esc(k[1]) + "</span><span class='rn'>" + (k[0] === "off" ? by[k[0]].length : u + "/" + by[k[0]].length) + "</span></button>"; }).join("");
+      each($("rail"), "[data-rail]", function (b) { b.onclick = function () { cat = b.getAttribute("data-rail"); ls("genesis.play.cat", cat); renderCards(); }; });
+    }
+    var label = (CATS.filter(function (k) { return k[0] === cat; })[0] || [0, 0, ""])[2];
+    $("groups").innerHTML = "<div class='cathd'><h2>" + esc(label) + "</h2></div>" + (cat === "off" ? by.off.map(function (x) { return "<p><b>" + esc(x.name) + "</b> — <span class='muted'>" + esc(x.why) + "</span></p>"; }).join("") :
+      "<div class='cards'>" + list.map(function (c) {   // every card is in the DOM; only the chosen category is shown
         var off = c.reaction || !c.available || !myPlanTurn();
-        return "<button class='card' data-pid='" + c.pid + "' aria-disabled='" + off + "' aria-label='" + esc(c.name + (c.reason ? " — unavailable: " + c.reason : "")) + "'><span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><span class='n'>" + esc(c.name) + "</span>" +
+        return "<button class='card cat-" + c.category + "' data-pid='" + c.pid + "' data-cat='" + c.category + "'" + (c.category === cat ? "" : " hidden") + " aria-disabled='" + off + "' aria-label='" + esc(c.name + (c.reason ? " — unavailable: " + c.reason : "")) + "'><span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><span class='n'>" + esc(c.name) + "</span>" +
           (c.reaction ? "<span class='muted' style='font-size:12px'>" + esc(c.inert_note || ("Triggers: " + c.trigger.replace(/_/g, " "))) + "</span>" : c.reason ? "<span class='why'>" + esc(c.reason) + "</span>" : "") + "<span>" + chips(c.cost_now || c.cost) + "</span></button>";
-      }).join("") + "</div></details>";
-    }).join("") + (V.not_on_sheet.length ? "<details class='grp'><summary>Not on Aero's sheet</summary>" + V.not_on_sheet.map(function (x) { return "<p><b>" + esc(x.name) + "</b> — <span class='muted'>" + esc(x.why) + "</span></p>"; }).join("") + "</details>" : "");
-    each($("groups"), "[data-pid]", function (b) { b.onclick = function () { if (b.getAttribute("aria-disabled") === "true") return; addStep(b.getAttribute("data-pid")); }; });
+      }).join("") + "</div>");
+    each($("groups"), "[data-pid]", function (b) { b.onclick = function () { if (b.getAttribute("aria-disabled") === "true") return inspect(b.getAttribute("data-pid")); addStep(b.getAttribute("data-pid")); }; });
+  }
+  // a disabled action stays inspectable: why it can't be used, what it costs, what it does (all from the server's card)
+  function inspect(pid) {
+    var list = plan.length && pf && pf.cards ? pf.cards : V.cards, c = list.filter(function (x) { return x.pid === pid; })[0]; if (!c) return;
+    $("drawerBody").innerHTML = "<span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Sandbox proposal") + "</span><h2 style='font-size:22px;color:var(--ink);text-transform:none;letter-spacing:.02em;margin-top:6px'>" + esc(c.name) + "</h2>" +
+      "<p>" + chips(c.cost_now || c.cost) + (c.maneuver ? " <span class='muted'>" + esc(c.maneuver) + "</span>" : "") + "</p>" +
+      (c.reaction ? "<p class='muted'>Reaction — " + esc(c.inert_note || "triggers: " + c.trigger.replace(/_/g, " ")) + (c.ready === false ? " (no reaction left this round)" : "") + "</p>" : c.reason ? "<p class='bad'><b>Can't use now:</b> " + esc(c.reason) + "</p>" : "<p class='ok'>Usable now.</p>") +
+      (c.rules ? "<p>" + esc(c.rules) + "</p>" : "") + (c.source ? "<p class='rc'>Source: " + esc(c.source) + "</p>" : "");
+    $("drawer").showModal();
   }
   function foes() { return Object.keys(V.actors).filter(function (id) { return id !== V.me.id && !V.actors[id].down; }); }
   function addStep(pid) {
@@ -303,6 +347,7 @@ dialog::backdrop { background: rgba(4,6,12,.7); }
   };
   $("clear").onclick = function () { plan = []; pf = null; render(); };
   $("dlgCancel").onclick = function () { $("dlg").close(); };
+  $("drawerClose").onclick = function () { $("drawer").close(); };
   $("newFight").onclick = function () { $("menu").open = false; scenario = $("scenario").value; open().catch(fail); };
   window.__genesisPlay = { view: function () { return V; }, plan: function () { return plan; }, busy: function () { return busy || pfBusy; }, session: function () { return session; } };
   // ---------- start or reconnect ----------
