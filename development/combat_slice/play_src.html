@@ -72,7 +72,16 @@ details.menu .pop { position: absolute; right: 0; top: calc(100% + 6px); z-index
 .rail button.none .rn { color: var(--dim); }
 .catpane { min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 8px 10px 12px; }
 .catpane .cathd { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 6px; } .catpane .cathd h2 { font-size: 14px; color: var(--ink); }
-.card[hidden] { display: none !important; }
+.cardw { position: relative; min-width: 0; } .cardw[hidden] { display: none !important; } .cardw .card { width: 100%; padding-right: 50px; }
+.cardw .info { position: absolute; top: 4px; right: 4px; z-index: 1; width: 44px; height: 44px; border-radius: 22px; font: italic 700 17px Georgia, serif; color: var(--muted); background: rgba(11,14,21,.55); }
+/* ---- plan steps, drawers (Milestone C) ---- */
+ol.plan li .nm { background: none; border: 0; padding: 0; min-height: 0; min-width: 0; text-align: left; font: 700 15px var(--text); color: var(--ink); text-decoration: underline dotted var(--dim); text-underline-offset: 3px; }
+ol.plan li .nm::after { content: ""; position: absolute; inset: 0; } ol.plan li { position: relative; } ol.plan .ctl { position: relative; z-index: 1; }
+.state { font: 600 10.5px var(--display); letter-spacing: .12em; text-transform: uppercase; border-radius: 5px; padding: 1px 6px; margin-left: 6px; vertical-align: 2px; }
+.state.legal { color: var(--ok); border: 1px solid rgba(87,217,154,.5); } .state.illegal { color: var(--bad); border: 1px solid rgba(255,122,114,.6); } .state.cond { color: var(--warn); border: 1px solid rgba(243,194,91,.55); } .state.pending { color: var(--dim); border: 1px dashed var(--line2); }
+ol.plan li.cond { border-color: rgba(243,194,91,.55); }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; font-size: 14px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
+.hd .who { min-height: 44px; font: 600 13px var(--display); letter-spacing: .08em; text-transform: uppercase; }
 @media (min-width: 1100px) {   /* wide: the rail stands vertically beside the cards */
   .zl.panel { grid-template-rows: minmax(0, 1fr); grid-template-columns: 118px minmax(0, 1fr); }
   .rail { flex-direction: column; overflow-x: hidden; overflow-y: auto; border-bottom: 0; border-right: 1px solid var(--line); }
@@ -128,6 +137,7 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
 <div class="app" id="app" data-tab="actions">
   <header class="hd">
     <h1 id="title">Genesis Duel</h1>
+    <button class="who" id="who" aria-label="Your character and combat history">Aero</button>
     <span class="chip" id="conn" role="status">connecting</span>
     <details class="menu" id="menu"><summary aria-label="Encounter menu">☰</summary><div class="pop">
       <p class="muted" style="margin:0;font-size:12px"><b>Genesis — PLAYER client (thin)</b> · noncanonical sandbox. Everything shown (cards, odds, rolls, narration) comes from the server's player view; this page ships no engine, rules catalog or enemy data.</p>
@@ -204,7 +214,7 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
   var cat = null;
   function render() {
     if (!V) return;
-    $("title").textContent = V.scenario.title || "Genesis Duel"; $("intro").textContent = V.scenario.intro || "";
+    $("title").textContent = V.scenario.title || "Genesis Duel"; $("who").textContent = V.me.name || "You"; $("intro").textContent = V.scenario.intro || "";
     $("auth").innerHTML = "<span class='auth ok'>server-authoritative · player view</span>";
     $("plates").innerHTML = Object.keys(V.actors).map(function (id) {
       var a = V.actors[id], own = id === V.me.id;
@@ -249,10 +259,37 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
     $("groups").innerHTML = "<div class='cathd'><h2>" + esc(label) + "</h2></div>" + (cat === "off" ? by.off.map(function (x) { return "<p><b>" + esc(x.name) + "</b> — <span class='muted'>" + esc(x.why) + "</span></p>"; }).join("") :
       "<div class='cards'>" + list.map(function (c) {   // every card is in the DOM; only the chosen category is shown
         var off = c.reaction || !c.available || !myPlanTurn();
-        return "<button class='card cat-" + c.category + "' data-pid='" + c.pid + "' data-cat='" + c.category + "'" + (c.category === cat ? "" : " hidden") + " aria-disabled='" + off + "' aria-label='" + esc(c.name + (c.reason ? " — unavailable: " + c.reason : "")) + "'><span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><span class='n'>" + esc(c.name) + "</span>" +
-          (c.reaction ? "<span class='muted' style='font-size:12px'>" + esc(c.inert_note || ("Triggers: " + c.trigger.replace(/_/g, " "))) + "</span>" : c.reason ? "<span class='why'>" + esc(c.reason) + "</span>" : "") + "<span>" + chips(c.cost_now || c.cost) + "</span></button>";
+        return "<div class='cardw'" + (c.category === cat ? "" : " hidden") + "><button class='info' data-info='" + c.pid + "' aria-label='Details: " + esc(c.name) + "'>i</button><button class='card cat-" + c.category + "' data-pid='" + c.pid + "' data-cat='" + c.category + "' aria-disabled='" + off + "' aria-label='" + esc(c.name + (c.reason ? " — unavailable: " + c.reason : "")) + "'><span class='badge " + c.status + "'>" + (c.status === "sheet" ? "Sheet" : c.status === "campaign_ruling" ? "Campaign ruling" : "Proposal") + "</span><span class='n'>" + esc(c.name) + "</span>" +
+          (c.reaction ? "<span class='muted' style='font-size:12px'>" + esc(c.inert_note || ("Triggers: " + c.trigger.replace(/_/g, " "))) + "</span>" : c.reason ? "<span class='why'>" + esc(c.reason) + "</span>" : "") + "<span>" + chips(c.cost_now || c.cost) + "</span></button></div>";
       }).join("") + "</div>");
+    each($("groups"), "[data-info]", function (b) { b.onclick = function () { inspect(b.getAttribute("data-info")); }; });
     each($("groups"), "[data-pid]", function (b) { b.onclick = function () { if (b.getAttribute("aria-disabled") === "true") return inspect(b.getAttribute("data-pid")); addStep(b.getAttribute("data-pid")); }; });
+  }
+  function drawer(html) { $("drawerBody").innerHTML = html; if (!$("drawer").open) $("drawer").showModal(); }
+  function stepDetails(i) {   // everything shown is the server's preflight for exactly this declared step
+    var st = plan[i], s = pf && pf.steps[i]; if (!st) return;
+    var c = V.cards.filter(function (x) { return x.pid === st.pid; })[0] || { name: st.pid }, o = (s && s.odds) || {}, d = s && s.damage;
+    var row = function (k, v) { return v == null || v === "" ? "" : "<dt>" + esc(k) + "</dt><dd>" + v + "</dd>"; };
+    drawer("<h2 style='font-size:13px'>Step " + (i + 1) + " of " + plan.length + "</h2><h2 style='font-size:22px;color:var(--ink);text-transform:none;letter-spacing:.02em;margin:4px 0 8px'>" + esc(c.name) + "</h2>" +
+      (!s ? "<p class='muted'>Waiting for the server's check…</p>" : "<dl class='kv'>" +
+        row("Verdict", s.ok ? "<span class='ok'>legal</span>" : "<span class='bad'>not legal</span>") + row("Why", s.reasons && s.reasons.length ? "<span class='bad'>" + esc(s.reasons.join(" ")) + "</span>" : "") +
+        row("Target", st.target && V.actors[st.target] ? esc(V.actors[st.target].name) + (s.distance_ft != null ? " · " + s.distance_ft + " ft when it happens" : "") : "") +
+        row("Cost", chips(s.cost)) + row("Hit chance", o.hit_min != null ? pct(o.hit_min) + "–" + pct(o.hit_max) + (o.assumed_unknown ? " <small class='muted'>(its AC isn't fully known; unknown part assumed 10–20)</small>" : "") : o.hit != null ? pct(o.hit) : o.contest ? esc(o.contest) : "") +
+        row("Roll", s.mode ? esc(s.mode) + (s.adv && s.adv.length ? " · advantage: " + esc(s.adv.join(", ")) : "") + (s.dis && s.dis.length ? " · disadvantage: " + esc(s.dis.join(", ")) : "") : "") +
+        row("Damage", d ? d.min + "–" + d.max + " (critical " + d.crit_min + "–" + d.crit_max + ")" : "") +
+        row("Conditional", s.conditional_on_feint ? "<span class='warn'>Advantage depends on the feint winning its contest.</span>" : "") + "</dl>") +
+      (c.rules ? "<p class='muted' style='margin-top:10px'>" + esc(c.rules) + "</p>" : ""));
+  }
+  function character() {   // your own sheet and what you have seen happen — the player projection only
+    var a = V.actors[V.me.id] || {}, b = a.budget || {};
+    drawer("<h2 style='font-size:22px;color:var(--ink);text-transform:none;letter-spacing:.02em'>" + esc(a.name) + "</h2><dl class='kv' style='margin-top:8px'>" +
+      "<dt>HP</dt><dd>" + a.hp + " / " + a.hp_max + "</dd><dt>AC</dt><dd>" + a.ac + "</dd><dt>Force</dt><dd>" + a.fp + " / " + V.me.fp_max + "</dd>" +
+      "<dt>This turn</dt><dd>" + Object.keys(b).filter(function (k) { return k !== "reaction"; }).map(function (k) { return esc((CL[k] || k) + " " + b[k] + (k === "movement_ft" ? " ft" : "")); }).join(" · ") + (a.reaction_left != null ? " · Reaction " + a.reaction_left : "") + "</dd>" +
+      (a.weapon ? "<dt>Weapon</dt><dd>" + esc(a.weapon.name) + (a.weapon.held ? (a.weapon.ignited === false ? " (unlit)" : " (lit)") : " — dropped") + "</dd>" : "") +
+      (V.me.sidearm ? "<dt>Sidearm</dt><dd>" + esc(V.me.sidearm.name) + " · " + V.me.sidearm.ammo + "/" + V.me.sidearm.capacity + "</dd>" : "") +
+      (a.conds && a.conds.length ? "<dt>Conditions</dt><dd>" + esc(a.conds.join(", ")) + "</dd>" : "") +
+      (V.me.campaign_grants && V.me.campaign_grants.length ? "<dt>Campaign grants</dt><dd>" + esc(V.me.campaign_grants.map(function (g) { return g.name || g.pid || g; }).join(", ")) + "</dd>" : "") + "</dl>" +
+      "<h2 style='margin-top:14px'>Combat history (what you saw)</h2><div style='font-size:13px'>" + (V.log.map(function (l) { return "<p style='margin:2px 0" + (l.turn_start ? ";font-weight:600" : "") + "'>" + esc(l.text) + "</p>"; }).join("") || "<p class='muted'>Nothing yet.</p>") + "</div>");
   }
   // a disabled action stays inspectable: why it can't be used, what it costs, what it does (all from the server's card)
   function inspect(pid) {
@@ -261,7 +298,7 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
       "<p>" + chips(c.cost_now || c.cost) + (c.maneuver ? " <span class='muted'>" + esc(c.maneuver) + "</span>" : "") + "</p>" +
       (c.reaction ? "<p class='muted'>Reaction — " + esc(c.inert_note || "triggers: " + c.trigger.replace(/_/g, " ")) + (c.ready === false ? " (no reaction left this round)" : "") + "</p>" : c.reason ? "<p class='bad'><b>Can't use now:</b> " + esc(c.reason) + "</p>" : "<p class='ok'>Usable now.</p>") +
       (c.rules ? "<p>" + esc(c.rules) + "</p>" : "") + (c.source ? "<p class='rc'>Source: " + esc(c.source) + "</p>" : "");
-    $("drawer").showModal();
+    if (!$("drawer").open) $("drawer").showModal();
   }
   function foes() { return Object.keys(V.actors).filter(function (id) { return id !== V.me.id && !V.actors[id].down; }); }
   function addStep(pid) {
@@ -289,17 +326,21 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
     var name = function (pid) { var c = V.cards.filter(function (x) { return x.pid === pid; })[0]; return c ? c.name : pid; };
     $("plan").innerHTML = plan.length ? plan.map(function (st, i) {
       var s = pf && pf.steps[i] || {}, o = s.odds || {}, odds = o.hit_min != null ? pct(o.hit_min) + "–" + pct(o.hit_max) + " hit" + (o.assumed_unknown ? "*" : "") : o.hit != null ? pct(o.hit) + " hit" : o.contest ? "contest" : "";
-      return "<li class='" + (s.ok === false ? "bad" : "") + "' data-step='" + i + "'><div style='min-width:0'><b>" + (i + 1) + ". " + esc(name(st.pid)) + "</b>" + (st.target ? " → " + esc(V.actors[st.target] ? V.actors[st.target].name : st.target) : "") +
+      var stt = pfBusy || !pf ? ["pending", "checking"] : s.ok === false ? ["illegal", "illegal"] : s.conditional_on_feint || s.mode === "conditional" ? ["cond", "conditional"] : ["legal", "legal"];
+      return "<li class='" + (s.ok === false ? "bad" : stt[0] === "cond" ? "cond" : "") + "' data-step='" + i + "' data-state='" + stt[0] + "'><div style='min-width:0'><button class='nm' data-sd='" + i + "' aria-label='Step " + (i + 1) + " details'>" + (i + 1) + ". " + esc(name(st.pid)) + "</button><span class='state " + stt[0] + "'>" + stt[1] + "</span>" + (st.target ? " → " + esc(V.actors[st.target] ? V.actors[st.target].name : st.target) : "") +
         "<div>" + chips(s.cost) + " <span class='odds'>" + esc(odds) + "</span></div>" + (s.reasons && s.reasons.length ? "<div class='bad' style='font-size:12px'>" + esc(s.reasons.join(" ")) + "</div>" : "") + "</div>" +
         "<div class='ctl'><button data-up='" + i + "' aria-label='Move step " + (i + 1) + " up'" + (i ? "" : " disabled") + ">▲</button><button data-dn='" + i + "' aria-label='Move step " + (i + 1) + " down'" + (i < plan.length - 1 ? "" : " disabled") + ">▼</button><button data-rm='" + i + "' aria-label='Remove step " + (i + 1) + "'>✕</button></div></li>";
     }).join("") : "<li class='muted' style='border-style:dashed'>" + (myPlanTurn() ? "Tap abilities to build your turn." : busy ? "Resolving…" : V.checkpoint.kind === "waiting" ? "The other side is acting…" : "") + "</li>";
     each($("plan"), "[data-up]", function (b) { b.onclick = function () { var i = +b.getAttribute("data-up"); var x = plan[i]; plan[i] = plan[i - 1]; plan[i - 1] = x; preflight(); }; });
     each($("plan"), "[data-dn]", function (b) { b.onclick = function () { var i = +b.getAttribute("data-dn"); var x = plan[i]; plan[i] = plan[i + 1]; plan[i + 1] = x; preflight(); }; });
+    each($("plan"), "[data-sd]", function (b) { b.onclick = function () { stepDetails(+b.getAttribute("data-sd")); }; });
     each($("plan"), "[data-rm]", function (b) { b.onclick = function () { plan.splice(+b.getAttribute("data-rm"), 1); preflight(); }; });
     var sy = pf && pf.synergies && pf.synergies[0];
     $("combo").innerHTML = sy ? "<div class='combo' data-combo='" + sy.id + "'><b>" + esc(sy.name) + "</b> <small class='muted'>predicted synergy</small><div>" + esc(sy.links.join(" ")) + "</div><div class='warn'>" + esc(sy.conditional) + "</div></div>" : "";
     if (pf && pf.steps.some(function (s) { return s.odds && s.odds.assumed_unknown; })) $("combo").innerHTML += "<p class='muted' style='font-size:12px'>* range: its AC isn't known yet; you learn it from your own hits and misses.</p>";
+    if (pf && pf.compound && pf.compound.length) $("combo").innerHTML += pf.compound.map(function (c) { return "<p class='warn' style='font-size:12.5px;margin:4px 0'>⚠ " + esc(c.name) + " is compound: it consumes " + Object.keys(c.cost).map(function (k) { return c.cost[k] + " " + CL[k]; }).join(" + ") + ".</p>"; }).join("");
     $("commit").disabled = !myPlanTurn() || pfBusy || !pf || !pf.legal;
+    $("commit").textContent = pfBusy && plan.length ? "Checking…" : "Commit turn";
   }
   var advancing = false;
   function renderCheckpoint() {
@@ -348,8 +389,9 @@ dialog.drawer { margin: auto auto 0; width: 100%; max-width: 640px; max-height: 
   $("clear").onclick = function () { plan = []; pf = null; render(); };
   $("dlgCancel").onclick = function () { $("dlg").close(); };
   $("drawerClose").onclick = function () { $("drawer").close(); };
+  $("who").onclick = function () { if (V) character(); };
   $("newFight").onclick = function () { $("menu").open = false; scenario = $("scenario").value; open().catch(fail); };
-  window.__genesisPlay = { view: function () { return V; }, plan: function () { return plan; }, busy: function () { return busy || pfBusy; }, session: function () { return session; } };
+  window.__genesisPlay = { view: function () { return V; }, plan: function () { return plan; }, busy: function () { return busy || pfBusy; }, preflight: function () { return pf; }, session: function () { return session; } };
   // ---------- start or reconnect ----------
   setTab(ls("genesis.play.tab") || "actions");
   scenario = ls("genesis.play.scenario") || "duelist"; $("scenario").value = scenario;
