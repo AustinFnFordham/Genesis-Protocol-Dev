@@ -24,7 +24,8 @@ REDUCER = "reduce/0.4"
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 REGISTRY = REPO / "campaigns" / "starwars_litrpg" / "runs" / "registry.json"
-SHEET = REPO / "api_bridge" / "gm" / "aero_character_runtime.yml"
+SHEET_FILE = "api_bridge/gm/aero_character_runtime.yml"
+SHEET = REPO / SHEET_FILE
 sys.path.insert(0, str(REPO / "development/experimental_resolution"))
 import policy as resolution_policy
 ID = re.compile(r"^evt_(\d+)$")
@@ -40,6 +41,10 @@ MINUTES = re.compile(r"\b(\d+)\s*minutes?\b", re.I)
 
 
 class Rejected(Exception):
+    pass
+
+
+class AuthorityInputsRejected(Rejected):
     pass
 
 
@@ -286,7 +291,7 @@ def git_info(run_dir):
             "ledger_files_committed": dirty == "", "ahead_of_upstream": g("rev-list", "--count", "@{u}..HEAD")}
 
 
-def bundle(s, entry, audience, sheet, validation):
+def bundle(s, entry, audience, sheet, validation, *, authority_inputs=None):
     pub = audience == "player"
     if pub:
         s = s.get("_player", empty(s["campaign"]))
@@ -307,7 +312,7 @@ def bundle(s, entry, audience, sheet, validation):
                             {"head": s["head"], "events": s["events"], "public_head": s["public_head"], "public_events": s["public"],
                              "chain": s["chain"], "valid": validation["valid"], "problems": validation["problems"]}),
                  "git": git_info(entry["path"]),
-                 "ruleset": {p.split("/")[-1]: sha(p) for p in RULE_FILES},
+                 "ruleset": ({p.split("/")[-1]: sha(p) for p in RULE_FILES} if authority_inputs is None else {}),
                  "turn_no": s["turn_no"], "world_time": s["world_time"], "last_action": s["last_action"]},
         "fields": fields(s, sheet, audience),
         "scene": s["scene"], "turn_context": tc or None,
@@ -319,6 +324,12 @@ def bundle(s, entry, audience, sheet, validation):
         "entity_history": ent_hist,
         "retrieval": "Full text of any listed event: brief.py history <campaign_id> <evt_id> (player audience cannot fetch hidden events).",
     }
+    if authority_inputs is not None:
+        b["meta"]["ruleset"] = {
+            Path(name).name: authority_inputs["sha256"][name][:16] for name in RULE_FILES
+        }
+        if not pub:
+            b["meta"]["brief_inputs"] = authority_inputs
     if not pub:
         hidden_dir = Path(entry["path"]).resolve() / "hidden"
         b["meta"]["ruleset"].update({name: sha(hidden_dir / name) for name in ("GM_LEDGER.md", "PACK_PROFILE.md")})
@@ -357,7 +368,46 @@ def load_sheet():
     return yaml.safe_load(SHEET.read_text(encoding="utf-8"))["character_runtime"]
 
 
-def build(entry, head=None, audience="gm", checkpoint=None, action=None):
+def load_authority_inputs(authority, campaign):
+    """Read one committed set of brief inputs from the campaign's own Git checkout."""
+    import yaml
+
+    root = Path(authority).resolve()
+    if not Path(campaign).resolve().is_relative_to(root):
+        raise AuthorityInputsRejected("Campaign is outside its brief-input authority")
+
+    def git(*args):
+        return subprocess.check_output(
+            ["git", "--no-optional-locks", "-C", str(root), *args],
+            stderr=subprocess.DEVNULL, timeout=10,
+        )
+
+    hashes = {}
+    try:
+        commit = git("rev-parse", "--verify", "HEAD^{commit}").decode("ascii").strip()
+        for name in (*RULE_FILES, SHEET_FILE):
+            path = root / name
+            if path.resolve() != path or not path.is_file():
+                raise AuthorityInputsRejected("Missing authoritative brief input")
+            data = git("show", "--no-textconv", f"{commit}:{name}")
+            if not data or path.read_bytes() != data:
+                raise AuthorityInputsRejected("Authoritative brief input differs from committed bytes")
+            hashes[name] = hashlib.sha256(data).hexdigest()
+        sheet = yaml.safe_load(data)["character_runtime"]
+        if not isinstance(sheet, dict):
+            raise AuthorityInputsRejected("Invalid authoritative runtime sheet")
+        if git("rev-parse", "--verify", "HEAD^{commit}").decode("ascii").strip() != commit:
+            raise AuthorityInputsRejected("Brief-input authority changed during verification")
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError, KeyError, yaml.YAMLError) as error:
+        raise AuthorityInputsRejected("Unable to verify authoritative brief inputs") from error
+
+    manifest = json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()
+    return sheet, {"schema": "genesis-brief-inputs/1", "source": "campaign-authority-git",
+                   "authority_commit": commit, "version": "sha256:" + hashlib.sha256(manifest).hexdigest(),
+                   "sha256": hashes}
+
+
+def build(entry, head=None, audience="gm", checkpoint=None, action=None, *, authority=None):
     t0 = time.perf_counter()
     led = ledger_mod()
     _, problems = led.validate_all(Path(entry["path"]))
@@ -390,8 +440,9 @@ def build(entry, head=None, audience="gm", checkpoint=None, action=None):
             s = fold(cp, [e for e in ev if seq(e["event_id"]) > seq(cp["head"])])
     if mode.startswith("full_replay"):
         s = fold(empty(entry["id"]), ev)
-    sheet = load_sheet()
-    b = bundle(s, entry, audience, sheet, {"valid": not problems, "problems": len(problems)})
+    sheet, inputs = (load_sheet(), None) if authority is None else load_authority_inputs(authority, entry["path"])
+    b = bundle(s, entry, audience, sheet, {"valid": not problems, "problems": len(problems)},
+               authority_inputs=inputs)
     if action is not None:
         public = s.get("_player", empty(entry["id"]))
         if (action.get("campaign_id") != entry["id"] or action.get("based_on_revision") != public["public"] or

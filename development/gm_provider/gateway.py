@@ -49,7 +49,7 @@ import export_state     # noqa: E402
 import ledger           # noqa: E402
 import policy           # noqa: E402
 import npc_review       # noqa: E402
-from store import Conflict  # noqa: E402
+from store import Conflict, GitStore  # noqa: E402
 from git_errors import GitFailure  # noqa: E402
 
 
@@ -456,7 +456,12 @@ class Gateway:
             raise Refused("STALE", "the action was declared against an older revision")
         declaration = row.get("declaration")
         checked = turn.node_validate(declaration, public_context) if declaration else turn.node_parse(row.get("text", ""), public_context)
-        _, gm_brief = brief.build(self.entry, action={k: row.get(k) for k in ("campaign_id", "based_on_revision", "ledger_head", "resolution_settings")})
+        action = {k: row.get(k) for k in ("campaign_id", "based_on_revision", "ledger_head", "resolution_settings")}
+        authority = self.store.repo if isinstance(self.store, GitStore) else None
+        try:
+            _, gm_brief = brief.build(self.entry, action=action, authority=authority)
+        except brief.AuthorityInputsRejected:
+            raise Refused("BRIEF_INPUTS_INVALID", "The authoritative GM brief inputs could not be verified") from None
         self._stage((key, version, row), lock, run, "context")
         hidden = [e for e in ledger.load_all(self.campaign) if e["visibility"] == "gm_only"]
         return {"audience": "gm", "campaign_id": self.id, "provider": provider,

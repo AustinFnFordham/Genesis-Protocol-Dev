@@ -79,6 +79,7 @@ def verify_write_startup(repo, env):
 def existing_authority(repo, env):
     """Validate local authority while holding its existing operation lock."""
     import staging
+    from gateway import brief
 
     if not (repo / ".git").is_dir():
         raise ValueError("Existing authority checkout required")
@@ -103,6 +104,7 @@ def existing_authority(repo, env):
         gateway = staging.open_shared(scope)
         if gateway.id != CAMPAIGN_ID or gateway.store.repo != repo.resolve():
             raise ValueError("Unexpected campaign authority")
+        brief.load_authority_inputs(repo, gateway.campaign)
         with gateway.store.local_snapshot():
             if gateway.recovery()["record_mid_write"]:
                 return None, "record_mid_write"

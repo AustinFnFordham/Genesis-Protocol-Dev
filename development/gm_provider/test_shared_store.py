@@ -14,7 +14,7 @@ import unittest
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import staging                                   # noqa: E402
-from gateway import Refused                      # noqa: E402
+from gateway import Refused, brief                      # noqa: E402
 from runner import run_turn                      # noqa: E402
 from store import Conflict                       # noqa: E402
 from test_gateway import script, QA, INSPECT, HOLSTER, Clock, fingerprints, ledger   # noqa: E402
@@ -35,6 +35,10 @@ class Shared(unittest.TestCase):
         seed = root / "seed"
         git(root, "clone", "--quiet", str(root / "origin.git"), str(seed))
         (seed / "README").write_text("shared staging test\n")
+        for name in (*brief.RULE_FILES, brief.SHEET_FILE):
+            target = seed / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((brief.REPO / name).read_bytes())
         git(seed, "add", "-A")
         git(seed, "-c", "user.name=t", "-c", "user.email=t@t.invalid", "commit", "--quiet", "-m", "seed")
         git(seed, "push", "--quiet", "origin", "HEAD:staging")

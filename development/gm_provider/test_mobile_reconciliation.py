@@ -318,6 +318,19 @@ class DiskRecovery(unittest.TestCase):
 
         action = staging.declare(self.player, 'external-0001', text=INSPECT, provider='codex-session')
         self.player.submit(action)
+        player_repo = self.player.store.repo
+        for name in brief.RULE_FILES:
+            path = player_repo / name
+            path.write_bytes(path.read_bytes() + b'\n ')
+        sheet = player_repo / brief.SHEET_FILE
+        original_sheet = sheet.read_bytes()
+        changed_sheet = original_sheet.replace(b'maximum_hp: 11', b'maximum_hp: 17', 1)
+        self.assertNotEqual(changed_sheet, original_sheet)
+        sheet.write_bytes(changed_sheet)
+        shared.git(player_repo, 'add', '--', *brief.RULE_FILES, brief.SHEET_FILE)
+        shared.git(player_repo, '-c', 'user.name=t', '-c', 'user.email=t@t.invalid',
+                   'commit', '-qm', 'Pin different brief inputs in fixture authority')
+        shared.git(player_repo, 'push', '-q', 'origin', 'staging')
         with tempfile.TemporaryDirectory(prefix='genesis-authority-', dir=brief.REPO.parent) as external:
             checkout = Path(external) / 'authority'
             shared.git(self.root, 'clone', '--quiet', str(self.root / 'origin.git'), str(checkout))
@@ -334,11 +347,16 @@ class DiskRecovery(unittest.TestCase):
             run = 'external-run'
 
             with TestClient(server.streamable_http_app(), base_url=RESOURCE.rsplit('/', 1)[0]) as client:
-                def call(name, **arguments):
+                def call(name, *, error=None, **arguments):
                     response = client.post('/mcp', headers=headers, json={'jsonrpc': '2.0', 'id': 1,
                                            'method': 'tools/call', 'params': {'name': name, 'arguments': arguments}})
                     self.assertEqual(response.status_code, 200)
                     result = response.json()['result']
+                    if error:
+                        self.assertTrue(result.get('isError'))
+                        payload = result['structuredContent']
+                        self.assertEqual(payload.get('result', payload)['error']['code'], error)
+                        return
                     self.assertFalse(result.get('isError'), result['structuredContent'])
                     return result['structuredContent']['result']
 
@@ -349,7 +367,23 @@ class DiskRecovery(unittest.TestCase):
                 self.assertEqual(context['action']['action_id'], action['action_id'])
                 self.assertEqual(context['ledger_head'], action['ledger_head'])
                 meta = context['brief']['meta']
+                inputs = meta['brief_inputs']
+                self.assertEqual(inputs['schema'], 'genesis-brief-inputs/1')
+                self.assertEqual(inputs['source'], 'campaign-authority-git')
+                self.assertEqual(len(inputs['authority_commit']), 40)
+                shared.git(checkout, 'merge-base', '--is-ancestor', authority_head, inputs['authority_commit'])
+                paths = (*brief.RULE_FILES, brief.SHEET_FILE)
+                hashes = {name: hashlib.sha256((checkout / name).read_bytes()).hexdigest() for name in paths}
+                self.assertEqual(inputs['sha256'], hashes)
+                expected_version = hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+                self.assertEqual(inputs['version'], 'sha256:' + expected_version)
+                for name in paths:
+                    self.assertNotEqual(hashes[name], hashlib.sha256((brief.REPO / name).read_bytes()).hexdigest())
+                for name in brief.RULE_FILES:
+                    self.assertEqual(meta['ruleset'][Path(name).name], hashes[name][:16])
+                self.assertEqual(context['brief']['fields']['aero.hp']['value'][1], 17)
                 git_meta = meta['git']
+                self.assertTrue(inputs['authority_commit'].startswith(git_meta['commit']))
                 self.assertEqual(git_meta['branch'], 'staging')
                 self.assertTrue(git_meta['ledger_files_committed'])
                 self.assertEqual(git_meta['ahead_of_upstream'], '0')
@@ -360,7 +394,39 @@ class DiskRecovery(unittest.TestCase):
                 self.assertEqual(meta['ruleset']['GM_LEDGER.md'], hashlib.sha256(hidden.read_bytes()).hexdigest()[:16])
                 self.assertEqual(context['operation']['rolls'], {})
                 self.assertIsNone(context['operation']['tables'])
+                authority_rule = checkout / brief.RULE_FILES[0]
+                committed_bytes = authority_rule.read_bytes()
+                try:
+                    authority_rule.write_bytes(committed_bytes + b'uncommitted')
+                    call('genesis_context', run=run, error='BRIEF_INPUTS_INVALID')
+                    authority_rule.unlink()
+                    call('genesis_context', run=run, error='BRIEF_INPUTS_INVALID')
+                finally:
+                    authority_rule.write_bytes(committed_bytes)
+
+                scripted = script('codex-session')
+                call('genesis_tables', run=run, body=scripted.step(context)['tables'])
+                context = call('genesis_context', run=run)
+                request, = scripted.step(context)['rolls']
+                first_roll = call('genesis_roll', run=run, body=request)
                 call('genesis_release', run=run)
+                run = 'external-resume'
+                call('genesis_claim', run=run, model='fixture', session='external-authority-test')
+                replay = call('genesis_roll', run=run, body=request)
+                self.assertTrue(replay['replayed'])
+                self.assertEqual(first_roll['result'], replay['result'])
+                context = call('genesis_context', run=run)
+                accepted = call('genesis_commit', run=run, body=scripted.step(context)['proposal'])
+                self.assertEqual(accepted['status'], 'committed')
+                self.assertEqual(accepted['publication']['status'], 'published')
+                with gateway.store.local_snapshot():
+                    recovery = gateway.recovery()
+                    self.assertIsNone(recovery['in_flight'])
+                    self.assertFalse(recovery['lease']['held'])
+                    self.assertGreater(recovery['revision'], context['revision'])
+                    rolls = ledger.read_jsonl(gateway.campaign / 'records/roll_log.jsonl')
+                    self.assertEqual(sum(action['action_id'] in row['purpose'] for row in rolls), 1)
+                    self.assertFalse(ledger.validate_all(gateway.campaign)[1])
 
     def scenario(self,phase,lose_disk):
         action=staging.declare(self.player,'recovery-0001',text=INSPECT,provider='gpt-session');self.player.submit(action)
