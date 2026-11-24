@@ -1,5 +1,6 @@
 """Local JWT, serialization and SIGKILL/disk-loss tests; no real campaign writes."""
 import asyncio
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -29,11 +30,11 @@ CLIENTS={'chatgpt-client':'gpt-session','gemini-client':'gemini-session'}
 class JWT(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.key=rsa.generate_private_key(public_exponent=65537,key_size=2048)
-    def verifier(self):
+    def verifier(self, clients=CLIENTS):
         key=self.key.public_key()
         class Keys:
             def get_signing_key_from_jwt(self,token):return type('Key',(),{'key':key})()
-        return adapter.JWTVerifier(ISSUER,RESOURCE,CLIENTS,fixture.SUBJECT,key_client=Keys())
+        return adapter.JWTVerifier(ISSUER,RESOURCE,clients,fixture.SUBJECT,key_client=Keys())
     def token(self,**changes):
         claims=dict(iss=ISSUER,aud=RESOURCE,sub=fixture.SUBJECT,azp='chatgpt-client',iat=int(time.time()),exp=int(time.time())+300,scope='genesis:read genesis:gm')
         claims.update(changes)
@@ -266,6 +267,57 @@ class DiskRecovery(unittest.TestCase):
     tearDown=shared.Shared.tearDown
     clone=shared.Shared.clone
     session=shared.Shared.session
+
+    def test_signed_codex_context_uses_external_git_authority(self):
+        from starlette.testclient import TestClient
+        from gateway import brief
+
+        action = staging.declare(self.player, 'external-0001', text=INSPECT, provider='codex-session')
+        self.player.submit(action)
+        with tempfile.TemporaryDirectory(prefix='genesis-authority-', dir=brief.REPO.parent) as external:
+            checkout = Path(external) / 'authority'
+            shared.git(self.root, 'clone', '--quiet', str(self.root / 'origin.git'), str(checkout))
+            gateway = staging.open_shared(checkout / 'staging/env', min_sync_s=0)
+            self.assertFalse(gateway.campaign.is_relative_to(brief.REPO))
+            tools = fixture.tools(gateway)
+            tools.app.gm_tokens['codex-session'] = 'test-server-codex-token'
+            signer = JWT()
+            signer.key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+            verifier = signer.verifier({**CLIENTS, 'codex-client': 'codex-session'})
+            server = adapter.create_server(tools, verifier, ISSUER, RESOURCE)
+            headers = {'accept': 'application/json, text/event-stream', 'mcp-protocol-version': '2025-11-25',
+                       'authorization': 'Bearer ' + signer.token(azp='codex-client')}
+            run = 'external-run'
+
+            with TestClient(server.streamable_http_app(), base_url=RESOURCE.rsplit('/', 1)[0]) as client:
+                def call(name, **arguments):
+                    response = client.post('/mcp', headers=headers, json={'jsonrpc': '2.0', 'id': 1,
+                                           'method': 'tools/call', 'params': {'name': name, 'arguments': arguments}})
+                    self.assertEqual(response.status_code, 200)
+                    result = response.json()['result']
+                    self.assertFalse(result.get('isError'), result['structuredContent'])
+                    return result['structuredContent']['result']
+
+                call('genesis_claim', run=run, model='fixture', session='external-authority-test')
+                authority_head = shared.git(checkout, 'rev-parse', '--short', 'HEAD').strip()
+                context = call('genesis_context', run=run)
+                self.assertEqual(context['provider'], 'codex-session')
+                self.assertEqual(context['action']['action_id'], action['action_id'])
+                self.assertEqual(context['ledger_head'], action['ledger_head'])
+                meta = context['brief']['meta']
+                git_meta = meta['git']
+                self.assertEqual(git_meta['branch'], 'staging')
+                self.assertTrue(git_meta['ledger_files_committed'])
+                self.assertEqual(git_meta['ahead_of_upstream'], '0')
+                # Context can persist lease progress. The cited commit must be on the authority history.
+                shared.git(checkout, 'merge-base', '--is-ancestor', authority_head, git_meta['commit'])
+                shared.git(checkout, 'merge-base', '--is-ancestor', git_meta['commit'], 'HEAD')
+                hidden = gateway.campaign / 'hidden/GM_LEDGER.md'
+                self.assertEqual(meta['ruleset']['GM_LEDGER.md'], hashlib.sha256(hidden.read_bytes()).hexdigest()[:16])
+                self.assertEqual(context['operation']['rolls'], {})
+                self.assertIsNone(context['operation']['tables'])
+                call('genesis_release', run=run)
+
     def scenario(self,phase,lose_disk):
         action=staging.declare(self.player,'recovery-0001',text=INSPECT,provider='gpt-session');self.player.submit(action)
         root=self.clone('server');scope=root/'staging/env';observed=self.root/'observed.json'
