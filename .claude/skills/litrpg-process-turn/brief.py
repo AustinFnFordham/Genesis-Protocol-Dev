@@ -279,10 +279,9 @@ def sha(path):
 
 def git_info(run_dir):
     def g(*a):
-        r = subprocess.run(["git", "-C", str(REPO), *a], capture_output=True, text=True)
+        r = subprocess.run(["git", "--no-optional-locks", "-C", str(run_dir), *a], capture_output=True, text=True)
         return r.stdout.strip() if r.returncode == 0 else None
-    rel = str(Path(run_dir).relative_to(REPO))
-    dirty = g("status", "--porcelain", "--", rel)
+    dirty = g("status", "--porcelain", "--", ".")
     return {"commit": g("rev-parse", "--short", "HEAD"), "branch": g("rev-parse", "--abbrev-ref", "HEAD"),
             "ledger_files_committed": dirty == "", "ahead_of_upstream": g("rev-list", "--count", "@{u}..HEAD")}
 
@@ -321,7 +320,8 @@ def bundle(s, entry, audience, sheet, validation):
         "retrieval": "Full text of any listed event: brief.py history <campaign_id> <evt_id> (player audience cannot fetch hidden events).",
     }
     if not pub:
-        b["meta"]["ruleset"].update({"GM_LEDGER.md": sha(entry["dir"] + "/hidden/GM_LEDGER.md"), "PACK_PROFILE.md": sha(entry["dir"] + "/hidden/PACK_PROFILE.md")})
+        hidden_dir = Path(entry["path"]).resolve() / "hidden"
+        b["meta"]["ruleset"].update({name: sha(hidden_dir / name) for name in ("GM_LEDGER.md", "PACK_PROFILE.md")})
         b["hidden"] = {"plans": {a: [line(i) for i in ids[-3:]] for a, ids in s["plans"].items()},
                        "positions": [line(i) for i in s["positions_refs"][-2:]],
                        "replay_available": [line(i) for i in s["replay_refs"]],
