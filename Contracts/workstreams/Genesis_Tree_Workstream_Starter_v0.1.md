@@ -1,6 +1,6 @@
 # Genesis Protocol — Progression Tree Workstream Starter v0.1
 
-**Status:** portable design brief; not canonical mechanics, not committed to GitHub, no campaign or service changes authorized.  
+**Status:** portable design brief committed to this isolated docs branch; not canonical mechanics; no campaign or service changes authorized.  
 **Purpose:** seed a NEW CHAT dedicated exclusively to character progression trees, unlock design, XP curves, milestone choices, and prerequisite graphs. Implementation/deployment stays in the main development chat.
 
 ## Start-here instructions for new chat
