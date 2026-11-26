@@ -64,6 +64,7 @@
       a.profiles = [].concat((a.grants && a.grants.sheet) || [], (a.grants && a.grants.sandbox_proposal) || []);
       ((catalog.ruleset || {}).universal_profiles || []).forEach(function (u) { if (catalog.profiles[u] && a.profiles.indexOf(u) < 0) a.profiles.push(u); });
       a.campaign_grants = [];
+      a.resources = clone(a.resources || {});   // limited-use features (e.g. Sentinel Balance 2 / long rest); session-local, never written back to the sheet
       // Campaign-grant overlay (e.g. Jedi Fundamentals): applies ONLY when the session's campaign is in the rule's scope
       // AND the rule names this character. Never edits the sheet or powers_known.
       (opts.overlays || []).forEach(function (ov) {
@@ -313,6 +314,7 @@
     if (d.down || d.reaction_left < 1) return [];
     return d.profiles.filter(function (pid) {
       var p = profile(s, pid); if (!p || p.trigger !== trigger) return false;
+      if (p.uses && !((d.resources[pid] || {}).current > 0)) return false;   // no uses left until the next rest
       if (p.resolution && p.resolution.counter && ctx.counter) return false;   // trigger fence: no counter from a counter
       if (ctx.depth >= s.catalog.ruleset.trigger_depth_max && p.resolution && p.resolution.counter) return false;
       var r = p.requires || {}, w = d.weapon;
@@ -531,8 +533,15 @@
     inside.forEach(function (id) {
       var T = s.actors[id], mod = (T.abilities && T.abilities[R.save]) || 0;
       var sv = rollDice(s, id, T.name + " " + R.save.toUpperCase() + " save vs " + p.name, "1d20" + (mod >= 0 ? "+" : "") + mod, { kind: "save", vs: { type: "dc", value: R.dc } });
-      var ok = sv.total >= R.dc;
-      log(s, id, T.name + " " + (ok ? "rides it out" : "is thrown") + " (" + sv.total + " vs DC " + R.dc + ").", { receipt: sv.receipt, ev: "save", actor: id, pid: p.id, total: sv.total, dc: R.dc, win: ok });
+      var ok = sv.total >= R.dc, total = sv.total;
+      if (!ok && (R.save === "dex" || R.save === "cha")) {   // Sentinel Balance window: after a failed DEX/CHA save, before consequences
+        var sbo = reactionOptions(s, id, "failed_dex_or_cha_save", { depth: 0 });
+        var sb = decide(s, ctrl, id, "failed_dex_or_cha_save", sbo, { save: R.save, total: sv.total, dc: R.dc, source: actorId, depth: 0 });
+        if (sb) { var SP = profile(s, sb); T.reaction_left--; T.resources[sb].current--;
+          var add = rollDice(s, id, SP.name + " (+" + SP.resolution.bonus + " to the save)", SP.resolution.bonus, { kind: "save_bonus", vs: { type: "dc", value: R.dc } });
+          total = sv.total + add.total; ok = total >= R.dc;
+          log(s, id, T.name + " — " + SP.name + ": +" + add.total + " → " + total + (ok ? " — steadies!" : " — not enough") + " (" + T.resources[sb].current + "/" + T.resources[sb].max + " left).", { receipt: add.receipt, ev: "sentinel_balance", actor: id, pid: sb, add: add.total, total: total, win: ok, uses_left: T.resources[sb].current }); } }
+      log(s, id, T.name + " " + (ok ? "rides it out" : "is thrown") + " (" + total + " vs DC " + R.dc + ").", { receipt: sv.receipt, ev: "save", actor: id, pid: p.id, total: total, dc: R.dc, win: ok });
       if (!ok) {
         var dmg = rollDice(s, actorId, p.name + " damage", R.damage, { kind: "damage", vs: { type: "damage", target: id } });
         T.hp = Math.max(0, T.hp - dmg.total); T.conds.prone = { by: actorId };
@@ -606,6 +615,12 @@
   function checkOver(s) {
     var sides = {}; Object.keys(s.actors).forEach(function (id) { var a = s.actors[id]; sides[a.side] = sides[a.side] || !a.down; });
     if (!sides.party) s.over = "defeat"; else if (Object.keys(sides).some(function (k) { return k !== "party" && sides[k] === false; }) && !Object.keys(sides).some(function (k) { return k !== "party" && sides[k]; })) s.over = "victory";
+  }
+  // Rests restore limited-use features by their recovery kind ("long_rest" restores both kinds; "short_rest" only short).
+  function rest(s0, actorId, kind) {
+    var s = clone(s0), a = s.actors[actorId];
+    Object.keys(a.resources || {}).forEach(function (k) { var r = a.resources[k]; if (r.recovery === kind || kind === "long_rest") { if (r.current !== r.max) log(s, actorId, a.name + " recovers " + (profile(s, k) || { name: k }).name + " (" + r.max + "/" + r.max + ").", { ev: "rest_recover", actor: actorId, resource: k, kind: kind }); r.current = r.max; } });
+    return s;
   }
   function endTurn(s0) {
     var s = clone(s0);
@@ -717,6 +732,6 @@
   }
 
   return { newState: newState, playerProjection: playerProjection, knowledge: knowledge, validatePlan: validatePlan, availability: availability, resolveTurn: resolveTurn, endTurn: endTurn,
-           acceptDice: acceptDice, _localDie: localDie, rangeMods: rangeMods, confirmedCombos: confirmedCombos, npcPlan: npcPlan, comboJudge: comboJudge, synergies: synergies, hasAdv: hasAdv, reactionOptions: reactionOptions, cinematicNote: cinematicNote, publicView: publicView, current: current,
+           acceptDice: acceptDice, _localDie: localDie, rangeMods: rangeMods, confirmedCombos: confirmedCombos, npcPlan: npcPlan, comboJudge: comboJudge, synergies: synergies, hasAdv: hasAdv, reactionOptions: reactionOptions, cinematicNote: cinematicNote, publicView: publicView, current: current, rest: rest,
            distance: distance, project: project, _rollDice: rollDice };
 });

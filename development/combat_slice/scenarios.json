@@ -107,7 +107,15 @@
    }
   ],
   "size": "medium",
-  "size_source": "fixture: Echani are humanoid; size is not on aero_character_runtime.yml"
+  "size_source": "fixture: Echani are humanoid; size is not on aero_character_runtime.yml",
+  "resources": {
+   "sentinel_balance": {
+    "max": 2,
+    "current": 2,
+    "recovery": "long_rest",
+    "source": "aero_character_runtime.yml features.sentinel_balance {maximum_uses: 2, current_uses: 2, recovery: long_rest}; each sandbox session starts from the sheet value and never writes back"
+   }
+  }
  },
  "scenarios": {
   "duelist": {

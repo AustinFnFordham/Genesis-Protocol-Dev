@@ -102,5 +102,33 @@ function held(seed) { const b = E.newState(C, S, "duelist", { seed: seed || 7 })
   const g = held(); g.actors.aero.down = true; const e = E.endTurn(g); ok(!e.actors.aero.conds.grappling && !e.actors.ilsa.conds.grappled, "the hold ends when the grappler goes down"); }
 { const s = held(); const e = E.endTurn(s); ok(!E.availability(e, "ilsa", "move", { pid: "move", dest: "withdraw" }).ok, "the held creature's speed is 0");
   ok(E.availability(s, "aero", "escape_grapple", { pid: "escape_grapple" }).reasons.some((r) => r.code === "NEEDS_GRAPPLED"), "you can only escape while grappled"); }
+// ---- D. Sentinel Balance: 2 uses per long rest (sheet), spend and recharge ----
+function burstOnAero(state, choices, saveTotal, d4) {   // Ilsa (given Burst for the test) forces Aero's DEX save
+  const s = JSON.parse(JSON.stringify(state)); if (s.actors.ilsa.profiles.indexOf("burst") < 0) s.actors.ilsa.profiles.push("burst"); s.dist["aero|ilsa"] = 5; s.turn = s.order.indexOf("ilsa");
+  s.actors.ilsa.budget.main = 1; s.actors.aero.down = false;
+  return scripted(s, "ilsa", [{ pid: "burst" }], (need, i, d) => need.actor === "aero" && d.sides === 20 ? saveTotal - mod(need.formula) : d.sides === 4 && need.actor === "aero" ? d4 : 1, choices);
+}
+{ const s0 = E.newState(C, S, "duelist", { seed: 7 });
+  ok(s0.actors.aero.resources.sentinel_balance.current === 2 && s0.actors.aero.resources.sentinel_balance.max === 2, "starts at 2/2 from the sheet");
+  const p = burstOnAero(s0, {}, 10, 4); ok(p.paused && p.paused.kind === "failed_dex_or_cha_save" && p.paused.options.includes("sentinel_balance"), "a failed DEX save offers Sentinel Balance (player decision)", p.paused);
+  const used = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 10, 4).state, a = used.actors.aero;
+  ok(a.resources.sentinel_balance.current === 1 && a.reaction_left === 0, "using it spends one use and the reaction");
+  ok(used.log.some((l) => l.ev === "sentinel_balance" && l.total === 14 && l.win) && used.log.some((l) => l.ev === "save" && l.actor === "aero" && l.win), "+1d4 can turn the failure into a success (10 + 4 ≥ DC 12)");
+  ok(!used.log.some((l) => l.ev === "damage" && l.target === "aero"), "success after Sentinel Balance: no damage, not prone");
+  const miss = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 7, 2).state; ok(miss.log.some((l) => l.ev === "sentinel_balance" && !l.win) && miss.log.some((l) => l.ev === "damage" && l.target === "aero"), "if +1d4 isn't enough the failure stands");
+  const dec = burstOnAero(s0, { [p.paused.key]: null }, 10, 4).state; ok(dec.actors.aero.resources.sentinel_balance.current === 2 && dec.actors.aero.reaction_left === 1, "declining spends nothing");
+  const pass = burstOnAero(s0, {}, 15, 4); ok(!pass.paused && !pass.state.log.some((l) => l.ev === "sentinel_balance"), "a successful save offers nothing (cannot affect successful saves)");
+  // spend both uses, then none is offered
+  let t = JSON.parse(JSON.stringify(used)); t.actors.aero.reaction_left = 1;
+  const p2 = burstOnAero(t, {}, 10, 4); const u2 = burstOnAero(t, { [p2.paused.key]: "sentinel_balance" }, 10, 4).state;
+  ok(u2.actors.aero.resources.sentinel_balance.current === 0, "second use leaves 0/2");
+  let z = JSON.parse(JSON.stringify(u2)); z.actors.aero.reaction_left = 1; const p3 = burstOnAero(z, {}, 10, 4);
+  ok(!p3.paused && !p3.state.log.slice(z.log.length).some((l) => l.ev === "sentinel_balance"), "with no uses left it is not offered");
+  const nr = JSON.parse(JSON.stringify(s0)); nr.actors.aero.reaction_left = 0; ok(!burstOnAero(nr, {}, 10, 4).paused, "not offered without a reaction");
+  ok(E.rest(u2, "aero", "short_rest").actors.aero.resources.sentinel_balance.current === 0, "a short rest does not recharge it");
+  const lr = E.rest(u2, "aero", "long_rest"); ok(lr.actors.aero.resources.sentinel_balance.current === 2 && lr.log.some((l) => l.ev === "rest_recover"), "a long rest recharges it to 2/2");
+  // replay determinism: the same choice and tape give the same state
+  const r1 = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 10, 4).state, r2 = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 10, 4).state;
+  ok(JSON.stringify(r1) === JSON.stringify(r2), "replaying the same decision and dice is identical"); }
 console.log(fails ? fails + " FAILED" : "all " + n + " passed"); process.exit(fails ? 1 : 0);
 }
