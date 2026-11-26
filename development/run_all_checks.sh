@@ -7,7 +7,7 @@ mkdir -p "$TMPDIR"
 python3 -B development/prepare_browser_fixtures.py >/dev/null || exit 2
 U=campaigns/starwars_litrpg/ui; P=$U/genesis_datapad.html; Q=development/.qa
 results=(); fail=0
-record(){ results+=("{\"suite\":\"$1\",\"passed\":$2,\"elapsed_ms\":$3}"); [ "$2" = true ] || { fail=$((fail+1)); echo "FAIL $1"; tail -8 "$Q/last.out"; }; }
+record(){ results+=("{\"suite\":\"$1\",\"passed\":$2,\"elapsed_ms\":$3}"); [ "$2" = true ] || { fail=$((fail+1)); echo "FAIL $1"; tail -8 "$Q/last.out"; cp "$Q/last.out" "$Q/fail_$(echo "$1" | tr '/.' '__').out"; }; }
 timed(){ name=$1; shift; s=$(date +%s%3N); if timeout 900 "$@" >"$Q/last.out" 2>&1; then ok=true; else ok=false; fi; record "$name" $ok $(( $(date +%s%3N)-s )); }
 for t in $(git ls-files -co --exclude-standard | grep -E '(^|/)test_[a-z_]+\.py$' | grep -E '^\.claude|^campaigns/starwars_litrpg|^development' | sort); do timed "$t" python3 -B "$t"; done
 timed "$U/test_datapad_ui.cjs" node $U/test_datapad_ui.cjs $P $Q/state_round1.json $Q/shots

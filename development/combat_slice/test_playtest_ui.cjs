@@ -22,7 +22,8 @@ async function closeIn(p) { await G(p, () => { const s = window.__genesisCombat.
 // Drive whatever the page is waiting for: reactions, Aero's Roll button; until not busy.
 async function drive(p, react) { for (let i = 0; i < 200; i++) { if (await p.locator("#react[open]").count()) { const pos = p.locator("#reactBody [data-react]:not([data-react=''])"); if (react !== "none" && await pos.count()) await pos.first().click(); else await p.locator("#reactBody [data-react='']").click(); }
     const rb = p.locator("[data-roll]:not([disabled])"); if (await rb.count()) await rb.first().click();
-    if (!(await G(p, () => window.__genesisCombat.busy())) && !(await p.locator("#react[open]").count())) return; await p.waitForTimeout(60); } }
+    // settled = not busy, no reaction dialog, no roll button and no roll checkpoint outstanding (a just-clicked roll may not have set busy yet)
+    if (!(await G(p, () => window.__genesisCombat.busy() || window.__genesisCombat.waitingRoll())) && !(await p.locator("#react[open]").count()) && !(await p.locator("[data-roll]:not([disabled])").count())) return; await p.waitForTimeout(60); } }
 async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (await G(p, () => !!window.__genesisCombat.state().over)) return true; await p.locator("#clear").click();
     for (const c of ["recover_weapon", "move", "saber_strike", "unarmed_strike", "blaster_shot", "flow_strike"]) { const el = p.locator(`[data-card="${c}"][data-off="false"]`); if (await el.count()) { await el.click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); } }
     if (await p.locator("#resolve").isDisabled()) { const any = p.locator(`[data-card][data-off="false"]`); if (await any.count()) await any.first().click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); }
@@ -134,7 +135,7 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     // D3: player view renders enemy facts only from the server projection
     await h.locator("#playerView").check(); await h.waitForTimeout(400);
     const plateTxt = await h.locator("[data-plate=ilsa]").innerText();
-    ok(!/HP \d+ \/ \d+/.test(plateTxt) && !/AC 15\b/.test(plateTxt) && /learned from your attacks/.test(plateTxt), "player view: no enemy HP numbers or true AC; AC shown as learned bounds", plateTxt);
+    ok(!/HP \d+ \/ \d+/.test(plateTxt) && !/AC 15(?!–)\b/.test(plateTxt) && (() => { const m = /AC (\d+)–(\d+)/.exec(plateTxt); return !m || (+m[1] <= 15 && 15 <= +m[2]); })() && /learned from your attacks/.test(plateTxt), "player view: no enemy HP numbers; AC only as learned bounds that contain the true AC (a bound may legitimately equal it)", plateTxt);
     await h.locator("#playerView").uncheck();
     ok(await G(h, () => window.__genesisCombat.state().receipts.every((r) => r.authority === "atomic")), "every receipt is authority=atomic");
     const sid = await G(h, () => window.__genesisCombat.session()); const hash1 = await G(h, () => JSON.stringify([window.__genesisCombat.state().log.length, window.__genesisCombat.state().tape, window.__genesisCombat.state().actors.aero.hp, window.__genesisCombat.state().actors.ilsa.hp]));
@@ -157,7 +158,9 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     const j = await (await fetch(base + "/atomic/journal", { method: "POST", body: JSON.stringify({ session: sid2, tokens: toks }), headers: { "Content-Type": "application/json" } })).json();
     const C = require("./catalog.json"), S = require("./scenarios.json"); const rb = D.replay(C, S, j);
     const pageState = await G(h, () => JSON.parse(JSON.stringify(window.__genesisCombat.state())));
-    ok(!rb.pending && D.stateHash(rb.state) === D.stateHash(pageState), "the page's state equals a clean replay of the server journal (presentation wrote nothing into game state)");
+    ok(!rb.pending && D.stateHash(rb.state) === D.stateHash(pageState), "the page's state equals a clean replay of the server journal (presentation wrote nothing into game state)",
+       { pending: rb.pending ? (rb.pending.kind || Object.keys(rb.pending)) : null, rbLog: rb.state.log.length, pageLog: pageState.log.length, rbTape: rb.state.tape.length, pageTape: pageState.tape.length,
+         rbTurn: [rb.state.round, rb.state.turn], pageTurn: [pageState.round, pageState.turn], busy: await G(h, () => window.__genesisCombat.busy()), over: [rb.state.over, pageState.over] });
     ok(herr.length === 0, "no page errors (Atomic mode)", herr);
     await c3.close();
   } finally { srv.kill(); await browser.close(); }
