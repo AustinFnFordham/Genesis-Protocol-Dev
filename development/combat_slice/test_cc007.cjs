@@ -130,5 +130,16 @@ function burstOnAero(state, choices, saveTotal, d4) {   // Ilsa (given Burst for
   // replay determinism: the same choice and tape give the same state
   const r1 = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 10, 4).state, r2 = burstOnAero(s0, { [p.paused.key]: "sentinel_balance" }, 10, 4).state;
   ok(JSON.stringify(r1) === JSON.stringify(r2), "replaying the same decision and dice is identical"); }
+// ---- E. Battle Insight: current behaviour pinned (BATTLE_INSIGHT_TIMING_CONTRACT.md; D-13 open) ----
+{ let s = E.newState(C, S, "duelist", { seed: 7 }); s.dist["aero|ilsa"] = 25;
+  let r = E.resolveTurn(s, "aero", [{ pid: "battle_insight", target: "ilsa" }], {}).state;
+  ok(r.actors.ilsa.conds.insight && r.actors.ilsa.conds.insight.by === "aero", "Battle Insight marks the target (by the caster)");
+  for (let i = 0; i < 4; i++) { r = E.endTurn(r); r = E.endTurn(E.resolveTurn(r, "ilsa", [], {}).state || r); }
+  ok(r.round >= 5 && r.actors.ilsa.conds.insight, "current behaviour: it persists across rounds until used (no duration — documented gap)");
+  r.dist["aero|ilsa"] = 5; r.actors.aero.budget.main = 1;
+  const ft = scripted(r, "aero", [{ pid: "feint", target: "ilsa" }], () => 1).state; ok(ft.actors.ilsa.conds.insight, "a contest (Feint) does not consume it");
+  const at = scripted(r, "aero", [{ pid: "saber_strike", target: "ilsa" }], () => 1).state;
+  const rc = at.receipts.find((x) => x.kind === "attack" && x.actor === "aero"); ok(rc && rc.mode === "advantage" && !at.actors.ilsa.conds.insight, "the caster's next attack against it has advantage and consumes it (even on a miss)");
+  ok(!("concentration" in r.actors.aero), "no concentration field exists yet (would be added by the proposed contract)"); }
 console.log(fails ? fails + " FAILED" : "all " + n + " passed"); process.exit(fails ? 1 : 0);
 }
