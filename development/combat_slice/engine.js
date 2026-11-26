@@ -572,6 +572,9 @@
   function endTurn(s0) {
     var s = clone(s0);
     if (s.over) return s;
+    // R-3 (owner 2026-11-25): an unused Feint lapses at the end of the feinter's own turn
+    var ender = current(s);
+    Object.keys(s.actors).forEach(function (t) { var f = s.actors[t].conds.feinted; if (f && f.by === ender) { delete s.actors[t].conds.feinted; log(s, ender, "The opening from the feint closes.", { ev: "feint_lapsed", actor: ender, target: t }); } });
     do { s.turn++; if (s.turn >= s.order.length) { s.turn = 0; s.round++; } } while (s.actors[current(s)].down);
     // reactions refresh at the start of each actor's own turn
     startTurn(s);
