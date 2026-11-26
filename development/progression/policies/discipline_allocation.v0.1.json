@@ -1,0 +1,32 @@
+{
+ "schema": "genesis-discipline-allocation/0.1",
+ "version": "0.1-experimental",
+ "status": "candidate",
+ "note": "EXPERIMENTAL weights for sandbox simulation. One committed observation → at most one primary mastery track + bounded Discipline pools. Never a duplicate mastery track; never from narration or an unlearned capability.",
+ "disciplines": ["force", "martial_arts", "armed_combat", "reaction_timing", "tactical_awareness", "marksmanship", "social_influence", "mobility", "equipment_handling"],
+ "bounds": { "max_pools_per_observation": 2, "max_pool_xp_per_observation": 1, "max_discipline_xp_per_observation": 2 },
+ "anti_farming": {
+  "social_influence": { "per_scene_cap": 2, "requires": "a committed social check with declared stakes" },
+  "mobility": { "per_scene_cap": 2, "requires": "a committed traversal challenge (climb, jump, balance, chase), never distance moved" },
+  "equipment_handling": { "per_scene_cap": 3, "requires": "handling under threat (an enemy within reach)" }
+ },
+ "rules": [
+  { "id": "saber_one_hand", "pids": ["saber_strike"], "primary": "mastery:lightsaber_one_hand", "pools": ["armed_combat"] },
+  { "id": "saber_two_hand", "pids": ["saber_strike_2h"], "primary": "mastery:lightsaber_two_hand", "pools": ["armed_combat"] },
+  { "id": "echani_strike", "pids": ["unarmed_strike", "flow_strike"], "primary": "mastery:echani_strike", "pools": ["martial_arts"] },
+  { "id": "parry", "pids": ["parry"], "primary": "mastery:lightsaber_defense", "pools": ["reaction_timing"], "when_fact": { "force_augmented": { "add_pools": ["force"] } } },
+  { "id": "grapple_family", "pids": ["grapple", "escape_grapple"], "primary": "mastery:grappling", "pools": ["martial_arts"], "parent_note": "escape shares the grappling parent track" },
+  { "id": "release_grapple", "pids": ["release_grapple"], "primary": null, "pools": [], "note": "letting go is trivial: no credit" },
+  { "id": "dodge_chain", "pids": ["readied_dodge", "dodge_reaction"], "primary": "mastery:dodge", "pools": ["reaction_timing"], "observation_from": "dodge_chain_id",
+    "note": "the readied dodge and the triggered dodge are ONE observation (setup + payoff); the setup alone earns nothing", "setup_only_pids": ["readied_dodge"] },
+  { "id": "telekinesis", "pids": ["minor_telekinesis"], "primary": "mastery:telekinetic_control", "pools": ["force"] },
+  { "id": "physical_recovery", "pids": ["recover_weapon"], "primary": null, "pools": ["equipment_handling"], "requires_fact": "threatened" },
+  { "id": "speech", "pids": ["speak"], "primary": null, "pools": ["social_influence"], "requires_fact": "social_check_committed" },
+  { "id": "traversal", "pids": ["traverse"], "primary": null, "pools": ["mobility"], "requires_fact": "traversal_challenge" },
+  { "id": "plain_move", "pids": ["move"], "primary": null, "pools": [], "note": "moving is not practice; footsteps earn nothing" },
+  { "id": "takedown", "pids": ["controlled_takedown"], "primary": "mastery:maneuver_controlled_takedown", "pools": ["martial_arts", "armed_combat"], "requires_owned": ["blade_bind", "controlled_takedown"],
+    "note": "a compound Maneuver is one observation credited to its own track; components are not separately credited for the same use" },
+  { "id": "tactical_glance", "pids": ["tactical_glance"], "primary": "mastery:perception_search", "pools": ["tactical_awareness"] },
+  { "id": "blaster", "pids": ["blaster_shot"], "primary": "mastery:blaster_pistol", "pools": ["marksmanship"] }
+ ]
+}
