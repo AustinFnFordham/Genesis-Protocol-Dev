@@ -141,5 +141,26 @@ function burstOnAero(state, choices, saveTotal, d4) {   // Ilsa (given Burst for
   const at = scripted(r, "aero", [{ pid: "saber_strike", target: "ilsa" }], () => 1).state;
   const rc = at.receipts.find((x) => x.kind === "attack" && x.actor === "aero"); ok(rc && rc.mode === "advantage" && !at.actors.ilsa.conds.insight, "the caster's next attack against it has advantage and consumes it (even on a miss)");
   ok(!("concentration" in r.actors.aero), "no concentration field exists yet (would be added by the proposed contract)"); }
+// ---- §8. Seed-sensitive regression (Codex: failing 782273157, control 477528826) ----
+// The server's die_value(seed, seq, sides) is an exact port of engine localDie (cross-checked: seed 782273157 seq 0..4 =
+// 20,7,6,15,4 in both). Replaying test_cc005b_server's duel in-process with that tape reproduces the server fight exactly.
+function boundDuel(seed) {
+  const legalP = (st, plan) => { const out = []; for (const x of plan) if (E.validatePlan(st, "aero", out.concat([x])).legal) out.push(x); return out; };
+  let s = E.newState(C, S, "duelist", { atomic: true }); s.tape = {}; let turns = 0; const rolls = { player: 0, gm: 0 }, turnsBy = { aero: 0, ilsa: 0 };
+  while (!s.over && turns < 40) { const a = E.current(s); turnsBy[a]++;
+    const plan = a === "aero" ? legalP(s, [{ pid: "recover_weapon" }, { pid: "move", dest: "close", target: "ilsa" }, { pid: "saber_strike", target: "ilsa" }, { pid: "unarmed_strike", target: "ilsa" }, { pid: "flow_strike", target: "ilsa" }]) : E.npcPlan(s, a);
+    let ch = {}, r; for (let k = 0; k < 80; k++) { r = E.resolveTurn(s, a, plan, ch);
+      if (r.need_dice) { r.need_dice.dice.forEach((d) => { s.tape[d.seq] = { seq: d.seq, sides: d.sides, value: E._localDie(seed, d.seq, d.sides) }; rolls[s.actors[r.need_dice.actor].controller === "player" ? "player" : "gm"]++; }); continue; }
+      if (r.paused) { ch[r.paused.key] = r.paused.options[0]; continue; } break; }
+    s = r.state; if (!s.over) s = E.endTurn(s); turns++; }
+  return { s, rolls, turnsBy };
+}
+{ ok([[0, 20], [1, 8], [2, 8], [3, 20], [4, 4]].map(([q, sd]) => E._localDie(782273157, q, sd)).join() === "20,7,6,15,4", "dice for seed 782273157 match the server's die_value (20,7,6,15,4)");
+  const f = boundDuel(782273157), L = f.s.log;
+  ok(f.s.over === "victory" && f.s.round === 1 && f.turnsBy.ilsa === 0, "failing seed: Aero wins on his first turn; Ilsa never takes a turn", [f.s.over, f.s.round, f.turnsBy]);
+  ok(f.rolls.player === 5 && f.rolls.gm === 0, "failing seed: exactly 5 player dice, 0 GM dice (the reported evidence)", f.rolls);
+  ok(L.some((l) => l.ev === "attack" && l.crit) && L.filter((l) => l.ev === "damage").map((l) => l.amount).join() === "16,4", "cause: natural-20 crit (2d8+3 = 16) then Flow Strike 4 → 0/20: a legitimate fight, not a missing GM step");
+  ok(!L.some((l) => l.refused), "no refused step, no skipped turn");
+  const g = boundDuel(477528826); ok(g.turnsBy.ilsa > 0 && g.rolls.gm > 0, "control seed: Ilsa acts and rolls GM dice", [g.turnsBy, g.rolls]); }
 console.log(fails ? fails + " FAILED" : "all " + n + " passed"); process.exit(fails ? 1 : 0);
 }

@@ -40,7 +40,13 @@ function legal(s, plan) { const out = []; for (const st of plan) if (E.validateP
     }
     ok(!!over && steps > 0 && playerRolls > 0, "a whole bound duel played with only the player token (server ran Ilsa)", [over, steps, playerRolls]);
     const jb = (await call("/atomic/journal", {})).body;
-    ok(jb.tape.filter((d) => d.roller === "gm").length > 0 && jb.tape.filter((d) => d.roller === "player").length === jb.tape.filter((d) => d.roller === "player").length, "GM dice were rolled by the server-side GM");
+    // Every die was rolled by its owner's side: Ilsa's by the server GM, Aero's by the player. (CC-007 §8: a duel can
+    // legitimately end before Ilsa ever rolls — e.g. seed 782273157, opening crit + Flow Strike — so "GM dice > 0" is not an
+    // invariant; ownership is. When Ilsa did act with dice, those dice must be GM-rolled.)
+    const rb = D.replay(C, S, jb).state, bySeq = {}; jb.tape.forEach((d) => (bySeq[d.seq] = d.roller));
+    const own = rb.receipts.every((r) => { for (let q = r.first_seq; q < r.seq; q++) if (bySeq[q] !== (rb.actors[r.actor].controller === "player" ? "player" : "gm")) return false; return true; });
+    const ilsaDice = rb.receipts.filter((r) => r.actor === "ilsa").reduce((n, r) => n + (r.seq - r.first_seq), 0), gmDice = jb.tape.filter((d) => d.roller === "gm").length;
+    ok(own && gmDice === ilsaDice && jb.tape.length > 0, "every die was rolled by its owner's side (GM dice = Ilsa's dice, server-rolled)", [own, gmDice, ilsaDice, jb.tape.length]);
     ok((await call("/atomic/state", {})).status === 403 && (await call("/atomic/view", { as: "gm" })).body.view.projection === "player", "bound: no debug view for the player (state refused; view is the player projection)");
     // ---- projection contents ----
     const v = (await call("/atomic/view", {})).body.view, txt = JSON.stringify(v), real = D.replay(C, S, jb).state;
