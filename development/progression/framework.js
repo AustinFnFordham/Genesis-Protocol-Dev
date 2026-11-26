@@ -7,7 +7,9 @@ const crypto = require("crypto");
 const CURVES = require("./curves.js");
 const sha = (s) => crypto.createHash("sha256").update(s).digest("hex");
 const clone = (x) => JSON.parse(JSON.stringify(x));
-const stable = (o) => JSON.stringify(o, Object.keys(o).sort());
+// canonical JSON (deep, sorted keys) so nested grants/statuses are covered by receipt hashes
+const canon = (v) => Array.isArray(v) ? v.map(canon) : v && typeof v === "object" ? Object.keys(v).sort().reduce((o, k) => ((o[k] = canon(v[k])), o), {}) : v;
+const stable = (o) => JSON.stringify(canon(o));
 const SCHEMA = "genesis-progression-tree/0.1", CHAR_SCHEMA = "genesis-progression-character/0.1";
 const LAYERS = ["class", "archetype", "species", "proficiency", "specialized_mastery", "parent_linked", "discipline"];
 const QUANTITIES = ["class_xp", "mastery_xp", "discipline_xp", "none"];
