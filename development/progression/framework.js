@@ -145,7 +145,7 @@ function commit(ch) {
     const st = trackState(s, rc.track); if (st.xp !== rc.xp_before) return { ok: false, code: "STALE_PENDING", state: s };
     s.tracks[rc.track] = { level: rc.level_after, xp: rc.xp_after }; if (rc.quantity === "class_xp") s.ledger.class_xp = rc.xp_after; s.applied[key] = rc.id; s.receipts.push(rc); return { ok: true, receipt: rc, state: s }; }
   if (rc.kind === "select") { if (s.held[rc.track + "/" + rc.node]) return { ok: true, duplicate: true, state: s };
-    s.held[rc.track + "/" + rc.node] = { txn: rc.id, offer: rc.offer_id, at_level: rc.at_level }; (rc.grants || []).forEach((g) => { if (g.type === "feature" || g.type === "profile") s.features.push(g.ref); });
+    s.held[rc.track + "/" + rc.node] = { txn: rc.id, offer: rc.offer_id, at_level: rc.at_level }; (rc.grants || []).forEach((g) => { if ((g.type === "feature" || g.type === "profile" || g.type === "track_unlock") && (g.repeatable || !s.features.includes(g.ref))) s.features.push(g.ref); });
     if (rc.offer_id && s.offers[rc.offer_id]) s.offers[rc.offer_id].resolved = rc.node; s.txns.push(rc); s.receipts.push(rc); return { ok: true, receipt: rc, state: s }; }
   return { ok: false, code: "UNKNOWN_TXN" };
 }

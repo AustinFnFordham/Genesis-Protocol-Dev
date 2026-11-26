@@ -1,0 +1,79 @@
+{
+ "status": "sandbox evidence — candidate content, not canonical",
+ "class_level": 3,
+ "class_xp": 900,
+ "tracks": {
+  "class:sentinel": {
+   "level": 3,
+   "xp": 900
+  },
+  "mastery:echani_strike": {
+   "level": 6,
+   "xp": 190
+  },
+  "discipline:martial_arts": {
+   "level": 6,
+   "xp": 190
+  }
+ },
+ "features": [
+  "feature:force_connection",
+  "feature:sentinel_balance",
+  "feature:martial_arts_training",
+  "feature:combat_discipline",
+  "feature:combat_communication",
+  "feature:investigation_focus",
+  "archetype:sentinel_sentry",
+  "feature:sentry_sentry_s_focus",
+  "feature:candidate_watchful_post",
+  "feature:candidate_quick_followup"
+ ],
+ "picks": [
+  {
+   "offer": [
+    "investigation_focus_2",
+    "diplomacy_focus_2"
+   ],
+   "picked": "investigation_focus_2",
+   "milestone": 2,
+   "track": "class:sentinel"
+  },
+  {
+   "offer": [
+    "archetype_diplomat",
+    "archetype_shadow_guard",
+    "archetype_artisan",
+    "archetype_investigator",
+    "archetype_racer",
+    "archetype_sentry",
+    "archetype_shadow",
+    "archetype_shien_expert"
+   ],
+   "picked": "archetype_sentry",
+   "milestone": 3,
+   "track": "class:sentinel"
+  },
+  {
+   "offer": [
+    "candidate_watchful_post",
+    "candidate_guardian_reflex",
+    "candidate_threat_read"
+   ],
+   "picked": "candidate_watchful_post",
+   "milestone": 3,
+   "track": "archetype:sentinel_sentry"
+  },
+  {
+   "offer": [
+    "candidate_quick_followup",
+    "candidate_pressure_point",
+    "candidate_low_sweep"
+   ],
+   "picked": "candidate_quick_followup",
+   "milestone": 3,
+   "track": "mastery:echani_strike"
+  }
+ ],
+ "receipts": 392,
+ "sheet_sha256_unchanged": "14f67ba242ae7d86ad4a699e46a2294998a83524ec7c06aeed0bca4a01dd8d90"
+}

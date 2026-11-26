@@ -1,0 +1,201 @@
+{
+ "schema": "genesis-source-extract/0.1",
+ "note": "Read-only extract of source facts used by the CC-008 Aero vertical fixture. Nothing here is canonical by being extracted.",
+ "archive": {
+  "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip",
+  "sha256": "0e2b6a5f8b37000a83d099d0d18655b6fca9280ccad001f70e9d4cc46acbdb7b"
+ },
+ "sentinel_subclasses": [
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel.diplomat.yml",
+   "ids_in_file": [
+    "sentinel_diplomat"
+   ],
+   "resolved_id": "sentinel_diplomat",
+   "name": "Diplomat",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    13,
+    17,
+    19
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel.shadow_guard.yml",
+   "ids_in_file": [
+    "sentinel_shadow_guard"
+   ],
+   "resolved_id": "sentinel_shadow_guard",
+   "name": "Shadow Guard",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    13,
+    17,
+    19
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_artisan.yml",
+   "ids_in_file": [
+    "artisan"
+   ],
+   "resolved_id": "artisan",
+   "name": "Artisan",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_investigator.yml",
+   "ids_in_file": [
+    "sentinel_sentinel_investigator",
+    "investigator"
+   ],
+   "resolved_id": "investigator",
+   "name": "Investigator",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_racer.yml",
+   "ids_in_file": [
+    "racer"
+   ],
+   "resolved_id": "racer",
+   "name": "Racer",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_sentry.yml",
+   "ids_in_file": [
+    "sentinel_sentinel_sentry",
+    "sentry"
+   ],
+   "resolved_id": "sentry",
+   "name": "Sentry",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_shadow.yml",
+   "ids_in_file": [
+    "shadow"
+   ],
+   "resolved_id": "shadow",
+   "name": "Shadow",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  },
+  {
+   "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_shien_expert.yml",
+   "ids_in_file": [
+    "sentinel_sentinel_shien_expert",
+    "shien_expert"
+   ],
+   "resolved_id": "shien_expert",
+   "name": "Shien Expert",
+   "base_class": "sentinel",
+   "tree_levels": [
+    3,
+    7,
+    11,
+    15,
+    18
+   ]
+  }
+ ],
+ "sentry": {
+  "member": "SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_sentry.yml",
+  "specialization_features": [
+   "sentry_watch",
+   "area_protection",
+   "guardian_mastery",
+   "sentry_mastery",
+   "legendary_sentry"
+  ],
+  "progression_tree": [
+   {
+    "node_id": "sentry-protector-feature-level-3",
+    "feature_id": "Sentry's Focus",
+    "level": 3,
+    "description": "You develop a heightened sense of awareness, granting you advantage on Wisdom (Perception) checks."
+   },
+   {
+    "node_id": "sentry-guardian-feature-level-7",
+    "feature_id": "Guardianship",
+    "level": 7,
+    "description": "You can use your reaction to grant a friendly creature within 30 feet temporary hit points equal to 1d8 + your proficiency bonus."
+   },
+   {
+    "node_id": "sentry-sentinel-feature-level-11",
+    "feature_id": "Sentinel's Posture",
+    "level": 11,
+    "description": "You become more imposing in combat, granting you advantage on Intimidation checks and making creatures within 10 feet of you have disadvantage on attack rolls against you."
+   },
+   {
+    "node_id": "sentry-vigilant-feature-level-15",
+    "feature_id": "Vigilant Watcher",
+    "level": 15,
+    "description": "You can use your action to enter a state of heightened vigilance, granting you a bonus to initiative rolls and allowing you to move up to your speed without provoking opportunity attacks."
+   },
+   {
+    "node_id": "sentry-defender-feature-level-18",
+    "feature_id": "Defender's Shield",
+    "level": 18,
+    "description": "You can use your reaction to create a barrier of protection, granting you and up to two friendly creatures within 10 feet of you resistance to one damage type (acid, cold, fire, lightning, or poison)."
+   }
+  ]
+ },
+ "echani": {
+  "member": "SW5e_Data_Hub/official_species_playable/echani.yml",
+  "size": "Medium",
+  "speed": 30,
+  "innate_traits": [
+   "Martial Arts Training",
+   "Combat Discipline",
+   "Combat Communication"
+  ],
+  "tiers": {
+   "level_5": "You can use your reaction to gain advantage on your next attack roll against a creature you've successfully analyzed in combat.",
+   "level_10": "You can use your action to gain advantage on all Dexterity-based skill checks for the next minute when in combat or martial training.",
+   "level_15": "When using unarmed strikes, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced martial arts mastery.",
+   "level_20": "You have advantage on all saving throws against being surprised or charmed, and you can use your reaction to make an unarmed strike against any creature that attempts to grapple you."
+  }
+ }
+}
