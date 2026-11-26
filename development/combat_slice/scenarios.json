@@ -105,7 +105,9 @@
     "name": "Off-hand blaster + saber in one turn",
     "why": "Only one Main action; the sheet grants no extra attack."
    }
-  ]
+  ],
+  "size": "medium",
+  "size_source": "fixture: Echani are humanoid; size is not on aero_character_runtime.yml"
  },
  "scenarios": {
   "duelist": {
@@ -165,7 +167,9 @@
        "recover_weapon"
       ]
      },
-     "policy": "duelist"
+     "policy": "duelist",
+     "size": "medium",
+     "size_source": "fixture default (no size in any source; pending owner data)"
     }
    }
   },
@@ -217,7 +221,9 @@
        "move"
       ]
      },
-     "policy": "ambusher"
+     "policy": "ambusher",
+     "size": "medium",
+     "size_source": "fixture default (no size in any source; pending owner data)"
     }
    }
   },
@@ -275,7 +281,9 @@
       "hp": "7 — playtest 001 'Malfunctioning Relay Droid 7hp'",
       "ac": "13 — playtest 001 roll line 'vs 13'",
       "approval": "approved: sandbox fixture only (owner 2026-11-22)"
-     }
+     },
+     "size": "medium",
+     "size_source": "fixture default (no size in any source; pending owner data)"
     }
    }
   }

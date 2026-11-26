@@ -61,7 +61,24 @@
     "rules": "Melee attacks against a prone creature have advantage. A prone creature attacks with disadvantage. It stands at the start of its own turn, spending 15 ft of movement."
    }
   },
-  "rules_version": "cc-sandbox-0.5"
+  "rules_version": "cc-sandbox-0.5",
+  "universal_profiles": [
+   "escape_grapple",
+   "release_grapple"
+  ],
+  "universal_profiles_note": "Basic grapple counterplay available to every combatant (CC-007 C, owner R-4).",
+  "sizes": [
+   "tiny",
+   "small",
+   "medium",
+   "large",
+   "huge",
+   "gargantuan"
+  ],
+  "grapple_drag": {
+   "movement_multiplier": 2,
+   "source": "aero_character_runtime.yml Echani Grappling Training: 'Drag at half speed'"
+  }
  },
  "profiles": {
   "saber_strike": {
@@ -777,7 +794,8 @@
     "reach_ft": 5,
     "target": "enemy",
     "offhand_free": true,
-    "not_grappled_by_me": true
+    "not_grappled_by_me": true,
+    "max_size_over": 1
    },
    "resolution": {
     "type": "contest",
@@ -787,9 +805,9 @@
    },
    "effect": {
     "on_success": "grappled",
-    "note": "Its speed becomes 0 while you hold it. No damage, no advantage by itself. Moving away releases it."
+    "note": "Its speed becomes 0 while you hold it. No damage, no advantage by itself. It may spend its action to escape (contest). Move with drag to haul it at half speed; moving without drag, letting go, either of you going down, or it ending up out of reach releases it."
    },
-   "rules": "Special melee attack (uses your Main action here): with a free hand, a +5 martial check against its better of Athletics or Acrobatics. Success: grappled, speed 0. Deals no damage.",
+   "rules": "Special melee attack (uses your Main action here): with a free hand, a +5 martial check against its better of Athletics or Acrobatics; the target may be at most one size larger. Success: grappled, speed 0. Deals no damage. Escape, drag and release: see effect.",
    "source": "aero_character_runtime.yml features: Echani Grappling Training (+5 vs Athletics/Acrobatics, free hand, no damage)"
   },
   "lightsaber_deflect": {
@@ -940,6 +958,45 @@
     "substituting for an unlearned combat Force power"
    ],
    "sandbox_adaptation": "Repositioning a dropped weapon has a positional consequence only (30 ft of movement to recover). Genesis adaptation, pending owner review."
+  },
+  "escape_grapple": {
+   "name": "Escape Grapple",
+   "maneuver": "Escape",
+   "technique": "Break the hold",
+   "status": "sheet",
+   "cost": {
+    "main": 1
+   },
+   "requires": {
+    "condition": "grappled"
+   },
+   "resolution": {
+    "type": "escape_contest",
+    "actor_skill": "athletics_or_acrobatics",
+    "against": "grappler_check"
+   },
+   "effect": {
+    "on_success": "escaped",
+    "note": "Ties go to the grappler (R-1 defender-wins-ties)."
+   },
+   "rules": "While grappled, use your action: your better of Athletics or Acrobatics against the grappler's grapple check. Success ends the grapple.",
+   "source": "aero_character_runtime.yml Echani Grappling Training: 'target may use its action for a contested escape' (applied to every grappled creature)"
+  },
+  "release_grapple": {
+   "name": "Release Grapple",
+   "maneuver": "Release",
+   "technique": "Let go",
+   "status": "sheet",
+   "cost": {},
+   "requires": {
+    "condition": "grappling"
+   },
+   "resolution": null,
+   "effect": {
+    "note": "The hold ends."
+   },
+   "rules": "Let go of a creature you hold, freely.",
+   "source": "aero_character_runtime.yml Echani Grappling Training: 'release freely'"
   }
  },
  "forms": {

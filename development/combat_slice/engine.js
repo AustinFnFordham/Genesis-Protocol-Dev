@@ -62,6 +62,7 @@
       a.conds = {}; if (a.hidden) a.conds.hidden = true; delete a.hidden;
       a.used = {}; a.down = false; a.dropped = null; a.reaction_left = 1;
       a.profiles = [].concat((a.grants && a.grants.sheet) || [], (a.grants && a.grants.sandbox_proposal) || []);
+      ((catalog.ruleset || {}).universal_profiles || []).forEach(function (u) { if (catalog.profiles[u] && a.profiles.indexOf(u) < 0) a.profiles.push(u); });
       a.campaign_grants = [];
       // Campaign-grant overlay (e.g. Jedi Fundamentals): applies ONLY when the session's campaign is in the rule's scope
       // AND the rule names this character. Never edits the sheet or powers_known.
@@ -108,6 +109,7 @@
     if (pid === "move") {
       var t = step.target; var d = t ? proj.dist[key(actorId, t)] : null;
       c = { movement_ft: step.dest === "close" ? Math.max(0, (d == null ? 60 : d) - 5) : 15 };
+      if (step.drag) c.movement_ft *= ((s.catalog.ruleset.grapple_drag || {}).movement_multiplier || 2);   // dragging: half speed
     }
     if (step.augment) c.fp = (c.fp || 0) + 1;
     return c;
@@ -163,6 +165,9 @@
         if (r.target_holds_weapon && !(T.weapon && T.weapon.held)) why.push({ code: "TARGET_UNARMED", text: "It holds no weapon." });
         if (r.max_range_ft && d > r.max_range_ft) why.push({ code: "OUT_OF_RANGE", text: "Out of range (" + d + " ft; max " + r.max_range_ft + ")." });
         if (r.not_grappled_by_me && T.conds.grappled && T.conds.grappled.by === actorId) why.push({ code: "ALREADY_GRAPPLED", text: "You already hold it." });
+        if (r.max_size_over != null) { var SZ = s.catalog.ruleset.sizes || [], sa_ = SZ.indexOf(a.size), st_ = SZ.indexOf(T.size);
+          if (sa_ < 0 || st_ < 0) why.push({ code: "SIZE_UNKNOWN", text: "Size data is missing; the size limit can't be checked." });
+          else if (st_ - sa_ > r.max_size_over) why.push({ code: "TOO_LARGE", text: "Too large to grapple (at most one size larger than you)." }); }
       }
     }
     if (step.augment) {
@@ -171,6 +176,7 @@
       else if (proj.used["cap:augment"]) why.push({ code: "CAP_REACHED", text: "Force-guided once per turn." });
     }
     if (pid === "move" && proj.conds.grappled) why.push({ code: "GRAPPLED", text: "Grappled: your speed is 0." });
+    if (pid === "move" && step.drag && !proj.conds.grappling) why.push({ code: "NOT_GRAPPLING", text: "You aren't holding anyone to drag." });
     if (pid === "move") {
       if (step.dest === "close" && !(step.target && s.actors[step.target] && visibleTo(s, actorId, step.target))) why.push({ code: "NO_TARGET", text: "Choose who to close on." });
     }
@@ -187,6 +193,12 @@
       var k = key(actorId, step.target), d = proj.dist[k] == null ? 60 : proj.dist[k];
       proj.dist[k] = step.dest === "close" ? 5 : d + 15;
     } else if (pid === "move") enemiesOfProj(s, actorId).forEach(function (e) { var k2 = key(actorId, e); proj.dist[k2] = (proj.dist[k2] == null ? 60 : proj.dist[k2]) + 15; });
+    if (pid === "move" && proj.conds.grappling) {
+      var gt = proj.conds.grappling.target;
+      if (step.drag && gt) { proj.dist[key(actorId, gt)] = 5; }
+      else delete proj.conds.grappling;
+    }
+    if (pid === "release_grapple") delete proj.conds.grappling;
     if (pid === "toggle_blade" && proj.weapon) proj.weapon.ignited = !proj.weapon.ignited;
     if (pid === "draw_sidearm" && proj.sidearm) proj.sidearm.held = true;
     if (pid === "holster_sidearm" && proj.sidearm) proj.sidearm.held = false;
@@ -413,7 +425,16 @@
     return win;
   }
 
-  function execStep(s, ctrl, actorId, step) {
+  // A hold ends when either side is down, when they are no longer within 5 ft, or when the grappler lets go / moves without dragging.
+  function checkGrapples(s) {
+    Object.keys(s.actors).forEach(function (id) { var a = s.actors[id], g = a.conds.grappling; if (!g) return; var T = s.actors[g.target];
+      var why = !T ? "gone" : a.down ? "grappler_down" : T.down ? "target_down" : distance(s, id, g.target) > 5 ? "out_of_reach" : !(T.conds.grappled && T.conds.grappled.by === id) ? "escaped" : null;
+      if (!why) return; delete a.conds.grappling; if (T && T.conds.grappled && T.conds.grappled.by === id) delete T.conds.grappled;
+      log(s, id, "The hold breaks" + (why === "grappler_down" ? " as " + a.name + " goes down." : why === "target_down" ? "." : why === "out_of_reach" ? ": they are pulled apart." : "."), { ev: "release", actor: id, target: g.target, why: why }); });
+    Object.keys(s.actors).forEach(function (id) { var c = s.actors[id].conds.grappled; if (c && !(s.actors[c.by] && s.actors[c.by].conds.grappling && s.actors[c.by].conds.grappling.target === id)) delete s.actors[id].conds.grappled; });
+  }
+  function execStep(s, ctrl, actorId, step) { var r_ = execStep_(s, ctrl, actorId, step); checkGrapples(s); return r_; }
+  function execStep_(s, ctrl, actorId, step) {
     var a = s.actors[actorId], p = profile(s, step.pid);
     var av = availability(s, actorId, step.pid, step, project(s, actorId));   // revalidate against current, real state
     if (!av.ok) { log(s, actorId, a.name + " cannot " + p.name + " now: " + av.reasons.map(function (r) { return r.text; }).join(" "), { refused: true }); return false; }
@@ -423,6 +444,17 @@
     if (step.augment) a.used["cap:augment"] = 1;
     var T = step.target && s.actors[step.target];
     if (step.pid === "move") return doMove(s, ctrl, actorId, step);
+    if (step.pid === "release_grapple") { var hg = a.conds.grappling.target; delete a.conds.grappling; if (s.actors[hg]) delete s.actors[hg].conds.grappled; log(s, actorId, a.name + " lets go.", { ev: "release", actor: actorId, target: hg, why: "released" }); return true; }
+    if (step.pid === "escape_grapple") {
+      var gid = a.conds.grappled.by, G = s.actors[gid], gp = (G.profiles.indexOf("grapple") >= 0 && profile(s, "grapple").resolution.actor_bonus != null) ? profile(s, "grapple").resolution.actor_bonus : (G.skills.athletics || 0);
+      var em = Math.max(a.skills.athletics || 0, a.skills.acrobatics || 0);
+      var ea = rollDice(s, actorId, "Escape Grapple (athletics/acrobatics)", "1d20" + (em >= 0 ? "+" : "") + em, { kind: "contest", vs: { type: "opposed", target: gid } });
+      var eg = rollDice(s, gid, "holds against the escape (grapple check)", "1d20" + (gp >= 0 ? "+" : "") + gp, { kind: "contest", vs: { type: "opposed_against", target: actorId, value: ea.total } });
+      var esc_ = ea.total > eg.total;   // R-1: ties go to the defender (the grappler)
+      log(s, actorId, a.name + " — Escape Grapple: " + ea.total + " vs " + eg.total + " → " + (esc_ ? "breaks free" : "still held"), { receipt: ea.receipt + "," + eg.receipt, ev: "contest", actor: actorId, target: gid, pid: "escape_grapple", a: ea.total, t: eg.total, win: esc_ });
+      if (esc_) { delete a.conds.grappled; if (G.conds.grappling && G.conds.grappling.target === actorId) delete G.conds.grappling; log(s, actorId, a.name + " breaks the hold.", { ev: "release", actor: gid, target: actorId, why: "escaped" }); }
+      return true;
+    }
     if (step.pid === "speak") { log(s, actorId, a.name + ": “" + (step.text || "…") + "”", { speech: true }); return true; }
     if (step.pid === "toggle_blade") { a.weapon.ignited = !a.weapon.ignited; log(s, actorId, a.name + (a.weapon.ignited ? " ignites" : " deactivates") + " the blade."); return true; }
     if (step.pid === "minor_telekinesis") {
@@ -512,9 +544,10 @@
   }
   function doMove(s, ctrl, actorId, step) {
     var a = s.actors[actorId];
-    if (a.conds.grappling) { var g = a.conds.grappling.target; delete a.conds.grappling; if (s.actors[g]) delete s.actors[g].conds.grappled; log(s, actorId, a.name + " lets go of the hold to move.", { ev: "release", actor: actorId }); }
+    var dragged = a.conds.grappling && step.drag ? a.conds.grappling.target : null;
+    if (a.conds.grappling && !dragged) { var g = a.conds.grappling.target; delete a.conds.grappling; if (s.actors[g]) delete s.actors[g].conds.grappled; log(s, actorId, a.name + " lets go of the hold to move.", { ev: "release", actor: actorId, target: g, why: "moved" }); }
     // leaving reach of adjacent enemies provokes (closing on a target does not)
-    var leaving = enemiesOf(s, actorId).filter(function (e) { return distance(s, actorId, e) <= 5 && !(step.dest === "close" && e === step.target); });
+    var leaving = enemiesOf(s, actorId).filter(function (e) { return distance(s, actorId, e) <= 5 && e !== dragged && !(step.dest === "close" && e === step.target); });
     for (var i = 0; i < leaving.length; i++) {
       var e = leaving[i], E = s.actors[e];
       if (E.reaction_left < 1 || E.down) continue;
@@ -525,6 +558,11 @@
     }
     if (step.dest === "close") { setDistance(s, actorId, step.target, 5); log(s, actorId, a.name + " closes on " + s.actors[step.target].name + ".", { ev: "close", actor: actorId, target: step.target }); }
     else { enemiesOf(s, actorId).forEach(function (e2) { setDistance(s, actorId, e2, distance(s, actorId, e2) + 15); }); log(s, actorId, a.name + " withdraws 15 ft."); }
+    if (dragged && s.actors[dragged]) {   // the held creature comes along, at half speed (cost already doubled)
+      setDistance(s, actorId, dragged, 5);
+      Object.keys(s.actors).forEach(function (o) { if (o !== actorId && o !== dragged) setDistance(s, dragged, o, distance(s, actorId, o)); });
+      log(s, actorId, a.name + " drags " + s.actors[dragged].name + " along.", { ev: "drag", actor: actorId, target: dragged });
+    }
     // a feint only holds while you stay engaged
     Object.keys(s.actors).forEach(function (t) { var f = s.actors[t].conds.feinted; if (f && (f.by === actorId || t === actorId) && distance(s, f.by, t) > 5) { delete s.actors[t].conds.feinted; log(s, t, "The feint's opening closes as the distance opens."); } });
     return true;
@@ -573,6 +611,7 @@
     var s = clone(s0);
     if (s.over) return s;
     // R-3 (owner 2026-11-25): an unused Feint lapses at the end of the feinter's own turn
+    checkGrapples(s);
     var ender = current(s);
     Object.keys(s.actors).forEach(function (t) { var f = s.actors[t].conds.feinted; if (f && f.by === ender) { delete s.actors[t].conds.feinted; log(s, ender, "The opening from the feint closes.", { ev: "feint_lapsed", actor: ender, target: t }); } });
     do { s.turn++; if (s.turn >= s.order.length) { s.turn = 0; s.round++; } } while (s.actors[current(s)].down);
@@ -586,6 +625,7 @@
     var a = s.actors[actorId], foes = enemiesOf(s, actorId).filter(function (e) { return visibleTo(s, actorId, e); });
     if (!foes.length) return [];
     var t = foes[0], d = distance(s, actorId, t), plan = [];
+    if (a.conds.grappled && a.profiles.indexOf("escape_grapple") >= 0) return [{ pid: "escape_grapple" }];   // a held NPC spends its action to break free
     if (a.policy === "ambusher") {
       if (a.conds.hidden && d <= 25) return [{ pid: "pounce", target: t }];
       if (d > 5 && !a.conds.grappled) plan.push({ pid: "move", dest: "close", target: t });

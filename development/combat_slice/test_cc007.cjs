@@ -61,5 +61,46 @@ for (const pid of ["feint", "blade_bind", "grapple"]) {   // defender wins ties,
     if (need.actor === "aero") { aTot = 10 + mod(need.formula); return 10; } return aTot - mod(need.formula); });
   const c = r.state.log.find((l) => l.ev === "contest");
   ok(c && c.a === c.t && /fails/.test(c.text), pid + ": a tied contest goes to the defender", c); }
+// ---- C. Grapple basics (R-4; aero_character_runtime.yml Echani Grappling Training) ----
+const win = (who) => (need, i, d) => { if (!/contest/.test(need.kind || "") && !/resists|holds against|Escape/.test(need.purpose || "")) return 1; return need.actor === who ? 19 : 2; };
+function held(seed) { const b = E.newState(C, S, "duelist", { seed: seed || 7 }); b.dist["aero|ilsa"] = 5;
+  const r = scripted(b, "aero", [{ pid: "grapple", target: "ilsa" }], win("aero")); return r.state; }
+{ const b = E.newState(C, S, "duelist", { seed: 7 }); b.dist["aero|ilsa"] = 5;
+  const av = (sz) => { const x = JSON.parse(JSON.stringify(b)); x.actors.ilsa.size = sz; return E.availability(x, "aero", "grapple", { pid: "grapple", target: "ilsa" }); };
+  ok(av("large").ok, "size: one size larger can be grappled");
+  ok(!av("huge").ok && av("huge").reasons.some((r) => r.code === "TOO_LARGE"), "size: two sizes larger is refused (TOO_LARGE)");
+  ok(av(undefined).reasons.some((r) => r.code === "SIZE_UNKNOWN"), "size: missing size data refuses rather than guessing (SIZE_UNKNOWN)");
+  const v = E.validatePlan(b, "aero", [{ pid: "grapple", target: "ilsa" }]); ok(v.legal && v.steps[0].cost.main === 1, "grapple costs the Main action (special melee attack, one attack per Main here)"); }
+{ const s = held(); ok(s.actors.ilsa.conds.grappled && s.actors.aero.conds.grappling, "fixture: Aero holds Ilsa");
+  ok(E.availability(s, "aero", "release_grapple", { pid: "release_grapple" }).ok && JSON.stringify(E.availability(s, "aero", "release_grapple", { pid: "release_grapple" }).cost) === "{}", "release is free (no budget)");
+  const rel = E.resolveTurn(s, "aero", [{ pid: "release_grapple" }], {}).state; ok(!rel.actors.ilsa.conds.grappled && !rel.actors.aero.conds.grappling && rel.actors.aero.budget.main === s.actors.aero.budget.main, "releasing ends the hold and spends nothing");
+  // drag: half speed
+  const t0 = JSON.parse(JSON.stringify(s)); t0.actors.aero.budget.movement_ft = 30;
+  const v = E.validatePlan(t0, "aero", [{ pid: "move", dest: "withdraw", drag: true }]); ok(v.legal && v.steps[0].cost.movement_ft === 30, "dragging costs double movement (15 ft withdraw → 30 ft)", v.steps[0]);
+  const dr = E.resolveTurn(t0, "aero", [{ pid: "move", dest: "withdraw", drag: true }], {}).state;
+  ok(!!dr.actors.ilsa.conds.grappled && !!dr.actors.aero.conds.grappling, "drag: the hold is kept");
+  ok(dr.dist["aero|ilsa"] === 5 && dr.log.some((l) => l.ev === "drag") && !dr.log.some((l) => /opportunity/.test(l.text || "")), "drag: the held creature stays adjacent and provokes no opportunity attack", dr.dist);
+  const t1 = JSON.parse(JSON.stringify(s)); t1.actors.aero.budget.movement_ft = 10;
+  ok(!E.validatePlan(t1, "aero", [{ pid: "move", dest: "withdraw", drag: true }]).legal, "drag needs the doubled movement (10 ft left: refused)");
+  const nd = scripted(s, "aero", [{ pid: "move", dest: "withdraw" }], () => 1).state;   // leaving reach provokes Ilsa's opportunity attack
+  ok(!nd.actors.ilsa.conds.grappled && nd.log.some((l) => l.ev === "release" && l.why === "moved"), "moving without drag releases the hold");
+  const fresh = E.newState(C, S, "duelist", { seed: 7 }); ok(E.validatePlan(fresh, "aero", [{ pid: "move", dest: "withdraw", drag: true }]).steps[0].reasons.some((r) => r.code === "NOT_GRAPPLING"), "drag without a hold is refused (NOT_GRAPPLING)"); }
+{ // escape contest on Ilsa's turn: NPC policy tries to escape; tie keeps the hold; a win breaks it; it costs her Main
+  let s = E.endTurn(held());
+  ok(JSON.stringify(E.npcPlan(s, "ilsa")) === JSON.stringify([{ pid: "escape_grapple" }]), "a held NPC spends its action trying to escape");
+  let aTot; const tie = scripted(s, "ilsa", [{ pid: "escape_grapple" }], (need) => { if (need.actor === "ilsa") { aTot = 10 + mod(need.formula); return 10; } return aTot - mod(need.formula); });
+  const c = tie.state.log.find((l) => l.pid === "escape_grapple"); ok(c && c.a === c.t && tie.state.actors.ilsa.conds.grappled, "escape tie goes to the grappler (R-1)", c);
+  ok(tie.state.actors.ilsa.budget.main === 0, "escape spends the escaper's Main action");
+  const out = scripted(s, "ilsa", [{ pid: "escape_grapple" }], win("ilsa")).state;
+  ok(!out.actors.ilsa.conds.grappled && !out.actors.aero.conds.grappling, "winning the escape ends the hold for both sides");
+  const r = out.receipts.filter((x) => x.kind === "contest").slice(-2); ok(r.length === 2 && r[1].formula === "1d20+5", "escape is opposed by the grappler's grapple check (+5)", r.map((x) => x.formula)); }
+{ // release conditions: the held creature going down; the grappler going down
+  let s = E.endTurn(held()); s = E.endTurn(E.resolveTurn(s, "ilsa", [], {}).state);   // Aero's next turn, still holding
+  s.actors.ilsa.hp = 1; s.actors.ilsa.ac = 1;
+  const k = scripted(s, "aero", [{ pid: "unarmed_strike", target: "ilsa" }], (need, i, d) => need.actor === "aero" ? (d.sides === 20 ? 15 : 4) : 1).state;
+  ok(k.actors.ilsa.down && !k.actors.aero.conds.grappling && k.log.some((l) => l.ev === "release" && l.why === "target_down"), "the hold ends when the held creature goes down");
+  const g = held(); g.actors.aero.down = true; const e = E.endTurn(g); ok(!e.actors.aero.conds.grappling && !e.actors.ilsa.conds.grappled, "the hold ends when the grappler goes down"); }
+{ const s = held(); const e = E.endTurn(s); ok(!E.availability(e, "ilsa", "move", { pid: "move", dest: "withdraw" }).ok, "the held creature's speed is 0");
+  ok(E.availability(s, "aero", "escape_grapple", { pid: "escape_grapple" }).reasons.some((r) => r.code === "NEEDS_GRAPPLED"), "you can only escape while grappled"); }
 console.log(fails ? fails + " FAILED" : "all " + n + " passed"); process.exit(fails ? 1 : 0);
 }
