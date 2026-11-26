@@ -1,0 +1,172 @@
+{
+ "N": 2000,
+ "seeds": "1000003*i+17",
+ "results": {
+  "duelist:A": {
+   "win_pct": 32.5,
+   "rounds": 2.25,
+   "aero_dmg_per_turn": 5.95,
+   "dmg_taken_per_fight": 11.35,
+   "secondary_use_pct": 100,
+   "feint_pct": 73.8,
+   "feint_success_pct": 43.7,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 1.64,
+   "plan_variety_bits": 2.11,
+   "distinct_plans": 7,
+   "top_plans": [
+    "move+feint+saber_strike+flow_strike 45%",
+    "feint+saber_strike+flow_strike 23%",
+    "readied_dodge+saber_strike+flow_strike 17%"
+   ]
+  },
+  "duelist:B": {
+   "win_pct": 30.6,
+   "rounds": 2.35,
+   "aero_dmg_per_turn": 5.32,
+   "dmg_taken_per_fight": 11.51,
+   "secondary_use_pct": 0,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 1.61,
+   "distinct_plans": 4,
+   "top_plans": [
+    "move+saber_strike+flow_strike 43%",
+    "saber_strike+flow_strike 41%",
+    "recover_weapon+unarmed_strike+flow_strike 13%"
+   ]
+  },
+  "duelist:C": {
+   "win_pct": 34.3,
+   "rounds": 2.85,
+   "aero_dmg_per_turn": 4.76,
+   "dmg_taken_per_fight": 11.22,
+   "secondary_use_pct": 100,
+   "feint_pct": 70.6,
+   "feint_success_pct": 44.1,
+   "flow_strike_pct": 0,
+   "flow_lost_to_opener_pct": 100,
+   "npc_feints_per_fight": 2.27,
+   "plan_variety_bits": 2.36,
+   "distinct_plans": 7,
+   "top_plans": [
+    "move+feint+saber_strike 35%",
+    "feint+saber_strike 25%",
+    "readied_dodge+saber_strike 18%"
+   ]
+  },
+  "predator:A": {
+   "win_pct": 62,
+   "rounds": 2.25,
+   "aero_dmg_per_turn": 8.04,
+   "dmg_taken_per_fight": 8.79,
+   "secondary_use_pct": 50.4,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 1,
+   "distinct_plans": 2,
+   "top_plans": [
+    "readied_dodge+saber_strike+flow_strike 50%",
+    "saber_strike+flow_strike 50%"
+   ]
+  },
+  "predator:B": {
+   "win_pct": 58.8,
+   "rounds": 2.13,
+   "aero_dmg_per_turn": 8.9,
+   "dmg_taken_per_fight": 9.16,
+   "secondary_use_pct": 0,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 0,
+   "distinct_plans": 1,
+   "top_plans": [
+    "saber_strike+flow_strike 100%"
+   ]
+  },
+  "predator:C": {
+   "win_pct": 57.5,
+   "rounds": 2.39,
+   "aero_dmg_per_turn": 7.23,
+   "dmg_taken_per_fight": 9.07,
+   "secondary_use_pct": 53,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 47,
+   "flow_lost_to_opener_pct": 53,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 1,
+   "distinct_plans": 2,
+   "top_plans": [
+    "readied_dodge+saber_strike 53%",
+    "saber_strike+flow_strike 47%"
+   ]
+  },
+  "relay_droid:A": {
+   "win_pct": 99.8,
+   "rounds": 1.34,
+   "aero_dmg_per_turn": 7.31,
+   "dmg_taken_per_fight": 0.75,
+   "secondary_use_pct": 2.3,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 0.93,
+   "distinct_plans": 3,
+   "top_plans": [
+    "move+saber_strike+flow_strike 74%",
+    "saber_strike+flow_strike 23%",
+    "readied_dodge+saber_strike+flow_strike 2%"
+   ]
+  },
+  "relay_droid:B": {
+   "win_pct": 99.8,
+   "rounds": 1.34,
+   "aero_dmg_per_turn": 7.33,
+   "dmg_taken_per_fight": 0.75,
+   "secondary_use_pct": 0,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 100,
+   "flow_lost_to_opener_pct": 0,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 0.82,
+   "distinct_plans": 2,
+   "top_plans": [
+    "move+saber_strike+flow_strike 75%",
+    "saber_strike+flow_strike 25%"
+   ]
+  },
+  "relay_droid:C": {
+   "win_pct": 99.7,
+   "rounds": 1.35,
+   "aero_dmg_per_turn": 7.29,
+   "dmg_taken_per_fight": 0.76,
+   "secondary_use_pct": 2.7,
+   "feint_pct": 0,
+   "feint_success_pct": null,
+   "flow_strike_pct": 97.3,
+   "flow_lost_to_opener_pct": 2.7,
+   "npc_feints_per_fight": 0,
+   "plan_variety_bits": 0.95,
+   "distinct_plans": 3,
+   "top_plans": [
+    "move+saber_strike+flow_strike 74%",
+    "saber_strike+flow_strike 23%",
+    "readied_dodge+saber_strike 3%"
+   ]
+  }
+ }
+}
