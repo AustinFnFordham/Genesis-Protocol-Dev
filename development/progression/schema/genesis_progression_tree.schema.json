@@ -1,0 +1,103 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "genesis-progression-tree/0.1",
+ "title": "Genesis progression tree (CC-008, sandbox)",
+ "description": "One levelable track and its authored nodes. Extends genesis-mastery/0.1 (CC-007) without replacing it. Distinguishes: track (owns XP or is driven by another track), node (an authored unlock), grant (what a node gives: feature, executable profile, capacity, prerequisite marker), choice group, milestone, requirement.",
+ "type": "object",
+ "required": ["schema", "id", "version", "status", "layer", "track", "provenance"],
+ "additionalProperties": false,
+ "properties": {
+  "schema": { "const": "genesis-progression-tree/0.1" },
+  "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*(:[a-z0-9_]+)?$", "description": "Track identity, e.g. class:sentinel, archetype:sentinel_sentry, species:echani, mastery:telekinetic_control, discipline:force." },
+  "version": { "type": "string" },
+  "status": { "enum": ["approved", "approved_provisional", "candidate", "scaffold"], "description": "Only 'approved*' content may be promoted; candidate/scaffold never grants live mechanics." },
+  "layer": { "enum": ["class", "archetype", "species", "proficiency", "specialized_mastery", "parent_linked", "discipline"] },
+  "registry_urid": { "type": "string", "description": "Registry anchor (urid = <entity_type>_<id>), when one exists." },
+  "parent": { "type": "string", "description": "parent_linked only: the track whose level/XP this track shares." },
+  "restrictions": { "type": "object", "properties": { "classes": { "type": "array", "items": { "type": "string" } }, "species": { "type": "array", "items": { "type": "string" } }, "requires_features": { "type": "array", "items": { "type": "string" } } }, "additionalProperties": false },
+  "provenance": { "type": "object", "required": ["source"], "properties": { "source": { "type": "string" }, "approved_by": { "type": "string" }, "approved_on": { "type": "string" }, "notes": { "type": "string" } } },
+  "track": {
+   "type": "object",
+   "required": ["start_level", "xp_quantity"],
+   "additionalProperties": false,
+   "properties": {
+    "start_level": { "type": "integer", "minimum": 0 },
+    "max_level": { "type": ["integer", "null"], "minimum": 1 },
+    "xp_quantity": { "enum": ["class_xp", "mastery_xp", "discipline_xp", "none"], "description": "Which ledger quantity this track consumes. 'none' = driven by another track's level (driven_by)." },
+    "driven_by": { "type": "string", "description": "Track id whose level this track follows (archetype ← class; species ← class or its own track)." },
+    "curve": { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" }, "params": { "type": "object" }, "table": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "description": "table/1: cumulative XP for each level from start_level, starting with 0." } } },
+    "curve_status": { "enum": ["authoritative", "owner_proposal", "candidate"], "description": "candidate curves are generated for comparison and are NEVER adopted silently." },
+    "cadence": { "type": "array", "items": { "type": "integer" }, "description": "Milestone levels for this track (e.g. 3,6,9,12,15,18 or 5,10,15,20)." }
+   }
+  },
+  "evidence": {
+   "type": "object",
+   "description": "Eligible evidence for XP (xp_quantity other than none).",
+   "properties": {
+    "accepted_authorities": { "type": "array", "items": { "type": "string" } },
+    "event_types": { "type": "object", "additionalProperties": { "type": "object", "properties": { "xp": { "type": "integer", "minimum": 0 }, "requires_facts": { "type": "array", "items": { "type": "string" } } } } },
+    "never_from": { "type": "array", "items": { "type": "string" } }
+   }
+  },
+  "choice_groups": {
+   "type": "array",
+   "items": { "type": "object", "required": ["id", "picks"], "additionalProperties": false, "properties": {
+     "id": { "type": "string" }, "picks": { "type": "integer", "minimum": 1 }, "offer_size": { "type": "integer", "minimum": 1, "default": 3 },
+     "exclusive": { "type": "boolean", "default": false, "description": "true: once 'picks' are taken the rest of the group is closed. false: unchosen options stay available at later milestones." },
+     "milestones": { "type": "array", "items": { "type": "integer" }, "description": "Levels at which this group offers a pick." } } }
+  },
+  "nodes": {
+   "type": "array",
+   "items": {
+    "type": "object", "required": ["id", "kind", "level", "status"], "additionalProperties": false,
+    "properties": {
+     "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+     "name": { "type": "string" },
+     "kind": { "enum": ["core_grant", "choice", "improvement", "subclass_entry", "prerequisite_marker"], "description": "core_grant: automatic at its level from an authoritative source. choice: picked from a choice group. improvement: bounded modifier to an existing capability. subclass_entry: opens an archetype track. prerequisite_marker: no effect, satisfies prerequisites (e.g. completed training)." },
+     "level": { "type": "integer", "minimum": 0 },
+     "choice_group": { "type": "string" },
+     "requires": { "$ref": "#/definitions/requirement" },
+     "grants": { "type": "array", "items": { "$ref": "#/definitions/grant" } },
+     "effects": { "type": "array", "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string" }, "add": { "type": "number" }, "set": {}, "stacking_group": { "type": "string" } } } },
+     "conflicts_with": { "type": "array", "items": { "type": "string" } },
+     "upgrades": { "type": "string", "description": "Node id this one upgrades (an upgrade chain); requires that node." },
+     "status": { "enum": ["approved", "approved_provisional", "candidate", "scaffold"] },
+     "provenance": { "type": "string" },
+     "legacy_reinterpretation": { "type": "string", "description": "Set by the legacy adapter when an ambiguous legacy prerequisite was read as any_of_group." }
+    }
+   }
+  }
+ },
+ "definitions": {
+  "requirement": {
+   "description": "Explicit mode. A bare array is NOT accepted in new trees (legacy ambiguity, CC-008 A §2.2).",
+   "type": "object", "additionalProperties": false,
+   "properties": {
+    "all": { "type": "array", "items": { "$ref": "#/definitions/requirement_term" } },
+    "any": { "type": "array", "items": { "$ref": "#/definitions/requirement_term" } },
+    "any_of_group": { "type": "string" },
+    "not": { "type": "array", "items": { "$ref": "#/definitions/requirement_term" } }
+   }
+  },
+  "requirement_term": {
+   "oneOf": [
+    { "type": "string", "description": "A node id in this tree." },
+    { "type": "object", "required": ["track", "level"], "properties": { "track": { "type": "string" }, "level": { "type": "integer" } }, "additionalProperties": false },
+    { "type": "object", "required": ["node"], "properties": { "node": { "type": "string", "description": "<track id>/<node id> in another tree (cross-tree)." } }, "additionalProperties": false },
+    { "type": "object", "required": ["feature"], "properties": { "feature": { "type": "string" } }, "additionalProperties": false },
+    { "type": "object", "required": ["training"], "properties": { "training": { "type": "string" } }, "additionalProperties": false },
+    { "$ref": "#/definitions/requirement" }
+   ]
+  },
+  "grant": {
+   "type": "object", "required": ["type", "ref", "authority"], "additionalProperties": false,
+   "properties": {
+    "type": { "enum": ["feature", "profile", "capacity", "training_opportunity", "track_unlock"], "description": "feature: an entitlement (Registry Feature/Power). profile: an executable action profile (catalog/Registry). capacity: a numeric capability value. training_opportunity: eligibility to train, never the power itself. track_unlock: opens another track (archetype)." },
+    "ref": { "type": "string" },
+    "authority": { "enum": ["class", "archetype", "species", "mastery", "discipline", "training", "campaign_ruling"] },
+    "value": {},
+    "never_grants": { "type": "array", "items": { "type": "string" } }
+   }
+  }
+ }
+}
