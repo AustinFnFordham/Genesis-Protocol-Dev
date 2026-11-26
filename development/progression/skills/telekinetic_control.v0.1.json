@@ -1,0 +1,49 @@
+{
+ "schema": "genesis-mastery-skill/0.1",
+ "id": "telekinetic_control",
+ "version": "0.1-sandbox",
+ "status": "sandbox_proposal",
+ "note": "NONCANONICAL. Owner direction 2026-11-25 (CC-007 §5) with the owner's proposed numbers, for simulation. Builds ON the Jedi Fundamentals Minor Telekinesis grant (jedi_fundamentals.json, approved_provisional 2026-11-11), which is unchanged; nothing here is written to aero_character_runtime.yml.",
+ "applies_to_feature": "minor_telekinesis",
+ "class_level_independent": true,
+ "max_level": 20,
+ "accepted_authorities": ["atomic", "atomic_exploration"],
+ "curve": { "id": "quadratic/1", "params": { "a": 10, "b": 5, "c": 1 }, "formula": "XP(L→L+1) = 10 + 5L + L²", "source": "owner proposal 2026-11-25" },
+ "base": {
+  "range_ft": { "value": 30, "source": "jedi_fundamentals.json rule jedi_fundamentals_minor_telekinesis v1 (30 ft)" },
+  "max_weight_lb": { "value": 10, "source": "jedi_fundamentals.json rule jedi_fundamentals_minor_telekinesis v1 (10 lb)" },
+  "objects_at_once": { "value": 1, "source": "jedi_fundamentals.json (one object)" }
+ },
+ "per_level": [
+  { "key": "range_ft", "add": 5, "source": "owner proposal 2026-11-25" },
+  { "key": "max_weight_lb", "add": 1, "source": "owner proposal 2026-11-25" }
+ ],
+ "xp_rules": {
+  "min_per_use": 1,
+  "base": { "telekinesis_use": 1 },
+  "bonuses": [
+   { "id": "demanding_load", "when": "load_fraction_at_least", "value": 0.75, "xp": 1, "source": "candidate: a committed use at ≥75% of current capacity (event fact weight_lb)" },
+   { "id": "demanding_reach", "when": "range_fraction_at_least", "value": 0.75, "xp": 1, "source": "candidate: a committed use at ≥75% of current range (event fact distance_ft)" },
+   { "id": "novel_object", "when": "first_object_kind", "xp": 2, "source": "candidate: first committed use on a new object kind for this character" },
+   { "id": "under_pressure", "when": "in_encounter", "xp": 1, "enabled": false, "source": "candidate, OFF: extra XP for use in an encounter (owner to decide)" }
+  ],
+  "never_from": ["narration", "client assertion", "prose", "uncommitted or refused step"]
+ },
+ "milestones": [
+  { "id": "tk_m5_fine_manipulation", "level": 5, "kind": "training_opportunity",
+    "bonuses": [{ "key": "max_weight_lb", "add": 5 }],
+    "offers": "Training opportunity: fine manipulation — operate simple unattended mechanisms (latches, switches, levers) within range, still one object, no damage (within the ruling's 'manipulate').",
+    "requires_features": ["minor_telekinesis"],
+    "never_grants": ["force_pull", "force_push", "creature_manipulation", "damage", "disarm", "attended_objects"] },
+  { "id": "tk_m10_sustained_hold", "level": 10, "kind": "training_opportunity",
+    "bonuses": [{ "key": "max_weight_lb", "add": 5 }],
+    "offers": "Training opportunity: sustained hold — keep one object aloft while doing other light tasks (resolves Jedi Fundamentals open item 3 for this character only, if the owner approves).",
+    "requires_features": ["minor_telekinesis"],
+    "never_grants": ["force_pull", "force_push", "creature_manipulation", "damage", "disarm", "attended_objects", "second_object"] },
+  { "id": "tk_m15_force_power_prerequisite", "level": 15, "kind": "prerequisite",
+    "bonuses": [{ "key": "max_weight_lb", "add": 5 }],
+    "offers": "Prerequisite met to BEGIN training a learned telekinetic Force power (drafts power_force_pull / power_force_push, unpromoted). Learning it still needs a teacher/story event, owner approval and powers_known rules.",
+    "requires_features": ["minor_telekinesis"],
+    "never_grants": ["force_pull", "force_push", "creature_manipulation", "damage"] }
+ ]
+}

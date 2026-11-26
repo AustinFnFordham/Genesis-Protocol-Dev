@@ -1,0 +1,15 @@
+{
+ "schema": "genesis-scene-objects/0.1",
+ "note": "Synthetic exploration fixture for the Telekinetic Control prototype. Not a campaign location.",
+ "scene": "sandbox_workshop",
+ "objects": [
+  { "id": "hydrospanner", "kind": "tool", "weight_lb": 2, "distance_ft": 15, "attended": false, "fixed": false, "visible": true },
+  { "id": "datapad", "kind": "device", "weight_lb": 1, "distance_ft": 25, "attended": false, "fixed": false, "visible": true },
+  { "id": "supply_crate", "kind": "crate", "weight_lb": 14, "distance_ft": 20, "attended": false, "fixed": false, "visible": true },
+  { "id": "power_cell", "kind": "cell", "weight_lb": 8, "distance_ft": 40, "attended": false, "fixed": false, "visible": true },
+  { "id": "wall_lever", "kind": "mechanism", "weight_lb": 3, "distance_ft": 20, "attended": false, "fixed": true, "visible": true },
+  { "id": "mechanic_wrench", "kind": "tool", "weight_lb": 3, "distance_ft": 10, "attended": true, "fixed": false, "visible": true },
+  { "id": "sealed_locker", "kind": "container", "weight_lb": 60, "distance_ft": 15, "attended": false, "fixed": false, "visible": true },
+  { "id": "behind_bulkhead", "kind": "tool", "weight_lb": 2, "distance_ft": 20, "attended": false, "fixed": false, "visible": false }
+ ]
+}

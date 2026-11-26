@@ -77,6 +77,7 @@
     var s = { schema: "genesis-cc002-state/0.1", canonical: false, scenario: scenarioId, title: sc.title, intro: sc.intro,
               catalog: catalog, switches: switches, round: 1, order: sc.initiative.slice(), turn: 0, actors: actors,
               dist: clone(sc.distance), campaign: opts.campaign || null, rng: { mode: opts.atomic ? "atomic" : "local", seed: opts.atomic ? null : (opts.seed == null ? 20261121 : opts.seed), n: 0 }, tape: [], receipts: [], log: [], trigger: 0, over: null };
+    if (opts.tk_limits) s.tk_limits = { range_ft: opts.tk_limits.range_ft, max_weight_lb: opts.tk_limits.max_weight_lb, objects_at_once: opts.tk_limits.objects_at_once || 1, source: opts.tk_limits.source || "sandbox mastery overlay" };
     Object.keys(actors).forEach(function (id) { actors[id].budget = budgetFor(s); });   // everyone starts the round with a full budget
     startTurn(s);
     return s;
@@ -461,9 +462,9 @@
     if (step.pid === "toggle_blade") { a.weapon.ignited = !a.weapon.ignited; log(s, actorId, a.name + (a.weapon.ignited ? " ignites" : " deactivates") + " the blade."); return true; }
     if (step.pid === "minor_telekinesis") {
       var tk = tkObject(s, actorId, step, null);
-      if (tk.kind === "retrieve") { a.weapon = clone(a.dropped); a.weapon.held = true; if (a.weapon.kind === "lightsaber") a.weapon.ignited = false; a.dropped = null; log(s, actorId, a.name + " calls the " + a.weapon.name + " back to his hand through the Force (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "retrieve" }); return true; }
+      if (tk.kind === "retrieve") { a.weapon = clone(a.dropped); a.weapon.held = true; if (a.weapon.kind === "lightsaber") a.weapon.ignited = false; a.dropped = null; log(s, actorId, a.name + " calls the " + a.weapon.name + " back to his hand through the Force (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "retrieve", object_kind: "weapon", weight_lb: a.weapon.weight_lb || 3, distance_ft: a.weapon.far ? 30 : 10 }); return true; }
       var O = s.actors[tk.owner]; O.dropped.far = true;
-      log(s, actorId, a.name + " sends " + O.name + "'s loose " + O.dropped.name + " skittering 30 ft away (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "reposition", target: tk.owner });
+      log(s, actorId, a.name + " sends " + O.name + "'s loose " + O.dropped.name + " skittering 30 ft away (Jedi Fundamentals).", { ev: "telekinesis", actor: actorId, mode: "reposition", target: tk.owner, object_kind: "weapon", weight_lb: O.dropped.weight_lb || 3, distance_ft: distance(s, actorId, tk.owner) + 10 });
       return true;
     }
     if (step.pid === "draw_sidearm") { a.sidearm.held = true; log(s, actorId, a.name + " draws the " + a.sidearm.name + " (" + a.sidearm.ammo + "/" + a.sidearm.capacity + ").", { ev: "draw", actor: actorId }); return true; }
@@ -508,7 +509,8 @@
   // In this slice the unattended objects are dropped weapons. step.object: "own_weapon" (retrieve) or "<actorId>_weapon"
   // (reposition someone else's dropped weapon 30 ft further away). Nothing here damages, moves or disarms a creature.
   function tkObject(s, actorId, step, proj) {
-    var lim = (s.catalog.profiles.minor_telekinesis || {}).limits || { max_weight_lb: 10, range_ft: 30 };
+    // s.tk_limits: optional SESSION overlay from a sandbox mastery prototype (development/progression); never written to any sheet
+    var lim = s.tk_limits || (s.catalog.profiles.minor_telekinesis || {}).limits || { max_weight_lb: 10, range_ft: 30 };
     if (step.object === "own_weapon") {
       var dw = proj ? proj.dropped : s.actors[actorId].dropped;
       if (!dw) return { ok: false, code: "NO_UNATTENDED_OBJECT", text: "Nothing of yours is lying loose." };

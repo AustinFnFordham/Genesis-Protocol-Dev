@@ -1,0 +1,30 @@
+{
+ "schema": "genesis-mastery-skill/0.1",
+ "id": "grappling",
+ "version": "0.1-scaffold",
+ "status": "scaffold",
+ "note": "SCAFFOLD ONLY (CC-007 §6). Reuses the mastery substrate; defines milestone FAMILIES and dependencies for owner review. It grants nothing, sets no numbers and invents no abilities. The owner may supply skill-tree concepts later.",
+ "class_level_independent": true,
+ "max_level": 20,
+ "accepted_authorities": ["atomic"],
+ "curve": { "id": "quadratic/1", "params": { "a": 10, "b": 5, "c": 1 }, "formula": "placeholder: same shape as Telekinetic Control until the owner sets a grapple curve" },
+ "base": {
+  "grapple_check_bonus": { "value": 5, "source": "aero_character_runtime.yml Echani Grappling Training (+5)" },
+  "max_size_over": { "value": 1, "source": "aero_character_runtime.yml (no more than one size larger)" }
+ },
+ "per_level": [],
+ "xp_rules": { "min_per_use": 1, "base": { "grapple_attempt": 1, "escape_attempt": 1, "drag": 1 }, "bonuses": [], "never_from": ["narration", "client assertion"] },
+ "families": [
+  { "id": "basic_capability", "layer": "trained_skill", "state": "implemented (CC-007 C)", "covers": "grapple, escape, drag at half speed, release", "source": "sheet" },
+  { "id": "escape_and_counterplay", "layer": "trained_skill", "state": "family only", "depends_on": ["basic_capability"], "covers": "more reliable escapes; resisting being grappled" },
+  { "id": "control_and_drag", "layer": "trained_skill", "state": "family only", "depends_on": ["basic_capability"], "covers": "better dragging, positioning a held creature" },
+  { "id": "learned_maneuvers", "layer": "purchased_or_taught", "state": "family only", "depends_on": ["control_and_drag"], "covers": "named techniques learned from a teacher (e.g. throws, pins) — none defined" },
+  { "id": "compound_attacks", "layer": "purchased_or_taught", "state": "family only", "depends_on": ["learned_maneuvers"], "covers": "grapple + strike combinations consuming multiple budgets (SA-001 study applies)" },
+  { "id": "class_features", "layer": "class_feature", "state": "outside the substrate", "covers": "anything granted by class level (e.g. Sentinel) stays a class feature, never earned by XP" }
+ ],
+ "milestones": [
+  { "id": "gr_m5_family_gate", "level": 5, "kind": "family_placeholder", "opens_family": "escape_and_counterplay", "never_grants": ["any ability"] },
+  { "id": "gr_m10_family_gate", "level": 10, "kind": "family_placeholder", "opens_family": "control_and_drag", "never_grants": ["any ability"] },
+  { "id": "gr_m15_family_gate", "level": 15, "kind": "family_placeholder", "opens_family": "learned_maneuvers", "never_grants": ["any ability"] }
+ ]
+}

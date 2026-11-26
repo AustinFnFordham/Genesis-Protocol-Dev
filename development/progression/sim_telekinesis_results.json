@@ -1,0 +1,320 @@
+{
+ "table": [
+  {
+   "level": 0,
+   "xp_to_next": 10,
+   "cumulative_xp": 0,
+   "range_ft": 30,
+   "max_weight_lb": 10,
+   "milestone": ""
+  },
+  {
+   "level": 1,
+   "xp_to_next": 16,
+   "cumulative_xp": 10,
+   "range_ft": 35,
+   "max_weight_lb": 11,
+   "milestone": ""
+  },
+  {
+   "level": 2,
+   "xp_to_next": 24,
+   "cumulative_xp": 26,
+   "range_ft": 40,
+   "max_weight_lb": 12,
+   "milestone": ""
+  },
+  {
+   "level": 3,
+   "xp_to_next": 34,
+   "cumulative_xp": 50,
+   "range_ft": 45,
+   "max_weight_lb": 13,
+   "milestone": ""
+  },
+  {
+   "level": 4,
+   "xp_to_next": 46,
+   "cumulative_xp": 84,
+   "range_ft": 50,
+   "max_weight_lb": 14,
+   "milestone": ""
+  },
+  {
+   "level": 5,
+   "xp_to_next": 60,
+   "cumulative_xp": 130,
+   "range_ft": 55,
+   "max_weight_lb": 20,
+   "milestone": "tk_m5_fine_manipulation"
+  },
+  {
+   "level": 6,
+   "xp_to_next": 76,
+   "cumulative_xp": 190,
+   "range_ft": 60,
+   "max_weight_lb": 21,
+   "milestone": ""
+  },
+  {
+   "level": 7,
+   "xp_to_next": 94,
+   "cumulative_xp": 266,
+   "range_ft": 65,
+   "max_weight_lb": 22,
+   "milestone": ""
+  },
+  {
+   "level": 8,
+   "xp_to_next": 114,
+   "cumulative_xp": 360,
+   "range_ft": 70,
+   "max_weight_lb": 23,
+   "milestone": ""
+  },
+  {
+   "level": 9,
+   "xp_to_next": 136,
+   "cumulative_xp": 474,
+   "range_ft": 75,
+   "max_weight_lb": 24,
+   "milestone": ""
+  },
+  {
+   "level": 10,
+   "xp_to_next": 160,
+   "cumulative_xp": 610,
+   "range_ft": 80,
+   "max_weight_lb": 30,
+   "milestone": "tk_m10_sustained_hold"
+  },
+  {
+   "level": 11,
+   "xp_to_next": 186,
+   "cumulative_xp": 770,
+   "range_ft": 85,
+   "max_weight_lb": 31,
+   "milestone": ""
+  },
+  {
+   "level": 12,
+   "xp_to_next": 214,
+   "cumulative_xp": 956,
+   "range_ft": 90,
+   "max_weight_lb": 32,
+   "milestone": ""
+  },
+  {
+   "level": 13,
+   "xp_to_next": 244,
+   "cumulative_xp": 1170,
+   "range_ft": 95,
+   "max_weight_lb": 33,
+   "milestone": ""
+  },
+  {
+   "level": 14,
+   "xp_to_next": 276,
+   "cumulative_xp": 1414,
+   "range_ft": 100,
+   "max_weight_lb": 34,
+   "milestone": ""
+  },
+  {
+   "level": 15,
+   "xp_to_next": 310,
+   "cumulative_xp": 1690,
+   "range_ft": 105,
+   "max_weight_lb": 40,
+   "milestone": "tk_m15_force_power_prerequisite"
+  },
+  {
+   "level": 16,
+   "xp_to_next": 346,
+   "cumulative_xp": 2000,
+   "range_ft": 110,
+   "max_weight_lb": 41,
+   "milestone": ""
+  },
+  {
+   "level": 17,
+   "xp_to_next": 384,
+   "cumulative_xp": 2346,
+   "range_ft": 115,
+   "max_weight_lb": 42,
+   "milestone": ""
+  },
+  {
+   "level": 18,
+   "xp_to_next": 424,
+   "cumulative_xp": 2730,
+   "range_ft": 120,
+   "max_weight_lb": 43,
+   "milestone": ""
+  },
+  {
+   "level": 19,
+   "xp_to_next": 466,
+   "cumulative_xp": 3154,
+   "range_ft": 125,
+   "max_weight_lb": 44,
+   "milestone": ""
+  },
+  {
+   "level": 20,
+   "xp_to_next": null,
+   "cumulative_xp": 3620,
+   "range_ft": 130,
+   "max_weight_lb": 45,
+   "milestone": ""
+  }
+ ],
+ "pacing": [
+  {
+   "label": "light: 5 uses/session",
+   "perSession": 5,
+   "demandingShare": 0.15,
+   "routineCapPerScene": null,
+   "reached": {
+    "5": 20,
+    "10": 98,
+    "15": 276
+   },
+   "final_level": 17,
+   "final_xp": 2454
+  },
+  {
+   "label": "typical: 10 uses/session",
+   "perSession": 10,
+   "demandingShare": 0.2,
+   "routineCapPerScene": null,
+   "reached": {
+    "5": 10,
+    "10": 48,
+    "15": 132,
+    "20": 281
+   },
+   "final_level": 20,
+   "final_xp": 3621
+  },
+  {
+   "label": "heavy: 20 uses/session",
+   "perSession": 20,
+   "demandingShare": 0.25,
+   "routineCapPerScene": null,
+   "reached": {
+    "5": 5,
+    "10": 23,
+    "15": 62,
+    "20": 132
+   },
+   "final_level": 20,
+   "final_xp": 3643
+  },
+  {
+   "label": "typical + routine cap 3/scene (candidate)",
+   "perSession": 10,
+   "demandingShare": 0.2,
+   "routineCapPerScene": 3,
+   "reached": {
+    "5": 16,
+    "10": 76,
+    "15": 218
+   },
+   "final_level": 18,
+   "final_xp": 3150
+  },
+  {
+   "label": "heavy + routine cap 3/scene (candidate)",
+   "perSession": 20,
+   "demandingShare": 0.25,
+   "routineCapPerScene": 3,
+   "reached": {
+    "5": 8,
+    "10": 40,
+    "15": 109,
+    "20": 234
+   },
+   "final_level": 20,
+   "final_xp": 3635
+  }
+ ],
+ "pure_farming_uses_to_level": {
+  "5": 128,
+  "10": 608,
+  "15": 1688,
+  "20": 3618
+ },
+ "environment": [
+  {
+   "level": 0,
+   "range_ft": 30,
+   "max_weight_lb": 10,
+   "movable_fixture_objects": "2/5",
+   "ids": [
+    "hydrospanner",
+    "datapad"
+   ]
+  },
+  {
+   "level": 4,
+   "range_ft": 50,
+   "max_weight_lb": 14,
+   "movable_fixture_objects": "4/5",
+   "ids": [
+    "hydrospanner",
+    "datapad",
+    "supply_crate",
+    "power_cell"
+   ]
+  },
+  {
+   "level": 5,
+   "range_ft": 55,
+   "max_weight_lb": 20,
+   "movable_fixture_objects": "4/5",
+   "ids": [
+    "hydrospanner",
+    "datapad",
+    "supply_crate",
+    "power_cell"
+   ]
+  },
+  {
+   "level": 10,
+   "range_ft": 80,
+   "max_weight_lb": 30,
+   "movable_fixture_objects": "4/5",
+   "ids": [
+    "hydrospanner",
+    "datapad",
+    "supply_crate",
+    "power_cell"
+   ]
+  },
+  {
+   "level": 15,
+   "range_ft": 105,
+   "max_weight_lb": 40,
+   "movable_fixture_objects": "4/5",
+   "ids": [
+    "hydrospanner",
+    "datapad",
+    "supply_crate",
+    "power_cell"
+   ]
+  },
+  {
+   "level": 20,
+   "range_ft": 130,
+   "max_weight_lb": 45,
+   "movable_fixture_objects": "4/5",
+   "ids": [
+    "hydrospanner",
+    "datapad",
+    "supply_crate",
+    "power_cell"
+   ]
+  }
+ ]
+}
