@@ -1,0 +1,72 @@
+{
+ "status": "candidate comparison — not adopted",
+ "assumptions": [
+  {
+   "id": "flat_450",
+   "xp_per_session": "450 per session (flat)"
+  },
+  {
+   "id": "scaling",
+   "xp_per_session": "150 × current level per session"
+  }
+ ],
+ "results": {
+  "cand_class_srd5e_shape": {
+   "cumulative_L5": 6500,
+   "cumulative_L10": 64000,
+   "cumulative_L20": 355000,
+   "sessions_to_level": {
+    "flat_450": {
+     "3": 2,
+     "5": 15,
+     "10": 143,
+     "20": 789
+    },
+    "scaling": {
+     "3": 4,
+     "5": 15,
+     "10": 69,
+     "20": 200
+    }
+   }
+  },
+  "cand_class_quadratic": {
+   "cumulative_L5": 3840,
+   "cumulative_L10": 25740,
+   "cumulative_L20": 183540,
+   "sessions_to_level": {
+    "flat_450": {
+     "3": 3,
+     "5": 9,
+     "10": 58,
+     "20": 408
+    },
+    "scaling": {
+     "3": 5,
+     "5": 10,
+     "10": 31,
+     "20": 102
+    }
+   }
+  },
+  "cand_class_geometric": {
+   "cumulative_L5": 1856,
+   "cumulative_L10": 9604,
+   "cumulative_L20": 145190,
+   "sessions_to_level": {
+    "flat_450": {
+     "3": 2,
+     "5": 5,
+     "10": 22,
+     "20": 323
+    },
+    "scaling": {
+     "3": 4,
+     "5": 6,
+     "10": 14,
+     "20": 71
+    }
+   }
+  }
+ }
+}

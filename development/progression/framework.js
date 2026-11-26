@@ -23,6 +23,7 @@ function fromLegacyClass(rec, opts) {
   opts = opts || {};
   const legacy = rec.progression_tree || [], byId = {}; legacy.forEach((n) => (byId[n.node_id] = n));
   const groups = {}, notes = [];
+  const fidCount = {}; legacy.forEach((n) => (fidCount[n.feature_id] = (fidCount[n.feature_id] || 0) + 1));
   const nodes = legacy.map((n) => {
     const pre = n.prerequisites || [], inGroup = {};
     pre.forEach((p) => { const g = byId[p] && byId[p].choice_group; if (g) (inGroup[g] = inGroup[g] || []).push(p); });
@@ -38,7 +39,9 @@ function fromLegacyClass(rec, opts) {
     if (n.choice_group && !groups[n.choice_group].milestones.includes(n.level_requirement)) groups[n.choice_group].milestones.push(n.level_requirement);
     const kind = n.type === "choice" ? "choice" : n.type === "subclass_entry" ? "subclass_entry" : "core_grant";
     const out = { id: n.node_id, kind, level: n.level_requirement, status: opts.status || "candidate", provenance: opts.source || "legacy progression_tree",
-                  grants: [{ type: kind === "subclass_entry" ? "track_unlock" : "feature", ref: (kind === "subclass_entry" ? "archetype:" : "feature:") + String(n.feature_id), authority: "class" }] };
+                  grants: [Object.assign({ type: kind === "subclass_entry" ? "track_unlock" : "feature", ref: (kind === "subclass_entry" ? "archetype:" : "feature:") + String(n.feature_id), authority: "class" },
+                                         fidCount[n.feature_id] > 1 ? { repeatable: true } : {})] };
+    if (fidCount[n.feature_id] > 1) notes.push({ node: n.node_id, note: "legacy feature id '" + n.feature_id + "' repeats " + fidCount[n.feature_id] + "× → marked repeatable" });
     if (n.choice_group) out.choice_group = n.choice_group;
     if (requires) out.requires = requires;
     if (reint) out.legacy_reinterpretation = reint;

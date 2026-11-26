@@ -10,7 +10,7 @@ console.log("# B");
   ok(tree.id === "class:sentinel" && tree.layer === "class" && tree.status === "candidate" && tree.track.xp_quantity === "class_xp", "legacy Sentinel tree adapts to a candidate class track (never approved by adaptation)");
   const spec = F.nodeOf(tree, "sentinel_specialization_3"), s7 = F.nodeOf(tree, "subclass_feature_7");
   ok(spec.requires.all.some((t) => t.any_of_group === "sentinel_focus_level_2") && /any_of_group/.test(spec.legacy_reinterpretation), "L3 'both L2 choices' prerequisite is read as any_of_group and the reinterpretation is recorded");
-  ok(s7.requires.all.some((t) => t.any_of_group === "sentinel_enhancement_level_6") && notes.length === 2, "the same at L7; exactly two reinterpretations noted", notes);
+  ok(s7.requires.all.some((t) => t.any_of_group === "sentinel_enhancement_level_6") && notes.filter((q) => /any_of_group/.test(q.note)).length === 2, "the same at L7; exactly two any_of_group reinterpretations noted", notes);
   ok(F.nodeOf(tree, "sentinel_specialization_3").grants[0].type === "track_unlock" && F.nodeOf(tree, "force_connection_1").grants[0].type === "feature", "subclass_entry unlocks a track; core nodes grant features");
   // literal reading would be unsatisfiable: with only one L2 pick, strict ALL fails, any_of_group passes
   const T = F.registry([tree]); let ch = F.newCharacter("aero", { class: "sentinel" }); ch.tracks["class:sentinel"] = { level: 3, xp: 0 }; ch.held["class:sentinel/force_connection_1"] = {}; ch.held["class:sentinel/investigation_focus_2"] = {};
