@@ -30,8 +30,9 @@ function policyChecks(policy, trees) {
   if (!(policy.bounds && policy.bounds.max_pools_per_observation > 0 && policy.bounds.max_discipline_xp_per_observation > 0)) E.push({ code: "UNBOUNDED_ALLOCATION" });
   return E;
 }
+function implementedProfiles() { try { return Object.keys(JSON.parse(fs.readFileSync(path.join(REPO, "development/combat_slice/catalog.json"))).profiles); } catch (e) { return []; } }
 function review(trees, opts) {
-  opts = opts || {}; const base = V.validateTrees(trees, Object.assign({}, opts, { registry: undefined, policy: undefined })), errors = base.errors.slice(), warnings = base.warnings.slice();
+  opts = Object.assign({ implemented_profiles: implementedProfiles() }, opts || {}); const base = V.validateTrees(trees, Object.assign({}, opts, { registry: undefined, policy: undefined })), errors = base.errors.slice(), warnings = base.warnings.slice();
   const W = (code, where, x) => warnings.push(Object.assign({}, x || {}, { code, where })), Er = (code, where, x) => errors.push(Object.assign({}, x || {}, { code, where }));
   const urids = opts.registry === false ? null : registryUrids();
   trees.forEach((t) => {
@@ -66,4 +67,4 @@ function markdown(trees, rep) {
   rep.edges.forEach((e, i) => L.push("  e" + i + "a[" + idOf(e.from) + "] -->|" + e.mode + "| e" + i + "b[" + idOf(e.to) + "]")); L.push("```", "");
   return L.join("\n");
 }
-module.exports = { review, markdown, reachability, policyChecks, registryUrids };
+module.exports = { implementedProfiles, review, markdown, reachability, policyChecks, registryUrids };

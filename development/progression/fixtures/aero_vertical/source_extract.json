@@ -180,7 +180,20 @@
     "level": 18,
     "description": "You can use your reaction to create a barrier of protection, granting you and up to two friendly creatures within 10 feet of you resistance to one damage type (acid, cold, fire, lightning, or poison)."
    }
-  ]
+  ],
+  "feature_file_sample": {
+   "member": "SW5e_Data_Hub/backend/features/sentinel/sentry/sentry_watch.yml",
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Sentry Watch",
+      "action_type": "passive"
+     }
+    }
+   ]
+  }
  },
  "echani": {
   "member": "SW5e_Data_Hub/official_species_playable/echani.yml",
@@ -196,6 +209,20 @@
    "level_10": "You can use your action to gain advantage on all Dexterity-based skill checks for the next minute when in combat or martial training.",
    "level_15": "When using unarmed strikes, you gain a +2 bonus to attack rolls and damage rolls, representing your enhanced martial arts mastery.",
    "level_20": "You have advantage on all saving throws against being surprised or charmed, and you can use your reaction to make an unarmed strike against any creature that attempts to grapple you."
-  }
+  },
+  "copies": [
+   {
+    "member": "SW5e_Data_Hub/official_species_playable/echani.yml",
+    "sha256": "d0cfb1840103e867ea53293d7aafda51d64c5cd92d9eaab13d30f6d00be5d6d9",
+    "species_progression_sha256": "234a5f86026d2caf20c5b67d94dad7a5b2ee7549465e51d44288bcd6f245b764",
+    "cited_by_sheet": true
+   },
+   {
+    "member": "SW5e_Data_Hub/backend/species/echani.yml",
+    "sha256": "e5e0bc4abbe533196ed01baae2eec3b5943c65dde80551682e8bb353b7f3ce72",
+    "species_progression_sha256": "7a4ace3380b874c2839392eba9a04a44ae4b2791f453c39fff1b1f2583daeffb",
+    "cited_by_sheet": false
+   }
+  ]
  }
 }

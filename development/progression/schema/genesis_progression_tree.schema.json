@@ -332,6 +332,72 @@
      "legacy_reinterpretation": {
       "type": "string",
       "description": "Set by the legacy adapter when an ambiguous legacy prerequisite was read as any_of_group."
+     },
+     "provenance_class": {
+      "enum": [
+       "source_backed",
+       "legacy",
+       "proposed",
+       "implemented",
+       "owner_approved"
+      ],
+      "description": "Where this node's mechanics come from (CC-008.1). source_backed: stated in a cited source, not yet engine-implemented. legacy: read from a legacy record (possibly reinterpreted). proposed: authored here, not owner-approved. implemented: backed by an engine profile. owner_approved: carries an approval record. Only implemented and owner_approved nodes may carry executable grants; a missing class is treated as proposed."
+     },
+     "placeholder": {
+      "type": "boolean",
+      "description": "The source mechanics are placeholder/free text; never executable whatever the class."
+     },
+     "placeholder_reason": {
+      "type": "string"
+     },
+     "legacy_prerequisites": {
+      "description": "Verbatim legacy prerequisites, kept beside any reinterpretation."
+     },
+     "legacy_validation": {
+      "type": "object",
+      "required": [
+       "by",
+       "on",
+       "decision"
+      ],
+      "properties": {
+       "by": {
+        "type": "string"
+       },
+       "on": {
+        "type": "string"
+       },
+       "decision": {
+        "type": "string"
+       },
+       "note": {
+        "type": "string"
+       }
+      },
+      "description": "Explicit sign-off on a legacy reinterpretation; required before an executable grant or an approved tree."
+     },
+     "approval": {
+      "type": "object",
+      "required": [
+       "by",
+       "on",
+       "ref"
+      ],
+      "properties": {
+       "by": {
+        "type": "string"
+       },
+       "on": {
+        "type": "string"
+       },
+       "ref": {
+        "type": "string"
+       },
+       "note": {
+        "type": "string"
+       }
+      },
+      "description": "Owner approval record; required for provenance_class owner_approved."
      }
     }
    }
@@ -342,6 +408,83 @@
     "type": "string"
    },
    "description": "Repository paths of simulations/tests that exercise this tree's numbers (authoring coverage check)."
+  },
+  "source_copies": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "path",
+     "sha256"
+    ],
+    "properties": {
+     "path": {
+      "type": "string"
+     },
+     "sha256": {
+      "type": "string"
+     },
+     "progression_sha256": {
+      "type": "string"
+     },
+     "cited_by_sheet": {
+      "type": "boolean"
+     }
+    }
+   },
+   "description": "Every known copy of the source record. Differing hashes block executable grants until source_choice is recorded."
+  },
+  "source_choice": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "required": [
+      "chosen",
+      "by"
+     ],
+     "properties": {
+      "chosen": {
+       "type": "string"
+      },
+      "by": {
+       "type": "string"
+      },
+      "note": {
+       "type": "string"
+      }
+     },
+     "description": "Which copy is authoritative, and who chose it."
+    }
+   ]
+  },
+  "legacy_source": {
+   "type": "object",
+   "properties": {
+    "path": {
+     "type": "string"
+    },
+    "sha256": {
+     "type": "string"
+    }
+   }
+  },
+  "promotion": {
+   "type": "object",
+   "required": [
+    "requires_explicit_validation"
+   ],
+   "properties": {
+    "requires_explicit_validation": {
+     "type": "boolean"
+    },
+    "validated": {
+     "type": "array"
+    }
+   },
+   "description": "Set by the legacy adapter. When true, an approved tree needs legacy_validation on every reinterpreted node."
   }
  },
  "definitions": {
@@ -480,6 +623,10 @@
     "repeatable": {
      "type": "boolean",
      "description": "The same grant may be received at several nodes (e.g. an ability score improvement). Without it a repeated grant is a DUPLICATE_REWARD."
+    },
+    "executable": {
+     "type": "boolean",
+     "description": "This grant changes game state at runtime. Blocked unless the node's provenance allows it (framework.executableBlockers)."
     }
    }
   }

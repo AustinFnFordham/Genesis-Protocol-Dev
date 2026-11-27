@@ -62,6 +62,10 @@ Exit codes: **0** pass, **1** errors, **2** usage.
 3. Present milestones with `choices.offer` and `choices.select`.
 4. Look at `test_cc008_f.cjs` for a full end-to-end example.
 
-## 5. Promotion
+## 5. Label where each node comes from
 
-Not part of this tool. Moving content from candidate to approved needs owner approval and a separate, versioned change.
+Give every node a `provenance_class` (`PROGRESSION_SCHEMA.md` §4.1). New content you write is `proposed`. Mark a node `placeholder: true` with a `placeholder_reason` when its source has no usable mechanics. Only set `executable: true` on a grant when the node is `implemented` (a real engine profile) or `owner_approved` (with an `approval` record). The validator rejects anything else, and so does the runtime offer.
+
+## 6. Promotion
+
+Not part of this tool. Moving content from candidate to approved needs owner approval and a separate, versioned change. For a legacy-derived tree, that change must also add `legacy_validation` to each reinterpreted node. For a tree with conflicting `source_copies`, it must record a `source_choice`.

@@ -11,6 +11,8 @@ function statusOf(trees, ch, trackId, nodeId) {
   const key = trackId + "/" + nodeId; if (ch.held[key]) return { status: "purchased", txn: ch.held[key].txn };
   const tw = F.trackAllowed(tree, ch); if (tw.length) return { status: "unavailable", reasons: tw };
   if (n.status === "scaffold") return { status: "unavailable", reasons: [{ code: "SCAFFOLD_NODE" }] };
+  const blocked = [].concat.apply([], (n.grants || []).map((gr) => F.executableBlockers(tree, n, gr)));   // runtime gate, independent of the validator
+  if (blocked.length) return { status: "unavailable", reasons: blocked };
   const g = n.choice_group && (tree.choice_groups || []).find((x) => x.id === n.choice_group);
   if (g && g.exclusive) { const taken = (tree.nodes || []).filter((m) => m.choice_group === g.id && ch.held[trackId + "/" + m.id]).length; if (taken >= g.picks) return { status: "unavailable", reasons: [{ code: "GROUP_CLOSED", group: g.id }] }; }
   const conflicts = (n.conflicts_with || []).filter((c) => ch.held[trackId + "/" + c]); if (conflicts.length) return { status: "unavailable", reasons: [{ code: "CONFLICTS_WITH_HELD", nodes: conflicts }] };

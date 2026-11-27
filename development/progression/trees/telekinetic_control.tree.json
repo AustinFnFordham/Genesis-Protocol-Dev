@@ -82,7 +82,8 @@
       "damage"
      ]
     }
-   ]
+   ],
+   "provenance_class": "proposed"
   },
   {
    "id": "tk_sustained_hold",
@@ -103,7 +104,8 @@
       "second_object"
      ]
     }
-   ]
+   ],
+   "provenance_class": "proposed"
   },
   {
    "id": "tk_force_power_prerequisite",
@@ -131,7 +133,8 @@
       "damage"
      ]
     }
-   ]
+   ],
+   "provenance_class": "proposed"
   }
  ],
  "balance_tests": [

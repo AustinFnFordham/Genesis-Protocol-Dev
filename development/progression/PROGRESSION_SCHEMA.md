@@ -61,12 +61,35 @@
 - Candidate nodes are usable **only in sandbox fixtures**.
 - Each grant names its `authority`: `class`, `archetype`, `species`, `mastery`, `discipline`, `training` or `campaign_ruling`. The validator checks that the authority matches the tree's layer (§G).
 
+### 4.1 Provenance class and executable grants (CC-008.1)
+
+`status` says whether content may ship; `provenance_class` says **where its mechanics come from**. They are independent.
+
+| `provenance_class` | Meaning | May carry `executable: true` grants? |
+|---|---|---|
+| `source_backed` | Stated in a cited source; not yet engine-implemented | No |
+| `legacy` | Read from a legacy record (possibly reinterpreted by the adapter) | No |
+| `proposed` | Authored here; not owner-approved. **A missing class is treated as `proposed`.** | No |
+| `implemented` | Backed by an engine profile | Yes, if every `profile:` grant names a profile in `combat_slice/catalog.json` |
+| `owner_approved` | Owner signed off | Yes, with `approval {by, on, ref}` |
+
+An executable grant is also blocked, whatever the class, when:
+- the node is `placeholder: true` (the source has no real mechanics, e.g. Sentry's `grant_ability` "Grants a special ability", or Echani tiers' free text);
+- the node carries `legacy_reinterpretation` without `legacy_validation {by, on, decision}`;
+- the tree lists `source_copies` with differing hashes and no `source_choice {chosen, by}` (e.g. the two Echani copies).
+
+`framework.executableBlockers()` implements these rules. The validator reports them as errors, and `choices.statusOf()` re-checks them at runtime, so a tree that skipped validation still can't execute such a grant. In an `approved` or `approved_provisional` tree, every node must be `implemented` or `owner_approved`, no node may be a placeholder, and unresolved source copies are an error rather than a warning.
+
 ## 5. Legacy compatibility
 
 `fromLegacyClass()` reads the legacy `Class.schema.json` `progression_tree` without changing it.
 
 - **Ambiguous lists:** a bare prerequisite list that names several members of one exclusive `choice_group` is read as `any_of_group`, and the node records `legacy_reinterpretation` (CC-008 A §2.2).
 - **Status:** adapted trees are always `candidate`.
+- **Provenance:** every adapted node is `provenance_class: "legacy"` and keeps `legacy_prerequisites` verbatim. The tree records `legacy_source {path, sha256}`.
+- **Promotion gate:** a tree with any reinterpretation (or any invalid prerequisite) gets `promotion.requires_explicit_validation: true`. It can't become approved until every reinterpreted node has `legacy_validation` and every node is owner-approved (`PROMOTION_WITHOUT_LEGACY_VALIDATION`).
+- **Invalid prerequisites are reported, never repaired:** `DANGLING_PREREQUISITE`, `SELF_PREREQUISITE`, `PREREQUISITE_ABOVE_LEVEL`, `NON_LIST_PREREQUISITES`, `DUPLICATE_NODE_ID`. A dangling reference stays in `requires`, so the validator rejects the tree.
+- **Audit:** `node tools/audit_legacy_prereqs.cjs` regenerates `legacy/legacy_prereq_audit.json`, a per-tree record of every reinterpretation over the 100 candidate builds and the 195 hub-archive trees. `test_cc008_h.cjs` checks that the committed report is current.
 - **New trees** must use explicit requirement modes.
 
 ## 6. Character state (`genesis-progression-character/0.1`)

@@ -1,7 +1,7 @@
 // Tree validator (CC-008 C/G). Pure function over tree documents; never touches the game runtime.
 // validateTrees(trees, opts) → { ok, errors[], warnings[], report }
 "use strict";
-const CU = require("./curves.js");
+const CU = require("./curves.js"), F = require("./framework.js");
 const LAYER_AUTH = { class: ["class", "training", "campaign_ruling"], archetype: ["archetype", "class", "training"], species: ["species"], proficiency: ["mastery", "training"],
                      specialized_mastery: ["mastery", "training"], parent_linked: ["mastery", "training"], discipline: ["discipline"] };
 const XP_LAYERS = ["proficiency", "specialized_mastery", "discipline"];
@@ -30,6 +30,11 @@ function validateTrees(list, opts) {
       if (XP_LAYERS.includes(t.layer)) E("XP_LAYER_WITHOUT_XP", w);
     }
     if (t.layer === "parent_linked" && !t.parent) E("PARENT_LINKED_WITHOUT_PARENT", w);
+    if (new Set((t.source_copies || []).map((c) => c.sha256)).size > 1 && !(t.source_choice && t.source_choice.chosen && t.source_choice.by)) {
+      if (t.status === "approved" || t.status === "approved_provisional") E("CONFLICTING_SOURCE_COPIES", w, { copies: t.source_copies.map((c) => c.path) }); else W("CONFLICTING_SOURCE_COPIES_UNRESOLVED", w, { copies: t.source_copies.map((c) => c.path) }); }
+    if (t.promotion && t.promotion.requires_explicit_validation && (t.status === "approved" || t.status === "approved_provisional")) {
+      const pend = (t.nodes || []).filter((n) => n.legacy_reinterpretation && !(n.legacy_validation && n.legacy_validation.by && n.legacy_validation.decision)).map((n) => n.id);
+      if (pend.length) E("PROMOTION_WITHOUT_LEGACY_VALIDATION", w, { nodes: pend }); }
     if (t.layer === "class" && tr.xp_quantity === "mastery_xp") E("CLASS_LEVEL_ON_MASTERY_XP", w);
     if (t.layer !== "class" && tr.xp_quantity === "class_xp") E("CLASS_XP_ON_NON_CLASS_TRACK", w);
     (tr.cadence || []).forEach((L) => { if (L < (tr.start_level || 0) || (tr.max_level != null && L > tr.max_level)) E("CADENCE_OUT_OF_RANGE", w, { level: L }); });
@@ -50,6 +55,17 @@ function validateTrees(list, opts) {
         if (g.type === "track_unlock" && !byId[g.ref.replace(/^archetype:/, "archetype:")] && !(opts.external_tracks || []).includes(g.ref)) W("TRACK_UNLOCK_TARGET_NOT_LOADED", at, { ref: g.ref });
       });
       if (n.upgrades && !nid[n.upgrades]) E("UPGRADE_OF_UNKNOWN_NODE", at, { upgrades: n.upgrades });
+      // ---- CC-008.1 provenance classes and executable authority ----
+      if (n.provenance_class && !F.PROVENANCE_CLASSES.includes(n.provenance_class)) E("UNKNOWN_PROVENANCE_CLASS", at, { provenance_class: n.provenance_class });
+      if (!n.provenance_class) W("MISSING_PROVENANCE_CLASS", at);
+      (n.grants || []).forEach((gr) => F.executableBlockers(t, n, gr, opts).forEach((b) => E(b.code, at, b)));
+      if ((t.status === "approved" || t.status === "approved_provisional")) {
+        if (n.provenance_class !== "owner_approved" && n.provenance_class !== "implemented") E("UNAPPROVED_PROVENANCE_IN_APPROVED_TREE", at, { provenance_class: n.provenance_class || null });
+        if (n.placeholder) E("PLACEHOLDER_IN_APPROVED_TREE", at);
+        if (n.legacy_reinterpretation && !(n.legacy_validation && n.legacy_validation.by && n.legacy_validation.decision)) E("LEGACY_REINTERPRETATION_UNVALIDATED", at);
+      }
+      if (n.provenance_class === "owner_approved" && !(n.approval && n.approval.by && n.approval.on && n.approval.ref)) E("OWNER_APPROVED_WITHOUT_RECORD", at);
+      if (n.legacy_reinterpretation && n.provenance_class !== "legacy" && !(n.legacy_validation && n.legacy_validation.decision)) E("REINTERPRETED_NODE_RELABELLED", at, { provenance_class: n.provenance_class || null });
       (n.conflicts_with || []).forEach((c) => { if (!nid[c]) E("CONFLICT_WITH_UNKNOWN_NODE", at, { conflicts_with: c }); });
       // stacking: two effects on the same key without a stacking group or upgrade relation
       (n.effects || []).forEach((e) => { if (!e.key) E("EFFECT_WITHOUT_KEY", at); });
