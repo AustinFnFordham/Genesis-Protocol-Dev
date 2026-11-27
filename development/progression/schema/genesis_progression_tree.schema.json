@@ -335,6 +335,13 @@
      }
     }
    }
+  },
+  "balance_tests": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "Repository paths of simulations/tests that exercise this tree's numbers (authoring coverage check)."
   }
  },
  "definitions": {

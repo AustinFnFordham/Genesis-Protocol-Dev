@@ -1,4 +1,4 @@
-# Genesis skill-mastery substrate (CC-007 §4–§6) — SANDBOX, NONCANONICAL
+# Genesis progression (CC-007 mastery substrate + CC-008 unified framework) — SANDBOX, NONCANONICAL
 
 This is a reusable, deterministic progression ledger. Nothing here writes to any character sheet or campaign file, and nothing is live.
 
@@ -29,3 +29,19 @@ This is a reusable, deterministic progression ledger. Nothing here writes to any
   - Each milestone lists what it `never_grants`: Force Pull, Force Push, creature manipulation, damage.
 - **Independent of class level.** Mastery state is per character and per skill.
 - **Combat limits are a session overlay.** A session can use mastery limits only through `newState({tk_limits})` (`s.tk_limits`, labelled). Without it, the Jedi Fundamentals limits apply unchanged.
+
+## CC-008 unified framework
+
+| File | Purpose |
+|---|---|
+| `CC008_SOURCE_RECONCILIATION.md` | Milestone A: what the sources say and where they conflict |
+| `PROGRESSION_SCHEMA.md`, `schema/genesis_progression_tree.schema.json` | Milestone B: the schema and authoring specification |
+| `framework.js` | Tracks, requirements, typed ledger, two-phase transactions, legacy adapter |
+| `curves.js` | Curve evaluator and table generator |
+| `validate.js`, `authoring.js`, `tools/validate_tree.cjs`, `AUTHORING.md` | Validator, authoring checks, the command-line entry point and its guide |
+| `choices.js` | Milestone D: the three-choice selection contract |
+| `disciplines.js`, `policies/discipline_allocation.v0.1.json` | Milestone E: shared Discipline XP |
+| `fixtures/aero_vertical/` | Milestone F: the Aero Echani + Sentinel vertical slice (`evidence.json`) |
+| `candidates/` | Candidate class-level curves and their pacing comparison (not adopted) |
+| `XP_TABLES.md` | Level-by-level sample tables |
+| `test_cc008.cjs` | Runs `test_cc008_{b..g}.cjs`; part of `run_all_checks.sh` |

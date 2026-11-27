@@ -5,18 +5,137 @@
  "status": "candidate",
  "layer": "specialized_mastery",
  "registry_urid": "feature_minor_telekinesis",
- "restrictions": { "requires_features": ["minor_telekinesis"] },
- "provenance": { "source": "CC-007 skills/telekinetic_control.v0.1.json (owner numbers 2026-11-25, for simulation); base envelope jedi_fundamentals.json v1", "notes": "Same curve as genesis-mastery/0.1; this tree is the CC-008 fixture form of it." },
- "track": { "start_level": 0, "max_level": 20, "xp_quantity": "mastery_xp", "curve": { "id": "quadratic/1", "params": { "a": 10, "b": 5, "c": 1 } }, "curve_status": "owner_proposal", "cadence": [5, 10, 15] },
- "evidence": { "accepted_authorities": ["atomic", "atomic_exploration"], "event_types": { "telekinesis_use": { "xp": 1 } }, "never_from": ["narration", "client assertion"] },
- "choice_groups": [ { "id": "tk_training", "picks": 1, "offer_size": 3, "exclusive": false, "milestones": [5, 10, 15] } ],
+ "restrictions": {
+  "requires_features": [
+   "minor_telekinesis"
+  ]
+ },
+ "provenance": {
+  "source": "CC-007 skills/telekinetic_control.v0.1.json (owner numbers 2026-11-25, for simulation); base envelope jedi_fundamentals.json v1",
+  "notes": "Same curve as genesis-mastery/0.1; this tree is the CC-008 fixture form of it."
+ },
+ "track": {
+  "start_level": 0,
+  "max_level": 20,
+  "xp_quantity": "mastery_xp",
+  "curve": {
+   "id": "quadratic/1",
+   "params": {
+    "a": 10,
+    "b": 5,
+    "c": 1
+   }
+  },
+  "curve_status": "owner_proposal",
+  "cadence": [
+   5,
+   10,
+   15
+  ]
+ },
+ "evidence": {
+  "accepted_authorities": [
+   "atomic",
+   "atomic_exploration"
+  ],
+  "event_types": {
+   "telekinesis_use": {
+    "xp": 1
+   }
+  },
+  "never_from": [
+   "narration",
+   "client assertion"
+  ]
+ },
+ "choice_groups": [
+  {
+   "id": "tk_training",
+   "picks": 1,
+   "offer_size": 3,
+   "exclusive": false,
+   "milestones": [
+    5,
+    10,
+    15
+   ]
+  }
+ ],
  "nodes": [
-  { "id": "tk_fine_manipulation", "name": "Fine manipulation", "kind": "choice", "level": 5, "choice_group": "tk_training", "status": "candidate", "provenance": "CC-007 tk_m5",
-    "grants": [ { "type": "training_opportunity", "ref": "training:tk_fine_manipulation", "authority": "training", "never_grants": ["force_pull", "force_push", "creature_manipulation", "damage"] } ] },
-  { "id": "tk_sustained_hold", "name": "Sustained hold", "kind": "choice", "level": 10, "choice_group": "tk_training", "status": "candidate", "provenance": "CC-007 tk_m10",
-    "grants": [ { "type": "training_opportunity", "ref": "training:tk_sustained_hold", "authority": "training", "never_grants": ["force_pull", "force_push", "second_object"] } ] },
-  { "id": "tk_force_power_prerequisite", "name": "Force-power training prerequisite", "kind": "choice", "level": 15, "choice_group": "tk_training", "status": "candidate", "provenance": "CC-007 tk_m15",
-    "requires": { "any": ["tk_fine_manipulation", "tk_sustained_hold"] },
-    "grants": [ { "type": "training_opportunity", "ref": "training:begin_telekinetic_power_training", "authority": "training", "never_grants": ["force_pull", "force_push", "creature_manipulation", "damage"] } ] }
+  {
+   "id": "tk_fine_manipulation",
+   "name": "Fine manipulation",
+   "kind": "choice",
+   "level": 5,
+   "choice_group": "tk_training",
+   "status": "candidate",
+   "provenance": "CC-007 tk_m5",
+   "grants": [
+    {
+     "type": "training_opportunity",
+     "ref": "training:tk_fine_manipulation",
+     "authority": "training",
+     "never_grants": [
+      "force_pull",
+      "force_push",
+      "creature_manipulation",
+      "damage"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tk_sustained_hold",
+   "name": "Sustained hold",
+   "kind": "choice",
+   "level": 10,
+   "choice_group": "tk_training",
+   "status": "candidate",
+   "provenance": "CC-007 tk_m10",
+   "grants": [
+    {
+     "type": "training_opportunity",
+     "ref": "training:tk_sustained_hold",
+     "authority": "training",
+     "never_grants": [
+      "force_pull",
+      "force_push",
+      "second_object"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tk_force_power_prerequisite",
+   "name": "Force-power training prerequisite",
+   "kind": "choice",
+   "level": 15,
+   "choice_group": "tk_training",
+   "status": "candidate",
+   "provenance": "CC-007 tk_m15",
+   "requires": {
+    "any": [
+     "tk_fine_manipulation",
+     "tk_sustained_hold"
+    ]
+   },
+   "grants": [
+    {
+     "type": "training_opportunity",
+     "ref": "training:begin_telekinetic_power_training",
+     "authority": "training",
+     "never_grants": [
+      "force_pull",
+      "force_push",
+      "creature_manipulation",
+      "damage"
+     ]
+    }
+   ]
+  }
+ ],
+ "balance_tests": [
+  "development/progression/sim_telekinesis.cjs",
+  "development/progression/test_progression.cjs"
  ]
 }

@@ -1,0 +1,164 @@
+{
+ "schema": "genesis-progression-tree/0.1",
+ "id": "mastery:broken_example",
+ "version": "0",
+ "status": "approved",
+ "layer": "specialized_mastery",
+ "registry_urid": "Bad URID!",
+ "provenance": {
+  "source": "deliberately broken authoring example (CC-008 G)"
+ },
+ "track": {
+  "start_level": 0,
+  "max_level": 6,
+  "xp_quantity": "mastery_xp",
+  "curve": {
+   "id": "table/1",
+   "table": [
+    0,
+    10,
+    30,
+    20,
+    60,
+    90,
+    150
+   ]
+  },
+  "curve_status": "candidate",
+  "cadence": [
+   3,
+   9
+  ]
+ },
+ "evidence": {
+  "accepted_authorities": [
+   "atomic"
+  ],
+  "event_types": {
+   "use": {
+    "xp": 1
+   }
+  }
+ },
+ "balance_tests": [
+  "development/progression/does_not_exist.cjs"
+ ],
+ "choice_groups": [
+  {
+   "id": "pick",
+   "picks": 1,
+   "offer_size": 3,
+   "exclusive": true,
+   "milestones": [
+    3
+   ]
+  },
+  {
+   "id": "ghost",
+   "picks": 2,
+   "milestones": [
+    6
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "id": "alpha",
+   "kind": "choice",
+   "level": 3,
+   "choice_group": "pick",
+   "status": "candidate",
+   "grants": [
+    {
+     "type": "feature",
+     "ref": "feature:candidate_alpha",
+     "authority": "mastery"
+    }
+   ],
+   "effects": [
+    {
+     "key": "damage_bonus",
+     "add": 1
+    }
+   ],
+   "conflicts_with": [
+    "beta"
+   ]
+  },
+  {
+   "id": "beta",
+   "kind": "choice",
+   "level": 3,
+   "choice_group": "pick",
+   "status": "candidate",
+   "grants": [
+    {
+     "type": "feature",
+     "ref": "feature:candidate_alpha",
+     "authority": "mastery"
+    }
+   ],
+   "effects": [
+    {
+     "key": "damage_bonus",
+     "add": 2
+    }
+   ]
+  },
+  {
+   "id": "gamma",
+   "kind": "improvement",
+   "level": 6,
+   "status": "candidate",
+   "requires": {
+    "all": [
+     "alpha",
+     "beta"
+    ]
+   }
+  },
+  {
+   "id": "delta",
+   "kind": "improvement",
+   "level": 5,
+   "status": "candidate",
+   "requires": {
+    "all": [
+     "epsilon"
+    ]
+   }
+  },
+  {
+   "id": "epsilon",
+   "kind": "improvement",
+   "level": 5,
+   "status": "candidate",
+   "requires": {
+    "all": [
+     "delta"
+    ]
+   }
+  },
+  {
+   "id": "zeta",
+   "kind": "improvement",
+   "level": 4,
+   "status": "candidate",
+   "grants": [
+    {
+     "type": "feature",
+     "ref": "feature:candidate_zeta",
+     "authority": "species"
+    }
+   ],
+   "requires": {
+    "all": [
+     {
+      "track": "mastery:broken_example",
+      "level": 12
+     }
+    ]
+   }
+  }
+ ]
+}
