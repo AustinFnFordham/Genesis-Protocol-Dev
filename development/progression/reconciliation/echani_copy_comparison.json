@@ -1,0 +1,616 @@
+{
+ "schema": "genesis-progression-reconciliation/0.1",
+ "kind": "echani_species_copy_comparison",
+ "generator": "development/progression/tools/reconcile_sources.py",
+ "canonical": false,
+ "status": "candidate",
+ "note": "Reconciliation material for the Progression Forge. Nothing here is approved, promoted or executable.",
+ "baseline": {
+  "copy": "official",
+  "member": "official_species_playable/echani.yml",
+  "reason": "cited by Aero's sheet (api_bridge/gm/aero_character_runtime.yml)",
+  "promoted": false
+ },
+ "copies": {
+  "official": {
+   "member": "official_species_playable/echani.yml",
+   "sha256": "d0cfb1840103e867ea53293d7aafda51d64c5cd92d9eaab13d30f6d00be5d6d9",
+   "cited_by_sheet": true
+  },
+  "backend": {
+   "member": "backend/species/echani.yml",
+   "sha256": "e5e0bc4abbe533196ed01baae2eec3b5943c65dde80551682e8bb353b7f3ce72",
+   "cited_by_sheet": false
+  }
+ },
+ "dispositions": {
+  "baseline_keeps": "present only in the official copy; kept in the baseline",
+  "retain_for_review": "present only in the backend copy; NOT discarded — kept for an owner/Forge decision",
+  "baseline_preferred_backend_retained": "values differ; official value is the proposed baseline, backend value preserved verbatim"
+ },
+ "summary": {
+  "identical_leaves": 73,
+  "differing_fields": 16,
+  "differs": 3,
+  "official_only": 1,
+  "backend_only": 12,
+  "mechanical_values_identical_where_both_define": true,
+  "mechanical": {
+   "differs": 0,
+   "official_only": 0,
+   "backend_only": 2
+  }
+ },
+ "fields": [
+  {
+   "path": [
+    "companion_engine"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "ai_behavior": {
+     "personality": "Warm, yet reserved; your Echani character is a trusted and formidable ally. They value loyalty above all else.\n",
+     "motivations": [
+      "Defending those they care about",
+      "Honoring their training and discipline",
+      "Seeking new knowledge in martial arts"
+     ],
+     "combat_behavior": "Your Echani character excels at close-range combat, focusing on disabling opponents with precision strikes rather than aiming for a kill shot.\n",
+     "social_behavior": "In social situations, your Echani character is respectful and courteous, but also fiercely protective of their allies and territory.\n"
+    },
+    "relationship_tracking": {
+     "trust_levels": [
+      {
+       "Friendly (0-50)": "Treats the companion as an equal in combat and respects their expertise"
+      },
+      {
+       "Trusted (51-75)": "Collaborates closely with the companion in social situations and respects their opinion"
+      },
+      {
+       "Honored (76-100)": "Places their trust entirely in the companion, following their lead in all situations"
+      }
+     ],
+     "loyalty_triggers": [
+      "Betrayal of a trusted ally",
+      "Disrespect towards martial arts or personal honor"
+     ]
+    },
+    "services": []
+   },
+   "field": "companion_engine",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "cultural_connections"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "primary_culture": "Eshan Culture",
+    "cultural_networks": [
+     {
+      "The Warrior's Circle": "A network of skilled martial artists and bodyguards who share techniques and strategies."
+     },
+     {
+      "The Honorable Alliance": "A coalition of species and factions united by a commitment to honor, discipline, and fair combat."
+     }
+    ],
+    "traditional_practices": [
+     {
+      "Martial Rituals": "Sacred ceremonies that celebrate Echani combat heritage and honor the traditions of unarmed combat."
+     },
+     {
+      "Combat Meditation": "Mindful techniques that enhance combat focus and martial discipline."
+     }
+    ],
+    "cultural_knowledge": [
+     {
+      "The Art of Unarmed Combat": "A comprehensive understanding of hand-to-hand fighting techniques, including strikes, throws, and takedowns."
+     },
+     {
+      "Martial Strategies": "Advanced tactics for adapting to different combat environments and opponents."
+     }
+    ]
+   },
+   "field": "cultural_connections",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "cultural_features"
+   ],
+   "status": "differs",
+   "official": {
+    "cultural_features": [
+     {
+      "name": "Martial Rituals",
+      "type": "ceremonial",
+      "description": "Echani have sacred martial rituals that celebrate their combat heritage and honor the traditions of unarmed combat.",
+      "narrative_impact": "Provides martial connection and cultural depth. Can be used for character development and cultural interactions."
+     },
+     {
+      "name": "Combat Traditions",
+      "type": "traditional",
+      "description": "Echani combat traditions emphasize discipline, honor, and the importance of mastering the art of unarmed combat.",
+      "narrative_impact": "Creates martial identity and training scenarios. Can be used for training and mentoring situations."
+     },
+     {
+      "name": "Sparring Circles",
+      "type": "cultural",
+      "description": "Echani communities gather in sparring circles to practice martial arts, share techniques, and strengthen their bonds through combat.",
+      "narrative_impact": "Provides martial bonding and skill development opportunities. Can be used for training and community building."
+     },
+     {
+      "name": "Combat Meditation",
+      "type": "narrative",
+      "description": "Echani practice meditation techniques that enhance their combat focus and martial discipline.",
+      "narrative_impact": "Provides character development and martial enhancement opportunities. Can be used for personal growth and combat preparation."
+     }
+    ]
+   },
+   "backend": [
+    {
+     "description": "Echani have sacred martial rituals that celebrate their combat heritage and honor the traditions of unarmed combat.",
+     "name": "Martial Rituals",
+     "activation": "Triggered by significant martial achievements or milestones (e.g., defeating a challenging opponent, mastering a new technique).",
+     "narrative_enhancement": "You feel a deep connection to your Echani heritage as you participate in a sacred martial ritual. Your focus and discipline are heightened, granting you advantage on all skill checks related to combat.",
+     "faction_connection": "The Warrior's Circle"
+    },
+    {
+     "description": "Echani combat traditions emphasize discipline, honor, and the importance of mastering the art of unarmed combat.",
+     "name": "Combat Traditions",
+     "activation": "Triggered by engaging in combat or martial training with a respected mentor or peer.",
+     "narrative_enhancement": "You draw upon your Echani heritage as you face your opponent. Your focus is sharpened, and you sense opportunities for growth and improvement.",
+     "faction_connection": "The Honorable Alliance"
+    },
+    {
+     "description": "Echani communities gather in sparring circles to practice martial arts, share techniques, and strengthen their bonds through combat.",
+     "name": "Sparring Circles",
+     "activation": "Triggered by participating in a sparring session with other members of the community.",
+     "narrative_enhancement": "You connect with your fellow Echani as you engage in a spirited sparring match. Your skills improve, and you develop new techniques through shared learning.",
+     "faction_connection": "The Warrior's Circle"
+    },
+    {
+     "description": "Echani practice meditation techniques that enhance their combat focus and martial discipline.",
+     "name": "Combat Meditation",
+     "activation": "Triggered by engaging in meditation or mindfulness exercises before a significant martial event (e.g., a high-stakes competition, a critical mission).",
+     "narrative_enhancement": "You quiet your mind and focus on the present moment. Your senses are heightened, allowing you to anticipate threats and opportunities with greater ease.",
+     "faction_connection": "The Honorable Alliance"
+    }
+   ],
+   "field": "cultural_features",
+   "mechanical": false,
+   "proposed_disposition": "baseline_preferred_backend_retained",
+   "decision": null
+  },
+  {
+   "path": [
+    "environmental_adaptations"
+   ],
+   "status": "differs",
+   "official": {
+    "environmental_adaptations": [
+     {
+      "environment": "combat",
+      "adaptation_name": "Combat Mastery",
+      "description": "Your martial arts training makes you perfectly suited for combat environments, where you can read and respond to threats with incredible precision.",
+      "mechanical_benefit": "You have advantage on all skill checks in combat environments, and you can sense the presence of hidden threats within 30 feet."
+     },
+     {
+      "environment": "disciplined",
+      "adaptation_name": "Disciplined Focus",
+      "description": "Your natural discipline allows you to maintain focus and control in any environment, regardless of distractions or chaos.",
+      "mechanical_benefit": "You have advantage on saving throws against being distracted or losing focus, and you can maintain concentration in chaotic situations."
+     },
+     {
+      "environment": "martial",
+      "adaptation_name": "Martial Environment",
+      "description": "Your martial arts training allows you to thrive in environments that require physical discipline and combat skills.",
+      "mechanical_benefit": "You have advantage on Dexterity-based skill checks in martial environments, and you can sense opportunities for combat training."
+     },
+     {
+      "environment": "honorable",
+      "adaptation_name": "Honorable Conduct",
+      "description": "Your species' emphasis on honor and discipline allows you to navigate complex social situations with grace and integrity.",
+      "mechanical_benefit": "You have advantage on Charisma-based skill checks when acting with honor and integrity, and you can sense when others are acting dishonorably."
+     }
+    ]
+   },
+   "backend": [
+    {
+     "environment": "combat",
+     "adaptation_name": "Combat Mastery",
+     "description": "Your martial arts training makes you perfectly suited for combat environments, where you can read and respond to threats with incredible precision.",
+     "mechanical_benefit": "You have advantage on all skill checks in combat environments, and you can sense the presence of hidden threats within 30 feet."
+    },
+    {
+     "environment": "disciplined",
+     "adaptation_name": "Disciplined Focus",
+     "description": "Your natural discipline allows you to maintain focus and control in any environment, regardless of distractions or chaos.",
+     "mechanical_benefit": "You have advantage on saving throws against being distracted or losing focus, and you can maintain concentration in chaotic situations."
+    },
+    {
+     "environment": "martial",
+     "adaptation_name": "Martial Environment",
+     "description": "Your martial arts training allows you to thrive in environments that require physical discipline and combat skills.",
+     "mechanical_benefit": "You have advantage on Dexterity-based skill checks in martial environments, and you can sense opportunities for combat training."
+    },
+    {
+     "environment": "honorable",
+     "adaptation_name": "Honorable Conduct",
+     "description": "Your species' emphasis on honor and discipline allows you to navigate complex social situations with grace and integrity.",
+     "mechanical_benefit": "You have advantage on Charisma-based skill checks when acting with honor and integrity, and you can sense when others are acting dishonorably."
+    }
+   ],
+   "field": "environmental_adaptations",
+   "mechanical": false,
+   "proposed_disposition": "baseline_preferred_backend_retained",
+   "decision": null
+  },
+  {
+   "path": [
+    "environmental_mastery"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "primary_environments": [
+     "Combat Environments",
+     "Martial Training Arenas"
+    ],
+    "environmental_knowledge": [
+     "Knowledge of combat strategies and tactics in various environments (e.g., planetary surfaces, zero-gravity areas).",
+     "Familiarity with the tools and equipment used in martial training, such as sparring dummies and obstacle courses."
+    ],
+    "survival_techniques": [
+     {
+      "Echani Martial Adaptation": "The ability to adjust their fighting style to suit different environments, such as adapting to zero-gravity or low-light conditions."
+     },
+     {
+      "Disciplined Survival": "Techniques for sustaining themselves in harsh environments using only minimal equipment."
+     }
+    ]
+   },
+   "field": "environmental_mastery",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "flavor_text"
+   ],
+   "status": "backend_only",
+   "backend": "The Echani are known for their unwavering dedication to the art of combat. Their homeworld, Eshan, is a planet where martial prowess is revered as a sacred tradition. From a young age, Echani children are trained in the ways of combat and physical discipline, often being enrolled in prestigious academies that teach them the finer points of hand-to-hand combat, sword fighting, and defensive techniques. The Echani's natural affinity for unarmed combat makes them formidable opponents on any battlefield.",
+   "field": "flavor_text",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "innate_traits",
+    "[id=echani_combat_communication]",
+    "corruption_transform"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "can_corrupt": true,
+    "corrupts_to_feature_id": "echani_deceptive_ambusher",
+    "ui_transition": {
+     "animation": "twisted-purple-mist",
+     "sfx": "hissing-snake-whisper"
+    }
+   },
+   "field": "innate_traits.[id=echani_combat_communication].corruption_transform",
+   "mechanical": true,
+   "proposed_disposition": "retain_for_review",
+   "decision": null,
+   "note": "backend-only dark-side corruption hook (trait swaps to echani_deceptive_ambusher); a mechanic the official baseline lacks"
+  },
+  {
+   "path": [
+    "innate_traits",
+    "[id=echani_martial_arts_training]",
+    "corruption_transform"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "can_corrupt": true,
+    "corrupts_to_feature_id": "echani_aggressive_combat_style",
+    "ui_transition": {
+     "animation": "flickering-red-aura",
+     "sfx": "growling-snarl"
+    }
+   },
+   "field": "innate_traits.[id=echani_martial_arts_training].corruption_transform",
+   "mechanical": true,
+   "proposed_disposition": "retain_for_review",
+   "decision": null,
+   "note": "backend-only dark-side corruption hook (trait swaps to echani_aggressive_combat_style); a mechanic the official baseline lacks"
+  },
+  {
+   "path": [
+    "llm_guidance"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "roleplay_guidance": "As an Echani, you are deeply connected to your martial heritage. Your culture emphasizes discipline, self-control, and respect for your opponents. You may find yourself drawn to roles that require strategic thinking, physical prowess, or leadership. Be mindful of your own emotional control, as the Echani are known for their calm and focused demeanor in combat.",
+    "narrative_hooks": [
+     "Your family's honor is tied to your martial performance. How will you live up to your family's expectations?",
+     "You've been tasked with protecting a high-ranking dignitary from an assassination attempt. Can you keep them safe?"
+    ],
+    "social_dynamics": "Echani tend to be respectful and courteous, but also fiercely competitive in combat situations. They value loyalty and camaraderie with their comrades, often forming strong bonds through shared experiences.",
+    "common_motivations": [
+     "To prove oneself as a skilled warrior",
+     "To protect one's family or community",
+     "To master the art of combat and become a legendary fighter"
+    ]
+   },
+   "field": "llm_guidance",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "narrative_tags"
+   ],
+   "status": "official_only",
+   "official": [
+    "archetype: skirmisher",
+    "physical: near_human",
+    "social: honorable",
+    "culture: martial_arts",
+    "environment: disciplined"
+   ],
+   "field": "narrative_tags",
+   "mechanical": false,
+   "proposed_disposition": "baseline_keeps",
+   "decision": null
+  },
+  {
+   "path": [
+    "nemesis_engine"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "archetype": "honor_duel",
+    "overrides": {
+     "nemesis_type": [
+      "Warlord of the Hutt Cartel",
+      "High-ranking Imperial Officer"
+     ],
+     "nemesis_motivations": [
+      "Crush the Echani's martial traditions and assert their own power",
+      "Eliminate any potential threats to their authority"
+     ],
+     "nemesis_tactics": [
+      "Use overwhelming force to overwhelm Echani defenses",
+      "Exploit Echani weaknesses in close combat"
+     ]
+    }
+   },
+   "field": "nemesis_engine",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "rarity"
+   ],
+   "status": "backend_only",
+   "backend": "common",
+   "field": "rarity",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null,
+   "note": "conflicts with the official copy's 'uncommon' tag"
+  },
+  {
+   "path": [
+    "romance_engine"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "archetype": "warrior_bond",
+    "overrides": {
+     "cultural_approach": "Echani typically view romantic relationships as a secondary priority, focusing first on their martial duties and family obligations. However, when they do form connections with others, it is often deeply passionate and intense.",
+     "ideal_partners": [
+      "Committed warriors or martial artists",
+      "Those who share a deep respect for Echani traditions"
+     ],
+     "romance_tactics": [
+      "Use physical discipline to create a bond of trust and intimacy",
+      "Engage in respectful competition to prove one's worth"
+     ]
+    }
+   },
+   "field": "romance_engine",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "species_progression",
+    "narrative_progression"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "level_5": "You begin to master your martial arts techniques, becoming a formidable opponent in combat. Your training focuses on refining your skills and developing a deeper connection with your body.",
+    "level_10": "As you progress, you become increasingly skilled at reading the battlefield and anticipating your opponents' moves. You start to develop a reputation as a reliable and deadly warrior.",
+    "level_15": "You've reached a new level of mastery, able to execute complex martial techniques with precision and ease. Your confidence in combat grows, and you begin to take on more leadership roles within your community.",
+    "level_20": "At the pinnacle of your abilities, you embody the Echani ideals of discipline, honor, and combat prowess. You're a master strategist and tactician, able to adapt to any situation with ease."
+   },
+   "field": "species_progression.narrative_progression",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  },
+  {
+   "path": [
+    "tags"
+   ],
+   "status": "differs",
+   "official": [
+    "echani",
+    "dexterity_based",
+    "wisdom_based",
+    "warrior",
+    "martial_artist",
+    "disciplined",
+    "honorable",
+    "agile",
+    "melee_specialist",
+    "bodyguard",
+    "perceptive",
+    "uncommon"
+   ],
+   "backend": [
+    "agile",
+    "bodyguard",
+    "combat_specialist",
+    "dexterity_based",
+    "disciplined",
+    "echani",
+    "honorable",
+    "melee_specialist",
+    "perceptive",
+    "uncommon",
+    "warrior",
+    "wisdom_based"
+   ],
+   "field": "tags",
+   "mechanical": false,
+   "proposed_disposition": "baseline_preferred_backend_retained",
+   "decision": null
+  },
+  {
+   "path": [
+    "visual_engine"
+   ],
+   "status": "backend_only",
+   "backend": {
+    "archetype": "standard_humanoid",
+    "overrides": {
+     "base_visual_tokens": [
+      {
+       "skin_color": "pale_white"
+      },
+      {
+       "hair_color": "silver_white"
+      },
+      {
+       "eye_color": "blue_green"
+      },
+      {
+       "facial_features": "angular_chin"
+      },
+      {
+       "body_type": "athletic"
+      },
+      {
+       "height": "medium_tall"
+      }
+     ],
+     "morphology": {
+      "head_type": "humanoid",
+      "body_type": "humanoid",
+      "average_height": "5_ft_9_in"
+     },
+     "dynamic_visuals": {
+      "age_progression": {
+       "child": {
+        "hair_length": "short",
+        "facial_features": "smooth_forehead"
+       },
+       "adult": {
+        "muscle_mass": "toned",
+        "scars": "few"
+       },
+       "elder": {
+        "wrinkles": "deep_set",
+        "graying_hair": "prominent"
+       }
+      },
+      "morality_corruption": {
+       "dark_side": [
+        {
+         "eye_color": "yellow_amber"
+        },
+        {
+         "skin_tone": "sickly_pale"
+        },
+        {
+         "facial_features": "cruel_grin"
+        }
+       ],
+       "light_side": [
+        {
+         "hair_length": "long flowing"
+        },
+        {
+         "muscle_mass": "powerful"
+        },
+        {
+         "scars": "many"
+        }
+       ]
+      }
+     },
+     "unique_identifiers": [
+      {
+       "tattoos": "tribal_patterns"
+      },
+      {
+       "birthmarks": "unique_symbols"
+      }
+     ],
+     "prompt_schema": {
+      "base_prompt": "Echani warrior with silver-white hair and pale skin, standing in a defensive stance.",
+      "contextual_modifiers": [
+       {
+        "height": "tall_short"
+       },
+       {
+        "muscle_mass": "toned_slim"
+       },
+       {
+        "facial_features": "angular_chin_smooth_forehead"
+       }
+      ]
+     }
+    }
+   },
+   "field": "visual_engine",
+   "mechanical": false,
+   "proposed_disposition": "retain_for_review",
+   "decision": null
+  }
+ ],
+ "sources": {
+  "archive": {
+   "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip",
+   "sha256": "0e2b6a5f8b37000a83d099d0d18655b6fca9280ccad001f70e9d4cc46acbdb7b"
+  },
+  "files": [
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/species/echani.yml",
+    "sha256": "e5e0bc4abbe533196ed01baae2eec3b5943c65dde80551682e8bb353b7f3ce72"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/official_species_playable/echani.yml",
+    "sha256": "d0cfb1840103e867ea53293d7aafda51d64c5cd92d9eaab13d30f6d00be5d6d9"
+   },
+   {
+    "path": "api_bridge/gm/aero_character_runtime.yml",
+    "sha256": "14f67ba242ae7d86ad4a699e46a2294998a83524ec7c06aeed0bca4a01dd8d90"
+   }
+  ]
+ }
+}

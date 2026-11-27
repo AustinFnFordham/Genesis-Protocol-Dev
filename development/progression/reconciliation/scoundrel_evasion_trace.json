@@ -1,0 +1,275 @@
+{
+ "schema": "genesis-progression-reconciliation/0.1",
+ "kind": "scoundrel_dangling_prerequisite_trace",
+ "generator": "development/progression/tools/reconcile_sources.py",
+ "canonical": false,
+ "status": "candidate",
+ "note": "Reconciliation material for the Progression Forge. Nothing here is approved, promoted or executable.",
+ "finding": {
+  "node": "ability_score_improvement_8",
+  "dangling_prerequisite": "evasion_7",
+  "verdict": "genuine source gap: no available Scoundrel class or subclass source defines evasion_7 or any Evasion node",
+  "searched": [
+   {
+    "source": "hub:backend/classes/scoundrel.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "uncanny_dodge_7"
+    ]
+   },
+   {
+    "source": "repo:registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/scoundrel.json",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "uncanny_dodge_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.gambler.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "loaded_dice_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.gamblers.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "feature_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.hutt.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "feature_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.ryloth.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "feature_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.starweaver.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "feature_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/scoundrel_subclasses/scoundrel.thief.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "fast_hands_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/smuggler_subclasses/smuggler.scoundrel.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "criminal_connections_7"
+    ]
+   },
+   {
+    "source": "hub:backend/subclasses/smuggler_subclasses/smuggler_scoundrel.yml",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "scoundrel_level_7"
+    ]
+   },
+   {
+    "source": "hub:backend/classes/smuggler.yml (sibling class)",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "expertise_pilot_7"
+    ]
+   },
+   {
+    "source": "hub:backend/classes/spy.yml (sibling class)",
+    "defines_evasion_7": false,
+    "evasion_like_nodes": [],
+    "level_7_nodes": [
+     "advanced_deception_tactics"
+    ]
+   },
+   {
+    "source": "hub:backend/feature_registry.json",
+    "defines_evasion_feature": false,
+    "evasion_features": [],
+    "references_to_evasion_7": [
+     {
+      "id": "ability_score_improvement",
+      "source_id": "scoundrel",
+      "level": 8
+     }
+    ]
+   },
+   {
+    "source": "hub:backend/features/smuggler/evasion_expertise.yml",
+    "id": "feature_evasion_expertise",
+    "mechanics": [
+     {
+      "effect": "grant_ability",
+      "description": "Grants a special ability",
+      "parameters": {
+       "ability_name": "Evasion Expertise",
+       "action_type": "passive"
+      }
+     }
+    ],
+    "relevance": "a Smuggler feature named Evasion Expertise; placeholder grant_ability mechanics; not a Scoundrel level-7 feature"
+   }
+  ]
+ },
+ "external_evidence": [
+  {
+   "source": "hub:backend/clean_source/SW5e_PHB.txt (Operative table)",
+   "excerpt": "5th +3 Uncanny Dodge 3d6 2 6th +3 Expertise 3d6 2 7th +3 Evasion 4d6 3 8th +3 Ability Score Improvement",
+   "reading": "SW5e's rogue-analogue Operative has Uncanny Dodge at 5, Evasion at 7, ASI at 8 — the pattern the Scoundrel tree appears to copy"
+  },
+  {
+   "source": "hub:backend/clean_source/SW5e_PHB.txt (Evasion text)",
+   "excerpt": "EVASION When you are subjected to an e \u0000 ect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed ona saving throw, and only half damage if you fail. STAND AGAINST THE TIDE When a hostile creature misses you with a melee attack, you can use y"
+  },
+  {
+   "source": "repo:registry/golden_slice/global_definitions/class_operative.yml",
+   "excerpt": "level_7: {proficiency_bonus: 3, features: [Evasion], sneak_attack: 4d6, exploits: 3}"
+  },
+  {
+   "source": "Scoundrel tree itself",
+   "excerpt": {
+    "uncanny_dodge_7": {
+     "level_requirement": 7,
+     "type": "core",
+     "prerequisites": [
+      "enhanced_stealth_6",
+      "enhanced_deception_6"
+     ]
+    }
+   },
+   "reading": "Scoundrel moved Uncanny Dodge to 7, so the slot the Operative pattern gives to Evasion is occupied"
+  }
+ ],
+ "alternatives": [
+  {
+   "id": "A_point_at_level_7_node",
+   "proposed_requires": {
+    "all": [
+     "uncanny_dodge_7"
+    ]
+   },
+   "evidence": "every other Scoundrel core node requires the node at the previous level; uncanny_dodge_7 is the only level-7 node",
+   "consequence": "no new content; restores the chain. Evasion is simply absent from Scoundrel",
+   "status": "candidate"
+  },
+  {
+   "id": "B_add_evasion_7_node",
+   "proposed_node": {
+    "node_id": "evasion_7",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_stealth_6",
+     "enhanced_deception_6"
+    ],
+    "mechanics": null,
+    "placeholder": true
+   },
+   "evidence": "the prerequisite names it; SW5e Operative grants Evasion at 7",
+   "consequence": "adds a second level-7 core feature (Scoundrel has no source text for it); inherits the same L6 exclusive-choice ambiguity; Evasion mechanics must be authored and implemented before it can execute",
+   "status": "candidate"
+  },
+  {
+   "id": "C_leave_unrepaired",
+   "consequence": "tree stays invalid (validator rejects it); Scoundrel unusable until decided",
+   "status": "current"
+  }
+ ],
+ "decision": null,
+ "sources": {
+  "archive": {
+   "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip",
+   "sha256": "0e2b6a5f8b37000a83d099d0d18655b6fca9280ccad001f70e9d4cc46acbdb7b"
+  },
+  "files": [
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/scoundrel.yml",
+    "sha256": "65bd4767071f1093328108c8a56da2083be9414b221a1870dce70efeddb9524a"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/smuggler.yml",
+    "sha256": "20dbc4f4d8163652b35009ad3c55ab24821d798e0087b74e96678d109ca1e9cc"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/spy.yml",
+    "sha256": "a86f95337df55920ad8e1637028e458ec8b3bb513ea239884d8db41472b1ab34"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/clean_source/SW5e_PHB.txt",
+    "sha256": "f2a1eef1627d5afc0295f29a981fa73adb6cffa07bb6b5fb7782b5dc45c81606"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/feature_registry.json",
+    "sha256": "d7ee86aee9cd42382d7d58f61a78d0cc04dda20cf0b4286aad0220bdd96a1399"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/smuggler/evasion_expertise.yml",
+    "sha256": "9815c05fb567734866075f2f9221cfaacbe19e0a5a108bb6341ef1b7dad4ad1b"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.gambler.yml",
+    "sha256": "fdc7ecfd0a1f4f46b8334fe71367ec3208ac5ed9606dab485bcb1cc701251dc4"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.gamblers.yml",
+    "sha256": "2349010b4ff28d224d49f7b8bed3fd18b915fca9478076608c3ed81962f684c9"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.hutt.yml",
+    "sha256": "a5e5ade89d455b5622e50e8c809d3cac1541f29eabb58def3626b5efbe40c43b"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.ryloth.yml",
+    "sha256": "f937d73900826a8c22ab4de4f703b9eed510a68ae4fa4bca2256b2246ccf8ecd"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.starweaver.yml",
+    "sha256": "f445a1fe6fcbe10829de177d2cbc0fc98f065d610d1cc791c363830f441c2589"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/scoundrel_subclasses/scoundrel.thief.yml",
+    "sha256": "4da0fad89228fd49b9276382e7df70da19caad7fa769d58b55abf2ffa47d0fb9"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/smuggler_subclasses/smuggler.scoundrel.yml",
+    "sha256": "f496989c1ceb1bab55bcdf0f77f0ee390279dc976ff9c45127386c6fa5dad76d"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/smuggler_subclasses/smuggler_scoundrel.yml",
+    "sha256": "813c2fc766b868504da2798df632e41990093a1586a74fb3b511bf6a4748e7aa"
+   },
+   {
+    "path": "registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/scoundrel.json",
+    "sha256": "39361fd4d98a5f5b6a8e5d5d1d0bd947964caa55aa62f6fa975c0c7f2be42ece"
+   },
+   {
+    "path": "registry/golden_slice/global_definitions/class_operative.yml",
+    "sha256": "ef0e13bb4610cb7670ee7bd6e5e50faf143094cab53223d36ad65cb269204a01"
+   }
+  ]
+ }
+}

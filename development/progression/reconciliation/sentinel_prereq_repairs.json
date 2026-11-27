@@ -1,0 +1,261 @@
+{
+ "schema": "genesis-progression-reconciliation/0.1",
+ "kind": "sentinel_exclusive_choice_repairs",
+ "generator": "development/progression/tools/reconcile_sources.py",
+ "canonical": false,
+ "status": "candidate",
+ "note": "Reconciliation material for the Progression Forge. Nothing here is approved, promoted or executable.",
+ "scope": "Sentinel levels 3 and 7 only",
+ "repairs": [
+  {
+   "id": "repair:sentinel:candidate_build:sentinel_specialization_3",
+   "family": "candidate_build",
+   "source": "registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/sentinel.json",
+   "source_sha256": "236b52894148f63e3476fbc4b176c30deb41e880702fdc12ceebfa9fc163d6e4",
+   "node": "sentinel_specialization_3",
+   "level": 3,
+   "original_prerequisites": [
+    "investigation_focus_2",
+    "diplomacy_focus_2"
+   ],
+   "original_record": {
+    "node_id": "sentinel_specialization_3",
+    "feature_id": "sentinel_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "investigation_focus_2",
+     "diplomacy_focus_2"
+    ],
+    "choice_group": "sentinel_specialization"
+   },
+   "group": "sentinel_focus_level_2",
+   "group_members": [
+    "diplomacy_focus_2",
+    "investigation_focus_2"
+   ],
+   "group_is_exclusive_choice": true,
+   "proposed_requires": {
+    "all": [
+     {
+      "any_of_group": "sentinel_focus_level_2"
+     }
+    ]
+   },
+   "evidence": [
+    "the listed prerequisites are exactly the full membership of choice group 'sentinel_focus_level_2'",
+    "the group is a pick-one choice, so a literal ALL can never be satisfied",
+    "SW5e PHB Sentinel table gates Calling features on level only (3rd Sentinel Calling, 7th Calling feature)"
+   ],
+   "status": "candidate",
+   "legacy_validation": {
+    "by": null,
+    "on": null,
+    "decision": null
+   }
+  },
+  {
+   "id": "repair:sentinel:candidate_build:subclass_feature_7",
+   "family": "candidate_build",
+   "source": "registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/sentinel.json",
+   "source_sha256": "236b52894148f63e3476fbc4b176c30deb41e880702fdc12ceebfa9fc163d6e4",
+   "node": "subclass_feature_7",
+   "level": 7,
+   "original_prerequisites": [
+    "enhanced_investigation_6",
+    "enhanced_diplomacy_6"
+   ],
+   "original_record": {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_investigation_6",
+     "enhanced_diplomacy_6"
+    ]
+   },
+   "group": "sentinel_enhancement_level_6",
+   "group_members": [
+    "enhanced_diplomacy_6",
+    "enhanced_investigation_6"
+   ],
+   "group_is_exclusive_choice": true,
+   "proposed_requires": {
+    "all": [
+     {
+      "any_of_group": "sentinel_enhancement_level_6"
+     }
+    ]
+   },
+   "evidence": [
+    "the listed prerequisites are exactly the full membership of choice group 'sentinel_enhancement_level_6'",
+    "the group is a pick-one choice, so a literal ALL can never be satisfied",
+    "SW5e PHB Sentinel table gates Calling features on level only (3rd Sentinel Calling, 7th Calling feature)"
+   ],
+   "status": "candidate",
+   "legacy_validation": {
+    "by": null,
+    "on": null,
+    "decision": null
+   }
+  },
+  {
+   "id": "repair:sentinel:hub_archive:sentinel_specialization_3",
+   "family": "hub_archive",
+   "source": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/sentinel.yml",
+   "source_sha256": "b2e0b848e429e918917edf51d7cf8d750f1f79bab3bf5f06b31f0c6c3e850e83",
+   "node": "sentinel_specialization_3",
+   "level": 3,
+   "original_prerequisites": [
+    "investigation_focus_2",
+    "diplomacy_focus_2"
+   ],
+   "original_record": {
+    "node_id": "sentinel_specialization_3",
+    "feature_id": "sentinel_specialization",
+    "level_requirement": 3,
+    "type": "subclass_entry",
+    "prerequisites": [
+     "investigation_focus_2",
+     "diplomacy_focus_2"
+    ],
+    "choice_group": "sentinel_specialization"
+   },
+   "group": "sentinel_focus_level_2",
+   "group_members": [
+    "diplomacy_focus_2",
+    "investigation_focus_2"
+   ],
+   "group_is_exclusive_choice": true,
+   "proposed_requires": {
+    "all": [
+     {
+      "any_of_group": "sentinel_focus_level_2"
+     }
+    ]
+   },
+   "evidence": [
+    "the listed prerequisites are exactly the full membership of choice group 'sentinel_focus_level_2'",
+    "the group is a pick-one choice, so a literal ALL can never be satisfied",
+    "SW5e PHB Sentinel table gates Calling features on level only (3rd Sentinel Calling, 7th Calling feature)"
+   ],
+   "status": "candidate",
+   "legacy_validation": {
+    "by": null,
+    "on": null,
+    "decision": null
+   }
+  },
+  {
+   "id": "repair:sentinel:hub_archive:subclass_feature_7",
+   "family": "hub_archive",
+   "source": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/sentinel.yml",
+   "source_sha256": "b2e0b848e429e918917edf51d7cf8d750f1f79bab3bf5f06b31f0c6c3e850e83",
+   "node": "subclass_feature_7",
+   "level": 7,
+   "original_prerequisites": [
+    "enhanced_investigation_6",
+    "enhanced_diplomacy_6"
+   ],
+   "original_record": {
+    "node_id": "subclass_feature_7",
+    "feature_id": "subclass_feature",
+    "level_requirement": 7,
+    "type": "core",
+    "prerequisites": [
+     "enhanced_investigation_6",
+     "enhanced_diplomacy_6"
+    ]
+   },
+   "group": "sentinel_enhancement_level_6",
+   "group_members": [
+    "enhanced_diplomacy_6",
+    "enhanced_investigation_6"
+   ],
+   "group_is_exclusive_choice": true,
+   "proposed_requires": {
+    "all": [
+     {
+      "any_of_group": "sentinel_enhancement_level_6"
+     }
+    ]
+   },
+   "evidence": [
+    "the listed prerequisites are exactly the full membership of choice group 'sentinel_enhancement_level_6'",
+    "the group is a pick-one choice, so a literal ALL can never be satisfied",
+    "SW5e PHB Sentinel table gates Calling features on level only (3rd Sentinel Calling, 7th Calling feature)"
+   ],
+   "status": "candidate",
+   "legacy_validation": {
+    "by": null,
+    "on": null,
+    "decision": null
+   }
+  }
+ ],
+ "not_in_scope": {
+  "reinterpreted_trees_not_repaired": [
+   "candidate_build:berserker_battle_master",
+   "candidate_build:berserker_rage_specialist",
+   "candidate_build:colonist",
+   "candidate_build:engineer_inventor",
+   "candidate_build:engineer_mechanic",
+   "candidate_build:fighter_assault_specialist",
+   "candidate_build:fighter_defensive_specialist",
+   "candidate_build:fighter_weapon_master",
+   "candidate_build:guardian_force_warrior",
+   "candidate_build:hired_gun",
+   "candidate_build:inquisitor",
+   "candidate_build:scoundrel",
+   "candidate_build:scout",
+   "candidate_build:sith",
+   "candidate_build:tracker",
+   "candidate_build:trooper",
+   "hub_archive:berserker_battle_master",
+   "hub_archive:berserker_rage_specialist",
+   "hub_archive:colonist",
+   "hub_archive:engineer_inventor",
+   "hub_archive:engineer_mechanic",
+   "hub_archive:fighter_assault_specialist",
+   "hub_archive:fighter_defensive_specialist",
+   "hub_archive:fighter_weapon_master",
+   "hub_archive:guardian_force_warrior",
+   "hub_archive:hired_gun",
+   "hub_archive:inquisitor",
+   "hub_archive:monk_ki_master",
+   "hub_archive:monk_martial_artist",
+   "hub_archive:operative_infiltrator",
+   "hub_archive:operative_stealth_specialist",
+   "hub_archive:scholar_lore_master",
+   "hub_archive:scholar_researcher",
+   "hub_archive:scoundrel",
+   "hub_archive:scout",
+   "hub_archive:sith",
+   "hub_archive:tracker",
+   "hub_archive:trooper"
+  ],
+  "count": 38,
+  "note": "Left exactly as the CC-008.1 audit reports them; no approval implied."
+ },
+ "sources": {
+  "archive": {
+   "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip",
+   "sha256": "0e2b6a5f8b37000a83d099d0d18655b6fca9280ccad001f70e9d4cc46acbdb7b"
+  },
+  "files": [
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/classes/sentinel.yml",
+    "sha256": "b2e0b848e429e918917edf51d7cf8d750f1f79bab3bf5f06b31f0c6c3e850e83"
+   },
+   {
+    "path": "development/progression/legacy/legacy_prereq_audit.json",
+    "sha256": "bc0636cefffe30b7bc03e63a4fcc6369796364a5f281ba6be2187192e0ea356d"
+   },
+   {
+    "path": "registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/sentinel.json",
+    "sha256": "236b52894148f63e3476fbc4b176c30deb41e880702fdc12ceebfa9fc163d6e4"
+   }
+  ]
+ }
+}

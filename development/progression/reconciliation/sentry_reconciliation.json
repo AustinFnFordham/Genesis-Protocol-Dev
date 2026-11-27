@@ -1,0 +1,530 @@
+{
+ "schema": "genesis-progression-reconciliation/0.1",
+ "kind": "sentry_reconciliation_packet",
+ "generator": "development/progression/tools/reconcile_sources.py",
+ "canonical": false,
+ "status": "candidate",
+ "note": "Reconciliation material for the Progression Forge. Nothing here is approved, promoted or executable.",
+ "subclass": {
+  "member": "backend/subclasses/sentinel_subclasses/sentinel_sentry.yml",
+  "id": "sentry",
+  "class": "sentinel",
+  "registry": {
+   "urid": "subclass_sentry",
+   "golden_slice_tags": [
+    "planned"
+   ],
+   "golden_slice_source_path": "SW5e_Data_Hub\\forge_v3\\backend\\subclasses\\sentinel_subclasses\\sentinel_sentry.yml",
+   "note": "golden slice cites a forge_v3 path that is not in the archive; its 'mechanical_match: true' is not evidence of mechanics"
+  }
+ },
+ "specialization_features": [
+  {
+   "id": "sentry_watch",
+   "file": "backend/features/sentinel/sentry/sentry_watch.yml",
+   "defined": true,
+   "name": "Sentry Watch",
+   "level": null,
+   "xp_cost": 35,
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Sentry Watch",
+      "action_type": "passive"
+     }
+    }
+   ],
+   "placeholder": true,
+   "has_level": false,
+   "issues": [
+    {
+     "code": "PLACEHOLDER_MECHANICS",
+     "detail": "grant_ability 'Grants a special ability'"
+    },
+    {
+     "code": "NO_LEVEL"
+    },
+    {
+     "code": "NOT_IN_PROGRESSION_TREE"
+    }
+   ]
+  },
+  {
+   "id": "area_protection",
+   "file": "backend/features/sentinel/sentry/area_protection.yml",
+   "defined": true,
+   "name": "Area Protection",
+   "level": null,
+   "xp_cost": 40,
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Area Protection",
+      "action_type": "passive"
+     }
+    }
+   ],
+   "placeholder": true,
+   "has_level": false,
+   "issues": [
+    {
+     "code": "PLACEHOLDER_MECHANICS",
+     "detail": "grant_ability 'Grants a special ability'"
+    },
+    {
+     "code": "NO_LEVEL"
+    },
+    {
+     "code": "NOT_IN_PROGRESSION_TREE"
+    }
+   ]
+  },
+  {
+   "id": "guardian_mastery",
+   "file": "backend/features/sentinel/sentry/guardian_mastery.yml",
+   "defined": true,
+   "name": "Guardian Mastery",
+   "level": null,
+   "xp_cost": 45,
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Guardian Mastery",
+      "action_type": "passive"
+     }
+    }
+   ],
+   "placeholder": true,
+   "has_level": false,
+   "issues": [
+    {
+     "code": "PLACEHOLDER_MECHANICS",
+     "detail": "grant_ability 'Grants a special ability'"
+    },
+    {
+     "code": "NO_LEVEL"
+    },
+    {
+     "code": "NOT_IN_PROGRESSION_TREE"
+    }
+   ]
+  },
+  {
+   "id": "sentry_mastery",
+   "file": "backend/features/sentinel/sentry/sentry_mastery.yml",
+   "defined": true,
+   "name": "Sentry Mastery",
+   "level": null,
+   "xp_cost": 55,
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Sentry Mastery",
+      "action_type": "passive"
+     }
+    }
+   ],
+   "placeholder": true,
+   "has_level": false,
+   "issues": [
+    {
+     "code": "PLACEHOLDER_MECHANICS",
+     "detail": "grant_ability 'Grants a special ability'"
+    },
+    {
+     "code": "NO_LEVEL"
+    },
+    {
+     "code": "NOT_IN_PROGRESSION_TREE"
+    }
+   ]
+  },
+  {
+   "id": "legendary_sentry",
+   "file": "backend/features/sentinel/sentry/legendary_sentry.yml",
+   "defined": true,
+   "name": "Legendary Sentry",
+   "level": null,
+   "xp_cost": 65,
+   "mechanics": [
+    {
+     "effect": "grant_ability",
+     "description": "Grants a special ability",
+     "parameters": {
+      "ability_name": "Legendary Sentry",
+      "action_type": "passive"
+     }
+    }
+   ],
+   "placeholder": true,
+   "has_level": false,
+   "issues": [
+    {
+     "code": "PLACEHOLDER_MECHANICS",
+     "detail": "grant_ability 'Grants a special ability'"
+    },
+    {
+     "code": "NO_LEVEL"
+    },
+    {
+     "code": "NOT_IN_PROGRESSION_TREE"
+    }
+   ]
+  }
+ ],
+ "progression_tree": [
+  {
+   "node_id": "sentry-protector-feature-level-3",
+   "feature_id": "Sentry's Focus",
+   "level": 3,
+   "type": "core",
+   "description": "You develop a heightened sense of awareness, granting you advantage on Wisdom (Perception) checks.",
+   "effects": [
+    {
+     "type": "ability_modification",
+     "value": "1d4 + proficiency bonus"
+    }
+   ],
+   "issues": [
+    {
+     "code": "EFFECT_CONTRADICTS_DESCRIPTION",
+     "detail": "description grants advantage; effect is a numeric modification '1d4 + proficiency bonus'"
+    },
+    {
+     "code": "NO_STRUCTURED_MECHANICS",
+     "detail": "no target, range, duration, uses or resource; not executable as written"
+    },
+    {
+     "code": "NOT_IN_SPECIALIZATION_FEATURES"
+    }
+   ]
+  },
+  {
+   "node_id": "sentry-guardian-feature-level-7",
+   "feature_id": "Guardianship",
+   "level": 7,
+   "type": "core",
+   "description": "You can use your reaction to grant a friendly creature within 30 feet temporary hit points equal to 1d8 + your proficiency bonus.",
+   "effects": [
+    {
+     "type": "ability_trigger",
+     "value": "reaction, when you take damage"
+    }
+   ],
+   "issues": [
+    {
+     "code": "EFFECT_CONTRADICTS_DESCRIPTION",
+     "detail": "description protects an ally; trigger is 'when you take damage'"
+    },
+    {
+     "code": "NO_STRUCTURED_MECHANICS",
+     "detail": "no target, range, duration, uses or resource; not executable as written"
+    },
+    {
+     "code": "NOT_IN_SPECIALIZATION_FEATURES"
+    }
+   ]
+  },
+  {
+   "node_id": "sentry-sentinel-feature-level-11",
+   "feature_id": "Sentinel's Posture",
+   "level": 11,
+   "type": "core",
+   "description": "You become more imposing in combat, granting you advantage on Intimidation checks and making creatures within 10 feet of you have disadvantage on attack rolls against you.",
+   "effects": [
+    {
+     "type": "ability_modification",
+     "value": "Intimidate + proficiency bonus"
+    }
+   ],
+   "issues": [
+    {
+     "code": "EFFECT_CONTRADICTS_DESCRIPTION",
+     "detail": "description grants advantage; effect is a numeric modification 'Intimidate + proficiency bonus'"
+    },
+    {
+     "code": "NO_STRUCTURED_MECHANICS",
+     "detail": "no target, range, duration, uses or resource; not executable as written"
+    },
+    {
+     "code": "NOT_IN_SPECIALIZATION_FEATURES"
+    }
+   ]
+  },
+  {
+   "node_id": "sentry-vigilant-feature-level-15",
+   "feature_id": "Vigilant Watcher",
+   "level": 15,
+   "type": "core",
+   "description": "You can use your action to enter a state of heightened vigilance, granting you a bonus to initiative rolls and allowing you to move up to your speed without provoking opportunity attacks.",
+   "effects": [
+    {
+     "type": "ability_modification",
+     "value": "initiative + proficiency bonus"
+    }
+   ],
+   "issues": [
+    {
+     "code": "NO_STRUCTURED_MECHANICS",
+     "detail": "no target, range, duration, uses or resource; not executable as written"
+    },
+    {
+     "code": "NOT_IN_SPECIALIZATION_FEATURES"
+    }
+   ]
+  },
+  {
+   "node_id": "sentry-defender-feature-level-18",
+   "feature_id": "Defender's Shield",
+   "level": 18,
+   "type": "core",
+   "description": "You can use your reaction to create a barrier of protection, granting you and up to two friendly creatures within 10 feet of you resistance to one damage type (acid, cold, fire, lightning, or poison).",
+   "effects": [
+    {
+     "type": "ability_trigger",
+     "value": "reaction, when you take damage"
+    }
+   ],
+   "issues": [
+    {
+     "code": "EFFECT_CONTRADICTS_DESCRIPTION",
+     "detail": "description protects an ally; trigger is 'when you take damage'"
+    },
+    {
+     "code": "TRIGGER_UNSPECIFIED_FOR_DESCRIBED_EFFECT",
+     "detail": "trigger copied verbatim from Guardianship; barrier needs its own trigger, size and duration"
+    },
+    {
+     "code": "NO_STRUCTURED_MECHANICS",
+     "detail": "no target, range, duration, uses or resource; not executable as written"
+    },
+    {
+     "code": "NOT_IN_SPECIALIZATION_FEATURES"
+    }
+   ]
+  }
+ ],
+ "cross_reference": {
+  "specialization_features_without_tree_node": [
+   "sentry_watch",
+   "area_protection",
+   "guardian_mastery",
+   "sentry_mastery",
+   "legendary_sentry"
+  ],
+  "tree_nodes_without_feature_file": [
+   "sentry-protector-feature-level-3",
+   "sentry-guardian-feature-level-7",
+   "sentry-sentinel-feature-level-11",
+   "sentry-vigilant-feature-level-15",
+   "sentry-defender-feature-level-18"
+  ],
+  "overlap": []
+ },
+ "missing_mechanical_definitions": [
+  "sentry-protector-feature-level-3",
+  "sentry-guardian-feature-level-7",
+  "sentry-sentinel-feature-level-11",
+  "sentry-vigilant-feature-level-15",
+  "sentry-defender-feature-level-18",
+  "sentry_watch",
+  "area_protection",
+  "guardian_mastery",
+  "sentry_mastery",
+  "legendary_sentry"
+ ],
+ "cadence": {
+  "levels": [
+   3,
+   6,
+   7,
+   9,
+   11,
+   12,
+   13,
+   15,
+   17,
+   18,
+   19
+  ],
+  "rows": [
+   {
+    "level": 3,
+    "sentry_progression_tree": true,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": true,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 6,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": false,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 7,
+    "sentry_progression_tree": true,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": true,
+    "genesis_archetype_cadence": false
+   },
+   {
+    "level": 9,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": false,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 11,
+    "sentry_progression_tree": true,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": false
+   },
+   {
+    "level": 12,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": false,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 13,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": true,
+    "genesis_archetype_cadence": false
+   },
+   {
+    "level": 15,
+    "sentry_progression_tree": true,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 17,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": false
+   },
+   {
+    "level": 18,
+    "sentry_progression_tree": true,
+    "sentinel_class_subclass_slot": false,
+    "sw5e_phb_calling_feature": true,
+    "genesis_archetype_cadence": true
+   },
+   {
+    "level": 19,
+    "sentry_progression_tree": false,
+    "sentinel_class_subclass_slot": true,
+    "sw5e_phb_calling_feature": false,
+    "genesis_archetype_cadence": false
+   }
+  ],
+  "sentry_progression_tree": [
+   3,
+   7,
+   11,
+   15,
+   18
+  ],
+  "sentinel_class_subclass_slots": [
+   3,
+   7,
+   11,
+   13,
+   15,
+   17,
+   19
+  ],
+  "sw5e_phb_calling_features": [
+   3,
+   7,
+   13,
+   18
+  ],
+  "genesis_archetype_cadence": [
+   3,
+   6,
+   9,
+   12,
+   15,
+   18
+  ],
+  "aligned_with_genesis": [
+   3,
+   15,
+   18
+  ],
+  "source_levels_off_genesis_cadence": [
+   7,
+   11
+  ],
+  "genesis_milestones_without_source_feature": [
+   6,
+   9,
+   12
+  ]
+ },
+ "design_session_inputs": {
+  "chooses_final_abilities": false,
+  "note": "Forge design session decides abilities; this packet only lists the evidence and gaps."
+ },
+ "sources": {
+  "archive": {
+   "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip",
+   "sha256": "0e2b6a5f8b37000a83d099d0d18655b6fca9280ccad001f70e9d4cc46acbdb7b"
+  },
+  "files": [
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/clean_source/SW5e_PHB.txt",
+    "sha256": "f2a1eef1627d5afc0295f29a981fa73adb6cffa07bb6b5fb7782b5dc45c81606"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/sentinel/sentry/area_protection.yml",
+    "sha256": "d3989046e9e2fb0ecb1429414bf6e8a5911ae3babc0afd05af87ed212ae1ed65"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/sentinel/sentry/guardian_mastery.yml",
+    "sha256": "253883dfc7d109f3a7e5a6fe08e8d54a42356e806968a908e4ede9223a0b68f4"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/sentinel/sentry/legendary_sentry.yml",
+    "sha256": "b960f75994c0e7af4c75a567f4fa6ba75b016f6d18471405ae3d0978a2eb7c74"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/sentinel/sentry/sentry_mastery.yml",
+    "sha256": "9242cf38f225c6614ba677472230638535876d455916b3c805a228e450319f2b"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/features/sentinel/sentry/sentry_watch.yml",
+    "sha256": "dbf1cdb579f54f0e693150e9ddc69db0ab17a1580402e141fc7570a2294575b6"
+   },
+   {
+    "path": "_QUARANTINE/hub_root_debris/SW5e_Data_Hub.zip!SW5e_Data_Hub/backend/subclasses/sentinel_subclasses/sentinel_sentry.yml",
+    "sha256": "bd226ee4ce2889304ebac64daec8d742979b4147812e9234c9e39b73ebf785bd"
+   },
+   {
+    "path": "registry/candidate_builds/cand_classes_861acd817b14421e/validated_candidate/sentinel.json",
+    "sha256": "236b52894148f63e3476fbc4b176c30deb41e880702fdc12ceebfa9fc163d6e4"
+   },
+   {
+    "path": "registry/golden_slice/global_definitions/subclass_sentry.yml",
+    "sha256": "7056f742be8bfe09b977daa6907f91471b1abef7ccdccf3fc0682dc9fc75febd"
+   }
+  ]
+ }
+}
