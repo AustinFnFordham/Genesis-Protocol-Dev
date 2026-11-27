@@ -70,8 +70,10 @@
 | `source_backed` | Stated in a cited source; not yet engine-implemented | No |
 | `legacy` | Read from a legacy record (possibly reinterpreted by the adapter) | No |
 | `proposed` | Authored here; not owner-approved. **A missing class is treated as `proposed`.** | No |
-| `implemented` | Backed by an engine profile | Yes, if every `profile:` grant names a profile in `combat_slice/catalog.json` |
-| `owner_approved` | Owner signed off | Yes, with `approval {by, on, ref}` |
+| `implemented` | Backed by an engine profile | Yes, if the grant names a valid engine profile |
+| `owner_approved` | Owner signed off on the **design** | Only with `approval {by, on, ref}` **and** a valid engine profile |
+
+**Approval is not implementation (CC-008.2).** Every executable grant, whatever its class, must be a `profile:` grant naming a profile in `combat_slice/catalog.json` that is valid (has `rules`, `requires`, `cost`, and a `resolution`, `effect` or `maneuver`). It must also be live (`sheet` or `campaign_ruling`); a `sandbox_proposal` profile executes only with `{sandbox: true}`. Otherwise you get `APPROVED_DESIGN_NOT_IMPLEMENTED`, `IMPLEMENTED_WITHOUT_ENGINE_PROFILE`, `ENGINE_PROFILE_INVALID` or `ENGINE_PROFILE_SANDBOX_ONLY`. The catalog is read by default, so the runtime gate enforces this with no options, and it fails closed if the catalog can't be read. Approved design content with no executable grants stays valid content.
 
 An executable grant is also blocked, whatever the class, when:
 - the node is `placeholder: true` (the source has no real mechanics, e.g. Sentry's `grant_ability` "Grants a special ability", or Echani tiers' free text);

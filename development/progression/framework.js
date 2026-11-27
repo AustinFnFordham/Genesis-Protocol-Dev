@@ -181,11 +181,36 @@ function applyCoreGrants(trees, ch, trackId) {
 // implemented: an engine profile exists and is tested · owner_approved: recorded owner approval.
 const PROVENANCE_CLASSES = ["source_backed", "legacy", "proposed", "implemented", "owner_approved"];
 // Why a grant may NOT execute (empty array = it may). Missing provenance_class is treated as 'proposed' (never executable).
+// Engine implementation evidence (CC-008.2). A grant is implemented only if it names a combat-catalog profile that exists and has an
+// engine-resolvable shape. Read lazily from development/combat_slice/catalog.json; unreadable → nothing is implemented (fail closed).
+const LIVE_PROFILE_STATUSES = ["sheet", "campaign_ruling"];
+let _engine = null;
+function engineProfiles() {
+  if (_engine) return _engine;
+  const out = {};
+  try { const c = JSON.parse(require("fs").readFileSync(require("path").join(__dirname, "../combat_slice/catalog.json"), "utf8"));
+    Object.keys(c.profiles || {}).forEach((k) => { const p = c.profiles[k];
+      out[k] = { status: p.status || null, valid: !!(p && typeof p.rules === "string" && p.requires && typeof p.requires === "object" && p.cost && (p.resolution || p.effect || p.maneuver)) }; });
+  } catch (e) { /* fail closed */ }
+  return (_engine = out);
+}
+function implementationBlockers(grant, opts) {
+  // Approval is design sign-off; only an engine profile makes a grant playable. Applies to every provenance class.
+  const pc = opts.provenance_class, missing = pc === "owner_approved" ? "APPROVED_DESIGN_NOT_IMPLEMENTED" : "IMPLEMENTED_WITHOUT_ENGINE_PROFILE";
+  if (grant.type !== "profile" || typeof grant.ref !== "string") return [{ code: missing, ref: grant.ref, reason: "executable grants must name an engine profile" }];
+  const id = grant.ref.replace(/^profile:/, "");
+  if (opts.implemented_profiles && !opts.implemented_profiles.includes(id)) return [{ code: missing, ref: grant.ref }];
+  const ep = engineProfiles()[id];
+  if (!ep) return opts.implemented_profiles ? [] : [{ code: missing, ref: grant.ref }];
+  if (!ep.valid) return [{ code: "ENGINE_PROFILE_INVALID", ref: grant.ref }];
+  if (!LIVE_PROFILE_STATUSES.includes(ep.status) && !opts.sandbox) return [{ code: "ENGINE_PROFILE_SANDBOX_ONLY", ref: grant.ref, status: ep.status }];
+  return [];
+}
 function executableBlockers(tree, node, grant, opts) {
   opts = opts || {}; const why = [], pc = node.provenance_class || "proposed";
   if (!grant.executable) return why;
   if (pc !== "implemented" && pc !== "owner_approved") why.push({ code: "EXECUTABLE_WITHOUT_AUTHORITY", provenance_class: pc });
-  if (pc === "implemented" && opts.implemented_profiles && !(grant.type === "profile" && opts.implemented_profiles.includes(grant.ref.replace(/^profile:/, "")))) why.push({ code: "IMPLEMENTED_WITHOUT_ENGINE_PROFILE", ref: grant.ref });
+  else implementationBlockers(grant, Object.assign({}, opts, { provenance_class: pc })).forEach((b) => why.push(b));
   if (pc === "owner_approved" && !(node.approval && node.approval.by && node.approval.on && node.approval.ref)) why.push({ code: "OWNER_APPROVED_WITHOUT_RECORD" });
   if (node.placeholder) why.push({ code: "PLACEHOLDER_EXECUTABLE", reason: node.placeholder_reason || null });
   if (node.legacy_reinterpretation && !(node.legacy_validation && node.legacy_validation.by && node.legacy_validation.decision)) why.push({ code: "LEGACY_REINTERPRETATION_UNVALIDATED" });
@@ -193,5 +218,5 @@ function executableBlockers(tree, node, grant, opts) {
   if (new Set(copies.map((c) => c.sha256)).size > 1 && !(tree.source_choice && tree.source_choice.chosen && tree.source_choice.by)) why.push({ code: "CONFLICTING_SOURCE_COPIES", copies: copies.map((c) => c.path) });
   return why;
 }
-module.exports = { PROVENANCE_CLASSES, executableBlockers, SCHEMA, CHAR_SCHEMA, LAYERS, QUANTITIES, registry, nodeOf, fromLegacyClass, evalReq, missing, newCharacter, trackState, levelOfTrack, ctxFor,
+module.exports = { PROVENANCE_CLASSES, LIVE_PROFILE_STATUSES, executableBlockers, engineProfiles, SCHEMA, CHAR_SCHEMA, LAYERS, QUANTITIES, registry, nodeOf, fromLegacyClass, evalReq, missing, newCharacter, trackState, levelOfTrack, ctxFor,
                    trackAllowed, validateEvidence, awardXp, commit, recover, verifyReceipt, applyCoreGrants, sha, stable, clone };
