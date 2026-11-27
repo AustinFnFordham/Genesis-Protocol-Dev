@@ -24,10 +24,17 @@ const nodeOf = (tree, id) => (tree.nodes || []).find((n) => n.id === id) || null
 function fromLegacyClass(rec, opts) {
   opts = opts || {};
   const legacy = rec.progression_tree || [], byId = {}; legacy.forEach((n) => (byId[n.node_id] = n));
-  const groups = {}, notes = [];
+  const groups = {}, notes = [], note = (code, node, text, x) => notes.push(Object.assign({ code, node, note: text }, x || {}));
   const fidCount = {}; legacy.forEach((n) => (fidCount[n.feature_id] = (fidCount[n.feature_id] || 0) + 1));
+  const idCount = {}; legacy.forEach((n) => (idCount[n.node_id] = (idCount[n.node_id] || 0) + 1));
+  Object.keys(idCount).forEach((k) => { if (idCount[k] > 1) note("DUPLICATE_NODE_ID", k, "legacy node id appears " + idCount[k] + "×; only the last definition is addressable", { invalid: true }); });
   const nodes = legacy.map((n) => {
-    const pre = n.prerequisites || [], inGroup = {};
+    const pre = Array.isArray(n.prerequisites) ? n.prerequisites : n.prerequisites == null ? [] : [n.prerequisites], inGroup = {};
+    if (n.prerequisites != null && !Array.isArray(n.prerequisites)) note("NON_LIST_PREREQUISITES", n.node_id, "prerequisites is not a list: " + JSON.stringify(n.prerequisites), { invalid: true });
+    const dangling = pre.filter((p) => !byId[p]), self = pre.filter((p) => p === n.node_id), above = pre.filter((p) => byId[p] && byId[p].level_requirement > n.level_requirement);
+    if (dangling.length) note("DANGLING_PREREQUISITE", n.node_id, "prerequisite(s) " + JSON.stringify(dangling) + " name no node in this tree; kept verbatim (the validator rejects them)", { invalid: true, refs: dangling });
+    if (self.length) note("SELF_PREREQUISITE", n.node_id, "node requires itself", { invalid: true });
+    if (above.length) note("PREREQUISITE_ABOVE_LEVEL", n.node_id, "prerequisite(s) " + JSON.stringify(above) + " are only available at a higher level", { invalid: true, refs: above });
     pre.forEach((p) => { const g = byId[p] && byId[p].choice_group; if (g) (inGroup[g] = inGroup[g] || []).push(p); });
     let requires, reint = null;
     const multi = Object.keys(inGroup).filter((g) => inGroup[g].length > 1);
@@ -35,22 +42,30 @@ function fromLegacyClass(rec, opts) {
       const rest = pre.filter((p) => !multi.some((g) => inGroup[g].includes(p)));
       requires = { all: rest.concat(multi.map((g) => ({ any_of_group: g }))) };
       reint = "legacy prerequisites " + JSON.stringify(pre) + " name several members of exclusive group(s) " + multi.join(",") + " → read as any_of_group";
-      notes.push({ node: n.node_id, note: reint });
+      // a partial listing (not every member of the group) is still ambiguous: say so
+      const partial = multi.filter((g) => legacy.filter((m) => m.choice_group === g).length !== inGroup[g].length);
+      note("AMBIGUOUS_EXCLUSIVE_GROUP", n.node_id, reint, { groups: multi, original_prerequisites: pre.slice(), interpretation: requires, partial_group_listing: partial });
     } else requires = pre.length ? { all: pre.slice() } : undefined;
     if (n.choice_group) groups[n.choice_group] = groups[n.choice_group] || { id: n.choice_group, picks: 1, exclusive: true, milestones: [] };
     if (n.choice_group && !groups[n.choice_group].milestones.includes(n.level_requirement)) groups[n.choice_group].milestones.push(n.level_requirement);
     const kind = n.type === "choice" ? "choice" : n.type === "subclass_entry" ? "subclass_entry" : "core_grant";
-    const out = { id: n.node_id, kind, level: n.level_requirement, status: opts.status || "candidate", provenance: opts.source || "legacy progression_tree",
+    const out = { id: n.node_id, kind, level: n.level_requirement, status: opts.status || "candidate", provenance: opts.source || "legacy progression_tree", provenance_class: "legacy",
+                  legacy_prerequisites: pre.slice(),
                   grants: [Object.assign({ type: kind === "subclass_entry" ? "track_unlock" : "feature", ref: (kind === "subclass_entry" ? "archetype:" : "feature:") + String(n.feature_id), authority: "class" },
                                          fidCount[n.feature_id] > 1 ? { repeatable: true } : {})] };
-    if (fidCount[n.feature_id] > 1) notes.push({ node: n.node_id, note: "legacy feature id '" + n.feature_id + "' repeats " + fidCount[n.feature_id] + "× → marked repeatable" });
+    if (fidCount[n.feature_id] > 1) note("REPEATED_FEATURE_ID", n.node_id, "legacy feature id '" + n.feature_id + "' repeats " + fidCount[n.feature_id] + "× → marked repeatable");
     if (n.choice_group) out.choice_group = n.choice_group;
     if (requires) out.requires = requires;
     if (reint) out.legacy_reinterpretation = reint;
     return out;
   });
-  return { tree: { schema: SCHEMA, id: "class:" + rec.id, version: opts.version || "legacy-adapter-0.1", status: opts.status || "candidate", layer: "class",
-                   registry_urid: "class_" + rec.id, provenance: { source: opts.source || "legacy", notes: "adapted by fromLegacyClass; legacy fields preserved in the source" },
+  // single-member exclusive groups and groups whose members are all locked out are unsatisfiable as choices
+  Object.values(groups).forEach((g) => { const m = legacy.filter((x) => x.choice_group === g.id); if (m.length === 1) note("SINGLE_OPTION_CHOICE_GROUP", m[0].node_id, "choice group '" + g.id + "' has one option (it is not a choice)"); });
+  return { tree: { schema: SCHEMA, id: (opts.track_prefix || "class") + ":" + rec.id, version: opts.version || "legacy-adapter-0.2", status: opts.status || "candidate", layer: opts.layer || "class",
+                   registry_urid: (opts.layer === "archetype" ? "subclass_" : "class_") + rec.id,
+                   provenance: { source: opts.source || "legacy", notes: "adapted by fromLegacyClass; the legacy source is unchanged and the original prerequisites are kept on each node (legacy_prerequisites)" },
+                   legacy_source: opts.legacy_source || null,
+                   promotion: { requires_explicit_validation: notes.some((x) => x.code === "AMBIGUOUS_EXCLUSIVE_GROUP" || x.invalid), validated: [] },
                    track: { start_level: 1, max_level: 20, xp_quantity: "class_xp", curve: opts.curve || { id: "none/1" }, curve_status: opts.curve_status || "candidate" },
                    choice_groups: Object.values(groups), nodes }, notes };
 }
@@ -161,5 +176,22 @@ function applyCoreGrants(trees, ch, trackId) {
     rc.hash = sha(stable(rc)); const x = clone(s); x.pending = rc; s = commit(x).state; granted.push(n.id); });
   return { state: s, granted };
 }
-module.exports = { SCHEMA, CHAR_SCHEMA, LAYERS, QUANTITIES, registry, nodeOf, fromLegacyClass, evalReq, missing, newCharacter, trackState, levelOfTrack, ctxFor,
+// ---------- provenance classes and executable authority (CC-008.1) ----------
+// source_backed: stated in a source, not implemented · legacy: from the legacy adapter · proposed: authored candidate ·
+// implemented: an engine profile exists and is tested · owner_approved: recorded owner approval.
+const PROVENANCE_CLASSES = ["source_backed", "legacy", "proposed", "implemented", "owner_approved"];
+// Why a grant may NOT execute (empty array = it may). Missing provenance_class is treated as 'proposed' (never executable).
+function executableBlockers(tree, node, grant, opts) {
+  opts = opts || {}; const why = [], pc = node.provenance_class || "proposed";
+  if (!grant.executable) return why;
+  if (pc !== "implemented" && pc !== "owner_approved") why.push({ code: "EXECUTABLE_WITHOUT_AUTHORITY", provenance_class: pc });
+  if (pc === "implemented" && opts.implemented_profiles && !(grant.type === "profile" && opts.implemented_profiles.includes(grant.ref.replace(/^profile:/, "")))) why.push({ code: "IMPLEMENTED_WITHOUT_ENGINE_PROFILE", ref: grant.ref });
+  if (pc === "owner_approved" && !(node.approval && node.approval.by && node.approval.on && node.approval.ref)) why.push({ code: "OWNER_APPROVED_WITHOUT_RECORD" });
+  if (node.placeholder) why.push({ code: "PLACEHOLDER_EXECUTABLE", reason: node.placeholder_reason || null });
+  if (node.legacy_reinterpretation && !(node.legacy_validation && node.legacy_validation.by && node.legacy_validation.decision)) why.push({ code: "LEGACY_REINTERPRETATION_UNVALIDATED" });
+  const copies = tree.source_copies || [];
+  if (new Set(copies.map((c) => c.sha256)).size > 1 && !(tree.source_choice && tree.source_choice.chosen && tree.source_choice.by)) why.push({ code: "CONFLICTING_SOURCE_COPIES", copies: copies.map((c) => c.path) });
+  return why;
+}
+module.exports = { PROVENANCE_CLASSES, executableBlockers, SCHEMA, CHAR_SCHEMA, LAYERS, QUANTITIES, registry, nodeOf, fromLegacyClass, evalReq, missing, newCharacter, trackState, levelOfTrack, ctxFor,
                    trackAllowed, validateEvidence, awardXp, commit, recover, verifyReceipt, applyCoreGrants, sha, stable, clone };
