@@ -11,7 +11,7 @@ let fails = 0; const ok = (c, n, x) => { if (c) console.log("ok", n); else { fai
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true })).newPage();
   const errs = []; p.on("pageerror", e => errs.push(e.message));
   await p.addInitScript(({ mock, s }) => { window.__store = s; eval(mock); }, { mock: MOCK, s: store });
-  await p.goto("file://" + path.resolve(page_file)); await p.waitForSelector("#submitTurn");
+  await p.goto(require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(page_file)); await p.waitForSelector("#submitTurn");
   const chips = p.locator("[data-ralt]");
   ok(await chips.count() === 5, "review options render", await chips.count());
   ok(await p.locator('[data-ralt^="amwdr79h8h0afs5"]:not([disabled])').count() === 2 && await p.locator('[data-ralt^="amwdo3arg2zkpts"]:not([disabled])').count() === 3, "options for the current scene are enabled");

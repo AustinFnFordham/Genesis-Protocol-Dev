@@ -20,10 +20,14 @@ const plan = (p) => G(p, () => window.__genesisCombat.plan().map((s) => s.pid));
 async function ready(p) { await p.waitForFunction(() => window.__genesisCombat && window.__genesisCombat.authority() && !window.__genesisCombat.busy() && document.querySelector("[data-card]"), null, { timeout: 15000 }); }
 async function closeIn(p) { await G(p, () => { const s = window.__genesisCombat.state(); Object.keys(s.dist).forEach((k) => s.dist[k] = 5); }); await p.locator("#clear").click(); }
 // Drive whatever the page is waiting for: reactions, Aero's Roll button; until not busy.
-async function drive(p, react) { for (let i = 0; i < 200; i++) { if (await p.locator("#react[open]").count()) { const pos = p.locator("#reactBody [data-react]:not([data-react=''])"); if (react !== "none" && await pos.count()) await pos.first().click(); else await p.locator("#reactBody [data-react='']").click(); }
+// Time-budgeted (CC-008.1): returns { settled, ms, polls }. It used to stop after a fixed 200 polls and return silently, so under CPU
+// load a still-running turn was compared against the journal as if it had finished. A stall must now fail as a stall.
+async function drive(p, react, budgetMs) { const t0 = Date.now(), until = t0 + (budgetMs || 90000); for (let i = 0; Date.now() < until; i++) { if (await p.locator("#react[open]").count()) { const pos = p.locator("#reactBody [data-react]:not([data-react=''])"); if (react !== "none" && await pos.count()) await pos.first().click(); else await p.locator("#reactBody [data-react='']").click(); }
     const rb = p.locator("[data-roll]:not([disabled])"); if (await rb.count()) await rb.first().click();
     // settled = not busy, no reaction dialog, no roll button and no roll checkpoint outstanding (a just-clicked roll may not have set busy yet)
-    if (!(await G(p, () => window.__genesisCombat.busy() || window.__genesisCombat.waitingRoll())) && !(await p.locator("#react[open]").count()) && !(await p.locator("[data-roll]:not([disabled])").count())) return; await p.waitForTimeout(60); } }
+    if (!(await G(p, () => window.__genesisCombat.busy() || window.__genesisCombat.waitingRoll())) && !(await p.locator("#react[open]").count()) && !(await p.locator("[data-roll]:not([disabled])").count())) return { settled: true, ms: Date.now() - t0, polls: i + 1 }; await p.waitForTimeout(60); }
+  const r = { settled: false, ms: Date.now() - t0, busy: await G(p, () => window.__genesisCombat.busy()), waiting: await G(p, () => window.__genesisCombat.waitingRoll()) };
+  ok(false, "the page settles within the drive budget (no stalled turn)", r); return r; }
 async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (await G(p, () => !!window.__genesisCombat.state().over)) return true; await p.locator("#clear").click();
     for (const c of ["recover_weapon", "move", "saber_strike", "unarmed_strike", "blaster_shot", "flow_strike"]) { const el = p.locator(`[data-card="${c}"][data-off="false"]`); if (await el.count()) { await el.click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); } }
     if (await p.locator("#resolve").isDisabled()) { const any = p.locator(`[data-card][data-off="false"]`); if (await any.count()) await any.first().click(); if (await p.locator("#pick[open]").count()) await p.locator("#pickBody button").first().click(); }
@@ -151,7 +155,7 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     await h.reload(); await h.waitForFunction(() => window.__genesisCombat && window.__genesisCombat.session(), null, { timeout: 15000 });
     ok((await G(h, () => window.__genesisCombat.session())) === sid2, "reload: the page reconnects to the same Atomic session");
     ok(/Reconnected/.test(await h.locator("#connMsg").innerText()), "reload: says it rebuilt from the journal");
-    await drive(h);
+    await drive(h);   // an unsettled drive now fails on its own
     const tapeAfter = await G(h, () => window.__genesisCombat.state().tape.map((d) => d.value));
     ok(JSON.stringify(tapeAfter.slice(0, tapeBefore.length)) === JSON.stringify(tapeBefore), "reload: every die already drawn is reused (no reroll after reconnect)", [tapeBefore, tapeAfter]);
     const toks = await G(h, () => window.__genesisCombat.tokens());
@@ -160,7 +164,8 @@ async function playOut(p) { for (let t = 0; t < 30; t++) { await drive(p); if (a
     const pageState = await G(h, () => JSON.parse(JSON.stringify(window.__genesisCombat.state())));
     ok(!rb.pending && D.stateHash(rb.state) === D.stateHash(pageState), "the page's state equals a clean replay of the server journal (presentation wrote nothing into game state)",
        { pending: rb.pending ? (rb.pending.kind || Object.keys(rb.pending)) : null, rbLog: rb.state.log.length, pageLog: pageState.log.length, rbTape: rb.state.tape.length, pageTape: pageState.tape.length,
-         rbTurn: [rb.state.round, rb.state.turn], pageTurn: [pageState.round, pageState.turn], busy: await G(h, () => window.__genesisCombat.busy()), over: [rb.state.over, pageState.over] });
+         rbTurn: [rb.state.round, rb.state.turn], pageTurn: [pageState.round, pageState.turn], busy: await G(h, () => window.__genesisCombat.busy()), over: [rb.state.over, pageState.over],
+         errMsg: await h.locator("#errMsg").innerText().catch(() => ""), connMsg: await h.locator("#connMsg").innerText().catch(() => ""), waiting: await G(h, () => window.__genesisCombat.waitingRoll()) });
     ok(herr.length === 0, "no page errors (Atomic mode)", herr);
     await c3.close();
   } finally { srv.kill(); await browser.close(); }

@@ -14,7 +14,7 @@ const ok = (c, n, x) => { if (c) console.log("ok", n); else { failures++; consol
       const errors = []; page.on("pageerror", (e) => errors.push(e.message));
       const s = JSON.parse(JSON.stringify(st)); delete s.features; if (features) s.features = features; s.processor = null;
       await page.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock: MOCK, st: s });
-      await page.goto("file://" + path.resolve(pageFile)); await page.waitForSelector("#submitTurn");
+      await page.goto(require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(pageFile)); await page.waitForSelector("#submitTurn");
       return { page, errors };
     }
     { const { page } = await open(null); ok(await page.locator("#whisperPanel").count() === 0, "switch off: no WHISPER panel"); }

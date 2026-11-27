@@ -7,9 +7,7 @@ const { chromium, devices } = require("playwright");
 const fs = require("fs"), path = require("path");
 const [page_file, state_file, shotDir] = process.argv.slice(2);
 // Published artifacts are wrapped in a skeleton with a device-width viewport; a phone renders that, so test the same.
-const wrapped = path.join(require("os").tmpdir(), "datapad_iphone_wrapped.html");
-fs.writeFileSync(wrapped, '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>' + fs.readFileSync(page_file, "utf8") + "</body></html>");
-const url = "file://" + wrapped;
+const url = require(path.join(__dirname, "hosted_url.cjs")).hostedUrl(page_file);   // per-process wrapped copy (was a shared fixed tmp file)
 const state = JSON.parse(fs.readFileSync(state_file, "utf8"));
 state.turn_context = JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "hask_r2_sequencer.json"), "utf8"));
 const MOCK = fs.readFileSync(path.join(__dirname, "test_datapad_ui.cjs"), "utf8").match(/const MOCK = `([\s\S]*?)`;/)[1];

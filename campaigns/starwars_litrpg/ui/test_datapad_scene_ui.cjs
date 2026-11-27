@@ -6,7 +6,7 @@ const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
 const [page_file, state_file, shotDir] = process.argv.slice(2);
-const url = "file://" + path.resolve(page_file);
+const url = require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(page_file);
 const state = JSON.parse(fs.readFileSync(state_file, "utf8"));
 state.turn_context = JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "hask_r2_barn_scene.json"), "utf8"));
 const MOCK = fs.readFileSync(path.join(__dirname, "test_datapad_ui.cjs"), "utf8").match(/const MOCK = `([\s\S]*?)`;/)[1];

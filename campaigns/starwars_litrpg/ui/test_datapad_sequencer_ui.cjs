@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const T = require("./turn_contract.js");
 const [page_file, state_file, shotDir] = process.argv.slice(2);
-const url = "file://" + path.resolve(page_file);
+const url = require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(page_file);
 const fx = p => JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", p), "utf8"));
 const CTX = fx("hask_r2_sequencer.json"), GM = fx("hask_r2_sequencer_gm_only.json"), S1F = fx("s1_four_sequences_fixed.json");
 const state = JSON.parse(fs.readFileSync(state_file, "utf8"));

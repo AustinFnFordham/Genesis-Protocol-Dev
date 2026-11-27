@@ -53,7 +53,7 @@ const MOCK = fs.readFileSync(path.join(__dirname,'test_datapad_ui.cjs'),'utf8').
    const page=await ctx.newPage(), errors=[];page.on('pageerror',e=>errors.push(e.message));
    const st=structuredClone(state);st.features={tb4_builder:true};st.processor=null;
    await page.addInitScript(({mock,st})=>{window.__store={'view/state':st};eval(mock)},{mock:MOCK,st});
-   await page.goto('file://'+path.resolve(process.argv[2]));await page.waitForSelector('#submitTurn');
+   await page.goto(require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(process.argv[2]));await page.waitForSelector('#submitTurn');
    assert.equal(await page.locator('#mechanicsCatalog').getAttribute('open'),null);
    assert(await page.locator('#intentPlans').isVisible());
    const cards=page.locator('#intentPlans [data-tb4pick]');

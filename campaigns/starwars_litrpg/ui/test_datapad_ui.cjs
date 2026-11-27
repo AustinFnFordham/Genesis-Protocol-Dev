@@ -7,7 +7,7 @@ const { chromium, devices } = require("playwright");
 const fs = require("fs");
 const [page_file, state_file, shotDir] = process.argv.slice(2);
 const path = require("path");
-const url = "file://" + path.resolve(page_file);
+const url = require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(page_file);
 const state = JSON.parse(fs.readFileSync(state_file, "utf8"));
 
 const MOCK = `

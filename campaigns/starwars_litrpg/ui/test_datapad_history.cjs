@@ -3,7 +3,7 @@
 const { chromium } = require("playwright");
 const fs = require("fs"), path = require("path");
 const [page_file, dir] = process.argv.slice(2);
-const url = "file://" + path.resolve(page_file);
+const url = require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(page_file);
 const store = {};
 for (const f of fs.readdirSync(path.join(dir, "view"))) store["view/" + f.replace(/\.json$/, "")] = JSON.parse(fs.readFileSync(path.join(dir, "view", f), "utf8"));
 const state = store["view/state"];

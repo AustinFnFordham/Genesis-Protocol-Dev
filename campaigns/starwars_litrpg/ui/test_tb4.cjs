@@ -44,7 +44,7 @@ const MOCK = src.match(/const MOCK = `([\s\S]*?)`;/)[1];
       const errors = []; page.on("pageerror", (e) => errors.push(e.message));
       const state = JSON.parse(JSON.stringify(st)); delete state.features; if (features) state.features = features; state.processor = null;
       await page.addInitScript(({ mock, st }) => { window.__store = { "view/state": st }; eval(mock); }, { mock: MOCK, st: state });
-      await page.goto("file://" + path.resolve(pageFile)); await page.waitForSelector("#submitTurn");
+      await page.goto(require(require("path").join(__dirname, "hosted_url.cjs")).hostedUrl(pageFile)); await page.waitForSelector("#submitTurn");
       return { page, errors };
     }
     // switch off: the page is the live page as before
