@@ -31,3 +31,11 @@ Owner explicitly approved the final open-helmet portrait with both mechanical po
 - Original PNG: 2262580 bytes; SHA-256 d56b26addff0a6a7555400ca33f7d146bb42c350870baf717436c4cb5f660e86.
 - Exact original persisted in the private visual source archive linked above. Git binary transfer still unresolved; do not confuse this manifest commit with a PNG commit.
 - Next: closed helmet configuration, Warfang, Doom Talon, Jadasshh and workshop.
+
+## Approved closed helmet — revision 4
+Owner explicitly approved the deployed helmet portrait on 2026-11-28. Retain the open-helmet fully equipped master as the baseline; this is its closed-helmet visual configuration. Preserve articulated reptilian helmet silhouette, compact cobra-frill accommodation, flame-shaped illuminated eye openings, black/crimson armor and oversized power fists. No mechanical benefits or deployment rules are implied by this artwork.
+
+- Intended Git path (binary upload pending): assets/rhowarr-iron-warrior-closed-helmet-v1.png
+- Original PNG: 2718413 bytes; SHA-256 10e82e5cce3e9b45f441ff3c29d8f2c179bd0c01ac4e4a733752631f906e6009.
+- Exact original persisted in the private visual source archive linked above; Git binary transfer remains unresolved.
+- Next: Warfang, Doom Talon, Jadasshh and workshop.
