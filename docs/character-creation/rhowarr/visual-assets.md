@@ -1,8 +1,8 @@
 # Rhowarr — Visual asset manifest
-Stage 3, revision 1. Owner approved the third unarmored portrait ("It's perfect") on 2026-11-28. This is visual authority only; no mechanical grants or campaign changes.
+Stage 3, revision 7 (visual approval complete; Git binary persistence open). Owner approved the third unarmored portrait ("It's perfect") on 2026-11-28. This is visual authority only; no mechanical grants or campaign changes.
 
 ## Approved originals
-Both exact PNG originals are persisted in the owner's private [visual source archive](https://chatgpt.com/space/page_2c70dc2fc0f0819194825fa64fe74d60). Archive upload SHA-256 matched local source bytes. Git binary transfer remains pending: this commit records provenance and checksums, not the PNG blobs.
+The first two exact PNG originals are persisted in the owner's private [visual source archive](https://chatgpt.com/space/page_2c70dc2fc0f0819194825fa64fe74d60). Archive upload SHA-256 matched local source bytes. Git binary transfer remains pending: this commit records provenance and checksums, not the PNG blobs.
 
 | Asset | Intended Git path (pending binary upload) | Bytes | SHA-256 | Expected Git blob SHA-1 |
 |---|---|---:|---|---|
@@ -55,3 +55,18 @@ Owner approved the spacecraft concept sheet on 2026-11-28. Preserve the original
 - Original PNG: 2548157 bytes; SHA-256 dc569d01eef1c79f5ef8dbe6bf812ec062b81c9d01eb6117fe4e5f870d57ec6c.
 - Exact original persisted in private visual source archive linked above; Git binary transfer remains unresolved.
 - Next: Jadasshh and Thomassk & Vhrenn workshop.
+
+## Approved Jadasshh and workshop — revision 7
+Owner explicitly approved both generated artworks on 2026-11-28. Jadasshh's visual identity: warm gold/ochre scales, brown swept-up hair, small cranial spines, warm smile, pearl-like earrings, dark ornamental shoulder tattoo, cream wrap garment and brown artisan accessories. The workshop depicts warm lighting, leatherworking tools, textiles, holsters, pouches, armor accessories and design sketches. The original approved brand screenshot remains authoritative over any variation in rendered signage. Workshop architecture, location, stock, affiliations and background symbols are illustrative, not established world facts. No real personal photograph or identifying source metadata is included in this manifest or uploaded to the artwork archive.
+
+| Asset | Intended Git path (pending binary upload) | Bytes | SHA-256 |
+|---|---|---:|---|
+| Jadasshh generated portrait v1 | assets/jadasshh-portrait-v1.png | 2469818 | 139a9ad62cd5ac5a30a6672e6a28882702eb7b7487b1bdfb624b989440b8eab6 |
+| Thomassk & Vhrenn workshop v1 | assets/thomassk-vhrenn-workshop-v1.png | 2846042 | 687b6c24676925685110c23f0fef72a13fde0b88a3ceb18ff2b23342b429d1d4 |
+
+## Stage 3 completion audit
+- Visual approvals: 10/10. All ten original asset PNGs have archive upload receipts with SHA-256 and byte counts and are linked on the private archive page. Original logo screenshot retained separately. The personal source photograph is excluded from the archive and Git changes.
+- Visual authority: unarmored master for anatomy and tattoos; equipped open/closed helmet masters for armor; independent gauntlet, Warfang and ship sheets for appearance; original brand screenshot for signage; Jadasshh portrait for character and workshop for atmosphere.
+- Canon boundaries: illustrated technical labels, incidental faction symbols, scale, builder marks, equipment availability and runtime mechanics are not promoted. No dice, ledger or campaign activation.
+- Git persistence: manifest and approvals committed; actual PNG binaries remain outstanding. Stage 3 creative approval and private archive complete, but repository asset portability is NOT complete. Do not mark the full Git delivery gate passed until all ten PNGs exist at intended paths and their SHA-256 matches archive receipts. Earlier Next/pending notes are historical and superseded by this audit.
+- Stage 4 reusable Character Creation Pattern can proceed independently; no campaign insertion authorized.
