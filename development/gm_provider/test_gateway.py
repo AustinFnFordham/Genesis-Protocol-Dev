@@ -454,6 +454,36 @@ class Interchange(Base):
             self.assertIn(caught.exception.code, ("NOT_DECLARED", "PURPOSE_LEAK"))
         self.assertEqual(self.gw.commit("claude", "run-a", move["proposal"])["status"], "committed")
 
+    def test_commit_preserves_structured_tables_and_checks_nested_private_text(self):
+        action, _ = self.act(INSPECT, provider="gpt")
+        self.gw.claim("gpt", "structured-run")
+        provider = script("gpt")
+        context = self.gw.context("gpt", "structured-run")
+        tables = provider.step(context)["tables"]
+        private_text = 'The "hidden relay" activates when the remote passes the inspection.'
+        tables["tables"] = [{"outcomes": [12, {"private": private_text}]}]
+        self.gw.fix_tables("gpt", "structured-run", tables)
+        context = self.gw.context("gpt", "structured-run")
+        request, = provider.step(context)["rolls"]
+        self.gw.roll("gpt", "structured-run", request)
+        before = self.gw._op(action["action_id"])
+        context = self.gw.context("gpt", "structured-run")
+        proposal = provider.step(context)["proposal"]
+        leaking = dict(proposal, narration=private_text)
+        with self.assertRaises(Refused) as caught:
+            self.gw.commit("gpt", "structured-run", leaking)
+        self.assertEqual(caught.exception.code, "PROPOSAL_REJECTED")
+        self.assertIn("PRIVATE_LEAK", [p["code"] for p in caught.exception.extra["problems"]])
+        self.assertIsNone(self.gw._op(action["action_id"])["commit"])
+
+        result = self.gw.commit("gpt", "structured-run", proposal)
+        self.assertEqual(result["publication"]["status"], "published")
+        after = self.gw._op(action["action_id"])
+        self.assertEqual(after["tables"], before["tables"])
+        self.assertEqual(after["rolls"], before["rolls"])
+        self.assertEqual(len(self.rolls_for(action["action_id"])), 1)
+        self.assertFalse(self.gw.recovery()["lease"]["held"])
+
     def test_runner_feeds_rejections_back_then_releases(self):
         action, _ = self.act(INSPECT, provider="gemini")
         attempts = {"n": 0}

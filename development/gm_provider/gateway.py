@@ -646,10 +646,19 @@ class Gateway:
         if brief.player_leaks(public_text, hidden):
             bad("PRIVATE_LEAK", "player-visible text repeats GM-only records")
         tables = (op["tables"] or {}).get("value", {})
-        for fragment in (tables.get("tables") or "", tables.get("interpretation") or ""):
-            fragment = fragment.strip()[:60]
-            if len(fragment) >= 30 and fragment in public_text:
-                bad("PRIVATE_LEAK", "player-visible text repeats the GM's private tables")
+        private_values = [tables.get("tables"), tables.get("interpretation")]
+        while private_values:
+            value = private_values.pop()
+            if isinstance(value, dict):
+                private_values.extend(value)
+                private_values.extend(value.values())
+            elif isinstance(value, list):
+                private_values.extend(value)
+            elif isinstance(value, str):
+                fragment = value.strip()[:60]
+                if len(fragment) >= 30 and json.dumps(fragment, ensure_ascii=False)[1:-1] in public_text:
+                    bad("PRIVATE_LEAK", "player-visible text repeats the GM's private tables")
+                    break
         if isinstance(context, dict):
             with tempfile.TemporaryDirectory(prefix="genesis-ctx-") as directory:
                 path = Path(directory) / "ctx.json"
