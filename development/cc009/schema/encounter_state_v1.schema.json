@@ -1,0 +1,43 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "genesis-encounter-state/1.0-candidate",
+ "title": "Minimum structured encounter state (CC-009 design, noncanonical)",
+ "description": "The minimum per-encounter state for reliable theater-of-mind combat, grid-ready. It is a PROJECTION derived from committed events (never GM-written directly), published per viewer. Fields marked 'existing' are already published in turn-contract/3 contexts or the Atomic engine state; 'gap' fields are proposals evidenced by Hask Meadow r2.",
+ "type": "object",
+ "required": ["encounter_id", "round", "turn_owner", "order", "actors"],
+ "properties": {
+  "encounter_id": {"type": "string"},
+  "based_on": {"type": "object", "properties": {"revision": {"type": "integer"}, "ledger_head": {"type": "string"}}},
+  "round": {"type": "integer", "description": "existing (context.round / engine.round)"},
+  "turn_owner": {"type": "string", "description": "existing (context.actor / engine current())"},
+  "order": {"type": "array", "items": {"type": "object", "required": ["actor", "initiative"], "properties": {"actor": {"type": "string"}, "initiative": {"type": "integer"}}},
+   "description": "gap in live: allied NPCs acting in combat (Wick, round 10) have no entry. Owner decision D2."},
+  "actors": {"type": "object", "additionalProperties": {"$ref": "#/definitions/actor"}},
+  "objects": {"type": "array", "items": {"$ref": "#/definitions/object"}},
+  "hazards": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "string"}, "label": {"type": "string"}, "at": {"type": "string"}, "spreads": {"type": "string"}, "caused_by": {"type": "string"}}},
+   "description": "gap: environmental changes (the live ember in the cut, evt_1356; the scorched gouge with an ember, evt_1403) are prose only."},
+  "pending": {"type": "array", "description": "existing (context.pending_steps with status)"},
+  "receipts": {"type": "array", "items": {"type": "object", "properties": {"roll_id": {"type": "string"}, "roller": {"type": "string"}, "purpose": {"type": "string"}, "public_total": {"type": ["integer", "null"]}, "visibility": {"enum": ["public", "total_only", "hidden"]}}},
+   "description": "existing (roll_log + dice display redaction; Atomic receipts)"}
+ },
+ "definitions": {
+  "actor": {
+   "type": "object",
+   "required": ["id", "side", "controller"],
+   "properties": {
+    "id": {"type": "string"}, "label": {"type": "string"},
+    "side": {"enum": ["pc", "ally", "enemy", "neutral"]}, "controller": {"enum": ["player", "npc", "gm"]},
+    "hp": {"description": "Own PC: number. Others: a condition word (Atomic playerProjection). Never a hidden number."},
+    "conditions": {"type": "array", "items": {"type": "string"}},
+    "resources": {"type": "object", "description": "e.g. FP; and charges for weapons (gap: the blaster's charge is 'not tracked in the record', evt_1412)."},
+    "budget": {"type": "object", "properties": {"action": {"type": "integer"}, "bonus_action": {"type": "integer"}, "reaction": {"type": "integer"}, "movement_ft": {"type": "integer"}, "object_interaction": {"type": "integer"}, "secondary": {"type": "integer", "description": "only when ruleset.secondary_action"}}},
+    "hands": {"type": "object", "properties": {"right": {"type": ["object", "null"]}, "left": {"type": ["object", "null"]}}, "description": "existing for Aero; gap for NPCs (Wick's hands are prose only)."},
+    "equipment": {"type": "array", "items": {"type": "object", "properties": {"item": {"type": "string"}, "state": {"type": "string", "description": "lit/unlit, holstered, drawn, held by another"}}}},
+    "position": {"type": "object", "properties": {"label": {"type": "string"}, "zone": {"type": "string"}, "distance_ft": {"type": "object", "additionalProperties": {"type": "integer"}}, "cover": {"enum": ["none", "half", "three_quarters", "total"]}, "reach_ft": {"type": "integer"}}},
+    "knowledge": {"description": "Bounded: what this actor knows (TB4 actor-scoped envelopes). The player view never includes another actor's private knowledge."},
+    "intent_state": {"type": "object", "properties": {"standing_instruction": {"type": "string"}, "readied": {"type": "string"}}, "description": "gap: 'don't fire till I say' (evt_1389) is prose; NPC agency still decides."}
+   }
+  },
+  "object": {"type": "object", "properties": {"id": {"type": "string"}, "label": {"type": "string"}, "held_by": {"type": ["string", "null"]}, "at": {"type": "string"}, "durability": {"type": "object", "properties": {"state": {"type": "string"}, "ac": {"type": "integer"}, "hp": {"type": "integer"}}, "description": "gap: the hatch planks were cut and burned through (evt_1243) but carry no durability; Wick's shot used 'total cover' vs a hidden DC."}}}
+ }
+}

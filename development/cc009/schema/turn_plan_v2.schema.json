@@ -1,0 +1,39 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "genesis-turn-plan/2.0-candidate",
+ "title": "Genesis structured turn plan v2 (CC-009 candidate, noncanonical)",
+ "description": "An ordered, editable plan of one actor's activities. It is an AUTHORED INTENTION: it confers no authority and records no outcome. turn_plan_v2.js turns it into a turn-contract/3 declaration; the existing validator authorizes; only committed GM/Atomic events carry outcomes.",
+ "type": "object",
+ "required": ["schema", "actor", "based_on", "activities"],
+ "additionalProperties": false,
+ "properties": {
+  "schema": {"const": "genesis-turn-plan/2.0-candidate"},
+  "actor": {"type": "string", "description": "Turn owner. Must equal the published context's actor."},
+  "based_on": {"type": "object", "required": ["context_id"], "properties": {"context_id": {"type": ["string", "null"]}, "revision": {"type": "integer"}, "ledger_head": {"type": "string"}},
+   "description": "The published context the plan was written against. A mismatch is STALE_PLAN; the processor's own revision/ledger-head check (turn.py check) still applies."},
+  "end_turn": {"type": "boolean", "default": false, "description": "Only the player's explicit word ends a turn while budget remains. A submission alone never does."},
+  "whisper": {"description": "Passed through untouched; governed by the WHISPER contract (TB4_WHISPER_001)."},
+  "activities": {"type": "array", "items": {"$ref": "#/definitions/activity"}}
+ },
+ "definitions": {
+  "activity": {
+   "type": "object",
+   "required": ["id", "slot"],
+   "properties": {
+    "id": {"type": "string"},
+    "slot": {"enum": ["main", "bonus", "reaction", "movement", "object", "free", "speech", "secondary"],
+     "description": "Action-economy slot. 'secondary' is refused (SECONDARY_NOT_ENABLED) unless the published context carries ruleset.secondary_action === true. 'reaction' is a declared intent with a trigger; it is never a turn step."},
+    "capability": {"type": "object", "properties": {"option": {"type": "string", "description": "A published option/object/movement/reaction id."}}},
+    "intent": {"type": "object", "properties": {"text": {"type": "string", "description": "Custom intent, kept literally. The GM adjudicates its cost and effect."}}},
+    "target": {"type": "object", "required": ["kind"], "properties": {"kind": {"enum": ["enemy", "ally", "self", "object", "location"]}, "id": {"type": "string", "description": "A visible id from the context; never a hidden one."}}},
+    "speech": {"type": "object", "properties": {"text": {"type": "string"}, "extended": {"type": "boolean", "description": "An extended exchange takes the action (ACTION_ECONOMY_RULING §2)."}}},
+    "flair": {"type": "string", "description": "Descriptive only. No mechanical effect."},
+    "trigger": {"type": "string", "description": "Reactions: the event that would trigger it."},
+    "condition": {"type": "object", "properties": {"text": {"type": "string"}}, "description": "Execute only if this is settled by committed events; otherwise the GM stops there (a halt) and the rest becomes pending."},
+    "after": {"type": "array", "items": {"type": "string"}, "description": "Activities this one depends on; each must come earlier (DEPENDENCY_ORDER)."},
+    "pending": {"type": "boolean", "description": "Carried from a halted plan (context.pending_steps)."},
+    "status": {"type": "string", "description": "For pending activities: the published status (interrupted, unattempted, paused...)."}
+   }
+  }
+ }
+}
