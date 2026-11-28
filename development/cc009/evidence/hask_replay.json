@@ -1,0 +1,576 @@
+{
+ "schema": "genesis-cc009-hask-replay/0.1",
+ "canonical": false,
+ "source": {
+  "path": "campaigns/starwars_litrpg/runs/hask_meadow_r2/records/events.jsonl",
+  "sha256": "2e4cdb5b40a4b0a7ebc1e2b6a7d1917f8c727f04826f4f808e0fbf4aec39d46b",
+  "events": 1125
+ },
+ "contract": "turn-contract/3",
+ "rows": [
+  {
+   "event": "evt_1250",
+   "action_id": "amwdrxghypypesa",
+   "round": 1,
+   "budget_before": {
+    "action": 0,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the indigo lightsaber, lit, its blade through the hatch"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action",
+     "object_interaction"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1262",
+   "action_id": "amwdshwpko1prnc",
+   "round": 2,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the indigo lightsaber, lit, its blade through the hatch"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action",
+     "object_interaction"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1277",
+   "action_id": "amwdtagpzdac9vs",
+   "round": 3,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the indigo lightsaber, lit, its blade through the hatch"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1293",
+   "action_id": "amwe7qket89j366",
+   "round": 4,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the hilt of the indigo lightsaber, unlit"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action"
+    ],
+    "movement_ft": 20
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1310",
+   "action_id": "amwe85dmgv6amls",
+   "round": 5,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "rake",
+     "label": "the rake, in both hands"
+    },
+    "left": {
+     "item": "rake",
+     "label": "the rake, in both hands"
+    }
+   },
+   "declared_end_turn": false,
+   "steps": 2,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "UNMAPPED",
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action",
+     "object_interaction"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1324",
+   "action_id": "amwe92548rq2fpz",
+   "round": 6,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "rake",
+     "label": "the rake, in both hands"
+    },
+    "left": {
+     "item": "rake",
+     "label": "the rake, in both hands"
+    }
+   },
+   "declared_end_turn": false,
+   "steps": 4,
+   "current_validator": {
+    "legal": false,
+    "ends_turn": false,
+    "errors": [
+     "UNKNOWN_OBJECT",
+     "UNKNOWN_ITEM"
+    ],
+    "info": [
+     "UNMAPPED",
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action"
+    ],
+    "movement_ft": 20
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1344",
+   "action_id": "amwe9lcs5xt8icz",
+   "round": 7,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the indigo lightsaber, lit, its blade through the hatch"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1360",
+   "action_id": "amwec5zd302o5tj",
+   "round": 8,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the hilt, unlit"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "action",
+     "bonus_action"
+    ],
+    "movement_ft": 0
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1375",
+   "action_id": "amweckuad6tgvbq",
+   "round": 9,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the hilt, unlit"
+    },
+    "left": null
+   },
+   "declared_end_turn": false,
+   "steps": 5,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "UNLISTED_ITEM",
+     "UNMAPPED",
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action",
+     "object_interaction"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": false,
+   "record_stop": "mechanical",
+   "finding": null
+  },
+  {
+   "event": "evt_1386",
+   "action_id": "amwhb0ln6bujkui",
+   "round": 9,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 0
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the hilt, unlit"
+    },
+    "left": {
+     "item": "blaster",
+     "label": "on the blaster in Wick's hand, holding the aim"
+    }
+   },
+   "declared_end_turn": false,
+   "steps": 0,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  },
+  {
+   "event": "evt_1401",
+   "action_id": "amwhbehqstehbof",
+   "round": 10,
+   "budget_before": {
+    "action": 1,
+    "bonus_action": 1,
+    "reaction": 1,
+    "movement_ft": 30,
+    "object_interaction": 1
+   },
+   "hands_before": {
+    "right": {
+     "item": "lightsaber",
+     "label": "the hilt, unlit"
+    },
+    "left": {
+     "item": "wick_lantern",
+     "label": "Wick's lantern, lit"
+    }
+   },
+   "declared_end_turn": false,
+   "steps": 3,
+   "current_validator": {
+    "legal": true,
+    "ends_turn": false,
+    "errors": [],
+    "info": [
+     "UNLISTED_ITEM",
+     "TURN_CONTINUES"
+    ]
+   },
+   "unspent_after_plan": {
+    "slots": [
+     "bonus_action",
+     "object_interaction"
+    ],
+    "movement_ft": 30
+   },
+   "record_ended_turn": true,
+   "record_stop": "combat",
+   "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES"
+  }
+ ],
+ "summary": {
+  "declarations": 11,
+  "findings": [
+   {
+    "event": "evt_1250",
+    "round": 1,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action",
+      "object_interaction"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1262",
+    "round": 2,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action",
+      "object_interaction"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1277",
+    "round": 3,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1293",
+    "round": 4,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action"
+     ],
+     "movement_ft": 20
+    }
+   },
+   {
+    "event": "evt_1310",
+    "round": 5,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action",
+      "object_interaction"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1324",
+    "round": 6,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action"
+     ],
+     "movement_ft": 20
+    }
+   },
+   {
+    "event": "evt_1344",
+    "round": 7,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1360",
+    "round": 8,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "action",
+      "bonus_action"
+     ],
+     "movement_ft": 0
+    }
+   },
+   {
+    "event": "evt_1386",
+    "round": 9,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action"
+     ],
+     "movement_ft": 30
+    }
+   },
+   {
+    "event": "evt_1401",
+    "round": 10,
+    "finding": "RECORD_ENDED_TURN_THAT_CURRENT_CONTRACT_CONTINUES",
+    "unspent": {
+     "slots": [
+      "bonus_action",
+      "object_interaction"
+     ],
+     "movement_ft": 30
+    }
+   }
+  ]
+ }
+}
