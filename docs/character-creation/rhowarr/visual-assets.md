@@ -23,3 +23,11 @@ Owner approved the armored appearance and modular gauntlet concept on 2026-11-28
 | Modular gauntlets concept sheet v1 | assets/rhowarr-gauntlets-v1.png | 2788081 | ea54263afbbdd50d04eb265a8f2871bdf43872a41d36f427acd90f935b288c14 |
 
 Preserve armored master independently of gauntlet revision. Gauntlet sheet establishes oversized articulated power fists, black/crimson worn plating, orange light accents and the five player-selected modes: power fist, integrated blaster, retractable blade, grappling cable, energy shield. Component and blueprint labels are illustrative, not approved materials, energy sources, stats or engineering specifications. Next composition: same armored Rhowarr with fully assembled gloves fitted over both hands, preserving anatomy, scar, compact frill and armor design. Closed helmet, Warfang, Doom Talon and Jadasshh remain pending. No gameplay activation.
+
+## Approved fully equipped portrait — revision 3
+Owner explicitly approved the final open-helmet portrait with both mechanical power-fist gloves fitted, 2026-11-28. Use as the definitive equipped visual reference; retain unarmored master for anatomy/tattoo continuity and original armor and gauntlet sheet as independent references. No change to mechanical availability or gameplay rules.
+
+- Intended Git path (binary upload pending): assets/rhowarr-fully-equipped-v1.png
+- Original PNG: 2262580 bytes; SHA-256 d56b26addff0a6a7555400ca33f7d146bb42c350870baf717436c4cb5f660e86.
+- Exact original persisted in the private visual source archive linked above. Git binary transfer still unresolved; do not confuse this manifest commit with a PNG commit.
+- Next: closed helmet configuration, Warfang, Doom Talon, Jadasshh and workshop.
