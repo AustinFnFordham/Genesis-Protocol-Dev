@@ -312,6 +312,103 @@ class DiskRecovery(unittest.TestCase):
     clone=shared.Shared.clone
     session=shared.Shared.session
 
+    def test_player_http_and_signed_gm_share_disposable_git_pilot(self):
+        from starlette.testclient import TestClient
+        from providers import SessionProvider
+        from service import App
+
+        campaign = adapter.DATAPAD_PILOT
+        repo = self.clone("pilot")
+        shared.git(repo, "remote", "remove", "origin")
+        shared.git(repo, "branch", "-m", "staging/provider-shared")
+        shared.git(self.root, "init", "--quiet", "--bare", "-b", "staging/provider-shared", "pilot-origin.git")
+        shared.git(repo, "remote", "add", "origin", str(self.root / "pilot-origin.git"))
+        shared.git(repo, "push", "--quiet", "origin", "HEAD")
+        scope = repo / "staging" / campaign
+        initialized = staging.make_shared(scope, campaign)
+        generation = adapter.for_gateway(initialized).generation
+        player_token = "fixture-datapad-token-distinct-from-gm"
+        gm_tokens = {"gpt-session": "fixture-gpt", "gemini-session": "fixture-gemini"}
+        providers = {name: SessionProvider(name) for name in gm_tokens}
+        signer = JWT()
+        signer.key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        verifier = signer.verifier()
+        env = {
+            "GENESIS_MCP_ISSUER": ISSUER, "GENESIS_MCP_RESOURCE": RESOURCE,
+            "GENESIS_MCP_CLIENT_PROVIDERS": json.dumps(CLIENTS), "GENESIS_MCP_SUBJECT": fixture.SUBJECT,
+            "GENESIS_MCP_ENABLE_WRITES": "1", "GENESIS_GM_TOKENS": json.dumps(gm_tokens),
+            "GENESIS_STORAGE_GENERATION": generation, "GENESIS_DATAPAD_PILOT_PLAYER_TOKEN": player_token,
+        }
+        with patch.object(adapter, "JWTVerifier", return_value=verifier), patch.object(adapter, "create_server", wraps=adapter.create_server) as create:
+            server = adapter.build(scope, env)
+            tools = create.call_args.args[0]
+        guard, pilot = tools.guard, tools.app.gateways[campaign]
+        with self.assertRaisesRegex(ValueError, "dedicated Datapad pilot"):
+            other_app = App({self.player.id: self.player}, providers, player_token, gm_tokens=gm_tokens)
+            other_tools = adapter.GatewayTools(other_app, self.player.id, fixture.SUBJECT, local_reads=True)
+            adapter.create_server(other_tools, signer.verifier(), ISSUER, RESOURCE)
+
+        player = {"x-genesis-player-token": player_token}
+        root = f"/v1/campaigns/{campaign}"
+        steps = [
+            {"id": "check", "type": "action", "option": "inspect_remote", "target": "remote"},
+            {"id": "custom", "type": "free", "kind": "custom", "text": "Quietly note that inspection in my log."},
+        ]
+        action = staging.declare(pilot, "datapad-acceptance-0001", text="Inspect the remote and quietly note that inspection in my log.",
+                                 steps=steps, provider="gpt-session")
+        with TestClient(server.streamable_http_app(), base_url=RESOURCE.rsplit("/", 1)[0]) as client:
+            def call(name, provider="chatgpt-client", **arguments):
+                headers = {"accept": "application/json, text/event-stream", "mcp-protocol-version": "2025-11-25",
+                           "authorization": "Bearer " + signer.token(azp=provider)}
+                reply = client.post("/mcp", headers=headers, json={"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                                     "params": {"name": name, "arguments": arguments}})
+                self.assertEqual(reply.status_code, 200, reply.text)
+                return reply.json()["result"]["structuredContent"]
+
+            self.assertEqual(client.get(root + "/state").status_code, 401)
+            self.assertEqual(client.get(root + "/state", headers={"x-genesis-player-token": gm_tokens["gpt-session"]}).status_code, 401)
+            self.assertEqual(client.get("/v1/campaigns/shared-1/state", headers=player).status_code, 404)
+            self.assertEqual(client.post("/mcp", headers=player).status_code, 401)
+            self.assertEqual(client.post(root + "/provider", headers=player, json={}).status_code, 404)
+            start = client.get(root + "/state", headers=player).json()["cursor"]
+            guard.expected_generation = "invalid-generation"
+            self.assertEqual(client.post(root + "/actions", headers=player, json=action).status_code, 503)
+            self.assertIsNone(pilot.recovery()["in_flight"])
+            guard.expected_generation = guard.generation
+            self.assertEqual(client.post(root + "/actions", headers=player, json={**action, "gm_provider": []}).status_code, 422)
+            self.assertEqual(client.post(root + "/actions", headers=player, json=action).status_code, 202)
+            self.assertTrue(client.post(root + "/actions", headers=player, json=action).json()["duplicate"])
+            self.assertEqual(call("genesis_claim", provider="gemini-client", run="wrong-provider", model="fixture", session="test")
+                             ["result"]["error"]["code"], "NOT_ROUTED_HERE")
+            run = "datapad-pilot-run"
+            call("genesis_claim", run=run, model="signed-test-fixture", session="test")
+            context = call("genesis_context", run=run)["result"]
+            self.assertEqual(context["declaration"]["steps"], action["declaration"]["steps"])
+            self.assertEqual(context["declaration"]["steps"][1]["text"], steps[1]["text"])
+            scripted = script("gpt-session")
+            call("genesis_tables", run=run, body=scripted.step(context)["tables"])
+            current = call("genesis_context", run=run)["result"]
+            roll_request, = scripted.step(current)["rolls"]
+            roll = call("genesis_roll", run=run, body=roll_request)["result"]["result"]
+            self.assertEqual(call("genesis_roll", run=run, body=roll_request)["result"]["result"], roll)
+            proposal = scripted.step(call("genesis_context", run=run)["result"])["proposal"]
+            proposal["events"].append({"kind": "observation", "actor": "aero", "visibility": "player",
+                                       "summary": "Aero quietly notes the inspection in his log.",
+                                       "details": {"step_id": "custom"}})
+            committed = call("genesis_commit", run=run, body=proposal)
+            self.assertEqual(committed["result"]["publication"]["status"], "published", committed)
+            state = client.get(root + "/state", headers=player).json()
+            self.assertGreater(state["cursor"]["revision"], start["revision"])
+            self.assertNotIn("CANARY", json.dumps(state))
+            status_path = f"{root}/actions/{action['action_id']}"
+            self.assertEqual(client.get(status_path, headers=player).json()["status"], "committed")
+            gemini = call("genesis_refresh", provider="gemini-client")
+            self.assertEqual(gemini["connection_provider"], "gemini-session")
+            self.assertEqual({k: gemini["public"]["cursor"][k] for k in state["cursor"]}, state["cursor"])
+            self.assertFalse(gemini["recovery"]["lease"]["held"])
+        rolls = ledger.read_jsonl(pilot.campaign / "records/roll_log.jsonl")
+        self.assertEqual(sum(action["action_id"] in row["purpose"] for row in rolls), 1)
+
     def test_signed_codex_context_uses_external_git_authority(self):
         from starlette.testclient import TestClient
         from gateway import brief

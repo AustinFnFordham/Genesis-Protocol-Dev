@@ -22,10 +22,12 @@ from mcp.server.auth.settings import AuthSettings
 from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, TextContent, ToolAnnotations
+from starlette.responses import JSONResponse
 
 from gateway import Refused
 from git_errors import GitFailure
-from service import App
+from providers import SessionProvider
+from service import App, MAX_BODY
 from worktree_guard import for_gateway
 
 READ = "genesis:read"
@@ -33,6 +35,7 @@ GM = "genesis:gm"
 PROVIDER = "gpt-session"
 BASE_PROVIDERS = frozenset({"gpt-session", "gemini-session"})
 SUPPORTED_PROVIDERS = BASE_PROVIDERS | {"codex-session"}
+DATAPAD_PILOT = "datapad-pilot"
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCES = {
     "gm_guide": "development/gm_provider/GM_GUIDE.md",
@@ -297,6 +300,63 @@ def result(call):
                           structuredContent=data, isError=failed, _meta=metadata)
 
 
+def add_player_routes(mcp, tools):
+    app = tools.app
+    prefix = f"/v1/campaigns/{tools.campaign_id}"
+    gateway = app.gateways[tools.campaign_id]
+
+    def response(payload, status):
+        return JSONResponse(payload, status_code=status, headers={"cache-control": "no-store"})
+
+    def error(code, message, status):
+        return response({"error": {"code": code, "message": message}}, status)
+
+    def handle(method, path, headers, body):
+        try:
+            with tools.guard:
+                if method == "POST":
+                    if not tools.writes or tools.guard.recovery_required:
+                        return error("PLAYER_WRITES_BLOCKED", "Player submissions are disabled pending operator checks", 503)
+                    return response_from_app(method, path, headers, body)
+                with gateway.store.local_snapshot():
+                    return response_from_app(method, path, headers, body)
+        except (OSError, ValueError, RuntimeError):
+            return error("GATEWAY_UNAVAILABLE", "The campaign is temporarily unavailable", 503)
+
+    def response_from_app(method, path, headers, body):
+        status, payload = app.handle(method, path, headers, body)
+        return response(payload, status)
+
+    @mcp.custom_route(prefix + "/{operation:path}", methods=["GET", "POST"], include_in_schema=False)
+    async def player(request):
+        token = request.headers.get("x-genesis-player-token", "")
+        if not hmac.compare_digest(token.encode(), app.token.encode()):
+            return error("UNAUTHORIZED", "An authorized player connection is required", 401)
+        operation = request.path_params["operation"]
+        if request.method == "POST" and operation == "actions":
+            if request.headers.get("content-type", "").split(";", 1)[0].strip() != "application/json":
+                return error("BAD_CONTENT_TYPE", "Send an application/json declaration", 415)
+        elif request.method != "GET" or not re.fullmatch(r"state|pages/[A-Za-z0-9_-]{1,64}|actions/[A-Za-z0-9_-]{6,64}", operation):
+            return error("NOT_FOUND", "Unknown player operation", 404)
+        body = bytearray()
+        if request.method == "POST":
+            async for chunk in request.stream():
+                if len(body) + len(chunk) > MAX_BODY:
+                    return error("TOO_LARGE", "Declaration body is too large", 413)
+                body.extend(chunk)
+            # The Datapad must name a provider for each new submission. Routing
+            # changes and reroutes are deliberately absent from this player API.
+            try:
+                declaration = json.loads(body)
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                return error("BAD_JSON", "Body must be a JSON declaration", 400)
+            provider = declaration.get("gm_provider") if isinstance(declaration, dict) else None
+            if not isinstance(provider, str) or provider not in app.providers:
+                return error("PROVIDER_NOT_SELECTED", "Choose a configured pilot GM provider", 422)
+        headers = {"authorization": "Bearer " + token}
+        return await anyio.to_thread.run_sync(handle, request.method, prefix + "/" + operation, headers, bytes(body))
+
+
 def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789):
     resource, issuer = https_url(resource), https_url(issuer)
     if urlsplit(resource).path != "/mcp":
@@ -357,6 +417,10 @@ def create_server(tools, verifier, issuer, resource, host="127.0.0.1", port=8789
         register("genesis_commit", commit, "Validate and atomically commit the session GM's proposal. Append-only authoritative consequences.", destructive=True)
         register("genesis_publish", publish, "Finish accepted work and paginated public publication; never author a replacement turn.")
         register("genesis_release", release, "Release this run's lease, preserving all accepted tables, dice and recovery records.")
+    if tools.app.token:
+        if tools.campaign_id != DATAPAD_PILOT or not tools.local_reads:
+            raise ValueError("Player routes require the dedicated Datapad pilot with local reads")
+        add_player_routes(mcp, tools)
     return mcp
 
 
@@ -373,7 +437,16 @@ def build(shared, env=None, *, local_reads=False):
     issuer, resource = env["GENESIS_MCP_ISSUER"], env["GENESIS_MCP_RESOURCE"]
     verifier = JWTVerifier(issuer, resource, json.loads(env['GENESIS_MCP_CLIENT_PROVIDERS']), env['GENESIS_MCP_SUBJECT'])
     tokens = json.loads(env.get('GENESIS_GM_TOKENS') or '{}')
-    app = App({gateway.id: gateway}, {}, None, gm_tokens=tokens)
+    player_token = env.get('GENESIS_DATAPAD_PILOT_PLAYER_TOKEN')
+    if player_token:
+        if (gateway.id != DATAPAD_PILOT or not re.fullmatch(r"[A-Za-z0-9_-]{32,128}", player_token)
+                or player_token in tokens.values() or not tokens or not set(tokens) <= set(verifier.clients.values())):
+            raise ValueError("Configure separate credentials and OAuth clients for the Datapad pilot")
+        if gateway.store.scope != gateway.store.repo / "staging" / DATAPAD_PILOT or (gateway.store.repo / "staging/shared-1").exists():
+            raise ValueError("Use a separate Datapad pilot authority checkout")
+        local_reads = True
+    providers = {name: SessionProvider(name) for name in tokens} if player_token else {}
+    app = App({gateway.id: gateway}, providers, player_token, gm_tokens=tokens)
     writes = env.get('GENESIS_MCP_ENABLE_WRITES') == '1'
     guard = for_gateway(gateway, env.get('GENESIS_STORAGE_GENERATION'),
                         initialize=not writes and not local_reads, require_lock=local_reads)
@@ -386,11 +459,15 @@ def build(shared, env=None, *, local_reads=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--shared", required=True, type=Path)
+    parser.add_argument("--check", action="store_true", help="Validate configuration without opening a listener")
     args = parser.parse_args()
     try:
-        server = build(args.shared)
+        server = build(args.shared, local_reads=args.check)
     except Exception:
         parser.exit(2, "MCP startup refused: verify staging scope, branch and server-only OAuth/GM configuration\n")
+    if args.check:
+        print("Gateway configuration checked.")
+        return 0
     server.run(transport="streamable-http")
 
 
