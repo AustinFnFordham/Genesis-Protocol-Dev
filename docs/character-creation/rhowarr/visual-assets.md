@@ -47,3 +47,11 @@ Owner approved the Warfang equipment concept sheet on 2026-11-28. Preserve angul
 - Original PNG: 2703106 bytes; SHA-256 0dcabf44e240f85b634de2c9af60bb68205c08e57a1169afd77363acd9adb020.
 - Exact original persisted in private visual source archive linked above; Git binary transfer remains unresolved.
 - Next: Doom Talon, Jadasshh and workshop; optional equipped guitar composition.
+
+## Approved Doom Talon — revision 6
+Owner approved the spacecraft concept sheet on 2026-11-28. Preserve the original swept-wing silhouette, elongated pointed hull, enormous rear engines, black/crimson armor, molten-orange illumination and depicted cockpit aesthetic. Exterior orthographic views and hangar illustration are visual references, not engineering drawings or exact scale authority. Depicted hardpoints, markings, alternate brand and cockpit layout do not establish mechanical equipment, builder attribution, capacity or ship statistics. Keep the Doom Talon distinct from the escaped bounty's vessel; original Thomassk & Vhrenn brand screenshot remains authoritative.
+
+- Intended Git path (binary upload pending): assets/doom-talon-concept-v1.png
+- Original PNG: 2548157 bytes; SHA-256 dc569d01eef1c79f5ef8dbe6bf812ec062b81c9d01eb6117fe4e5f870d57ec6c.
+- Exact original persisted in private visual source archive linked above; Git binary transfer remains unresolved.
+- Next: Jadasshh and Thomassk & Vhrenn workshop.
