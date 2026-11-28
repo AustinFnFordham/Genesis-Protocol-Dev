@@ -39,3 +39,11 @@ Owner explicitly approved the deployed helmet portrait on 2026-11-28. Retain the
 - Original PNG: 2718413 bytes; SHA-256 10e82e5cce3e9b45f441ff3c29d8f2c179bd0c01ac4e4a733752631f906e6009.
 - Exact original persisted in the private visual source archive linked above; Git binary transfer remains unresolved.
 - Next: Warfang, Doom Talon, Jadasshh and workshop.
+
+## Approved Warfang — revision 5
+Owner approved the Warfang equipment concept sheet on 2026-11-28. Preserve angular metallic guitar silhouette, black/crimson plating, molten-orange accents, illuminated fretboard and integrated fictional blaster appearance. The sheet is visual authority only: depicted dimensions, mass, materials, power source, hybrid mode, builder attribution and alternate brand mark are illustrative and not canonical mechanics or amendments to the original Thomassk & Vhrenn identity. Rhowarr's established narrative ownership and approved brand screenshot remain authoritative.
+
+- Intended Git path (binary upload pending): assets/warfang-concept-v1.png
+- Original PNG: 2703106 bytes; SHA-256 0dcabf44e240f85b634de2c9af60bb68205c08e57a1169afd77363acd9adb020.
+- Exact original persisted in private visual source archive linked above; Git binary transfer remains unresolved.
+- Next: Doom Talon, Jadasshh and workshop; optional equipped guitar composition.
