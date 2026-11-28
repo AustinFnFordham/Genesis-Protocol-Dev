@@ -13,3 +13,13 @@ Paths relative to this document. Do not mark Git binary persistence complete unt
 
 ## Visual continuity
 Third portrait supersedes earlier candidates. Compact cobra-inspired cervical frill is an approved character-specific appearance variation, not an asserted species-wide canon trait. Single BATTLE inscription in readable lettering (no duplicate); left eye scar; character-right forearm I luv Mom; right shin angry, left shin happy; red eyes, crimson and black flame patterns, orange luminous tattoos. No active enhancement or intimidation bonus. Use approved image as anatomy and facial reference for all later renderings; armor must accommodate frill. Remaining assets: armored master, gauntlets, Warfang, Doom Talon, Jadasshh. Each requires approval; no runtime item stats implied.
+
+## Approved armor and gauntlets — revision 2
+Owner approved the armored appearance and modular gauntlet concept on 2026-11-28 ("Commit Commit!"). Original PNG bytes archived in the same private visual source archive; binary Git transfer remains pending.
+
+| Asset | Intended Git path (pending binary upload) | Bytes | SHA-256 |
+|---|---|---:|---|
+| Iron Warrior armored master v1, open helmet | assets/rhowarr-iron-warrior-v1.png | 2307544 | 908031b8a9a22192d84034a9e3ee5cbeaed5f9a090c40086e225a0901b7e4228 |
+| Modular gauntlets concept sheet v1 | assets/rhowarr-gauntlets-v1.png | 2788081 | ea54263afbbdd50d04eb265a8f2871bdf43872a41d36f427acd90f935b288c14 |
+
+Preserve armored master independently of gauntlet revision. Gauntlet sheet establishes oversized articulated power fists, black/crimson worn plating, orange light accents and the five player-selected modes: power fist, integrated blaster, retractable blade, grappling cable, energy shield. Component and blueprint labels are illustrative, not approved materials, energy sources, stats or engineering specifications. Next composition: same armored Rhowarr with fully assembled gloves fitted over both hands, preserving anatomy, scar, compact frill and armor design. Closed helmet, Warfang, Doom Talon and Jadasshh remain pending. No gameplay activation.
