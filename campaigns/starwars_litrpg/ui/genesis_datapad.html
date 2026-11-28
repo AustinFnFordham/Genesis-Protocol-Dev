@@ -489,7 +489,11 @@ button { min-height: 44px; min-width: 44px; }
       else if (s.type === "move") { var m = byId(ctx.movement, s.option); if (m) out.push({ step: "movement", id: s.id, text: pre + m.label + (m.feet && !/\d\s*(ft|m)\b/.test(m.label) ? " (~" + m.feet + " ft)" : "") }); }
       else if (s.type === "action") { var a = byId(opts, s.option); if (a) out.push({ step: "action", id: s.id, text: pre + a.label + (s.target ? " → " + names(ctx, [s.target])[0] : "") + (s.trigger ? " (trigger: " + s.trigger + ")" : "") }); }
       else if (s.type === "bonus_action") { var x = byId(opts, s.option); if (x) out.push({ step: "bonus_action", id: s.id, text: pre + x.label }); }
-      else if (s.type === "free" && s.text) out.push({ step: "free", id: s.id, text: pre + (s.kind === "custom" || s.custom ? "Try: " : "Also: ") + s.text });
+      else if (s.type === "free" && s.text) {
+        // CC-009: a combat custom step is billed as an action by validateLinear (§2 "customs"); say so, as object steps do.
+        var billed = combat && (s.kind === "custom" || s.method || (s.uses || []).length);
+        out.push({ step: "free", id: s.id, text: pre + (s.kind === "custom" || s.custom ? "Try: " : "Also: ") + s.text + (billed ? " (the GM rules its cost; it counts as your action until then)" : "") });
+      }
       else if (s.type === "branch") {
         (s.cases || []).forEach(function (c, k) {
           var inner = previewSteps(c.steps || [], ctx, combat, speechAction, state).map(function (p) { return p.text; });
